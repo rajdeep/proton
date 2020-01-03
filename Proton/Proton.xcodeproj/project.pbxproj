@@ -17,6 +17,14 @@
 		1B45CDA723BEEC3D001EB196 /* testRendersMultilineTextViewBasedOnContent@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B45CDA423BEEC3D001EB196 /* testRendersMultilineTextViewBasedOnContent@3x.png */; };
 		1B45CDA923BEED0E001EB196 /* AutogrowingTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDA823BEED0E001EB196 /* AutogrowingTextViewTests.swift */; };
 		1B45CDAC23BEEDF8001EB196 /* MockAutogrowingTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDAB23BEEDF8001EB196 /* MockAutogrowingTextViewDelegate.swift */; };
+		1B45CDBA23BF10DF001EB196 /* TextStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDB923BF10DF001EB196 /* TextStorage.swift */; };
+		1B45CDBC23BF1174001EB196 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDBB23BF1174001EB196 /* Types.swift */; };
+		1B45CDBE23BF125D001EB196 /* NSAttributedString+ContentTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDBD23BF125D001EB196 /* NSAttributedString+ContentTypes.swift */; };
+		1B45CDC223BF131E001EB196 /* TextStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDC023BF131B001EB196 /* TextStorageTests.swift */; };
+		1B45CDC523BF13D4001EB196 /* NSRangeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDC423BF13D4001EB196 /* NSRangeExtensions.swift */; };
+		1B45CDC723BF14DF001EB196 /* NSAttributedStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDC623BF14DF001EB196 /* NSAttributedStringExtensions.swift */; };
+		1B45CDCB23BF1621001EB196 /* MockDefaultTextFormattingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDC923BF161E001EB196 /* MockDefaultTextFormattingProvider.swift */; };
+		1B45CDCE23BF18A5001EB196 /* XCTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDCC23BF189F001EB196 /* XCTestHelpers.swift */; };
 		1BB214D023BB2778008B84A0 /* Proton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB214C623BB2778008B84A0 /* Proton.framework */; };
 		1BB214D723BB2778008B84A0 /* Proton.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BB214C923BB2778008B84A0 /* Proton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
@@ -56,6 +64,14 @@
 		1B45CDA423BEEC3D001EB196 /* testRendersMultilineTextViewBasedOnContent@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersMultilineTextViewBasedOnContent@3x.png"; sourceTree = "<group>"; };
 		1B45CDA823BEED0E001EB196 /* AutogrowingTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingTextViewTests.swift; sourceTree = "<group>"; };
 		1B45CDAB23BEEDF8001EB196 /* MockAutogrowingTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAutogrowingTextViewDelegate.swift; sourceTree = "<group>"; };
+		1B45CDB923BF10DF001EB196 /* TextStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStorage.swift; sourceTree = "<group>"; };
+		1B45CDBB23BF1174001EB196 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
+		1B45CDBD23BF125D001EB196 /* NSAttributedString+ContentTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+ContentTypes.swift"; sourceTree = "<group>"; };
+		1B45CDC023BF131B001EB196 /* TextStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStorageTests.swift; sourceTree = "<group>"; };
+		1B45CDC423BF13D4001EB196 /* NSRangeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRangeExtensions.swift; sourceTree = "<group>"; };
+		1B45CDC623BF14DF001EB196 /* NSAttributedStringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedStringExtensions.swift; sourceTree = "<group>"; };
+		1B45CDC923BF161E001EB196 /* MockDefaultTextFormattingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDefaultTextFormattingProvider.swift; sourceTree = "<group>"; };
+		1B45CDCC23BF189F001EB196 /* XCTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestHelpers.swift; sourceTree = "<group>"; };
 		1BB214C623BB2778008B84A0 /* Proton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Proton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BB214C923BB2778008B84A0 /* Proton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Proton.h; sourceTree = "<group>"; };
 		1BB214CA23BB2778008B84A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -105,6 +121,7 @@
 			children = (
 				1B45CD9C23BEDA8F001EB196 /* UIView+Render.swift */,
 				1B45CD9E23BEE997001EB196 /* SnapshotTestViewController.swift */,
+				1B45CDCC23BF189F001EB196 /* XCTestHelpers.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -142,6 +159,40 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
+		1B45CDB823BF10C1001EB196 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				1B45CDB923BF10DF001EB196 /* TextStorage.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		1B45CDBF23BF1309001EB196 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				1B45CDC823BF15CF001EB196 /* Mocks */,
+				1B45CDC023BF131B001EB196 /* TextStorageTests.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		1B45CDC323BF13B8001EB196 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				1B45CDC423BF13D4001EB196 /* NSRangeExtensions.swift */,
+				1B45CDC623BF14DF001EB196 /* NSAttributedStringExtensions.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		1B45CDC823BF15CF001EB196 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				1B45CDC923BF161E001EB196 /* MockDefaultTextFormattingProvider.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		1BB214BC23BB2778008B84A0 = {
 			isa = PBXGroup;
 			children = (
@@ -164,8 +215,9 @@
 		1BB214C823BB2778008B84A0 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				1B45CDC323BF13B8001EB196 /* Helpers */,
+				1B45CDB823BF10C1001EB196 /* Core */,
 				1BB2152E23BB2B83008B84A0 /* Base */,
-				1BB2152D23BB2B7A008B84A0 /* Core */,
 				1BB214C923BB2778008B84A0 /* Proton.h */,
 				1BB214CA23BB2778008B84A0 /* Info.plist */,
 			);
@@ -178,24 +230,10 @@
 				1B45CDA023BEEC3D001EB196 /* Snapshots */,
 				1B45CD9B23BEDA7F001EB196 /* Helpers */,
 				1B45CD9223BEBFE2001EB196 /* Base */,
-				1BB2152C23BB2B63008B84A0 /* Core */,
+				1B45CDBF23BF1309001EB196 /* Core */,
 				1BB214D623BB2778008B84A0 /* Info.plist */,
 			);
 			path = Tests;
-			sourceTree = "<group>";
-		};
-		1BB2152C23BB2B63008B84A0 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Core;
-			sourceTree = "<group>";
-		};
-		1BB2152D23BB2B7A008B84A0 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Core;
 			sourceTree = "<group>";
 		};
 		1BB2152E23BB2B83008B84A0 /* Base */ = {
@@ -203,6 +241,8 @@
 			children = (
 				1B45CD8F23BDD7E6001EB196 /* AutogrowingTextView.swift */,
 				1B45CD8E23BDD7E6001EB196 /* AutogrowingTextViewDelegate.swift */,
+				1B45CDBB23BF1174001EB196 /* Types.swift */,
+				1B45CDBD23BF125D001EB196 /* NSAttributedString+ContentTypes.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -320,8 +360,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B45CDBE23BF125D001EB196 /* NSAttributedString+ContentTypes.swift in Sources */,
 				1B45CD9123BDD7E6001EB196 /* AutogrowingTextView.swift in Sources */,
+				1B45CDC723BF14DF001EB196 /* NSAttributedStringExtensions.swift in Sources */,
+				1B45CDC523BF13D4001EB196 /* NSRangeExtensions.swift in Sources */,
+				1B45CDBA23BF10DF001EB196 /* TextStorage.swift in Sources */,
 				1B45CD9023BDD7E6001EB196 /* AutogrowingTextViewDelegate.swift in Sources */,
+				1B45CDBC23BF1174001EB196 /* Types.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,7 +376,10 @@
 			files = (
 				1B45CD9D23BEDA8F001EB196 /* UIView+Render.swift in Sources */,
 				1B45CD9F23BEE997001EB196 /* SnapshotTestViewController.swift in Sources */,
+				1B45CDC223BF131E001EB196 /* TextStorageTests.swift in Sources */,
 				1B45CDAC23BEEDF8001EB196 /* MockAutogrowingTextViewDelegate.swift in Sources */,
+				1B45CDCE23BF18A5001EB196 /* XCTestHelpers.swift in Sources */,
+				1B45CDCB23BF1621001EB196 /* MockDefaultTextFormattingProvider.swift in Sources */,
 				1B45CDA923BEED0E001EB196 /* AutogrowingTextViewTests.swift in Sources */,
 				1B45CD9423BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift in Sources */,
 			);
