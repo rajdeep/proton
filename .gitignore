@@ -30,6 +30,9 @@ DerivedData/
 *.dSYM.zip
 *.dSYM
 
+## Carthage
+Carthage/
+
 ## Playgrounds
 timeline.xctimeline
 playground.xcworkspace

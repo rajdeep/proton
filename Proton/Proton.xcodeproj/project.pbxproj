@@ -7,8 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B45CD9023BDD7E6001EB196 /* AutogrowingTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8E23BDD7E6001EB196 /* AutogrowingTextViewDelegate.swift */; };
+		1B45CD9123BDD7E6001EB196 /* AutogrowingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8F23BDD7E6001EB196 /* AutogrowingTextView.swift */; };
+		1B45CD9423BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD9323BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift */; };
+		1B45CD9923BED0B8001EB196 /* FBSnapshotTestCase.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1B45CD9623BED05A001EB196 /* FBSnapshotTestCase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1B45CD9D23BEDA8F001EB196 /* UIView+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD9C23BEDA8F001EB196 /* UIView+Render.swift */; };
+		1B45CD9F23BEE997001EB196 /* SnapshotTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD9E23BEE997001EB196 /* SnapshotTestViewController.swift */; };
+		1B45CDA623BEEC3D001EB196 /* testRendersTextViewBasedOnContent@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B45CDA323BEEC3D001EB196 /* testRendersTextViewBasedOnContent@3x.png */; };
+		1B45CDA723BEEC3D001EB196 /* testRendersMultilineTextViewBasedOnContent@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B45CDA423BEEC3D001EB196 /* testRendersMultilineTextViewBasedOnContent@3x.png */; };
+		1B45CDA923BEED0E001EB196 /* AutogrowingTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDA823BEED0E001EB196 /* AutogrowingTextViewTests.swift */; };
+		1B45CDAC23BEEDF8001EB196 /* MockAutogrowingTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDAB23BEEDF8001EB196 /* MockAutogrowingTextViewDelegate.swift */; };
 		1BB214D023BB2778008B84A0 /* Proton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB214C623BB2778008B84A0 /* Proton.framework */; };
-		1BB214D523BB2778008B84A0 /* ProtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB214D423BB2778008B84A0 /* ProtonTests.swift */; };
 		1BB214D723BB2778008B84A0 /* Proton.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BB214C923BB2778008B84A0 /* Proton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -22,12 +31,35 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		1B45CD9823BED0A2001EB196 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1B45CD9923BED0B8001EB196 /* FBSnapshotTestCase.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		1B45CD8E23BDD7E6001EB196 /* AutogrowingTextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutogrowingTextViewDelegate.swift; sourceTree = "<group>"; };
+		1B45CD8F23BDD7E6001EB196 /* AutogrowingTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutogrowingTextView.swift; sourceTree = "<group>"; };
+		1B45CD9323BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingTextViewSnapshotTests.swift; sourceTree = "<group>"; };
+		1B45CD9623BED05A001EB196 /* FBSnapshotTestCase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSnapshotTestCase.framework; path = ../Carthage/Build/iOS/FBSnapshotTestCase.framework; sourceTree = "<group>"; };
+		1B45CD9C23BEDA8F001EB196 /* UIView+Render.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Render.swift"; sourceTree = "<group>"; };
+		1B45CD9E23BEE997001EB196 /* SnapshotTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTestViewController.swift; sourceTree = "<group>"; };
+		1B45CDA323BEEC3D001EB196 /* testRendersTextViewBasedOnContent@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersTextViewBasedOnContent@3x.png"; sourceTree = "<group>"; };
+		1B45CDA423BEEC3D001EB196 /* testRendersMultilineTextViewBasedOnContent@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersMultilineTextViewBasedOnContent@3x.png"; sourceTree = "<group>"; };
+		1B45CDA823BEED0E001EB196 /* AutogrowingTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingTextViewTests.swift; sourceTree = "<group>"; };
+		1B45CDAB23BEEDF8001EB196 /* MockAutogrowingTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAutogrowingTextViewDelegate.swift; sourceTree = "<group>"; };
 		1BB214C623BB2778008B84A0 /* Proton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Proton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BB214C923BB2778008B84A0 /* Proton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Proton.h; sourceTree = "<group>"; };
 		1BB214CA23BB2778008B84A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BB214CF23BB2778008B84A0 /* ProtonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1BB214D423BB2778008B84A0 /* ProtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonTests.swift; sourceTree = "<group>"; };
 		1BB214D623BB2778008B84A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -50,12 +82,73 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B45CD9223BEBFE2001EB196 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				1B45CDAA23BEEDA6001EB196 /* Mocks */,
+				1B45CD9323BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift */,
+				1B45CDA823BEED0E001EB196 /* AutogrowingTextViewTests.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		1B45CD9523BED059001EB196 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1B45CD9623BED05A001EB196 /* FBSnapshotTestCase.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1B45CD9B23BEDA7F001EB196 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				1B45CD9C23BEDA8F001EB196 /* UIView+Render.swift */,
+				1B45CD9E23BEE997001EB196 /* SnapshotTestViewController.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		1B45CDA023BEEC3D001EB196 /* Snapshots */ = {
+			isa = PBXGroup;
+			children = (
+				1B45CDA123BEEC3D001EB196 /* ReferenceImages_64 */,
+			);
+			path = Snapshots;
+			sourceTree = "<group>";
+		};
+		1B45CDA123BEEC3D001EB196 /* ReferenceImages_64 */ = {
+			isa = PBXGroup;
+			children = (
+				1B45CDA223BEEC3D001EB196 /* ProtonTests.AutogrowingTextViewSnapshotTests */,
+			);
+			path = ReferenceImages_64;
+			sourceTree = "<group>";
+		};
+		1B45CDA223BEEC3D001EB196 /* ProtonTests.AutogrowingTextViewSnapshotTests */ = {
+			isa = PBXGroup;
+			children = (
+				1B45CDA323BEEC3D001EB196 /* testRendersTextViewBasedOnContent@3x.png */,
+				1B45CDA423BEEC3D001EB196 /* testRendersMultilineTextViewBasedOnContent@3x.png */,
+			);
+			path = ProtonTests.AutogrowingTextViewSnapshotTests;
+			sourceTree = "<group>";
+		};
+		1B45CDAA23BEEDA6001EB196 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				1B45CDAB23BEEDF8001EB196 /* MockAutogrowingTextViewDelegate.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		1BB214BC23BB2778008B84A0 = {
 			isa = PBXGroup;
 			children = (
 				1BB214C823BB2778008B84A0 /* Sources */,
 				1BB214D323BB2778008B84A0 /* Tests */,
 				1BB214C723BB2778008B84A0 /* Products */,
+				1B45CD9523BED059001EB196 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -82,8 +175,10 @@
 		1BB214D323BB2778008B84A0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				1B45CDA023BEEC3D001EB196 /* Snapshots */,
+				1B45CD9B23BEDA7F001EB196 /* Helpers */,
+				1B45CD9223BEBFE2001EB196 /* Base */,
 				1BB2152C23BB2B63008B84A0 /* Core */,
-				1BB214D423BB2778008B84A0 /* ProtonTests.swift */,
 				1BB214D623BB2778008B84A0 /* Info.plist */,
 			);
 			path = Tests;
@@ -106,6 +201,8 @@
 		1BB2152E23BB2B83008B84A0 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				1B45CD8F23BDD7E6001EB196 /* AutogrowingTextView.swift */,
+				1B45CD8E23BDD7E6001EB196 /* AutogrowingTextViewDelegate.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -149,6 +246,7 @@
 				1BB214CB23BB2778008B84A0 /* Sources */,
 				1BB214CC23BB2778008B84A0 /* Frameworks */,
 				1BB214CD23BB2778008B84A0 /* Resources */,
+				1B45CD9823BED0A2001EB196 /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -210,6 +308,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B45CDA723BEEC3D001EB196 /* testRendersMultilineTextViewBasedOnContent@3x.png in Resources */,
+				1B45CDA623BEEC3D001EB196 /* testRendersTextViewBasedOnContent@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +320,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B45CD9123BDD7E6001EB196 /* AutogrowingTextView.swift in Sources */,
+				1B45CD9023BDD7E6001EB196 /* AutogrowingTextViewDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,7 +329,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BB214D523BB2778008B84A0 /* ProtonTests.swift in Sources */,
+				1B45CD9D23BEDA8F001EB196 /* UIView+Render.swift in Sources */,
+				1B45CD9F23BEE997001EB196 /* SnapshotTestViewController.swift in Sources */,
+				1B45CDAC23BEEDF8001EB196 /* MockAutogrowingTextViewDelegate.swift in Sources */,
+				1B45CDA923BEED0E001EB196 /* AutogrowingTextViewTests.swift in Sources */,
+				1B45CD9423BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,7 +477,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Proton/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -399,7 +505,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Proton/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -420,8 +526,10 @@
 		1BB214DE23BB2778008B84A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = ProtonTests/Info.plist;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../Carthage/Build/**";
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -437,8 +545,10 @@
 		1BB214DF23BB2778008B84A0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = ProtonTests/Info.plist;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../Carthage/Build/**";
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
