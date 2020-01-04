@@ -1,0 +1,46 @@
+//
+//  RichTextViewTests.swift
+//  ProtonTests
+//
+//  Created by Rajdeep Kwatra on 4/1/20.
+//  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
+//
+
+import Foundation
+import XCTest
+
+@testable import Proton
+
+class RichTextViewTests: XCTestCase {
+    func testGetsAttributeAtLocation() {
+        let key = NSAttributedString.Key("test_key")
+        let value = "value"
+        let viewController = SnapshotTestViewController()
+        let textView = RichTextView(frame: .zero)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        let attributedText = NSMutableAttributedString(string: "This is a test string")
+        attributedText.addAttributes([key: value], range: NSRange(location: 0, length: 4))
+
+        textView.attributedText = attributedText
+
+        let view = viewController.view!
+        view.addSubview(textView)
+        NSLayoutConstraint.activate([
+            textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+        ])
+
+        viewController.render()
+
+        // character at index 1
+        let point1 = CGPoint(x: 20, y: 10)
+        let attribute1 = textView.attributeValue(at: point1, for: key) as? String
+
+        // character at index 8
+        let point2 = CGPoint(x: 60, y: 10)
+        let attribute2 = textView.attributeValue(at: point2, for: key) as? String
+
+        XCTAssertEqual(attribute1, value)
+        XCTAssertNil(attribute2)
+    }
+}
