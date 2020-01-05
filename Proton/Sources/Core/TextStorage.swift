@@ -112,4 +112,30 @@ class TextStorage: NSTextStorage {
     override func removeAttribute(_ attr: NSAttributedString.Key, range: NSRange) {
         storage.removeAttribute(attr, range: range)
     }
+
+    func insertAttachment(in range: NSRange, attachment: Attachment) {
+        let spacer = attachment.spacer.string
+        var hasPrevSpacer = false
+        if range.length + range.location > 0 {
+            hasPrevSpacer = attributedSubstring(from: NSRange(location: max(range.location - 1, 0), length: 1)).string == spacer
+        }
+        var hasNextSpacer = false
+        if (range.location + range.length + 1) <= length {
+            hasNextSpacer = attributedSubstring(from: NSRange(location: range.location, length: 1)).string == spacer
+        }
+
+        let attachmentString = attachment.stringWithSpacers(appendPrev: !hasPrevSpacer, appendNext: !hasNextSpacer)
+        replaceCharacters(in: range, with: attachmentString)
+    }
+
+    private func handleDeletedAttachments(in range: NSRange) {
+        storage.enumerateAttribute(NSAttributedString.Key.attachment,
+                                   in: range,
+                                   options: .longestEffectiveRangeNotRequired,
+                                   using: { (attribute, _, _) in
+                                    if let attachment = attribute as? Attachment {
+                                        attachment.removeFromSuperView()
+                                    }
+        })
+    }
 }

@@ -9,14 +9,21 @@
 import Foundation
 import UIKit
 
-enum EditorContentType {
+/// Type of `EditorContent`
+public enum EditorContentType {
     case text(name: EditorContent.Name, attributedString: NSAttributedString)
+    case attachment(name: EditorContent.Name, contentView : AttachmentView)
     case viewOnly
 }
 
-struct EditorContent {
-    let type: EditorContentType
-    let enclosingRange: NSRange? //private set/public get
+/// Defines a content type for `Editor`. This may be used to serialize the contents of an `Editor` via enumerating through the contents of the `Editor`.
+public struct EditorContent {
+
+    /// Type of `EditorContent`
+    public let type: EditorContentType
+
+    /// Range within the `Editor` for this content
+    public let enclosingRange: NSRange?
 
     init(type: EditorContentType) {
         self.type = type
@@ -29,16 +36,16 @@ struct EditorContent {
     }
 }
 
-extension EditorContent {
+public extension EditorContent {
     struct Name: Hashable, Equatable, RawRepresentable {
-        var rawValue: String
+        public var rawValue: String
 
-        static let paragraph = Name("paragraph")
-        static let viewOnly = Name("viewOnly")
-        static let text = Name("text")
-        static let unknown = Name("unknown")
+        public static let paragraph = Name("paragraph")
+        public static let viewOnly = Name("viewOnly")
+        public static let text = Name("text")
+        public static let unknown = Name("unknown")
 
-        init(rawValue: String) {
+        public init(rawValue: String) {
             self.rawValue = rawValue
         }
 

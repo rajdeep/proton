@@ -23,7 +23,7 @@ class RichTextView: AutogrowingTextView {
         set { storage.defaultTextFormattingProvider = newValue }
     }
 
-    init(frame: CGRect) {
+    init(frame: CGRect = .zero) {
         let textContainer = TextContainer()
         let layoutManager = NSLayoutManager()
 
@@ -39,6 +39,10 @@ class RichTextView: AutogrowingTextView {
         return storage
     }
 
+    var textEndRange: NSRange {
+        return NSRange(location: storage.length, length: 0)
+    }
+
     @available(*, unavailable, message: "init(coder:) unavailable, use init")
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -50,6 +54,23 @@ class RichTextView: AutogrowingTextView {
 
     func invalidateDisaplay(for range: NSRange) {
         layoutManager.invalidateDisplay(forCharacterRange: range)
+    }
+
+    func insertAttachment(in range: NSRange, attachment: Attachment) {
+        richTextStorage.insertAttachment(in: range, attachment: attachment)
+    }
+
+    override func insertText(_ text: String) {
+        super.insertText(text)
+    }
+
+    func replaceCharacters(in range: NSRange, with attrString: NSAttributedString) {
+        richTextStorage.replaceCharacters(in: range, with: attrString)
+    }
+
+    func replaceCharacters(in range: NSRange, with string: String) {
+        // Delegate to function with attrString so that default attributes are automatically applied
+        richTextStorage.replaceCharacters(in: range, with: NSAttributedString(string: string))
     }
 
     func attributeValue(at location: CGPoint, for attribute: NSAttributedString.Key) -> Any? {
@@ -77,5 +98,29 @@ extension RichTextView: NSLayoutManagerDelegate  {
 }
 
 extension RichTextView {
-    func relayoutAttachments() { }
+    func relayoutAttachments() {
+        textStorage.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: textStorage.length), options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
+            guard let attachment = attach as? Attachment
+                else { return }
+
+            var frame = layoutManager.boundingRect(forGlyphRange: range, in: textContainer)
+            frame.origin.y += self.textContainerInset.top
+
+            var size = attachment.frame.size
+            if size == .zero,
+                let contentSize = attachment.contentView?.systemLayoutSizeFitting(bounds.size) {
+                size = contentSize
+            }
+
+            frame = CGRect(origin: frame.origin, size: size)
+
+            if attachment.isRendered == false {
+                attachment.render(in: self)
+                if let focusable = attachment.contentView as? Focusable {
+                    focusable.setFocus()
+                }
+            }
+            attachment.frame = frame
+        }
+    }
 }

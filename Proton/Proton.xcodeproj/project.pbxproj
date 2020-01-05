@@ -13,8 +13,6 @@
 		1B45CD9923BED0B8001EB196 /* FBSnapshotTestCase.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1B45CD9623BED05A001EB196 /* FBSnapshotTestCase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1B45CD9D23BEDA8F001EB196 /* UIView+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD9C23BEDA8F001EB196 /* UIView+Render.swift */; };
 		1B45CD9F23BEE997001EB196 /* SnapshotTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD9E23BEE997001EB196 /* SnapshotTestViewController.swift */; };
-		1B45CDA623BEEC3D001EB196 /* testRendersTextViewBasedOnContent@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B45CDA323BEEC3D001EB196 /* testRendersTextViewBasedOnContent@3x.png */; };
-		1B45CDA723BEEC3D001EB196 /* testRendersMultilineTextViewBasedOnContent@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B45CDA423BEEC3D001EB196 /* testRendersMultilineTextViewBasedOnContent@3x.png */; };
 		1B45CDA923BEED0E001EB196 /* AutogrowingTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDA823BEED0E001EB196 /* AutogrowingTextViewTests.swift */; };
 		1B45CDAC23BEEDF8001EB196 /* MockAutogrowingTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDAB23BEEDF8001EB196 /* MockAutogrowingTextViewDelegate.swift */; };
 		1B45CDBA23BF10DF001EB196 /* TextStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDB923BF10DF001EB196 /* TextStorage.swift */; };
@@ -31,6 +29,15 @@
 		1B45CDD723C00A0A001EB196 /* EditorAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDD623C00A0A001EB196 /* EditorAttribute.swift */; };
 		1B45CDD923C0484A001EB196 /* RichTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDD823C0484A001EB196 /* RichTextViewTests.swift */; };
 		1B45CDDB23C04BE3001EB196 /* RichTextViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDDA23C04BE3001EB196 /* RichTextViewSnapshotTests.swift */; };
+		1B45CDDD23C05340001EB196 /* Attachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDDC23C05340001EB196 /* Attachment.swift */; };
+		1B45CDDF23C053FB001EB196 /* EditorContentIdentifying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDDE23C053FB001EB196 /* EditorContentIdentifying.swift */; };
+		1B45CDE123C05476001EB196 /* UIColor+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDE023C05476001EB196 /* UIColor+Image.swift */; };
+		1B45CDE423C05916001EB196 /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDE323C05916001EB196 /* SelectionView.swift */; };
+		1B45CDE623C05942001EB196 /* AttachmentSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDE523C05942001EB196 /* AttachmentSize.swift */; };
+		1B45CDE823C05C0C001EB196 /* Focusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDE723C05C0C001EB196 /* Focusable.swift */; };
+		1B45CDEC23C1682C001EB196 /* AttachmentSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDEA23C16829001EB196 /* AttachmentSnapshotTests.swift */; };
+		1B45CDEE23C1686F001EB196 /* RichTextViewTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDED23C1686F001EB196 /* RichTextViewTestViewController.swift */; };
+		1B45CDF123C16EF4001EB196 /* RichTextAttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDF023C16EF4001EB196 /* RichTextAttachmentView.swift */; };
 		1BB214D023BB2778008B84A0 /* Proton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB214C623BB2778008B84A0 /* Proton.framework */; };
 		1BB214D723BB2778008B84A0 /* Proton.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BB214C923BB2778008B84A0 /* Proton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
@@ -60,6 +67,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B004EC023C17DCE007893AA /* testRendersTextInTextView@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersTextInTextView@3x.png"; sourceTree = "<group>"; };
+		1B004EC123C17DCE007893AA /* testRendersMultilineTextViewBasedOnContent@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersMultilineTextViewBasedOnContent@3x.png"; sourceTree = "<group>"; };
+		1B004EC323C18544007893AA /* testMatchContentRendering@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testMatchContentRendering@3x.png"; sourceTree = "<group>"; };
+		1B004EC423C188DA007893AA /* testFallsToNextLineForLongContent@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testFallsToNextLineForLongContent@3x.png"; sourceTree = "<group>"; };
+		1B004EC523C188DA007893AA /* testMatchContainerRendering@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testMatchContainerRendering@3x.png"; sourceTree = "<group>"; };
 		1B45CD8E23BDD7E6001EB196 /* AutogrowingTextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutogrowingTextViewDelegate.swift; sourceTree = "<group>"; };
 		1B45CD8F23BDD7E6001EB196 /* AutogrowingTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutogrowingTextView.swift; sourceTree = "<group>"; };
 		1B45CD9323BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingTextViewSnapshotTests.swift; sourceTree = "<group>"; };
@@ -84,6 +96,15 @@
 		1B45CDD623C00A0A001EB196 /* EditorAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorAttribute.swift; sourceTree = "<group>"; };
 		1B45CDD823C0484A001EB196 /* RichTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewTests.swift; sourceTree = "<group>"; };
 		1B45CDDA23C04BE3001EB196 /* RichTextViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewSnapshotTests.swift; sourceTree = "<group>"; };
+		1B45CDDC23C05340001EB196 /* Attachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attachment.swift; sourceTree = "<group>"; };
+		1B45CDDE23C053FB001EB196 /* EditorContentIdentifying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentIdentifying.swift; sourceTree = "<group>"; };
+		1B45CDE023C05476001EB196 /* UIColor+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Image.swift"; sourceTree = "<group>"; };
+		1B45CDE323C05916001EB196 /* SelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionView.swift; sourceTree = "<group>"; };
+		1B45CDE523C05942001EB196 /* AttachmentSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentSize.swift; sourceTree = "<group>"; };
+		1B45CDE723C05C0C001EB196 /* Focusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Focusable.swift; sourceTree = "<group>"; };
+		1B45CDEA23C16829001EB196 /* AttachmentSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentSnapshotTests.swift; sourceTree = "<group>"; };
+		1B45CDED23C1686F001EB196 /* RichTextViewTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewTestViewController.swift; sourceTree = "<group>"; };
+		1B45CDF023C16EF4001EB196 /* RichTextAttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextAttachmentView.swift; sourceTree = "<group>"; };
 		1BB214C623BB2778008B84A0 /* Proton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Proton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BB214C923BB2778008B84A0 /* Proton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Proton.h; sourceTree = "<group>"; };
 		1BB214CA23BB2778008B84A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -110,6 +131,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B004EBF23C17DCE007893AA /* ProtonTests.RichTextViewSnapshotTests */ = {
+			isa = PBXGroup;
+			children = (
+				1B004EC023C17DCE007893AA /* testRendersTextInTextView@3x.png */,
+				1B004EC123C17DCE007893AA /* testRendersMultilineTextViewBasedOnContent@3x.png */,
+			);
+			path = ProtonTests.RichTextViewSnapshotTests;
+			sourceTree = "<group>";
+		};
+		1B004EC223C18544007893AA /* ProtonTests.AttachmentSnapshotTests */ = {
+			isa = PBXGroup;
+			children = (
+				1B004EC423C188DA007893AA /* testFallsToNextLineForLongContent@3x.png */,
+				1B004EC523C188DA007893AA /* testMatchContainerRendering@3x.png */,
+				1B004EC323C18544007893AA /* testMatchContentRendering@3x.png */,
+			);
+			path = ProtonTests.AttachmentSnapshotTests;
+			sourceTree = "<group>";
+		};
 		1B45CD9223BEBFE2001EB196 /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +174,7 @@
 				1B45CD9C23BEDA8F001EB196 /* UIView+Render.swift */,
 				1B45CD9E23BEE997001EB196 /* SnapshotTestViewController.swift */,
 				1B45CDCC23BF189F001EB196 /* XCTestHelpers.swift */,
+				1B45CDED23C1686F001EB196 /* RichTextViewTestViewController.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -149,6 +190,8 @@
 		1B45CDA123BEEC3D001EB196 /* ReferenceImages_64 */ = {
 			isa = PBXGroup;
 			children = (
+				1B004EC223C18544007893AA /* ProtonTests.AttachmentSnapshotTests */,
+				1B004EBF23C17DCE007893AA /* ProtonTests.RichTextViewSnapshotTests */,
 				1B45CDA223BEEC3D001EB196 /* ProtonTests.AutogrowingTextViewSnapshotTests */,
 			);
 			path = ReferenceImages_64;
@@ -197,6 +240,7 @@
 			children = (
 				1B45CDC423BF13D4001EB196 /* NSRangeExtensions.swift */,
 				1B45CDC623BF14DF001EB196 /* NSAttributedStringExtensions.swift */,
+				1B45CDE023C05476001EB196 /* UIColor+Image.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -214,8 +258,37 @@
 			children = (
 				1B45CDD423C00927001EB196 /* EditorContent.swift */,
 				1B45CDD623C00A0A001EB196 /* EditorAttribute.swift */,
+				1B45CDDE23C053FB001EB196 /* EditorContentIdentifying.swift */,
 			);
 			path = Editor;
+			sourceTree = "<group>";
+		};
+		1B45CDE223C05901001EB196 /* Attachment */ = {
+			isa = PBXGroup;
+			children = (
+				1B45CDDC23C05340001EB196 /* Attachment.swift */,
+				1B45CDE523C05942001EB196 /* AttachmentSize.swift */,
+				1B45CDE323C05916001EB196 /* SelectionView.swift */,
+				1B45CDE723C05C0C001EB196 /* Focusable.swift */,
+			);
+			path = Attachment;
+			sourceTree = "<group>";
+		};
+		1B45CDE923C16816001EB196 /* Attachments */ = {
+			isa = PBXGroup;
+			children = (
+				1B45CDEF23C16ED4001EB196 /* Mocks */,
+				1B45CDEA23C16829001EB196 /* AttachmentSnapshotTests.swift */,
+			);
+			path = Attachments;
+			sourceTree = "<group>";
+		};
+		1B45CDEF23C16ED4001EB196 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				1B45CDF023C16EF4001EB196 /* RichTextAttachmentView.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		1BB214BC23BB2778008B84A0 = {
@@ -240,6 +313,7 @@
 		1BB214C823BB2778008B84A0 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				1B45CDE223C05901001EB196 /* Attachment */,
 				1B45CDC323BF13B8001EB196 /* Helpers */,
 				1B45CDB823BF10C1001EB196 /* Core */,
 				1BB2152E23BB2B83008B84A0 /* Base */,
@@ -253,6 +327,7 @@
 		1BB214D323BB2778008B84A0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				1B45CDE923C16816001EB196 /* Attachments */,
 				1B45CDA023BEEC3D001EB196 /* Snapshots */,
 				1B45CD9B23BEDA7F001EB196 /* Helpers */,
 				1B45CD9223BEBFE2001EB196 /* Base */,
@@ -374,8 +449,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B45CDA723BEEC3D001EB196 /* testRendersMultilineTextViewBasedOnContent@3x.png in Resources */,
-				1B45CDA623BEEC3D001EB196 /* testRendersTextViewBasedOnContent@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,16 +460,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B45CDBE23BF125D001EB196 /* NSAttributedString+ContentTypes.swift in Sources */,
+				1B45CDE123C05476001EB196 /* UIColor+Image.swift in Sources */,
 				1B45CD9123BDD7E6001EB196 /* AutogrowingTextView.swift in Sources */,
+				1B45CDE623C05942001EB196 /* AttachmentSize.swift in Sources */,
 				1B45CDD723C00A0A001EB196 /* EditorAttribute.swift in Sources */,
 				1B45CDC723BF14DF001EB196 /* NSAttributedStringExtensions.swift in Sources */,
 				1B45CDD223C00856001EB196 /* TextContainer.swift in Sources */,
+				1B45CDDD23C05340001EB196 /* Attachment.swift in Sources */,
 				1B45CDD023C007AF001EB196 /* RichTextView.swift in Sources */,
 				1B45CDC523BF13D4001EB196 /* NSRangeExtensions.swift in Sources */,
 				1B45CDBA23BF10DF001EB196 /* TextStorage.swift in Sources */,
+				1B45CDE823C05C0C001EB196 /* Focusable.swift in Sources */,
 				1B45CD9023BDD7E6001EB196 /* AutogrowingTextViewDelegate.swift in Sources */,
+				1B45CDDF23C053FB001EB196 /* EditorContentIdentifying.swift in Sources */,
 				1B45CDD523C00927001EB196 /* EditorContent.swift in Sources */,
 				1B45CDBC23BF1174001EB196 /* Types.swift in Sources */,
+				1B45CDE423C05916001EB196 /* SelectionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,6 +483,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B45CDEE23C1686F001EB196 /* RichTextViewTestViewController.swift in Sources */,
 				1B45CD9D23BEDA8F001EB196 /* UIView+Render.swift in Sources */,
 				1B45CD9F23BEE997001EB196 /* SnapshotTestViewController.swift in Sources */,
 				1B45CDC223BF131E001EB196 /* TextStorageTests.swift in Sources */,
@@ -413,7 +493,9 @@
 				1B45CDD923C0484A001EB196 /* RichTextViewTests.swift in Sources */,
 				1B45CDCB23BF1621001EB196 /* MockDefaultTextFormattingProvider.swift in Sources */,
 				1B45CDA923BEED0E001EB196 /* AutogrowingTextViewTests.swift in Sources */,
+				1B45CDF123C16EF4001EB196 /* RichTextAttachmentView.swift in Sources */,
 				1B45CD9423BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift in Sources */,
+				1B45CDEC23C1682C001EB196 /* AttachmentSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
