@@ -13,9 +13,9 @@ import UIKit
 
 class MockDefaultTextFormattingProvider: DefaultTextFormattingProviding {
     let font: UIFont?
-    let paragraphStyle: NSParagraphStyle
+    let paragraphStyle: NSMutableParagraphStyle
 
-    init(font: UIFont, paragraphStyle: NSParagraphStyle) {
+    init(font: UIFont, paragraphStyle: NSMutableParagraphStyle) {
         self.font = font
         self.paragraphStyle = paragraphStyle
     }

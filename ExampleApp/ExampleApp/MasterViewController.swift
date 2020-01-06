@@ -21,7 +21,10 @@ struct NavigationItem {
 class MasterViewController: UITableViewController {
 
     let navigation = [
-        Navigation(title: "Basic features", items: [NavigationItem(title: "Autogrowing TextView", viewController: AutogrowingTextViewExampleViewController())])
+        Navigation(title: "Basic features",
+                   items: [
+                    NavigationItem(title: "Autogrowing Editor", viewController: AutogrowingEditorViewExampleViewController())
+        ])
     ]
 
     override func viewWillAppear(_ animated: Bool) {

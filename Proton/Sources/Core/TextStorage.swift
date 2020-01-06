@@ -11,7 +11,7 @@ import UIKit
 
 protocol DefaultTextFormattingProviding: class {
     var font: UIFont? { get }
-    var paragraphStyle: NSParagraphStyle { get }
+    var paragraphStyle: NSMutableParagraphStyle { get }
 }
 
 class TextStorage: NSTextStorage {

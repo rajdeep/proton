@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B45CD8B23BDD3E9001EB196 /* AutogrowingTextViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8A23BDD3E9001EB196 /* AutogrowingTextViewExampleViewController.swift */; };
+		1B45CD8B23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8A23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift */; };
 		1B45CD8D23BDD5FC001EB196 /* ExamplesBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8C23BDD5FC001EB196 /* ExamplesBaseViewController.swift */; };
 		1B6D2FD123BD46ED0019CE40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6D2FD023BD46ED0019CE40 /* AppDelegate.swift */; };
 		1B6D2FD323BD46ED0019CE40 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6D2FD223BD46ED0019CE40 /* MasterViewController.swift */; };
@@ -36,7 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1B45CD8A23BDD3E9001EB196 /* AutogrowingTextViewExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingTextViewExampleViewController.swift; sourceTree = "<group>"; };
+		1B45CD8A23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingEditorViewExampleViewController.swift; sourceTree = "<group>"; };
 		1B45CD8C23BDD5FC001EB196 /* ExamplesBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplesBaseViewController.swift; sourceTree = "<group>"; };
 		1B6D2FCD23BD46ED0019CE40 /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B6D2FD023BD46ED0019CE40 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -81,7 +81,7 @@
 		1B45CD8923BDD3B3001EB196 /* Basic */ = {
 			isa = PBXGroup;
 			children = (
-				1B45CD8A23BDD3E9001EB196 /* AutogrowingTextViewExampleViewController.swift */,
+				1B45CD8A23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift */,
 			);
 			path = Basic;
 			sourceTree = "<group>";
@@ -273,7 +273,7 @@
 				1B45CD8D23BDD5FC001EB196 /* ExamplesBaseViewController.swift in Sources */,
 				1B6D2FD323BD46ED0019CE40 /* MasterViewController.swift in Sources */,
 				1B6D2FD123BD46ED0019CE40 /* AppDelegate.swift in Sources */,
-				1B45CD8B23BDD3E9001EB196 /* AutogrowingTextViewExampleViewController.swift in Sources */,
+				1B45CD8B23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
