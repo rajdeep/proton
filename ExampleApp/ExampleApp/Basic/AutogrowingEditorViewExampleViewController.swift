@@ -18,8 +18,6 @@ class AutogrowingEditorViewExampleViewController: ExamplesBaseViewController {
     override func setup() {
         super.setup()
         
-        self.title = "Autogrowing Editor"
-
         editor.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(editor)
 

@@ -13,19 +13,19 @@ import XCTest
 
 class AutogrowingTextViewTests: XCTestCase {
     func testNotifiesDelegateOfBoundsChange() {
-        let delegate = MockAutogrowingTextViewDelegate()
+        let boundsObserver = MockBoundsObserver()
         let viewController = SnapshotTestViewController()
         let textView = AutogrowingTextView()
 
         let boundsChangeExpectation = expectation(description: #function)
         boundsChangeExpectation.expectedFulfillmentCount = 2
 
-        delegate.onBoundsChanged = { _ in
+        boundsObserver.onBoundsChanged = { _ in
             boundsChangeExpectation.fulfill()
         }
 
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.autogrowingTextViewDelegate = delegate
+        textView.boundsObserver = boundsObserver
         textView.text = "Sample with single line text"
 
         let view = viewController.view!

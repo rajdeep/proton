@@ -14,18 +14,21 @@ public protocol DynamicBoundsProviding: class {
     func sizeFor(containerSize: CGSize, lineRect: CGRect) -> CGSize
 }
 
-/// Describss an object capable of providing offsets for the `Attachment`. The value is used to offset the `Attachment` when rendered alongside the text. This may
+/// Describes an object capable of providing offsets for the `Attachment`. The value is used to offset the `Attachment` when rendered alongside the text. This may
 /// be used to align the content baselines in `Attachment` content to that of it's container's content baselines.
 /// - Note:
 /// This function may be called m0re than once in the same rendering pass. Changing offsets does not resize the container i.e. unlike how container resizes to fit the attachment, if the
 /// offset is change such that the attachment ends up rendering outside the bounds of it's container, it will not resize the container.
+/// - Attention:
+/// While offset can be provided for any type of `Attachment` i.e. Inline or Block, it is recommended that offset be provided only for Inline. If an offset is provided for Block attachment,
+/// it is possible that the attachment starts overlapping the content in `Editor` in the following line since the offset does not affect the line height.
 public protocol AttachmentOffsetProviding: class {
     func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint
 }
 
 /// An attachment can be used as a container for any view object. Based on the `AttachmentSize` provided, the attachment automatically renders itself alongside the text in `EditorView`.
 /// `Attachment` also provides helper functions like `deleteFromContainer` and `rangeInContainer`
-public class Attachment: NSTextAttachment {
+public class Attachment: NSTextAttachment, BoundsObserving {
 
     private let view: UIView
     private let size: AttachmentSize
@@ -105,7 +108,7 @@ public class Attachment: NSTextAttachment {
 
     private(set)var containerTextView: RichTextView?
 
-    func didChangeBounds(_ bounds: CGRect) {
+    public func didChangeBounds(_ bounds: CGRect) {
         invalidateLayout()
     }
 
@@ -161,7 +164,7 @@ public class Attachment: NSTextAttachment {
         ])
 
         switch size {
-        case .matchContainer, .matchContent, .percent:
+        case .fullWidth, .matchContent, .percent:
             NSLayoutConstraint.activate([
                 contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
@@ -222,7 +225,7 @@ public class Attachment: NSTextAttachment {
             size = contentView?.bounds.integral.size ?? view.bounds.integral.size
         case let .fixed(width):
             size = CGSize(width: min(size.width, width), height: size.height)
-        case .matchContainer:
+        case .fullWidth:
             let containerWidth = textContainer.size.width
             // Account for text leading and trailing margins within the textContainer
             let adjustedContainerWidth = containerWidth - (textContainer.lineFragmentPadding * 2)

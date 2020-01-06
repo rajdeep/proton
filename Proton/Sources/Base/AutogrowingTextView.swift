@@ -23,7 +23,7 @@ class AutogrowingTextView: UITextView {
         }
     }
 
-    weak var autogrowingTextViewDelegate: AutogrowingTextViewDelegate?
+    weak var boundsObserver: BoundsObserving?
     var maxHeightConstraint: NSLayoutConstraint!
 
     override init(frame: CGRect, textContainer: NSTextContainer?) {
@@ -52,7 +52,7 @@ class AutogrowingTextView: UITextView {
     override var bounds: CGRect {
         didSet {
             guard oldValue.height != bounds.height else { return }
-            autogrowingTextViewDelegate?.autogrowingTextView(self, didChangeBounds: bounds)
+            boundsObserver?.didChangeBounds(bounds)
         }
     }
 

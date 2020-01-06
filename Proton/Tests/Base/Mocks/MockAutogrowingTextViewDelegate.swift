@@ -11,10 +11,10 @@ import UIKit
 
 @testable import Proton
 
-class MockAutogrowingTextViewDelegate: AutogrowingTextViewDelegate {
+class MockBoundsObserver: BoundsObserving {
     var onBoundsChanged: ((CGRect) -> Void)?
 
-    func autogrowingTextView(_ autogrowingTextView: AutogrowingTextView, didChangeBounds bounds: CGRect) {
+    func didChangeBounds(_ bounds: CGRect) {
         onBoundsChanged?(bounds)
     }
 }

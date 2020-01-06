@@ -23,7 +23,15 @@ class MasterViewController: UITableViewController {
     let navigation = [
         Navigation(title: "Basic features",
                    items: [
-                    NavigationItem(title: "Autogrowing Editor", viewController: AutogrowingEditorViewExampleViewController())
+                    NavigationItem(title: "Autogrowing Editor", viewController: AutogrowingEditorViewExampleViewController()),
+        ]),
+        Navigation(title: "Attachment",
+                   items: [
+                    NavigationItem(title: "Match Content", viewController: MatchContentAttachmentExampleViewController()),
+                    NavigationItem(title: "Full Width", viewController: FullWidthAttachmentExampleViewController()),
+                    NavigationItem(title: "Fixed Width", viewController: FixedWidthAttachmentExampleViewController()),
+                    NavigationItem(title: "Width Range", viewController: WidthRangeAttachmentExampleViewController()),
+                    NavigationItem(title: "Percent Width", viewController: PercentWidthAttachmentExampleViewController()),
         ])
     ]
 
@@ -55,7 +63,9 @@ class MasterViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewController = navigation.item(at: indexPath).viewController
+        let item = navigation.item(at: indexPath)
+        let viewController = item.viewController
+        viewController.title = item.title
         navigationController?.pushViewController(viewController, animated: true)
     }
 }

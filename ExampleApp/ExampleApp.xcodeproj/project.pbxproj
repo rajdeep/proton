@@ -16,6 +16,14 @@
 		1B6D2FDD23BD46F10019CE40 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B6D2FDB23BD46F10019CE40 /* LaunchScreen.storyboard */; };
 		1B6D2FE823BD46F20019CE40 /* ExampleAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6D2FE723BD46F20019CE40 /* ExampleAppTests.swift */; };
 		1B6D2FF323BD46F20019CE40 /* ExampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6D2FF223BD46F20019CE40 /* ExampleAppUITests.swift */; };
+		1BFFEEFE23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEEFD23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift */; };
+		1BFFEF0023C303F100D2BA35 /* AutogrowingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEEFF23C303F100D2BA35 /* AutogrowingTextField.swift */; };
+		1BFFEF0323C3048E00D2BA35 /* Proton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BFFEF0223C3048E00D2BA35 /* Proton.framework */; };
+		1BFFEF0723C30B8E00D2BA35 /* FullWidthAttachmentExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF0623C30B8E00D2BA35 /* FullWidthAttachmentExampleViewController.swift */; };
+		1BFFEF0A23C30C9900D2BA35 /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF0923C30C9900D2BA35 /* PanelView.swift */; };
+		1BFFEF0E23C3228900D2BA35 /* FixedWidthAttachmentExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF0D23C3228900D2BA35 /* FixedWidthAttachmentExampleViewController.swift */; };
+		1BFFEF1023C32B5A00D2BA35 /* WidthRangeAttachmentExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF0F23C32B5A00D2BA35 /* WidthRangeAttachmentExampleViewController.swift */; };
+		1BFFEF1223C3310A00D2BA35 /* PercentWidthAttachmentExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF1123C3310A00D2BA35 /* PercentWidthAttachmentExampleViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +59,14 @@
 		1B6D2FEE23BD46F20019CE40 /* ExampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B6D2FF223BD46F20019CE40 /* ExampleAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleAppUITests.swift; sourceTree = "<group>"; };
 		1B6D2FF423BD46F20019CE40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1BFFEEFD23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchContentAttachmentExampleViewController.swift; sourceTree = "<group>"; };
+		1BFFEEFF23C303F100D2BA35 /* AutogrowingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingTextField.swift; sourceTree = "<group>"; };
+		1BFFEF0223C3048E00D2BA35 /* Proton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Proton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1BFFEF0623C30B8E00D2BA35 /* FullWidthAttachmentExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullWidthAttachmentExampleViewController.swift; sourceTree = "<group>"; };
+		1BFFEF0923C30C9900D2BA35 /* PanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
+		1BFFEF0D23C3228900D2BA35 /* FixedWidthAttachmentExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedWidthAttachmentExampleViewController.swift; sourceTree = "<group>"; };
+		1BFFEF0F23C32B5A00D2BA35 /* WidthRangeAttachmentExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidthRangeAttachmentExampleViewController.swift; sourceTree = "<group>"; };
+		1BFFEF1123C3310A00D2BA35 /* PercentWidthAttachmentExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentWidthAttachmentExampleViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BFFEF0323C3048E00D2BA35 /* Proton.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +110,7 @@
 				1B6D2FE623BD46F20019CE40 /* ExampleAppTests */,
 				1B6D2FF123BD46F20019CE40 /* ExampleAppUITests */,
 				1B6D2FCE23BD46ED0019CE40 /* Products */,
+				1BFFEF0123C3048E00D2BA35 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,6 +127,8 @@
 		1B6D2FCF23BD46ED0019CE40 /* ExampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				1BFFEF0823C30C7600D2BA35 /* Views */,
+				1BFFEEFC23C2D3AE00D2BA35 /* Attachments */,
 				1B45CD8923BDD3B3001EB196 /* Basic */,
 				1B6D2FD023BD46ED0019CE40 /* AppDelegate.swift */,
 				1B6D2FD223BD46ED0019CE40 /* MasterViewController.swift */,
@@ -137,6 +157,35 @@
 				1B6D2FF423BD46F20019CE40 /* Info.plist */,
 			);
 			path = ExampleAppUITests;
+			sourceTree = "<group>";
+		};
+		1BFFEEFC23C2D3AE00D2BA35 /* Attachments */ = {
+			isa = PBXGroup;
+			children = (
+				1BFFEEFD23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift */,
+				1BFFEF0623C30B8E00D2BA35 /* FullWidthAttachmentExampleViewController.swift */,
+				1BFFEF0D23C3228900D2BA35 /* FixedWidthAttachmentExampleViewController.swift */,
+				1BFFEF0F23C32B5A00D2BA35 /* WidthRangeAttachmentExampleViewController.swift */,
+				1BFFEF1123C3310A00D2BA35 /* PercentWidthAttachmentExampleViewController.swift */,
+			);
+			path = Attachments;
+			sourceTree = "<group>";
+		};
+		1BFFEF0123C3048E00D2BA35 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1BFFEF0223C3048E00D2BA35 /* Proton.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1BFFEF0823C30C7600D2BA35 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1BFFEEFF23C303F100D2BA35 /* AutogrowingTextField.swift */,
+				1BFFEF0923C30C9900D2BA35 /* PanelView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,10 +319,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BFFEF0E23C3228900D2BA35 /* FixedWidthAttachmentExampleViewController.swift in Sources */,
 				1B45CD8D23BDD5FC001EB196 /* ExamplesBaseViewController.swift in Sources */,
+				1BFFEEFE23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift in Sources */,
 				1B6D2FD323BD46ED0019CE40 /* MasterViewController.swift in Sources */,
 				1B6D2FD123BD46ED0019CE40 /* AppDelegate.swift in Sources */,
+				1BFFEF1223C3310A00D2BA35 /* PercentWidthAttachmentExampleViewController.swift in Sources */,
+				1BFFEF1023C32B5A00D2BA35 /* WidthRangeAttachmentExampleViewController.swift in Sources */,
+				1BFFEF0023C303F100D2BA35 /* AutogrowingTextField.swift in Sources */,
+				1BFFEF0A23C30C9900D2BA35 /* PanelView.swift in Sources */,
 				1B45CD8B23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift in Sources */,
+				1BFFEF0723C30B8E00D2BA35 /* FullWidthAttachmentExampleViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

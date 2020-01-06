@@ -53,7 +53,7 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
         let viewController = RichTextViewTestViewController()
         let textView = viewController.textView
 
-        let attachment = makeDummyAttachment(text: "in attachment", size: .matchContainer)
+        let attachment = makeDummyAttachment(text: "in attachment", size: .fullWidth)
 
         textView.replaceCharacters(in: .zero, with: "In textView")
         textView.insertAttachment(in: textView.textEndRange, attachment: attachment)

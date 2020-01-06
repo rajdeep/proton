@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+public protocol BoundsObserving: class {
+    func didChangeBounds(_ bounds: CGRect)
+}
+
 open class EditorView: UIView {
     let editor: RichTextView
 
@@ -18,7 +22,7 @@ open class EditorView: UIView {
         setup()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -68,6 +72,15 @@ open class EditorView: UIView {
     public var typingAttributes: [NSAttributedString.Key: Any] {
         get { return editor.typingAttributes }
         set { editor.typingAttributes = newValue }
+    }
+
+    public var boundsObserver: BoundsObserving? {
+        get { editor.boundsObserver }
+        set { editor.boundsObserver = newValue }
+    }
+
+    public var textEndRange: NSRange {
+        return editor.textEndRange
     }
 
     func setup() {
@@ -121,6 +134,10 @@ open class EditorView: UIView {
 
     public func replaceCharacters(in range: NSRange, with attriburedString: NSAttributedString) {
         editor.textStorage.replaceCharacters(in: range, with: attriburedString)
+    }
+
+    public func replaceCharacters(in range: NSRange, with string: String) {
+        editor.textStorage.replaceCharacters(in: range, with: string)
     }
 }
 

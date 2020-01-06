@@ -95,6 +95,8 @@ extension RichTextView: NSLayoutManagerDelegate  {
 
         textView.relayoutAttachments()
     }
+
+    
 }
 
 extension RichTextView {
