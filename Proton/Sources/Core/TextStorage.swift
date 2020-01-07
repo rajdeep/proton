@@ -23,6 +23,10 @@ class TextStorage: NSTextStorage {
 
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding?
 
+    var textEndRange: NSRange {
+        return NSRange(location: length, length: 0)
+    }
+
     override init() {
         super.init()
     }
@@ -62,7 +66,7 @@ class TextStorage: NSTextStorage {
     override func replaceCharacters(in range: NSRange, with str: String) {
         beginEditing()
         let delta = str.utf16.count - range.length
-
+        handleDeletedAttachments(in: range)
         storage.replaceCharacters(in: range, with: str)
         storage.fixAttributes(in: NSRange(location: 0, length: storage.length))
         edited([.editedCharacters, .editedAttributes], range: range, changeInLength: delta)

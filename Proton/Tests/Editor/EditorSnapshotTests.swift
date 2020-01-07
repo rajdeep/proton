@@ -148,4 +148,32 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         viewController.render()
         FBSnapshotVerifyView(viewController.view)
     }
+
+    func testDeletesAttachments() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        editor.font = UIFont.systemFont(ofSize: 12)
+
+        let textField = AutogrowingTextField()
+        textField.backgroundColor = .cyan
+        textField.addBorder()
+        textField.font = editor.font
+        textField.text = "in attachment"
+
+        let attachment = Attachment(textField, size: .matchContent)
+        textField.boundsObserver = attachment
+
+        editor.replaceCharacters(in: .zero, with: "This text is in Editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+
+        editor.attributedText.enumerateAttribute(.attachment, in: editor.attributedText.fullRange, options: .longestEffectiveRangeNotRequired) { value, range, _ in
+            if value != nil {
+                editor.replaceCharacters(in: range, with: "")
+            }
+        }
+
+        viewController.render()
+        FBSnapshotVerifyView(viewController.view)
+    }
 }

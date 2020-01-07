@@ -40,7 +40,7 @@ class RichTextView: AutogrowingTextView {
     }
 
     var textEndRange: NSRange {
-        return NSRange(location: storage.length, length: 0)
+        return storage.textEndRange
     }
 
     @available(*, unavailable, message: "init(coder:) unavailable, use init")
