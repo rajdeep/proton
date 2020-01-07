@@ -14,10 +14,10 @@ public protocol BoundsObserving: class {
 }
 
 open class EditorView: UIView {
-    let editor: RichTextView
+    let richTextView: RichTextView
 
     public override init(frame: CGRect) {
-        editor = RichTextView(frame: frame)
+        richTextView = RichTextView(frame: frame)
         super.init(frame: frame)
         setup()
     }
@@ -27,13 +27,13 @@ open class EditorView: UIView {
     }
 
     public var contentInset: UIEdgeInsets {
-        get { editor.contentInset }
-        set { editor.contentInset = newValue }
+        get { richTextView.contentInset }
+        set { richTextView.contentInset = newValue }
     }
 
     public var textContainerInset: UIEdgeInsets {
-        get { editor.textContainerInset }
-        set { editor.textContainerInset = newValue }
+        get { richTextView.textContainerInset }
+        set { richTextView.textContainerInset = newValue }
     }
 
     public var contentLength: Int {
@@ -42,59 +42,59 @@ open class EditorView: UIView {
 
     public override var backgroundColor: UIColor? {
         didSet {
-            editor.backgroundColor = backgroundColor
+            richTextView.backgroundColor = backgroundColor
         }
     }
 
     public var font: UIFont? = UIFont.systemFont(ofSize: 17) {
-        didSet { editor.typingAttributes[.font] = font }
+        didSet { richTextView.typingAttributes[.font] = font }
     }
 
     public var paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle() {
-        didSet { editor.typingAttributes[.paragraphStyle] = paragraphStyle }
+        didSet { richTextView.typingAttributes[.paragraphStyle] = paragraphStyle }
     }
 
     public var maxHeight: CGFloat {
-        get { editor.maxHeight }
-        set { editor.maxHeight = newValue }
+        get { richTextView.maxHeight }
+        set { richTextView.maxHeight = newValue }
     }
 
     public var attributedText: NSAttributedString {
-        get { return editor.attributedText }
-        set { editor.attributedText = newValue }
+        get { return richTextView.attributedText }
+        set { richTextView.attributedText = newValue }
     }
 
     public var selectedRange: NSRange {
-        get { return editor.selectedRange }
-        set { editor.selectedRange = newValue }
+        get { return richTextView.selectedRange }
+        set { richTextView.selectedRange = newValue }
     }
 
     public var typingAttributes: [NSAttributedString.Key: Any] {
-        get { return editor.typingAttributes }
-        set { editor.typingAttributes = newValue }
+        get { return richTextView.typingAttributes }
+        set { richTextView.typingAttributes = newValue }
     }
 
     public var boundsObserver: BoundsObserving? {
-        get { editor.boundsObserver }
-        set { editor.boundsObserver = newValue }
+        get { richTextView.boundsObserver }
+        set { richTextView.boundsObserver = newValue }
     }
 
     public var textEndRange: NSRange {
-        return editor.textEndRange
+        return richTextView.textEndRange
     }
 
     func setup() {
-        editor.autocorrectionType = .no
+        richTextView.autocorrectionType = .no
 
-        editor.translatesAutoresizingMaskIntoConstraints = false
-        editor.defaultTextFormattingProvider = self
+        richTextView.translatesAutoresizingMaskIntoConstraints = false
+        richTextView.defaultTextFormattingProvider = self
 
-        addSubview(editor)
+        addSubview(richTextView)
         NSLayoutConstraint.activate([
-            editor.topAnchor.constraint(equalTo: topAnchor),
-            editor.bottomAnchor.constraint(equalTo: bottomAnchor),
-            editor.leadingAnchor.constraint(equalTo: leadingAnchor),
-            editor.trailingAnchor.constraint(equalTo: trailingAnchor),
+            richTextView.topAnchor.constraint(equalTo: topAnchor),
+            richTextView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            richTextView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            richTextView.trailingAnchor.constraint(equalTo: trailingAnchor),
             ])
 
         setupTextStyles()
@@ -111,44 +111,44 @@ open class EditorView: UIView {
 
     @discardableResult
     public override func becomeFirstResponder() -> Bool {
-        return editor.becomeFirstResponder()
+        return richTextView.becomeFirstResponder()
     }
 
     public func insertAttachment(in range: NSRange, attachment: Attachment) {
         // TODO: handle undo
 
-        editor.insertAttachment(in: range, attachment: attachment)
+        richTextView.insertAttachment(in: range, attachment: attachment)
     }
 
     public func resignFocus() {
-        editor.resignFirstResponder()
+        richTextView.resignFirstResponder()
     }
 
     public func scrollRangeToVisible(range: NSRange) {
-        editor.scrollRangeToVisible(range)
+        richTextView.scrollRangeToVisible(range)
     }
 
     public func scrollRectToVisible(rect: CGRect, animated: Bool) {
-        editor.scrollRectToVisible(rect, animated: animated)
+        richTextView.scrollRectToVisible(rect, animated: animated)
     }
 
     public func replaceCharacters(in range: NSRange, with attriburedString: NSAttributedString) {
-        editor.textStorage.replaceCharacters(in: range, with: attriburedString)
+        richTextView.textStorage.replaceCharacters(in: range, with: attriburedString)
     }
 
     public func replaceCharacters(in range: NSRange, with string: String) {
-        editor.textStorage.replaceCharacters(in: range, with: string)
+        richTextView.textStorage.replaceCharacters(in: range, with: string)
     }
 }
 
 extension EditorView {
     public func addAttributes(_ attributes: [NSAttributedString.Key: Any], at range: NSRange) {
-        self.editor.storage.addAttributes(attributes, range: range)
+        self.richTextView.storage.addAttributes(attributes, range: range)
         // TODO: propagate to attachments
     }
 
     public func removeAttributes(_ attributes: [NSAttributedString.Key], at range: NSRange) {
-        self.editor.storage.removeAttributes(attributes, range: range)
+        self.richTextView.storage.removeAttributes(attributes, range: range)
        // TODO: propagate to attachments
     }
 

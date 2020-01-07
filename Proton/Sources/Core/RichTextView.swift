@@ -9,10 +9,6 @@
 import Foundation
 import UIKit
 
-protocol RichTextViewDelegate: class {
-    func didChangeSelection(_ textView: RichTextView, range: NSRange, attributes: [EditorAttribute], contentType: EditorContent.Name)
-}
-
 class RichTextView: AutogrowingTextView {
     let storage = TextStorage()
 
@@ -23,7 +19,7 @@ class RichTextView: AutogrowingTextView {
         set { storage.defaultTextFormattingProvider = newValue }
     }
 
-    init(frame: CGRect = .zero) {
+    init(frame: CGRect = .zero, context: RichTextViewContext = RichTextViewContext.default) {
         let textContainer = TextContainer()
         let layoutManager = NSLayoutManager()
 
@@ -33,6 +29,7 @@ class RichTextView: AutogrowingTextView {
         super.init(frame: frame, textContainer: textContainer)
         layoutManager.delegate = self
         textContainer.textView = self
+        self.delegate = context
     }
 
     var richTextStorage: TextStorage {
@@ -95,8 +92,6 @@ extension RichTextView: NSLayoutManagerDelegate  {
 
         textView.relayoutAttachments()
     }
-
-    
 }
 
 extension RichTextView {
