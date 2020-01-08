@@ -75,14 +75,16 @@ class WidthRangeAttachmentExampleViewController: ExamplesBaseViewController {
 
     @objc
     func insertAttachment(sender: UIButton) {
-        let inlineEditor = InlineEditorView()
-        inlineEditor.backgroundColor = .cyan
-        inlineEditor.layer.borderWidth = 1.0
-        inlineEditor.layer.cornerRadius = 4.0
-        inlineEditor.layer.borderColor = UIColor.black.cgColor
+        let textField = AutogrowingTextField()
+        textField.backgroundColor = .cyan
+        textField.layer.borderWidth = 1.0
+        textField.layer.cornerRadius = 4.0
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.font = editor.font
 
-        let attachment = Attachment(inlineEditor, size: .range(minWidth: minWidth, maxWidth: maxWidth))
-        inlineEditor.boundsObserver = attachment
+        let attachment = Attachment(textField, size: .range(minWidth: minWidth, maxWidth: maxWidth))
+        textField.boundsObserver = attachment
+        attachment.offsetProvider = self
         editor.insertAttachment(in: editor.selectedRange, attachment: attachment)
     }
 }
