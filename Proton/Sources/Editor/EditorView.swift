@@ -151,6 +151,10 @@ open class EditorView: UIView {
     public func replaceCharacters(in range: NSRange, with string: String) {
         richTextView.textStorage.replaceCharacters(in: range, with: string)
     }
+
+    public func setFocus() {
+        richTextView.becomeFirstResponder()
+    }
 }
 
 extension EditorView {

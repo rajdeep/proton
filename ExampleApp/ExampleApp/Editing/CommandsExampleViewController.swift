@@ -30,10 +30,10 @@ class CommandsExampleViewController: ExamplesBaseViewController {
     let editor = EditorView()
     let commandExecutor = EditorCommandExecutor()
 
-    let commands: [String: EditorCommand] = [
-        "Panel": PanelCommand(),
-        "Bold": BoldCommand(),
-        "Italics": ItalicsCommand()
+    let commands: [(title: String, command: EditorCommand)] = [
+        (title: "Panel", command: PanelCommand()),
+        (title: "Bold", command: BoldCommand()),
+        (title: "Italics", command: ItalicsCommand()),
     ]
 
     override func setup() {
@@ -51,10 +51,16 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
 
         for command in commands {
-            let button = CommandButton(command: command.value)
-            button.setTitle(command.key, for: .normal)
+            let button = CommandButton(command: command.command)
+            button.setTitle(command.title, for: .normal)
             button.translatesAutoresizingMaskIntoConstraints = false
             button.addTarget(self, action: #selector(runCommand(sender:)), for: .touchUpInside)
+
+            button.layer.borderColor = UIColor.black.cgColor
+            button.layer.borderWidth = 1.0
+            button.layer.cornerRadius = 5.0
+
+            NSLayoutConstraint.activate([button.widthAnchor.constraint(equalToConstant: 60)])
             stackView.addArrangedSubview(button)
         }
 
@@ -69,6 +75,8 @@ class CommandsExampleViewController: ExamplesBaseViewController {
             editor.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
         ])
+
+        editor.setFocus()
     }
 
     @objc
