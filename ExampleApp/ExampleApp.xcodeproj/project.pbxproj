@@ -18,6 +18,7 @@
 		1B6D2FF323BD46F20019CE40 /* ExampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6D2FF223BD46F20019CE40 /* ExampleAppUITests.swift */; };
 		1B6DE9DE23C598F1007F9859 /* CommandsExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6DE9DD23C598F1007F9859 /* CommandsExampleViewController.swift */; };
 		1B6DE9E123C59A16007F9859 /* PanelCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6DE9E023C59A16007F9859 /* PanelCommand.swift */; };
+		1BB8904223C5A74700F087AE /* Proton.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1BFFEF0223C3048E00D2BA35 /* Proton.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1BFFEEFE23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEEFD23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift */; };
 		1BFFEF0023C303F100D2BA35 /* AutogrowingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEEFF23C303F100D2BA35 /* AutogrowingTextField.swift */; };
 		1BFFEF0323C3048E00D2BA35 /* Proton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BFFEF0223C3048E00D2BA35 /* Proton.framework */; };
@@ -44,6 +45,20 @@
 			remoteInfo = ExampleApp;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1BB8904123C5A73500F087AE /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1BB8904223C5A74700F087AE /* Proton.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1B45CD8A23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingEditorViewExampleViewController.swift; sourceTree = "<group>"; };
@@ -220,6 +235,7 @@
 				1B6D2FC923BD46ED0019CE40 /* Sources */,
 				1B6D2FCA23BD46ED0019CE40 /* Frameworks */,
 				1B6D2FCB23BD46ED0019CE40 /* Resources */,
+				1BB8904123C5A73500F087AE /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -529,6 +545,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5ET5H5LLAF;
 				INFOPLIST_FILE = ExampleApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -546,6 +563,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5ET5H5LLAF;
 				INFOPLIST_FILE = ExampleApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
