@@ -43,10 +43,7 @@ class AutogrowingTextView: UITextView {
         super.layoutSubviews()
         let bounds = self.bounds
         let fittingSize = sizeThatFits(CGSize(width: frame.width, height: .greatestFiniteMagnitude))
-        guard maxHeight > 0 && maxHeight < fittingSize.height else {
-            return
-        }
-        isScrollEnabled = fittingSize.height > bounds.height
+        isScrollEnabled = (fittingSize.height > bounds.height) || (maxHeight > 0 && maxHeight < fittingSize.height)
     }
 
     override var bounds: CGRect {
