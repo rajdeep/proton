@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension NSRange {
+public extension NSRange {
     static var zero: NSRange {
         return NSRange(location: 0, length: 0)
     }

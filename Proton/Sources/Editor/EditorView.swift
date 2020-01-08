@@ -16,8 +16,12 @@ public protocol BoundsObserving: class {
 open class EditorView: UIView {
     let richTextView: RichTextView
 
-    public override init(frame: CGRect) {
-        richTextView = RichTextView(frame: frame)
+    public let context: EditorViewContext
+
+    public init(frame: CGRect = .zero, context: EditorViewContext = .shared) {
+        self.context = context
+        self.richTextView = RichTextView(frame: frame, context: context.richTextViewContext)
+
         super.init(frame: frame)
         setup()
     }
@@ -38,6 +42,10 @@ open class EditorView: UIView {
 
     public var contentLength: Int {
         return attributedText.length
+    }
+
+    public var selectedText: NSAttributedString {
+        return attributedText.attributedSubstring(from: selectedRange)
     }
 
     public override var backgroundColor: UIColor? {

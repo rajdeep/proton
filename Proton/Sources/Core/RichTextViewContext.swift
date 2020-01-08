@@ -12,8 +12,6 @@ import CoreServices
 
 class RichTextViewContext: NSObject, UITextViewDelegate {
 
-    private override init() { }
-
     static let `default` = RichTextViewContext()
 
     var activeTextView: RichTextView?

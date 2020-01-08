@@ -32,7 +32,11 @@ class MasterViewController: UITableViewController {
                     NavigationItem(title: "Fixed Width", viewController: FixedWidthAttachmentExampleViewController()),
                     NavigationItem(title: "Width Range", viewController: WidthRangeAttachmentExampleViewController()),
                     NavigationItem(title: "Percent Width", viewController: PercentWidthAttachmentExampleViewController()),
-        ])
+        ]),
+        Navigation(title: "Advanced features",
+                   items: [
+                    NavigationItem(title: "Commands", viewController: CommandsExampleViewController()),
+        ]),
     ]
 
     override func viewWillAppear(_ animated: Bool) {
