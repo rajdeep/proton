@@ -80,6 +80,11 @@ class RichTextView: AutogrowingTextView {
         let attributes = textStorage.attributes(at: characterIndex, longestEffectiveRange: nil, in: textStorage.fullRange)
         return attributes[attribute]
     }
+
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        // TODO: revisit
+        return false
+    }
 }
 
 extension RichTextView: NSLayoutManagerDelegate  {

@@ -44,6 +44,10 @@ open class EditorView: UIView {
         return attributedText.length
     }
 
+    public var isEmpty: Bool {
+        return richTextView.attributedText.length == 0
+    }
+
     public var selectedText: NSAttributedString {
         return attributedText.attributedSubstring(from: selectedRange)
     }

@@ -27,14 +27,34 @@ public extension UIFont {
         return traits.contains(.traitMonoSpace)
     }
 
-    func toggle(trait: UIFontDescriptor.SymbolicTraits) -> UIFont {
-        var traits = self.traits
-        if traits.contains(trait) {
-            traits.subtract(trait)
+    func contains(trait: UIFontDescriptor.SymbolicTraits) -> Bool {
+        return traits.contains(trait)
+    }
+
+    func toggled(trait: UIFontDescriptor.SymbolicTraits) -> UIFont {
+        let updatedFont: UIFont
+        if self.contains(trait: trait) {
+            updatedFont = removing(trait: trait)
         } else {
-            traits.formUnion(trait)
+            updatedFont = adding(trait: trait)
         }
 
+        return updatedFont
+    }
+
+    func adding(trait: UIFontDescriptor.SymbolicTraits) -> UIFont {
+        var traits = self.traits
+        traits.formUnion(trait)
+        guard let updatedFontDescriptor = fontDescriptor.withSymbolicTraits(traits) else {
+            return self
+        }
+
+        return UIFont(descriptor: updatedFontDescriptor, size: 0.0)
+    }
+
+    func removing(trait: UIFontDescriptor.SymbolicTraits) -> UIFont {
+        var traits = self.traits
+        traits.subtract(trait)
         guard let updatedFontDescriptor = fontDescriptor.withSymbolicTraits(traits) else {
             return self
         }

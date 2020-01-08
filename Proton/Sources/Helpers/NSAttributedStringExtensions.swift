@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension NSAttributedString {
+public extension NSAttributedString {
     var fullRange: NSRange {
         return NSRange(location: 0, length: length)
     }

@@ -38,6 +38,7 @@
 		1B45CDEE23C1686F001EB196 /* RichTextViewTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDED23C1686F001EB196 /* RichTextViewTestViewController.swift */; };
 		1B45CDF123C16EF4001EB196 /* RichTextAttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDF023C16EF4001EB196 /* RichTextAttachmentView.swift */; };
 		1B6DE9D923C5940B007F9859 /* EditorCommandSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */; };
+		1B6DE9E323C5C184007F9859 /* FontTraitToggleCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6DE9E223C5C184007F9859 /* FontTraitToggleCommandTests.swift */; };
 		1B7A985723C4828A00C34B14 /* RichTextViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A985623C4828A00C34B14 /* RichTextViewContext.swift */; };
 		1B7A985923C484BC00C34B14 /* RichTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */; };
 		1B82570423C48C350033A0A9 /* MockRichTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B82570323C48C350033A0A9 /* MockRichTextViewDelegate.swift */; };
@@ -123,6 +124,7 @@
 		1B45CDF023C16EF4001EB196 /* RichTextAttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextAttachmentView.swift; sourceTree = "<group>"; };
 		1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommandSnapshotTests.swift; sourceTree = "<group>"; };
 		1B6DE9DB23C59889007F9859 /* testExecutesCommandOnNestedEditors@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testExecutesCommandOnNestedEditors@3x.png"; sourceTree = "<group>"; };
+		1B6DE9E223C5C184007F9859 /* FontTraitToggleCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTraitToggleCommandTests.swift; sourceTree = "<group>"; };
 		1B7A985523C4811C00C34B14 /* testDeletesAttachments@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testDeletesAttachments@3x.png"; sourceTree = "<group>"; };
 		1B7A985623C4828A00C34B14 /* RichTextViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewContext.swift; sourceTree = "<group>"; };
 		1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewDelegate.swift; sourceTree = "<group>"; };
@@ -448,6 +450,7 @@
 			children = (
 				1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */,
 				1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */,
+				1B6DE9E223C5C184007F9859 /* FontTraitToggleCommandTests.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -646,6 +649,7 @@
 				1BFFEF2123C33EA900D2BA35 /* PanelView.swift in Sources */,
 				1B45CDC223BF131E001EB196 /* TextStorageTests.swift in Sources */,
 				1BFFEF1723C333B400D2BA35 /* EditorTestViewController.swift in Sources */,
+				1B6DE9E323C5C184007F9859 /* FontTraitToggleCommandTests.swift in Sources */,
 				1B45CDCE23BF18A5001EB196 /* XCTestHelpers.swift in Sources */,
 				1B45CDDB23C04BE3001EB196 /* RichTextViewSnapshotTests.swift in Sources */,
 				1B45CDD923C0484A001EB196 /* RichTextViewTests.swift in Sources */,
