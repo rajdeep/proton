@@ -59,15 +59,16 @@ class FixedWidthAttachmentExampleViewController: ExamplesBaseViewController {
 
     @objc
     func insertAttachment(sender: UIButton) {
-       let inlineEditor = InlineEditorView()
-       inlineEditor.backgroundColor = .cyan
-       inlineEditor.layer.borderWidth = 1.0
-       inlineEditor.layer.cornerRadius = 4.0
-       inlineEditor.layer.borderColor = UIColor.black.cgColor
+        let inlineEditor = InlineEditorView()
+        inlineEditor.backgroundColor = .cyan
+        inlineEditor.layer.borderWidth = 1.0
+        inlineEditor.layer.cornerRadius = 4.0
+        inlineEditor.layer.borderColor = UIColor.black.cgColor
 
-       let attachment = Attachment(inlineEditor, size: .fixed(width: width))
-       inlineEditor.boundsObserver = attachment
-       editor.insertAttachment(in: editor.selectedRange, attachment: attachment)
+        let attachment = Attachment(inlineEditor, size: .fixed(width: width))
+        attachment.selectBeforeDelete = true
+        inlineEditor.boundsObserver = attachment
+        editor.insertAttachment(in: editor.selectedRange, attachment: attachment)
     }
 }
 

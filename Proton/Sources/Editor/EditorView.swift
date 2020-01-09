@@ -17,6 +17,7 @@ open class EditorView: UIView {
     let richTextView: RichTextView
 
     public let context: EditorViewContext
+    public weak var delegate: EditorViewDelegate?
 
     public init(frame: CGRect = .zero, context: EditorViewContext = .shared) {
         self.context = context
@@ -100,6 +101,7 @@ open class EditorView: UIView {
 
         richTextView.translatesAutoresizingMaskIntoConstraints = false
         richTextView.defaultTextFormattingProvider = self
+        richTextView.richTextViewDelegate = self
 
         addSubview(richTextView)
         NSLayoutConstraint.activate([
@@ -178,3 +180,21 @@ extension EditorView {
 }
 
 extension EditorView: DefaultTextFormattingProviding { }
+
+extension EditorView: RichTextViewDelegate {
+    func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [EditorAttribute], contentType: EditorContent.Name) {
+        delegate?.editor(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
+    }
+
+    func richTextView(_ richTextView: RichTextView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool) {
+        delegate?.editor(self, didReceiveKey: key, at: range, handled: &handled)
+    }
+
+    func richTextView(_ richTextView: RichTextView, didReceiveFocusAt range: NSRange) {
+        delegate?.editor(self, didReceiveFocusAt: range)
+    }
+
+    func richTextView(_ richTextView: RichTextView, didLoseFocusFrom range: NSRange) {
+        delegate?.editor(self, didLoseFocusFrom: range)
+    }
+}

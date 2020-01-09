@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-enum EditorAttribute {
+public enum EditorAttribute {
     case bold
     case italics
     case underline
