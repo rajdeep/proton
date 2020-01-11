@@ -115,4 +115,22 @@ class EditorViewTests: XCTestCase {
         }
         XCTAssertEqual(paragraphContent.enclosingRange, editorString.fullRange)
     }
+
+    func testTransformsContents() {
+        let editor = EditorView()
+        let textField = AutogrowingTextField()
+        let editorString = NSAttributedString(string: "Some text in Editor ")
+        let attachmentString = NSAttributedString(string: "In full-width attachment")
+        let attachment = Attachment(textField, size: .matchContent)
+        textField.attributedText = attachmentString
+
+        editor.replaceCharacters(in: .zero, with: editorString)
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+
+        let transformedContents = editor.transformContents(using: TextTransformer())
+        XCTAssertEqual(transformedContents.count, 3)
+        XCTAssertEqual(transformedContents[0], "Name: `paragraph` Text: `Some text in Editor `")
+        XCTAssertEqual(transformedContents[1], "Name: `textField` ContentView: `AutogrowingTextField` Type: `inline`")
+        XCTAssertEqual(transformedContents[2], "Name: `paragraph` Text: ` `")
+    }
 }

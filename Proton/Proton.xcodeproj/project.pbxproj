@@ -62,6 +62,8 @@
 		1BD993B423C9966A00563ACB /* MockTextProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993B323C9966A00563ACB /* MockTextProcessor.swift */; };
 		1BD993B623C999AF00563ACB /* EditorViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993B523C999AF00563ACB /* EditorViewTests.swift */; };
 		1BD993B823C9AE4200563ACB /* NSAttributedString+Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993B723C9AE4200563ACB /* NSAttributedString+Content.swift */; };
+		1BD993BC23C9E6F800563ACB /* EditorContentTransforming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993BB23C9E6F800563ACB /* EditorContentTransforming.swift */; };
+		1BD993C023C9EAA900563ACB /* TextTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993BF23C9EAA900563ACB /* TextTransformer.swift */; };
 		1BFFEF0523C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF0423C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift */; };
 		1BFFEF0C23C30D5200D2BA35 /* EditorContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF0B23C30D5200D2BA35 /* EditorContentView.swift */; };
 		1BFFEF1523C332A100D2BA35 /* EditorSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF1423C332A100D2BA35 /* EditorSnapshotTests.swift */; };
@@ -161,6 +163,8 @@
 		1BD993B323C9966A00563ACB /* MockTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTextProcessor.swift; sourceTree = "<group>"; };
 		1BD993B523C999AF00563ACB /* EditorViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewTests.swift; sourceTree = "<group>"; };
 		1BD993B723C9AE4200563ACB /* NSAttributedString+Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Content.swift"; sourceTree = "<group>"; };
+		1BD993BB23C9E6F800563ACB /* EditorContentTransforming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentTransforming.swift; sourceTree = "<group>"; };
+		1BD993BF23C9EAA900563ACB /* TextTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransformer.swift; sourceTree = "<group>"; };
 		1BFFEF0423C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAutogrowingTextViewDelegate.swift; sourceTree = "<group>"; };
 		1BFFEF0B23C30D5200D2BA35 /* EditorContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentView.swift; sourceTree = "<group>"; };
 		1BFFEF1423C332A100D2BA35 /* EditorSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorSnapshotTests.swift; sourceTree = "<group>"; };
@@ -246,6 +250,7 @@
 			children = (
 				1BFFEF1823C3340D00D2BA35 /* Views */,
 				1B45CD9C23BEDA8F001EB196 /* UIView+Render.swift */,
+				1BD993BF23C9EAA900563ACB /* TextTransformer.swift */,
 				1B45CD9E23BEE997001EB196 /* SnapshotTestViewController.swift */,
 				1B45CDCC23BF189F001EB196 /* XCTestHelpers.swift */,
 				1B45CDED23C1686F001EB196 /* RichTextViewTestViewController.swift */,
@@ -346,6 +351,7 @@
 				1BFFEF0B23C30D5200D2BA35 /* EditorContentView.swift */,
 				1B82570C23C5686F0033A0A9 /* EditorViewContext.swift */,
 				1B8BE91A23C71CEA00353B17 /* EditorViewDelegate.swift */,
+				1BD993BB23C9E6F800563ACB /* EditorContentTransforming.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -688,6 +694,7 @@
 				1B45CDE423C05916001EB196 /* SelectionView.swift in Sources */,
 				1BD1791923C57F430066DC13 /* FontTraitToggleCommand.swift in Sources */,
 				1B82570B23C567B90033A0A9 /* EditorCommandExecutor.swift in Sources */,
+				1BD993BC23C9E6F800563ACB /* EditorContentTransforming.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -703,6 +710,7 @@
 				1BD993B423C9966A00563ACB /* MockTextProcessor.swift in Sources */,
 				1BD993B123C995B000563ACB /* TextProcessorTests.swift in Sources */,
 				1BFFEF1523C332A100D2BA35 /* EditorSnapshotTests.swift in Sources */,
+				1BD993C023C9EAA900563ACB /* TextTransformer.swift in Sources */,
 				1B8BE91D23C71E4B00353B17 /* EditorViewDelegateTests.swift in Sources */,
 				1BFFEF2123C33EA900D2BA35 /* PanelView.swift in Sources */,
 				1B8BE91F23C71E8A00353B17 /* MockEditorViewDelegate.swift in Sources */,

@@ -159,6 +159,14 @@ open class EditorView: UIView {
         return Array<EditorContent>(contents)
     }
 
+    /// Transforms `EditorContent` into given type. This function can also be used to encode content into a different type for  e.g. encoding the contents to JSON. Encoding
+    /// is  a type of transformation that can also be decoded.
+    /// - Parameter range: Range of `Editor` to transform the contents. By default, entire range is used.
+    /// - Parameter transformer: Transformer capable ot transforming `EditorContent` to given type
+    public func transformContents<T: EditorContentTransforming>(in range: NSRange? = nil, using transformer: T) -> [T.TransformedType] {
+        return richTextView.transformContents(in: range, using: transformer)
+    }
+
     public func replaceCharacters(in range: NSRange, with attriburedString: NSAttributedString) {
         richTextView.textStorage.replaceCharacters(in: range, with: attriburedString)
     }

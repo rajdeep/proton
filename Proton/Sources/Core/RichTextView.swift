@@ -63,6 +63,10 @@ class RichTextView: AutogrowingTextView {
         richTextStorage.insertAttachment(in: range, attachment: attachment)
     }
 
+    func transformContents<T: EditorContentTransforming>(in range: NSRange? = nil, using transformer: T) -> [T.TransformedType] {
+        return contents(in: range).compactMap(transformer.transform)
+    }
+
     func replaceCharacters(in range: NSRange, with attrString: NSAttributedString) {
         richTextStorage.replaceCharacters(in: range, with: attrString)
     }
