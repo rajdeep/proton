@@ -33,6 +33,9 @@ DerivedData/
 ## Carthage
 Carthage/
 
+## Snapshot Tests
+FailureDiffs/
+
 ## Playgrounds
 timeline.xctimeline
 playground.xcworkspace

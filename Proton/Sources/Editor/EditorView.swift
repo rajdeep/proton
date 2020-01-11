@@ -154,6 +154,11 @@ open class EditorView: UIView {
         richTextView.scrollRectToVisible(rect, animated: animated)
     }
 
+    public func contents(in range: NSRange? = nil) -> [EditorContent] {
+        let contents =  richTextView.contents(in: range)
+        return Array<EditorContent>(contents)
+    }
+
     public func replaceCharacters(in range: NSRange, with attriburedString: NSAttributedString) {
         richTextView.textStorage.replaceCharacters(in: range, with: attriburedString)
     }

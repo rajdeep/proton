@@ -70,8 +70,10 @@ public class Attachment: NSTextAttachment, BoundsObserving {
     }
 
     var spacer: NSAttributedString {
-        let key = isBlockAttachment == true ? NSAttributedString.Key.contentType: NSAttributedString.Key.inlineContentType
-        let spacerAttr = [NSAttributedString.Key.viewOnly: key]
+//        let key = isBlockAttachment == true ? NSAttributedString.Key.contentType: NSAttributedString.Key.inlineContentType
+//        let spacerAttr = [NSAttributedString.Key.viewOnly: key]
+        // TODO: Revisit - should this be viewOnly?
+        let spacerAttr: RichTextAttributes = [:]
         return isBlockAttachment == true ? NSAttributedString(string: "\n", attributes: spacerAttr) : NSAttributedString(string: " ", attributes: spacerAttr)
     }
 
@@ -89,10 +91,12 @@ public class Attachment: NSTextAttachment, BoundsObserving {
 
     final var string: NSAttributedString {
         guard let isBlockAttachment = isBlockAttachment else { return NSAttributedString(string: "<UNKNOWN CONTENT TYPE>") }
-        let key = isBlockAttachment == true ? NSAttributedString.Key.contentType: NSAttributedString.Key.inlineContentType
+//        let key = isBlockAttachment == true ? NSAttributedString.Key.contentType: NSAttributedString.Key.inlineContentType
         let string = NSMutableAttributedString(attachment: self)
         let value = name ?? EditorContent.Name.unknown
-        string.addAttributes([key: value], range: string.fullRange)
+        string.addAttributes([NSAttributedString.Key.contentType: value], range: string.fullRange)
+        string.addAttributes([NSAttributedString.Key.isBlockAttachment: isBlockAttachment], range: string.fullRange)
+        string.addAttributes([NSAttributedString.Key.isInlineAttachment: !isBlockAttachment], range: string.fullRange)
         return string
     }
 

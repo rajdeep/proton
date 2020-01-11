@@ -9,10 +9,16 @@
 import Foundation
 import UIKit
 
+/// Type of attachment
+public enum AttachmentType {
+    case block
+    case inline
+}
+
 /// Type of `EditorContent`
 public enum EditorContentType {
     case text(name: EditorContent.Name, attributedString: NSAttributedString)
-    case attachment(name: EditorContent.Name, contentView : AttachmentView)
+    case attachment(name: EditorContent.Name, contentView : AttachmentView, type: AttachmentType)
     case viewOnly
 }
 

@@ -55,16 +55,12 @@ class RichTextView: AutogrowingTextView {
         layoutManager.invalidateLayout(forCharacterRange: range, actualCharacterRange: nil)
     }
 
-    func invalidateDisaplay(for range: NSRange) {
+    func invalidateDisplay(for range: NSRange) {
         layoutManager.invalidateDisplay(forCharacterRange: range)
     }
 
     func insertAttachment(in range: NSRange, attachment: Attachment) {
         richTextStorage.insertAttachment(in: range, attachment: attachment)
-    }
-
-    override func insertText(_ text: String) {
-        super.insertText(text)
     }
 
     func replaceCharacters(in range: NSRange, with attrString: NSAttributedString) {
@@ -90,6 +86,10 @@ class RichTextView: AutogrowingTextView {
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         // TODO: revisit
         return false
+    }
+
+    func contents(in range: NSRange? = nil) -> AnySequence<EditorContent> {
+        return self.attributedText.enumerateContents(in: range)
     }
 }
 
