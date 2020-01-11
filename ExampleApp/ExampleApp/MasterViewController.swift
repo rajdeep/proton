@@ -36,6 +36,7 @@ class MasterViewController: UITableViewController {
         Navigation(title: "Advanced features",
                    items: [
                     NavigationItem(title: "Commands", viewController: CommandsExampleViewController()),
+                    NavigationItem(title: "Text Processors", viewController: TextProcessorExampleViewController()),
         ]),
     ]
 

@@ -36,6 +36,12 @@ class RichTextView: AutogrowingTextView {
         return storage
     }
 
+    weak var textProcessor: TextProcessor? {
+        didSet {
+            storage.delegate = textProcessor
+        }
+    }
+
     var textEndRange: NSRange {
         return storage.textEndRange
     }

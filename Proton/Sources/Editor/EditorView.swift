@@ -18,12 +18,16 @@ open class EditorView: UIView {
 
     public let context: EditorViewContext
     public weak var delegate: EditorViewDelegate?
+    var textProcessor: TextProcessor?
 
     public init(frame: CGRect = .zero, context: EditorViewContext = .shared) {
         self.context = context
         self.richTextView = RichTextView(frame: frame, context: context.richTextViewContext)
 
         super.init(frame: frame)
+
+        self.textProcessor = TextProcessor(editor: self)
+        self.richTextView.textProcessor = textProcessor
         setup()
     }
 
@@ -134,6 +138,10 @@ open class EditorView: UIView {
         richTextView.insertAttachment(in: range, attachment: attachment)
     }
 
+    public func setFocus() {
+        richTextView.becomeFirstResponder()
+    }
+
     public func resignFocus() {
         richTextView.resignFirstResponder()
     }
@@ -154,8 +162,12 @@ open class EditorView: UIView {
         richTextView.textStorage.replaceCharacters(in: range, with: string)
     }
 
-    public func setFocus() {
-        richTextView.becomeFirstResponder()
+    public func registerProcessor(_ processor: TextProcessing) {
+        textProcessor?.register(processor)
+    }
+
+    public func unregisterProcessor(_ processor: TextProcessing) {
+        textProcessor?.unregister(processor)
     }
 }
 

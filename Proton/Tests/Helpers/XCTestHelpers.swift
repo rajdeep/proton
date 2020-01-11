@@ -25,7 +25,7 @@ public func assertUnwrap<T>(_ value: T?, _ message: String = "Unexpected nil val
 
 
 extension XCTestCase  {
-    open func functionExpectation(_ caller: String = #function) -> XCTestExpectation {
-        return expectation(description: caller)
+    open func functionExpectation(_ id: String = "", caller: String = #function) -> XCTestExpectation {
+        return expectation(description: "\(caller)\(id)")
     }
 }

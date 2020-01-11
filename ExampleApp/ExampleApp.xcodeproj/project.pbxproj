@@ -18,6 +18,9 @@
 		1B6D2FF323BD46F20019CE40 /* ExampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6D2FF223BD46F20019CE40 /* ExampleAppUITests.swift */; };
 		1B6DE9DE23C598F1007F9859 /* CommandsExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6DE9DD23C598F1007F9859 /* CommandsExampleViewController.swift */; };
 		1B6DE9E123C59A16007F9859 /* PanelCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6DE9E023C59A16007F9859 /* PanelCommand.swift */; };
+		1B91F4B623C73D01003F9B55 /* TypeaheadTextProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91F4B523C73D01003F9B55 /* TypeaheadTextProcessor.swift */; };
+		1B91F4B823C73D3C003F9B55 /* MarkupTextProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91F4B723C73D3C003F9B55 /* MarkupTextProcessor.swift */; };
+		1B91F4BA23C73D96003F9B55 /* TextProcessorExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91F4B923C73D96003F9B55 /* TextProcessorExampleViewController.swift */; };
 		1BB8904223C5A74700F087AE /* Proton.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1BFFEF0223C3048E00D2BA35 /* Proton.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1BFFEEFE23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEEFD23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift */; };
 		1BFFEF0023C303F100D2BA35 /* AutogrowingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEEFF23C303F100D2BA35 /* AutogrowingTextField.swift */; };
@@ -78,6 +81,9 @@
 		1B6D2FF423BD46F20019CE40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1B6DE9DD23C598F1007F9859 /* CommandsExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandsExampleViewController.swift; sourceTree = "<group>"; };
 		1B6DE9E023C59A16007F9859 /* PanelCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelCommand.swift; sourceTree = "<group>"; };
+		1B91F4B523C73D01003F9B55 /* TypeaheadTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeaheadTextProcessor.swift; sourceTree = "<group>"; };
+		1B91F4B723C73D3C003F9B55 /* MarkupTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkupTextProcessor.swift; sourceTree = "<group>"; };
+		1B91F4B923C73D96003F9B55 /* TextProcessorExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessorExampleViewController.swift; sourceTree = "<group>"; };
 		1BFFEEFD23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchContentAttachmentExampleViewController.swift; sourceTree = "<group>"; };
 		1BFFEEFF23C303F100D2BA35 /* AutogrowingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingTextField.swift; sourceTree = "<group>"; };
 		1BFFEF0223C3048E00D2BA35 /* Proton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Proton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,8 +152,9 @@
 		1B6D2FCF23BD46ED0019CE40 /* ExampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				1B91F4B423C73CEB003F9B55 /* TextProcessors */,
 				1B6DE9DF23C599D8007F9859 /* Commands */,
-				1B6DE9DC23C598AB007F9859 /* Editing */,
+				1B6DE9DC23C598AB007F9859 /* AdvancedFeatures */,
 				1BFFEF0823C30C7600D2BA35 /* Views */,
 				1BFFEEFC23C2D3AE00D2BA35 /* Attachments */,
 				1B45CD8923BDD3B3001EB196 /* Basic */,
@@ -180,12 +187,13 @@
 			path = ExampleAppUITests;
 			sourceTree = "<group>";
 		};
-		1B6DE9DC23C598AB007F9859 /* Editing */ = {
+		1B6DE9DC23C598AB007F9859 /* AdvancedFeatures */ = {
 			isa = PBXGroup;
 			children = (
 				1B6DE9DD23C598F1007F9859 /* CommandsExampleViewController.swift */,
+				1B91F4B923C73D96003F9B55 /* TextProcessorExampleViewController.swift */,
 			);
-			path = Editing;
+			path = AdvancedFeatures;
 			sourceTree = "<group>";
 		};
 		1B6DE9DF23C599D8007F9859 /* Commands */ = {
@@ -194,6 +202,15 @@
 				1B6DE9E023C59A16007F9859 /* PanelCommand.swift */,
 			);
 			path = Commands;
+			sourceTree = "<group>";
+		};
+		1B91F4B423C73CEB003F9B55 /* TextProcessors */ = {
+			isa = PBXGroup;
+			children = (
+				1B91F4B523C73D01003F9B55 /* TypeaheadTextProcessor.swift */,
+				1B91F4B723C73D3C003F9B55 /* MarkupTextProcessor.swift */,
+			);
+			path = TextProcessors;
 			sourceTree = "<group>";
 		};
 		1BFFEEFC23C2D3AE00D2BA35 /* Attachments */ = {
@@ -358,8 +375,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BFFEF0E23C3228900D2BA35 /* FixedWidthAttachmentExampleViewController.swift in Sources */,
+				1B91F4B623C73D01003F9B55 /* TypeaheadTextProcessor.swift in Sources */,
 				1B45CD8D23BDD5FC001EB196 /* ExamplesBaseViewController.swift in Sources */,
+				1B91F4BA23C73D96003F9B55 /* TextProcessorExampleViewController.swift in Sources */,
 				1BFFEEFE23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift in Sources */,
+				1B91F4B823C73D3C003F9B55 /* MarkupTextProcessor.swift in Sources */,
 				1B6DE9DE23C598F1007F9859 /* CommandsExampleViewController.swift in Sources */,
 				1B6D2FD323BD46ED0019CE40 /* MasterViewController.swift in Sources */,
 				1B6D2FD123BD46ED0019CE40 /* AppDelegate.swift in Sources */,
