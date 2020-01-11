@@ -136,7 +136,15 @@ public class Attachment: NSTextAttachment, BoundsObserving {
         didSet { self.view.bounds = bounds }
     }
 
-    public init(_ contentView: UIView, size: AttachmentSize) {
+    public convenience init<AttachmentView: UIView & BlockAttachment>(_ contentView: AttachmentView, size: AttachmentSize) {
+        self.init(contentView: contentView, size: size)
+    }
+
+    public convenience init<AttachmentView: UIView & InlineAttachment>(_ contentView: AttachmentView, size: AttachmentSize) {
+        self.init(contentView: contentView, size: size)
+    }
+
+    init(contentView: AttachmentView, size: AttachmentSize) {
         self.view = UIView(frame: contentView.frame)
         self.size = size
         super.init(data: nil, ofType: nil)

@@ -36,7 +36,7 @@ extension NSAttributedString {
                         content = EditorContent(type: .viewOnly, enclosingRange: range)
                     }
                     else if let attachment = substring.attribute(.attachment, at: 0, effectiveRange: nil) as? Attachment {
-                        if let contentView = attachment.contentView as? AttachmentView {
+                        if let contentView = attachment.contentView {
                             let isBlockAttachment = substring.attribute(.isBlockAttachment, at: 0, effectiveRange: nil) as? Bool
                             let attachmentType = (isBlockAttachment == true) ? AttachmentType.block : .inline
                             content = EditorContent(type: .attachment(name: contentName, contentView: contentView, type: attachmentType), enclosingRange: range)
