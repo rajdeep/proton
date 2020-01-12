@@ -11,7 +11,7 @@ import UIKit
 
 import Proton
 
-class PanelView: UIView, BlockAttachment, EditorContentView {
+class PanelView: UIView, BlockContent, EditorContentView {
     let editor: EditorView
     let iconView = UIImageView()
 

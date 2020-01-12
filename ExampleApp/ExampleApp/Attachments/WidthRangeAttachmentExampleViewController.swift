@@ -95,7 +95,7 @@ extension WidthRangeAttachmentExampleViewController: AttachmentOffsetProviding {
     }
 }
 
-class InlineEditorView: EditorView, InlineAttachment {
+class InlineEditorView: EditorView, InlineContent {
     public var name: EditorContent.Name {
         return EditorContent.Name("Editor")
     }

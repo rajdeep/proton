@@ -134,7 +134,6 @@ open class EditorView: UIView {
 
     public func insertAttachment(in range: NSRange, attachment: Attachment) {
         // TODO: handle undo
-
         richTextView.insertAttachment(in: range, attachment: attachment)
     }
 
@@ -187,12 +186,20 @@ open class EditorView: UIView {
 extension EditorView {
     public func addAttributes(_ attributes: [NSAttributedString.Key: Any], at range: NSRange) {
         self.richTextView.storage.addAttributes(attributes, range: range)
-        // TODO: propagate to attachments
+        self.richTextView.storage.enumerateAttribute(.attachment, in: range, options: .longestEffectiveRangeNotRequired) { value, rangeInContainer, _ in
+            if let attachment = value as? Attachment {
+                attachment.addedAttributesOnContainingRange(rangeInContainer: rangeInContainer, attributes: attributes)
+            }
+        }
     }
 
     public func removeAttributes(_ attributes: [NSAttributedString.Key], at range: NSRange) {
         self.richTextView.storage.removeAttributes(attributes, range: range)
-       // TODO: propagate to attachments
+        self.richTextView.storage.enumerateAttribute(.attachment, in: range, options: .longestEffectiveRangeNotRequired) { value, rangeInContainer, _ in
+            if let attachment = value as? Attachment {
+                attachment.removedAttributesFromContainingRange(rangeInContainer: rangeInContainer, attributes: attributes)
+            }
+        }
     }
 
     public func addAttribute(_ name: NSAttributedString.Key, value: Any, at range: NSRange) {

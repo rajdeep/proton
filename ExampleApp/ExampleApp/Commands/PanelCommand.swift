@@ -13,18 +13,14 @@ import Proton
 
 class PanelCommand: EditorCommand {
     func execute(on editor: EditorView) {
-        var panel = PanelView()
         let selectedText = editor.selectedText
-        panel.backgroundColor = .lightGray
-        panel.layer.borderWidth = 1.0
-        panel.layer.cornerRadius = 4.0
-        panel.layer.borderColor = UIColor.black.cgColor
+
+        let attachment = PanelAttachment(frame: .zero)
+        let panel = attachment.view
         panel.editor.maxHeight = 300
         panel.editor.replaceCharacters(in: .zero, with: selectedText)
         panel.editor.selectedRange = panel.editor.textEndRange
 
-        let attachment = Attachment(panel, size: .fullWidth)
-        panel.boundsObserver = attachment
         editor.insertAttachment(in: editor.selectedRange, attachment: attachment)
     }
 }

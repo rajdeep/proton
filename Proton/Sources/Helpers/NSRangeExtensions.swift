@@ -22,4 +22,8 @@ public extension NSRange {
         return NSRange(location: location + length, length: 1)
     }
 
+    var nextPosition: NSRange {
+        return NSRange(location: self.location + 1, length: 0)
+    }
+
 }

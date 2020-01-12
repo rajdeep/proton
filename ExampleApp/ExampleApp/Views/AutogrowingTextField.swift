@@ -37,7 +37,7 @@ class AutogrowingTextField: UITextField, UITextFieldDelegate {
     }
 }
 
-extension AutogrowingTextField: InlineAttachment {
+extension AutogrowingTextField: InlineContent {
     var name: EditorContent.Name {
         return EditorContent.Name(rawValue: "textFIeld")
     }

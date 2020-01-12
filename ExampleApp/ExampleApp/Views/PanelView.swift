@@ -11,9 +11,15 @@ import UIKit
 
 import Proton
 
-class PanelView: UIView, BlockAttachment, EditorContentView {
+protocol PanelViewDelegate: class {
+    func panel(_ panel: PanelView, didRecieveKey key: EditorKey, at range: NSRange, handled: inout Bool)
+}
+
+class PanelView: UIView, BlockContent, EditorContentView {
     let editor: EditorView
     let iconView = UIImageView()
+
+    weak var delegate: PanelViewDelegate?
 
     var name: EditorContent.Name {
         return EditorContent.Name("panel")
@@ -40,6 +46,12 @@ class PanelView: UIView, BlockAttachment, EditorContentView {
         iconView.translatesAutoresizingMaskIntoConstraints = false
         editor.translatesAutoresizingMaskIntoConstraints = false
         editor.paragraphStyle.firstLineHeadIndent = 0
+        editor.delegate = self
+
+        self.backgroundColor = .lightGray
+        self.layer.borderWidth = 1.0
+        self.layer.cornerRadius = 4.0
+        self.layer.borderColor = UIColor.black.cgColor
 
         addSubview(iconView)
         addSubview(editor)
@@ -62,5 +74,11 @@ class PanelView: UIView, BlockAttachment, EditorContentView {
 
         layer.cornerRadius = 5.0
         clipsToBounds = true
+    }
+}
+
+extension PanelView: EditorViewDelegate {
+    func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool) {
+        delegate?.panel(self, didRecieveKey: key, at: range, handled: &handled)
     }
 }

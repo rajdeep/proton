@@ -22,6 +22,7 @@
 		1B91F4B823C73D3C003F9B55 /* MarkupTextProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91F4B723C73D3C003F9B55 /* MarkupTextProcessor.swift */; };
 		1B91F4BA23C73D96003F9B55 /* TextProcessorExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91F4B923C73D96003F9B55 /* TextProcessorExampleViewController.swift */; };
 		1BB8904223C5A74700F087AE /* Proton.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1BFFEF0223C3048E00D2BA35 /* Proton.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1BD993C223CA8FD200563ACB /* PanelAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993C123CA8FD200563ACB /* PanelAttachment.swift */; };
 		1BFFEEFE23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEEFD23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift */; };
 		1BFFEF0023C303F100D2BA35 /* AutogrowingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEEFF23C303F100D2BA35 /* AutogrowingTextField.swift */; };
 		1BFFEF0323C3048E00D2BA35 /* Proton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BFFEF0223C3048E00D2BA35 /* Proton.framework */; };
@@ -84,6 +85,7 @@
 		1B91F4B523C73D01003F9B55 /* TypeaheadTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeaheadTextProcessor.swift; sourceTree = "<group>"; };
 		1B91F4B723C73D3C003F9B55 /* MarkupTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkupTextProcessor.swift; sourceTree = "<group>"; };
 		1B91F4B923C73D96003F9B55 /* TextProcessorExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessorExampleViewController.swift; sourceTree = "<group>"; };
+		1BD993C123CA8FD200563ACB /* PanelAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelAttachment.swift; sourceTree = "<group>"; };
 		1BFFEEFD23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchContentAttachmentExampleViewController.swift; sourceTree = "<group>"; };
 		1BFFEEFF23C303F100D2BA35 /* AutogrowingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingTextField.swift; sourceTree = "<group>"; };
 		1BFFEF0223C3048E00D2BA35 /* Proton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Proton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -238,6 +240,7 @@
 			children = (
 				1BFFEEFF23C303F100D2BA35 /* AutogrowingTextField.swift */,
 				1BFFEF0923C30C9900D2BA35 /* PanelView.swift */,
+				1BD993C123CA8FD200563ACB /* PanelAttachment.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -389,6 +392,7 @@
 				1BFFEF0A23C30C9900D2BA35 /* PanelView.swift in Sources */,
 				1B45CD8B23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift in Sources */,
 				1B6DE9E123C59A16007F9859 /* PanelCommand.swift in Sources */,
+				1BD993C223CA8FD200563ACB /* PanelAttachment.swift in Sources */,
 				1BFFEF0723C30B8E00D2BA35 /* FullWidthAttachmentExampleViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

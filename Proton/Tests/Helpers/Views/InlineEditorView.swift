@@ -11,7 +11,7 @@ import UIKit
 
 import Proton
 
-class InlineEditorView: EditorView, InlineAttachment {
+class InlineEditorView: EditorView, InlineContent {
     public var name: EditorContent.Name {
         return EditorContent.Name("Editor")
     }
