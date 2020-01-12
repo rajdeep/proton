@@ -31,6 +31,16 @@ open class EditorView: UIView {
         setup()
     }
 
+    open var editorInputAccessoryView: UIView? {
+        get { return richTextView.inputAccessoryView }
+        set { richTextView.inputAccessoryView = newValue }
+    }
+
+    open var editorInputView: UIView? {
+        get { return richTextView.inputView }
+        set { richTextView.inputView = newValue }
+    }
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

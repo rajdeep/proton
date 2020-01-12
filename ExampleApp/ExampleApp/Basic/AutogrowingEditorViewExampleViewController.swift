@@ -30,6 +30,5 @@ class AutogrowingEditorViewExampleViewController: ExamplesBaseViewController {
             editor.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
         ])
-
     }
 }
