@@ -49,7 +49,7 @@ class EditorViewDelegateTests: XCTestCase {
         let richTextView = editor.richTextView
         let richTextViewDelegate = richTextView.richTextViewDelegate
 
-        richTextViewDelegate?.richTextView(richTextView, didChangeSelection: .zero, attributes: [], contentType: .paragraph)
+        richTextViewDelegate?.richTextView(richTextView, didChangeSelection: .zero, attributes: [:], contentType: .paragraph)
         waitForExpectations(timeout: 1.0)
     }
 

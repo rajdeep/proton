@@ -232,7 +232,7 @@ extension EditorView {
 extension EditorView: DefaultTextFormattingProviding { }
 
 extension EditorView: RichTextViewDelegate {
-    func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [EditorAttribute], contentType: EditorContent.Name) {
+    func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
         delegate?.editor(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
     }
 

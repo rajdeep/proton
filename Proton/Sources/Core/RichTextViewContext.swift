@@ -20,6 +20,13 @@ class RichTextViewContext: NSObject, UITextViewDelegate {
         activeTextView = textView as? RichTextView
         guard let richTextView = activeTextView else { return }
         activeTextView?.richTextViewDelegate?.richTextView(richTextView, didReceiveFocusAt: textView.selectedRange)
+
+        let range = textView.selectedRange
+        var attributes = richTextView.typingAttributes
+        let contentType = attributes[.contentType] as? EditorContent.Name ?? .unknown
+        attributes[.contentType] = nil
+        richTextView.richTextViewDelegate?.richTextView(richTextView, didChangeSelection: range, attributes: attributes, contentType: contentType)
+
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -75,28 +82,30 @@ class RichTextViewContext: NSObject, UITextViewDelegate {
         activeTextView = textView as? RichTextView
 
         guard let richTextView = activeTextView else { return }
-
         let range = textView.selectedRange
-        let substring = textView.attributedText.attributedSubstring(from: range)
-        guard substring.length > 0 else {
-            resetAttachmentSelection(textView)
 
-            if textView.text.isEmpty == false,
-                textView.selectedRange.location - 1 > textView.attributedText.length {
-                // TODO: Add attributes and contentTyoe
-                richTextView.richTextViewDelegate?.richTextView(richTextView, didChangeSelection: range, attributes: [], contentType: .unknown)
-            }
+        resetAttachmentSelection(textView)
+        guard range.length > 0 else {
+            var attributes = richTextView.typingAttributes
+            let contentType = attributes[.contentType] as? EditorContent.Name ?? .unknown
+            attributes[.contentType] = nil
+            richTextView.richTextViewDelegate?.richTextView(richTextView, didChangeSelection: range, attributes: attributes, contentType: contentType)
             return
         }
 
-        substring.enumerateAttribute(.attachment, in: substring.fullRange, options: .longestEffectiveRangeNotRequired) { attachment, _, _ in
+        let substring = textView.attributedText.attributedSubstring(from: range)
+
+        // Mark attachments as selected if there are any in the selected range
+        substring.enumerateAttribute(.attachment, in: substring.fullRange, options: .longestEffectiveRangeNotRequired) { attachment, range, _ in
             if let attachment = attachment as? Attachment {
                 attachment.isSelected = true
             }
         }
 
-        // TODO: Add attributes and contentTyoe
-        richTextView.richTextViewDelegate?.richTextView(richTextView, didChangeSelection: range, attributes: [], contentType: .unknown)
+        var attributes = substring.attributes(at: 0, effectiveRange: nil)
+        let contentType = attributes[.contentType] as? EditorContent.Name ?? .unknown
+        attributes[.contentType] = nil
+        richTextView.richTextViewDelegate?.richTextView(richTextView, didChangeSelection: range, attributes: attributes, contentType: contentType)
     }
 
     func resetAttachmentSelection(_ textView: UITextView) {

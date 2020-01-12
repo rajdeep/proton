@@ -12,13 +12,13 @@ import UIKit
 @testable import Proton
 
 class MockRichTextViewDelegate: RichTextViewDelegate {
-    var onSelectionChanged: ((RichTextView, NSRange, [EditorAttribute], EditorContent.Name) -> Void)?
+    var onSelectionChanged: ((RichTextView, NSRange, [NSAttributedString.Key: Any], EditorContent.Name) -> Void)?
     var onKeyReceived: ((RichTextView, EditorKey, NSRange, Bool) -> Void)?
     var onReceivedFocus: ((RichTextView, NSRange) -> Void)?
     var onLostFocus: ((RichTextView, NSRange) -> Void)?
     var onDidFinishLayout: ((RichTextView, Bool) -> Void)?
 
-    func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [EditorAttribute], contentType: EditorContent.Name) {
+    func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
         onSelectionChanged?(richTextView, range, attributes, contentType)
     }
 

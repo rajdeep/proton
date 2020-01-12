@@ -15,6 +15,7 @@ public protocol EditorContentView: Focusable {
     var attributedText: NSAttributedString { get set }
     var maxHeight: CGFloat { get set }
     var boundsObserver: BoundsObserving? { get set }
+    var delegate: EditorViewDelegate? { get set }
 
     func becomeFirstResponder() -> Bool
 }
@@ -37,6 +38,11 @@ public extension EditorContentView {
     var boundsObserver: BoundsObserving? {
         get { return editor.boundsObserver }
         set { editor.boundsObserver = newValue }
+    }
+
+    var delegate: EditorViewDelegate? {
+        get { return editor.delegate }
+        set { editor.delegate = newValue}
     }
 
     func setFocus() {

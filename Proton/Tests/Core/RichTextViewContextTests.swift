@@ -142,4 +142,43 @@ class RichTextViewContextTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
 
+    func testRelaysAttributesAtSelectedRange() {
+        let testExpectation = expectation(description: #function)
+        testExpectation.expectedFulfillmentCount = 2
+
+        let mockTextViewDelegate = MockRichTextViewDelegate()
+
+        let key1 = NSAttributedString.Key("key1")
+        let key2 = NSAttributedString.Key("key2")
+
+        let textView = RichTextView()
+        textView.richTextViewDelegate = mockTextViewDelegate
+        textView.text = "Sample text"
+
+        let key1Range = NSRange(location: 2, length: 1)
+        let key2Range = NSRange(location: 4, length: 1)
+
+        textView.addAttributes([key1: 1], range: key1Range)
+        textView.addAttributes([key2: 2], range: key2Range)
+
+        var run = 0
+        mockTextViewDelegate.onSelectionChanged = { _, _, attributes, _ in
+            if run == 0 {
+                XCTAssertEqual(attributes[key1] as? Int, 1)
+            } else  {
+                XCTAssertEqual(attributes[key2] as? Int, 2)
+            }
+            run += 1
+            testExpectation.fulfill()
+        }
+
+        // run 1
+        textView.selectedRange = key1Range
+
+        // run 2
+        textView.selectedRange = key2Range
+
+        waitForExpectations(timeout: 1.0)
+    }
+
 }

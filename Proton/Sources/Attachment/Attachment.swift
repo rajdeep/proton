@@ -283,6 +283,11 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         guard view.superview == nil else { return }
         editorView.richTextView.addSubview(self.view)
         self.view.layoutIfNeeded()
+
+        if var editorContentView = contentView as? EditorContentView,
+            editorContentView.delegate == nil {
+            editorContentView.delegate = editorView.delegate
+        }
     }
 }
 
