@@ -19,4 +19,5 @@ protocol RichTextViewDelegate: class {
     func richTextView(_ richTextView: RichTextView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool)
     func richTextView(_ richTextView: RichTextView, didReceiveFocusAt range: NSRange)
     func richTextView(_ richTextView: RichTextView, didLoseFocusFrom range: NSRange)
+    func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool)
 }

@@ -36,7 +36,7 @@ class TextProcessorTests: XCTestCase {
     func testInvokesTextProcessor() {
         let testExpectation = functionExpectation()
         let editor = EditorView()
-        let textProcessor = TextProcessor(editor: editor)
+
         let name = "RegsitrationTest"
         let mockProcessor = MockTextProcessor(name: name, processorCondition: { _, _ in return true })
         mockProcessor.onProcess = { processedEditor, range, _ in
@@ -44,9 +44,8 @@ class TextProcessorTests: XCTestCase {
             testExpectation.fulfill()
         }
         let testString = NSAttributedString(string: "test")
-        let textStorage = editor.richTextView.storage
-        textProcessor.register(mockProcessor)
-        textProcessor.textStorage(textStorage, willProcessEditing: .editedCharacters, range: testString.fullRange, changeInLength: testString.length)
+        editor.registerProcessor(mockProcessor)
+        editor.replaceCharacters(in: .zero, with: testString)
         waitForExpectations(timeout: 1.0)
     }
 
@@ -55,7 +54,6 @@ class TextProcessorTests: XCTestCase {
         testExpectation.expectedFulfillmentCount = 2
 
         let editor = EditorView()
-        let textProcessor = TextProcessor(editor: editor)
 
         let mockProcessor1 = MockTextProcessor(name: "p1", processorCondition: { _, _ in return true })
         mockProcessor1.priority = .high
@@ -77,10 +75,10 @@ class TextProcessorTests: XCTestCase {
         }
 
         let testString = NSAttributedString(string: "test")
-        let textStorage = editor.richTextView.storage
-        textProcessor.register(mockProcessor1)
-        textProcessor.register(mockProcessor2)
-        textProcessor.textStorage(textStorage, willProcessEditing: .editedCharacters, range: testString.fullRange, changeInLength: testString.length)
+
+        editor.registerProcessor(mockProcessor1)
+        editor.registerProcessor(mockProcessor2)
+        editor.replaceCharacters(in: .zero, with: testString)
         waitForExpectations(timeout: 1.0)
     }
 
@@ -91,7 +89,6 @@ class TextProcessorTests: XCTestCase {
         let interruptExpectation = functionExpectation("interrupt")
 
         let editor = EditorView()
-        let textProcessor = TextProcessor(editor: editor)
 
         let mockProcessor1 = MockTextProcessor(name: "e1", processorCondition: { _, _ in return true })
         mockProcessor1.priority = .exclusive
@@ -107,10 +104,9 @@ class TextProcessorTests: XCTestCase {
         }
 
         let testString = NSAttributedString(string: "test")
-        let textStorage = editor.richTextView.storage
-        textProcessor.register(mockProcessor1)
-        textProcessor.register(mockProcessor2)
-        textProcessor.textStorage(textStorage, willProcessEditing: .editedCharacters, range: testString.fullRange, changeInLength: testString.length)
+        editor.registerProcessor(mockProcessor1)
+        editor.registerProcessor(mockProcessor2)
+        editor.replaceCharacters(in: .zero, with: testString)
         waitForExpectations(timeout: 1.0)
     }
 }

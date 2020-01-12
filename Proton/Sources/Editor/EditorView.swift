@@ -115,16 +115,10 @@ open class EditorView: UIView {
             richTextView.trailingAnchor.constraint(equalTo: trailingAnchor),
             ])
 
-        setupTextStyles()
         typingAttributes = [
             NSAttributedString.Key.font: font ?? UIFont.systemFont(ofSize: 17),
             NSAttributedString.Key.paragraphStyle: paragraphStyle
         ]
-    }
-
-    private func setupTextStyles() {
-        paragraphStyle.lineSpacing = 6
-        paragraphStyle.firstLineHeadIndent = 8
     }
 
     @discardableResult
@@ -167,11 +161,25 @@ open class EditorView: UIView {
     }
 
     public func replaceCharacters(in range: NSRange, with attriburedString: NSAttributedString) {
-        richTextView.textStorage.replaceCharacters(in: range, with: attriburedString)
+        richTextView.replaceCharacters(in: range, with: attriburedString)
     }
 
+    /// Replaces the characters in the given range with the string provided.
+    /// - Attention:
+    /// The string provided will use the default `font` and `paragraphStyle` set in the `EditorView`. It will not retain any other attributes already applied on
+    /// the range of text being replaced by the `string`. If you would like add any other attributes, it is best to use `replaceCharacters` with the paramater value of
+    /// type `NSAttributedString` that may have additional attributes defined, as well as customised `font` and `paragraphStyle` applied.
+    /// - Parameter range: Range of text to replace. For an empty `EditorView`, you may pass `NSRange.zero` to insert text at the beginning.
+    /// - Parameter string: String to replace the range of text with. The string will use default `font` and `paragraphStyle` defined in the `EditorView`.
     public func replaceCharacters(in range: NSRange, with string: String) {
-        richTextView.textStorage.replaceCharacters(in: range, with: string)
+        var attributes: RichTextAttributes = [
+            NSAttributedString.Key.paragraphStyle: paragraphStyle
+        ]
+        if let font = self.font {
+           attributes[NSAttributedString.Key.font] = font
+        }
+        let attributedString = NSAttributedString(string: string, attributes: attributes)
+        richTextView.replaceCharacters(in: range, with: attributedString)
     }
 
     public func registerProcessor(_ processor: TextProcessing) {
@@ -185,8 +193,8 @@ open class EditorView: UIView {
 
 extension EditorView {
     public func addAttributes(_ attributes: [NSAttributedString.Key: Any], at range: NSRange) {
-        self.richTextView.storage.addAttributes(attributes, range: range)
-        self.richTextView.storage.enumerateAttribute(.attachment, in: range, options: .longestEffectiveRangeNotRequired) { value, rangeInContainer, _ in
+        self.richTextView.addAttributes(attributes, range: range)
+        self.richTextView.enumerateAttribute(.attachment, in: range, options: .longestEffectiveRangeNotRequired) { value, rangeInContainer, _ in
             if let attachment = value as? Attachment {
                 attachment.addedAttributesOnContainingRange(rangeInContainer: rangeInContainer, attributes: attributes)
             }
@@ -194,8 +202,8 @@ extension EditorView {
     }
 
     public func removeAttributes(_ attributes: [NSAttributedString.Key], at range: NSRange) {
-        self.richTextView.storage.removeAttributes(attributes, range: range)
-        self.richTextView.storage.enumerateAttribute(.attachment, in: range, options: .longestEffectiveRangeNotRequired) { value, rangeInContainer, _ in
+        self.richTextView.removeAttributes(attributes, range: range)
+        self.richTextView.enumerateAttribute(.attachment, in: range, options: .longestEffectiveRangeNotRequired) { value, rangeInContainer, _ in
             if let attachment = value as? Attachment {
                 attachment.removedAttributesFromContainingRange(rangeInContainer: rangeInContainer, attributes: attributes)
             }
@@ -228,5 +236,42 @@ extension EditorView: RichTextViewDelegate {
 
     func richTextView(_ richTextView: RichTextView, didLoseFocusFrom range: NSRange) {
         delegate?.editor(self, didLoseFocusFrom: range)
+    }
+
+    func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool) {
+        guard finished else { return }
+        relayoutAttachments()
+    }
+}
+
+extension EditorView {
+    func invalidateLayout(for range: NSRange) {
+        richTextView.invalidateLayout(for: range)
+    }
+
+    func relayoutAttachments() {
+        richTextView.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: richTextView.contentLength), options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
+            guard let attachment = attach as? Attachment
+                else { return }
+
+            var frame = richTextView.boundingRect(forGlyphRange: range)
+            frame.origin.y += self.textContainerInset.top
+
+            var size = attachment.frame.size
+            if size == .zero,
+                let contentSize = attachment.contentView?.systemLayoutSizeFitting(bounds.size) {
+                size = contentSize
+            }
+
+            frame = CGRect(origin: frame.origin, size: size)
+
+            if attachment.isRendered == false {
+                attachment.render(in: self)
+                if let focusable = attachment.contentView as? Focusable {
+                    focusable.setFocus()
+                }
+            }
+            attachment.frame = frame
+        }
     }
 }

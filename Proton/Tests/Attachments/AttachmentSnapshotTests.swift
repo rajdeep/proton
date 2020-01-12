@@ -22,8 +22,8 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
     }
 
     func testMatchContentRendering() {
-        let viewController = RichTextViewTestViewController()
-        let textView = viewController.textView
+        let viewController = EditorTestViewController()
+        let textView = viewController.editor
         
         let attachment = makeDummyAttachment(text: "in attachment", size: .matchContent)
 
@@ -35,8 +35,8 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
     }
 
     func testFallsToNextLineForLongContent() {
-        let viewController = RichTextViewTestViewController()
-        let textView = viewController.textView
+        let viewController = EditorTestViewController()
+        let textView = viewController.editor
 
         let attachment = makeDummyAttachment(text: "Long text in attachment", size: .matchContent)
 
@@ -50,8 +50,8 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
     }
 
     func testMatchContainerRendering() {
-        let viewController = RichTextViewTestViewController()
-        let textView = viewController.textView
+        let viewController = EditorTestViewController()
+        let textView = viewController.editor
 
         let attachment = makeDummyAttachment(text: "in attachment", size: .fullWidth)
 
@@ -63,8 +63,8 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
     }
 
     func testFixedWidthRendering() {
-        let viewController = RichTextViewTestViewController()
-        let textView = viewController.textView
+        let viewController = EditorTestViewController()
+        let textView = viewController.editor
 
         let attachment = makeDummyAttachment(text: "fixed width attachment", size: .fixed(width: 100))
 
@@ -77,8 +77,8 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
     }
 
     func testPercentBasedRendering() {
-        let viewController = RichTextViewTestViewController()
-        let textView = viewController.textView
+        let viewController = EditorTestViewController()
+        let textView = viewController.editor
 
         // TODO: validate incorect snapshot rendering
 //        let attachment = makeDummyAttachment(text: "percent width attachment", size: .percent(width: 75))
@@ -92,8 +92,8 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
     }
 
     func testWidthRangeRendering() {
-        let viewController = RichTextViewTestViewController()
-        let textView = viewController.textView
+        let viewController = EditorTestViewController()
+        let textView = viewController.editor
 
         let attachment1 = makeDummyAttachment(text: "short", size: .range(minWidth: 60, maxWidth: 200))
         let attachment2 = makeDummyAttachment(text: "some relatively long text", size: .range(minWidth: 60, maxWidth: 200))

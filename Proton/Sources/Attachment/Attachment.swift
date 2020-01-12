@@ -110,12 +110,10 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         }
     }
 
-    public var containerEditorView: EditorView? {
-        return containerTextView?.superview as? EditorView
-    }
+    public private(set) var containerEditorView: EditorView?
 
     private var containerTextView: RichTextView? {
-        return view.superview as? RichTextView
+        return containerEditorView?.richTextView
     }
 
     public func didChangeBounds(_ bounds: CGRect) {
@@ -280,9 +278,10 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         return self.bounds
     }
 
-    func render(in textView: RichTextView) {
+    func render(in editorView: EditorView) {
+        self.containerEditorView = editorView
         guard view.superview == nil else { return }
-        textView.addSubview(self.view)
+        editorView.richTextView.addSubview(self.view)
         self.view.layoutIfNeeded()
     }
 }
@@ -290,10 +289,10 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 extension Attachment {
     /// Invalidates the current layout and triggers a layout update.
     public func invalidateLayout() {
-        guard let editor = containerTextView,
-            let range = editor.textStorage.rangeFor(attachment: self) else { return }
+        guard let editor = containerEditorView,
+            let range = editor.attributedText.rangeFor(attachment: self) else { return }
 
-        editor.layoutManager.invalidateLayout(forCharacterRange: range, actualCharacterRange: nil)
+        editor.invalidateLayout(for: range)
         editor.relayoutAttachments()
     }
 }

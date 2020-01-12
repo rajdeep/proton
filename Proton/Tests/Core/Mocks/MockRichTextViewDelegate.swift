@@ -16,6 +16,7 @@ class MockRichTextViewDelegate: RichTextViewDelegate {
     var onKeyReceived: ((RichTextView, EditorKey, NSRange, Bool) -> Void)?
     var onReceivedFocus: ((RichTextView, NSRange) -> Void)?
     var onLostFocus: ((RichTextView, NSRange) -> Void)?
+    var onDidFinishLayout: ((RichTextView, Bool) -> Void)?
 
     func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [EditorAttribute], contentType: EditorContent.Name) {
         onSelectionChanged?(richTextView, range, attributes, contentType)
@@ -31,5 +32,9 @@ class MockRichTextViewDelegate: RichTextViewDelegate {
 
     func richTextView(_ richTextView: RichTextView, didLoseFocusFrom range: NSRange) {
         onLostFocus?(richTextView, range)
+    }
+
+    func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool) {
+        onDidFinishLayout?(richTextView, finished)
     }
 }

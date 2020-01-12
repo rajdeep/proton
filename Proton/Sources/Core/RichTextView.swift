@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class RichTextView: AutogrowingTextView {
-    let storage = TextStorage()
+    private let storage = TextStorage()
 
     weak var richTextViewDelegate: RichTextViewDelegate?
 
@@ -34,6 +34,10 @@ class RichTextView: AutogrowingTextView {
 
     var richTextStorage: TextStorage {
         return storage
+    }
+
+    var contentLength: Int {
+        return storage.length
     }
 
     weak var textProcessor: TextProcessor? {
@@ -87,6 +91,10 @@ class RichTextView: AutogrowingTextView {
         return attributes[attribute]
     }
 
+    func boundingRect(forGlyphRange range: NSRange) -> CGRect {
+        return layoutManager.boundingRect(forGlyphRange: range, in: textContainer)
+    }
+
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         // TODO: revisit
         return false
@@ -95,44 +103,22 @@ class RichTextView: AutogrowingTextView {
     func contents(in range: NSRange? = nil) -> AnySequence<EditorContent> {
         return self.attributedText.enumerateContents(in: range)
     }
+
+    func addAttributes(_ attrs: [NSAttributedString.Key : Any], range: NSRange) {
+        storage.addAttributes(attrs, range: range)
+    }
+
+    func removeAttributes(_ attrs: [NSAttributedString.Key], range: NSRange) {
+        storage.removeAttributes(attrs, range: range)
+    }
+
+    func enumerateAttribute(_ attrName: NSAttributedString.Key, in enumerationRange: NSRange, options opts: NSAttributedString.EnumerationOptions = [], using block: (Any?, NSRange, UnsafeMutablePointer<ObjCBool>) -> Void) {
+        storage.enumerateAttribute(attrName, in: enumerationRange, options: opts, using: block)
+    }
 }
 
 extension RichTextView: NSLayoutManagerDelegate  {
     func layoutManager(_ layoutManager: NSLayoutManager, didCompleteLayoutFor textContainer: NSTextContainer?, atEnd layoutFinishedFlag: Bool) {
-        guard layoutFinishedFlag,
-            let textContainer = textContainer as? TextContainer,
-            let textView = textContainer.textView else {
-                return
-        }
-
-        textView.relayoutAttachments()
-    }
-}
-
-extension RichTextView {
-    func relayoutAttachments() {
-        textStorage.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: textStorage.length), options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
-            guard let attachment = attach as? Attachment
-                else { return }
-
-            var frame = layoutManager.boundingRect(forGlyphRange: range, in: textContainer)
-            frame.origin.y += self.textContainerInset.top
-
-            var size = attachment.frame.size
-            if size == .zero,
-                let contentSize = attachment.contentView?.systemLayoutSizeFitting(bounds.size) {
-                size = contentSize
-            }
-
-            frame = CGRect(origin: frame.origin, size: size)
-
-            if attachment.isRendered == false {
-                attachment.render(in: self)
-                if let focusable = attachment.contentView as? Focusable {
-                    focusable.setFocus()
-                }
-            }
-            attachment.frame = frame
-        }
+        richTextViewDelegate?.richTextView(self, didFinishLayout: layoutFinishedFlag)
     }
 }
