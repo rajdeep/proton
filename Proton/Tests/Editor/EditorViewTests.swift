@@ -133,4 +133,45 @@ class EditorViewTests: XCTestCase {
         XCTAssertEqual(transformedContents[1], "Name: `textField` ContentView: `AutogrowingTextField` Type: `inline`")
         XCTAssertEqual(transformedContents[2], "Name: `paragraph` Text: ` `")
     }
+
+    func testPropagatesAddAttributesToAttachments() {
+        let attrExpectation = functionExpectation()
+        let testString = "Test string"
+        let editor = EditorView()
+        let attachment = MockAttachment(PanelView(), size: .fixed(width: 50))
+        let key = NSAttributedString.Key("TestKey")
+        let attributesToAdd = [key: "value"]
+
+        attachment.onAddedAttributesOnContainingRange = { range, attr in
+            XCTAssertNotNil(attr[key] as? String)
+            XCTAssertEqual(attributesToAdd[key], attr[key] as? String)
+            XCTAssertEqual(range, attachment.rangeInContainer())
+            attrExpectation.fulfill()
+        }
+
+        editor.replaceCharacters(in: .zero, with: testString)
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.addAttributes(attributesToAdd, at: NSRange(location: 7, length: editor.contentLength - 7))
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testPropagatesRemoveAttributesToAttachments() {
+        let attrExpectation = functionExpectation()
+        let testString = "Test string"
+        let editor = EditorView()
+        let attachment = MockAttachment(PanelView(), size: .fixed(width: 50))
+        let key = NSAttributedString.Key("TestKey")
+
+        attachment.onRemovedAttributesFromContainingRange = { range, attr in
+            XCTAssertFalse(attr.isEmpty)
+            XCTAssertEqual(key, attr[0])
+            XCTAssertEqual(range, attachment.rangeInContainer())
+            attrExpectation.fulfill()
+        }
+
+        editor.replaceCharacters(in: .zero, with: testString)
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.removeAttribute(key, at: NSRange(location: 7, length: editor.contentLength - 7))
+        waitForExpectations(timeout: 1.0)
+    }
 }
