@@ -20,6 +20,22 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         recordMode = false
     }
 
+    func testRendersPlaceholder() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let font = UIFont(name: "Verdana", size: 17) ?? UIFont()
+        let placeholderString = NSMutableAttributedString(string: "Placeholder text", attributes: [
+            NSAttributedString.Key.font: font,
+            NSAttributedString.Key.foregroundColor: UIColor.lightGray
+        ])
+
+        placeholderString.addAttribute(.font, value: font.adding(trait: .traitBold), range: NSRange(location: 12, length: 4))
+
+        editor.placeholderText = placeholderString
+        viewController.render()
+        FBSnapshotVerifyView(viewController.view)
+    }
+
     func testRendersMatchContentAttachment() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor

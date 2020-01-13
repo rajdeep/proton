@@ -45,6 +45,11 @@ open class EditorView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    public var placeholderText: NSAttributedString? {
+        get { richTextView.placeholderText }
+        set { richTextView.placeholderText = newValue}
+    }
+
     public var contentInset: UIEdgeInsets {
         get { richTextView.contentInset }
         set { richTextView.contentInset = newValue }

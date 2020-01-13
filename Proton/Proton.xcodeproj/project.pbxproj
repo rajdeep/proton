@@ -152,6 +152,7 @@
 		1B8BE91E23C71E8A00353B17 /* MockEditorViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEditorViewDelegate.swift; sourceTree = "<group>"; };
 		1B91F4B023C72D87003F9B55 /* TextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessor.swift; sourceTree = "<group>"; };
 		1B91F4B223C72DC3003F9B55 /* TextProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessing.swift; sourceTree = "<group>"; };
+		1B975AF323CC627500EC410C /* testRendersPlaceholder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersPlaceholder@3x.png"; sourceTree = "<group>"; };
 		1BB214C623BB2778008B84A0 /* Proton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Proton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BB214C923BB2778008B84A0 /* Proton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Proton.h; sourceTree = "<group>"; };
 		1BB214CA23BB2778008B84A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -545,6 +546,7 @@
 		1BFFEF2223C3423800D2BA35 /* ProtonTests.EditorSnapshotTests */ = {
 			isa = PBXGroup;
 			children = (
+				1B975AF323CC627500EC410C /* testRendersPlaceholder@3x.png */,
 				1B7A985523C4811C00C34B14 /* testDeletesAttachments@3x.png */,
 				1BFFEF2323C3423800D2BA35 /* testRendersFixedWidthAttachment@3x.png */,
 				1BFFEF2423C3423800D2BA35 /* testRendersMatchContentAttachment@3x.png */,

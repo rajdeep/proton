@@ -19,6 +19,14 @@ class RichTextView: AutogrowingTextView {
         set { storage.defaultTextFormattingProvider = newValue }
     }
 
+    private let placeholderLabel = UILabel()
+
+    var placeholderText: NSAttributedString? {
+        didSet {
+            placeholderLabel.attributedText = placeholderText
+        }
+    }
+
     init(frame: CGRect = .zero, context: RichTextViewContext = RichTextViewContext.default) {
         let textContainer = TextContainer()
         let layoutManager = NSLayoutManager()
@@ -30,6 +38,8 @@ class RichTextView: AutogrowingTextView {
         layoutManager.delegate = self
         textContainer.textView = self
         self.delegate = context
+
+        setupPlaceholder()
     }
 
     var richTextStorage: TextStorage {
@@ -55,6 +65,25 @@ class RichTextView: AutogrowingTextView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private func setupPlaceholder() {
+        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
+        placeholderLabel.numberOfLines = 0
+        placeholderLabel.lineBreakMode = .byWordWrapping
+
+        addSubview(placeholderLabel)
+        placeholderLabel.attributedText = placeholderText
+        NSLayoutConstraint.activate([
+            placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: textContainerInset.top),
+            placeholderLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -textContainerInset.bottom),
+            placeholderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: textContainer.lineFragmentPadding),
+            placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -textContainer.lineFragmentPadding),
+        ])
+
+        NotificationCenter.default.addObserver(forName: UITextView.textDidChangeNotification, object: self, queue: nil) { [weak self] _ in
+            self?.updatePlaceholderVisibility()
+        }
+    }
+
     func invalidateLayout(for range: NSRange) {
         layoutManager.invalidateLayout(forCharacterRange: range, actualCharacterRange: nil)
     }
@@ -73,11 +102,16 @@ class RichTextView: AutogrowingTextView {
 
     func replaceCharacters(in range: NSRange, with attrString: NSAttributedString) {
         richTextStorage.replaceCharacters(in: range, with: attrString)
+        updatePlaceholderVisibility()
     }
 
     func replaceCharacters(in range: NSRange, with string: String) {
         // Delegate to function with attrString so that default attributes are automatically applied
         richTextStorage.replaceCharacters(in: range, with: NSAttributedString(string: string))
+    }
+
+    private func updatePlaceholderVisibility() {
+        self.placeholderLabel.attributedText = self.attributedText.length == 0 ? self.placeholderText : NSAttributedString()
     }
 
     func attributeValue(at location: CGPoint, for attribute: NSAttributedString.Key) -> Any? {
