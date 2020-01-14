@@ -16,7 +16,7 @@ class RichTextViewTests: XCTestCase {
         let key = NSAttributedString.Key("test_key")
         let value = "value"
         let viewController = SnapshotTestViewController()
-        let textView = RichTextView(frame: .zero)
+        let textView = RichTextView(frame: .zero, context: RichTextViewContext())
         textView.translatesAutoresizingMaskIntoConstraints = false
         let attributedText = NSMutableAttributedString(string: "This is a test string")
         attributedText.addAttributes([key: value], range: NSRange(location: 0, length: 4))

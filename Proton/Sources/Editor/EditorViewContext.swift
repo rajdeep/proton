@@ -13,7 +13,7 @@ import Foundation
 /// context automatically share the `EditorCommandExecutor`. i.e. the `EditorCommandExecutor` operates on only those `EditorView`s which have the same
 /// context as provided to the `EditorCommandExecutor`.
 public class EditorViewContext {
-    let richTextViewContext: RichTextViewContext
+    let richTextViewContext: RichTextEditorContext
 
     /// Identifies the `EditorViewContext`uniquely.
     public let id: String
@@ -23,13 +23,13 @@ public class EditorViewContext {
     public let name: String
 
     /// Default shared context. Use this in case there is onlt a single `EditorView` on the screen at the root level.
-    public static let shared = EditorViewContext(name: "shared_context")
+    public static let shared = EditorViewContext(name: "shared_editor_context")
 
     /// Initializes a new context
     /// - Parameter name: Friendly name for the context.
     public init(name: String) {
         self.id = UUID().uuidString
         self.name = name
-        richTextViewContext = RichTextViewContext()
+        richTextViewContext = RichTextEditorContext()
     }
 }

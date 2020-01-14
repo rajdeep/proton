@@ -16,13 +16,26 @@ public protocol BoundsObserving: class {
 open class EditorView: UIView {
     let richTextView: RichTextView
 
-    public let context: EditorViewContext
+    let context: RichTextViewContext
     public weak var delegate: EditorViewDelegate?
     var textProcessor: TextProcessor?
 
+    // Making this a convenience init fails the test `testRendersWidthRangeAttachment` as the init of a class subclassed from
+    // `EditorView` is retured as type `EditorView` and not the class itself, causing the test to fail.
     public init(frame: CGRect = .zero, context: EditorViewContext = .shared) {
-        self.context = context
-        self.richTextView = RichTextView(frame: frame, context: context.richTextViewContext)
+        self.context = context.richTextViewContext
+        self.richTextView = RichTextView(frame: frame, context: self.context)
+
+        super.init(frame: frame)
+
+        self.textProcessor = TextProcessor(editor: self)
+        self.richTextView.textProcessor = textProcessor
+        setup()
+    }
+
+    init(frame: CGRect, richTextViewContext: RichTextViewContext) {
+        self.context = richTextViewContext
+        self.richTextView = RichTextView(frame: frame, context: context)
 
         super.init(frame: frame)
 
@@ -62,6 +75,11 @@ open class EditorView: UIView {
 
     public var contentLength: Int {
         return attributedText.length
+    }
+
+    public var isEditable: Bool {
+        get { richTextView.isEditable }
+        set { richTextView.isEditable = newValue }
     }
 
     public var isEmpty: Bool {
@@ -154,11 +172,11 @@ open class EditorView: UIView {
         richTextView.resignFirstResponder()
     }
 
-    public func scrollRangeToVisible(range: NSRange) {
+    public func scrollRangeToVisible(_ range: NSRange) {
         richTextView.scrollRangeToVisible(range)
     }
 
-    public func scrollRectToVisible(rect: CGRect, animated: Bool) {
+    public func scrollRectToVisible(_ rect: CGRect, animated: Bool) {
         richTextView.scrollRectToVisible(rect, animated: animated)
     }
 
@@ -257,6 +275,8 @@ extension EditorView: RichTextViewDelegate {
         guard finished else { return }
         relayoutAttachments()
     }
+
+    func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) { }
 }
 
 extension EditorView {
@@ -288,5 +308,11 @@ extension EditorView {
             }
             attachment.frame = frame
         }
+    }
+}
+
+public extension EditorView {
+    func convertToRenderer() -> RendererView {
+        return RendererView(editor: self)
     }
 }

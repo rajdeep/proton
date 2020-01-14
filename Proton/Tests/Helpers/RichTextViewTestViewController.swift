@@ -15,7 +15,7 @@ class RichTextViewTestViewController: SnapshotTestViewController {
     let textView: RichTextView
 
     init() {
-        textView = RichTextView(frame: .zero)
+        textView = RichTextView(frame: .zero, context: RichTextViewContext())
         super.init(nibName: nil, bundle: nil)
         setup()
     }

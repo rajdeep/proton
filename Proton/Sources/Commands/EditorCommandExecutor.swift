@@ -12,7 +12,7 @@ import Foundation
 /// All the `EditorView`s in the hierarchy sharing the same `EditorContext` will automaticlly be handled by the `EditorCommandExecutor`.
 /// `EditorCommandExecutor` keeps the track of the `EditorView` that has the focus and executes the given command in the active `EditorView`.
 public class EditorCommandExecutor {
-    private let context: RichTextViewContext
+    private let context: RichTextEditorContext
 
     /// Initializes the `EditorCommandExecutor`
     /// - Parameter context: The context for the command executor. `EditorCommandExecutor` is capable of executing commands only on the `EditorView`s

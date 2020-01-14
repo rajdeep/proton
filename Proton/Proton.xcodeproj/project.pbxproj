@@ -39,7 +39,7 @@
 		1B45CDF123C16EF4001EB196 /* RichTextAttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDF023C16EF4001EB196 /* RichTextAttachmentView.swift */; };
 		1B6DE9D923C5940B007F9859 /* EditorCommandSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */; };
 		1B6DE9E323C5C184007F9859 /* FontTraitToggleCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6DE9E223C5C184007F9859 /* FontTraitToggleCommandTests.swift */; };
-		1B7A985723C4828A00C34B14 /* RichTextViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A985623C4828A00C34B14 /* RichTextViewContext.swift */; };
+		1B7A985723C4828A00C34B14 /* RichTextEditorContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A985623C4828A00C34B14 /* RichTextEditorContext.swift */; };
 		1B7A985923C484BC00C34B14 /* RichTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */; };
 		1B82570423C48C350033A0A9 /* MockRichTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B82570323C48C350033A0A9 /* MockRichTextViewDelegate.swift */; };
 		1B82570623C48FEC0033A0A9 /* RichTextViewContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B82570523C48FEC0033A0A9 /* RichTextViewContextTests.swift */; };
@@ -53,8 +53,18 @@
 		1B8BE91F23C71E8A00353B17 /* MockEditorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8BE91E23C71E8A00353B17 /* MockEditorViewDelegate.swift */; };
 		1B91F4B123C72D87003F9B55 /* TextProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91F4B023C72D87003F9B55 /* TextProcessor.swift */; };
 		1B91F4B323C72DC3003F9B55 /* TextProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91F4B223C72DC3003F9B55 /* TextProcessing.swift */; };
+		1B975AFB23CD3E9B00EC410C /* RendererView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975AFA23CD3E9B00EC410C /* RendererView.swift */; };
+		1B975AFD23CD40D200EC410C /* RichTextRendererContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975AFC23CD40D200EC410C /* RichTextRendererContext.swift */; };
+		1B975AFF23CD454700EC410C /* RichTextViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975AFE23CD454700EC410C /* RichTextViewContext.swift */; };
+		1B975B0123CD45DC00EC410C /* RendererViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975B0023CD45DC00EC410C /* RendererViewContext.swift */; };
 		1BB214D023BB2778008B84A0 /* Proton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB214C623BB2778008B84A0 /* Proton.framework */; };
 		1BB214D723BB2778008B84A0 /* Proton.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BB214C923BB2778008B84A0 /* Proton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1BBAC3CC23CD571D0088A1C8 /* RendererViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3CB23CD571D0088A1C8 /* RendererViewDelegate.swift */; };
+		1BBAC3CF23CD5A1B0088A1C8 /* UITextRangeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3CE23CD5A1B0088A1C8 /* UITextRangeExtensions.swift */; };
+		1BBAC3D223CD69250088A1C8 /* RendererSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3D123CD69250088A1C8 /* RendererSnapshotTests.swift */; };
+		1BBAC3D423CD696F0088A1C8 /* RendererTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3D323CD696F0088A1C8 /* RendererTestViewController.swift */; };
+		1BBAC3D823CD79EA0088A1C8 /* RendererViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3D723CD79EA0088A1C8 /* RendererViewTests.swift */; };
+		1BBAC3DA23CD7A8B0088A1C8 /* MockRendererViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3D923CD7A8B0088A1C8 /* MockRendererViewDelegate.swift */; };
 		1BD1791723C57F140066DC13 /* ItalicsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1791623C57F140066DC13 /* ItalicsCommand.swift */; };
 		1BD1791923C57F430066DC13 /* FontTraitToggleCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1791823C57F430066DC13 /* FontTraitToggleCommand.swift */; };
 		1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */; };
@@ -138,7 +148,7 @@
 		1B6DE9DB23C59889007F9859 /* testExecutesCommandOnNestedEditors@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testExecutesCommandOnNestedEditors@3x.png"; sourceTree = "<group>"; };
 		1B6DE9E223C5C184007F9859 /* FontTraitToggleCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTraitToggleCommandTests.swift; sourceTree = "<group>"; };
 		1B7A985523C4811C00C34B14 /* testDeletesAttachments@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testDeletesAttachments@3x.png"; sourceTree = "<group>"; };
-		1B7A985623C4828A00C34B14 /* RichTextViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewContext.swift; sourceTree = "<group>"; };
+		1B7A985623C4828A00C34B14 /* RichTextEditorContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextEditorContext.swift; sourceTree = "<group>"; };
 		1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewDelegate.swift; sourceTree = "<group>"; };
 		1B82570323C48C350033A0A9 /* MockRichTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRichTextViewDelegate.swift; sourceTree = "<group>"; };
 		1B82570523C48FEC0033A0A9 /* RichTextViewContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewContextTests.swift; sourceTree = "<group>"; };
@@ -153,11 +163,22 @@
 		1B91F4B023C72D87003F9B55 /* TextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessor.swift; sourceTree = "<group>"; };
 		1B91F4B223C72DC3003F9B55 /* TextProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessing.swift; sourceTree = "<group>"; };
 		1B975AF323CC627500EC410C /* testRendersPlaceholder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersPlaceholder@3x.png"; sourceTree = "<group>"; };
+		1B975AFA23CD3E9B00EC410C /* RendererView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererView.swift; sourceTree = "<group>"; };
+		1B975AFC23CD40D200EC410C /* RichTextRendererContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextRendererContext.swift; sourceTree = "<group>"; };
+		1B975AFE23CD454700EC410C /* RichTextViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewContext.swift; sourceTree = "<group>"; };
+		1B975B0023CD45DC00EC410C /* RendererViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererViewContext.swift; sourceTree = "<group>"; };
 		1BB214C623BB2778008B84A0 /* Proton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Proton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BB214C923BB2778008B84A0 /* Proton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Proton.h; sourceTree = "<group>"; };
 		1BB214CA23BB2778008B84A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BB214CF23BB2778008B84A0 /* ProtonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BB214D623BB2778008B84A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1BBAC3CB23CD571D0088A1C8 /* RendererViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererViewDelegate.swift; sourceTree = "<group>"; };
+		1BBAC3CE23CD5A1B0088A1C8 /* UITextRangeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextRangeExtensions.swift; sourceTree = "<group>"; };
+		1BBAC3D123CD69250088A1C8 /* RendererSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererSnapshotTests.swift; sourceTree = "<group>"; };
+		1BBAC3D323CD696F0088A1C8 /* RendererTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererTestViewController.swift; sourceTree = "<group>"; };
+		1BBAC3D623CD74450088A1C8 /* testRendersAttachmentFromEditor@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersAttachmentFromEditor@3x.png"; sourceTree = "<group>"; };
+		1BBAC3D723CD79EA0088A1C8 /* RendererViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererViewTests.swift; sourceTree = "<group>"; };
+		1BBAC3D923CD7A8B0088A1C8 /* MockRendererViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRendererViewDelegate.swift; sourceTree = "<group>"; };
 		1BD1791623C57F140066DC13 /* ItalicsCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItalicsCommand.swift; sourceTree = "<group>"; };
 		1BD1791823C57F430066DC13 /* FontTraitToggleCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTraitToggleCommand.swift; sourceTree = "<group>"; };
 		1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommandExecutorTests.swift; sourceTree = "<group>"; };
@@ -258,6 +279,7 @@
 				1B45CDCC23BF189F001EB196 /* XCTestHelpers.swift */,
 				1B45CDED23C1686F001EB196 /* RichTextViewTestViewController.swift */,
 				1BFFEF1623C333B400D2BA35 /* EditorTestViewController.swift */,
+				1BBAC3D323CD696F0088A1C8 /* RendererTestViewController.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -273,6 +295,7 @@
 		1B45CDA123BEEC3D001EB196 /* ReferenceImages_64 */ = {
 			isa = PBXGroup;
 			children = (
+				1BBAC3D523CD74450088A1C8 /* ProtonTests.RendererSnapshotTests */,
 				1B6DE9DA23C59889007F9859 /* ProtonTests.EditorCommandSnapshotTests */,
 				1BFFEF2223C3423800D2BA35 /* ProtonTests.EditorSnapshotTests */,
 				1B004EC223C18544007893AA /* ProtonTests.AttachmentSnapshotTests */,
@@ -305,8 +328,10 @@
 				1B45CDB923BF10DF001EB196 /* TextStorage.swift */,
 				1B45CDCF23C007AF001EB196 /* RichTextView.swift */,
 				1B45CDD123C00856001EB196 /* TextContainer.swift */,
-				1B7A985623C4828A00C34B14 /* RichTextViewContext.swift */,
 				1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */,
+				1B975AFE23CD454700EC410C /* RichTextViewContext.swift */,
+				1B7A985623C4828A00C34B14 /* RichTextEditorContext.swift */,
+				1B975AFC23CD40D200EC410C /* RichTextRendererContext.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -331,6 +356,7 @@
 				1B45CDC623BF14DF001EB196 /* NSAttributedString+Range.swift */,
 				1BD993B723C9AE4200563ACB /* NSAttributedString+Content.swift */,
 				1B45CDE023C05476001EB196 /* UIColor+Image.swift */,
+				1BBAC3CE23CD5A1B0088A1C8 /* UITextRangeExtensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -424,6 +450,16 @@
 			path = TextProcessors;
 			sourceTree = "<group>";
 		};
+		1B975AF923CD3E5A00EC410C /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				1B975AFA23CD3E9B00EC410C /* RendererView.swift */,
+				1BBAC3CB23CD571D0088A1C8 /* RendererViewDelegate.swift */,
+				1B975B0023CD45DC00EC410C /* RendererViewContext.swift */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
 		1BB214BC23BB2778008B84A0 = {
 			isa = PBXGroup;
 			children = (
@@ -451,6 +487,7 @@
 				1B82570723C567370033A0A9 /* Commands */,
 				1B45CDB823BF10C1001EB196 /* Core */,
 				1B45CDD323C00915001EB196 /* Editor */,
+				1B975AF923CD3E5A00EC410C /* Renderer */,
 				1B45CDC323BF13B8001EB196 /* Helpers */,
 				1B91F4AF23C72D66003F9B55 /* TextProcessors */,
 				1BB214C923BB2778008B84A0 /* Proton.h */,
@@ -468,6 +505,7 @@
 				1B45CDBF23BF1309001EB196 /* Core */,
 				1BFFEF1323C3328600D2BA35 /* Editor */,
 				1B45CD9B23BEDA7F001EB196 /* Helpers */,
+				1BBAC3D023CD68EE0088A1C8 /* Renderer */,
 				1BD993AE23C9955800563ACB /* TextProcessors */,
 				1B45CDA023BEEC3D001EB196 /* Snapshots */,
 				1BB214D623BB2778008B84A0 /* Info.plist */,
@@ -483,6 +521,24 @@
 				1B45CDBD23BF125D001EB196 /* NSAttributedString+ContentTypes.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		1BBAC3D023CD68EE0088A1C8 /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				1BBAC3D123CD69250088A1C8 /* RendererSnapshotTests.swift */,
+				1BBAC3D723CD79EA0088A1C8 /* RendererViewTests.swift */,
+				1BBAC3D923CD7A8B0088A1C8 /* MockRendererViewDelegate.swift */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		1BBAC3D523CD74450088A1C8 /* ProtonTests.RendererSnapshotTests */ = {
+			isa = PBXGroup;
+			children = (
+				1BBAC3D623CD74450088A1C8 /* testRendersAttachmentFromEditor@3x.png */,
+			);
+			path = ProtonTests.RendererSnapshotTests;
 			sourceTree = "<group>";
 		};
 		1BD1791A23C588450066DC13 /* Commands */ = {
@@ -669,14 +725,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B45CDBE23BF125D001EB196 /* NSAttributedString+ContentTypes.swift in Sources */,
-				1B7A985723C4828A00C34B14 /* RichTextViewContext.swift in Sources */,
+				1B7A985723C4828A00C34B14 /* RichTextEditorContext.swift in Sources */,
 				1B7A985923C484BC00C34B14 /* RichTextViewDelegate.swift in Sources */,
 				1B45CDE123C05476001EB196 /* UIColor+Image.swift in Sources */,
 				1B45CD9123BDD7E6001EB196 /* AutogrowingTextView.swift in Sources */,
 				1B45CDE623C05942001EB196 /* AttachmentSize.swift in Sources */,
+				1B975AFB23CD3E9B00EC410C /* RendererView.swift in Sources */,
 				1B45CDD723C00A0A001EB196 /* EditorAttribute.swift in Sources */,
 				1B45CDC723BF14DF001EB196 /* NSAttributedString+Range.swift in Sources */,
 				1B45CDD223C00856001EB196 /* TextContainer.swift in Sources */,
+				1BBAC3CF23CD5A1B0088A1C8 /* UITextRangeExtensions.swift in Sources */,
+				1BBAC3CC23CD571D0088A1C8 /* RendererViewDelegate.swift in Sources */,
 				1B91F4B323C72DC3003F9B55 /* TextProcessing.swift in Sources */,
 				1B45CDDD23C05340001EB196 /* Attachment.swift in Sources */,
 				1B45CDD023C007AF001EB196 /* RichTextView.swift in Sources */,
@@ -686,14 +745,17 @@
 				1B82570F23C573CE0033A0A9 /* BoldCommand.swift in Sources */,
 				1B45CDC523BF13D4001EB196 /* NSRangeExtensions.swift in Sources */,
 				1BD993B823C9AE4200563ACB /* NSAttributedString+Content.swift in Sources */,
+				1B975B0123CD45DC00EC410C /* RendererViewContext.swift in Sources */,
 				1BFFEF0C23C30D5200D2BA35 /* EditorContentView.swift in Sources */,
 				1B82570923C5674E0033A0A9 /* EditorCommand.swift in Sources */,
 				1B82570D23C5686F0033A0A9 /* EditorViewContext.swift in Sources */,
 				1BD1791723C57F140066DC13 /* ItalicsCommand.swift in Sources */,
 				1B45CDBA23BF10DF001EB196 /* TextStorage.swift in Sources */,
+				1B975AFF23CD454700EC410C /* RichTextViewContext.swift in Sources */,
 				1B45CDE823C05C0C001EB196 /* Focusable.swift in Sources */,
 				1B45CDDF23C053FB001EB196 /* EditorContentIdentifying.swift in Sources */,
 				1B45CDD523C00927001EB196 /* EditorContent.swift in Sources */,
+				1B975AFD23CD40D200EC410C /* RichTextRendererContext.swift in Sources */,
 				1B45CDBC23BF1174001EB196 /* Types.swift in Sources */,
 				1B82571223C5799C0033A0A9 /* FontExtensions.swift in Sources */,
 				1B45CDE423C05916001EB196 /* SelectionView.swift in Sources */,
@@ -710,10 +772,12 @@
 				1B45CDEE23C1686F001EB196 /* RichTextViewTestViewController.swift in Sources */,
 				1BFFEF0523C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift in Sources */,
 				1B45CD9D23BEDA8F001EB196 /* UIView+Render.swift in Sources */,
+				1BBAC3D823CD79EA0088A1C8 /* RendererViewTests.swift in Sources */,
 				1B45CD9F23BEE997001EB196 /* SnapshotTestViewController.swift in Sources */,
 				1BFFEF1A23C3344A00D2BA35 /* AutogrowingTextField.swift in Sources */,
 				1BD993B423C9966A00563ACB /* MockTextProcessor.swift in Sources */,
 				1BD993B123C995B000563ACB /* TextProcessorTests.swift in Sources */,
+				1BBAC3DA23CD7A8B0088A1C8 /* MockRendererViewDelegate.swift in Sources */,
 				1BFFEF1523C332A100D2BA35 /* EditorSnapshotTests.swift in Sources */,
 				1BD993C023C9EAA900563ACB /* TextTransformer.swift in Sources */,
 				1B8BE91D23C71E4B00353B17 /* EditorViewDelegateTests.swift in Sources */,
@@ -723,12 +787,14 @@
 				1BFFEF1723C333B400D2BA35 /* EditorTestViewController.swift in Sources */,
 				1B6DE9E323C5C184007F9859 /* FontTraitToggleCommandTests.swift in Sources */,
 				1B45CDCE23BF18A5001EB196 /* XCTestHelpers.swift in Sources */,
+				1BBAC3D223CD69250088A1C8 /* RendererSnapshotTests.swift in Sources */,
 				1B45CDDB23C04BE3001EB196 /* RichTextViewSnapshotTests.swift in Sources */,
 				1B45CDD923C0484A001EB196 /* RichTextViewTests.swift in Sources */,
 				1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */,
 				1B82570423C48C350033A0A9 /* MockRichTextViewDelegate.swift in Sources */,
 				1B45CDCB23BF1621001EB196 /* MockDefaultTextFormattingProvider.swift in Sources */,
 				1B45CDA923BEED0E001EB196 /* AutogrowingTextViewTests.swift in Sources */,
+				1BBAC3D423CD696F0088A1C8 /* RendererTestViewController.swift in Sources */,
 				1BD993C423CACCE100563ACB /* MockAttachment.swift in Sources */,
 				1BFFEF1C23C334D200D2BA35 /* InlineEditorView.swift in Sources */,
 				1B45CDF123C16EF4001EB196 /* RichTextAttachmentView.swift in Sources */,

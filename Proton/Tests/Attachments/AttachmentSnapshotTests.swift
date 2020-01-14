@@ -108,7 +108,7 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
     }
 
     private func makeDummyAttachment(text: String, size: AttachmentSize) -> Attachment {
-        let textView = RichTextAttachmentView()
+        let textView = RichTextAttachmentView(context: RichTextViewContext())
         textView.textContainerInset = .zero
         textView.layoutMargins = .zero
         textView.text = text

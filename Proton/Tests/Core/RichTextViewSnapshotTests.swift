@@ -23,7 +23,7 @@ class RichTextViewSnapshotTests: FBSnapshotTestCase {
 
     func testRendersTextInTextView() {
         let viewController = SnapshotTestViewController()
-        let textView = RichTextView(frame: .zero)
+        let textView = RichTextView(frame: .zero, context: RichTextViewContext())
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.text = "Sample with single line text"
         textView.addBorder()
@@ -42,7 +42,7 @@ class RichTextViewSnapshotTests: FBSnapshotTestCase {
 
     func testRendersMultilineTextViewBasedOnContent() {
         let viewController = SnapshotTestViewController()
-        let textView = RichTextView(frame: .zero)
+        let textView = RichTextView(frame: .zero, context: RichTextViewContext())
 
         let font = assertUnwrap(UIFont(name: "Papyrus", size: 12))
         let paragraphStyle = NSMutableParagraphStyle()

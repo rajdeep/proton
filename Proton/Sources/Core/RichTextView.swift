@@ -27,7 +27,7 @@ class RichTextView: AutogrowingTextView {
         }
     }
 
-    init(frame: CGRect = .zero, context: RichTextViewContext = RichTextViewContext.default) {
+    init(frame: CGRect = .zero, context: RichTextViewContext) {
         let textContainer = TextContainer()
         let layoutManager = NSLayoutManager()
 
@@ -148,6 +148,22 @@ class RichTextView: AutogrowingTextView {
 
     func enumerateAttribute(_ attrName: NSAttributedString.Key, in enumerationRange: NSRange, options opts: NSAttributedString.EnumerationOptions = [], using block: (Any?, NSRange, UnsafeMutablePointer<ObjCBool>) -> Void) {
         storage.enumerateAttribute(attrName, in: enumerationRange, options: opts, using: block)
+    }
+
+    func rangeOfCharacter(at point: CGPoint) -> NSRange? {
+        return characterRange(at: point)?.toNSRange(in: self)
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            let position = touch.location(in: self)
+            didTap(at: position)
+        }
+    }
+
+    func didTap(at location: CGPoint) {
+        let characterRange = rangeOfCharacter(at: location)
+        richTextViewDelegate?.richTextView(self, didTapAtLocation: location, characterRange: characterRange)
     }
 }
 

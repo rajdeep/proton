@@ -174,4 +174,25 @@ class EditorViewTests: XCTestCase {
         editor.removeAttribute(key, at: NSRange(location: 7, length: editor.contentLength - 7))
         waitForExpectations(timeout: 1.0)
     }
+
+    func testSelectsAttachmentInSelectedRange() {
+        let testExpectation = functionExpectation()
+
+        let delegate = MockEditorViewDelegate()
+        let editor = EditorView()
+        let attachment = Attachment(PanelView(), size: .fullWidth)
+        let attrString = NSMutableAttributedString(string: "This is a test string")
+        attrString.append(attachment.string)
+        editor.attributedText = attrString
+
+        editor.delegate = delegate
+        XCTAssertFalse(attachment.isSelected)
+        delegate.onSelectionChanged = {_, _, _, _ in
+            XCTAssertTrue(attachment.isSelected)
+            testExpectation.fulfill()
+        }
+        editor.selectedRange = editor.attributedText.fullRange
+        waitForExpectations(timeout: 1.0)
+
+    }
 }

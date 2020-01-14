@@ -17,8 +17,8 @@ class RichTextViewContextTests: XCTestCase {
         let testExpectation = expectation(description: #function)
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
-        let context = RichTextViewContext.default
-        let textView = RichTextView()
+        let context = RichTextEditorContext.default
+        let textView = RichTextView(context: RichTextViewContext())
         textView.richTextViewDelegate = mockTextViewDelegate
         textView.text = "Sample text"
 
@@ -38,8 +38,8 @@ class RichTextViewContextTests: XCTestCase {
         let testExpectation = expectation(description: #function)
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
-        let context = RichTextViewContext.default
-        let textView = RichTextView()
+        let context = RichTextEditorContext.default
+        let textView = RichTextView(context: RichTextViewContext())
         textView.richTextViewDelegate = mockTextViewDelegate
         textView.text = "Sample text"
 
@@ -59,8 +59,8 @@ class RichTextViewContextTests: XCTestCase {
         let testExpectation = expectation(description: #function)
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
-        let context = RichTextViewContext.default
-        let textView = RichTextView()
+        let context = RichTextEditorContext.default
+        let textView = RichTextView(context: context)
         textView.richTextViewDelegate = mockTextViewDelegate
         textView.text = "Sample text"
 
@@ -80,8 +80,8 @@ class RichTextViewContextTests: XCTestCase {
         let testExpectation = expectation(description: #function)
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
-        let context = RichTextViewContext.default
-        let textView = RichTextView()
+        let context = RichTextEditorContext.default
+        let textView = RichTextView(context: context)
         textView.richTextViewDelegate = mockTextViewDelegate
         textView.text = "Sample text"
 
@@ -102,8 +102,8 @@ class RichTextViewContextTests: XCTestCase {
         let testExpectation = expectation(description: #function)
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
-        let context = RichTextViewContext.default
-        let textView = RichTextView()
+        let context = RichTextEditorContext.default
+        let textView = RichTextView(context: context)
         textView.richTextViewDelegate = mockTextViewDelegate
         textView.text = "Sample text"
 
@@ -124,8 +124,8 @@ class RichTextViewContextTests: XCTestCase {
         let testExpectation = expectation(description: #function)
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
-        let context = RichTextViewContext.default
-        let textView = RichTextView()
+        let context = RichTextEditorContext.default
+        let textView = RichTextView(context: context)
         textView.richTextViewDelegate = mockTextViewDelegate
         textView.text = "Sample text"
 
@@ -151,7 +151,8 @@ class RichTextViewContextTests: XCTestCase {
         let key1 = NSAttributedString.Key("key1")
         let key2 = NSAttributedString.Key("key2")
 
-        let textView = RichTextView()
+        let context = RichTextViewContext()
+        let textView = RichTextView(context: context)
         textView.richTextViewDelegate = mockTextViewDelegate
         textView.text = "Sample text"
 
