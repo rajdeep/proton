@@ -9,13 +9,21 @@
 import Foundation
 import UIKit
 
-extension NSAttributedString {
+public extension NSAttributedString {
     func enumerateContents(in range: NSRange? = nil) -> AnySequence<EditorContent> {
         return self.enumerateContentType(.contentType, defaultIfMissing: .paragraph, in: range) { attributes in
             attributes[NSAttributedString.Key.isBlockAttachment] as? Bool != false
         }
     }
 
+    func enumerateInlineContents(in range: NSRange? = nil) -> AnySequence<EditorContent> {
+        return self.enumerateContentType(.contentType, defaultIfMissing: .text, in: range) { attributes in
+            attributes[NSAttributedString.Key.isInlineAttachment] as? Bool != false
+        }
+    }
+}
+
+extension NSAttributedString {
     func enumerateContentType(_ type: NSAttributedString.Key, defaultIfMissing: EditorContent.Name, in range: NSRange? = nil, where filter: @escaping ((RichTextAttributes) -> Bool) = { _ in return true}) -> AnySequence<EditorContent> {
         let range = range ?? self.fullRange
         let contentString = self.attributedSubstring(from: range)
@@ -24,7 +32,7 @@ extension NSAttributedString {
 
             return AnyIterator {
                 var content: EditorContent? = nil
-                guard substringRange.location < contentString.length else {
+                guard substringRange.location <= contentString.length else {
                     return nil
                 }
 

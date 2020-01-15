@@ -11,6 +11,10 @@ import UIKit
 
 import Proton
 
+extension EditorContent.Name {
+    static let panel = EditorContent.Name("panel")
+}
+
 protocol PanelViewDelegate: class {
     func panel(_ panel: PanelView, didRecieveKey key: EditorKey, at range: NSRange, handled: inout Bool)
     func panel(_ panel: PanelView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name)
@@ -23,7 +27,7 @@ class PanelView: UIView, BlockContent, EditorContentView {
     weak var delegate: PanelViewDelegate?
 
     var name: EditorContent.Name {
-        return EditorContent.Name("panel")
+        return .panel
     }
 
     override init(frame: CGRect) {

@@ -14,8 +14,11 @@ import Proton
 class EditorCommandButton: UIButton {
     let command: EditorCommand
 
-    init(command: EditorCommand) {
+    let highlightOnTouch: Bool
+
+    init(command: EditorCommand, highlightOnTouch: Bool) {
         self.command = command
+        self.highlightOnTouch = highlightOnTouch
         super.init(frame: .zero)
 
         setTitleColor(.blue, for: .normal)
@@ -38,10 +41,11 @@ class CommandsExampleViewController: ExamplesBaseViewController {
     let commandExecutor = EditorCommandExecutor()
     var buttons = [UIButton]()
 
-    let commands: [(title: String, command: EditorCommand)] = [
-        (title: "Panel", command: PanelCommand()),
-        (title: "Bold", command: BoldCommand()),
-        (title: "Italics", command: ItalicsCommand()),
+    let commands: [(title: String, command: EditorCommand, highlightOnTouch: Bool)] = [
+        (title: "Panel", command: PanelCommand(), highlightOnTouch: false),
+        (title: "Bold", command: BoldCommand(), highlightOnTouch: true),
+        (title: "Italics", command: ItalicsCommand(), highlightOnTouch: true),
+        (title: "Encode", command: EncodeContentsCommand(), highlightOnTouch: false),
     ]
 
     override func setup() {
@@ -53,7 +57,13 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         editor.layer.borderColor = UIColor.blue.cgColor
         editor.layer.borderWidth = 1.0
 
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+
         let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .equalCentering
+        stackView.alignment = .center
         stackView.spacing = 10
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -63,11 +73,22 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         for button in buttons {
             stackView.addArrangedSubview(button)
         }
-        view.addSubview(stackView)
+
+        view.addSubview(scrollView)
+        scrollView.addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+
+            scrollView.heightAnchor.constraint(equalTo: stackView.heightAnchor, constant: 10),
+
+            stackView.widthAnchor.constraint(greaterThanOrEqualTo: scrollView.widthAnchor),
+            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
 
             editor.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20),
             editor.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -81,7 +102,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
     func makeCommandButtons() -> [UIButton] {
         var buttons = [UIButton]()
         for command in commands {
-            let button = EditorCommandButton(command: command.command)
+            let button = EditorCommandButton(command: command.command, highlightOnTouch: command.highlightOnTouch)
             button.setTitle(command.title, for: .normal)
             button.translatesAutoresizingMaskIntoConstraints = false
             button.addTarget(self, action: #selector(runCommand(sender:)), for: .touchUpInside)
@@ -90,7 +111,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
             button.layer.borderWidth = 1.0
             button.layer.cornerRadius = 5.0
 
-            NSLayoutConstraint.activate([button.widthAnchor.constraint(equalToConstant: 60)])
+            NSLayoutConstraint.activate([button.widthAnchor.constraint(equalToConstant: 70)])
             buttons.append(button)
         }
         return buttons
@@ -99,9 +120,14 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
     @objc
     func runCommand(sender: EditorCommandButton) {
-        if sender.titleLabel?.text != "Panel" {
+        if sender.highlightOnTouch {
             sender.isSelected = !sender.isSelected
         }
+        if sender.titleLabel?.text == "Encode" {
+            sender.command.execute(on: editor)
+            return
+        }
+
         commandExecutor.execute(sender.command)
     }
 }

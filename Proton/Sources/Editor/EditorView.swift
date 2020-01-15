@@ -182,7 +182,7 @@ open class EditorView: UIView {
 
     public func contents(in range: NSRange? = nil) -> [EditorContent] {
         let contents =  richTextView.contents(in: range)
-        return Array<EditorContent>(contents)
+        return Array(contents)
     }
 
     /// Transforms `EditorContent` into given type. This function can also be used to encode content into a different type for  e.g. encoding the contents to JSON. Encoding
