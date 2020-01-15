@@ -65,6 +65,10 @@
 		1BBAC3D423CD696F0088A1C8 /* RendererTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3D323CD696F0088A1C8 /* RendererTestViewController.swift */; };
 		1BBAC3D823CD79EA0088A1C8 /* RendererViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3D723CD79EA0088A1C8 /* RendererViewTests.swift */; };
 		1BBAC3DA23CD7A8B0088A1C8 /* MockRendererViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3D923CD7A8B0088A1C8 /* MockRendererViewDelegate.swift */; };
+		1BBAC3DD23CDB8C10088A1C8 /* RendererCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3DC23CDB8C10088A1C8 /* RendererCommand.swift */; };
+		1BBAC3E023CE81F40088A1C8 /* RendererCommandExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3DF23CE81F40088A1C8 /* RendererCommandExecutor.swift */; };
+		1BBAC3E323CE85660088A1C8 /* RendererCommandExecutorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3E223CE85660088A1C8 /* RendererCommandExecutorTests.swift */; };
+		1BBAC3E623CE86740088A1C8 /* HighlightTextCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3E423CE86420088A1C8 /* HighlightTextCommand.swift */; };
 		1BD1791723C57F140066DC13 /* ItalicsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1791623C57F140066DC13 /* ItalicsCommand.swift */; };
 		1BD1791923C57F430066DC13 /* FontTraitToggleCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1791823C57F430066DC13 /* FontTraitToggleCommand.swift */; };
 		1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */; };
@@ -179,6 +183,10 @@
 		1BBAC3D623CD74450088A1C8 /* testRendersAttachmentFromEditor@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersAttachmentFromEditor@3x.png"; sourceTree = "<group>"; };
 		1BBAC3D723CD79EA0088A1C8 /* RendererViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererViewTests.swift; sourceTree = "<group>"; };
 		1BBAC3D923CD7A8B0088A1C8 /* MockRendererViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRendererViewDelegate.swift; sourceTree = "<group>"; };
+		1BBAC3DC23CDB8C10088A1C8 /* RendererCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommand.swift; sourceTree = "<group>"; };
+		1BBAC3DF23CE81F40088A1C8 /* RendererCommandExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommandExecutor.swift; sourceTree = "<group>"; };
+		1BBAC3E223CE85660088A1C8 /* RendererCommandExecutorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommandExecutorTests.swift; sourceTree = "<group>"; };
+		1BBAC3E423CE86420088A1C8 /* HighlightTextCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightTextCommand.swift; sourceTree = "<group>"; };
 		1BD1791623C57F140066DC13 /* ItalicsCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItalicsCommand.swift; sourceTree = "<group>"; };
 		1BD1791823C57F430066DC13 /* FontTraitToggleCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTraitToggleCommand.swift; sourceTree = "<group>"; };
 		1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommandExecutorTests.swift; sourceTree = "<group>"; };
@@ -421,7 +429,7 @@
 			path = ProtonTests.EditorCommandSnapshotTests;
 			sourceTree = "<group>";
 		};
-		1B82570723C567370033A0A9 /* Commands */ = {
+		1B82570723C567370033A0A9 /* EditorCommand */ = {
 			isa = PBXGroup;
 			children = (
 				1B82570823C5674E0033A0A9 /* EditorCommand.swift */,
@@ -430,7 +438,7 @@
 				1BD1791623C57F140066DC13 /* ItalicsCommand.swift */,
 				1BD1791823C57F430066DC13 /* FontTraitToggleCommand.swift */,
 			);
-			path = Commands;
+			path = EditorCommand;
 			sourceTree = "<group>";
 		};
 		1B82571023C5798C0033A0A9 /* Text */ = {
@@ -484,10 +492,11 @@
 			children = (
 				1B45CDE223C05901001EB196 /* Attachment */,
 				1BB2152E23BB2B83008B84A0 /* Base */,
-				1B82570723C567370033A0A9 /* Commands */,
 				1B45CDB823BF10C1001EB196 /* Core */,
 				1B45CDD323C00915001EB196 /* Editor */,
+				1B82570723C567370033A0A9 /* EditorCommand */,
 				1B975AF923CD3E5A00EC410C /* Renderer */,
+				1BBAC3DB23CDB89A0088A1C8 /* RendererCommand */,
 				1B45CDC323BF13B8001EB196 /* Helpers */,
 				1B91F4AF23C72D66003F9B55 /* TextProcessors */,
 				1BB214C923BB2778008B84A0 /* Proton.h */,
@@ -501,11 +510,12 @@
 			children = (
 				1B45CDE923C16816001EB196 /* Attachments */,
 				1B45CD9223BEBFE2001EB196 /* Base */,
-				1BD1791A23C588450066DC13 /* Commands */,
 				1B45CDBF23BF1309001EB196 /* Core */,
 				1BFFEF1323C3328600D2BA35 /* Editor */,
+				1BD1791A23C588450066DC13 /* EditorCommands */,
 				1B45CD9B23BEDA7F001EB196 /* Helpers */,
 				1BBAC3D023CD68EE0088A1C8 /* Renderer */,
+				1BBAC3E123CE850E0088A1C8 /* RendererCommands */,
 				1BD993AE23C9955800563ACB /* TextProcessors */,
 				1B45CDA023BEEC3D001EB196 /* Snapshots */,
 				1BB214D623BB2778008B84A0 /* Info.plist */,
@@ -541,14 +551,32 @@
 			path = ProtonTests.RendererSnapshotTests;
 			sourceTree = "<group>";
 		};
-		1BD1791A23C588450066DC13 /* Commands */ = {
+		1BBAC3DB23CDB89A0088A1C8 /* RendererCommand */ = {
+			isa = PBXGroup;
+			children = (
+				1BBAC3DC23CDB8C10088A1C8 /* RendererCommand.swift */,
+				1BBAC3DF23CE81F40088A1C8 /* RendererCommandExecutor.swift */,
+				1BBAC3E423CE86420088A1C8 /* HighlightTextCommand.swift */,
+			);
+			path = RendererCommand;
+			sourceTree = "<group>";
+		};
+		1BBAC3E123CE850E0088A1C8 /* RendererCommands */ = {
+			isa = PBXGroup;
+			children = (
+				1BBAC3E223CE85660088A1C8 /* RendererCommandExecutorTests.swift */,
+			);
+			path = RendererCommands;
+			sourceTree = "<group>";
+		};
+		1BD1791A23C588450066DC13 /* EditorCommands */ = {
 			isa = PBXGroup;
 			children = (
 				1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */,
 				1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */,
 				1B6DE9E223C5C184007F9859 /* FontTraitToggleCommandTests.swift */,
 			);
-			path = Commands;
+			path = EditorCommands;
 			sourceTree = "<group>";
 		};
 		1BD993AE23C9955800563ACB /* TextProcessors */ = {
@@ -741,9 +769,12 @@
 				1B45CDD023C007AF001EB196 /* RichTextView.swift in Sources */,
 				1B004EC723C1C287007893AA /* EditorView.swift in Sources */,
 				1B8BE91B23C71CEA00353B17 /* EditorViewDelegate.swift in Sources */,
+				1BBAC3DD23CDB8C10088A1C8 /* RendererCommand.swift in Sources */,
 				1B91F4B123C72D87003F9B55 /* TextProcessor.swift in Sources */,
 				1B82570F23C573CE0033A0A9 /* BoldCommand.swift in Sources */,
 				1B45CDC523BF13D4001EB196 /* NSRangeExtensions.swift in Sources */,
+				1BBAC3E623CE86740088A1C8 /* HighlightTextCommand.swift in Sources */,
+				1BBAC3E023CE81F40088A1C8 /* RendererCommandExecutor.swift in Sources */,
 				1BD993B823C9AE4200563ACB /* NSAttributedString+Content.swift in Sources */,
 				1B975B0123CD45DC00EC410C /* RendererViewContext.swift in Sources */,
 				1BFFEF0C23C30D5200D2BA35 /* EditorContentView.swift in Sources */,
@@ -790,6 +821,7 @@
 				1BBAC3D223CD69250088A1C8 /* RendererSnapshotTests.swift in Sources */,
 				1B45CDDB23C04BE3001EB196 /* RichTextViewSnapshotTests.swift in Sources */,
 				1B45CDD923C0484A001EB196 /* RichTextViewTests.swift in Sources */,
+				1BBAC3E323CE85660088A1C8 /* RendererCommandExecutorTests.swift in Sources */,
 				1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */,
 				1B82570423C48C350033A0A9 /* MockRichTextViewDelegate.swift in Sources */,
 				1B45CDCB23BF1621001EB196 /* MockDefaultTextFormattingProvider.swift in Sources */,

@@ -38,6 +38,10 @@ class MasterViewController: UITableViewController {
                     NavigationItem(title: "Commands", viewController: CommandsExampleViewController()),
                     NavigationItem(title: "Text Processors", viewController: TextProcessorExampleViewController()),
         ]),
+        Navigation(title: "Renderer",
+                   items: [
+                    NavigationItem(title: "Commands", viewController: RendererCommandsExampleViewController())
+        ]),
     ]
 
     override func viewWillAppear(_ animated: Bool) {

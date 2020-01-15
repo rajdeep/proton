@@ -11,7 +11,7 @@ import UIKit
 
 import Proton
 
-class CommandButton: UIButton {
+class EditorCommandButton: UIButton {
     let command: EditorCommand
 
     init(command: EditorCommand) {
@@ -81,7 +81,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
     func makeCommandButtons() -> [UIButton] {
         var buttons = [UIButton]()
         for command in commands {
-            let button = CommandButton(command: command.command)
+            let button = EditorCommandButton(command: command.command)
             button.setTitle(command.title, for: .normal)
             button.translatesAutoresizingMaskIntoConstraints = false
             button.addTarget(self, action: #selector(runCommand(sender:)), for: .touchUpInside)
@@ -98,7 +98,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
     }
 
     @objc
-    func runCommand(sender: CommandButton) {
+    func runCommand(sender: EditorCommandButton) {
         if sender.titleLabel?.text != "Panel" {
             sender.isSelected = !sender.isSelected
         }

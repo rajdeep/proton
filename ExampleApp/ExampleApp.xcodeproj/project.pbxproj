@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B183D8423CE8C8500AE83E5 /* RendererCommandExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D8323CE8C8500AE83E5 /* RendererCommandExampleViewController.swift */; };
 		1B45CD8B23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8A23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift */; };
 		1B45CD8D23BDD5FC001EB196 /* ExamplesBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8C23BDD5FC001EB196 /* ExamplesBaseViewController.swift */; };
 		1B6D2FD123BD46ED0019CE40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6D2FD023BD46ED0019CE40 /* AppDelegate.swift */; };
@@ -65,6 +66,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B183D8323CE8C8500AE83E5 /* RendererCommandExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommandExampleViewController.swift; sourceTree = "<group>"; };
 		1B45CD8A23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingEditorViewExampleViewController.swift; sourceTree = "<group>"; };
 		1B45CD8C23BDD5FC001EB196 /* ExamplesBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplesBaseViewController.swift; sourceTree = "<group>"; };
 		1B6D2FCD23BD46ED0019CE40 /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,6 +124,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B183D8223CE8C5E00AE83E5 /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				1B183D8323CE8C8500AE83E5 /* RendererCommandExampleViewController.swift */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
 		1B45CD8923BDD3B3001EB196 /* Basic */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,6 +164,7 @@
 		1B6D2FCF23BD46ED0019CE40 /* ExampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				1B183D8223CE8C5E00AE83E5 /* Renderer */,
 				1B91F4B423C73CEB003F9B55 /* TextProcessors */,
 				1B6DE9DF23C599D8007F9859 /* Commands */,
 				1B6DE9DC23C598AB007F9859 /* AdvancedFeatures */,
@@ -387,6 +398,7 @@
 				1B6D2FD323BD46ED0019CE40 /* MasterViewController.swift in Sources */,
 				1B6D2FD123BD46ED0019CE40 /* AppDelegate.swift in Sources */,
 				1BFFEF1223C3310A00D2BA35 /* PercentWidthAttachmentExampleViewController.swift in Sources */,
+				1B183D8423CE8C8500AE83E5 /* RendererCommandExampleViewController.swift in Sources */,
 				1BFFEF1023C32B5A00D2BA35 /* WidthRangeAttachmentExampleViewController.swift in Sources */,
 				1BFFEF0023C303F100D2BA35 /* AutogrowingTextField.swift in Sources */,
 				1BFFEF0A23C30C9900D2BA35 /* PanelView.swift in Sources */,
