@@ -68,7 +68,7 @@ class RichTextView: AutogrowingTextView {
     private func setupPlaceholder() {
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
         placeholderLabel.numberOfLines = 0
-        placeholderLabel.lineBreakMode = .byWordWrapping
+        placeholderLabel.lineBreakMode = .byTruncatingTail
 
         addSubview(placeholderLabel)
         placeholderLabel.attributedText = placeholderText
@@ -77,11 +77,8 @@ class RichTextView: AutogrowingTextView {
             placeholderLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -textContainerInset.bottom),
             placeholderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: textContainer.lineFragmentPadding),
             placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -textContainer.lineFragmentPadding),
+            placeholderLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -textContainer.lineFragmentPadding)
         ])
-
-        NotificationCenter.default.addObserver(forName: UITextView.textDidChangeNotification, object: self, queue: nil) { [weak self] _ in
-            self?.updatePlaceholderVisibility()
-        }
     }
 
     func invalidateLayout(for range: NSRange) {
@@ -169,6 +166,7 @@ class RichTextView: AutogrowingTextView {
 
 extension RichTextView: NSLayoutManagerDelegate  {
     func layoutManager(_ layoutManager: NSLayoutManager, didCompleteLayoutFor textContainer: NSTextContainer?, atEnd layoutFinishedFlag: Bool) {
+        updatePlaceholderVisibility()
         richTextViewDelegate?.richTextView(self, didFinishLayout: layoutFinishedFlag)
     }
 }

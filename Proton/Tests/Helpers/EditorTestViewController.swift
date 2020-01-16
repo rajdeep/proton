@@ -13,9 +13,11 @@ import Proton
 
 class EditorTestViewController: SnapshotTestViewController {
     let editor: EditorView
+    let height: CGFloat?
 
-    init() {
+    init(height: CGFloat? = nil) {
         editor = EditorView(frame: .zero)
+        self.height = height
         super.init(nibName: nil, bundle: nil)
         setup()
     }
@@ -33,6 +35,12 @@ class EditorTestViewController: SnapshotTestViewController {
             editor.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
             editor.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             view.trailingAnchor.constraint(equalTo: editor.trailingAnchor, constant: 20),
+        ])
+
+        guard let height = self.height else { return }
+
+        NSLayoutConstraint.activate([
+            editor.heightAnchor.constraint(equalToConstant: height),
         ])
     }
 }

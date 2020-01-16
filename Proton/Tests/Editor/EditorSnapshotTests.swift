@@ -21,10 +21,10 @@ class EditorSnapshotTests: FBSnapshotTestCase {
     }
 
     func testRendersPlaceholder() {
-        let viewController = EditorTestViewController()
+        let viewController = EditorTestViewController(height: 80)
         let editor = viewController.editor
         let font = UIFont(name: "Verdana", size: 17) ?? UIFont()
-        let placeholderString = NSMutableAttributedString(string: "Placeholder text", attributes: [
+        let placeholderString = NSMutableAttributedString(string: "Placeholder text that is so long that it wraps into the next line", attributes: [
             NSAttributedString.Key.font: font,
             NSAttributedString.Key.foregroundColor: UIColor.lightGray
         ])
@@ -32,7 +32,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         placeholderString.addAttribute(.font, value: font.adding(trait: .traitBold), range: NSRange(location: 12, length: 4))
 
         editor.placeholderText = placeholderString
-        viewController.render()
+        viewController.render(size: CGSize(width: 300, height:120))
         FBSnapshotVerifyView(viewController.view)
     }
 

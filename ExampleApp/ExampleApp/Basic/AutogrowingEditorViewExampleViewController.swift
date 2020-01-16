@@ -31,7 +31,7 @@ class AutogrowingEditorViewExampleViewController: ExamplesBaseViewController {
             editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
         ])
 
-        editor.placeholderText = NSAttributedString(string: "This is a placeholder text",
+        editor.placeholderText = NSAttributedString(string: "This is a placeholder text that flows into the next line",
                                                     attributes: [
                                                         NSAttributedString.Key.font : editor.font ?? UIFont.systemFont(ofSize: 17),
                                                         NSAttributedString.Key.foregroundColor: UIColor.lightGray
