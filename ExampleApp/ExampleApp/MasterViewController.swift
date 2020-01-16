@@ -75,7 +75,7 @@ class MasterViewController: UITableViewController {
         let item = navigation.item(at: indexPath)
         let viewController = item.viewController
         viewController.title = item.title
-        navigationController?.pushViewController(viewController, animated: true)
+        self.showDetailViewController(viewController, sender: self)
     }
 }
 
