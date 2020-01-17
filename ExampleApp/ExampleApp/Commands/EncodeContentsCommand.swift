@@ -13,7 +13,7 @@ import Proton
 
 class EncodeContentsCommand: EditorCommand {
     func execute(on editor: EditorView) {
-        let value = editor.transformContents(using: JSONTransformer())
+        let value = editor.transformContents(using: JSONEncoder())
         let data = try! JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
         let jsonString = String.init(data: data, encoding: .utf8)!
 

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		1B183D8423CE8C8500AE83E5 /* RendererCommandExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D8323CE8C8500AE83E5 /* RendererCommandExampleViewController.swift */; };
 		1B183D9623CEF33600AE83E5 /* EncodeContentsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9523CEF33600AE83E5 /* EncodeContentsCommand.swift */; };
-		1B183D9923CEF45000AE83E5 /* JSONTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9823CEF45000AE83E5 /* JSONTransformer.swift */; };
+		1B183D9923CEF45000AE83E5 /* JSONEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9823CEF45000AE83E5 /* JSONEncoder.swift */; };
 		1B183D9C23CEF65300AE83E5 /* ParagraphEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9B23CEF65300AE83E5 /* ParagraphEncoder.swift */; };
 		1B183D9E23CEF6F200AE83E5 /* ParagraphStyle+Codables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9D23CEF6F200AE83E5 /* ParagraphStyle+Codables.swift */; };
 		1B183DA023CEF73C00AE83E5 /* TextEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9F23CEF73C00AE83E5 /* TextEncoder.swift */; };
@@ -74,7 +74,7 @@
 /* Begin PBXFileReference section */
 		1B183D8323CE8C8500AE83E5 /* RendererCommandExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommandExampleViewController.swift; sourceTree = "<group>"; };
 		1B183D9523CEF33600AE83E5 /* EncodeContentsCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodeContentsCommand.swift; sourceTree = "<group>"; };
-		1B183D9823CEF45000AE83E5 /* JSONTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTransformer.swift; sourceTree = "<group>"; };
+		1B183D9823CEF45000AE83E5 /* JSONEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONEncoder.swift; sourceTree = "<group>"; };
 		1B183D9B23CEF65300AE83E5 /* ParagraphEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParagraphEncoder.swift; sourceTree = "<group>"; };
 		1B183D9D23CEF6F200AE83E5 /* ParagraphStyle+Codables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ParagraphStyle+Codables.swift"; sourceTree = "<group>"; };
 		1B183D9F23CEF73C00AE83E5 /* TextEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEncoder.swift; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				1B183D9A23CEF64000AE83E5 /* Encoders */,
-				1B183D9823CEF45000AE83E5 /* JSONTransformer.swift */,
+				1B183D9823CEF45000AE83E5 /* JSONEncoder.swift */,
 			);
 			path = Encoding;
 			sourceTree = "<group>";
@@ -431,7 +431,7 @@
 				1B91F4B823C73D3C003F9B55 /* MarkupTextProcessor.swift in Sources */,
 				1B6DE9DE23C598F1007F9859 /* CommandsExampleViewController.swift in Sources */,
 				1B6D2FD323BD46ED0019CE40 /* MasterViewController.swift in Sources */,
-				1B183D9923CEF45000AE83E5 /* JSONTransformer.swift in Sources */,
+				1B183D9923CEF45000AE83E5 /* JSONEncoder.swift in Sources */,
 				1B183DA023CEF73C00AE83E5 /* TextEncoder.swift in Sources */,
 				1B6D2FD123BD46ED0019CE40 /* AppDelegate.swift in Sources */,
 				1B183D9623CEF33600AE83E5 /* EncodeContentsCommand.swift in Sources */,

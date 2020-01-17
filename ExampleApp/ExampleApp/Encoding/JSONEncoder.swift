@@ -13,14 +13,13 @@ import Proton
 
 typealias JSON = [String: Any]
 
-struct JSONTransformer: EditorContentTransformer {
-
-    let textTransformers: [EditorContent.Name: AnyEditorTextEncoding<JSON>] = [
+struct JSONEncoder: EditorContentEncoder {
+    let textEncoders: [EditorContent.Name: AnyEditorTextEncoding<JSON>] = [
         EditorContent.Name.paragraph: AnyEditorTextEncoding(ParagraphEncoder()),
         .text: AnyEditorTextEncoding(TextEncoder())
     ]
 
-    let attachmentTransformers: [EditorContent.Name: AnyEditorContentAttachmentEncoding<JSON>] = [
+    let attachmentEncoders: [EditorContent.Name: AnyEditorContentAttachmentEncoding<JSON>] = [
         EditorContent.Name.panel: AnyEditorContentAttachmentEncoding(PanelEncoder()),
     ]
 }

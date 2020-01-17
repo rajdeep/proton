@@ -18,7 +18,7 @@ struct PanelEncoder: AttachmentEncoding {
         var json = JSON()
         json.type = name.rawValue
         json["style"] = "info"
-        let contents = view.editor.transformContents(using: JSONTransformer())
+        let contents = view.editor.transformContents(using: JSONEncoder())
         json.contents = contents
         return json
     }

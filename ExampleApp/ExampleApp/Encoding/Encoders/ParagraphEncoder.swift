@@ -43,12 +43,12 @@ extension EditorTextEncoding where EncodedType == JSON {
             case .viewOnly:
                 break
             case let .text(name, attributedString):
-                if let encoder = JSONTransformer().textTransformers[name] {
+                if let encoder = JSONEncoder().textEncoders[name] {
                     let json = encoder.encode(name: name, string: attributedString)
                     contents.append(json)
                 }
             case let .attachment(name, contentView, _):
-                if let encodable = JSONTransformer().attachmentTransformers[name] {
+                if let encodable = JSONEncoder().attachmentEncoders[name] {
                     contents.append(encodable.encode(name: name, view: contentView))
                 }
             }

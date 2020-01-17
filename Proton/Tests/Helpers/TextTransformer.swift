@@ -10,7 +10,7 @@ import Foundation
 
 import Proton
 
-class TextTransformer: EditorContentTransforming {
+class TextTransformer: EditorContentEncoding {
     typealias TransformedType = String
 
     func transform(_ content: EditorContent) -> String! {

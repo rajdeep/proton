@@ -81,7 +81,6 @@
 		1BD993B423C9966A00563ACB /* MockTextProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993B323C9966A00563ACB /* MockTextProcessor.swift */; };
 		1BD993B623C999AF00563ACB /* EditorViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993B523C999AF00563ACB /* EditorViewTests.swift */; };
 		1BD993B823C9AE4200563ACB /* NSAttributedString+Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993B723C9AE4200563ACB /* NSAttributedString+Content.swift */; };
-		1BD993BC23C9E6F800563ACB /* EditorContentTransforming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993BB23C9E6F800563ACB /* EditorContentTransforming.swift */; };
 		1BD993C023C9EAA900563ACB /* TextTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993BF23C9EAA900563ACB /* TextTransformer.swift */; };
 		1BD993C423CACCE100563ACB /* MockAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993C323CACCE100563ACB /* MockAttachment.swift */; };
 		1BFFEF0523C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF0423C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift */; };
@@ -204,7 +203,6 @@
 		1BD993B323C9966A00563ACB /* MockTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTextProcessor.swift; sourceTree = "<group>"; };
 		1BD993B523C999AF00563ACB /* EditorViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewTests.swift; sourceTree = "<group>"; };
 		1BD993B723C9AE4200563ACB /* NSAttributedString+Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Content.swift"; sourceTree = "<group>"; };
-		1BD993BB23C9E6F800563ACB /* EditorContentTransforming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentTransforming.swift; sourceTree = "<group>"; };
 		1BD993BF23C9EAA900563ACB /* TextTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransformer.swift; sourceTree = "<group>"; };
 		1BD993C323CACCE100563ACB /* MockAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAttachment.swift; sourceTree = "<group>"; };
 		1BFFEF0423C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAutogrowingTextViewDelegate.swift; sourceTree = "<group>"; };
@@ -431,7 +429,6 @@
 				1BFFEF0B23C30D5200D2BA35 /* EditorContentView.swift */,
 				1B82570C23C5686F0033A0A9 /* EditorViewContext.swift */,
 				1B8BE91A23C71CEA00353B17 /* EditorViewDelegate.swift */,
-				1BD993BB23C9E6F800563ACB /* EditorContentTransforming.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -841,7 +838,6 @@
 				1B45CDE423C05916001EB196 /* SelectionView.swift in Sources */,
 				1BD1791923C57F430066DC13 /* FontTraitToggleCommand.swift in Sources */,
 				1B82570B23C567B90033A0A9 /* EditorCommandExecutor.swift in Sources */,
-				1BD993BC23C9E6F800563ACB /* EditorContentTransforming.swift in Sources */,
 				1B183D8C23CEA90400AE83E5 /* EditorContentEncoding.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

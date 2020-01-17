@@ -189,7 +189,7 @@ open class EditorView: UIView {
     /// is  a type of transformation that can also be decoded.
     /// - Parameter range: Range of `Editor` to transform the contents. By default, entire range is used.
     /// - Parameter transformer: Transformer capable ot transforming `EditorContent` to given type
-    public func transformContents<T: EditorContentTransforming>(in range: NSRange? = nil, using transformer: T) -> [T.TransformedType] {
+    public func transformContents<T: EditorContentEncoding>(in range: NSRange? = nil, using transformer: T) -> [T.EncodedType] {
         return richTextView.transformContents(in: range, using: transformer)
     }
 
