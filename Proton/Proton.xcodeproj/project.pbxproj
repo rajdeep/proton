@@ -11,6 +11,7 @@
 		1B164F1023D1BE9900A0869A /* AttributesDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F0F23D1BE9900A0869A /* AttributesDecoding.swift */; };
 		1B164F4123D2A4AB00A0869A /* String+NSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F4023D2A4AB00A0869A /* String+NSRange.swift */; };
 		1B164F4923D2AC9B00A0869A /* FindTextCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F4723D2AC6D00A0869A /* FindTextCommand.swift */; };
+		1B164F5223D2B9D400A0869A /* TestTextProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F5123D2B9D400A0869A /* TestTextProcessor.swift */; };
 		1B183D8C23CEA90400AE83E5 /* EditorContentEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D8B23CEA90400AE83E5 /* EditorContentEncoding.swift */; };
 		1B183D8E23CEE9BA00AE83E5 /* AttributesEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D8D23CEE9BA00AE83E5 /* AttributesEncoding.swift */; };
 		1B183D9223CEEED900AE83E5 /* EditorContentEncoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9023CEEEC400AE83E5 /* EditorContentEncoderTests.swift */; };
@@ -129,6 +130,7 @@
 		1B164F4723D2AC6D00A0869A /* FindTextCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindTextCommand.swift; sourceTree = "<group>"; };
 		1B164F4A23D2B77600A0869A /* testScrolledRendering@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testScrolledRendering@3x.png"; sourceTree = "<group>"; };
 		1B164F4B23D2B77600A0869A /* testBasicRendering@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testBasicRendering@3x.png"; sourceTree = "<group>"; };
+		1B164F5123D2B9D400A0869A /* TestTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTextProcessor.swift; sourceTree = "<group>"; };
 		1B183D8B23CEA90400AE83E5 /* EditorContentEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentEncoding.swift; sourceTree = "<group>"; };
 		1B183D8D23CEE9BA00AE83E5 /* AttributesEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesEncoding.swift; sourceTree = "<group>"; };
 		1B183D9023CEEEC400AE83E5 /* EditorContentEncoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentEncoderTests.swift; sourceTree = "<group>"; };
@@ -275,6 +277,14 @@
 			path = ProtonTests.AttachmentSnapshotTests;
 			sourceTree = "<group>";
 		};
+		1B164F5023D2B99900A0869A /* Processors */ = {
+			isa = PBXGroup;
+			children = (
+				1B164F5123D2B9D400A0869A /* TestTextProcessor.swift */,
+			);
+			path = Processors;
+			sourceTree = "<group>";
+		};
 		1B183D8A23CEA8F000AE83E5 /* Encoding */ = {
 			isa = PBXGroup;
 			children = (
@@ -290,13 +300,6 @@
 				1B183D9023CEEEC400AE83E5 /* EditorContentEncoderTests.swift */,
 			);
 			path = Encoding;
-			sourceTree = "<group>";
-		};
-		1B2BC0D923CF182E00407DEE /* Encoders */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Encoders;
 			sourceTree = "<group>";
 		};
 		1B2BC0DA23CF18A900407DEE /* Decoding */ = {
@@ -329,7 +332,6 @@
 		1B45CD9B23BEDA7F001EB196 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				1B2BC0D923CF182E00407DEE /* Encoders */,
 				1BFFEF1823C3340D00D2BA35 /* Views */,
 				1B45CD9C23BEDA8F001EB196 /* UIView+Render.swift */,
 				1BD993BF23C9EAA900563ACB /* TextTransformer.swift */,
@@ -638,6 +640,7 @@
 		1BD993AE23C9955800563ACB /* TextProcessors */ = {
 			isa = PBXGroup;
 			children = (
+				1B164F5023D2B99900A0869A /* Processors */,
 				1BD993B223C9965B00563ACB /* Mocks */,
 				1BD993B023C995B000563ACB /* TextProcessorTests.swift */,
 			);
@@ -868,6 +871,7 @@
 				1B45CD9F23BEE997001EB196 /* SnapshotTestViewController.swift in Sources */,
 				1BFFEF1A23C3344A00D2BA35 /* AutogrowingTextField.swift in Sources */,
 				1BD993B423C9966A00563ACB /* MockTextProcessor.swift in Sources */,
+				1B164F5223D2B9D400A0869A /* TestTextProcessor.swift in Sources */,
 				1BD993B123C995B000563ACB /* TextProcessorTests.swift in Sources */,
 				1BBAC3DA23CD7A8B0088A1C8 /* MockRendererViewDelegate.swift in Sources */,
 				1BFFEF1523C332A100D2BA35 /* EditorSnapshotTests.swift in Sources */,

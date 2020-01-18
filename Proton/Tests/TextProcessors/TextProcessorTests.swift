@@ -109,4 +109,36 @@ class TextProcessorTests: XCTestCase {
         editor.replaceCharacters(in: .zero, with: testString)
         waitForExpectations(timeout: 1.0)
     }
+
+    func testAppliesChangesFromAllProcessors() {
+        let processorExpectation = functionExpectation()
+        processorExpectation.expectedFulfillmentCount = 3
+
+        let editor = EditorView()
+        editor.attributedText = NSAttributedString(string: "Test")
+        let testAttribute = NSAttributedString.Key("testAttr")
+
+        let processor: (EditorView, NSRange) -> Void = { editor, _ in
+            let attrValue = editor.attributedText.attribute(testAttribute, at: 0, effectiveRange: nil) as? Int ?? 0
+            editor.addAttribute(testAttribute, value: attrValue+1, at: editor.attributedText.fullRange)
+            processorExpectation.fulfill()
+        }
+
+        let processor1 = TestTextProcessor()
+        processor1.onProcess = processor
+        let processor2 = TestTextProcessor()
+        processor2.onProcess = processor
+        let processor3 = TestTextProcessor()
+        processor3.onProcess = processor
+
+        editor.registerProcessor(processor1)
+        editor.registerProcessor(processor2)
+        editor.registerProcessor(processor3)
+
+        editor.replaceCharacters(in: editor.textEndRange, with: NSAttributedString(string: " string"))
+        let attrValue = editor.attributedText.attribute(testAttribute, at: 0, effectiveRange: nil) as? Int ?? 0
+        XCTAssertEqual(attrValue, 3)
+
+        waitForExpectations(timeout: 1.0)
+    }
 }
