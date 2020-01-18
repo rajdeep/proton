@@ -89,7 +89,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         return updatedString
     }
 
-    final var string: NSAttributedString {
+    public var string: NSAttributedString {
         guard let isBlockAttachment = isBlockAttachment else { return NSAttributedString(string: "<UNKNOWN CONTENT TYPE>") }
 //        let key = isBlockAttachment == true ? NSAttributedString.Key.contentType: NSAttributedString.Key.inlineContentType
         let string = NSMutableAttributedString(attachment: self)

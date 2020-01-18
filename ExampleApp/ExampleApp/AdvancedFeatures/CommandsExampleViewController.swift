@@ -21,7 +21,7 @@ class EditorCommandButton: UIButton {
         self.highlightOnTouch = highlightOnTouch
         super.init(frame: .zero)
 
-        setTitleColor(.blue, for: .normal)
+        setTitleColor(.systemBlue, for: .normal)
     }
 
     required init?(coder: NSCoder) {
@@ -41,11 +41,18 @@ class CommandsExampleViewController: ExamplesBaseViewController {
     let commandExecutor = EditorCommandExecutor()
     var buttons = [UIButton]()
 
+    var encodedContents: JSON = ["contents": []]
+
     let commands: [(title: String, command: EditorCommand, highlightOnTouch: Bool)] = [
         (title: "Panel", command: PanelCommand(), highlightOnTouch: false),
         (title: "Bold", command: BoldCommand(), highlightOnTouch: true),
         (title: "Italics", command: ItalicsCommand(), highlightOnTouch: true),
-        (title: "Encode", command: EncodeContentsCommand(), highlightOnTouch: false),
+    ]
+
+    let editorButtons: [(title: String, selector: Selector)] = [
+        (title: "Encode", selector: #selector(encodeContents(sender:))),
+        (title: "Decode", selector: #selector(decodeContents(sender:))),
+        (title: "Sample", selector: #selector(loadSample(sender:))),
     ]
 
     override func setup() {
@@ -71,6 +78,11 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
         self.buttons = makeCommandButtons()
         for button in buttons {
+            stackView.addArrangedSubview(button)
+        }
+
+        let editorButtons = makeEditorButtons()
+        for button in editorButtons {
             stackView.addArrangedSubview(button)
         }
 
@@ -118,6 +130,25 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
     }
 
+    func makeEditorButtons() -> [UIButton] {
+        var buttons = [UIButton]()
+        for editorButton in editorButtons {
+            let button = UIButton(type: .custom)
+            button.setTitleColor(.systemBlue, for: .normal)
+            button.setTitle(editorButton.title, for: .normal)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.addTarget(self, action: editorButton.selector, for: .touchUpInside)
+
+            button.layer.borderColor = UIColor.black.cgColor
+            button.layer.borderWidth = 1.0
+            button.layer.cornerRadius = 5.0
+
+            NSLayoutConstraint.activate([button.widthAnchor.constraint(equalToConstant: 70)])
+            buttons.append(button)
+        }
+        return buttons
+    }
+
     @objc
     func runCommand(sender: EditorCommandButton) {
         if sender.highlightOnTouch {
@@ -129,6 +160,41 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         }
 
         commandExecutor.execute(sender.command)
+    }
+
+    @objc
+    func encodeContents(sender: UIButton) {
+        let value = editor.transformContents(using: JSONEncoder())
+        let data = try! JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
+        let jsonString = String.init(data: data, encoding: .utf8)!
+        self.encodedContents = ["contents": value]
+
+        let printableContents =
+        """
+            { "contents":  \(jsonString) }
+        """
+
+        print(printableContents)
+
+        editor.attributedText = NSAttributedString()
+    }
+
+    @objc
+    func decodeContents(sender: UIButton) {
+        let text = EditorContentJSONDecoder().decode(mode: .editor, maxSize: editor.frame.size, value: encodedContents)
+        self.editor.attributedText = text
+    }
+
+    @objc
+    func loadSample(sender: UIButton) {
+        guard let contents = Bundle.main.jsonFromFile("SampleDoc") else {
+            return
+        }
+
+        let text = EditorContentJSONDecoder().decode(mode: .editor, maxSize: editor.frame.size, value: contents)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            self.editor.attributedText = text
+        }
     }
 }
 

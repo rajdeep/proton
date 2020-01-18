@@ -17,6 +17,7 @@ public enum EditorContentMode {
 
 public protocol EditorContentDecoding {
     associatedtype TypeToDecode
+
     func decode(mode: EditorContentMode, maxSize: CGSize, value: TypeToDecode) -> NSAttributedString
 }
 

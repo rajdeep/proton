@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B164F2E23D282A500A0869A /* JSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F2923D282A500A0869A /* JSONDecoder.swift */; };
+		1B164F2F23D282A500A0869A /* PanelDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F2B23D282A500A0869A /* PanelDecoder.swift */; };
+		1B164F3023D282A500A0869A /* TextDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F2C23D282A500A0869A /* TextDecoder.swift */; };
+		1B164F3123D282A500A0869A /* ParagraphDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F2D23D282A500A0869A /* ParagraphDecoder.swift */; };
+		1B164F3323D2849A00A0869A /* AttributesDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F3223D2849A00A0869A /* AttributesDecoding.swift */; };
+		1B164F3523D2850100A0869A /* UIFontDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F3423D2850100A0869A /* UIFontDecoder.swift */; };
+		1B164F3723D2854400A0869A /* ParagraphStyleDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F3623D2854400A0869A /* ParagraphStyleDecoder.swift */; };
+		1B164F3B23D286D300A0869A /* SampleDoc.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B164F3A23D286D300A0869A /* SampleDoc.json */; };
+		1B164F3D23D289B400A0869A /* BundleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F3C23D289B400A0869A /* BundleExtensions.swift */; };
 		1B183D8423CE8C8500AE83E5 /* RendererCommandExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D8323CE8C8500AE83E5 /* RendererCommandExampleViewController.swift */; };
 		1B183D9623CEF33600AE83E5 /* EncodeContentsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9523CEF33600AE83E5 /* EncodeContentsCommand.swift */; };
 		1B183D9923CEF45000AE83E5 /* JSONEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9823CEF45000AE83E5 /* JSONEncoder.swift */; };
@@ -72,6 +81,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B164F2923D282A500A0869A /* JSONDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDecoder.swift; sourceTree = "<group>"; };
+		1B164F2B23D282A500A0869A /* PanelDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanelDecoder.swift; sourceTree = "<group>"; };
+		1B164F2C23D282A500A0869A /* TextDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextDecoder.swift; sourceTree = "<group>"; };
+		1B164F2D23D282A500A0869A /* ParagraphDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParagraphDecoder.swift; sourceTree = "<group>"; };
+		1B164F3223D2849A00A0869A /* AttributesDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesDecoding.swift; sourceTree = "<group>"; };
+		1B164F3423D2850100A0869A /* UIFontDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFontDecoder.swift; sourceTree = "<group>"; };
+		1B164F3623D2854400A0869A /* ParagraphStyleDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParagraphStyleDecoder.swift; sourceTree = "<group>"; };
+		1B164F3A23D286D300A0869A /* SampleDoc.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SampleDoc.json; sourceTree = "<group>"; };
+		1B164F3C23D289B400A0869A /* BundleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtensions.swift; sourceTree = "<group>"; };
 		1B183D8323CE8C8500AE83E5 /* RendererCommandExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommandExampleViewController.swift; sourceTree = "<group>"; };
 		1B183D9523CEF33600AE83E5 /* EncodeContentsCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodeContentsCommand.swift; sourceTree = "<group>"; };
 		1B183D9823CEF45000AE83E5 /* JSONEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONEncoder.swift; sourceTree = "<group>"; };
@@ -136,6 +154,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B164F2823D282A500A0869A /* Decoding */ = {
+			isa = PBXGroup;
+			children = (
+				1B164F2923D282A500A0869A /* JSONDecoder.swift */,
+				1B164F2A23D282A500A0869A /* Decoder */,
+				1B164F3223D2849A00A0869A /* AttributesDecoding.swift */,
+			);
+			path = Decoding;
+			sourceTree = "<group>";
+		};
+		1B164F2A23D282A500A0869A /* Decoder */ = {
+			isa = PBXGroup;
+			children = (
+				1B164F2B23D282A500A0869A /* PanelDecoder.swift */,
+				1B164F2C23D282A500A0869A /* TextDecoder.swift */,
+				1B164F2D23D282A500A0869A /* ParagraphDecoder.swift */,
+				1B164F3423D2850100A0869A /* UIFontDecoder.swift */,
+				1B164F3623D2854400A0869A /* ParagraphStyleDecoder.swift */,
+			);
+			path = Decoder;
+			sourceTree = "<group>";
+		};
+		1B164F3923D286B400A0869A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1B164F3A23D286D300A0869A /* SampleDoc.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		1B183D8223CE8C5E00AE83E5 /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +244,8 @@
 		1B6D2FCF23BD46ED0019CE40 /* ExampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				1B164F3923D286B400A0869A /* Resources */,
+				1B164F2823D282A500A0869A /* Decoding */,
 				1B183D9723CEF42F00AE83E5 /* Encoding */,
 				1B183D8223CE8C5E00AE83E5 /* Renderer */,
 				1B91F4B423C73CEB003F9B55 /* TextProcessors */,
@@ -211,6 +261,7 @@
 				1B6D2FD923BD46F10019CE40 /* Assets.xcassets */,
 				1B6D2FDB23BD46F10019CE40 /* LaunchScreen.storyboard */,
 				1B6D2FDE23BD46F10019CE40 /* Info.plist */,
+				1B164F3C23D289B400A0869A /* BundleExtensions.swift */,
 			);
 			path = ExampleApp;
 			sourceTree = "<group>";
@@ -397,6 +448,7 @@
 			files = (
 				1B6D2FDD23BD46F10019CE40 /* LaunchScreen.storyboard in Resources */,
 				1B6D2FDA23BD46F10019CE40 /* Assets.xcassets in Resources */,
+				1B164F3B23D286D300A0869A /* SampleDoc.json in Resources */,
 				1B6D2FD823BD46ED0019CE40 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -424,11 +476,13 @@
 			files = (
 				1B183DA223CEF7D600AE83E5 /* PanelEncoder.swift in Sources */,
 				1BFFEF0E23C3228900D2BA35 /* FixedWidthAttachmentExampleViewController.swift in Sources */,
+				1B164F3723D2854400A0869A /* ParagraphStyleDecoder.swift in Sources */,
 				1B91F4B623C73D01003F9B55 /* TypeaheadTextProcessor.swift in Sources */,
 				1B45CD8D23BDD5FC001EB196 /* ExamplesBaseViewController.swift in Sources */,
 				1B91F4BA23C73D96003F9B55 /* TextProcessorExampleViewController.swift in Sources */,
 				1BFFEEFE23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift in Sources */,
 				1B91F4B823C73D3C003F9B55 /* MarkupTextProcessor.swift in Sources */,
+				1B164F2E23D282A500A0869A /* JSONDecoder.swift in Sources */,
 				1B6DE9DE23C598F1007F9859 /* CommandsExampleViewController.swift in Sources */,
 				1B6D2FD323BD46ED0019CE40 /* MasterViewController.swift in Sources */,
 				1B183D9923CEF45000AE83E5 /* JSONEncoder.swift in Sources */,
@@ -437,13 +491,19 @@
 				1B183D9623CEF33600AE83E5 /* EncodeContentsCommand.swift in Sources */,
 				1B183D9C23CEF65300AE83E5 /* ParagraphEncoder.swift in Sources */,
 				1BFFEF1223C3310A00D2BA35 /* PercentWidthAttachmentExampleViewController.swift in Sources */,
+				1B164F3323D2849A00A0869A /* AttributesDecoding.swift in Sources */,
 				1B183D8423CE8C8500AE83E5 /* RendererCommandExampleViewController.swift in Sources */,
+				1B164F2F23D282A500A0869A /* PanelDecoder.swift in Sources */,
 				1B183D9E23CEF6F200AE83E5 /* ParagraphStyle+Codables.swift in Sources */,
 				1BFFEF1023C32B5A00D2BA35 /* WidthRangeAttachmentExampleViewController.swift in Sources */,
 				1BFFEF0023C303F100D2BA35 /* AutogrowingTextField.swift in Sources */,
 				1BFFEF0A23C30C9900D2BA35 /* PanelView.swift in Sources */,
+				1B164F3023D282A500A0869A /* TextDecoder.swift in Sources */,
 				1B45CD8B23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift in Sources */,
 				1B6DE9E123C59A16007F9859 /* PanelCommand.swift in Sources */,
+				1B164F3D23D289B400A0869A /* BundleExtensions.swift in Sources */,
+				1B164F3123D282A500A0869A /* ParagraphDecoder.swift in Sources */,
+				1B164F3523D2850100A0869A /* UIFontDecoder.swift in Sources */,
 				1BD993C223CA8FD200563ACB /* PanelAttachment.swift in Sources */,
 				1BFFEF0723C30B8E00D2BA35 /* FullWidthAttachmentExampleViewController.swift in Sources */,
 			);

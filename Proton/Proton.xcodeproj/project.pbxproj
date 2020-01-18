@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1B004EC723C1C287007893AA /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B004EC623C1C287007893AA /* EditorView.swift */; };
+		1B164F1023D1BE9900A0869A /* AttributesDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F0F23D1BE9900A0869A /* AttributesDecoding.swift */; };
 		1B183D8C23CEA90400AE83E5 /* EditorContentEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D8B23CEA90400AE83E5 /* EditorContentEncoding.swift */; };
 		1B183D8E23CEE9BA00AE83E5 /* AttributesEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D8D23CEE9BA00AE83E5 /* AttributesEncoding.swift */; };
 		1B183D9223CEEED900AE83E5 /* EditorContentEncoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9023CEEEC400AE83E5 /* EditorContentEncoderTests.swift */; };
@@ -121,6 +122,7 @@
 		1B004EC023C17DCE007893AA /* testRendersTextInTextView@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersTextInTextView@3x.png"; sourceTree = "<group>"; };
 		1B004EC123C17DCE007893AA /* testRendersMultilineTextViewBasedOnContent@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersMultilineTextViewBasedOnContent@3x.png"; sourceTree = "<group>"; };
 		1B004EC623C1C287007893AA /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
+		1B164F0F23D1BE9900A0869A /* AttributesDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesDecoding.swift; sourceTree = "<group>"; };
 		1B183D8B23CEA90400AE83E5 /* EditorContentEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentEncoding.swift; sourceTree = "<group>"; };
 		1B183D8D23CEE9BA00AE83E5 /* AttributesEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesEncoding.swift; sourceTree = "<group>"; };
 		1B183D9023CEEEC400AE83E5 /* EditorContentEncoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentEncoderTests.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				1B2BC0DB23CF18C100407DEE /* EditorContentDecoding.swift */,
+				1B164F0F23D1BE9900A0869A /* AttributesDecoding.swift */,
 			);
 			path = Decoding;
 			sourceTree = "<group>";
@@ -803,6 +806,7 @@
 				1B45CD9123BDD7E6001EB196 /* AutogrowingTextView.swift in Sources */,
 				1B45CDE623C05942001EB196 /* AttachmentSize.swift in Sources */,
 				1B975AFB23CD3E9B00EC410C /* RendererView.swift in Sources */,
+				1B164F1023D1BE9900A0869A /* AttributesDecoding.swift in Sources */,
 				1B45CDD723C00A0A001EB196 /* EditorAttribute.swift in Sources */,
 				1B45CDC723BF14DF001EB196 /* NSAttributedString+Range.swift in Sources */,
 				1B45CDD223C00856001EB196 /* TextContainer.swift in Sources */,

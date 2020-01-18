@@ -11,9 +11,9 @@ import Foundation
 import Proton
 
 class TextTransformer: EditorContentEncoding {
-    typealias TransformedType = String
+    typealias EncodedType = String
 
-    func transform(_ content: EditorContent) -> String! {
+    func encode(_ content: EditorContent) -> String! {
         let text: String
 
         switch content.type {
