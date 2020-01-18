@@ -49,12 +49,24 @@ open class RendererView: UIView {
         get { return readOnlyEditorView.selectedText }
     }
 
+    public var contents: [EditorContent] {
+        get { return readOnlyEditorView.contents() }
+    }
+
     public func scrollRangeToVisible(_ range: NSRange) {
         readOnlyEditorView.scrollRangeToVisible(range)
     }
 
     public func scrollRectToVisible(_ rect: CGRect, animated: Bool) {
         readOnlyEditorView.scrollRectToVisible(rect, animated: animated)
+    }
+
+    public var contentOffest: CGPoint {
+        return readOnlyEditorView.contentOffest
+    }
+
+    public func contents(in range: NSRange? = nil) -> [EditorContent] {
+        return readOnlyEditorView.contents(in: range)
     }
 
     func didTap(at location: CGPoint) {

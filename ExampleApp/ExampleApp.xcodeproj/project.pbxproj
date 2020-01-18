@@ -16,6 +16,8 @@
 		1B164F3723D2854400A0869A /* ParagraphStyleDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F3623D2854400A0869A /* ParagraphStyleDecoder.swift */; };
 		1B164F3B23D286D300A0869A /* SampleDoc.json in Resources */ = {isa = PBXBuildFile; fileRef = 1B164F3A23D286D300A0869A /* SampleDoc.json */; };
 		1B164F3D23D289B400A0869A /* BundleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F3C23D289B400A0869A /* BundleExtensions.swift */; };
+		1B164F3F23D29BF200A0869A /* ScrollCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F3E23D29BF200A0869A /* ScrollCommand.swift */; };
+		1B164F4323D2A5A000A0869A /* ResetCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F4223D2A5A000A0869A /* ResetCommand.swift */; };
 		1B183D8423CE8C8500AE83E5 /* RendererCommandExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D8323CE8C8500AE83E5 /* RendererCommandExampleViewController.swift */; };
 		1B183D9623CEF33600AE83E5 /* EncodeContentsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9523CEF33600AE83E5 /* EncodeContentsCommand.swift */; };
 		1B183D9923CEF45000AE83E5 /* JSONEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9823CEF45000AE83E5 /* JSONEncoder.swift */; };
@@ -90,6 +92,8 @@
 		1B164F3623D2854400A0869A /* ParagraphStyleDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParagraphStyleDecoder.swift; sourceTree = "<group>"; };
 		1B164F3A23D286D300A0869A /* SampleDoc.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SampleDoc.json; sourceTree = "<group>"; };
 		1B164F3C23D289B400A0869A /* BundleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtensions.swift; sourceTree = "<group>"; };
+		1B164F3E23D29BF200A0869A /* ScrollCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollCommand.swift; sourceTree = "<group>"; };
+		1B164F4223D2A5A000A0869A /* ResetCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetCommand.swift; sourceTree = "<group>"; };
 		1B183D8323CE8C8500AE83E5 /* RendererCommandExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommandExampleViewController.swift; sourceTree = "<group>"; };
 		1B183D9523CEF33600AE83E5 /* EncodeContentsCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodeContentsCommand.swift; sourceTree = "<group>"; };
 		1B183D9823CEF45000AE83E5 /* JSONEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONEncoder.swift; sourceTree = "<group>"; };
@@ -298,6 +302,8 @@
 			children = (
 				1B6DE9E023C59A16007F9859 /* PanelCommand.swift */,
 				1B183D9523CEF33600AE83E5 /* EncodeContentsCommand.swift */,
+				1B164F3E23D29BF200A0869A /* ScrollCommand.swift */,
+				1B164F4223D2A5A000A0869A /* ResetCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -475,6 +481,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B183DA223CEF7D600AE83E5 /* PanelEncoder.swift in Sources */,
+				1B164F3F23D29BF200A0869A /* ScrollCommand.swift in Sources */,
 				1BFFEF0E23C3228900D2BA35 /* FixedWidthAttachmentExampleViewController.swift in Sources */,
 				1B164F3723D2854400A0869A /* ParagraphStyleDecoder.swift in Sources */,
 				1B91F4B623C73D01003F9B55 /* TypeaheadTextProcessor.swift in Sources */,
@@ -482,6 +489,7 @@
 				1B91F4BA23C73D96003F9B55 /* TextProcessorExampleViewController.swift in Sources */,
 				1BFFEEFE23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift in Sources */,
 				1B91F4B823C73D3C003F9B55 /* MarkupTextProcessor.swift in Sources */,
+				1B164F4323D2A5A000A0869A /* ResetCommand.swift in Sources */,
 				1B164F2E23D282A500A0869A /* JSONDecoder.swift in Sources */,
 				1B6DE9DE23C598F1007F9859 /* CommandsExampleViewController.swift in Sources */,
 				1B6D2FD323BD46ED0019CE40 /* MasterViewController.swift in Sources */,

@@ -39,7 +39,9 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
     var buttons = [UIButton]()
 
     let commands: [(title: String, command: RendererCommand)] = [
+        (title: "Reset", command: ResetCommand()),
         (title: "Highlight", command: HighlightTextCommand()),
+        (title: "Scroll", command: ScrollCommand()),
     ]
 
     override func setup() {

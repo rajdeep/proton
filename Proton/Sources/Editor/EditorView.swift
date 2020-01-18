@@ -86,6 +86,10 @@ open class EditorView: UIView {
         return richTextView.attributedText.length == 0
     }
 
+    public var contentOffest: CGPoint {
+        return richTextView.contentOffset
+    }
+
     public var selectedText: NSAttributedString {
         return attributedText.attributedSubstring(from: selectedRange)
     }

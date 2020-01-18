@@ -30,6 +30,34 @@ class RendererSnapshotTests: FBSnapshotTestCase {
         FBSnapshotVerifyView(viewController.view)
     }
 
+    func testScrolledRendering() {
+        let viewController = RendererTestViewController()
+        let renderer = viewController.renderer
+        renderer.addBorder()
+
+        renderer.attributedText = NSAttributedString(string:
+        """
+        Line 1   - abc
+        Line 2   - def
+        Line 3   - ghi
+        Line 4   - jkl
+        Line 5   - mno
+        Line 6   - pqr
+        Line 7   - stu
+        Line 8   - vwx
+        Line 9   - yza
+        Line 10  - bcd
+        """
+        )
+
+        viewController.render()
+
+        let findCommand = FindTextCommand(text: "pqr")
+        findCommand.execute(on: renderer)
+
+        FBSnapshotVerifyView(viewController.view)
+    }
+
     func testRendersAttachmentFromEditor() {
         let editor = EditorView()
         let offsetProvider = MockAttachmentOffsetProvider()

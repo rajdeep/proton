@@ -33,6 +33,7 @@ class RendererTestViewController: SnapshotTestViewController {
             renderer.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
             renderer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             view.trailingAnchor.constraint(equalTo: renderer.trailingAnchor, constant: 20),
+            view.bottomAnchor.constraint(greaterThanOrEqualTo: renderer.bottomAnchor, constant: 20),
         ])
     }
 }
