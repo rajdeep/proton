@@ -16,7 +16,7 @@ protocol DefaultTextFormattingProviding: class {
 
 class TextStorage: NSTextStorage {
 
-    let storage = NSMutableAttributedString()
+    let storage = NSTextStorage()
 
     private let defaultParagraphStyle = NSParagraphStyle()
     private let defaultFont = UIFont.systemFont(ofSize: 17)
@@ -138,7 +138,7 @@ class TextStorage: NSTextStorage {
                                    options: .longestEffectiveRangeNotRequired,
                                    using: { (attribute, _, _) in
                                     if let attachment = attribute as? Attachment {
-                                        attachment.removeFromSuperView()
+                                        attachment.removeFromSuperView()                                        
                                     }
         })
     }

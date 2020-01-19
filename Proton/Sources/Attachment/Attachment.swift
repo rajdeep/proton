@@ -70,11 +70,8 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     }
 
     var spacer: NSAttributedString {
-//        let key = isBlockAttachment == true ? NSAttributedString.Key.contentType: NSAttributedString.Key.inlineContentType
-//        let spacerAttr = [NSAttributedString.Key.viewOnly: key]
-        // TODO: Revisit - should this be viewOnly?
-        let spacerAttr: RichTextAttributes = [:]
-        return isBlockAttachment == true ? NSAttributedString(string: "\n", attributes: spacerAttr) : NSAttributedString(string: " ", attributes: spacerAttr)
+        let spacer = isBlockAttachment == true ? "" : " "
+        return NSAttributedString(string: spacer)
     }
 
     func stringWithSpacers(appendPrev: Bool, appendNext: Bool) -> NSAttributedString {

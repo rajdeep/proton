@@ -91,6 +91,8 @@ class RichTextView: AutogrowingTextView {
 
     func insertAttachment(in range: NSRange, attachment: Attachment) {
         richTextStorage.insertAttachment(in: range, attachment: attachment)
+        richTextStorage.edited([.editedAttributes, .editedCharacters], range: range, changeInLength: 0)
+        scrollRangeToVisible(range)
     }
 
     func transformContents<T: EditorContentEncoding>(in range: NSRange? = nil, using transformer: T) -> [T.EncodedType] {
