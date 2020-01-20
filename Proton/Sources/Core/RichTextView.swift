@@ -65,6 +65,13 @@ class RichTextView: AutogrowingTextView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    #if targetEnvironment(macCatalyst)
+    @objc(_focusRingType)
+    var focusRingType: UInt {
+        return 1 //NSFocusRingTypeNone
+    }
+    #endif
+
     private func setupPlaceholder() {
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
         placeholderLabel.numberOfLines = 0
