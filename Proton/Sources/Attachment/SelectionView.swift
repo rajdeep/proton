@@ -21,7 +21,8 @@ class SelectionView: UIView {
     }
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        guard let originalResult = super.hitTest(point, with: event) else {
+        guard let originalResult = super.hitTest(point, with: event),
+        event?.type == .touches else {
             return nil
         }
 
