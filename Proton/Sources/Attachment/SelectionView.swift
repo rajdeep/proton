@@ -13,7 +13,6 @@ class SelectionView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.alpha = 0.5
-        self.backgroundColor = tintColor
     }
 
     required init?(coder: NSCoder) {
@@ -41,6 +40,7 @@ class SelectionView: UIView {
     }
 
     func addTo(parent: UIView) {
+        applyTintColor()
         self.translatesAutoresizingMaskIntoConstraints = false
         parent.addSubview(self)
         NSLayoutConstraint.activate([
@@ -49,5 +49,11 @@ class SelectionView: UIView {
             self.leadingAnchor.constraint(equalTo: parent.leadingAnchor),
             self.trailingAnchor.constraint(equalTo: parent.trailingAnchor),
         ])
+    }
+
+    private func applyTintColor() {
+        // TintColor needs to be picked up from UIButton as it is the only control that
+        // provides correct color for macOS accents.
+        self.backgroundColor = UIButton().tintColor
     }
 }
