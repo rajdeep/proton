@@ -42,7 +42,7 @@ extension PanelAttachment: PanelViewDelegate {
     }
 
     func panel(_ panel: PanelView, didRecieveKey key: EditorKey, at range: NSRange, handled: inout Bool) {
-        if key == .backspace && range == .zero && panel.editor.isEmpty {
+        if key == .backspace && range == .zero && panel.editor.attributedText.string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             removeFromContainer()
             handled = true
         } else if key == .enter,

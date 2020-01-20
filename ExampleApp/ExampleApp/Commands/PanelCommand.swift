@@ -16,11 +16,18 @@ class PanelCommand: EditorCommand {
         let selectedText = editor.selectedText
 
         let attachment = PanelAttachment(frame: .zero)
+        attachment.selectBeforeDelete = true
         let panel = attachment.view
         panel.editor.maxHeight = 300
         panel.editor.replaceCharacters(in: .zero, with: selectedText)
         panel.editor.selectedRange = panel.editor.textEndRange
 
         editor.insertAttachment(in: editor.selectedRange, attachment: attachment)
+    }
+
+    func canExecute(on editor: EditorView) -> Bool {
+        let panel = PanelView()
+        let minSize = panel.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+        return minSize.width < editor.frame.width
     }
 }
