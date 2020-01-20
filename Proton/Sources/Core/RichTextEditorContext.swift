@@ -70,4 +70,9 @@ class RichTextEditorContext: RichTextViewContext {
 
         return true
     }
+
+    func textViewDidChange(_ textView: UITextView) {
+        guard let richTextView = activeTextView else { return }
+        richTextView.richTextViewDelegate?.richTextView(richTextView, didChangeTextAtRange: textView.selectedRange)
+    }
 }

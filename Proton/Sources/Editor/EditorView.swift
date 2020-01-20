@@ -275,6 +275,10 @@ extension EditorView: RichTextViewDelegate {
         delegate?.editor(self, didLoseFocusFrom: range)
     }
 
+    func richTextView(_ richTextView: RichTextView, didChangeTextAtRange range: NSRange) {
+        delegate?.editor(self, didChangeTextAt: range)
+    }
+
     func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool) {
         guard finished else { return }
         relayoutAttachments()

@@ -142,6 +142,27 @@ class RichTextViewContextTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
 
+    func testInvokesTextDidChange() {
+        let testExpectation = expectation(description: #function)
+        let mockTextViewDelegate = MockRichTextViewDelegate()
+
+        let context = RichTextEditorContext.default
+        let textView = RichTextView(context: context)
+        textView.richTextViewDelegate = mockTextViewDelegate
+        textView.text = "Sample text"
+
+        let selectedRange = NSRange(location: 4, length: 1)
+        textView.selectedRange = selectedRange
+
+        mockTextViewDelegate.onDidChangeText = { _, range in
+            XCTAssertEqual(range, selectedRange)
+            testExpectation.fulfill()
+        }
+
+        _ = context.textViewDidChange(textView)
+        waitForExpectations(timeout: 1.0)
+    }
+
     func testRelaysAttributesAtSelectedRange() {
         let testExpectation = expectation(description: #function)
         testExpectation.expectedFulfillmentCount = 2
@@ -181,5 +202,4 @@ class RichTextViewContextTests: XCTestCase {
 
         waitForExpectations(timeout: 1.0)
     }
-
 }

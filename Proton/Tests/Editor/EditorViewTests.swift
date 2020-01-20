@@ -47,7 +47,7 @@ class EditorViewTests: XCTestCase {
 
         let contents = editor.contents()
 
-        XCTAssertEqual(contents.count, 5)
+        XCTAssertEqual(contents.count, 4)
         let paragraphContent = contents[0]
         if case let .text(name, attributedString) = paragraphContent.type {
             XCTAssertEqual(name, EditorContent.Name.paragraph)
@@ -81,14 +81,6 @@ class EditorViewTests: XCTestCase {
             XCTAssertEqual(type, .block)
         } else {
             XCTFail("Failed to get correct content [TextFieldAttachment]")
-        }
-
-        let spacerContent2 = contents[4]
-        if case let .text(name, attributedString) = spacerContent2.type {
-            XCTAssertEqual(name, EditorContent.Name.paragraph)
-            XCTAssertEqual(attributedString.string.trimmingCharacters(in: .whitespacesAndNewlines), "")
-        } else {
-            XCTFail("Failed to get correct content [Spacer]")
         }
     }
 

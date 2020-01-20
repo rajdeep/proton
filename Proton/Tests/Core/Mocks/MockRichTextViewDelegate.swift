@@ -16,6 +16,7 @@ class MockRichTextViewDelegate: RichTextViewDelegate {
     var onKeyReceived: ((RichTextView, EditorKey, NSRange, Bool) -> Void)?
     var onReceivedFocus: ((RichTextView, NSRange) -> Void)?
     var onLostFocus: ((RichTextView, NSRange) -> Void)?
+    var onDidChangeText: ((RichTextView, NSRange) -> Void)?
     var onDidFinishLayout: ((RichTextView, Bool) -> Void)?
     var onDidTapAtLocation: ((RichTextView, CGPoint, NSRange?) -> Void)?
 
@@ -37,6 +38,10 @@ class MockRichTextViewDelegate: RichTextViewDelegate {
 
     func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool) {
         onDidFinishLayout?(richTextView, finished)
+    }
+
+    func richTextView(_ richTextView: RichTextView, didChangeTextAtRange range: NSRange) {
+        onDidChangeText?(richTextView, range)
     }
 
     func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
