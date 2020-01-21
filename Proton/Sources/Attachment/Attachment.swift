@@ -70,15 +70,15 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     }
 
     var spacer: NSAttributedString {
-        let spacer = isBlockAttachment == true ? "" : " "
+        let spacer = isBlockAttachment == true ? "\n" : " "
         return NSAttributedString(string: spacer)
     }
 
     func stringWithSpacers(appendPrev: Bool, appendNext: Bool) -> NSAttributedString {
         let updatedString = NSMutableAttributedString()
-        if appendPrev {
-            updatedString.append(spacer)
-        }
+//        if appendPrev {
+//            updatedString.append(spacer)
+//        }
         updatedString.append(string)
         if appendNext {
             updatedString.append(spacer)
