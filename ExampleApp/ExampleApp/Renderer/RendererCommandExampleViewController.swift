@@ -37,6 +37,7 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
     let renderer = RendererView()
     let commandExecutor = RendererCommandExecutor()
     var buttons = [UIButton]()
+    let searchText = UITextField()
 
     let commands: [(title: String, command: RendererCommand)] = [
         (title: "Reset", command: ResetCommand()),
@@ -65,11 +66,21 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
         }
         view.addSubview(stackView)
 
+        searchText.placeholder = "Search text"
+        searchText.translatesAutoresizingMaskIntoConstraints = false
+        searchText.borderStyle = .roundedRect
+
+        view.addSubview(searchText)
+
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
-            renderer.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20),
+            searchText.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20),
+            searchText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            searchText.widthAnchor.constraint(equalToConstant: 100),
+
+            renderer.topAnchor.constraint(equalTo: searchText.bottomAnchor, constant: 20),
             renderer.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             renderer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             renderer.heightAnchor.constraint(equalToConstant: 300)
@@ -108,7 +119,12 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
 
     @objc
     func runCommand(sender: RendererCommandButton) {
-        commandExecutor.execute(sender.command)
+        let command = sender.command
+        if command is ScrollCommand {
+            (command as? ScrollCommand)?.text = searchText.text ?? ""
+        }
+
+        commandExecutor.execute(command)
     }
 }
 
