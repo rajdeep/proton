@@ -40,7 +40,7 @@ class EditorCommandSnapshotTests: FBSnapshotTestCase {
 
         panel.attributedText = NSAttributedString(string: "In full-width attachment")
 
-        editor.replaceCharacters(in: .zero, with: "This text is in Editor")
+        editor.replaceCharacters(in: .zero, with: "This text is in Editor ")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
 
         let context = EditorViewContext(name: "test_context")

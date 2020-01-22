@@ -54,7 +54,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         textField.boundsObserver = attachment
         attachment.offsetProvider = offsetProvider
 
-        editor.replaceCharacters(in: .zero, with: "This text is in Editor")
+        editor.replaceCharacters(in: .zero, with: "This text is in Editor ")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
 
         viewController.render()
@@ -106,7 +106,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         textField.boundsObserver = attachment
         attachment.offsetProvider = offsetProvider
 
-        editor.replaceCharacters(in: .zero, with: "This text is in Editor")
+        editor.replaceCharacters(in: .zero, with: "This text is in Editor ")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
 
         viewController.render()
@@ -132,7 +132,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         inlineEditor.replaceCharacters(in: .zero, with: "In width range text attachment")
         attachment.offsetProvider = offsetProvider
 
-        editor.replaceCharacters(in: .zero, with: "This text is in Editor")
+        editor.replaceCharacters(in: .zero, with: "This text is in Editor ")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
         editor.replaceCharacters(in: editor.textEndRange, with: "and then some more text after the attachment")
         
@@ -158,7 +158,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         textField.boundsObserver = attachment
         attachment.offsetProvider = offsetProvider
 
-        editor.replaceCharacters(in: .zero, with: "This text is in Editor")
+        editor.replaceCharacters(in: .zero, with: "This text is in Editor ")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
 
         viewController.render()

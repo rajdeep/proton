@@ -75,7 +75,7 @@ class RendererSnapshotTests: FBSnapshotTestCase {
         textField.boundsObserver = attachment
         attachment.offsetProvider = offsetProvider
 
-        editor.replaceCharacters(in: .zero, with: "This text is in Editor")
+        editor.replaceCharacters(in: .zero, with: "This text is in Editor ")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
 
         let renderer = editor.convertToRenderer()
