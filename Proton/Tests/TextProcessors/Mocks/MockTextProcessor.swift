@@ -13,6 +13,7 @@ class MockTextProcessor: TextProcessing {
     let name: String
     var priority: TextProcessingPriority = .medium
 
+    var onWillProcess: ((NSAttributedString, String) -> Void)?
     var onProcess: ((EditorView, NSRange, Int) -> Void)?
     var onProcessInterrupted: ((EditorView, NSRange) -> Void)?
 
@@ -21,6 +22,10 @@ class MockTextProcessor: TextProcessing {
     init(name: String = "MockTextProcessor", processorCondition: @escaping (EditorView, NSRange) -> Bool) {
         self.name = name
         self.processorCondition = processorCondition
+    }
+
+    func willProcess(deletedText: NSAttributedString, insertedText: String) {
+        onWillProcess?(deletedText, insertedText)
     }
 
     func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int, processed: inout Bool) {

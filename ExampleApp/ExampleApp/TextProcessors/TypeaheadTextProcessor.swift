@@ -13,11 +13,16 @@ import Proton
 
 protocol TypeaheadTextProcessorDelegate: class {
     func typeaheadQueryDidChange(trigger: String, query: String, range: NSRange)
-    func typeadheadQueryDidEnd()
+    func typeadheadQueryDidEnd(reason: TypeaheadExitReason)
 }
 
 extension NSAttributedString.Key {
-    static let Typeahead = NSAttributedString.Key.init("Typeahead")
+    static let typeahead = NSAttributedString.Key.init("Typeahead")
+}
+
+enum TypeaheadExitReason {
+    case triggerDeleted
+    case completed
 }
 
 class TypeaheadTextProcessor: TextProcessing {
@@ -29,9 +34,28 @@ class TypeaheadTextProcessor: TextProcessing {
     }
 
     weak var delegate: TypeaheadTextProcessorDelegate?
+    var triggerDeleted = false
+
+    func willProcess(deletedText: NSAttributedString, insertedText: String) {
+        let deleted = NSMutableAttributedString(attributedString: deletedText)
+        let range = deleted.mutableString.range(of: "@")
+        if range.location != NSNotFound {
+            let triggerChar = deletedText.attributedSubstring(from: range)
+            let typeaheadAttribute = triggerChar.attribute(.typeahead, at: 0, effectiveRange: nil) as? Bool ?? true
+            if typeaheadAttribute != false {
+                triggerDeleted = true
+                delegate?.typeadheadQueryDidEnd(reason: .triggerDeleted)
+            }
+        }
+    }
 
     func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int, processed: inout Bool) {
-        //        guard let range = typeAheadRange(from: textStorage, editedRange: editedRange) else { return }
+        guard triggerDeleted == false else {
+            editor.removeAttribute(.foregroundColor, at: editedRange)
+            triggerDeleted = false
+            return
+        }
+
         let textStorage = editor.attributedText
         guard let range = textStorage.reverseRange(of: "@", currentPosition: editedRange.location + editedRange.length),
             isValidTrigger(editor: editor, range: range.firstCharacterRange) else { return }
@@ -42,15 +66,15 @@ class TypeaheadTextProcessor: TextProcessing {
         let trigger = textStorage.attributedSubstring(from: triggerRange)
 
         let isCancelled = trigger.attributes(at: 0, effectiveRange: nil).contains { attr in
-            attr.key == .Typeahead && attr.value as? Bool == false
+            attr.key == .typeahead && attr.value as? Bool == false
         }
 
         guard isCancelled == false else { return }
 
         if query.components(separatedBy: " ").count >= 3 {
-            editor.addAttributes([.Typeahead: false], at: triggerRange)
+            editor.addAttributes([.typeahead: false], at: triggerRange)
             editor.removeAttribute(NSAttributedString.Key.foregroundColor, at: range)
-            delegate?.typeadheadQueryDidEnd()
+            delegate?.typeadheadQueryDidEnd(reason: .completed)
         } else {
             delegate?.typeaheadQueryDidChange(trigger: trigger.string, query: query, range: range)
             editor.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.blue], at: range)

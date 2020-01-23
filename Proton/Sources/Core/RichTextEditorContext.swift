@@ -36,6 +36,10 @@ class RichTextEditorContext: RichTextViewContext {
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         guard let richTextView = activeTextView else { return true }
+
+        let deletedText = textView.attributedText.attributedSubstring(from: range)
+        richTextView.textProcessor?.textStorage(richTextView.textStorage, willProcessDeletedText: deletedText, insertedText: text)
+
         // if backspace
         var handled = false
         if (text.isEmpty && range.length > 0) || (text.isEmpty && range == .zero) {

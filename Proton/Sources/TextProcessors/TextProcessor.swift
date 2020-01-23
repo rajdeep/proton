@@ -42,6 +42,12 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         }
     }
 
+    func textStorage(_ textStorage: NSTextStorage, willProcessDeletedText deletedText: NSAttributedString, insertedText: String) {
+        for processor in sortedProcessors {
+            processor.willProcess(deletedText: deletedText, insertedText: insertedText)
+        }
+    }
+
     private func notifyInterruption(by processor: TextProcessing, editor: EditorView, at range: NSRange) {
         let processors = activeProcessors.filter{ $0.name != processor.name }
         processors.forEach { $0.processInterrupted(editor: editor, at: range) }

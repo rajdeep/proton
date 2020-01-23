@@ -56,8 +56,9 @@ extension TextProcessorExampleViewController: TypeaheadTextProcessorDelegate {
         typeaheadLabel.text = text
     }
 
-    func typeadheadQueryDidEnd() {
-        typeaheadLabel.text = "Typeahead ended"
+    func typeadheadQueryDidEnd(reason: TypeaheadExitReason) {
+        let reason = reason == .completed ? "completed" : "trigger deleted"
+        typeaheadLabel.text = "Typeahead ended with reason: \(reason)"
     }
 }
 

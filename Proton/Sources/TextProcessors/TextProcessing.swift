@@ -30,6 +30,9 @@ public protocol TextProcessing {
     /// executed. It is responsibility of these `TextProcessors` to do any cleanup/rollback if that needs to be done.
     var priority: TextProcessingPriority { get }
 
+
+    func willProcess(deletedText: NSAttributedString, insertedText: String)
+
     /// Allows to change attributes and text in the `EditorView` as the text is changed.
     /// - Parameter editor:`EditorView` in which text is being changed.
     /// - Parameter editedRange: Current range that is being modified.
@@ -43,4 +46,9 @@ public protocol TextProcessing {
     /// - Parameter editor:`EditorView` in which text is being changed.
     /// - Parameter range: Current range that is being modified.
     func processInterrupted(editor: EditorView, at range: NSRange) // fired when processor is interrupted as a result of an exclusive priority processor
+}
+
+
+public extension TextProcessing {
+    func willProcess(deletedText: NSAttributedString, insertedText: String) { }
 }

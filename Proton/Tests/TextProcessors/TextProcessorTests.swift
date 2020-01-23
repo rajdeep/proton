@@ -14,7 +14,7 @@ import XCTest
 class TextProcessorTests: XCTestCase {
     func testRegistersTextProcessor() {
         let textProcessor = TextProcessor(editor: EditorView())
-        let name = "RegsitrationTest"
+        let name = "TextProcessorTest"
         let mockProcessor = MockTextProcessor(name: name, processorCondition: { _, _ in return true })
         textProcessor.register(mockProcessor)
 
@@ -24,7 +24,7 @@ class TextProcessorTests: XCTestCase {
 
     func testUnregistersTextProcessor() {
         let textProcessor = TextProcessor(editor: EditorView())
-        let name = "RegsitrationTest"
+        let name = "TextProcessorTest"
         let mockProcessor = MockTextProcessor(name: name, processorCondition: { _, _ in return true })
         textProcessor.register(mockProcessor)
 
@@ -33,11 +33,36 @@ class TextProcessorTests: XCTestCase {
         XCTAssertEqual(textProcessor.sortedProcessors.count, 0)
     }
 
+    func testInvokesWillProcess() {
+        let testExpectation = functionExpectation()
+        let editor = EditorView()
+        let richTextEditorContext = assertUnwrap(editor.context as? RichTextEditorContext)
+
+        let name = "TextProcessorTest"
+        let replacementString = "replacement string"
+        let mockProcessor = MockTextProcessor(name: name, processorCondition: { _, _ in return true })
+        mockProcessor.onWillProcess = { deleted, inserted in
+            XCTAssertEqual(deleted.string, "some")
+            XCTAssertEqual(inserted, replacementString)
+            testExpectation.fulfill()
+        }
+
+        richTextEditorContext.textViewDidBeginEditing(editor.richTextView)
+        let testString = NSAttributedString(string: "test some text")
+
+        editor.replaceCharacters(in: .zero, with: testString)
+        editor.registerProcessor(mockProcessor)
+        let replacementRange = NSRange(location: 5, length: 4)
+        _ = richTextEditorContext.textView(editor.richTextView, shouldChangeTextIn: replacementRange, replacementText: replacementString)
+        editor.replaceCharacters(in: replacementRange, with: replacementString)
+        waitForExpectations(timeout: 1.0)
+    }
+
     func testInvokesTextProcessor() {
         let testExpectation = functionExpectation()
         let editor = EditorView()
 
-        let name = "RegsitrationTest"
+        let name = "TextProcessorTest"
         let mockProcessor = MockTextProcessor(name: name, processorCondition: { _, _ in return true })
         mockProcessor.onProcess = { processedEditor, range, _ in
             XCTAssertEqual(processedEditor, editor)
