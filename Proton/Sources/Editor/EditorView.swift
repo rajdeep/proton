@@ -13,6 +13,19 @@ public protocol BoundsObserving: class {
     func didChangeBounds(_ bounds: CGRect)
 }
 
+public struct EditorLine {
+    public let text: NSAttributedString
+    public let range: NSRange
+
+    public func startsWith(_ text: String) -> Bool {
+        return self.text.string.hasPrefix(text)
+    }
+
+    public func endsWith(_ text: String) -> Bool {
+        self.text.string.hasSuffix(text)
+    }
+}
+
 open class EditorView: UIView {
     let richTextView: RichTextView
 
@@ -90,6 +103,12 @@ open class EditorView: UIView {
         return richTextView.contentOffset
     }
 
+    public var currentLine: EditorLine {
+        let lineRange = richTextView.currentLineRange
+        let text = attributedText.attributedSubstring(from: lineRange)
+        return EditorLine(text: text, range: lineRange)
+    }
+
     public var selectedText: NSAttributedString {
         return attributedText.attributedSubstring(from: selectedRange)
     }
@@ -163,6 +182,10 @@ open class EditorView: UIView {
         return richTextView.becomeFirstResponder()
     }
 
+    public func word(at location: Int) -> NSAttributedString? {
+        return richTextView.wordAt(location)
+    }
+
     public func insertAttachment(in range: NSRange, attachment: Attachment) {
         // TODO: handle undo
         richTextView.insertAttachment(in: range, attachment: attachment)
@@ -217,6 +240,14 @@ open class EditorView: UIView {
         }
         let attributedString = NSAttributedString(string: string, attributes: attributes)
         richTextView.replaceCharacters(in: range, with: attributedString)
+    }
+
+    public func appendCharacters(_ attriburedString: NSAttributedString) {
+        replaceCharacters(in: textEndRange, with: attriburedString)
+    }
+
+    public func appendCharacters(_ string: String) {
+        richTextView.replaceCharacters(in: textEndRange, with: string)
     }
 
     public func registerProcessor(_ processor: TextProcessing) {

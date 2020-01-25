@@ -194,6 +194,38 @@ class EditorViewTests: XCTestCase {
         }
         editor.selectedRange = editor.attributedText.fullRange
         waitForExpectations(timeout: 1.0)
+    }
 
+    func testGetsCurrentLineInformation() {
+        let editor = EditorView()
+        let line1 = NSAttributedString(string: "This is text in line 1\n")
+        let line2 = NSAttributedString(string: "And this is text in line 2")
+        editor.appendCharacters(line1)
+        editor.appendCharacters(line2)
+        editor.selectedRange = NSRange(location: line1.length + 4, length: 1)
+
+        let currentLine = editor.currentLine
+        XCTAssertEqual(currentLine.text.string, line2.string)
+        XCTAssertTrue(currentLine.startsWith("And"))
+        XCTAssertTrue(currentLine.endsWith("line 2"))
+    }
+
+    func testRetunsZeroRangeForLineInEmptyEditor() {
+        let editor = EditorView()
+        let line = editor.currentLine
+        XCTAssertEqual(line.range, .zero)
+    }
+
+    func testReturnsNilForWordAtInvalidRange() {
+        let editor = EditorView()
+        let word = editor.word(at: 2)
+        XCTAssertNil(word)
+    }
+
+    func testGetsWordAtLocation() {
+        let editor = EditorView()
+        editor.appendCharacters("This is a test line")
+        let word = editor.word(at: 12)
+        XCTAssertEqual(word?.string, "test")
     }
 }

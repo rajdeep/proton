@@ -60,6 +60,20 @@ class RichTextView: AutogrowingTextView {
         return storage.textEndRange
     }
 
+    var currentLineRange: NSRange {
+        let backward = UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)
+        let forward = UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)
+
+        guard attributedText.length > 0,
+            let currentPosition = selectedTextRange?.start,
+            let startOfLinePosition = tokenizer.position(from: currentPosition, toBoundary: .paragraph, inDirection: backward),
+            let endOfLinePosition = tokenizer.position(from: currentPosition, toBoundary: .paragraph, inDirection: forward),
+            let lineRange = self.textRange(from: startOfLinePosition, to: endOfLinePosition) else {
+                return .zero
+        }
+        return lineRange.toNSRange(in: self) ?? .zero
+    }
+
     @available(*, unavailable, message: "init(coder:) unavailable, use init")
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -86,6 +100,15 @@ class RichTextView: AutogrowingTextView {
             placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -textContainer.lineFragmentPadding),
             placeholderLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -textContainer.lineFragmentPadding)
         ])
+    }
+
+    func wordAt(_ location: Int) -> NSAttributedString? {
+        guard let position = self.position(from: self.beginningOfDocument, offset: location),
+        let wordRange = tokenizer.rangeEnclosingPosition(position, with: .word, inDirection: UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)),
+        let range = wordRange.toNSRange(in: self) else {
+            return nil
+        }
+        return attributedText.attributedSubstring(from: range)
     }
 
     func invalidateLayout(for range: NSRange) {
