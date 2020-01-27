@@ -66,11 +66,12 @@ class TextStorage: NSTextStorage {
     override func replaceCharacters(in range: NSRange, with str: String) {
         beginEditing()
         let delta = str.utf16.count - range.length
-        handleDeletedAttachments(in: range)
+        let attachmentsToDelete = getAttachments(in: range)
         storage.replaceCharacters(in: range, with: str)
         storage.fixAttributes(in: NSRange(location: 0, length: storage.length))
         edited([.editedCharacters, .editedAttributes], range: range, changeInLength: delta)
         endEditing()
+        attachmentsToDelete.forEach { $0.removeFromSuperView() }
     }
 
     override func setAttributes(_ attrs: [NSAttributedString.Key : Any]?, range: NSRange) {
@@ -132,14 +133,16 @@ class TextStorage: NSTextStorage {
         replaceCharacters(in: range, with: attachmentString)
     }
 
-    private func handleDeletedAttachments(in range: NSRange) {
+    private func getAttachments(in range: NSRange) -> [Attachment] {
+        var attachments = [Attachment]()
         storage.enumerateAttribute(NSAttributedString.Key.attachment,
                                    in: range,
                                    options: .longestEffectiveRangeNotRequired,
                                    using: { (attribute, _, _) in
                                     if let attachment = attribute as? Attachment {
-                                        attachment.removeFromSuperView()                                        
+                                        attachments.append(attachment)
                                     }
         })
+        return attachments
     }
 }

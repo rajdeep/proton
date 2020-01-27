@@ -64,10 +64,11 @@ class RichTextView: AutogrowingTextView {
         let backward = UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)
         let forward = UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)
 
+        // endOfLinePosition needs to be calculated before to avoid error in case of selecting an entire line and deleting it
         guard attributedText.length > 0,
             let currentPosition = selectedTextRange?.start,
-            let startOfLinePosition = tokenizer.position(from: currentPosition, toBoundary: .paragraph, inDirection: backward),
             let endOfLinePosition = tokenizer.position(from: currentPosition, toBoundary: .paragraph, inDirection: forward),
+            let startOfLinePosition = tokenizer.position(from: currentPosition, toBoundary: .paragraph, inDirection: backward),
             let lineRange = self.textRange(from: startOfLinePosition, to: endOfLinePosition) else {
                 return .zero
         }
