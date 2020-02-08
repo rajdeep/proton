@@ -195,6 +195,11 @@ open class EditorView: UIView {
         return rects.map { $0.rect }
     }
 
+    public func caretRect(for position: Int) -> CGRect {
+        let textPosition = richTextView.position(from: richTextView.beginningOfDocument, offset: position) ?? richTextView.endOfDocument
+        return richTextView.caretRect(for: textPosition)
+    }
+
     public func word(at location: Int) -> NSAttributedString? {
         return richTextView.wordAt(location)
     }

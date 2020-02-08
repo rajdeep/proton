@@ -183,6 +183,9 @@
 		1B872B9523EE48490070A92A /* testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png"; sourceTree = "<group>"; };
 		1B872B9623EE486E0070A92A /* testGetsRectsForGivenRangeSpanningAcrossSingleLine@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsRectsForGivenRangeSpanningAcrossSingleLine@3x.png"; sourceTree = "<group>"; };
 		1B872B9723EE486E0070A92A /* testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png"; sourceTree = "<group>"; };
+		1B872B9823EE4BB40070A92A /* testGetsCaretRectForPositionOutsideBounds@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsCaretRectForPositionOutsideBounds@3x.png"; sourceTree = "<group>"; };
+		1B872B9923EE4BB40070A92A /* testGetsCaretRectForPositionInEmptyEditor@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsCaretRectForPositionInEmptyEditor@3x.png"; sourceTree = "<group>"; };
+		1B872B9A23EE4BB40070A92A /* testGetsCaretRectForValidPosition@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsCaretRectForValidPosition@3x.png"; sourceTree = "<group>"; };
 		1B8BE91A23C71CEA00353B17 /* EditorViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewDelegate.swift; sourceTree = "<group>"; };
 		1B8BE91C23C71E4B00353B17 /* EditorViewDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewDelegateTests.swift; sourceTree = "<group>"; };
 		1B8BE91E23C71E8A00353B17 /* MockEditorViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEditorViewDelegate.swift; sourceTree = "<group>"; };
@@ -694,6 +697,9 @@
 		1BFFEF2223C3423800D2BA35 /* ProtonTests.EditorSnapshotTests */ = {
 			isa = PBXGroup;
 			children = (
+				1B872B9923EE4BB40070A92A /* testGetsCaretRectForPositionInEmptyEditor@3x.png */,
+				1B872B9823EE4BB40070A92A /* testGetsCaretRectForPositionOutsideBounds@3x.png */,
+				1B872B9A23EE4BB40070A92A /* testGetsCaretRectForValidPosition@3x.png */,
 				1B975AF323CC627500EC410C /* testRendersPlaceholder@3x.png */,
 				1B7A985523C4811C00C34B14 /* testDeletesAttachments@3x.png */,
 				1BFFEF2323C3423800D2BA35 /* testRendersFixedWidthAttachment@3x.png */,

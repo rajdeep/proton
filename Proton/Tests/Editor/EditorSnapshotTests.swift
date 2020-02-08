@@ -224,4 +224,47 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         viewController.render()
         FBSnapshotVerifyView(viewController.view)
     }
+
+    func testGetsCaretRectForValidPosition() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.attributedText = NSAttributedString(string: "This is some long string that wraps into the next line.")
+        viewController.render()
+        let rect = editor.caretRect(for: 10)
+        let view = UIView(frame: rect)
+        view.backgroundColor = .clear
+        view.addBorder(.blue)
+        editor.addSubview(view)
+
+        viewController.render()
+        FBSnapshotVerifyView(viewController.view)
+    }
+
+    func testGetsCaretRectForPositionInEmptyEditor() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let rect = editor.caretRect(for: 10)
+        let view = UIView(frame: rect)
+        view.backgroundColor = .clear
+        view.addBorder(.green)
+        editor.addSubview(view)
+
+        viewController.render()
+        FBSnapshotVerifyView(viewController.view)
+    }
+
+    func testGetsCaretRectForPositionOutsideBounds() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.attributedText = NSAttributedString(string: "some text")
+        viewController.render()
+        let rect = editor.caretRect(for: 20)
+        let view = UIView(frame: rect)
+        view.backgroundColor = .clear
+        view.addBorder(.red)
+        editor.addSubview(view)
+
+        viewController.render()
+        FBSnapshotVerifyView(viewController.view)
+    }
 }
