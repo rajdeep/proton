@@ -26,4 +26,11 @@ public extension NSRange {
         return NSRange(location: self.location + 1, length: 0)
     }
 
+    func toTextRange(textInput: UITextInput) -> UITextRange? {
+        guard let rangeStart = textInput.position(from: textInput.beginningOfDocument, offset: location),
+            let rangeEnd = textInput.position(from: rangeStart, offset: length) else {
+                return nil
+        }
+        return textInput.textRange(from: rangeStart, to: rangeEnd)
+    }
 }

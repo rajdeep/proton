@@ -180,6 +180,9 @@
 		1B82570C23C5686F0033A0A9 /* EditorViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewContext.swift; sourceTree = "<group>"; };
 		1B82570E23C573CE0033A0A9 /* BoldCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoldCommand.swift; sourceTree = "<group>"; };
 		1B82571123C5799C0033A0A9 /* FontExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtensions.swift; sourceTree = "<group>"; };
+		1B872B9523EE48490070A92A /* testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png"; sourceTree = "<group>"; };
+		1B872B9623EE486E0070A92A /* testGetsRectsForGivenRangeSpanningAcrossSingleLine@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsRectsForGivenRangeSpanningAcrossSingleLine@3x.png"; sourceTree = "<group>"; };
+		1B872B9723EE486E0070A92A /* testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png"; sourceTree = "<group>"; };
 		1B8BE91A23C71CEA00353B17 /* EditorViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewDelegate.swift; sourceTree = "<group>"; };
 		1B8BE91C23C71E4B00353B17 /* EditorViewDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewDelegateTests.swift; sourceTree = "<group>"; };
 		1B8BE91E23C71E8A00353B17 /* MockEditorViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEditorViewDelegate.swift; sourceTree = "<group>"; };
@@ -602,6 +605,7 @@
 			isa = PBXGroup;
 			children = (
 				1BBAC3D623CD74450088A1C8 /* testRendersAttachmentFromEditor@3x.png */,
+				1B872B9523EE48490070A92A /* testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png */,
 				1B164F4B23D2B77600A0869A /* testBasicRendering@3x.png */,
 				1B164F4A23D2B77600A0869A /* testScrolledRendering@3x.png */,
 			);
@@ -697,6 +701,8 @@
 				1BFFEF2523C3423800D2BA35 /* testRendersPercentWidthAttachment@3x.png */,
 				1BFFEF2623C3423800D2BA35 /* testRendersWidthRangeAttachment@3x.png */,
 				1BFFEF2723C3423800D2BA35 /* testRendersFullWidthAttachment@3x.png */,
+				1B872B9723EE486E0070A92A /* testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png */,
+				1B872B9623EE486E0070A92A /* testGetsRectsForGivenRangeSpanningAcrossSingleLine@3x.png */,
 			);
 			path = ProtonTests.EditorSnapshotTests;
 			sourceTree = "<group>";

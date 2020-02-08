@@ -189,6 +189,12 @@ open class EditorView: UIView {
         return richTextView.becomeFirstResponder()
     }
 
+    public func rects(for range: NSRange) -> [CGRect] {
+        guard let textRange = range.toTextRange(textInput: richTextView) else { return [] }
+        let rects = richTextView.selectionRects(for: textRange)
+        return rects.map { $0.rect }
+    }
+
     public func word(at location: Int) -> NSAttributedString? {
         return richTextView.wordAt(location)
     }

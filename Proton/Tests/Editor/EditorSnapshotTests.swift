@@ -192,4 +192,36 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         viewController.render()
         FBSnapshotVerifyView(viewController.view)
     }
+
+    func testGetsRectsForGivenRangeSpanningAcrossMultipleLines() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.attributedText = NSAttributedString(string: "This is some long string that wraps into the next line.")
+        viewController.render()
+        let rects = editor.rects(for: NSRange(location: 25, length: 10))
+        for rect in rects {
+            let view = UIView(frame: rect)
+            view.backgroundColor = .clear
+            view.addBorder(.red)
+            editor.addSubview(view)
+        }
+        viewController.render()
+        FBSnapshotVerifyView(viewController.view)
+    }
+
+    func testGetsRectsForGivenRangeSpanningAcrossSingleLine() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.attributedText = NSAttributedString(string: "This is some long string that wraps into the next line.")
+        viewController.render()
+        let rects = editor.rects(for: NSRange(location: 10, length: 10))
+        for rect in rects {
+            let view = UIView(frame: rect)
+            view.backgroundColor = .clear
+            view.addBorder(.red)
+            editor.addSubview(view)
+        }
+        viewController.render()
+        FBSnapshotVerifyView(viewController.view)
+    }
 }

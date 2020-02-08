@@ -85,4 +85,20 @@ class RendererSnapshotTests: FBSnapshotTestCase {
         viewController.render()
         FBSnapshotVerifyView(viewController.view)
     }
+
+    func testGetsRectsForGivenRangeSpanningAcrossMultipleLines() {
+        let viewController = RendererTestViewController()
+        let renderer = viewController.renderer
+        renderer.attributedText = NSAttributedString(string: "This is some long string in the Renderer that wraps into the next line.")
+        viewController.render(size: CGSize(width: 300, height: 130))
+        let rects = renderer.rects(for: NSRange(location: 25, length: 10))
+        for rect in rects {
+            let view = UIView(frame: rect)
+            view.backgroundColor = .clear
+            view.addBorder(.red)
+            renderer.addSubview(view)
+        }
+        viewController.render(size: CGSize(width: 300, height: 130))
+        FBSnapshotVerifyView(viewController.view)
+    }
 }

@@ -78,6 +78,10 @@ open class RendererView: UIView {
         readOnlyEditorView.richTextView.didTap(at: location)
     }
 
+    public func rects(for range: NSRange) -> [CGRect] {
+        return readOnlyEditorView.rects(for: range)
+    }
+
     private func setup() {
         readOnlyEditorView.isEditable = false
 
