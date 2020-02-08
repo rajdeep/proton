@@ -69,6 +69,8 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
         searchText.placeholder = "Search text"
         searchText.translatesAutoresizingMaskIntoConstraints = false
         searchText.borderStyle = .roundedRect
+        searchText.autocorrectionType = .no
+        searchText.autocapitalizationType = .none
 
         view.addSubview(searchText)
 

@@ -15,13 +15,15 @@ class ScrollCommand: RendererCommand {
     var text = "Fusce"
 
     func execute(on renderer: RendererView) {
-        for content in renderer.contents() {
+        let location = renderer.selectedRange.location + renderer.selectedRange.length
+        let range = NSRange(location: location, length: renderer.attributedText.length - location)
+        for content in renderer.contents(in: range) {
             if case let .text(_, attributedString) = content.type,
                 let range = attributedString.string.range(of: text, options: .caseInsensitive),
                 let enclosingRange = content.enclosingRange {
                 let contentRange = attributedString.string.makeNSRange(from: range)
-                let scrollRange = NSRange(location: enclosingRange.location + contentRange.location, length: contentRange.length)
-                renderer.addAttribute(.backgroundColor, value: UIColor.cyan, at: scrollRange)
+                let scrollRange = NSRange(location: enclosingRange.location + contentRange.location + location, length: contentRange.length)
+                renderer.selectedRange = scrollRange
                 renderer.scrollRangeToVisible(scrollRange)
                 break
             }
