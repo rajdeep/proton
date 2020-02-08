@@ -61,6 +61,8 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         editor.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(editor)
 
+        view.backgroundColor = .systemBackground
+
         editor.layer.borderColor = UIColor.blue.cgColor
         editor.layer.borderWidth = 1.0
 

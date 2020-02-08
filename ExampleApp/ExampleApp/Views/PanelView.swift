@@ -53,10 +53,10 @@ class PanelView: UIView, BlockContent, EditorContentView {
         editor.paragraphStyle.firstLineHeadIndent = 0
         editor.delegate = self
 
-        self.backgroundColor = .lightGray
+        self.backgroundColor = .systemGray3
         self.layer.borderWidth = 1.0
         self.layer.cornerRadius = 4.0
-        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderColor = UIColor.label.cgColor
 
         addSubview(iconView)
         addSubview(editor)
@@ -92,5 +92,11 @@ extension PanelView: EditorViewDelegate {
         // This needs to be done as an additional step as container `EditorView`'s delegate is not registered as `PanelView`'s
         // editor as the `PanelView` register's itself as the `EditorView`'s delegate
         delegate?.panel(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
+    }
+}
+
+extension PanelView {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        self.layer.borderColor = UIColor.label.cgColor
     }
 }

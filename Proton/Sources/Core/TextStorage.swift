@@ -12,6 +12,7 @@ import UIKit
 protocol DefaultTextFormattingProviding: class {
     var font: UIFont? { get }
     var paragraphStyle: NSMutableParagraphStyle { get }
+    var textColor: UIColor? { get }
 }
 
 class TextStorage: NSTextStorage {
@@ -20,6 +21,7 @@ class TextStorage: NSTextStorage {
 
     private let defaultParagraphStyle = NSParagraphStyle()
     private let defaultFont = UIFont.preferredFont(forTextStyle: .body)
+    private let defaultTextColor = UIColor.label
 
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding?
 
@@ -91,6 +93,10 @@ class TextStorage: NSTextStorage {
 
         if attributes?[NSAttributedString.Key.font] == nil {
             updatedAttributes[NSAttributedString.Key.font] = defaultTextFormattingProvider?.font ?? defaultFont
+        }
+
+        if attributes?[NSAttributedString.Key.foregroundColor] == nil {
+            updatedAttributes[NSAttributedString.Key.foregroundColor] = defaultTextFormattingProvider?.textColor ?? defaultTextColor
         }
 
         return updatedAttributes

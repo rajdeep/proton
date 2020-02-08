@@ -39,6 +39,9 @@ class RichTextView: AutogrowingTextView {
         textContainer.textView = self
         self.delegate = context
 
+        self.backgroundColor = .systemBackground
+        self.textColor = .label
+
         setupPlaceholder()
     }
 

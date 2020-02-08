@@ -127,6 +127,11 @@ open class EditorView: UIView {
         didSet { richTextView.typingAttributes[.paragraphStyle] = paragraphStyle }
     }
 
+    public var textColor: UIColor? {
+        get { return richTextView.textColor }
+        set { richTextView.textColor = newValue }
+    }
+
     public var maxHeight: CGFloat {
         get { richTextView.maxHeight }
         set { richTextView.maxHeight = newValue }
