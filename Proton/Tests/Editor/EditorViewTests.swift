@@ -13,6 +13,7 @@ import XCTest
 @testable import Proton
 
 class EditorViewTests: XCTestCase {
+
     func testInvokesRegisteredProcessor() {
         let testExpectation = functionExpectation()
         let editor = EditorView()
@@ -187,6 +188,7 @@ class EditorViewTests: XCTestCase {
         editor.attributedText = attrString
 
         editor.delegate = delegate
+        editor.enableSelectionHandles = false
         XCTAssertFalse(attachment.isSelected)
         delegate.onSelectionChanged = {_, _, _, _ in
             XCTAssertTrue(attachment.isSelected)

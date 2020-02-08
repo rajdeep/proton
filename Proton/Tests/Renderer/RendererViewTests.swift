@@ -13,13 +13,14 @@ import XCTest
 @testable import Proton
 
 class RendererViewTests: XCTestCase {
-    func testInvokesDelegateOnSelectionCHanged() {
+    func testInvokesDelegateOnSelectionChanged() {
         let testExpectation = functionExpectation()
 
         let delegate = MockRendererViewDelegate()
         let renderer = RendererView(frame: CGRect(origin: .zero, size: CGSize(width: 200, height: 50)))
         renderer.attributedText = NSAttributedString(string: "This is a test string")
         renderer.delegate = delegate
+        renderer.enableSelectionHandles = false
         let selectedRange = NSRange(location: 4, length: 4)
         delegate.onDidChangeSelection = { _, range in
             XCTAssertEqual(range, selectedRange)
@@ -35,6 +36,7 @@ class RendererViewTests: XCTestCase {
 
         let delegate = MockRendererViewDelegate()
         let renderer = RendererView()
+        renderer.enableSelectionHandles = false
         let attachment = Attachment(PanelView(), size: .fullWidth)
         let attrString = NSMutableAttributedString(string: "This is a test string")
         attrString.append(attachment.string)

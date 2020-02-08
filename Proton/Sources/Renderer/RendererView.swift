@@ -40,6 +40,11 @@ open class RendererView: UIView {
         set { readOnlyEditorView.attributedText = newValue }
     }
 
+    public var enableSelectionHandles: Bool {
+        get { return readOnlyEditorView.enableSelectionHandles }
+        set { readOnlyEditorView.enableSelectionHandles = false }
+    }
+
     public var selectedRange: NSRange {
         get { return readOnlyEditorView.selectedRange }
         set { readOnlyEditorView.selectedRange = newValue }

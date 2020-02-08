@@ -137,9 +137,16 @@ open class EditorView: UIView {
         set { richTextView.attributedText = newValue }
     }
 
+    public var enableSelectionHandles = true
+
     public var selectedRange: NSRange {
         get { return richTextView.selectedRange }
-        set { richTextView.selectedRange = newValue }
+        set {
+            if enableSelectionHandles {
+                richTextView.select(self)
+            }
+            richTextView.selectedRange = newValue
+        }
     }
 
     public var typingAttributes: [NSAttributedString.Key: Any] {
