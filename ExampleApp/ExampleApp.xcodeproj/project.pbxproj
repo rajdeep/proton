@@ -36,6 +36,7 @@
 		1B6D2FF323BD46F20019CE40 /* ExampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6D2FF223BD46F20019CE40 /* ExampleAppUITests.swift */; };
 		1B6DE9DE23C598F1007F9859 /* CommandsExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6DE9DD23C598F1007F9859 /* CommandsExampleViewController.swift */; };
 		1B6DE9E123C59A16007F9859 /* PanelCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6DE9E023C59A16007F9859 /* PanelCommand.swift */; };
+		1B872B9F23EE73170070A92A /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B872B9E23EE73170070A92A /* UIViewExtensions.swift */; };
 		1B91F4B623C73D01003F9B55 /* TypeaheadTextProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91F4B523C73D01003F9B55 /* TypeaheadTextProcessor.swift */; };
 		1B91F4B823C73D3C003F9B55 /* MarkupTextProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91F4B723C73D3C003F9B55 /* MarkupTextProcessor.swift */; };
 		1B91F4BA23C73D96003F9B55 /* TextProcessorExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91F4B923C73D96003F9B55 /* TextProcessorExampleViewController.swift */; };
@@ -119,6 +120,7 @@
 		1B6D2FF423BD46F20019CE40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1B6DE9DD23C598F1007F9859 /* CommandsExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandsExampleViewController.swift; sourceTree = "<group>"; };
 		1B6DE9E023C59A16007F9859 /* PanelCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelCommand.swift; sourceTree = "<group>"; };
+		1B872B9E23EE73170070A92A /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		1B91F4B523C73D01003F9B55 /* TypeaheadTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeaheadTextProcessor.swift; sourceTree = "<group>"; };
 		1B91F4B723C73D3C003F9B55 /* MarkupTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkupTextProcessor.swift; sourceTree = "<group>"; };
 		1B91F4B923C73D96003F9B55 /* TextProcessorExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessorExampleViewController.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 		1B6D2FCF23BD46ED0019CE40 /* ExampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				1B872B9D23EE73060070A92A /* Helpers */,
 				1B5B599423D30B260043ADEA /* ExampleApp.entitlements */,
 				1B164F3923D286B400A0869A /* Resources */,
 				1B164F2823D282A500A0869A /* Decoding */,
@@ -308,6 +311,14 @@
 				1B164F4223D2A5A000A0869A /* ResetCommand.swift */,
 			);
 			path = Commands;
+			sourceTree = "<group>";
+		};
+		1B872B9D23EE73060070A92A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				1B872B9E23EE73170070A92A /* UIViewExtensions.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		1B91F4B423C73CEB003F9B55 /* TextProcessors */ = {
@@ -483,6 +494,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B183DA223CEF7D600AE83E5 /* PanelEncoder.swift in Sources */,
+				1B872B9F23EE73170070A92A /* UIViewExtensions.swift in Sources */,
 				1B164F3F23D29BF200A0869A /* ScrollCommand.swift in Sources */,
 				1BFFEF0E23C3228900D2BA35 /* FixedWidthAttachmentExampleViewController.swift in Sources */,
 				1B164F3723D2854400A0869A /* ParagraphStyleDecoder.swift in Sources */,
