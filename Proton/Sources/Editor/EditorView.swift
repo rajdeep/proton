@@ -119,7 +119,7 @@ open class EditorView: UIView {
         }
     }
 
-    public var font: UIFont? = UIFont.systemFont(ofSize: 17) {
+    public var font: UIFont? = UIFont.preferredFont(forTextStyle: .body) {
         didSet { richTextView.typingAttributes[.font] = font }
     }
 
@@ -184,9 +184,10 @@ open class EditorView: UIView {
             ])
 
         typingAttributes = [
-            NSAttributedString.Key.font: font ?? UIFont.systemFont(ofSize: 17),
+            NSAttributedString.Key.font: font ?? UIFont.preferredFont(forTextStyle: .body),
             NSAttributedString.Key.paragraphStyle: paragraphStyle
         ]
+        richTextView.adjustsFontForContentSizeCategory = true
     }
 
     @discardableResult

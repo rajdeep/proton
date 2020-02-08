@@ -23,8 +23,9 @@ class MatchContentAttachmentExampleViewController: ExamplesBaseViewController {
         editor.layer.borderColor = UIColor.blue.cgColor
         editor.layer.borderWidth = 1.0
 
-        editor.font = UIFont(name: "Papyrus", size: 18)
-
+        if let font = UIFont(name: "Papyrus", size: UIFont.labelFontSize) {
+            editor.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: font)
+        }
         let button = UIButton(type: .system)
         button.setTitle("Insert attachment", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false

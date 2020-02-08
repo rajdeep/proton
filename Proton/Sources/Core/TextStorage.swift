@@ -19,7 +19,7 @@ class TextStorage: NSTextStorage {
     let storage = NSTextStorage()
 
     private let defaultParagraphStyle = NSParagraphStyle()
-    private let defaultFont = UIFont.systemFont(ofSize: 17)
+    private let defaultFont = UIFont.preferredFont(forTextStyle: .body)
 
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding?
 
