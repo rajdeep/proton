@@ -58,6 +58,11 @@ open class RendererView: UIView {
         get { return readOnlyEditorView.contents() }
     }
 
+    public var contentOffset: CGPoint {
+        get { return readOnlyEditorView.contentOffset }
+        set { readOnlyEditorView.contentOffset = newValue }
+    }
+
     public func scrollRangeToVisible(_ range: NSRange) {
         readOnlyEditorView.scrollRangeToVisible(range)
     }

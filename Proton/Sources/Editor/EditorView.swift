@@ -159,6 +159,11 @@ open class EditorView: UIView {
         set { richTextView.boundsObserver = newValue }
     }
 
+    public var contentOffset: CGPoint {
+        get { richTextView.contentOffset }
+        set { richTextView.contentOffset = newValue }
+    }
+
     public var textEndRange: NSRange {
         return richTextView.textEndRange
     }
