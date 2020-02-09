@@ -121,7 +121,7 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
 
 extension AttachmentSnapshotTests: AttachmentOffsetProviding {
     func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint {
-        return CGPoint(x: 0, y: -2)
+        return CGPoint(x: 0, y: -3)
     }
 }
 
