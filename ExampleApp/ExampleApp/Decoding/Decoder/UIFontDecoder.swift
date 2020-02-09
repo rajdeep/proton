@@ -17,15 +17,19 @@ struct UIFontDecoder: AttributedStringAttributesDecoding {
     func decode(_ json: JSON) -> Attributes {
         guard let name = json["name"] as? String,
             let size = json["size"] as? CGFloat,
+            let style = json["textStyle"] as? String,
             let family = json["family"] as? String else {
-                return [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17)]
+                return [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body)]
         }
 
-        var fontDescriptor = UIFontDescriptor(name: name, size: size)
+        let textStyle = UIFont.TextStyle(rawValue: style)
+        var fontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: textStyle)
+
         // IMPORTANT - A bug in Apple's framework requires font family to be set before updating traits.
         // In absence of the following line, the font ends up defaulting to "Times New Roman" after
         // traits are applied using `fontDescriptor.withSymbolicTraits(traits)`
         fontDescriptor = fontDescriptor.withFamily(family)
+
         var traits = fontDescriptor.symbolicTraits
         if json["isBold"] as? Bool == true {
             traits.formUnion(.traitBold)

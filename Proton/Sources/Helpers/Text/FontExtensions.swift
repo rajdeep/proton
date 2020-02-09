@@ -27,6 +27,17 @@ public extension UIFont {
         return traits.contains(.traitMonoSpace)
     }
 
+    var textStyle: UIFont.TextStyle {
+        guard let style = fontDescriptor.object(forKey:UIFontDescriptor.AttributeName.textStyle) as? String else {
+            return .body
+        }
+        return UIFont.TextStyle(rawValue: style)
+    }
+
+    var isNonDynamicTextStyle: Bool {
+        return textStyle.rawValue == "CTFontRegularUsage"
+    }
+
     func contains(trait: UIFontDescriptor.SymbolicTraits) -> Bool {
         return traits.contains(trait)
     }

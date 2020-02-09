@@ -1,6 +1,78 @@
-{
-    "contents":
-    [
+    { "contents":  [
+  {
+    "type" : "paragraph",
+    "style" : {
+      "paragraphSpacing" : 0,
+      "linespacing" : 0,
+      "alignment" : 4,
+      "firstLineHeadIndent" : 0
+    },
+    "contents" : [
+      {
+        "font" : {
+          "size" : 17,
+          "isItalics" : false,
+          "isMonospace" : false,
+          "name" : ".SFUI-Regular",
+          "family" : ".AppleSystemUIFont",
+          "isBold" : false,
+          "textStyle" : "UICTFontTextStyleBody"
+        },
+        "text" : "This is some ",
+        "type" : "text"
+      }
+    ]
+  },
+  {
+    "type" : "paragraph",
+    "style" : {
+      "linespacing" : 0,
+      "paragraphSpacing" : 0,
+      "firstLineHeadIndent" : 0,
+      "alignment" : 4
+    },
+    "contents" : [
+      {
+        "type" : "text",
+        "font" : {
+          "isMonospace" : false,
+          "name" : ".SFUI-SemiboldItalic",
+          "size" : 17,
+          "textStyle" : "UICTFontTextStyleEmphasizedItalicBody",
+          "family" : ".AppleSystemUIFont",
+          "isBold" : true,
+          "isItalics" : true
+        },
+        "text" : "formatted"
+      }
+    ]
+  },
+  {
+    "style" : {
+      "linespacing" : 0,
+      "firstLineHeadIndent" : 0,
+      "paragraphSpacing" : 0,
+      "alignment" : 4
+    },
+    "type" : "paragraph",
+    "contents" : [
+      {
+        "text" : " text in Editor",
+        "font" : {
+          "isBold" : false,
+          "size" : 17,
+          "isMonospace" : false,
+          "name" : ".SFUI-Regular",
+          "textStyle" : "UICTFontTextStyleBody",
+          "family" : ".AppleSystemUIFont",
+          "isItalics" : false
+        },
+        "type" : "text"
+      }
+    ]
+  },
+  {
+    "contents" : [
       {
         "style" : {
           "alignment" : 4,
@@ -12,247 +84,18 @@
           {
             "font" : {
               "family" : ".AppleSystemUIFont",
-              "isBold" : false,
-              "size" : 17,
+              "isItalics" : false,
               "isMonospace" : false,
               "name" : ".SFUI-Regular",
-              "isItalics" : false
-            },
-            "type" : "text",
-            "text" : "This is a test of encoding with "
-          }
-        ],
-        "type" : "paragraph"
-      },
-      {
-        "type" : "paragraph",
-        "contents" : [
-          {
-            "font" : {
-              "name" : ".SFUI-Semibold",
-              "isItalics" : false,
               "size" : 17,
-              "family" : ".AppleSystemUIFont",
-              "isBold" : true,
-              "isMonospace" : false
+              "isBold" : false,
+              "textStyle" : "UICTFontTextStyleBody"
             },
-            "text" : "bold",
+            "text" : "And this is ",
             "type" : "text"
           }
         ],
-        "style" : {
-          "paragraphSpacing" : 0,
-          "alignment" : 4,
-          "linespacing" : 0,
-          "firstLineHeadIndent" : 0
-        }
-      },
-      {
-        "type" : "paragraph",
-        "style" : {
-          "alignment" : 4,
-          "paragraphSpacing" : 0,
-          "firstLineHeadIndent" : 0,
-          "linespacing" : 0
-        },
-        "contents" : [
-          {
-            "text" : " text followed by a panel\n",
-            "type" : "text",
-            "font" : {
-              "isBold" : false,
-              "size" : 17,
-              "isMonospace" : false,
-              "family" : ".AppleSystemUIFont",
-              "name" : ".SFUI-Regular",
-              "isItalics" : false
-            }
-          }
-        ]
-      },
-      {
-        "type" : "panel",
-        "style" : "info",
-        "contents" : [
-          {
-            "type" : "paragraph",
-            "contents" : [
-              {
-                "type" : "text",
-                "font" : {
-                  "family" : ".AppleSystemUIFont",
-                  "isBold" : false,
-                  "size" : 17,
-                  "isItalics" : false,
-                  "isMonospace" : false,
-                  "name" : ".SFUI-Regular"
-                },
-                "text" : "A panel with "
-              }
-            ],
-            "style" : {
-              "paragraphSpacing" : 0,
-              "firstLineHeadIndent" : 0,
-              "linespacing" : 0,
-              "alignment" : 4
-            }
-          },
-          {
-            "contents" : [
-              {
-                "font" : {
-                  "name" : ".SFUI-Semibold",
-                  "family" : ".AppleSystemUIFont",
-                  "size" : 17,
-                  "isBold" : true,
-                  "isItalics" : false,
-                  "isMonospace" : false
-                },
-                "type" : "text",
-                "text" : "bold"
-              }
-            ],
-            "type" : "paragraph",
-            "style" : {
-              "alignment" : 4,
-              "firstLineHeadIndent" : 0,
-              "paragraphSpacing" : 0,
-              "linespacing" : 0
-            }
-          },
-          {
-            "style" : {
-              "paragraphSpacing" : 0,
-              "linespacing" : 0,
-              "alignment" : 4,
-              "firstLineHeadIndent" : 0
-            },
-            "type" : "paragraph",
-            "contents" : [
-              {
-                "font" : {
-                  "isItalics" : false,
-                  "name" : ".SFUI-Regular",
-                  "family" : ".AppleSystemUIFont",
-                  "size" : 17,
-                  "isBold" : false,
-                  "isMonospace" : false
-                },
-                "type" : "text",
-                "text" : " and "
-              }
-            ]
-          },
-          {
-            "style" : {
-              "paragraphSpacing" : 0,
-              "alignment" : 4,
-              "firstLineHeadIndent" : 0,
-              "linespacing" : 0
-            },
-            "contents" : [
-              {
-                "font" : {
-                  "family" : ".AppleSystemUIFont",
-                  "isBold" : false,
-                  "name" : ".SFUI-RegularItalic",
-                  "isItalics" : true,
-                  "isMonospace" : false,
-                  "size" : 17
-                },
-                "type" : "text",
-                "text" : "italics"
-              }
-            ],
-            "type" : "paragraph"
-          },
-          {
-            "contents" : [
-              {
-                "type" : "text",
-                "font" : {
-                  "family" : ".AppleSystemUIFont",
-                  "isItalics" : false,
-                  "isBold" : false,
-                  "isMonospace" : false,
-                  "size" : 17,
-                  "name" : ".SFUI-Regular"
-                },
-                "text" : " text\n"
-              }
-            ],
-            "type" : "paragraph",
-            "style" : {
-              "linespacing" : 0,
-              "alignment" : 4,
-              "firstLineHeadIndent" : 0,
-              "paragraphSpacing" : 0
-            }
-          },
-          {
-            "type" : "panel",
-            "style" : "info",
-            "contents" : [
-              {
-                "contents" : [
-                  {
-                    "font" : {
-                      "size" : 17,
-                      "isBold" : false,
-                      "isItalics" : false,
-                      "isMonospace" : false,
-                      "family" : ".AppleSystemUIFont",
-                      "name" : ".SFUI-Regular"
-                    },
-                    "type" : "text",
-                    "text" : "A panel nested in another panel "
-                  }
-                ],
-                "style" : {
-                  "firstLineHeadIndent" : 0,
-                  "paragraphSpacing" : 0,
-                  "linespacing" : 0,
-                  "alignment" : 4
-                },
-                "type" : "paragraph"
-              }
-            ]
-          },
-          {
-            "type" : "paragraph",
-            "contents" : [
-              {
-                "type" : "text",
-                "text" : "\n",
-                "font" : {
-                  "isBold" : false,
-                  "isMonospace" : false,
-                  "size" : 17,
-                  "isItalics" : false,
-                  "name" : ".SFUI-Regular",
-                  "family" : ".AppleSystemUIFont"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "type" : "paragraph",
-        "contents" : [
-          {
-            "text" : "\n",
-            "type" : "text",
-            "font" : {
-              "name" : ".SFUI-Regular",
-              "isMonospace" : false,
-              "isItalics" : false,
-              "isBold" : false,
-              "size" : 17,
-              "family" : ".AppleSystemUIFont"
-            }
-          }
-        ]
+        "type" : "paragraph"
       },
       {
         "style" : {
@@ -261,68 +104,176 @@
           "linespacing" : 0,
           "alignment" : 4
         },
-        "type" : "paragraph",
         "contents" : [
           {
-            "font" : {
-              "size" : 17,
-              "isMonospace" : false,
-              "family" : ".AppleSystemUIFont",
-              "isItalics" : false,
-              "isBold" : false,
-              "name" : ".SFUI-Regular"
-            },
-            "text" : "And some more ",
-            "type" : "text"
-          }
-        ]
-      },
-      {
-        "type" : "paragraph",
-        "style" : {
-          "firstLineHeadIndent" : 0,
-          "linespacing" : 0,
-          "alignment" : 4,
-          "paragraphSpacing" : 0
-        },
-        "contents" : [
-          {
+            "text" : "bold",
             "type" : "text",
-            "text" : "bold and italics",
             "font" : {
+              "textStyle" : "UICTFontTextStyleEmphasizedBody",
+              "size" : 17,
+              "name" : ".SFUI-Semibold",
               "isBold" : true,
-              "isMonospace" : false,
-              "isItalics" : true,
-              "name" : ".SFUI-SemiboldItalic",
               "family" : ".AppleSystemUIFont",
-              "size" : 17
-            }
-          }
-        ]
-      },
-      {
-        "style" : {
-          "paragraphSpacing" : 0,
-          "alignment" : 4,
-          "linespacing" : 0,
-          "firstLineHeadIndent" : 0
-        },
-        "contents" : [
-          {
-            "font" : {
-              "family" : ".AppleSystemUIFont",
-              "isBold" : false,
               "isMonospace" : false,
-              "name" : ".SFUI-Regular",
-              "size" : 17,
               "isItalics" : false
-            },
-            "type" : "text",
-            "text" : " text at the end."
+            }
           }
         ],
         "type" : "paragraph"
+      },
+      {
+        "style" : {
+          "alignment" : 4,
+          "paragraphSpacing" : 0,
+          "firstLineHeadIndent" : 0,
+          "linespacing" : 0
+        },
+        "contents" : [
+          {
+            "type" : "text",
+            "text" : " text in Panel",
+            "font" : {
+              "family" : ".AppleSystemUIFont",
+              "name" : ".SFUI-Regular",
+              "isItalics" : false,
+              "size" : 17,
+              "textStyle" : "UICTFontTextStyleBody",
+              "isBold" : false,
+              "isMonospace" : false
+            }
+          }
+        ],
+        "type" : "paragraph"
+      },
+      {
+        "type" : "panel",
+        "style" : "info",
+        "contents" : [
+          {
+            "style" : {
+              "alignment" : 4,
+              "firstLineHeadIndent" : 0,
+              "linespacing" : 0,
+              "paragraphSpacing" : 0
+            },
+            "type" : "paragraph",
+            "contents" : [
+              {
+                "text" : "With nested panel having ",
+                "font" : {
+                  "isMonospace" : false,
+                  "textStyle" : "UICTFontTextStyleBody",
+                  "name" : ".SFUI-Regular",
+                  "family" : ".AppleSystemUIFont",
+                  "isItalics" : false,
+                  "size" : 17,
+                  "isBold" : false
+                },
+                "type" : "text"
+              }
+            ]
+          },
+          {
+            "contents" : [
+              {
+                "type" : "text",
+                "text" : "italics",
+                "font" : {
+                  "textStyle" : "UICTFontTextStyleItalicBody",
+                  "name" : ".SFUI-RegularItalic",
+                  "size" : 17,
+                  "isMonospace" : false,
+                  "isBold" : false,
+                  "family" : ".AppleSystemUIFont",
+                  "isItalics" : true
+                }
+              }
+            ],
+            "type" : "paragraph",
+            "style" : {
+              "alignment" : 4,
+              "firstLineHeadIndent" : 0,
+              "linespacing" : 0,
+              "paragraphSpacing" : 0
+            }
+          },
+          {
+            "type" : "paragraph",
+            "style" : {
+              "alignment" : 4,
+              "firstLineHeadIndent" : 0,
+              "paragraphSpacing" : 0,
+              "linespacing" : 0
+            },
+            "contents" : [
+              {
+                "font" : {
+                  "textStyle" : "UICTFontTextStyleBody",
+                  "size" : 17,
+                  "isBold" : false,
+                  "family" : ".AppleSystemUIFont",
+                  "isItalics" : false,
+                  "name" : ".SFUI-Regular",
+                  "isMonospace" : false
+                },
+                "type" : "text",
+                "text" : " text"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "contents" : [
+          {
+            "font" : {
+              "size" : 17,
+              "textStyle" : "UICTFontTextStyleBody",
+              "family" : ".AppleSystemUIFont",
+              "name" : ".SFUI-Regular",
+              "isBold" : false,
+              "isItalics" : false,
+              "isMonospace" : false
+            },
+            "type" : "text",
+            "text" : "\n"
+          }
+        ],
+        "type" : "paragraph",
+        "style" : {
+          "alignment" : 4,
+          "firstLineHeadIndent" : 0,
+          "paragraphSpacing" : 0,
+          "linespacing" : 0
+        }
       }
-    ]
-
+    ],
+    "style" : "info",
+    "type" : "panel"
+  },
+  {
+    "contents" : [
+      {
+        "font" : {
+          "isMonospace" : false,
+          "isItalics" : false,
+          "size" : 15,
+          "family" : ".AppleSystemUIFont",
+          "isBold" : false,
+          "textStyle" : "UICTFontTextStyleBody",
+          "name" : ".SFUI-Regular"
+        },
+        "type" : "text",
+        "text" : "\n"
+      }
+    ],
+    "type" : "paragraph",
+    "style" : {
+      "firstLineHeadIndent" : 0,
+      "alignment" : 4,
+      "linespacing" : 0,
+      "paragraphSpacing" : 0
+    }
+  }
+]
 }
