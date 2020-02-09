@@ -71,6 +71,10 @@ open class EditorView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    public var registeredProcessors: [TextProcessing] {
+        return textProcessor?.activeProcessors ?? []
+    }
+
     public var placeholderText: NSAttributedString? {
         get { richTextView.placeholderText }
         set { richTextView.placeholderText = newValue}
@@ -285,6 +289,14 @@ open class EditorView: UIView {
 
     public func unregisterProcessor(_ processor: TextProcessing) {
         textProcessor?.unregister(processor)
+    }
+
+    public func registerProcessors(_ processors: [TextProcessing]) {
+        textProcessor?.register(processors)
+    }
+
+    public func unregisterProcessors(_ processors: [TextProcessing]) {
+        textProcessor?.unregister(processors)
     }
 }
 

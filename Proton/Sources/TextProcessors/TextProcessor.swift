@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class TextProcessor: NSObject, NSTextStorageDelegate {
-    private var activeProcessors = [TextProcessing]()
+    private(set) var activeProcessors = [TextProcessing]()
     weak var editor: EditorView?
 
     init(editor: EditorView) {
@@ -22,11 +22,21 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
     }
 
     func register(_ processor: TextProcessing) {
-        activeProcessors.append(processor)
+        register([processor])
     }
 
-    func unregister(_ command: TextProcessing) {
-        activeProcessors.removeAll { $0.name == command.name }
+    func unregister(_ processor: TextProcessing) {
+        unregister([processor])
+    }
+
+    func register(_ processors: [TextProcessing]) {
+        activeProcessors.append(contentsOf: processors)
+    }
+
+    func unregister(_ processors: [TextProcessing]) {
+        activeProcessors.removeAll { p in
+            processors.contains { $0.name == p.name }
+        }
     }
 
     func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int) {
