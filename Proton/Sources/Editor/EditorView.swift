@@ -143,7 +143,12 @@ open class EditorView: UIView {
 
     public var attributedText: NSAttributedString {
         get { return richTextView.attributedText }
-        set { richTextView.attributedText = newValue }
+        set {
+            // Focus needs to be set in the Editor without which the
+            // encode command fails on macOS
+            richTextView.becomeFirstResponder()
+            richTextView.attributedText = newValue
+        }
     }
 
     public var enableSelectionHandles = true
