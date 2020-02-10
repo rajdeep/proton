@@ -25,6 +25,7 @@
 		1B183D9E23CEF6F200AE83E5 /* ParagraphStyle+Codables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9D23CEF6F200AE83E5 /* ParagraphStyle+Codables.swift */; };
 		1B183DA023CEF73C00AE83E5 /* TextEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9F23CEF73C00AE83E5 /* TextEncoder.swift */; };
 		1B183DA223CEF7D600AE83E5 /* PanelEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183DA123CEF7D600AE83E5 /* PanelEncoder.swift */; };
+		1B2DA74D23F0C39B00F7EC52 /* DummyCollabCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2DA74C23F0C39B00F7EC52 /* DummyCollabCommand.swift */; };
 		1B45CD8B23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8A23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift */; };
 		1B45CD8D23BDD5FC001EB196 /* ExamplesBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8C23BDD5FC001EB196 /* ExamplesBaseViewController.swift */; };
 		1B6D2FD123BD46ED0019CE40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6D2FD023BD46ED0019CE40 /* AppDelegate.swift */; };
@@ -102,6 +103,7 @@
 		1B183D9D23CEF6F200AE83E5 /* ParagraphStyle+Codables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ParagraphStyle+Codables.swift"; sourceTree = "<group>"; };
 		1B183D9F23CEF73C00AE83E5 /* TextEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEncoder.swift; sourceTree = "<group>"; };
 		1B183DA123CEF7D600AE83E5 /* PanelEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelEncoder.swift; sourceTree = "<group>"; };
+		1B2DA74C23F0C39B00F7EC52 /* DummyCollabCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyCollabCommand.swift; sourceTree = "<group>"; };
 		1B45CD8A23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingEditorViewExampleViewController.swift; sourceTree = "<group>"; };
 		1B45CD8C23BDD5FC001EB196 /* ExamplesBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplesBaseViewController.swift; sourceTree = "<group>"; };
 		1B5B599423D30B260043ADEA /* ExampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ExampleApp.entitlements; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 				1B183D9523CEF33600AE83E5 /* EncodeContentsCommand.swift */,
 				1B164F3E23D29BF200A0869A /* ScrollCommand.swift */,
 				1B164F4223D2A5A000A0869A /* ResetCommand.swift */,
+				1B2DA74C23F0C39B00F7EC52 /* DummyCollabCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 				1B164F3523D2850100A0869A /* UIFontDecoder.swift in Sources */,
 				1BD993C223CA8FD200563ACB /* PanelAttachment.swift in Sources */,
 				1BFFEF0723C30B8E00D2BA35 /* FullWidthAttachmentExampleViewController.swift in Sources */,
+				1B2DA74D23F0C39B00F7EC52 /* DummyCollabCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

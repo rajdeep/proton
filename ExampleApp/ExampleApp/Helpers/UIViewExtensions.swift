@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 
 public extension UIView {
-    func flash(numberOfFlashes: Float = 3, maxOpacity: Float = 0.7, minOpacity: Float = 0.1, onCompletion completion: ((UIView)->Void)? = nil) {
+    func flash(numberOfFlashes: Float = 2, maxOpacity: Float = 0.5, minOpacity: Float = 0.1, onCompletion completion: ((UIView)->Void)? = nil) {
         CATransaction.begin()
         CATransaction.setCompletionBlock {
             completion?(self)
         }
         let flash = CABasicAnimation(keyPath: "opacity")
-        flash.duration = 0.2
+        flash.duration = 0.5
         flash.fromValue = maxOpacity
         flash.toValue = minOpacity
         flash.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
@@ -24,5 +24,12 @@ public extension UIView {
         flash.repeatCount = numberOfFlashes
         layer.add(flash, forKey: nil)
         CATransaction.commit()
+    }
+
+    func blink() {
+        self.alpha = 1;
+        UIView.animate(withDuration: 1.0, delay: 0, options: [.repeat], animations: {
+            self.alpha = 0
+        }, completion: nil)
     }
 }
