@@ -26,11 +26,25 @@ public protocol AttachmentOffsetProviding: class {
     func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint
 }
 
+class AttachmentContentView: UIView {
+    let name: EditorContent.Name
+    weak var attachment: Attachment?
+
+    init(name: EditorContent.Name, frame: CGRect) {
+        self.name = name
+        super.init(frame: frame)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 /// An attachment can be used as a container for any view object. Based on the `AttachmentSize` provided, the attachment automatically renders itself alongside the text in `EditorView`.
 /// `Attachment` also provides helper functions like `deleteFromContainer` and `rangeInContainer`
 open class Attachment: NSTextAttachment, BoundsObserving {
 
-    private let view: UIView
+    private let view: AttachmentContentView
     private let size: AttachmentSize
 
     /// Governs if the attachment should be selected before being deleted. When `true`, tapping the backspace key the first time on range containing `Attachment` will only
@@ -109,6 +123,10 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
     public private(set) var containerEditorView: EditorView?
 
+    public var containerContentName: EditorContent.Name? {
+        return containerEditorView?.contentName
+    }
+
     private var containerTextView: RichTextView? {
         return containerEditorView?.richTextView
     }
@@ -139,18 +157,21 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
     // This cannot be made convenience init as it prevents this being called from a class that inherits from `Attachment`
     public init<AttachmentView: UIView & BlockContent>(_ contentView: AttachmentView, size: AttachmentSize) {
-        self.view = UIView(frame: contentView.frame)
+        self.view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
         self.size = size
         super.init(data: nil, ofType: nil)
+        // TODO: revisit - can this be done differently i.e. not setting afterwards
+        self.view.attachment = self
         initialize(contentView: contentView)
-
     }
 
     // This cannot be made convenience init as it prevents this being called from a class that inherits from `Attachment`
     public init<AttachmentView: UIView & InlineContent>(_ contentView: AttachmentView, size: AttachmentSize) {
-        self.view = UIView(frame: contentView.frame)
+        self.view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
         self.size = size
         super.init(data: nil, ofType: nil)
+        // TODO: revisit - can this be done differently i.e. not setting afterwards
+        self.view.attachment = self
         initialize(contentView: contentView)
     }
 

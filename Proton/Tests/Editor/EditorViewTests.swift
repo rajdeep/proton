@@ -230,4 +230,74 @@ class EditorViewTests: XCTestCase {
         let word = editor.word(at: 12)
         XCTAssertEqual(word?.string, "test")
     }
+
+    func testReturnsIsAttachmentContentFalseByDefault() {
+        let editor = EditorView()
+        XCTAssertFalse(editor.isContainedInAnAttachment)
+    }
+
+    func testGetsIfEditorIsContainedInAnAttachment() {
+        let panel = PanelView()
+        let attachment = Attachment(panel, size: .matchContent)
+        XCTAssertEqual(attachment.contentView, panel)
+        XCTAssertTrue(panel.editor.isContainedInAnAttachment)
+    }
+
+    func testGetsContainerNameForEditorInAttachment() {
+        let panel = PanelView()
+        let attachment = Attachment(panel, size: .matchContent)
+        XCTAssertEqual(attachment.contentView, panel)
+        XCTAssertEqual(panel.editor.contentName, panel.name)
+    }
+
+    func testGetsContainerAttachment() {
+           let panel = PanelView()
+           let attachment = Attachment(panel, size: .matchContent)
+           XCTAssertEqual(attachment.contentView, panel)
+           XCTAssertEqual(panel.editor.containerAttachment, attachment)
+       }
+
+    func testGetsContainerContentName() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let panel = PanelView()
+        let panelAttachment = Attachment(panel, size: .matchContent)
+        editor.insertAttachment(in: .zero, attachment: panelAttachment)
+
+        let textField = AutogrowingTextField()
+        let textFieldAttachment = Attachment(textField, size: .matchContent)
+        panel.editor.insertAttachment(in: .zero, attachment: textFieldAttachment)
+        viewController.render()
+
+        XCTAssertEqual(textFieldAttachment.containerContentName, panel.name)
+    }
+
+    func testGetsDefaultNestingLevel() {
+        let panel = PanelView()
+        XCTAssertEqual(panel.editor.nestingLevel, 0)
+    }
+
+    func testGetsNestingLevel() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let panel1 = PanelView()
+        let panelAttachment1 = Attachment(panel1, size: .matchContent)
+        editor.insertAttachment(in: .zero, attachment: panelAttachment1)
+
+        let panel2 = PanelView()
+        let panelAttachment2 = Attachment(panel2, size: .matchContent)
+        panel1.editor.insertAttachment(in: .zero, attachment: panelAttachment2)
+
+        let panel3 = PanelView()
+        let panelAttachment3 = Attachment(panel3, size: .matchContent)
+        panel2.editor.insertAttachment(in: .zero, attachment: panelAttachment3)
+
+        viewController.render()
+
+        XCTAssertEqual(editor.nestingLevel, 0)
+        XCTAssertEqual(panel1.editor.nestingLevel, 1)
+        XCTAssertEqual(panel2.editor.nestingLevel, 2)
+        XCTAssertEqual(panel3.editor.nestingLevel, 3)
+    }
 }

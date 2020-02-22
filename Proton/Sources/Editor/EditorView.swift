@@ -182,6 +182,44 @@ open class EditorView: UIView {
         return richTextView.textEndRange
     }
 
+    /// Determines if the current Editor is contained in an attachment
+    public var isContainedInAnAttachment: Bool {
+        return getAttachmentContentView(view: superview) != nil
+    }
+
+    /// Name of the content if the Editor is contained within an `Attachment`.
+    /// This is donw by recursive look-up of views in the `Attachment` content view
+    /// i.e. the Editor may be nested in subviews within the contentView of Attachment.
+    /// The value is nil if the Editor is not contained within an `Attachment`.
+    public var contentName: EditorContent.Name? {
+        return getAttachmentContentView(view: superview)?.name
+    }
+
+    /// Attachment containing the current Editor.
+    public var containerAttachment: Attachment? {
+        return getAttachmentContentView(view: superview)?.attachment
+    }
+
+    /// Nesting level of current Editor within other attachments containinig Editors.
+    /// 0 indicates that the Editor is not contaibed in an attachment.
+    public var nestingLevel: Int {
+        var nestingLevel = 0
+        var containerEditor = containerAttachment?.containerEditorView
+        while containerEditor != nil {
+            nestingLevel += 1
+            containerEditor = containerEditor?.containerAttachment?.containerEditorView
+        }
+        return nestingLevel
+    }
+
+    private func getAttachmentContentView(view: UIView?) -> AttachmentContentView? {
+        guard let view = view else { return nil }
+        if let attachmentContentView = view.superview as? AttachmentContentView {
+            return attachmentContentView
+        }
+        return getAttachmentContentView(view: view.superview)
+    }
+
     func setup() {
         richTextView.autocorrectionType = .no
 
