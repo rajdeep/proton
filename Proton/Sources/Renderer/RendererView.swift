@@ -72,7 +72,7 @@ open class RendererView: UIView {
     }
 
     public var contentOffest: CGPoint {
-        return readOnlyEditorView.contentOffest
+        return readOnlyEditorView.contentOffset
     }
 
     public func contents(in range: NSRange? = nil) -> [EditorContent] {
