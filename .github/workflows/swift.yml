@@ -1,0 +1,22 @@
+name: Swift
+
+on: 
+  push:    
+    paths-ignore:
+    - 'docs/**'
+
+jobs:
+  build:
+
+    runs-on: macOS-latest
+    strategy:
+      matrix: 
+        destination: ['platform=iOS Simulator,OS=13.3,name=iPhone 11 Pro']
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Example App
+      run: xcodebuild build  -destination "name=iPhone 11 Pro" -scheme "ExampleApp"
+    - name: Build and Test Proton
+      run: xcodebuild build test -destination "name=iPhone 11 Pro" -scheme "Proton"
+      
