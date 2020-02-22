@@ -10,7 +10,5 @@ import Foundation
 import UIKit
 
 class RichTextRendererContext: RichTextViewContext {
-
     static let `default` = RichTextRendererContext()
-
 }

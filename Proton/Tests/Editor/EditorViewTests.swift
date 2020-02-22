@@ -212,7 +212,7 @@ class EditorViewTests: XCTestCase {
         XCTAssertTrue(currentLine.endsWith("line 2"))
     }
 
-    func testRetunsZeroRangeForLineInEmptyEditor() {
+    func testReturnsZeroRangeForLineInEmptyEditor() {
         let editor = EditorView()
         let line = editor.currentLine
         XCTAssertEqual(line.range, .zero)

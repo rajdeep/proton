@@ -13,7 +13,7 @@ import Foundation
 /// view including the ones that are contained in the attachments.
 public protocol EditorCommand {
 
-    /// Determines if the cutrrent command can be executed on the given `EditorView`. When a command is executed using `EditorCommandExecutor`, it ensures
+    /// Determines if the current command can be executed on the given `EditorView`. When a command is executed using `EditorCommandExecutor`, it ensures
     /// that only the commands returning `true` for the active `EditorView` are executed when invoked. Defaults to `true`.
     /// - Parameter editor: `EditorView` to execute the command on.
     func canExecute(on editor: EditorView) -> Bool

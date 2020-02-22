@@ -215,7 +215,7 @@ open class EditorView: UIView {
 
     /// Maximum height that the `EditorView` can expand to. After reaching the maximum specified height, the editor becomes scrollable.
     /// - Note:
-    /// If both autolayout constraints and `maxHeight` are used, the lower of the two height would be used as maximum allowed height.
+    /// If both auto-layout constraints and `maxHeight` are used, the lower of the two height would be used as maximum allowed height.
     public var maxHeight: CGFloat {
         get { richTextView.maxHeight }
         set { richTextView.maxHeight = newValue }

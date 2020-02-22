@@ -80,7 +80,7 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
         let viewController = EditorTestViewController()
         let textView = viewController.editor
 
-        // TODO: validate incorect snapshot rendering
+        // TODO: validate incorrect snapshot rendering
 //        let attachment = makeDummyAttachment(text: "percent width attachment", size: .percent(width: 75))
         let attachment = makeDummyAttachment(text: "attachment with percent based width", size: .percent(width: 75))
 

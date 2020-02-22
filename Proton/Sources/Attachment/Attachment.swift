@@ -48,7 +48,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     private let size: AttachmentSize
 
     /// Governs if the attachment should be selected before being deleted. When `true`, tapping the backspace key the first time on range containing `Attachment` will only
-    /// select the attachment i.e. show as highlighted. Tapping the backspace again will delete the attachment. If the value is `false`, the attachment will be deteted on the first backspace itself.
+    /// select the attachment i.e. show as highlighted. Tapping the backspace again will delete the attachment. If the value is `false`, the attachment will be deleted on the first backspace itself.
     public var selectBeforeDelete = false
 
     var isBlockAttachment: Bool? {

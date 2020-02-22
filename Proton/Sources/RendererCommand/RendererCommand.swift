@@ -13,7 +13,7 @@ import Foundation
 /// view including the ones that are contained in the attachments.
 public protocol RendererCommand {
 
-    /// Determines if the cutrrent command can be executed on the given `RendererView`. When a command is executed using `RendererCommandExecutor`,
+    /// Determines if the current command can be executed on the given `RendererView`. When a command is executed using `RendererCommandExecutor`,
     /// it ensures that only the commands returning `true` for the active `RendererView` are executed when invoked. Defaults to `true`.
     /// - Parameter renderer: `EditorView` to execute the command on.
     func canExecute(on renderer: RendererView) -> Bool

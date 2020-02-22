@@ -5,7 +5,7 @@
 //  Created by Rajdeep Kwatra on 14/1/20.
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
-
+//s
 import Foundation
 
 /// Describes the context for the `RendererView`. A context is used to execute the commands using `RendererCommandExecutor`. In a typical scenario, where there are
@@ -18,11 +18,11 @@ public class RendererViewContext {
     /// Identifies the `RendererViewContext`uniquely.
     public let id: String
 
-    /// Friendly name for the context. It is possible to create multiple `RendeererViewContext` using the same name.
+    /// Friendly name for the context. It is possible to create multiple `RendererViewContext` using the same name.
     /// A context is uniquely identified by `id` and not the name.
     public let name: String
 
-    /// Default shared context. Use this in case there is onlt a single `RendererView` on the screen at the root level.
+    /// Default shared context. Use this in case there is only a single `RendererView` on the screen at the root level.
     public static let shared = RendererViewContext(name: "shared_renderer_context")
 
     /// Initializes a new context

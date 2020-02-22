@@ -9,7 +9,7 @@
 import Foundation
 
 /// `EditorCommandExecutor` manages all the `EditorView` in the main `EditorView`. Sub editors may have been added as `Attachment` in the `EditorView`.
-/// All the `EditorView`s in the hierarchy sharing the same `EditorContext` will automaticlly be handled by the `EditorCommandExecutor`.
+/// All the `EditorView`s in the hierarchy sharing the same `EditorContext` will automatically be handled by the `EditorCommandExecutor`.
 /// `EditorCommandExecutor` keeps the track of the `EditorView` that has the focus and executes the given command in the active `EditorView`.
 public class EditorCommandExecutor {
     private let context: RichTextEditorContext

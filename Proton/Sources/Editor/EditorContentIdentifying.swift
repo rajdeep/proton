@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-/// Identifies a content type withing the `Editor`
+/// Identifies a content type within the `Editor`
 public protocol EditorContentIdentifying {
     var name: EditorContent.Name { get }
 }

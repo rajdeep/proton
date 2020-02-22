@@ -12,7 +12,7 @@ import XCTest
 @testable import Proton
 
 class TextStorageTests: XCTestCase {
-    func testAddsDefaultTextFormattings() {
+    func testAddsDefaultTextFormatting() {
         let textStorage = TextStorage()
         let string = "This is a test string"
         textStorage.replaceCharacters(in: .zero, with: NSAttributedString(string: string))

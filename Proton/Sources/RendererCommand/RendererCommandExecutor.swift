@@ -9,7 +9,7 @@
 import Foundation
 
 /// `RendererCommandExecutor` manages all the `RendererView` in the main `RendererView`. Sub renderers may have been added as `Attachment` in the `RendererView`.
-/// All the `RendererView`s in the hierarchy sharing the same `RendererContext` will automaticlly be handled by the `RendererCommandExecutor`.
+/// All the `RendererView`s in the hierarchy sharing the same `RendererContext` will automatically be handled by the `RendererCommandExecutor`.
 /// `RendererCommandExecutor` keeps the track of the `RendererView` that has been selected and executes the given command in the active `RendererView`.
 public class RendererCommandExecutor {
     private let context: RichTextRendererContext

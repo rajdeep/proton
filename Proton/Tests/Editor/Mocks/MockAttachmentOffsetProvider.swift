@@ -1,5 +1,5 @@
 //
-//  MockAttachmentOffsetzProvider.swift
+//  MockAttachmentOffsetProvider.swift
 //  ProtonTests
 //
 //  Created by Rajdeep Kwatra on 6/1/20.

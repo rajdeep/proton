@@ -14,7 +14,7 @@ import XCTest
 
 class EditorViewDelegateTests: XCTestCase {
 
-    func testDidRecieveKey() {
+    func testDidReceiveKey() {
         let delegateExpectation = functionExpectation()
         let delegate = MockEditorViewDelegate()
         delegate.onKeyReceived = { editor, key, range, _ in

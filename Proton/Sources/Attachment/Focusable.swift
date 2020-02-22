@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Describes an object cabalpe of gaining focus
+/// Describes an object capable of gaining focus
 public protocol Focusable {
     func setFocus()
 }

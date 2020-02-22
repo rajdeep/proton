@@ -22,7 +22,7 @@ public class EditorViewContext {
     /// A context is uniquely identified by `id` and not the name.
     public let name: String
 
-    /// Default shared context. Use this in case there is onlt a single `EditorView` on the screen at the root level.
+    /// Default shared context. Use this in case there is only a single `EditorView` on the screen at the root level.
     public static let shared = EditorViewContext(name: "shared_editor_context")
 
     /// Initializes a new context
