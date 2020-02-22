@@ -15,6 +15,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Run carthage
+      run: carthage bootstrap --platform iOS
     - name: Build Example App
       run: xcodebuild build  -destination "name=iPhone 11 Pro" -scheme "ExampleApp"
     - name: Build and Test Proton
