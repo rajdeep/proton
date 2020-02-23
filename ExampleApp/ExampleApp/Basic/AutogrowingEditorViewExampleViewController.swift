@@ -13,15 +13,13 @@ import Proton
 
 class AutogrowingEditorViewExampleViewController: ExamplesBaseViewController {
 
-    let editor = EditorView()
-
     override func setup() {
         super.setup()
         
         editor.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(editor)
 
-        editor.layer.borderColor = UIColor.blue.cgColor
+        editor.layer.borderColor = UIColor.systemBlue.cgColor
         editor.layer.borderWidth = 1.0
         
         NSLayoutConstraint.activate([
@@ -35,7 +33,7 @@ class AutogrowingEditorViewExampleViewController: ExamplesBaseViewController {
         editor.placeholderText = NSAttributedString(string: "This is a placeholder text that flows into the next line",
                                                     attributes: [
                                                         NSAttributedString.Key.font : editor.font ?? UIFont.systemFont(ofSize: 17),
-                                                        NSAttributedString.Key.foregroundColor: UIColor.lightGray
+                                                        NSAttributedString.Key.foregroundColor: UIColor.tertiaryLabel,
         ])
     }
 }

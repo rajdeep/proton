@@ -13,7 +13,6 @@ import Proton
 
 class TextProcessorExampleViewController: ExamplesBaseViewController {
 
-    let editor = EditorView()
     let typeaheadLabel = UILabel()
 
     override func setup() {
@@ -25,7 +24,7 @@ class TextProcessorExampleViewController: ExamplesBaseViewController {
         view.addSubview(editor)
         view.addSubview(typeaheadLabel)
 
-        editor.layer.borderColor = UIColor.blue.cgColor
+        editor.layer.borderColor = UIColor.systemBlue.cgColor
         editor.layer.borderWidth = 1.0
 
         NSLayoutConstraint.activate([

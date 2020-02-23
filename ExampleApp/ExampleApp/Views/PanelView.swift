@@ -21,6 +21,7 @@ protocol PanelViewDelegate: class {
 }
 
 class PanelView: UIView, BlockContent, EditorContentView {
+    let container = UIView()
     let editor: EditorView
     let iconView = UIImageView()
 
@@ -41,44 +42,59 @@ class PanelView: UIView, BlockContent, EditorContentView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    var textColor: UIColor? {
+        get { editor.textColor }
+        set { editor.textColor = newValue }
+    }
+
     override var backgroundColor: UIColor? {
-        didSet {
-            editor.backgroundColor = backgroundColor
+        get { container.backgroundColor }
+        set {
+            container.backgroundColor = newValue
+            editor.backgroundColor = newValue
         }
     }
 
     private func setup() {
+        container.translatesAutoresizingMaskIntoConstraints = false
         iconView.translatesAutoresizingMaskIntoConstraints = false
         editor.translatesAutoresizingMaskIntoConstraints = false
         editor.paragraphStyle.firstLineHeadIndent = 0
         editor.delegate = self
 
-        self.backgroundColor = .systemGray3
-        self.layer.borderWidth = 1.0
-        self.layer.cornerRadius = 4.0
-        self.layer.borderColor = UIColor.label.cgColor
+        backgroundColor = .systemGray3
+        container.layer.borderWidth = 1.0
+        container.layer.cornerRadius = 4.0
+        container.layer.borderColor = UIColor.systemGray.cgColor
 
-        addSubview(iconView)
-        addSubview(editor)
+        addSubview(container)
+        container.addSubview(iconView)
+        container.addSubview(editor)
 
         NSLayoutConstraint.activate([
+            container.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+            container.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4),
+            container.leadingAnchor.constraint(equalTo: leadingAnchor),
+            container.trailingAnchor.constraint(equalTo: trailingAnchor),
+
             iconView.heightAnchor.constraint(equalToConstant: 20),
             iconView.widthAnchor.constraint(equalToConstant: 20),
-            iconView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-            iconView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            iconView.topAnchor.constraint(equalTo: container.topAnchor, constant: 10),
+            iconView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 10),
 
             editor.topAnchor.constraint(equalTo: iconView.topAnchor, constant: -editor.textContainerInset.top),
             editor.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 5),
-            editor.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
-            editor.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+            editor.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -5),
+            editor.bottomAnchor.constraint(equalTo: container.bottomAnchor),
         ])
 
-        iconView.layer.borderColor = UIColor.black.cgColor
+        iconView.layer.borderColor = UIColor.systemGray.cgColor
         iconView.layer.borderWidth = 1.0
+        iconView.layer.cornerRadius = 3.0
         iconView.backgroundColor = .white
 
-        layer.cornerRadius = 5.0
-        clipsToBounds = true
+        container.layer.cornerRadius = 5.0
+        container.clipsToBounds = true
     }
 }
 
@@ -97,6 +113,7 @@ extension PanelView: EditorViewDelegate {
 
 extension PanelView {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        self.layer.borderColor = UIColor.label.cgColor
+        container.layer.borderColor = UIColor.systemGray.cgColor
+        iconView.layer.borderColor = UIColor.systemGray.cgColor
     }
 }

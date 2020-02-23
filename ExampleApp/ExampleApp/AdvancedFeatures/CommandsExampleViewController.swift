@@ -20,8 +20,8 @@ class EditorCommandButton: UIButton {
         self.command = command
         self.highlightOnTouch = highlightOnTouch
         super.init(frame: .zero)
-
-        setTitleColor(.systemBlue, for: .normal)
+        titleLabel?.font = UIButton(type: .system).titleLabel?.font
+        isSelected = false
     }
 
     required init?(coder: NSCoder) {
@@ -30,14 +30,14 @@ class EditorCommandButton: UIButton {
 
     override var isSelected: Bool {
         didSet {
-            let color: UIColor = isSelected ? .lightGray : .white
-            backgroundColor = color
+            setTitleColor(isSelected ? .white : .systemBlue, for: .normal)
+            backgroundColor = isSelected ? .systemBlue : .systemBackground
         }
     }
 }
 
 class CommandsExampleViewController: ExamplesBaseViewController {
-    let editor = EditorView()
+
     let commandExecutor = EditorCommandExecutor()
     var buttons = [UIButton]()
 
@@ -62,9 +62,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         editor.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(editor)
 
-        view.backgroundColor = .systemBackground
-
-        editor.layer.borderColor = UIColor.blue.cgColor
+        editor.layer.borderColor = UIColor.systemBlue.cgColor
         editor.layer.borderWidth = 1.0
 
         let scrollView = UIScrollView()
@@ -111,15 +109,13 @@ class CommandsExampleViewController: ExamplesBaseViewController {
             editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
             editor.heightAnchor.constraint(lessThanOrEqualToConstant: 300),
         ])
-
-        editor.setFocus()
     }
 
     func makeCommandButtons() -> [UIButton] {
         var buttons = [UIButton]()
-        for command in commands {
-            let button = EditorCommandButton(command: command.command, highlightOnTouch: command.highlightOnTouch)
-            button.setTitle(command.title, for: .normal)
+        for (title, command, highlightOnTouch) in commands {
+            let button = EditorCommandButton(command: command, highlightOnTouch: highlightOnTouch)
+            button.setTitle(title, for: .normal)
             button.translatesAutoresizingMaskIntoConstraints = false
             button.addTarget(self, action: #selector(runCommand(sender:)), for: .touchUpInside)
 
@@ -131,15 +127,15 @@ class CommandsExampleViewController: ExamplesBaseViewController {
             buttons.append(button)
         }
         return buttons
-
     }
 
     func makeEditorButtons() -> [UIButton] {
         var buttons = [UIButton]()
         for editorButton in editorButtons {
-            let button = UIButton(type: .custom)
-            button.setTitleColor(.systemBlue, for: .normal)
+            let button = UIButton(type: .system)
+            button.tintColor = .systemBlue
             button.setTitle(editorButton.title, for: .normal)
+            button.backgroundColor = .systemBackground
             button.translatesAutoresizingMaskIntoConstraints = false
             button.addTarget(self, action: editorButton.selector, for: .touchUpInside)
 

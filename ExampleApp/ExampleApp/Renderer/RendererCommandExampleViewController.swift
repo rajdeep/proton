@@ -12,24 +12,14 @@ import UIKit
 import Proton
 
 class RendererCommandButton: UIButton {
-    let command: RendererCommand
+    var command: RendererCommand!
 
-    init(command: RendererCommand) {
-        self.command = command
-        super.init(frame: .zero)
-
-        setTitleColor(.blue, for: .normal)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override var isSelected: Bool {
-        didSet {
-            let color: UIColor = isSelected ? .lightGray : .white
-            backgroundColor = color
-        }
+    static func make(command: RendererCommand) -> RendererCommandButton {
+        let button = RendererCommandButton(type: .system)
+        button.command = command
+        button.tintColor = .systemBlue
+        button.backgroundColor = .systemBackground
+        return button
     }
 }
 
@@ -51,7 +41,7 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
         renderer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(renderer)
 
-        renderer.layer.borderColor = UIColor.blue.cgColor
+        renderer.layer.borderColor = UIColor.systemBlue.cgColor
         renderer.layer.borderWidth = 1.0
 
         let stackView = UIStackView()
@@ -80,7 +70,7 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
 
             searchText.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20),
             searchText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            searchText.widthAnchor.constraint(equalToConstant: 100),
+            searchText.widthAnchor.constraint(equalToConstant: 300),
 
             renderer.topAnchor.constraint(equalTo: searchText.bottomAnchor, constant: 20),
             renderer.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -102,9 +92,9 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
 
     func makeCommandButtons() -> [UIButton] {
         var buttons = [UIButton]()
-        for command in commands {
-            let button = RendererCommandButton(command: command.command)
-            button.setTitle(command.title, for: .normal)
+        for (title, command) in commands {
+            let button = RendererCommandButton.make(command: command)
+            button.setTitle(title, for: .normal)
             button.translatesAutoresizingMaskIntoConstraints = false
             button.addTarget(self, action: #selector(runCommand(sender:)), for: .touchUpInside)
 
@@ -121,11 +111,10 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
 
     @objc
     func runCommand(sender: RendererCommandButton) {
-        let command = sender.command
+        guard let command = sender.command else { return }
         if command is ScrollCommand {
             (command as? ScrollCommand)?.text = searchText.text ?? ""
         }
-
         commandExecutor.execute(command)
     }
 }

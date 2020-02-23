@@ -12,7 +12,6 @@ import UIKit
 import Proton
 
 class FullWidthAttachmentExampleViewController: ExamplesBaseViewController {
-    let editor = EditorView()
 
     override func setup() {
         super.setup()
@@ -20,7 +19,7 @@ class FullWidthAttachmentExampleViewController: ExamplesBaseViewController {
         editor.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(editor)
 
-        editor.layer.borderColor = UIColor.blue.cgColor
+        editor.layer.borderColor = UIColor.systemBlue.cgColor
         editor.layer.borderWidth = 1.0
 
         let button = UIButton(type: .system)
@@ -32,7 +31,7 @@ class FullWidthAttachmentExampleViewController: ExamplesBaseViewController {
 
         NSLayoutConstraint.activate([
             button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
 
             editor.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 20),
             editor.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -44,10 +43,8 @@ class FullWidthAttachmentExampleViewController: ExamplesBaseViewController {
     @objc
     func insertAttachment(sender: UIButton) {
         var panel = PanelView()
-        panel.backgroundColor = .cyan
-        panel.layer.borderWidth = 1.0
-        panel.layer.cornerRadius = 4.0
-        panel.layer.borderColor = UIColor.black.cgColor
+        panel.backgroundColor = .systemTeal
+        panel.textColor = .black
 
         let attachment = Attachment(panel, size: .fullWidth)
         panel.boundsObserver = attachment

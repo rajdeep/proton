@@ -12,7 +12,6 @@ import UIKit
 import Proton
 
 class FixedWidthAttachmentExampleViewController: ExamplesBaseViewController {
-    let editor = EditorView()
     let widthTextField = UITextField()
 
     var width: CGFloat {
@@ -26,7 +25,7 @@ class FixedWidthAttachmentExampleViewController: ExamplesBaseViewController {
         editor.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(editor)
 
-        editor.layer.borderColor = UIColor.blue.cgColor
+        editor.layer.borderColor = UIColor.systemBlue.cgColor
         editor.layer.borderWidth = 1.0
 
         let button = UIButton(type: .system)
@@ -60,10 +59,12 @@ class FixedWidthAttachmentExampleViewController: ExamplesBaseViewController {
     @objc
     func insertAttachment(sender: UIButton) {
         let inlineEditor = InlineEditorView()
-        inlineEditor.backgroundColor = .cyan
+        inlineEditor.backgroundColor = .systemTeal
+        inlineEditor.textColor = .black
         inlineEditor.layer.borderWidth = 1.0
         inlineEditor.layer.cornerRadius = 4.0
         inlineEditor.layer.borderColor = UIColor.black.cgColor
+        inlineEditor.clipsToBounds = true
 
         let attachment = Attachment(inlineEditor, size: .fixed(width: width))
         attachment.selectBeforeDelete = true
