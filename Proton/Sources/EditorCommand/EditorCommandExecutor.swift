@@ -27,6 +27,7 @@ public class EditorCommandExecutor {
     public func execute(_ command: EditorCommand) {
         guard let activeEditor = context.activeTextView,
             let editor = activeEditor.superview as? EditorView,
+            editor.isCommandSupported(command),
             command.canExecute(on: editor) else { return }
         command.execute(on: editor)
     }

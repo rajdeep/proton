@@ -57,6 +57,7 @@
 		1B82570D23C5686F0033A0A9 /* EditorViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B82570C23C5686F0033A0A9 /* EditorViewContext.swift */; };
 		1B82570F23C573CE0033A0A9 /* BoldCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B82570E23C573CE0033A0A9 /* BoldCommand.swift */; };
 		1B82571223C5799C0033A0A9 /* FontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B82571123C5799C0033A0A9 /* FontExtensions.swift */; };
+		1B840F612401E63100D5E8F7 /* MockEditorCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B840F602401E63100D5E8F7 /* MockEditorCommand.swift */; };
 		1B8BE91B23C71CEA00353B17 /* EditorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8BE91A23C71CEA00353B17 /* EditorViewDelegate.swift */; };
 		1B8BE91D23C71E4B00353B17 /* EditorViewDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8BE91C23C71E4B00353B17 /* EditorViewDelegateTests.swift */; };
 		1B8BE91F23C71E8A00353B17 /* MockEditorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8BE91E23C71E8A00353B17 /* MockEditorViewDelegate.swift */; };
@@ -180,6 +181,7 @@
 		1B82570C23C5686F0033A0A9 /* EditorViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewContext.swift; sourceTree = "<group>"; };
 		1B82570E23C573CE0033A0A9 /* BoldCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoldCommand.swift; sourceTree = "<group>"; };
 		1B82571123C5799C0033A0A9 /* FontExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtensions.swift; sourceTree = "<group>"; };
+		1B840F602401E63100D5E8F7 /* MockEditorCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEditorCommand.swift; sourceTree = "<group>"; };
 		1B872B9523EE48490070A92A /* testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png"; sourceTree = "<group>"; };
 		1B872B9623EE486E0070A92A /* testGetsRectsForGivenRangeSpanningAcrossSingleLine@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsRectsForGivenRangeSpanningAcrossSingleLine@3x.png"; sourceTree = "<group>"; };
 		1B872B9723EE486E0070A92A /* testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png"; sourceTree = "<group>"; };
@@ -507,6 +509,14 @@
 			path = Text;
 			sourceTree = "<group>";
 		};
+		1B840F5F2401E61600D5E8F7 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				1B840F602401E63100D5E8F7 /* MockEditorCommand.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		1B91F4AF23C72D66003F9B55 /* TextProcessors */ = {
 			isa = PBXGroup;
 			children = (
@@ -637,6 +647,7 @@
 		1BD1791A23C588450066DC13 /* EditorCommands */ = {
 			isa = PBXGroup;
 			children = (
+				1B840F5F2401E61600D5E8F7 /* Mocks */,
 				1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */,
 				1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */,
 				1B6DE9E223C5C184007F9859 /* FontTraitToggleCommandTests.swift */,
@@ -879,6 +890,7 @@
 				1B45CDEE23C1686F001EB196 /* RichTextViewTestViewController.swift in Sources */,
 				1BFFEF0523C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift in Sources */,
 				1B45CD9D23BEDA8F001EB196 /* UIView+Render.swift in Sources */,
+				1B840F612401E63100D5E8F7 /* MockEditorCommand.swift in Sources */,
 				1BBAC3D823CD79EA0088A1C8 /* RendererViewTests.swift in Sources */,
 				1B45CD9F23BEE997001EB196 /* SnapshotTestViewController.swift in Sources */,
 				1BFFEF1A23C3344A00D2BA35 /* AutogrowingTextField.swift in Sources */,

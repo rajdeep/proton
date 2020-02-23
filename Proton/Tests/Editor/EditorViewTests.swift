@@ -300,4 +300,24 @@ class EditorViewTests: XCTestCase {
         XCTAssertEqual(panel2.editor.nestingLevel, 2)
         XCTAssertEqual(panel3.editor.nestingLevel, 3)
     }
+
+    func testRequiresSupportedCommandRegistrationIsFalseByDefault() {
+        let editor = EditorView()
+        XCTAssertEqual(editor.requiresSupportedCommandsRegistration, false)
+    }
+
+    func testSetsRequiresSupportedCommandRegistrationToTrueWhenCommandIsRegistered() {
+        let editor = EditorView()
+        let command = MockEditorCommand { _ in }
+        editor.registerCommand(command)
+        XCTAssertEqual(editor.requiresSupportedCommandsRegistration, true)
+    }
+
+    func testSetsRequiresSupportedCommandRegistrationToFalseWhenAllCommandRegisterationsAreRemoved() {
+        let editor = EditorView()
+        let command = MockEditorCommand { _ in }
+        editor.registerCommand(command)
+        editor.unregisterCommand(command)
+        XCTAssertEqual(editor.requiresSupportedCommandsRegistration, false)
+    }
 }
