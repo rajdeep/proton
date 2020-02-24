@@ -9,14 +9,23 @@
 import Foundation
 import UIKit
 
+import Proton
+
 class ExamplesBaseViewController: UIViewController {
 
+    let editor = EditorView()
+
     func setup() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .secondarySystemBackground
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setup()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        editor.setFocus()
     }
 }

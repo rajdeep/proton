@@ -12,7 +12,6 @@ import UIKit
 import Proton
 
 class WidthRangeAttachmentExampleViewController: ExamplesBaseViewController {
-    let editor = EditorView()
     let minWidthTextField = UITextField()
     let maxWidthTextField = UITextField()
 
@@ -32,7 +31,7 @@ class WidthRangeAttachmentExampleViewController: ExamplesBaseViewController {
         editor.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(editor)
 
-        editor.layer.borderColor = UIColor.blue.cgColor
+        editor.layer.borderColor = UIColor.systemBlue.cgColor
         editor.layer.borderWidth = 1.0
 
         let button = UIButton(type: .system)
@@ -76,7 +75,8 @@ class WidthRangeAttachmentExampleViewController: ExamplesBaseViewController {
     @objc
     func insertAttachment(sender: UIButton) {
         let textField = AutogrowingTextField()
-        textField.backgroundColor = .cyan
+        textField.backgroundColor = .systemTeal
+        textField.textColor = .black
         textField.layer.borderWidth = 1.0
         textField.layer.cornerRadius = 4.0
         textField.layer.borderColor = UIColor.black.cgColor

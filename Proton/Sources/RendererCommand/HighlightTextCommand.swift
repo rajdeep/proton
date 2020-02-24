@@ -14,7 +14,14 @@ public extension NSAttributedString.Key {
 }
 
 public class HighlightTextCommand: RendererCommand {
-    public var color = UIColor(red: 1.0, green: 0.98, blue: 0.80, alpha: 1.0)
+    public let color = UIColor.init(dynamicProvider: { traightCollection -> UIColor in
+        switch traightCollection.userInterfaceStyle {
+        case .dark:
+            return UIColor.systemYellow.withAlphaComponent(0.2)
+        default:
+            return UIColor(red: 1.0, green: 0.98, blue: 0.80, alpha: 1.0)
+        }
+    })
     public init() { }
     public func execute(on renderer: RendererView) {
         guard renderer.selectedText.length > 0 else { return }
@@ -31,4 +38,3 @@ public class HighlightTextCommand: RendererCommand {
             ],at: renderer.selectedRange)
     }
 }
-

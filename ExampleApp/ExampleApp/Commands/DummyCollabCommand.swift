@@ -16,7 +16,7 @@ class DummyCollabCommand: EditorCommand {
         let caretRect = editor.caretRect(for: 0)
 
         let caretView = UIView(frame: caretRect)
-        caretView.backgroundColor = .red
+        caretView.backgroundColor = .systemRed
         caretView.blink()
         editor.addSubview(caretView)
 
@@ -27,7 +27,7 @@ class DummyCollabCommand: EditorCommand {
             let insertedTextRange = NSRange(location: 0 , length: text.count)
             let selectionRangeRect = editor.rects(for: insertedTextRange)
             let selectionView = UIView(frame: selectionRangeRect[0])
-            selectionView.backgroundColor = .red
+            selectionView.backgroundColor = .systemRed
             selectionView.layer.cornerRadius = 4.0
             editor.addSubview(selectionView)
             selectionView.flash { view in
