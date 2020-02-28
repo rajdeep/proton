@@ -17,6 +17,8 @@ public extension TextProcessingPriority {
     static let low: TextProcessingPriority = 250
 }
 
+public typealias Processed = Bool
+
 /// An object capable of intercepting and modifying the text and attributes in an `EditorView` when registered with the `EditorView`.
 public protocol TextProcessing {
 
@@ -39,7 +41,9 @@ public protocol TextProcessing {
     /// - Parameter delta: Change in length of the text as a result of typing text. The length may be more than 1 if multiple characters are selected
     /// before content is typed. It may also happen if text containing a string is pasted.
     /// - Parameter processed: Set this to `true` is the `TextProcessor` has made any changes to the text or attributes in the `EditorView`
-    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int, processed: inout Bool)
+    /// - Returns: Return `true` to indicate the processing had been done by the current processor. In case of .exclusive priority processors,
+    /// returning `true` notifies all other processors of interruption.
+    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int) -> Processed
 
     /// Fired when processing has been interrupted by another `TextProcessor` running in the same pass. This allows `TextProcessor` to revert
     /// any changes that may not have been committed.

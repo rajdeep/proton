@@ -22,29 +22,28 @@ class MarkupProcessor: TextProcessing {
         return .medium
     }
 
-    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int, processed: inout Bool) {
+    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int) -> Processed {
         let textStorage = editor.attributedText
         let char = textStorage.attributedSubstring(from: editedRange)
 
-        guard char.string == "*" else { return }
+        guard char.string == "*" else { return false }
 
         guard let markupRange = textStorage.reverseRange(of: "*", currentPosition: editedRange.location),
             let attr = textStorage.attribute(markupKey, at: markupRange.location, effectiveRange: nil) as? String,
             attr == rangeMarker
             else {
                 editor.addAttributes([markupKey : rangeMarker], at: editedRange)
-                processed = true
-                return
+                return true
         }
 
         let attrs = textStorage.attributes(at: markupRange.location, effectiveRange: nil)
-        guard let font = attrs[NSAttributedString.Key.font] as? UIFont else { return }
+        guard let font = attrs[NSAttributedString.Key.font] as? UIFont else { return false }
         let boldFont = font.adding(trait: .traitBold)
         editor.addAttribute(.font, value: boldFont, at: markupRange)
         editor.replaceCharacters(in: markupRange.firstCharacterRange, with: " ")
         editor.replaceCharacters(in: markupRange.lastCharacterRange, with: " ")
 
-        processed = true
+        return true
     }
 
     func processInterrupted(editor: EditorView, at range: NSRange) {

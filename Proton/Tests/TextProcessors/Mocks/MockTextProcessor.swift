@@ -28,13 +28,12 @@ class MockTextProcessor: TextProcessing {
         onWillProcess?(deletedText, insertedText)
     }
 
-    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int, processed: inout Bool) {
+    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int) -> Processed {
         guard processorCondition(editor, editedRange) else {
-            processed = false
-            return
+            return false
         }
         onProcess?(editor, editedRange, delta)
-        processed = true
+        return true
     }
 
     func processInterrupted(editor: EditorView, at range: NSRange) {

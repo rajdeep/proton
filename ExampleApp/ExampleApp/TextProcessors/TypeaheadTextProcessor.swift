@@ -49,16 +49,16 @@ class TypeaheadTextProcessor: TextProcessing {
         }
     }
 
-    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int, processed: inout Bool) {
+    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int) -> Processed {
         guard triggerDeleted == false else {
             editor.removeAttribute(.foregroundColor, at: editedRange)
             triggerDeleted = false
-            return
+            return false
         }
 
         let textStorage = editor.attributedText
         guard let range = textStorage.reverseRange(of: "@", currentPosition: editedRange.location + editedRange.length),
-            isValidTrigger(editor: editor, range: range.firstCharacterRange) else { return }
+            isValidTrigger(editor: editor, range: range.firstCharacterRange) else { return false}
 
         let triggerRange = NSRange(location: range.location, length: 1)
         let queryRange = NSRange(location: range.location + 1, length: range.length - 1)
@@ -69,7 +69,7 @@ class TypeaheadTextProcessor: TextProcessing {
             attr.key == .typeahead && attr.value as? Bool == false
         }
 
-        guard isCancelled == false else { return }
+        guard isCancelled == false else { return false}
 
         if query.components(separatedBy: " ").count >= 3 {
             editor.addAttributes([.typeahead: false], at: triggerRange)
@@ -80,7 +80,7 @@ class TypeaheadTextProcessor: TextProcessing {
             editor.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.systemBlue], at: range)
         }
 
-        processed = true
+        return true
     }
 
     func processInterrupted(editor: EditorView, at range: NSRange) { }

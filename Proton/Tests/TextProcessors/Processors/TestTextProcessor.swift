@@ -16,11 +16,11 @@ class TestTextProcessor: TextProcessing {
 
     var priority: TextProcessingPriority = .medium
 
-    var onProcess: ((EditorView, NSRange) -> Void)?
+    var onProcess: ((EditorView, NSRange) -> Processed)?
     var onProcessInterrupted: ((EditorView, NSRange) -> Void)?
 
-    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int, processed: inout Bool) {
-        onProcess?(editor, editedRange)
+    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int) -> Processed {
+        return onProcess?(editor, editedRange) ?? false
     }
 
     func processInterrupted(editor: EditorView, at range: NSRange) {

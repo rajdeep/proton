@@ -143,10 +143,11 @@ class TextProcessorTests: XCTestCase {
         editor.attributedText = NSAttributedString(string: "Test")
         let testAttribute = NSAttributedString.Key("testAttr")
 
-        let processor: (EditorView, NSRange) -> Void = { editor, _ in
+        let processor: (EditorView, NSRange) -> Processed = { editor, _ in
             let attrValue = editor.attributedText.attribute(testAttribute, at: 0, effectiveRange: nil) as? Int ?? 0
             editor.addAttribute(testAttribute, value: attrValue+1, at: editor.attributedText.fullRange)
             processorExpectation.fulfill()
+            return true
         }
 
         let processor1 = TestTextProcessor()
