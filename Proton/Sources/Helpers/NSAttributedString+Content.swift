@@ -21,6 +21,13 @@ public extension NSAttributedString {
             attributes[NSAttributedString.Key.isInlineAttachment] as? Bool != false
         }
     }
+
+    func rangeOfCharacter(from characterSet: CharacterSet) -> NSRange? {
+        guard let newlineRange = string.rangeOfCharacter(from: .newlines) else {
+            return nil
+        }
+        return string.makeNSRange(from: newlineRange)
+    }
 }
 
 extension NSAttributedString {

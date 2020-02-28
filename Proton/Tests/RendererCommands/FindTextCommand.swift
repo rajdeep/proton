@@ -21,8 +21,10 @@ class FindTextCommand: RendererCommand {
     func execute(on renderer: RendererView) {
         for content in renderer.contents() {
             if case let .text(_, attributedString) = content.type,
-                let range = attributedString.string.range(of: text) {
-                let scrollRange = attributedString.string.makeNSRange(from: range)
+                let range = attributedString.string.range(of: text),
+                let enclosingRange = content.enclosingRange {
+                let contentRange = attributedString.string.makeNSRange(from: range)
+                let scrollRange = NSRange(location: enclosingRange.location + contentRange.location, length: contentRange.length)
                 renderer.addAttribute(.backgroundColor, value: UIColor.cyan, at: scrollRange)
                 renderer.scrollRangeToVisible(scrollRange)
                 break

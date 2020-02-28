@@ -21,7 +21,9 @@ struct ParagraphDecoder: EditorContentDecoding {
 
             string.append(EditorContentJSONDecoder().decode(mode: mode, maxSize: maxSize, value: value))
         }
+        string.append(NSAttributedString(string: "\n"))
         string.addAttributes(attr, range: string.fullRange)
+
         return string
     }
 }

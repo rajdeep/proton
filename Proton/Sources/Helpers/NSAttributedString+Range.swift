@@ -34,4 +34,8 @@ public extension NSAttributedString {
         }
         return nil
     }
+
+    func rangesOf(characterSet: CharacterSet) -> [NSRange] {
+        return string.rangesOf(characterSet: characterSet).map { string.makeNSRange(from: $0) }
+    }
 }

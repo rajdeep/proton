@@ -86,7 +86,7 @@ class EditorViewTests: XCTestCase {
 
         let spacerContent2 = contents[4]
         if case let .text(name, attributedString) = spacerContent2.type {
-            XCTAssertEqual(name, EditorContent.Name.paragraph)
+            XCTAssertEqual(name, EditorContent.Name.newline)
             XCTAssertEqual(attributedString.string.trimmingCharacters(in: .whitespacesAndNewlines), "")
         } else {
             XCTFail("Failed to get correct content [Spacer]")
@@ -134,6 +134,20 @@ class EditorViewTests: XCTestCase {
         XCTAssertEqual(transformedContents[0], "Name: `paragraph` Text: `Some text in Editor `")
         XCTAssertEqual(transformedContents[1], "Name: `textField` ContentView: `AutogrowingTextField` Type: `inline`")
         XCTAssertEqual(transformedContents[2], "Name: `paragraph` Text: ` `")
+    }
+
+    func testTransformsContentsSplitsParagraphs() {
+        let editor = EditorView()
+        let editorString = NSAttributedString(string: "\nSome text in Editor\nThis is second line")
+
+        editor.replaceCharacters(in: .zero, with: editorString)
+
+        let transformedContents = editor.transformContents(using: TextTransformer())
+        XCTAssertEqual(transformedContents.count, 4)
+        XCTAssertEqual(transformedContents[0], "Name: `newline` Text: `\n`")
+        XCTAssertEqual(transformedContents[1], "Name: `paragraph` Text: `Some text in Editor`")
+        XCTAssertEqual(transformedContents[2], "Name: `newline` Text: `\n`")
+        XCTAssertEqual(transformedContents[3], "Name: `paragraph` Text: `This is second line`")
     }
 
     func testPropagatesAddAttributesToAttachments() {

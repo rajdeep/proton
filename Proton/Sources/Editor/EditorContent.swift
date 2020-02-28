@@ -48,6 +48,7 @@ public extension EditorContent {
 
         public static let paragraph = Name("paragraph")
         public static let viewOnly = Name("viewOnly")
+        public static let newline = Name("newline")
         public static let text = Name("text")
         public static let unknown = Name("unknown")
 

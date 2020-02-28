@@ -80,6 +80,8 @@ class TextStorage: NSTextStorage {
         beginEditing()
         let updatedAttributes = applyingDefaultFormattingIfRequired(attrs)
         storage.setAttributes(updatedAttributes, range: range)
+        storage.rangesOf(characterSet: .newlines)
+            .forEach { storage.addAttribute(.contentType, value: EditorContent.Name.newline, range: $0) }
         storage.fixAttributes(in: NSRange(location: 0, length: storage.length))
         edited([.editedAttributes], range: range, changeInLength: 0)
         endEditing()
