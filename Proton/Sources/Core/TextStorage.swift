@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 
 protocol DefaultTextFormattingProviding: class {
-    var font: UIFont? { get }
+    var font: UIFont { get }
     var paragraphStyle: NSMutableParagraphStyle { get }
-    var textColor: UIColor? { get }
+    var textColor: UIColor { get }
 }
 
 class TextStorage: NSTextStorage {
@@ -114,12 +114,25 @@ class TextStorage: NSTextStorage {
 
     func removeAttributes(_ attrs: [NSAttributedString.Key], range: NSRange) {
         beginEditing()
-        for attr in attrs {
-            storage.removeAttribute(attr, range: range)
-        }
+        attrs.forEach { storage.removeAttribute($0, range: range) }
+        fixMissingAttributes(deletedAttributes: attrs, range: range)
         storage.fixAttributes(in: NSRange(location: 0, length: storage.length))
         edited([.editedAttributes], range: range, changeInLength: 0)
         endEditing()
+    }
+
+    private func fixMissingAttributes(deletedAttributes attrs: [NSAttributedString.Key], range: NSRange) {
+        if attrs.contains(.foregroundColor) {
+            storage.addAttribute(.foregroundColor, value: defaultTextColor, range: range)
+        }
+
+        if attrs.contains(.paragraphStyle) {
+            storage.addAttribute(.paragraphStyle, value: defaultParagraphStyle, range: range)
+        }
+
+        if attrs.contains(.font) {
+            storage.addAttribute(.font, value: defaultFont, range: range)
+        }
     }
 
     override func removeAttribute(_ attr: NSAttributedString.Key, range: NSRange) {

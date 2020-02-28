@@ -30,7 +30,7 @@ open class RendererView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public var font: UIFont? {
+    public var font: UIFont {
         get { return readOnlyEditorView.font }
         set { readOnlyEditorView.font = newValue }
     }

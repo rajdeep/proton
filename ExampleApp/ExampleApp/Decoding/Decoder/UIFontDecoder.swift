@@ -15,7 +15,7 @@ struct UIFontDecoder: AttributedStringAttributesDecoding {
     var name: String { return "font" }
 
     func decode(_ json: JSON) -> Attributes {
-        guard let name = json["name"] as? String,
+        guard
             let size = json["size"] as? CGFloat,
             let style = json["textStyle"] as? String,
             let family = json["family"] as? String else {

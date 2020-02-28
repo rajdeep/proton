@@ -42,7 +42,7 @@ class PanelView: UIView, BlockContent, EditorContentView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    var textColor: UIColor? {
+    var textColor: UIColor {
         get { editor.textColor }
         set { editor.textColor = newValue }
     }

@@ -58,7 +58,7 @@ class TypeaheadTextProcessor: TextProcessing {
 
         let textStorage = editor.attributedText
         guard let range = textStorage.reverseRange(of: "@", currentPosition: editedRange.location + editedRange.length),
-            isValidTrigger(editor: editor, range: range.firstCharacterRange) else { return false}
+            isValidTrigger(editor: editor, range: range.firstCharacterRange) else { return false }
 
         let triggerRange = NSRange(location: range.location, length: 1)
         let queryRange = NSRange(location: range.location + 1, length: range.length - 1)
@@ -73,7 +73,7 @@ class TypeaheadTextProcessor: TextProcessing {
 
         if query.components(separatedBy: " ").count >= 3 {
             editor.addAttributes([.typeahead: false], at: triggerRange)
-            editor.removeAttribute(NSAttributedString.Key.foregroundColor, at: range)
+            editor.removeAttribute(.foregroundColor, at: range)
             delegate?.typeadheadQueryDidEnd(reason: .completed)
         } else {
             delegate?.typeaheadQueryDidChange(trigger: trigger.string, query: query, range: range)

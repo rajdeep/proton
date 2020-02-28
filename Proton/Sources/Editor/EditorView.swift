@@ -222,7 +222,7 @@ open class EditorView: UIView {
 
     /// Default font to be used by the Editor. A font may be overridden on whole or part of content in `EditorView` by an `EditorCommand` or
     /// `TextProcessing` conformances.
-    public var font: UIFont? = UIFont.preferredFont(forTextStyle: .body) {
+    public var font: UIFont = UIFont.preferredFont(forTextStyle: .body) {
         didSet { richTextView.typingAttributes[.font] = font }
     }
 
@@ -234,8 +234,8 @@ open class EditorView: UIView {
 
     /// Default text color to be used by the Editor. The color may be overridden on whole or part of content in
     /// `EditorView` by an `EditorCommand` or `TextProcessing` conformances.
-    public var textColor: UIColor? {
-        get { return richTextView.textColor }
+    public var textColor: UIColor {
+        get { return richTextView.textColor ?? UIColor.label }
         set { richTextView.textColor = newValue }
     }
 
@@ -351,7 +351,7 @@ open class EditorView: UIView {
             ])
 
         typingAttributes = [
-            NSAttributedString.Key.font: font ?? UIFont.preferredFont(forTextStyle: .body),
+            NSAttributedString.Key.font: font,
             NSAttributedString.Key.paragraphStyle: paragraphStyle
         ]
         richTextView.adjustsFontForContentSizeCategory = true
@@ -450,12 +450,12 @@ open class EditorView: UIView {
     /// - Parameter range: Range of text to replace. For an empty `EditorView`, you may pass `NSRange.zero` to insert text at the beginning.
     /// - Parameter string: String to replace the range of text with. The string will use default `font` and `paragraphStyle` defined in the `EditorView`.
     public func replaceCharacters(in range: NSRange, with string: String) {
-        var attributes: RichTextAttributes = [
-            NSAttributedString.Key.paragraphStyle: paragraphStyle
+        let attributes: RichTextAttributes = [
+            NSAttributedString.Key.paragraphStyle: paragraphStyle,
+            NSAttributedString.Key.font: font as Any,
+            NSAttributedString.Key.foregroundColor: textColor as Any
         ]
-        if let font = self.font {
-           attributes[NSAttributedString.Key.font] = font
-        }
+
         let attributedString = NSAttributedString(string: string, attributes: attributes)
         richTextView.replaceCharacters(in: range, with: attributedString)
     }

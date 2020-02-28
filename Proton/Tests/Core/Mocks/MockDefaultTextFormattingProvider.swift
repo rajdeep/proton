@@ -12,11 +12,11 @@ import UIKit
 @testable import Proton
 
 class MockDefaultTextFormattingProvider: DefaultTextFormattingProviding {
-    var textColor: UIColor?
-    let font: UIFont?
+    var textColor: UIColor
+    let font: UIFont
     let paragraphStyle: NSMutableParagraphStyle
 
-    init(font: UIFont, textColor: UIColor? = .black, paragraphStyle: NSMutableParagraphStyle) {
+    init(font: UIFont, textColor: UIColor = .black, paragraphStyle: NSMutableParagraphStyle) {
         self.font = font
         self.textColor = textColor
         self.paragraphStyle = paragraphStyle

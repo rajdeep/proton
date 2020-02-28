@@ -85,4 +85,22 @@ class TextStorageTests: XCTestCase {
         XCTAssertEqual(keyAttributes[key] as? Bool, true)
         XCTAssertEqual(effectiveRange, NSRange(location: range.length, length: testString.count - range.length))
     }
+
+    func testFixesMissingDefaultAttributesWhenRemoved() {
+        let textStorage = TextStorage()
+        let testString = NSAttributedString(string: "test string")
+        textStorage.replaceCharacters(in: .zero, with: testString)
+
+        let defaultAttributes = textStorage.attributes(at: 0, effectiveRange: nil)
+        XCTAssertTrue(defaultAttributes.contains { $0.key == .font })
+        XCTAssertTrue(defaultAttributes.contains { $0.key == .foregroundColor })
+        XCTAssertTrue(defaultAttributes.contains { $0.key == .paragraphStyle })
+
+        textStorage.removeAttributes([.font, .foregroundColor, .paragraphStyle], range: textStorage.fullRange)
+
+        let fixedAttributes = textStorage.attributes(at: 0, effectiveRange: nil)
+        XCTAssertTrue(fixedAttributes.contains { $0.key == .font })
+        XCTAssertTrue(fixedAttributes.contains { $0.key == .foregroundColor })
+        XCTAssertTrue(fixedAttributes.contains { $0.key == .paragraphStyle })
+    }
 }
