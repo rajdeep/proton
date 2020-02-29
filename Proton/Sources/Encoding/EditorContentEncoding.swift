@@ -30,13 +30,11 @@ public extension EditorContentEncoder {
         case .viewOnly:
             return nil
         case let .attachment(name, contentView, _):
-            if let encodable = attachmentEncoders[name] {
-                return encodable.encode(name: name, view: contentView)
-            } else { return nil }
+            guard let encodable = attachmentEncoders[name] else { return nil }
+            return encodable.encode(name: name, view: contentView)
         case let .text(name, attributedString):
-            if let encodable = textEncoders[name] {
-                return encodable.encode(name: name, string: attributedString)
-            } else { return nil }
+            guard let encodable = textEncoders[name] else {  return nil }
+            return encodable.encode(name: name, string: attributedString)
         }
     }
 }
