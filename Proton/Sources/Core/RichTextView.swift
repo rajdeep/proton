@@ -78,6 +78,11 @@ class RichTextView: AutogrowingTextView {
         return lineRange.toNSRange(in: self) ?? .zero
     }
 
+    var visibleRange: NSRange {
+        let textBounds = bounds.inset(by: textContainerInset)
+        return layoutManager.glyphRange(forBoundingRect: textBounds, in: textContainer)
+    }
+
     @available(*, unavailable, message: "init(coder:) unavailable, use init")
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

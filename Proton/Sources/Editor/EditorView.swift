@@ -310,6 +310,11 @@ open class EditorView: UIView {
         return getAttachmentContentView(view: superview)?.name
     }
 
+    /// Returns the visible text range.
+    public var visibleRange: NSRange {
+        return richTextView.visibleRange
+    }
+
     /// Attachment containing the current Editor.
     public var containerAttachment: Attachment? {
         return getAttachmentContentView(view: superview)?.attachment

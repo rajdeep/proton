@@ -54,6 +54,11 @@ open class RendererView: UIView {
         get { return readOnlyEditorView.selectedText }
     }
 
+    /// Returns the visible text range.
+    public var visibleRange: NSRange {
+        return readOnlyEditorView.visibleRange
+    }
+
     public var contents: [EditorContent] {
         get { return readOnlyEditorView.contents() }
     }
