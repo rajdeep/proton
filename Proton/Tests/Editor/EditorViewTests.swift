@@ -333,4 +333,25 @@ class EditorViewTests: XCTestCase {
         editor.unregisterCommand(command)
         XCTAssertEqual(editor.requiresSupportedCommandsRegistration, false)
     }
+
+    func testRegistersCommands() {
+        let editor = EditorView()
+        let command = MockEditorCommand { _ in }
+        editor.registerCommand(command)
+
+        XCTAssertEqual(editor.supportedCommands.count, 1)
+        XCTAssertTrue(editor.supportedCommands.contains{ $0 === command })
+    }
+
+    func testUnregistersCommands() {
+        let editor = EditorView()
+        let command1 = MockEditorCommand { _ in }
+        let command2 = MockEditorCommand { _ in }
+        editor.registerCommand(command1)
+        editor.registerCommand(command2)
+
+        editor.unregisterCommand(command1)
+        XCTAssertEqual(editor.supportedCommands.count, 1)
+        XCTAssertTrue(editor.supportedCommands.contains{ $0 === command2 })
+    }
 }

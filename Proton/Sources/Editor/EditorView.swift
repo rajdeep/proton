@@ -509,7 +509,7 @@ open class EditorView: UIView {
     /// - Parameter commands: Commands to unregister
     public func unregisterCommands(_ commands: [EditorCommand]) {
         supportedCommands.removeAll { c in
-            supportedCommands.contains { $0 === c }
+            commands.contains { $0 === c }
         }
     }
 
