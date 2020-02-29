@@ -69,7 +69,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         return view.superview != nil
     }
 
-    private var selectionView = SelectionView()
+    private let selectionView = SelectionView()
 
     var isSelected: Bool = false {
         didSet {
