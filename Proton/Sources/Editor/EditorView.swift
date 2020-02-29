@@ -118,13 +118,13 @@ open class EditorView: UIView {
 
     /// Input accessory view to be used
     open var editorInputAccessoryView: UIView? {
-        get { return richTextView.inputAccessoryView }
+        get { richTextView.inputAccessoryView }
         set { richTextView.inputAccessoryView = newValue }
     }
 
     /// Input view to be used
     open var editorInputView: UIView? {
-        get { return richTextView.inputView }
+        get { richTextView.inputView }
         set { richTextView.inputView = newValue }
     }
 
@@ -167,7 +167,7 @@ open class EditorView: UIView {
     /// supported in the `NSAttributedString`.
     public var placeholderText: NSAttributedString? {
         get { richTextView.placeholderText }
-        set { richTextView.placeholderText = newValue}
+        set { richTextView.placeholderText = newValue }
     }
 
     /// Default value is UIEdgeInsetsZero. Add insets for additional scroll area around the content.
@@ -235,7 +235,7 @@ open class EditorView: UIView {
     /// Default text color to be used by the Editor. The color may be overridden on whole or part of content in
     /// `EditorView` by an `EditorCommand` or `TextProcessing` conformances.
     public var textColor: UIColor {
-        get { return richTextView.textColor ?? UIColor.label }
+        get { richTextView.textColor ?? UIColor.label }
         set { richTextView.textColor = newValue }
     }
 
@@ -249,7 +249,7 @@ open class EditorView: UIView {
 
     /// Text to be set in the `EditorView`
     public var attributedText: NSAttributedString {
-        get { return richTextView.attributedText }
+        get { richTextView.attributedText }
         set {
             // Focus needs to be set in the Editor without which the
             // encode command fails on macOS
@@ -263,7 +263,7 @@ open class EditorView: UIView {
 
     /// Gets or sets the selected range in the `EditorView`.
     public var selectedRange: NSRange {
-        get { return richTextView.selectedRange }
+        get { richTextView.selectedRange }
         set {
             if enableSelectionHandles {
                 richTextView.select(self)
@@ -276,7 +276,7 @@ open class EditorView: UIView {
     /// To apply an attribute in the current position such that it is applied as text is typed,
     /// the attribute must be added to `typingAttributes` collection.
     public var typingAttributes: [NSAttributedString.Key: Any] {
-        get { return richTextView.typingAttributes }
+        get { richTextView.typingAttributes }
         set { richTextView.typingAttributes = newValue }
     }
 
@@ -353,7 +353,7 @@ open class EditorView: UIView {
             richTextView.bottomAnchor.constraint(equalTo: bottomAnchor),
             richTextView.leadingAnchor.constraint(equalTo: leadingAnchor),
             richTextView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            ])
+        ])
 
         typingAttributes = [
             NSAttributedString.Key.font: font,

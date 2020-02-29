@@ -22,7 +22,7 @@ class PanelAttachment: Attachment {
     }
 
     var attributedText: NSAttributedString {
-        get { return view.attributedText }
+        get { view.attributedText }
         set { view.attributedText = newValue }
     }
 

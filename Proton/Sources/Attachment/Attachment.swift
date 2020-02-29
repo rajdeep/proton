@@ -112,7 +112,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     }
 
     final var frame: CGRect {
-        get { return view.frame }
+        get { view.frame }
         set {
             guard view.frame.equalTo(newValue) == false else { return }
 
@@ -136,9 +136,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     }
 
     var contentView: UIView? {
-        get {
-            return view.subviews.first
-        }
+        get { view.subviews.first }
         set {
             view.subviews.forEach { $0.removeFromSuperview() }
             if let contentView = newValue {

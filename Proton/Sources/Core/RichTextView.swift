@@ -15,7 +15,7 @@ class RichTextView: AutogrowingTextView {
     weak var richTextViewDelegate: RichTextViewDelegate?
 
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding? {
-        get { return storage.defaultTextFormattingProvider }
+        get { storage.defaultTextFormattingProvider }
         set { storage.defaultTextFormattingProvider = newValue }
     }
 

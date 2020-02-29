@@ -31,27 +31,27 @@ open class RendererView: UIView {
     }
 
     public var font: UIFont {
-        get { return readOnlyEditorView.font }
+        get { readOnlyEditorView.font }
         set { readOnlyEditorView.font = newValue }
     }
 
     public var attributedText: NSAttributedString {
-        get { return readOnlyEditorView.attributedText }
+        get { readOnlyEditorView.attributedText }
         set { readOnlyEditorView.attributedText = newValue }
     }
 
     public var enableSelectionHandles: Bool {
-        get { return readOnlyEditorView.enableSelectionHandles }
+        get { readOnlyEditorView.enableSelectionHandles }
         set { readOnlyEditorView.enableSelectionHandles = false }
     }
 
     public var selectedRange: NSRange {
-        get { return readOnlyEditorView.selectedRange }
+        get { readOnlyEditorView.selectedRange }
         set { readOnlyEditorView.selectedRange = newValue }
     }
 
     public var selectedText: NSAttributedString {
-        get { return readOnlyEditorView.selectedText }
+        return readOnlyEditorView.selectedText
     }
 
     /// Returns the visible text range.
@@ -60,11 +60,11 @@ open class RendererView: UIView {
     }
 
     public var contents: [EditorContent] {
-        get { return readOnlyEditorView.contents() }
+        return readOnlyEditorView.contents()
     }
 
     public var contentOffset: CGPoint {
-        get { return readOnlyEditorView.contentOffset }
+        get { readOnlyEditorView.contentOffset }
         set { readOnlyEditorView.contentOffset = newValue }
     }
 
@@ -100,7 +100,7 @@ open class RendererView: UIView {
             readOnlyEditorView.bottomAnchor.constraint(equalTo: bottomAnchor),
             readOnlyEditorView.leadingAnchor.constraint(equalTo: leadingAnchor),
             readOnlyEditorView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            ])
+        ])
     }
 }
 

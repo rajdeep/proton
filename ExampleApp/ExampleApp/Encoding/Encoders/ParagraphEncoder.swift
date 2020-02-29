@@ -13,12 +13,12 @@ import Proton
 
 extension JSON {
     var type: String? {
-        get { return self["type"] as? String }
+        get { self["type"] as? String }
         set { self["type"] = newValue }
     }
 
     var contents: [JSON]? {
-        get { return self["contents"] as? [JSON] }
+        get { self["contents"] as? [JSON] }
         set { self["contents"] = newValue }
     }
 }
