@@ -23,7 +23,6 @@ class RichTextEditorContext: RichTextViewContext {
         let contentType = attributes[.contentType] as? EditorContent.Name ?? .unknown
         attributes[.contentType] = nil
         richTextView.richTextViewDelegate?.richTextView(richTextView, didChangeSelection: range, attributes: attributes, contentType: contentType)
-
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {

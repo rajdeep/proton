@@ -10,7 +10,7 @@ import Foundation
 
 public extension String {
     func makeNSRange(from range: Range<String.Index>) -> NSRange {
-        let range = range.lowerBound..<min(range.upperBound, endIndex)
+        let range = range.lowerBound ..< min(range.upperBound, endIndex)
 
         guard let from = range.lowerBound.samePosition(in: utf16),
             let to = range.upperBound.samePosition(in: utf16) else {
@@ -37,7 +37,7 @@ public extension String {
         while newlineRange != nil {
             guard let range = newlineRange else { break }
             ranges.append(range)
-            newlineRange = rangeOfCharacter(from: .newlines, options: [], range: range.upperBound..<endIndex)
+            newlineRange = rangeOfCharacter(from: .newlines, options: [], range: range.upperBound ..< endIndex)
         }
         return ranges
     }

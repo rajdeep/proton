@@ -45,7 +45,7 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         var processed = false
         for processor in sortedProcessors {
             processed = processor.process(editor: editor, range: editedRange, changeInLength: delta)
-            if processor.priority == .exclusive && processed == true {
+            if processor.priority == .exclusive, processed == true {
                 notifyInterruption(by: processor, editor: editor, at: editedRange)
                 break
             }
@@ -59,7 +59,7 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
     }
 
     private func notifyInterruption(by processor: TextProcessing, editor: EditorView, at range: NSRange) {
-        let processors = activeProcessors.filter{ $0.name != processor.name }
+        let processors = activeProcessors.filter { $0.name != processor.name }
         processors.forEach { $0.processInterrupted(editor: editor, at: range) }
     }
 }

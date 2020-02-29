@@ -30,7 +30,7 @@ import UIKit
 ///  let attachment = Attachment(myView, size: .matchContent)
 ///  myView.boundsObserver = attachment
 /// ```
-public protocol BoundsObserving: class {
+public protocol BoundsObserving: AnyObject {
 
     /// Lets the observer know that bounds of current object have changed
     /// - Parameter bounds: New bounds
@@ -118,13 +118,13 @@ open class EditorView: UIView {
 
     /// Input accessory view to be used
     open var editorInputAccessoryView: UIView? {
-        get { return richTextView.inputAccessoryView }
+        get { richTextView.inputAccessoryView }
         set { richTextView.inputAccessoryView = newValue }
     }
 
     /// Input view to be used
     open var editorInputView: UIView? {
-        get { return richTextView.inputView }
+        get { richTextView.inputView }
         set { richTextView.inputView = newValue }
     }
 
@@ -167,7 +167,7 @@ open class EditorView: UIView {
     /// supported in the `NSAttributedString`.
     public var placeholderText: NSAttributedString? {
         get { richTextView.placeholderText }
-        set { richTextView.placeholderText = newValue}
+        set { richTextView.placeholderText = newValue }
     }
 
     /// Default value is UIEdgeInsetsZero. Add insets for additional scroll area around the content.
@@ -235,7 +235,7 @@ open class EditorView: UIView {
     /// Default text color to be used by the Editor. The color may be overridden on whole or part of content in
     /// `EditorView` by an `EditorCommand` or `TextProcessing` conformances.
     public var textColor: UIColor {
-        get { return richTextView.textColor ?? UIColor.label }
+        get { richTextView.textColor ?? UIColor.label }
         set { richTextView.textColor = newValue }
     }
 
@@ -249,7 +249,7 @@ open class EditorView: UIView {
 
     /// Text to be set in the `EditorView`
     public var attributedText: NSAttributedString {
-        get { return richTextView.attributedText }
+        get { richTextView.attributedText }
         set {
             // Focus needs to be set in the Editor without which the
             // encode command fails on macOS
@@ -263,7 +263,7 @@ open class EditorView: UIView {
 
     /// Gets or sets the selected range in the `EditorView`.
     public var selectedRange: NSRange {
-        get { return richTextView.selectedRange }
+        get { richTextView.selectedRange }
         set {
             if enableSelectionHandles {
                 richTextView.select(self)
@@ -276,7 +276,7 @@ open class EditorView: UIView {
     /// To apply an attribute in the current position such that it is applied as text is typed,
     /// the attribute must be added to `typingAttributes` collection.
     public var typingAttributes: [NSAttributedString.Key: Any] {
-        get { return richTextView.typingAttributes }
+        get { richTextView.typingAttributes }
         set { richTextView.typingAttributes = newValue }
     }
 
@@ -353,11 +353,11 @@ open class EditorView: UIView {
             richTextView.bottomAnchor.constraint(equalTo: bottomAnchor),
             richTextView.leadingAnchor.constraint(equalTo: leadingAnchor),
             richTextView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            ])
+        ])
 
         typingAttributes = [
-            NSAttributedString.Key.font: font,
-            NSAttributedString.Key.paragraphStyle: paragraphStyle
+            .font: font,
+            .paragraphStyle: paragraphStyle
         ]
         richTextView.adjustsFontForContentSizeCategory = true
     }
@@ -427,7 +427,7 @@ open class EditorView: UIView {
     /// - Parameter range: Range to be enumerated to get the contents. If no range is specified, entire content range is
     /// enumerated.
     public func contents(in range: NSRange? = nil) -> [EditorContent] {
-        let contents =  richTextView.contents(in: range)
+        let contents = richTextView.contents(in: range)
         return Array(contents)
     }
 
@@ -455,13 +455,11 @@ open class EditorView: UIView {
     /// - Parameter range: Range of text to replace. For an empty `EditorView`, you may pass `NSRange.zero` to insert text at the beginning.
     /// - Parameter string: String to replace the range of text with. The string will use default `font` and `paragraphStyle` defined in the `EditorView`.
     public func replaceCharacters(in range: NSRange, with string: String) {
-        let attributes: RichTextAttributes = [
-            NSAttributedString.Key.paragraphStyle: paragraphStyle,
-            NSAttributedString.Key.font: font as Any,
-            NSAttributedString.Key.foregroundColor: textColor as Any
-        ]
-
-        let attributedString = NSAttributedString(string: string, attributes: attributes)
+        let attributedString = NSAttributedString(string: string, attributes: [
+            .paragraphStyle: paragraphStyle,
+            .font: font,
+            .foregroundColor: textColor
+        ])
         richTextView.replaceCharacters(in: range, with: attributedString)
     }
 
@@ -612,9 +610,8 @@ extension EditorView {
     }
 
     func relayoutAttachments() {
-        richTextView.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: richTextView.contentLength), options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
-            guard let attachment = attach as? Attachment
-                else { return }
+        richTextView.enumerateAttribute(.attachment, in: NSRange(location: 0, length: richTextView.contentLength), options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
+            guard let attachment = attach as? Attachment else { return }
 
             var frame = richTextView.boundingRect(forGlyphRange: range)
             frame.origin.y += self.textContainerInset.top

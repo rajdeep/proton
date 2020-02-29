@@ -32,12 +32,12 @@ class MarkupProcessor: TextProcessing {
             let attr = textStorage.attribute(markupKey, at: markupRange.location, effectiveRange: nil) as? String,
             attr == rangeMarker
             else {
-                editor.addAttributes([markupKey : rangeMarker], at: editedRange)
+                editor.addAttributes([markupKey: rangeMarker], at: editedRange)
                 return true
         }
 
         let attrs = textStorage.attributes(at: markupRange.location, effectiveRange: nil)
-        guard let font = attrs[NSAttributedString.Key.font] as? UIFont else { return false }
+        guard let font = attrs[.font] as? UIFont else { return false }
         let boldFont = font.adding(trait: .traitBold)
         editor.addAttribute(.font, value: boldFont, at: markupRange)
         editor.replaceCharacters(in: markupRange.firstCharacterRange, with: " ")

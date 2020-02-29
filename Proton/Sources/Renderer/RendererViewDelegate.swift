@@ -9,7 +9,7 @@
 import Foundation
 import CoreGraphics
 
-public protocol RendererViewDelegate: class {
+public protocol RendererViewDelegate: AnyObject {
     func didTap(_ renderer: RendererView, didTapAtLocation location: CGPoint, characterRange: NSRange?)
     func didChangeSelection(_ renderer: RendererView, range: NSRange)
 }

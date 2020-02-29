@@ -11,13 +11,13 @@ import UIKit
 
 import Proton
 
-protocol TypeaheadTextProcessorDelegate: class {
+protocol TypeaheadTextProcessorDelegate: AnyObject {
     func typeaheadQueryDidChange(trigger: String, query: String, range: NSRange)
     func typeadheadQueryDidEnd(reason: TypeaheadExitReason)
 }
 
 extension NSAttributedString.Key {
-    static let typeahead = NSAttributedString.Key.init("Typeahead")
+    static let typeahead = NSAttributedString.Key("Typeahead")
 }
 
 enum TypeaheadExitReason {
@@ -69,7 +69,7 @@ class TypeaheadTextProcessor: TextProcessing {
             attr.key == .typeahead && attr.value as? Bool == false
         }
 
-        guard isCancelled == false else { return false}
+        guard isCancelled == false else { return false }
 
         if query.components(separatedBy: " ").count >= 3 {
             editor.addAttributes([.typeahead: false], at: triggerRange)
@@ -77,7 +77,7 @@ class TypeaheadTextProcessor: TextProcessing {
             delegate?.typeadheadQueryDidEnd(reason: .completed)
         } else {
             delegate?.typeaheadQueryDidChange(trigger: trigger.string, query: query, range: range)
-            editor.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.systemBlue], at: range)
+            editor.addAttributes([.foregroundColor: UIColor.systemBlue], at: range)
         }
 
         return true
@@ -97,7 +97,7 @@ class TypeaheadTextProcessor: TextProcessing {
 
 extension NSAttributedString {
     func reverseRange(of delimiter: String, currentPosition: Int) -> NSRange? {
-        guard currentPosition <=  string.utf16.count else {
+        guard currentPosition <= string.utf16.count else {
             return nil
         }
         let triggerCharacterSet = CharacterSet(charactersIn: delimiter)

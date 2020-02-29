@@ -15,13 +15,13 @@ class AutogrowingEditorViewExampleViewController: ExamplesBaseViewController {
 
     override func setup() {
         super.setup()
-        
+
         editor.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(editor)
 
         editor.layer.borderColor = UIColor.systemBlue.cgColor
         editor.layer.borderWidth = 1.0
-        
+
         NSLayoutConstraint.activate([
             editor.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             editor.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -30,10 +30,11 @@ class AutogrowingEditorViewExampleViewController: ExamplesBaseViewController {
             editor.heightAnchor.constraint(lessThanOrEqualToConstant: 200)
         ])
 
-        editor.placeholderText = NSAttributedString(string: "This is a placeholder text that flows into the next line",
-                                                    attributes: [
-                                                        NSAttributedString.Key.font : editor.font,
-                                                        NSAttributedString.Key.foregroundColor: UIColor.tertiaryLabel,
+        editor.placeholderText = NSAttributedString(
+            string: "This is a placeholder text that flows into the next line",
+            attributes: [
+                .font: editor.font,
+                .foregroundColor: UIColor.tertiaryLabel,
         ])
     }
 }

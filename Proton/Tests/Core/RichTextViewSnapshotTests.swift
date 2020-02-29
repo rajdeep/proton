@@ -12,7 +12,6 @@ import FBSnapshotTestCase
 
 @testable import Proton
 
-
 class RichTextViewSnapshotTests: FBSnapshotTestCase {
 
     override func setUp() {

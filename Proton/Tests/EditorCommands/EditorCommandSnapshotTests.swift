@@ -12,7 +12,6 @@ import FBSnapshotTestCase
 
 @testable import Proton
 
-
 class EditorCommandSnapshotTests: FBSnapshotTestCase {
     override func setUp() {
         super.setUp()

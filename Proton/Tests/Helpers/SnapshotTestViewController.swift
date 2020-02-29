@@ -15,8 +15,8 @@ class SnapshotTestViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .lightGray
     }
-    
-    func render(size: CGSize = CGSize(width: 300, height:100)) {
+
+    func render(size: CGSize = CGSize(width: 300, height: 100)) {
         view.frame = CGRect(origin: .zero, size: size)
         view.setNeedsLayout()
         view.layoutIfNeeded()

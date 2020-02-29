@@ -30,4 +30,3 @@ struct AnyAttributedStringAttributeDecoding<EncodedType>: AttributedStringAttrib
         return decoding(value)
     }
 }
-

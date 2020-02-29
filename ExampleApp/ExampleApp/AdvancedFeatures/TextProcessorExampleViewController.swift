@@ -60,4 +60,3 @@ extension TextProcessorExampleViewController: TypeaheadTextProcessorDelegate {
         typeaheadLabel.text = "Typeahead ended with reason: \(reason)"
     }
 }
-

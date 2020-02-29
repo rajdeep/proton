@@ -22,7 +22,7 @@ public protocol EditorContentView: Focusable {
 
 public extension EditorContentView {
     var attributedText: NSAttributedString {
-        get { return editor.attributedText }
+        get { editor.attributedText }
         set { editor.attributedText = newValue }
     }
 
@@ -31,23 +31,21 @@ public extension EditorContentView {
     }
 
     var maxHeight: CGFloat {
-        get { return editor.maxHeight }
+        get { editor.maxHeight }
         set { editor.maxHeight = newValue }
     }
 
     var boundsObserver: BoundsObserving? {
-        get { return editor.boundsObserver }
+        get { editor.boundsObserver }
         set { editor.boundsObserver = newValue }
     }
 
     var delegate: EditorViewDelegate? {
-        get { return editor.delegate }
-        set { editor.delegate = newValue}
+        get { editor.delegate }
+        set { editor.delegate = newValue }
     }
 
     func setFocus() {
         editor.becomeFirstResponder()
     }
 }
-
-

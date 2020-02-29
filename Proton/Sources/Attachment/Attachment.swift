@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 /// Describes an object (typically attachment view) that may change size during the layout pass
-public protocol DynamicBoundsProviding: class {
+public protocol DynamicBoundsProviding: AnyObject {
     func sizeFor(containerSize: CGSize, lineRect: CGRect) -> CGSize
 }
 
@@ -22,7 +22,7 @@ public protocol DynamicBoundsProviding: class {
 /// - Attention:
 /// While offset can be provided for any type of `Attachment` i.e. Inline or Block, it is recommended that offset be provided only for Inline. If an offset is provided for Block attachment,
 /// it is possible that the attachment starts overlapping the content in `Editor` in the following line since the offset does not affect the line height.
-public protocol AttachmentOffsetProviding: class {
+public protocol AttachmentOffsetProviding: AnyObject {
     func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint
 }
 
@@ -69,16 +69,14 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         return view.superview != nil
     }
 
-    var selectedView: SelectionView = {
-        return SelectionView()
-    }()
+    private let selectionView = SelectionView()
 
     var isSelected: Bool = false {
         didSet {
             if isSelected {
-                selectedView.addTo(parent: view)
+                selectionView.addTo(parent: view)
             } else {
-                selectedView.removeFromSuperview()
+                selectionView.removeFromSuperview()
             }
         }
     }
@@ -105,14 +103,16 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 //        let key = isBlockAttachment == true ? NSAttributedString.Key.contentType: NSAttributedString.Key.inlineContentType
         let string = NSMutableAttributedString(attachment: self)
         let value = name ?? EditorContent.Name.unknown
-        string.addAttributes([NSAttributedString.Key.contentType: value], range: string.fullRange)
-        string.addAttributes([NSAttributedString.Key.isBlockAttachment: isBlockAttachment], range: string.fullRange)
-        string.addAttributes([NSAttributedString.Key.isInlineAttachment: !isBlockAttachment], range: string.fullRange)
+        string.addAttributes([
+            .contentType: value,
+            .isBlockAttachment: isBlockAttachment,
+            .isInlineAttachment: !isBlockAttachment
+        ], range: string.fullRange)
         return string
     }
 
     final var frame: CGRect {
-        get { return view.frame }
+        get { view.frame }
         set {
             guard view.frame.equalTo(newValue) == false else { return }
 
@@ -136,9 +136,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     }
 
     var contentView: UIView? {
-        get {
-            return view.subviews.first
-        }
+        get { view.subviews.first }
         set {
             view.subviews.forEach { $0.removeFromSuperview() }
             if let contentView = newValue {
@@ -152,7 +150,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     }
 
     public override var bounds: CGRect {
-        didSet { self.view.bounds = bounds }
+        didSet { view.bounds = bounds }
     }
 
     // This cannot be made convenience init as it prevents this being called from a class that inherits from `Attachment`
@@ -238,7 +236,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         return containerTextView.attributedText.rangeFor(attachment: self)
     }
 
-    open func addedAttributesOnContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key : Any]) {
+    open func addedAttributesOnContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key: Any]) {
 
     }
 
@@ -286,7 +284,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         case let .percent(value):
             let containerWidth = textContainer.size.width
             let adjustedContainerWidth = containerWidth - (textContainer.lineFragmentPadding * 2)
-            let percentWidth = adjustedContainerWidth * (value/100.0)
+            let percentWidth = adjustedContainerWidth * (value / 100.0)
             size = CGSize(width: percentWidth, height: size.height)
         }
 

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol DefaultTextFormattingProviding: class {
+protocol DefaultTextFormattingProviding: AnyObject {
     var font: UIFont { get }
     var paragraphStyle: NSMutableParagraphStyle { get }
     var textColor: UIColor { get }
@@ -52,7 +52,7 @@ class TextStorage: NSTextStorage {
         return storage.string
     }
 
-    override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [NSAttributedString.Key : Any] {
+    override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [NSAttributedString.Key: Any] {
         guard storage.length > location else {
             return [:]
         }
@@ -76,7 +76,7 @@ class TextStorage: NSTextStorage {
         attachmentsToDelete.forEach { $0.removeFromSuperView() }
     }
 
-    override func setAttributes(_ attrs: [NSAttributedString.Key : Any]?, range: NSRange) {
+    override func setAttributes(_ attrs: [NSAttributedString.Key: Any]?, range: NSRange) {
         beginEditing()
         let updatedAttributes = applyingDefaultFormattingIfRequired(attrs)
         storage.setAttributes(updatedAttributes, range: range)
@@ -89,22 +89,22 @@ class TextStorage: NSTextStorage {
 
     private func applyingDefaultFormattingIfRequired(_ attributes: RichTextAttributes?) -> RichTextAttributes {
         var updatedAttributes = attributes ?? [:]
-        if attributes?[NSAttributedString.Key.contentType] == nil {
-            updatedAttributes[NSAttributedString.Key.paragraphStyle] = defaultTextFormattingProvider?.paragraphStyle ?? defaultParagraphStyle
+        if attributes?[.contentType] == nil {
+            updatedAttributes[.paragraphStyle] = defaultTextFormattingProvider?.paragraphStyle ?? defaultParagraphStyle
         }
 
-        if attributes?[NSAttributedString.Key.font] == nil {
-            updatedAttributes[NSAttributedString.Key.font] = defaultTextFormattingProvider?.font ?? defaultFont
+        if attributes?[.font] == nil {
+            updatedAttributes[.font] = defaultTextFormattingProvider?.font ?? defaultFont
         }
 
-        if attributes?[NSAttributedString.Key.foregroundColor] == nil {
-            updatedAttributes[NSAttributedString.Key.foregroundColor] = defaultTextFormattingProvider?.textColor ?? defaultTextColor
+        if attributes?[.foregroundColor] == nil {
+            updatedAttributes[.foregroundColor] = defaultTextFormattingProvider?.textColor ?? defaultTextColor
         }
 
         return updatedAttributes
     }
 
-    override func addAttributes(_ attrs: [NSAttributedString.Key : Any], range: NSRange) {
+    override func addAttributes(_ attrs: [NSAttributedString.Key: Any], range: NSRange) {
         beginEditing()
         storage.addAttributes(attrs, range: range)
         storage.fixAttributes(in: NSRange(location: 0, length: storage.length))
@@ -156,7 +156,7 @@ class TextStorage: NSTextStorage {
 
     private func getAttachments(in range: NSRange) -> [Attachment] {
         var attachments = [Attachment]()
-        storage.enumerateAttribute(NSAttributedString.Key.attachment,
+        storage.enumerateAttribute(.attachment,
                                    in: range,
                                    options: .longestEffectiveRangeNotRequired,
                                    using: { (attribute, _, _) in

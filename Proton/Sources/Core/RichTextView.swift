@@ -15,7 +15,7 @@ class RichTextView: AutogrowingTextView {
     weak var richTextViewDelegate: RichTextViewDelegate?
 
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding? {
-        get { return storage.defaultTextFormattingProvider }
+        get { storage.defaultTextFormattingProvider }
         set { storage.defaultTextFormattingProvider = newValue }
     }
 
@@ -112,10 +112,10 @@ class RichTextView: AutogrowingTextView {
     }
 
     func wordAt(_ location: Int) -> NSAttributedString? {
-        guard let position = self.position(from: self.beginningOfDocument, offset: location),
-        let wordRange = tokenizer.rangeEnclosingPosition(position, with: .word, inDirection: UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)),
-        let range = wordRange.toNSRange(in: self) else {
-            return nil
+        guard let position = self.position(from: beginningOfDocument, offset: location),
+            let wordRange = tokenizer.rangeEnclosingPosition(position, with: .word, inDirection: UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)),
+            let range = wordRange.toNSRange(in: self) else {
+                return nil
         }
         return attributedText.attributedSubstring(from: range)
     }
@@ -135,7 +135,7 @@ class RichTextView: AutogrowingTextView {
         }
         scrollRangeToVisible(NSRange(location: range.location, length: 1))
     }
-    
+
     func edited(range: NSRange) {
         richTextStorage.beginEditing()
         richTextStorage.edited([.editedCharacters, .editedAttributes], range: range, changeInLength: 0)
@@ -179,7 +179,7 @@ class RichTextView: AutogrowingTextView {
         return self.attributedText.enumerateContents(in: range)
     }
 
-    func addAttributes(_ attrs: [NSAttributedString.Key : Any], range: NSRange) {
+    func addAttributes(_ attrs: [NSAttributedString.Key: Any], range: NSRange) {
         storage.addAttributes(attrs, range: range)
     }
 
@@ -208,7 +208,7 @@ class RichTextView: AutogrowingTextView {
     }
 }
 
-extension RichTextView: NSLayoutManagerDelegate  {
+extension RichTextView: NSLayoutManagerDelegate {
     func layoutManager(_ layoutManager: NSLayoutManager, didCompleteLayoutFor textContainer: NSTextContainer?, atEnd layoutFinishedFlag: Bool) {
         updatePlaceholderVisibility()
         richTextViewDelegate?.richTextView(self, didFinishLayout: layoutFinishedFlag)

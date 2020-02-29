@@ -12,7 +12,6 @@ import FBSnapshotTestCase
 
 @testable import Proton
 
-
 class AttachmentSnapshotTests: FBSnapshotTestCase {
 
     override func setUp() {
@@ -24,7 +23,7 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
     func testMatchContentRendering() {
         let viewController = EditorTestViewController()
         let textView = viewController.editor
-        
+
         let attachment = makeDummyAttachment(text: "in attachment", size: .matchContent)
 
         textView.replaceCharacters(in: .zero, with: "In textView ")
@@ -43,7 +42,6 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
         textView.replaceCharacters(in: .zero, with: "In textView")
         textView.insertAttachment(in: textView.textEndRange, attachment: attachment)
         textView.replaceCharacters(in: textView.textEndRange, with: NSAttributedString(string: "after."))
-
 
         viewController.render()
         FBSnapshotVerifyView(viewController.view)
@@ -124,5 +122,3 @@ extension AttachmentSnapshotTests: AttachmentOffsetProviding {
         return CGPoint(x: 0, y: -3)
     }
 }
-
-

@@ -20,11 +20,11 @@ class DummyCollabCommand: EditorCommand {
         caretView.blink()
         editor.addSubview(caretView)
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {[editor] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [editor] in
             let text = "collab edit "
             editor.replaceCharacters(in: .zero, with: text)
             editor.selectedRange = NSRange(location: editor.selectedRange.location + text.count, length: 0)
-            let insertedTextRange = NSRange(location: 0 , length: text.count)
+            let insertedTextRange = NSRange(location: 0, length: text.count)
             let selectionRangeRect = editor.rects(for: insertedTextRange)
             let selectionView = UIView(frame: selectionRangeRect[0])
             selectionView.backgroundColor = .systemRed

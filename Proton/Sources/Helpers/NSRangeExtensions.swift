@@ -23,7 +23,7 @@ public extension NSRange {
     }
 
     var nextPosition: NSRange {
-        return NSRange(location: self.location + 1, length: 0)
+        return NSRange(location: location + 1, length: 0)
     }
 
     func toTextRange(textInput: UITextInput) -> UITextRange? {

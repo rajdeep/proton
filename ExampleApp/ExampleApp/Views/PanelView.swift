@@ -15,7 +15,7 @@ extension EditorContent.Name {
     static let panel = EditorContent.Name("panel")
 }
 
-protocol PanelViewDelegate: class {
+protocol PanelViewDelegate: AnyObject {
     func panel(_ panel: PanelView, didRecieveKey key: EditorKey, at range: NSRange, handled: inout Bool)
     func panel(_ panel: PanelView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name)
 }
@@ -36,7 +36,7 @@ class PanelView: UIView, BlockContent, EditorContentView {
         super.init(frame: frame)
 
         setup()
-    }   
+    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -103,7 +103,7 @@ extension PanelView: EditorViewDelegate {
         delegate?.panel(self, didRecieveKey: key, at: range, handled: &handled)
     }
 
-    func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name) {
+    func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
         // Relay the changed selection command to container `EditorView`'s delegate
         // This needs to be done as an additional step as container `EditorView`'s delegate is not registered as `PanelView`'s
         // editor as the `PanelView` register's itself as the `EditorView`'s delegate
@@ -113,6 +113,7 @@ extension PanelView: EditorViewDelegate {
 
 extension PanelView {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
         container.layer.borderColor = UIColor.systemGray.cgColor
         iconView.layer.borderColor = UIColor.systemGray.cgColor
     }

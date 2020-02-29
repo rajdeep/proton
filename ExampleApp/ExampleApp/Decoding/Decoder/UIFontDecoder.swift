@@ -19,7 +19,7 @@ struct UIFontDecoder: AttributedStringAttributesDecoding {
             let size = json["size"] as? CGFloat,
             let style = json["textStyle"] as? String,
             let family = json["family"] as? String else {
-                return [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body)]
+                return [.font: UIFont.preferredFont(forTextStyle: .body)]
         }
 
         let textStyle = UIFont.TextStyle(rawValue: style)
@@ -46,6 +46,6 @@ struct UIFontDecoder: AttributedStringAttributesDecoding {
         }
 
         let font = UIFont(descriptor: fontDescriptor, size: size)
-        return [NSAttributedString.Key.font: font]
+        return [.font: font]
     }
 }
