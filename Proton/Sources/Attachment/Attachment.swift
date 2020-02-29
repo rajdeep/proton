@@ -52,12 +52,10 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     public var selectBeforeDelete = false
 
     var isBlockAttachment: Bool? {
-        if let _ = contentView as? BlockContent {
-            return true
-        } else if let _ = contentView as? InlineContent {
-            return false
-        } else {
-            return nil
+        switch contentView {
+        case is BlockContent: return true
+        case is InlineContent: return false
+        default: return nil
         }
     }
 
@@ -230,10 +228,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     }
 
     public func rangeInContainer() -> NSRange? {
-        guard let containerTextView = containerTextView else {
-            return nil
-        }
-        return containerTextView.attributedText.rangeFor(attachment: self)
+        return containerTextView?.attributedText.rangeFor(attachment: self)
     }
 
     open func addedAttributesOnContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key: Any]) {
