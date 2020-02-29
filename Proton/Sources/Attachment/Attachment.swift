@@ -74,9 +74,9 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     var isSelected: Bool = false {
         didSet {
             if isSelected {
-                selectedView.addTo(parent: view)
+                selectionView.addTo(parent: view)
             } else {
-                selectedView.removeFromSuperview()
+                selectionView.removeFromSuperview()
             }
         }
     }
