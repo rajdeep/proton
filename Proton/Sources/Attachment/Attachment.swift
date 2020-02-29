@@ -103,9 +103,11 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 //        let key = isBlockAttachment == true ? NSAttributedString.Key.contentType: NSAttributedString.Key.inlineContentType
         let string = NSMutableAttributedString(attachment: self)
         let value = name ?? EditorContent.Name.unknown
-        string.addAttributes([NSAttributedString.Key.contentType: value], range: string.fullRange)
-        string.addAttributes([NSAttributedString.Key.isBlockAttachment: isBlockAttachment], range: string.fullRange)
-        string.addAttributes([NSAttributedString.Key.isInlineAttachment: !isBlockAttachment], range: string.fullRange)
+        string.addAttributes([
+            .contentType: value,
+            .isBlockAttachment: isBlockAttachment,
+            .isInlineAttachment: !isBlockAttachment
+        ], range: string.fullRange)
         return string
     }
 

@@ -28,7 +28,7 @@ public extension UIFont {
     }
 
     var textStyle: UIFont.TextStyle {
-        guard let style = fontDescriptor.object(forKey: UIFontDescriptor.AttributeName.textStyle) as? String else {
+        guard let style = fontDescriptor.object(forKey: .textStyle) as? String else {
             return .body
         }
         return UIFont.TextStyle(rawValue: style)

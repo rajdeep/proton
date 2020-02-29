@@ -39,7 +39,7 @@ extension UIFont: InlineEncoding {
             "isBold": fontDescriptor.symbolicTraits.contains(.traitBold),
             "isItalics": fontDescriptor.symbolicTraits.contains(.traitItalic),
             "isMonospace": fontDescriptor.symbolicTraits.contains(.traitMonoSpace),
-            "textStyle": fontDescriptor.object(forKey: UIFontDescriptor.AttributeName.textStyle) as? String ?? "UICTFontTextStyleBody"
+            "textStyle": fontDescriptor.object(forKey: .textStyle) as? String ?? "UICTFontTextStyleBody"
         ]
         return .json(value: attributes)
     }

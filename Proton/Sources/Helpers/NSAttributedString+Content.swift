@@ -12,13 +12,13 @@ import UIKit
 public extension NSAttributedString {
     func enumerateContents(in range: NSRange? = nil) -> AnySequence<EditorContent> {
         return self.enumerateContentType(.contentType, defaultIfMissing: .paragraph, in: range) { attributes in
-            attributes[NSAttributedString.Key.isBlockAttachment] as? Bool != false
+            attributes[.isBlockAttachment] as? Bool != false
         }
     }
 
     func enumerateInlineContents(in range: NSRange? = nil) -> AnySequence<EditorContent> {
         return self.enumerateContentType(.contentType, defaultIfMissing: .text, in: range) { attributes in
-            attributes[NSAttributedString.Key.isInlineAttachment] as? Bool != false
+            attributes[.isInlineAttachment] as? Bool != false
         }
     }
 

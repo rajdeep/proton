@@ -89,16 +89,16 @@ class TextStorage: NSTextStorage {
 
     private func applyingDefaultFormattingIfRequired(_ attributes: RichTextAttributes?) -> RichTextAttributes {
         var updatedAttributes = attributes ?? [:]
-        if attributes?[NSAttributedString.Key.contentType] == nil {
-            updatedAttributes[NSAttributedString.Key.paragraphStyle] = defaultTextFormattingProvider?.paragraphStyle ?? defaultParagraphStyle
+        if attributes?[.contentType] == nil {
+            updatedAttributes[.paragraphStyle] = defaultTextFormattingProvider?.paragraphStyle ?? defaultParagraphStyle
         }
 
-        if attributes?[NSAttributedString.Key.font] == nil {
-            updatedAttributes[NSAttributedString.Key.font] = defaultTextFormattingProvider?.font ?? defaultFont
+        if attributes?[.font] == nil {
+            updatedAttributes[.font] = defaultTextFormattingProvider?.font ?? defaultFont
         }
 
-        if attributes?[NSAttributedString.Key.foregroundColor] == nil {
-            updatedAttributes[NSAttributedString.Key.foregroundColor] = defaultTextFormattingProvider?.textColor ?? defaultTextColor
+        if attributes?[.foregroundColor] == nil {
+            updatedAttributes[.foregroundColor] = defaultTextFormattingProvider?.textColor ?? defaultTextColor
         }
 
         return updatedAttributes
@@ -156,7 +156,7 @@ class TextStorage: NSTextStorage {
 
     private func getAttachments(in range: NSRange) -> [Attachment] {
         var attachments = [Attachment]()
-        storage.enumerateAttribute(NSAttributedString.Key.attachment,
+        storage.enumerateAttribute(.attachment,
                                    in: range,
                                    options: .longestEffectiveRangeNotRequired,
                                    using: { (attribute, _, _) in

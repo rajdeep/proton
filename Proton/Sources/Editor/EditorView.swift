@@ -356,8 +356,8 @@ open class EditorView: UIView {
         ])
 
         typingAttributes = [
-            NSAttributedString.Key.font: font,
-            NSAttributedString.Key.paragraphStyle: paragraphStyle
+            .font: font,
+            .paragraphStyle: paragraphStyle
         ]
         richTextView.adjustsFontForContentSizeCategory = true
     }
@@ -455,13 +455,11 @@ open class EditorView: UIView {
     /// - Parameter range: Range of text to replace. For an empty `EditorView`, you may pass `NSRange.zero` to insert text at the beginning.
     /// - Parameter string: String to replace the range of text with. The string will use default `font` and `paragraphStyle` defined in the `EditorView`.
     public func replaceCharacters(in range: NSRange, with string: String) {
-        let attributes: RichTextAttributes = [
-            NSAttributedString.Key.paragraphStyle: paragraphStyle,
-            NSAttributedString.Key.font: font as Any,
-            NSAttributedString.Key.foregroundColor: textColor as Any
-        ]
-
-        let attributedString = NSAttributedString(string: string, attributes: attributes)
+        let attributedString = NSAttributedString(string: string, attributes: [
+            .paragraphStyle: paragraphStyle,
+            .font: font,
+            .foregroundColor: textColor
+        ])
         richTextView.replaceCharacters(in: range, with: attributedString)
     }
 
@@ -612,7 +610,7 @@ extension EditorView {
     }
 
     func relayoutAttachments() {
-        richTextView.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: richTextView.contentLength), options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
+        richTextView.enumerateAttribute(.attachment, in: NSRange(location: 0, length: richTextView.contentLength), options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
             guard let attachment = attach as? Attachment else { return }
 
             var frame = richTextView.boundingRect(forGlyphRange: range)

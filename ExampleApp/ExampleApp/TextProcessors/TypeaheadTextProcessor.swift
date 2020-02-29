@@ -77,7 +77,7 @@ class TypeaheadTextProcessor: TextProcessing {
             delegate?.typeadheadQueryDidEnd(reason: .completed)
         } else {
             delegate?.typeaheadQueryDidChange(trigger: trigger.string, query: query, range: range)
-            editor.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.systemBlue], at: range)
+            editor.addAttributes([.foregroundColor: UIColor.systemBlue], at: range)
         }
 
         return true
