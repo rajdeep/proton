@@ -12,7 +12,6 @@ import FBSnapshotTestCase
 
 @testable import Proton
 
-
 class AutogrowingTextViewSnapshotTests: FBSnapshotTestCase {
 
     override func setUp() {

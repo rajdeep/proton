@@ -42,4 +42,3 @@ struct TextEncoder: EditorTextEncoding {
         return text
     }
 }
-

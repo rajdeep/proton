@@ -15,7 +15,7 @@ class PercentWidthAttachmentExampleViewController: ExamplesBaseViewController {
     let widthTextField = UITextField()
 
     var width: CGFloat {
-        let width = CGFloat(exactly: NumberFormatter().number(from: (widthTextField.text ?? "")) ?? 50) ?? 50
+        let width = CGFloat(exactly: NumberFormatter().number(from: widthTextField.text ?? "") ?? 50) ?? 50
         return width
     }
 

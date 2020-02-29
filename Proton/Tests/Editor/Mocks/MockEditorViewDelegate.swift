@@ -6,7 +6,6 @@
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 
-
 import Foundation
 import UIKit
 
@@ -17,7 +16,6 @@ class MockEditorViewDelegate: EditorViewDelegate {
     var onKeyReceived: ((EditorView, EditorKey, NSRange, Bool) -> Void)?
     var onReceivedFocus: ((EditorView, NSRange) -> Void)?
     var onLostFocus: ((EditorView, NSRange) -> Void)?
-
 
     func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
         onSelectionChanged?(editor, range, attributes, contentType)

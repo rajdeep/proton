@@ -14,7 +14,7 @@ public extension NSAttributedString.Key {
 }
 
 public class HighlightTextCommand: RendererCommand {
-    public let color = UIColor.init(dynamicProvider: { traightCollection -> UIColor in
+    public let color = UIColor(dynamicProvider: { traightCollection -> UIColor in
         switch traightCollection.userInterfaceStyle {
         case .dark:
             return UIColor.systemYellow.withAlphaComponent(0.2)
@@ -33,8 +33,8 @@ public class HighlightTextCommand: RendererCommand {
         }
 
         renderer.addAttributes([
-            NSAttributedString.Key.backgroundColor : color,
-            .isHighlighted: true
-            ],at: renderer.selectedRange)
+            .backgroundColor: color,
+            .isHighlighted: true,
+        ], at: renderer.selectedRange)
     }
 }

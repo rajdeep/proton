@@ -23,7 +23,7 @@ class ExamplesBaseViewController: UIViewController {
         super.viewDidLoad()
         self.setup()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         editor.setFocus()

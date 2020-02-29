@@ -42,12 +42,10 @@ public extension EditorContentView {
 
     var delegate: EditorViewDelegate? {
         get { editor.delegate }
-        set { editor.delegate = newValue}
+        set { editor.delegate = newValue }
     }
 
     func setFocus() {
         editor.becomeFirstResponder()
     }
 }
-
-

@@ -35,8 +35,7 @@ class RendererSnapshotTests: FBSnapshotTestCase {
         let renderer = viewController.renderer
         renderer.addBorder()
 
-        renderer.attributedText = NSAttributedString(string:
-        """
+        renderer.attributedText = NSAttributedString(string: """
         Line 1   - abc
         Line 2   - def
         Line 3   - ghi
@@ -47,8 +46,7 @@ class RendererSnapshotTests: FBSnapshotTestCase {
         Line 8   - vwx
         Line 9   - yza
         Line 10  - bcd
-        """
-        )
+        """)
 
         viewController.render()
 

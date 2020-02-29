@@ -32,7 +32,7 @@ class MarkupProcessor: TextProcessing {
             let attr = textStorage.attribute(markupKey, at: markupRange.location, effectiveRange: nil) as? String,
             attr == rangeMarker
             else {
-                editor.addAttributes([markupKey : rangeMarker], at: editedRange)
+                editor.addAttributes([markupKey: rangeMarker], at: editedRange)
                 return true
         }
 

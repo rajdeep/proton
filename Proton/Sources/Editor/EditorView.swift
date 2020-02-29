@@ -30,7 +30,7 @@ import UIKit
 ///  let attachment = Attachment(myView, size: .matchContent)
 ///  myView.boundsObserver = attachment
 /// ```
-public protocol BoundsObserving: class {
+public protocol BoundsObserving: AnyObject {
 
     /// Lets the observer know that bounds of current object have changed
     /// - Parameter bounds: New bounds
@@ -427,7 +427,7 @@ open class EditorView: UIView {
     /// - Parameter range: Range to be enumerated to get the contents. If no range is specified, entire content range is
     /// enumerated.
     public func contents(in range: NSRange? = nil) -> [EditorContent] {
-        let contents =  richTextView.contents(in: range)
+        let contents = richTextView.contents(in: range)
         return Array(contents)
     }
 
@@ -613,8 +613,7 @@ extension EditorView {
 
     func relayoutAttachments() {
         richTextView.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: richTextView.contentLength), options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
-            guard let attachment = attach as? Attachment
-                else { return }
+            guard let attachment = attach as? Attachment else { return }
 
             var frame = richTextView.boundingRect(forGlyphRange: range)
             frame.origin.y += self.textContainerInset.top

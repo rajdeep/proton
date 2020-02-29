@@ -187,7 +187,7 @@ class RichTextViewContextTests: XCTestCase {
         mockTextViewDelegate.onSelectionChanged = { _, _, attributes, _ in
             if run == 0 {
                 XCTAssertEqual(attributes[key1] as? Int, 1)
-            } else  {
+            } else {
                 XCTAssertEqual(attributes[key2] as? Int, 2)
             }
             run += 1

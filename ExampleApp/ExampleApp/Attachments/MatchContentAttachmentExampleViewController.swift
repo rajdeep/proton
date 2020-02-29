@@ -41,7 +41,6 @@ class MatchContentAttachmentExampleViewController: ExamplesBaseViewController {
             editor.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
         ])
-
     }
 
     @objc
@@ -53,7 +52,6 @@ class MatchContentAttachmentExampleViewController: ExamplesBaseViewController {
         textField.layer.cornerRadius = 4.0
         textField.layer.borderColor = UIColor.black.cgColor
         textField.font = editor.font
-        
 
         let attachment = Attachment(textField, size: .matchContent)
         textField.boundsObserver = attachment
@@ -61,7 +59,6 @@ class MatchContentAttachmentExampleViewController: ExamplesBaseViewController {
         editor.insertAttachment(in: editor.selectedRange, attachment: attachment)
     }
 }
-
 
 extension MatchContentAttachmentExampleViewController: AttachmentOffsetProviding {
     func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint {

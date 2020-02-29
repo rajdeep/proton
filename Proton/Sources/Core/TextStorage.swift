@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol DefaultTextFormattingProviding: class {
+protocol DefaultTextFormattingProviding: AnyObject {
     var font: UIFont { get }
     var paragraphStyle: NSMutableParagraphStyle { get }
     var textColor: UIColor { get }
@@ -52,7 +52,7 @@ class TextStorage: NSTextStorage {
         return storage.string
     }
 
-    override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [NSAttributedString.Key : Any] {
+    override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [NSAttributedString.Key: Any] {
         guard storage.length > location else {
             return [:]
         }
@@ -76,7 +76,7 @@ class TextStorage: NSTextStorage {
         attachmentsToDelete.forEach { $0.removeFromSuperView() }
     }
 
-    override func setAttributes(_ attrs: [NSAttributedString.Key : Any]?, range: NSRange) {
+    override func setAttributes(_ attrs: [NSAttributedString.Key: Any]?, range: NSRange) {
         beginEditing()
         let updatedAttributes = applyingDefaultFormattingIfRequired(attrs)
         storage.setAttributes(updatedAttributes, range: range)
@@ -104,7 +104,7 @@ class TextStorage: NSTextStorage {
         return updatedAttributes
     }
 
-    override func addAttributes(_ attrs: [NSAttributedString.Key : Any], range: NSRange) {
+    override func addAttributes(_ attrs: [NSAttributedString.Key: Any], range: NSRange) {
         beginEditing()
         storage.addAttributes(attrs, range: range)
         storage.fixAttributes(in: NSRange(location: 0, length: storage.length))

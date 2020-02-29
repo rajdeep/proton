@@ -21,26 +21,22 @@ struct NavigationItem {
 class MasterViewController: UITableViewController {
 
     let navigation = [
-        Navigation(title: "Basic features",
-                   items: [
-                    NavigationItem(title: "Autogrowing Editor", viewController: AutogrowingEditorViewExampleViewController()),
+        Navigation(title: "Basic features", items: [
+            NavigationItem(title: "Autogrowing Editor", viewController: AutogrowingEditorViewExampleViewController()),
         ]),
-        Navigation(title: "Attachment",
-                   items: [
-                    NavigationItem(title: "Match Content", viewController: MatchContentAttachmentExampleViewController()),
-                    NavigationItem(title: "Full Width", viewController: FullWidthAttachmentExampleViewController()),
-                    NavigationItem(title: "Fixed Width", viewController: FixedWidthAttachmentExampleViewController()),
-                    NavigationItem(title: "Width Range", viewController: WidthRangeAttachmentExampleViewController()),
-                    NavigationItem(title: "Percent Width", viewController: PercentWidthAttachmentExampleViewController()),
+        Navigation(title: "Attachment", items: [
+            NavigationItem(title: "Match Content", viewController: MatchContentAttachmentExampleViewController()),
+            NavigationItem(title: "Full Width", viewController: FullWidthAttachmentExampleViewController()),
+            NavigationItem(title: "Fixed Width", viewController: FixedWidthAttachmentExampleViewController()),
+            NavigationItem(title: "Width Range", viewController: WidthRangeAttachmentExampleViewController()),
+            NavigationItem(title: "Percent Width", viewController: PercentWidthAttachmentExampleViewController()),
         ]),
-        Navigation(title: "Advanced features",
-                   items: [
-                    NavigationItem(title: "Commands", viewController: CommandsExampleViewController()),
-                    NavigationItem(title: "Text Processors", viewController: TextProcessorExampleViewController()),
+        Navigation(title: "Advanced features", items: [
+            NavigationItem(title: "Commands", viewController: CommandsExampleViewController()),
+            NavigationItem(title: "Text Processors", viewController: TextProcessorExampleViewController()),
         ]),
-        Navigation(title: "Renderer",
-                   items: [
-                    NavigationItem(title: "Commands", viewController: RendererCommandsExampleViewController())
+        Navigation(title: "Renderer", items: [
+            NavigationItem(title: "Commands", viewController: RendererCommandsExampleViewController())
         ]),
     ]
 
@@ -58,7 +54,6 @@ class MasterViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         navigation[section].title
     }
-
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return navigation[section].items.count

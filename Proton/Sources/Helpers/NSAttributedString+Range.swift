@@ -27,12 +27,7 @@ public extension NSAttributedString {
     }
 
     func rangeFor(attachment: Attachment) -> NSRange? {
-        for (viewAttachment, range) in attachmentRanges.reversed() {
-            if viewAttachment == attachment {
-                return range
-            }
-        }
-        return nil
+        return attachmentRanges.reversed().first(where: { $0.attachment == attachment })?.range
     }
 
     func rangesOf(characterSet: CharacterSet) -> [NSRange] {

@@ -106,7 +106,6 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
             buttons.append(button)
         }
         return buttons
-
     }
 
     @objc

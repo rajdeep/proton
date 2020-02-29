@@ -91,7 +91,6 @@ class EditorViewTests: XCTestCase {
         } else {
             XCTFail("Failed to get correct content [Spacer]")
         }
-
     }
 
     func testGetsContentsByRange() {
@@ -204,7 +203,7 @@ class EditorViewTests: XCTestCase {
         editor.delegate = delegate
         editor.enableSelectionHandles = false
         XCTAssertFalse(attachment.isSelected)
-        delegate.onSelectionChanged = {_, _, _, _ in
+        delegate.onSelectionChanged = { _, _, _, _ in
             XCTAssertTrue(attachment.isSelected)
             testExpectation.fulfill()
         }
@@ -265,11 +264,11 @@ class EditorViewTests: XCTestCase {
     }
 
     func testGetsContainerAttachment() {
-           let panel = PanelView()
-           let attachment = Attachment(panel, size: .matchContent)
-           XCTAssertEqual(attachment.contentView, panel)
-           XCTAssertEqual(panel.editor.containerAttachment, attachment)
-       }
+        let panel = PanelView()
+        let attachment = Attachment(panel, size: .matchContent)
+        XCTAssertEqual(attachment.contentView, panel)
+        XCTAssertEqual(panel.editor.containerAttachment, attachment)
+    }
 
     func testGetsContainerContentName() {
         let viewController = EditorTestViewController()

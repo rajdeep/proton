@@ -38,5 +38,5 @@ class MockTextProcessor: TextProcessing {
 
     func processInterrupted(editor: EditorView, at range: NSRange) {
         onProcessInterrupted?(editor, range)
-    }    
+    }
 }

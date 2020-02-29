@@ -19,6 +19,4 @@ class ResetCommand: RendererCommand {
         """
         )
     }
-
-
 }

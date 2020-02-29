@@ -105,7 +105,7 @@ open class RendererView: UIView {
 }
 
 extension RendererView: RichTextViewDelegate {
-    func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name) {
+    func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
         delegate?.didChangeSelection(self, range: range)
     }
 

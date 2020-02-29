@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 extension NSAttributedString.Key {
-    static let viewOnly =  NSAttributedString.Key("viewOnly")
-    static let contentType =  NSAttributedString.Key("contentType")
+    static let viewOnly = NSAttributedString.Key("viewOnly")
+    static let contentType = NSAttributedString.Key("contentType")
     static let isBlockAttachment = NSAttributedString.Key("isBlockAttachment")
     static let isInlineAttachment = NSAttributedString.Key("isInlineAttachment")
 }

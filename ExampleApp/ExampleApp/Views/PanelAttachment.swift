@@ -26,7 +26,7 @@ class PanelAttachment: Attachment {
         set { view.attributedText = newValue }
     }
 
-    override func addedAttributesOnContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key : Any]) {
+    override func addedAttributesOnContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key: Any]) {
         view.editor.addAttributes(attributes, at: view.editor.attributedText.fullRange)
     }
 
@@ -36,13 +36,13 @@ class PanelAttachment: Attachment {
 }
 
 extension PanelAttachment: PanelViewDelegate {
-    func panel(_ panel: PanelView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name) {
+    func panel(_ panel: PanelView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
         guard let containerEditor = self.containerEditorView else { return }
         containerEditor.delegate?.editor(containerEditor, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
     }
 
     func panel(_ panel: PanelView, didRecieveKey key: EditorKey, at range: NSRange, handled: inout Bool) {
-        if key == .backspace && range == .zero && panel.editor.attributedText.string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+        if key == .backspace, range == .zero, panel.editor.attributedText.string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             removeFromContainer()
             handled = true
         } else if key == .enter,

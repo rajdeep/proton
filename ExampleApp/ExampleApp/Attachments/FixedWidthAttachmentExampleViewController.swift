@@ -15,7 +15,7 @@ class FixedWidthAttachmentExampleViewController: ExamplesBaseViewController {
     let widthTextField = UITextField()
 
     var width: CGFloat {
-        let width = CGFloat(exactly: NumberFormatter().number(from: (widthTextField.text ?? "")) ?? 100) ?? 100
+        let width = CGFloat(exactly: NumberFormatter().number(from: widthTextField.text ?? "") ?? 100) ?? 100
         return width
     }
 

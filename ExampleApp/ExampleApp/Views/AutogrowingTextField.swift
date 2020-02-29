@@ -23,7 +23,7 @@ class AutogrowingTextField: UITextField, UITextFieldDelegate {
 
     override var intrinsicContentSize: CGSize {
         let fittingSize = sizeThatFits(CGSize(width: .greatestFiniteMagnitude, height: frame.height))
-        //TODO: revisit to use invalidate intrinsic content size
+        // TODO: revisit to use invalidate intrinsic content size
         self.bounds = CGRect(origin: bounds.origin, size: fittingSize)
         return fittingSize
     }

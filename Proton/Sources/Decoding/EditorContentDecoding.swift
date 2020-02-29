@@ -24,7 +24,7 @@ public protocol EditorContentDecoding {
 public struct AnyEditorContentDecoding<T>: EditorContentDecoding {
     let decoding: (EditorContentMode, CGSize, T) -> NSAttributedString
 
-    public init<D:EditorContentDecoding>(_ decoder: D) where D.TypeToDecode == T {
+    public init<D: EditorContentDecoding>(_ decoder: D) where D.TypeToDecode == T {
         decoding = decoder.decode
     }
 

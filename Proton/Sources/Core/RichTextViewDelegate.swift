@@ -14,7 +14,7 @@ public enum EditorKey {
     case backspace
 }
 
-protocol RichTextViewDelegate: class {
+protocol RichTextViewDelegate: AnyObject {
     func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name)
     func richTextView(_ richTextView: RichTextView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool)
     func richTextView(_ richTextView: RichTextView, didReceiveFocusAt range: NSRange)

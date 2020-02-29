@@ -18,13 +18,13 @@ class SelectionView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         guard let originalResult = super.hitTest(point, with: event),
-        event?.type == .touches else {
-            return nil
+            event?.type == .touches else {
+                return nil
         }
-
+        
         guard originalResult == self else {
             return originalResult
         }
@@ -38,7 +38,7 @@ class SelectionView: UIView {
         }
         return nil
     }
-
+    
     func addTo(parent: UIView) {
         applyTintColor()
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -50,7 +50,7 @@ class SelectionView: UIView {
             self.trailingAnchor.constraint(equalTo: parent.trailingAnchor),
         ])
     }
-
+    
     private func applyTintColor() {
         // TintColor needs to be picked up from UIButton as it is the only control that
         // provides correct color for macOS accents.

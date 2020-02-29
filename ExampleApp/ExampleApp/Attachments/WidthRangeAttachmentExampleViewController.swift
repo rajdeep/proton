@@ -16,12 +16,12 @@ class WidthRangeAttachmentExampleViewController: ExamplesBaseViewController {
     let maxWidthTextField = UITextField()
 
     var minWidth: CGFloat {
-        let width = CGFloat(exactly: NumberFormatter().number(from: (minWidthTextField.text ?? "")) ?? 40) ?? 40
+        let width = CGFloat(exactly: NumberFormatter().number(from: minWidthTextField.text ?? "") ?? 40) ?? 40
         return width
     }
 
     var maxWidth: CGFloat {
-        let width = CGFloat(exactly: NumberFormatter().number(from: (maxWidthTextField.text ?? "")) ?? 120) ?? 120
+        let width = CGFloat(exactly: NumberFormatter().number(from: maxWidthTextField.text ?? "") ?? 120) ?? 120
         return width
     }
 

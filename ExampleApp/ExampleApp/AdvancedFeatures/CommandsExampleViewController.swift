@@ -155,7 +155,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
     @objc
     func runCommand(sender: EditorCommandButton) {
         if sender.highlightOnTouch {
-            sender.isSelected = !sender.isSelected
+            sender.isSelected.toggle()
         }
         if sender.titleLabel?.text == "Encode" {
             sender.command.execute(on: editor)
@@ -169,11 +169,10 @@ class CommandsExampleViewController: ExamplesBaseViewController {
     func encodeContents(sender: UIButton) {
         let value = editor.transformContents(using: JSONEncoder())
         let data = try! JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
-        let jsonString = String.init(data: data, encoding: .utf8)!
+        let jsonString = String(data: data, encoding: .utf8)!
         self.encodedContents = ["contents": value]
 
-        let printableContents =
-        """
+        let printableContents = """
             { "contents":  \(jsonString) }
         """
 
@@ -202,10 +201,10 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 }
 
 extension CommandsExampleViewController: EditorViewDelegate {
-    func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name) {
+    func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
         guard let font = attributes[.font] as? UIFont else { return }
 
-        buttons.first(where: { $0.titleLabel?.text == "Bold"})?.isSelected = font.isBold
-        buttons.first(where: { $0.titleLabel?.text == "Italics"})?.isSelected = font.isItalics
+        buttons.first(where: { $0.titleLabel?.text == "Bold" })?.isSelected = font.isBold
+        buttons.first(where: { $0.titleLabel?.text == "Italics" })?.isSelected = font.isItalics
     }
 }
