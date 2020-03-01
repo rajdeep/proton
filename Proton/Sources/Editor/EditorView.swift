@@ -202,8 +202,8 @@ open class EditorView: UIView {
 
     /// Current line information based the caret position or selected range. If the selected range spans across multiple
     /// lines, only the line information of the line containing the start of the range is returned.
-    public var currentLine: EditorLine {
-        let lineRange = richTextView.currentLineRange
+    public var currentLine: EditorLine? {
+        guard let lineRange = richTextView.currentLineRange else { return nil }
         let text = attributedText.attributedSubstring(from: lineRange)
         return EditorLine(text: text, range: lineRange)
     }

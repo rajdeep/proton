@@ -63,19 +63,24 @@ class RichTextView: AutogrowingTextView {
         return storage.textEndRange
     }
 
-    var currentLineRange: NSRange {
-        let backward = UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)
-        let forward = UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)
-
-        // endOfLinePosition needs to be calculated before to avoid error in case of selecting an entire line and deleting it
-        guard attributedText.length > 0,
-            let currentPosition = selectedTextRange?.start,
-            let endOfLinePosition = tokenizer.position(from: currentPosition, toBoundary: .paragraph, inDirection: forward),
-            let startOfLinePosition = tokenizer.position(from: currentPosition, toBoundary: .paragraph, inDirection: backward),
-            let lineRange = self.textRange(from: startOfLinePosition, to: endOfLinePosition) else {
-                return .zero
+    var currentLineRange: NSRange? {
+        var currentLocation = selectedRange.location
+        guard contentLength > 0 else { return .zero }
+        var range = NSRange()
+        // In case this is called before layout has completed, e.g. from TextProcessor, the last entered glyph
+        // will not have been laid out by layoutManager but would be present in TextStorage. It can also happen
+        // when deleting multiple characters where layout is pending in the same case. Following logic finds the
+        // last valid glyph that is already laid out.
+        while currentLocation > 0 && layoutManager.isValidGlyphIndex(currentLocation) == false {
+            currentLocation -= 1
         }
-        return lineRange.toNSRange(in: self) ?? .zero
+        guard layoutManager.isValidGlyphIndex(currentLocation) else { return NSRange(location: 0, length: 1) }
+        layoutManager.lineFragmentUsedRect(forGlyphAt: currentLocation, effectiveRange: &range)
+        guard range.location != NSNotFound else { return nil }
+        // As mentioned above, in case of this getting called before layout is completed,
+        // we need to account for the range that has been changed. storage.changeInLength provides
+        // the change that might not have been laid already
+        return NSRange(location: range.location, length: range.length + storage.changeInLength)
     }
 
     var visibleRange: NSRange {

@@ -287,4 +287,47 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         let visibleText = editor.attributedText.attributedSubstring(from: visibleRange).string
         XCTAssertEqual(visibleText, expectedText)
     }
+
+    func testGetsCurrentLineRange() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let text =
+            """
+            Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text
+            """
+
+        let line1Location = NSRange(location: 10, length: 1)
+        let line2Location = NSRange(location: 40, length: 1)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render()
+        editor.selectedRange = line1Location
+
+        let rect1 = editor.caretRect(for: line1Location.location)
+        let view1 = UIView(frame: rect1)
+        view1.backgroundColor = .clear
+        view1.addBorder(.green)
+        editor.addSubview(view1)
+
+        let rect2 = editor.caretRect(for: line2Location.location)
+        let view2 = UIView(frame: rect2)
+        view2.backgroundColor = .clear
+        view2.addBorder(.red)
+        editor.addSubview(view2)
+
+        FBSnapshotVerifyView(viewController.view)
+
+        let currentLineText1 = editor.currentLine?.text.string
+        // refer to snapshot for visible text - green marker
+        let expectedText1 = "Line 1 text Line 1 text Line 1 text "
+        XCTAssertEqual(currentLineText1, expectedText1)
+
+        // Change selected location to move to line 2
+        editor.selectedRange = line2Location
+        let currentLineText2 = editor.currentLine?.text.string
+        // refer to snapshot for visible text - red marker
+        let expectedText2 = "Line 2 text Line 2 text"
+        XCTAssertEqual(currentLineText2, expectedText2)
+    }
 }

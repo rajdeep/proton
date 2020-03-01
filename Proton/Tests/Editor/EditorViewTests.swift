@@ -220,15 +220,15 @@ class EditorViewTests: XCTestCase {
         editor.selectedRange = NSRange(location: line1.length + 4, length: 1)
 
         let currentLine = editor.currentLine
-        XCTAssertEqual(currentLine.text.string, line2.string)
-        XCTAssertTrue(currentLine.startsWith("And"))
-        XCTAssertTrue(currentLine.endsWith("line 2"))
+        XCTAssertEqual(currentLine?.text.string, line2.string)
+        XCTAssertEqual(currentLine?.startsWith("And"), true)
+        XCTAssertEqual(currentLine?.endsWith("line 2"), true)
     }
 
     func testReturnsZeroRangeForLineInEmptyEditor() {
         let editor = EditorView()
         let line = editor.currentLine
-        XCTAssertEqual(line.range, .zero)
+        XCTAssertEqual(line?.range, .zero)
     }
 
     func testReturnsNilForWordAtInvalidRange() {
