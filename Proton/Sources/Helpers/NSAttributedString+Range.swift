@@ -33,4 +33,11 @@ public extension NSAttributedString {
     func rangesOf(characterSet: CharacterSet) -> [NSRange] {
         return string.rangesOf(characterSet: characterSet).map { string.makeNSRange(from: $0) }
     }
+
+    func reverseAttributedSubstring(from range: NSRange) -> NSAttributedString? {
+        guard length > 0 && range.location + range.length < length else {
+            return nil
+        }
+        return attributedSubstring(from: NSRange(location: range.location - range.length, length: range.length))
+    }
 }
