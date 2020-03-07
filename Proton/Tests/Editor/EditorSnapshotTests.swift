@@ -293,9 +293,9 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         let editor = viewController.editor
 
         let text =
-            """
-            Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text
-            """
+        """
+        Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text
+        """
 
         let line1Location = NSRange(location: 10, length: 1)
         let line2Location = NSRange(location: 40, length: 1)
@@ -304,17 +304,8 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         viewController.render()
         editor.selectedRange = line1Location
 
-        let rect1 = editor.caretRect(for: line1Location.location)
-        let view1 = UIView(frame: rect1)
-        view1.backgroundColor = .clear
-        view1.addBorder(.green)
-        editor.addSubview(view1)
-
-        let rect2 = editor.caretRect(for: line2Location.location)
-        let view2 = UIView(frame: rect2)
-        view2.backgroundColor = .clear
-        view2.addBorder(.red)
-        editor.addSubview(view2)
+        addCaretRect(at: line1Location, in: editor, color: .green)
+        addCaretRect(at: line2Location, in: editor, color: .red)
 
         FBSnapshotVerifyView(viewController.view)
 
@@ -329,5 +320,53 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         // refer to snapshot for visible text - red marker
         let expectedText2 = "Line 2 text Line 2 text"
         XCTAssertEqual(currentLineText2, expectedText2)
+    }
+
+    func testLineRanges() throws {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let text =
+        """
+        Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 2 text Line 3 text Line 3
+        """
+
+        let line1Location = NSRange(location: 10, length: 1)
+        let line2Location = NSRange(location: 40, length: 1)
+        let line3Location = NSRange(location: 80, length: 1)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render()
+        editor.selectedRange = line1Location
+
+        addCaretRect(at: line1Location, in: editor, color: .green)
+        addCaretRect(at: line2Location, in: editor, color: .red)
+        addCaretRect(at: line3Location, in: editor, color: .blue)
+
+        FBSnapshotVerifyView(viewController.view)
+
+        let firstLine = try XCTUnwrap(editor.firstLine)
+        let nextLine = try XCTUnwrap(editor.lineNext(to: firstLine))
+        let lastLine = try XCTUnwrap(editor.lastLine)
+        let prevLine = try XCTUnwrap(editor.linePrevious(to: lastLine))
+
+        let firstLineText = editor.firstLine?.text.string
+        let expectedText1 = "Line 1 text Line 1 text Line 1 text "
+        XCTAssertEqual(firstLineText, expectedText1)
+
+        let lastLineText = editor.lastLine?.text.string
+        let expectedText2 = "Line 3 text Line 3"
+        XCTAssertEqual(lastLineText, expectedText2)
+
+        XCTAssertEqual(nextLine.text.string, prevLine.text.string)
+
+    }
+
+    private func addCaretRect(at range: NSRange, in editor: EditorView, color: UIColor) {
+        let rect = editor.caretRect(for: range.location)
+        let view = UIView(frame: rect)
+        view.backgroundColor = .clear
+        view.addBorder(color)
+        editor.addSubview(view)
     }
 }

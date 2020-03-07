@@ -178,6 +178,7 @@
 		1B7A985523C4811C00C34B14 /* testDeletesAttachments@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testDeletesAttachments@3x.png"; sourceTree = "<group>"; };
 		1B7A985623C4828A00C34B14 /* RichTextEditorContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextEditorContext.swift; sourceTree = "<group>"; };
 		1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewDelegate.swift; sourceTree = "<group>"; };
+		1B80A31024136C94001E3A5E /* testLineRangesAndReturnError_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testLineRangesAndReturnError_@3x.png"; sourceTree = "<group>"; };
 		1B82570323C48C350033A0A9 /* MockRichTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRichTextViewDelegate.swift; sourceTree = "<group>"; };
 		1B82570523C48FEC0033A0A9 /* RichTextViewContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewContextTests.swift; sourceTree = "<group>"; };
 		1B82570823C5674E0033A0A9 /* EditorCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommand.swift; sourceTree = "<group>"; };
@@ -724,6 +725,7 @@
 				1B872B9923EE4BB40070A92A /* testGetsCaretRectForPositionInEmptyEditor@3x.png */,
 				1B872B9823EE4BB40070A92A /* testGetsCaretRectForPositionOutsideBounds@3x.png */,
 				1B770C97240CDB2A00455425 /* testGetsCurrentLineRange@3x.png */,
+				1B80A31024136C94001E3A5E /* testLineRangesAndReturnError_@3x.png */,
 				1B872B9A23EE4BB40070A92A /* testGetsCaretRectForValidPosition@3x.png */,
 				1B975AF323CC627500EC410C /* testRendersPlaceholder@3x.png */,
 				1B7A985523C4811C00C34B14 /* testDeletesAttachments@3x.png */,

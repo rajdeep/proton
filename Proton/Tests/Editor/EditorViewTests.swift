@@ -354,4 +354,24 @@ class EditorViewTests: XCTestCase {
         XCTAssertEqual(editor.registeredCommands?.count, 1)
         XCTAssertTrue(editor.registeredCommands?.contains{ $0 === command2 } ?? false)
     }
+
+    func testReturnsNilForInvalidNextLine() throws {
+        let editor = EditorView()
+        let attrString = NSMutableAttributedString(string: "This is a test string")
+        editor.attributedText = attrString
+
+        let currentLine = try XCTUnwrap(editor.currentLine)
+        XCTAssertEqual(currentLine.text.string, attrString.string)
+        XCTAssertNil(editor.lineNext(to: currentLine))
+    }
+
+    func testReturnsNilForInvalidPreviousLine() throws {
+           let editor = EditorView()
+           let attrString = NSMutableAttributedString(string: "This is a test string")
+           editor.attributedText = attrString
+
+           let currentLine = try XCTUnwrap(editor.currentLine)
+           XCTAssertEqual(currentLine.text.string, attrString.string)
+           XCTAssertNil(editor.linePrevious(to: currentLine))
+       }
 }

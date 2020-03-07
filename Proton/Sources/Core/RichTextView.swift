@@ -64,23 +64,7 @@ class RichTextView: AutogrowingTextView {
     }
 
     var currentLineRange: NSRange? {
-        var currentLocation = selectedRange.location
-        guard contentLength > 0 else { return .zero }
-        var range = NSRange()
-        // In case this is called before layout has completed, e.g. from TextProcessor, the last entered glyph
-        // will not have been laid out by layoutManager but would be present in TextStorage. It can also happen
-        // when deleting multiple characters where layout is pending in the same case. Following logic finds the
-        // last valid glyph that is already laid out.
-        while currentLocation > 0 && layoutManager.isValidGlyphIndex(currentLocation) == false {
-            currentLocation -= 1
-        }
-        guard layoutManager.isValidGlyphIndex(currentLocation) else { return NSRange(location: 0, length: 1) }
-        layoutManager.lineFragmentUsedRect(forGlyphAt: currentLocation, effectiveRange: &range)
-        guard range.location != NSNotFound else { return nil }
-        // As mentioned above, in case of this getting called before layout is completed,
-        // we need to account for the range that has been changed. storage.changeInLength provides
-        // the change that might not have been laid already
-        return NSRange(location: range.location, length: range.length + storage.changeInLength)
+        return lineRange(from: selectedRange.location)
     }
 
     var visibleRange: NSRange {
@@ -123,6 +107,26 @@ class RichTextView: AutogrowingTextView {
                 return nil
         }
         return attributedText.attributedSubstring(from: range)
+    }
+
+    func lineRange(from location: Int) -> NSRange? {
+        var currentLocation = location
+        guard contentLength > 0 else { return .zero }
+        var range = NSRange()
+        // In case this is called before layout has completed, e.g. from TextProcessor, the last entered glyph
+        // will not have been laid out by layoutManager but would be present in TextStorage. It can also happen
+        // when deleting multiple characters where layout is pending in the same case. Following logic finds the
+        // last valid glyph that is already laid out.
+        while currentLocation > 0 && layoutManager.isValidGlyphIndex(currentLocation) == false {
+            currentLocation -= 1
+        }
+        guard layoutManager.isValidGlyphIndex(currentLocation) else { return NSRange(location: 0, length: 1) }
+        layoutManager.lineFragmentUsedRect(forGlyphAt: currentLocation, effectiveRange: &range)
+        guard range.location != NSNotFound else { return nil }
+        // As mentioned above, in case of this getting called before layout is completed,
+        // we need to account for the range that has been changed. storage.changeInLength provides
+        // the change that might not have been laid already
+        return NSRange(location: range.location, length: range.length + storage.changeInLength)
     }
 
     func invalidateLayout(for range: NSRange) {

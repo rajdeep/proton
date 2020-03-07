@@ -33,4 +33,11 @@ public extension NSRange {
         }
         return textInput.textRange(from: rangeStart, to: rangeEnd)
     }
+
+    func isValidIn(_ textInput: UITextInput) -> Bool {
+        guard location > 0 else { return false }
+        let end = location + length
+        let contentLength = textInput.offset(from: textInput.beginningOfDocument, to: textInput.endOfDocument)
+        return end < contentLength
+    }
 }

@@ -62,6 +62,12 @@ public struct EditorLine {
     public func endsWith(_ text: String) -> Bool {
         self.text.string.hasSuffix(text)
     }
+
+    // EditorLine may only be initialized internally
+    init(text: NSAttributedString, range: NSRange) {
+        self.text = text
+        self.range = range
+    }
 }
 
 /// A scrollable, multiline text region capable of resizing itself based of the height of the content. Maximum height of `EditorView`
@@ -183,9 +189,15 @@ open class EditorView: UIView {
     /// Current line information based the caret position or selected range. If the selected range spans across multiple
     /// lines, only the line information of the line containing the start of the range is returned.
     public var currentLine: EditorLine? {
-        guard let lineRange = richTextView.currentLineRange else { return nil }
-        let text = attributedText.attributedSubstring(from: lineRange)
-        return EditorLine(text: text, range: lineRange)
+        return editorLineFrom(range: richTextView.currentLineRange )
+    }
+
+    public var firstLine: EditorLine? {
+        return editorLineFrom(range: NSRange(location: 1, length: 0) )
+    }
+
+    public var lastLine: EditorLine? {
+        return editorLineFrom(range: NSRange(location: contentLength - 1, length: 0) )
     }
 
     /// Selected text in the editor.
@@ -345,6 +357,32 @@ open class EditorView: UIView {
     @discardableResult
     public override func becomeFirstResponder() -> Bool {
         return richTextView.becomeFirstResponder()
+    }
+
+    /// Gets the line preceding the given line. Nil if the given line is invalid or is first line
+    /// - Parameter line: Reference line
+    public func lineNext(to line: EditorLine) -> EditorLine? {
+        let lineRange = line.range
+        let nextLineStartRange = NSRange(location: lineRange.location + lineRange.length + 1, length: 0)
+        guard nextLineStartRange.isValidIn(richTextView) else { return nil }
+        return editorLineFrom(range: nextLineStartRange)
+    }
+
+    /// Gets the line after the given line. Nil if the given line is invalid or is last line
+    /// - Parameter line: Reference line
+    public func linePrevious(to line: EditorLine) -> EditorLine? {
+        let lineRange = line.range
+        let previousLineStartRange = NSRange(location: lineRange.location - 1, length: 0)
+        guard previousLineStartRange.isValidIn(richTextView) else { return nil }
+        return editorLineFrom(range: previousLineStartRange)
+    }
+
+    private func editorLineFrom(range: NSRange?) -> EditorLine? {
+        guard let range = range,
+            let lineRange = richTextView.lineRange(from: range.location) else { return nil }
+
+        let text = attributedText.attributedSubstring(from: lineRange)
+        return EditorLine(text: text, range: lineRange)
     }
 
     /// Returns the rectangles for line fragments spanned by the range. Based on the span of the range,
