@@ -26,6 +26,6 @@ public protocol EditorCommand: AnyObject {
 
 public extension EditorCommand {
     func canExecute(on editor: EditorView) -> Bool {
-        return editor.requiresSupportedCommandsRegistration == false || editor.supportedCommands.contains { $0 === self }
+        return editor.registeredCommands?.contains { $0 === self } ?? true
     }
 }

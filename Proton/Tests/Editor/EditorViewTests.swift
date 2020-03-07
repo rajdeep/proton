@@ -314,24 +314,24 @@ class EditorViewTests: XCTestCase {
         XCTAssertEqual(panel3.editor.nestingLevel, 3)
     }
 
-    func testRequiresSupportedCommandRegistrationIsFalseByDefault() {
+    func testRegisteredCommandsIsNilByDefault() {
         let editor = EditorView()
-        XCTAssertEqual(editor.requiresSupportedCommandsRegistration, false)
+        XCTAssertNil(editor.registeredCommands)
     }
 
-    func testSetsRequiresSupportedCommandRegistrationToTrueWhenCommandIsRegistered() {
+    func testRegisteredCommandsIsNotNilWhenCommandIsRegistered() {
         let editor = EditorView()
         let command = MockEditorCommand { _ in }
         editor.registerCommand(command)
-        XCTAssertEqual(editor.requiresSupportedCommandsRegistration, true)
+        XCTAssertNotNil(editor.registeredCommands)
     }
 
-    func testSetsRequiresSupportedCommandRegistrationToFalseWhenAllCommandRegisterationsAreRemoved() {
+    func testSetsRegisteredCommandsToNilWhenAllCommandRegisterationsAreRemoved() {
         let editor = EditorView()
         let command = MockEditorCommand { _ in }
         editor.registerCommand(command)
         editor.unregisterCommand(command)
-        XCTAssertEqual(editor.requiresSupportedCommandsRegistration, false)
+        XCTAssertNil(editor.registeredCommands)
     }
 
     func testRegistersCommands() {
@@ -339,8 +339,8 @@ class EditorViewTests: XCTestCase {
         let command = MockEditorCommand { _ in }
         editor.registerCommand(command)
 
-        XCTAssertEqual(editor.supportedCommands.count, 1)
-        XCTAssertTrue(editor.supportedCommands.contains{ $0 === command })
+        XCTAssertEqual(editor.registeredCommands?.count, 1)
+        XCTAssertTrue(editor.registeredCommands?.contains{ $0 === command } ?? false)
     }
 
     func testUnregistersCommands() {
@@ -351,7 +351,7 @@ class EditorViewTests: XCTestCase {
         editor.registerCommand(command2)
 
         editor.unregisterCommand(command1)
-        XCTAssertEqual(editor.supportedCommands.count, 1)
-        XCTAssertTrue(editor.supportedCommands.contains{ $0 === command2 })
+        XCTAssertEqual(editor.registeredCommands?.count, 1)
+        XCTAssertTrue(editor.registeredCommands?.contains{ $0 === command2 } ?? false)
     }
 }

@@ -78,13 +78,9 @@ open class EditorView: UIView {
 
     /// List of commands supported by the editor.
     /// -Note:
-    /// * To support any command, set `requiresSupportedCommandsRegistration` to `false`
-    /// * To prevent any command to be executed, set `requiresSupportedCommandsRegistration` to true and keep this list empty.
-    public private(set) var supportedCommands = [EditorCommand]() {
-        didSet {
-            requiresSupportedCommandsRegistration = supportedCommands.count > 0
-        }
-    }
+    /// * To support any command, set value to nil. Default behaviour.
+    /// * To prevent any command to be executed, set value to be an empty array.
+    public var registeredCommands: [EditorCommand]?
 
     // Making this a convenience init fails the test `testRendersWidthRangeAttachment` as the init of a class subclassed from
     // `EditorView` is returned as type `EditorView` and not the class itself, causing the test to fail.
@@ -146,22 +142,6 @@ open class EditorView: UIView {
     public var registeredProcessors: [TextProcessing] {
         return textProcessor?.activeProcessors ?? []
     }
-
-    /// Determines if the editor requires explicit registration of commands. This works in conjunction with `supportedCommands` which
-    /// may be registered by using `registerCommand(:)` or `registerCommands(:)`.
-    /// - Important:
-    /// This applies only when executing commands via `EditorCommandExecutor`. When executing a command directly on the `EditorView`, this is
-    /// governed by `canExecute(:)` of the `EditorCommand`. By default, it uses same logic as `EditorCommandExecutor` but if the command has
-    /// custom implementation of `canExecute(:)`, its the responsibility of developer of command to check if the command should be allowed to be
-    /// executed on the given editor.
-    ///
-    /// - Note:
-    /// * When `requiresSupportedCommandsRegistration` == true and no commands are registered, no command can be executed on the Editor.
-    /// * When `requiresSupportedCommandsRegistration` == false, any command can be executed without being registered.
-    /// * When `requiresSupportedCommandsRegistration` == true and some commands are registered, only registered command can be executed on the Editor.
-    /// * When one or more commands are registered with Editor, `requiresSupportedCommandsRegistration` is automatically set to `true`.
-    /// * When all registered commands are unregistered from Editor, `requiresSupportedCommandsRegistration` is automatically set to `false`.
-    public var requiresSupportedCommandsRegistration: Bool = false
 
     /// Placeholder text for the `EditorView`. The value can contain any attributes which is natively
     /// supported in the `NSAttributedString`.
@@ -502,14 +482,20 @@ open class EditorView: UIView {
     /// Registers the given commands with the Editor. Only registered commands can be executed if any is added to the Editor.
     /// - Parameter commands: Commands to register
     public func registerCommands(_ commands: [EditorCommand]) {
-        supportedCommands.append(contentsOf: commands)
+        if registeredCommands == nil {
+            registeredCommands = []
+        }
+        registeredCommands?.append(contentsOf: commands)
     }
 
-    /// Unregisters the given commands from the Editor. When all commands are unregistered, any command can be executed with the editor.
+    /// Unregisters the given commands from the Editor. When all commands are unregistered, any command can be executed on the editor.
     /// - Parameter commands: Commands to unregister
     public func unregisterCommands(_ commands: [EditorCommand]) {
-        supportedCommands.removeAll { c in
+        registeredCommands?.removeAll { c in
             commands.contains { $0 === c }
+        }
+        if registeredCommands?.count == 0 {
+            registeredCommands = nil
         }
     }
 
@@ -519,7 +505,7 @@ open class EditorView: UIView {
         registerCommands([command])
     }
 
-    /// Unregisters the given command from the Editor. When all commands are unregistered, any command can be executed with the editor.
+    /// Unregisters the given command from the Editor. When all commands are unregistered, any command can be executed on the editor.
     /// - Parameter commands: Command to unregister
     public func unregisterCommand(_ command: EditorCommand) {
         unregisterCommands([command])
@@ -644,7 +630,7 @@ public extension EditorView {
     /// Determines if the given command can be executed on the current editor. The command is allowed to be executed if
     /// `requiresSupportedCommandsRegistration` is false or if the command has been registered with the editor.
     /// - Parameter command: Command to validate
-    func isCommandSupported(_ command: EditorCommand) -> Bool {
-        return requiresSupportedCommandsRegistration == false || supportedCommands.contains { $0 === command }
+    func isCommandRegistered(_ command: EditorCommand) -> Bool {
+        return registeredCommands?.contains { $0 === command } ?? true
     }
 }

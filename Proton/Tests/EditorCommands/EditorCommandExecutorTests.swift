@@ -151,7 +151,7 @@ class EditorCommandExecutorTests: XCTestCase {
             command2Expectation.fulfill()
         }
 
-        editor.requiresSupportedCommandsRegistration = true
+        editor.registeredCommands = []
 
         commandExecutor.execute(command1)
         commandExecutor.execute(command2)
