@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class AutogrowingTextView: UITextView {
-    private let dimensionsCalculatingTextView: UITextView
+    private let dimensionsCalculatingTextView = UITextView()
 
     var maxHeight: CGFloat = 0 {
         didSet {
@@ -28,15 +28,12 @@ class AutogrowingTextView: UITextView {
     var maxHeightConstraint: NSLayoutConstraint!
 
     override init(frame: CGRect, textContainer: NSTextContainer?) {
-        self.dimensionsCalculatingTextView = UITextView()
-
         super.init(frame: frame, textContainer: textContainer)
         maxHeightConstraint = heightAnchor.constraint(lessThanOrEqualToConstant: frame.height)
         isScrollEnabled = false
         NSLayoutConstraint.activate([
             heightAnchor.constraint(greaterThanOrEqualToConstant: frame.height)
         ])
-        dimensionsCalculatingTextView.font = font
     }
 
     required init?(coder: NSCoder) {
@@ -46,9 +43,18 @@ class AutogrowingTextView: UITextView {
     override func layoutSubviews() {
         super.layoutSubviews()
         let bounds = self.bounds
-        dimensionsCalculatingTextView.attributedText = attributedText
+        updateDimensionsCalculatingTextView()
         let fittingSize = dimensionsCalculatingTextView.sizeThatFits(CGSize(width: frame.width, height: .greatestFiniteMagnitude))
         isScrollEnabled = (fittingSize.height > bounds.height) || (maxHeight > 0 && maxHeight < fittingSize.height)
+    }
+
+    override open func sizeThatFits(_ size: CGSize) -> CGSize {
+        updateDimensionsCalculatingTextView()
+        var fittingSize = dimensionsCalculatingTextView.sizeThatFits(size)
+        if maxHeight > 0 {
+            fittingSize.height = min(maxHeight, fittingSize.height)
+        }
+        return fittingSize
     }
 
     override var bounds: CGRect {
@@ -60,5 +66,10 @@ class AutogrowingTextView: UITextView {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.becomeFirstResponder()
+    }
+
+    private func updateDimensionsCalculatingTextView() {
+        dimensionsCalculatingTextView.font = font
+        dimensionsCalculatingTextView.attributedText = attributedText
     }
 }
