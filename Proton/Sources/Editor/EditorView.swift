@@ -354,6 +354,10 @@ open class EditorView: UIView {
         richTextView.adjustsFontForContentSizeCategory = true
     }
 
+    override open func sizeThatFits(_ size: CGSize) -> CGSize {
+        return richTextView.sizeThatFits(size)
+    }
+
     @discardableResult
     public override func becomeFirstResponder() -> Bool {
         return richTextView.becomeFirstResponder()
