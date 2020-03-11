@@ -637,6 +637,12 @@ extension EditorView {
         richTextView.enumerateAttribute(.attachment, in: NSRange(location: 0, length: richTextView.contentLength), options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
             guard let attachment = attach as? Attachment else { return }
 
+            // Remove attachment from container if it is already added to another Editor
+            // for e.g. when moving text with attachment into another attachment
+            if attachment.containerEditorView != self {
+                attachment.removeFromContainer()
+            }
+
             var frame = richTextView.boundingRect(forGlyphRange: range)
             frame.origin.y += self.textContainerInset.top
 
