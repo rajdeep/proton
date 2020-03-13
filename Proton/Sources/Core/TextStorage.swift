@@ -89,7 +89,7 @@ class TextStorage: NSTextStorage {
 
     private func applyingDefaultFormattingIfRequired(_ attributes: RichTextAttributes?) -> RichTextAttributes {
         var updatedAttributes = attributes ?? [:]
-        if attributes?[.contentType] == nil {
+        if attributes?[.paragraphStyle] == nil {
             updatedAttributes[.paragraphStyle] = defaultTextFormattingProvider?.paragraphStyle ?? defaultParagraphStyle
         }
 

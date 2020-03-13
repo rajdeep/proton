@@ -362,6 +362,49 @@ class EditorSnapshotTests: FBSnapshotTestCase {
 
     }
 
+    func testParagraphStyling() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let styles: [(String, pointSize: CGFloat, UIFont.Weight, paragraphBefore: CGFloat, paragraphAfter: CGFloat)] = [
+            ("Heading 1", 27, .medium, 50, 15),
+            ("Heading 2", 23.5, .medium, 22, 15),
+            ("Heading 3", 17, .semibold, 20, 16),
+            ("Heading 4", 17, .semibold, 4, 15),
+            ("Heading 5", 14, .semibold, 5, 15),
+            ("Heading 6", 12, .semibold, 4, 15),
+        ]
+        let para = NSAttributedString(string: "para --\n", attributes: [
+            .font: UIFont.preferredFont(forTextStyle: .body),
+            .paragraphStyle: { () -> NSMutableParagraphStyle in
+                let s = NSMutableParagraphStyle()
+                s.paragraphSpacing = 20
+                return s
+            }(),
+        ])
+        let text = NSMutableAttributedString()
+        text.append(NSAttributedString(string: "para --\n"))
+        for style in styles {
+            let pstyle = NSMutableParagraphStyle()
+            pstyle.paragraphSpacingBefore = style.paragraphBefore
+            pstyle.paragraphSpacing = style.paragraphAfter
+            pstyle.headIndent = 60
+            pstyle.tabStops = [
+                NSTextTab(textAlignment: .natural, location: 30, options: [:]),
+                NSTextTab(textAlignment: .natural, location: 60, options: [:]),
+            ]
+            text.append(NSAttributedString(string: "\(style.0)\n", attributes: [
+                .font: UIFont.systemFont(ofSize: style.pointSize, weight: style.2),
+                .paragraphStyle: pstyle,
+            ]))
+            text.append(para)
+        }
+
+        editor.attributedText = text
+        viewController.render(size: CGSize(width: 300, height: 680))
+        FBSnapshotVerifyView(viewController.view)
+    }
+
     private func addCaretRect(at range: NSRange, in editor: EditorView, color: UIColor) {
         let rect = editor.caretRect(for: range.location)
         let view = UIView(frame: rect)
