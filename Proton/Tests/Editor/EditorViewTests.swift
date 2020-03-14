@@ -366,12 +366,23 @@ class EditorViewTests: XCTestCase {
     }
 
     func testReturnsNilForInvalidPreviousLine() throws {
-           let editor = EditorView()
-           let attrString = NSMutableAttributedString(string: "This is a test string")
-           editor.attributedText = attrString
+        let editor = EditorView()
+        let attrString = NSMutableAttributedString(string: "This is a test string")
+        editor.attributedText = attrString
 
-           let currentLine = try XCTUnwrap(editor.currentLine)
-           XCTAssertEqual(currentLine.text.string, attrString.string)
-           XCTAssertNil(editor.linePrevious(to: currentLine))
-       }
+        let currentLine = try XCTUnwrap(editor.currentLine)
+        XCTAssertEqual(currentLine.text.string, attrString.string)
+        XCTAssertNil(editor.linePrevious(to: currentLine))
+    }
+
+    func testResetsAttributesWhenCleared() {
+        let editor = EditorView()
+        editor.textColor = UIColor.red
+        let attrString = NSMutableAttributedString(string: "This is a test string", attributes: [.foregroundColor: UIColor.blue])
+        editor.attributedText = attrString
+        editor.clear()
+        editor.appendCharacters(NSAttributedString(string: "test"))
+        let color = editor.attributedText.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor
+        XCTAssertEqual(color, editor.textColor)
+    }
 }

@@ -27,6 +27,14 @@ class RichTextView: AutogrowingTextView {
         }
     }
 
+    var defaultTypingAttributes: RichTextAttributes {
+        return [
+            .font: defaultTextFormattingProvider?.font ?? storage.defaultFont,
+            .paragraphStyle: defaultTextFormattingProvider?.paragraphStyle ?? storage.defaultParagraphStyle,
+            .foregroundColor: defaultTextFormattingProvider?.textColor ?? storage.defaultTextColor
+        ]
+    }
+
     init(frame: CGRect = .zero, context: RichTextViewContext) {
         let textContainer = TextContainer()
         let layoutManager = NSLayoutManager()
@@ -135,6 +143,14 @@ class RichTextView: AutogrowingTextView {
 
     func invalidateDisplay(for range: NSRange) {
         layoutManager.invalidateDisplay(forCharacterRange: range)
+    }
+
+    override func deleteBackward() {
+        super.deleteBackward()
+        guard contentLength == 0 else {
+            return
+        }
+        self.typingAttributes = defaultTypingAttributes
     }
 
     func insertAttachment(in range: NSRange, attachment: Attachment) {

@@ -232,9 +232,10 @@ open class EditorView: UIView {
 
     /// Default text color to be used by the Editor. The color may be overridden on whole or part of content in
     /// `EditorView` by an `EditorCommand` or `TextProcessing` conformances.
-    public var textColor: UIColor {
-        get { richTextView.textColor ?? UIColor.label }
-        set { richTextView.textColor = newValue }
+    public var textColor: UIColor = UIColor.label {
+        didSet {
+            richTextView.textColor = textColor
+        }
     }
 
     /// Maximum height that the `EditorView` can expand to. After reaching the maximum specified height, the editor becomes scrollable.
@@ -328,6 +329,11 @@ open class EditorView: UIView {
             containerEditor = containerEditor?.containerAttachment?.containerEditorView
         }
         return nestingLevel
+    }
+
+    /// Clears the contents in the Editor.
+    public func clear() {
+        self.attributedText = NSAttributedString()
     }
 
     private func getAttachmentContentView(view: UIView?) -> AttachmentContentView? {

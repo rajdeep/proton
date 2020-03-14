@@ -43,4 +43,17 @@ class RichTextViewTests: XCTestCase {
         XCTAssertEqual(attribute1, value)
         XCTAssertNil(attribute2)
     }
+
+    func testResetsTypingAttributesOnDeleteBackwards() throws {
+        let text = NSAttributedString(string: "a", attributes: [.foregroundColor: UIColor.blue])
+        let textView = RichTextView(context: RichTextViewContext())
+        textView.attributedText = text
+        let preColor = try XCTUnwrap(textView.typingAttributes[.foregroundColor] as? UIColor)
+        XCTAssertEqual(preColor, UIColor.blue)
+        textView.deleteBackward()
+        let postColor = try XCTUnwrap(textView.typingAttributes[.foregroundColor] as? UIColor)
+        let typingAttributeColor = try XCTUnwrap(textView.defaultTypingAttributes[.foregroundColor] as? UIColor)
+        XCTAssertEqual(postColor, typingAttributeColor)
+
+    }
 }

@@ -19,9 +19,9 @@ class TextStorage: NSTextStorage {
 
     let storage = NSTextStorage()
 
-    private let defaultParagraphStyle = NSParagraphStyle()
-    private let defaultFont = UIFont.preferredFont(forTextStyle: .body)
-    private let defaultTextColor = UIColor.label
+    let defaultParagraphStyle = NSParagraphStyle()
+    let defaultFont = UIFont.preferredFont(forTextStyle: .body)
+    let defaultTextColor = UIColor.label
 
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding?
 
