@@ -168,6 +168,12 @@ open class EditorView: UIView {
         set { richTextView.textContainerInset = newValue }
     }
 
+    /// The types of data converted to tappable URLs in the editor view.
+    public var dataDetectorTypes: UIDataDetectorTypes {
+        get { richTextView.dataDetectorTypes }
+        set { richTextView.dataDetectorTypes = newValue }
+    }
+
     /// Length of content within the Editor.
     /// - Note: An attachment is only counted as a single character. Content length does not include
     /// length of content within the Attachment that is hosting another `EditorView`.

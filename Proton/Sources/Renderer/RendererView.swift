@@ -50,6 +50,12 @@ open class RendererView: UIView {
         set { readOnlyEditorView.selectedRange = newValue }
     }
 
+    /// The types of data converted to tappable URLs in the renderer view.
+    public var dataDetectorTypes: UIDataDetectorTypes {
+        get { readOnlyEditorView.dataDetectorTypes }
+        set { readOnlyEditorView.dataDetectorTypes = newValue }
+    }
+
     public var selectedText: NSAttributedString {
         return readOnlyEditorView.selectedText
     }
