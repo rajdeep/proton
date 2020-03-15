@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class FullWidthAttachmentExampleViewController: ExamplesBaseViewController {
 
@@ -34,9 +33,11 @@ class FullWidthAttachmentExampleViewController: ExamplesBaseViewController {
             button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
 
             editor.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 20),
-            editor.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            editor.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
+            editor.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            editor.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
         ])
     }
 

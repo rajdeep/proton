@@ -25,7 +25,8 @@ open class RendererView: UIView {
     ///   `RendererCommandExecutor` needs to have same context as the `RendererView` to execute a command on it. Unless you need to have
     ///    restriction around some commands to be restricted in execution on certain specific renderers, the default value may be used.
     public init(frame: CGRect = .zero, context: RendererViewContext = .shared) {
-        readOnlyEditorView = EditorView(frame: frame, richTextViewContext: context.richTextRendererContext)
+        readOnlyEditorView = EditorView(
+            frame: frame, richTextViewContext: context.richTextRendererContext)
         super.init(frame: frame)
         setup()
     }
@@ -152,23 +153,31 @@ open class RendererView: UIView {
 }
 
 extension RendererView: RichTextViewDelegate {
-    func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
+    func richTextView(
+        _ richTextView: RichTextView, didChangeSelection range: NSRange,
+        attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name
+    ) {
         delegate?.didChangeSelection(self, range: range)
     }
 
-    func richTextView(_ richTextView: RichTextView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool) { }
+    func richTextView(
+        _ richTextView: RichTextView, didReceiveKey key: EditorKey, at range: NSRange,
+        handled: inout Bool
+    ) {}
 
-    func richTextView(_ richTextView: RichTextView, didReceiveFocusAt range: NSRange) { }
+    func richTextView(_ richTextView: RichTextView, didReceiveFocusAt range: NSRange) {}
 
-    func richTextView(_ richTextView: RichTextView, didLoseFocusFrom range: NSRange) { }
+    func richTextView(_ richTextView: RichTextView, didLoseFocusFrom range: NSRange) {}
 
-    func richTextView(_ richTextView: RichTextView, didChangeTextAtRange range: NSRange) { }
+    func richTextView(_ richTextView: RichTextView, didChangeTextAtRange range: NSRange) {}
 
     func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool) {
         readOnlyEditorView.relayoutAttachments()
     }
 
-    func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
+    func richTextView(
+        _ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?
+    ) {
         delegate?.didTap(self, didTapAtLocation: location, characterRange: characterRange)
     }
 }

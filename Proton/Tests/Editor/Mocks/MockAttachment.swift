@@ -7,19 +7,22 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class MockAttachment: Attachment {
     var onAddedAttributesOnContainingRange: ((NSRange, [NSAttributedString.Key: Any]) -> Void)?
     var onRemovedAttributesFromContainingRange: ((NSRange, [NSAttributedString.Key]) -> Void)?
 
-    override func addedAttributesOnContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key: Any]) {
+    override func addedAttributesOnContainingRange(
+        rangeInContainer range: NSRange, attributes: [NSAttributedString.Key: Any]
+    ) {
         onAddedAttributesOnContainingRange?(range, attributes)
     }
 
-    override func removedAttributesFromContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key]) {
+    override func removedAttributesFromContainingRange(
+        rangeInContainer range: NSRange, attributes: [NSAttributedString.Key]
+    ) {
         onRemovedAttributesFromContainingRange?(range, attributes)
     }
 }

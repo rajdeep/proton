@@ -25,18 +25,25 @@ public class FontTraitToggleCommand: EditorCommand {
         }
 
         if selectedText.length == 0 {
-            guard let font = editor.attributedText.attribute(.font, at: editor.selectedRange.location - 1, effectiveRange: nil) as? UIFont else { return }
+            guard
+                let font = editor.attributedText.attribute(
+                    .font, at: editor.selectedRange.location - 1, effectiveRange: nil) as? UIFont
+            else { return }
             editor.typingAttributes[.font] = font.toggled(trait: trait)
             return
         }
 
-        guard let initFont = selectedText.attribute(.font, at: 0, effectiveRange: nil) as? UIFont else {
+        guard let initFont = selectedText.attribute(.font, at: 0, effectiveRange: nil) as? UIFont
+        else {
             return
         }
 
-        editor.attributedText.enumerateAttribute(.font, in: editor.selectedRange, options: .longestEffectiveRangeNotRequired) { font, range, _ in
+        editor.attributedText.enumerateAttribute(
+            .font, in: editor.selectedRange, options: .longestEffectiveRangeNotRequired
+        ) { font, range, _ in
             if let font = font as? UIFont {
-                let fontToApply = initFont.contains(trait: trait) ? font.removing(trait: trait) : font.adding(trait: trait)
+                let fontToApply = initFont.contains(trait: trait)
+                    ? font.removing(trait: trait) : font.adding(trait: trait)
                 editor.addAttribute(.font, value: fontToApply, at: range)
             }
         }

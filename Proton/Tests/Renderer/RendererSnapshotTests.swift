@@ -6,11 +6,10 @@
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 
-import Foundation
 import FBSnapshotTestCase
-import XCTest
-
+import Foundation
 import Proton
+import XCTest
 
 class RendererSnapshotTests: FBSnapshotTestCase {
     override func setUp() {
@@ -35,18 +34,19 @@ class RendererSnapshotTests: FBSnapshotTestCase {
         let renderer = viewController.renderer
         renderer.addBorder()
 
-        renderer.attributedText = NSAttributedString(string: """
-        Line 1   - abc
-        Line 2   - def
-        Line 3   - ghi
-        Line 4   - jkl
-        Line 5   - mno
-        Line 6   - pqr
-        Line 7   - stu
-        Line 8   - vwx
-        Line 9   - yza
-        Line 10  - bcd
-        """)
+        renderer.attributedText = NSAttributedString(
+            string: """
+                Line 1   - abc
+                Line 2   - def
+                Line 3   - ghi
+                Line 4   - jkl
+                Line 5   - mno
+                Line 6   - pqr
+                Line 7   - stu
+                Line 8   - vwx
+                Line 9   - yza
+                Line 10  - bcd
+                """)
 
         viewController.render()
 
@@ -87,7 +87,8 @@ class RendererSnapshotTests: FBSnapshotTestCase {
     func testGetsRectsForGivenRangeSpanningAcrossMultipleLines() {
         let viewController = RendererTestViewController()
         let renderer = viewController.renderer
-        renderer.attributedText = NSAttributedString(string: "This is some long string in the Renderer that wraps into the next line.")
+        renderer.attributedText = NSAttributedString(
+            string: "This is some long string in the Renderer that wraps into the next line.")
         viewController.render(size: CGSize(width: 300, height: 130))
         let rects = renderer.rects(for: NSRange(location: 25, length: 10))
         for rect in rects {

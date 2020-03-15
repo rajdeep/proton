@@ -19,8 +19,9 @@ extension Bundle {
 
     func jsonFromFile(_ fileName: String) -> [String: Any]? {
         guard let data = dataFromFile(fileName, fileExtension: "json"),
-            let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
-                return nil
+            let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        else {
+            return nil
         }
         return json
     }

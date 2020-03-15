@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-public extension NSAttributedString.Key {
-    static let isHighlighted = NSAttributedString.Key("IsHighlighted")
+extension NSAttributedString.Key {
+    public static let isHighlighted = NSAttributedString.Key("IsHighlighted")
 }
 
 public class HighlightTextCommand: RendererCommand {
@@ -22,19 +22,24 @@ public class HighlightTextCommand: RendererCommand {
             return UIColor(red: 1.0, green: 0.98, blue: 0.80, alpha: 1.0)
         }
     })
-    public init() { }
+
+    public init() {}
+
     public func execute(on renderer: RendererView) {
         guard renderer.selectedText.length > 0 else { return }
-        let highlightedColor = renderer.selectedText.attribute(.backgroundColor, at: 0, effectiveRange: nil) as? UIColor
+        let highlightedColor = renderer.selectedText.attribute(
+            .backgroundColor, at: 0, effectiveRange: nil) as? UIColor
 
         guard highlightedColor != color else {
-            renderer.removeAttributes([.backgroundColor, .isHighlighted], at: renderer.selectedRange)
+            renderer.removeAttributes(
+                [.backgroundColor, .isHighlighted], at: renderer.selectedRange)
             return
         }
 
-        renderer.addAttributes([
-            .backgroundColor: color,
-            .isHighlighted: true,
-        ], at: renderer.selectedRange)
+        renderer.addAttributes(
+            [
+                .backgroundColor: color,
+                .isHighlighted: true,
+            ], at: renderer.selectedRange)
     }
 }

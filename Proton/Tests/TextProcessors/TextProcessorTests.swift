@@ -53,7 +53,9 @@ class TextProcessorTests: XCTestCase {
         editor.replaceCharacters(in: .zero, with: testString)
         editor.registerProcessor(mockProcessor)
         let replacementRange = NSRange(location: 5, length: 4)
-        _ = richTextEditorContext.textView(editor.richTextView, shouldChangeTextIn: replacementRange, replacementText: replacementString)
+        _ = richTextEditorContext.textView(
+            editor.richTextView, shouldChangeTextIn: replacementRange,
+            replacementText: replacementString)
         editor.replaceCharacters(in: replacementRange, with: replacementString)
         waitForExpectations(timeout: 1.0)
     }
@@ -144,8 +146,10 @@ class TextProcessorTests: XCTestCase {
         let testAttribute = NSAttributedString.Key("testAttr")
 
         let processor: (EditorView, NSRange) -> Processed = { editor, _ in
-            let attrValue = editor.attributedText.attribute(testAttribute, at: 0, effectiveRange: nil) as? Int ?? 0
-            editor.addAttribute(testAttribute, value: attrValue + 1, at: editor.attributedText.fullRange)
+            let attrValue = editor.attributedText.attribute(
+                testAttribute, at: 0, effectiveRange: nil) as? Int ?? 0
+            editor.addAttribute(
+                testAttribute, value: attrValue + 1, at: editor.attributedText.fullRange)
             processorExpectation.fulfill()
             return true
         }
@@ -161,8 +165,10 @@ class TextProcessorTests: XCTestCase {
         editor.registerProcessor(processor2)
         editor.registerProcessor(processor3)
 
-        editor.replaceCharacters(in: editor.textEndRange, with: NSAttributedString(string: " string"))
-        let attrValue = editor.attributedText.attribute(testAttribute, at: 0, effectiveRange: nil) as? Int ?? 0
+        editor.replaceCharacters(
+            in: editor.textEndRange, with: NSAttributedString(string: " string"))
+        let attrValue = editor.attributedText.attribute(testAttribute, at: 0, effectiveRange: nil)
+            as? Int ?? 0
         XCTAssertEqual(attrValue, 3)
 
         waitForExpectations(timeout: 1.0)

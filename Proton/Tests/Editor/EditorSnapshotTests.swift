@@ -6,9 +6,9 @@
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 
+import FBSnapshotTestCase
 import Foundation
 import XCTest
-import FBSnapshotTestCase
 
 @testable import Proton
 
@@ -23,12 +23,15 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         let viewController = EditorTestViewController(height: 80)
         let editor = viewController.editor
         let font = UIFont(name: "Verdana", size: 17) ?? UIFont()
-        let placeholderString = NSMutableAttributedString(string: "Placeholder text that is so long that it wraps into the next line", attributes: [
-            NSAttributedString.Key.font: font,
-            NSAttributedString.Key.foregroundColor: UIColor.lightGray
-        ])
+        let placeholderString = NSMutableAttributedString(
+            string: "Placeholder text that is so long that it wraps into the next line",
+            attributes: [
+                NSAttributedString.Key.font: font,
+                NSAttributedString.Key.foregroundColor: UIColor.lightGray,
+            ])
 
-        placeholderString.addAttribute(.font, value: font.adding(trait: .traitBold), range: NSRange(location: 12, length: 4))
+        placeholderString.addAttribute(
+            .font, value: font.adding(trait: .traitBold), range: NSRange(location: 12, length: 4))
 
         editor.placeholderText = placeholderString
         viewController.render(size: CGSize(width: 300, height: 120))
@@ -133,7 +136,8 @@ class EditorSnapshotTests: FBSnapshotTestCase {
 
         editor.replaceCharacters(in: .zero, with: "This text is in Editor ")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
-        editor.replaceCharacters(in: editor.textEndRange, with: "and then some more text after the attachment")
+        editor.replaceCharacters(
+            in: editor.textEndRange, with: "and then some more text after the attachment")
 
         viewController.render()
         FBSnapshotVerifyView(viewController.view)
@@ -182,7 +186,10 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         editor.replaceCharacters(in: .zero, with: "This text is in Editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
 
-        editor.attributedText.enumerateAttribute(.attachment, in: editor.attributedText.fullRange, options: .longestEffectiveRangeNotRequired) { value, range, _ in
+        editor.attributedText.enumerateAttribute(
+            .attachment, in: editor.attributedText.fullRange,
+            options: .longestEffectiveRangeNotRequired
+        ) { value, range, _ in
             if value != nil {
                 editor.replaceCharacters(in: range, with: "")
             }
@@ -195,7 +202,8 @@ class EditorSnapshotTests: FBSnapshotTestCase {
     func testGetsRectsForGivenRangeSpanningAcrossMultipleLines() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-        editor.attributedText = NSAttributedString(string: "This is some long string that wraps into the next line.")
+        editor.attributedText = NSAttributedString(
+            string: "This is some long string that wraps into the next line.")
         viewController.render()
         let rects = editor.rects(for: NSRange(location: 25, length: 10))
         for rect in rects {
@@ -211,7 +219,8 @@ class EditorSnapshotTests: FBSnapshotTestCase {
     func testGetsRectsForGivenRangeSpanningAcrossSingleLine() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-        editor.attributedText = NSAttributedString(string: "This is some long string that wraps into the next line.")
+        editor.attributedText = NSAttributedString(
+            string: "This is some long string that wraps into the next line.")
         viewController.render()
         let rects = editor.rects(for: NSRange(location: 10, length: 10))
         for rect in rects {
@@ -227,7 +236,8 @@ class EditorSnapshotTests: FBSnapshotTestCase {
     func testGetsCaretRectForValidPosition() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-        editor.attributedText = NSAttributedString(string: "This is some long string that wraps into the next line.")
+        editor.attributedText = NSAttributedString(
+            string: "This is some long string that wraps into the next line.")
         viewController.render()
         let rect = editor.caretRect(for: 10)
         let view = UIView(frame: rect)
@@ -283,7 +293,8 @@ class EditorSnapshotTests: FBSnapshotTestCase {
 
         let visibleRange = editor.visibleRange
         // refer to snapshot for visible text
-        let expectedText = "consectetur, from a Lorem Ipsum passage, and going through the cites of the word in "
+        let expectedText =
+            "consectetur, from a Lorem Ipsum passage, and going through the cites of the word in "
         let visibleText = editor.attributedText.attributedSubstring(from: visibleRange).string
         XCTAssertEqual(visibleText, expectedText)
     }
@@ -293,9 +304,9 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         let editor = viewController.editor
 
         let text =
-        """
-        Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text
-        """
+            """
+            Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text
+            """
 
         let line1Location = NSRange(location: 10, length: 1)
         let line2Location = NSRange(location: 40, length: 1)
@@ -327,9 +338,9 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         let editor = viewController.editor
 
         let text =
-        """
-        Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 2 text Line 3 text Line 3
-        """
+            """
+            Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 2 text Line 3 text Line 3
+            """
 
         let line1Location = NSRange(location: 10, length: 1)
         let line2Location = NSRange(location: 40, length: 1)
@@ -366,22 +377,28 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
 
-        let styles: [(String, pointSize: CGFloat, UIFont.Weight, paragraphBefore: CGFloat, paragraphAfter: CGFloat)] = [
-            ("Heading 1", 27, .medium, 50, 15),
-            ("Heading 2", 23.5, .medium, 22, 15),
-            ("Heading 3", 17, .semibold, 20, 16),
-            ("Heading 4", 17, .semibold, 4, 15),
-            ("Heading 5", 14, .semibold, 5, 15),
-            ("Heading 6", 12, .semibold, 4, 15),
-        ]
-        let para = NSAttributedString(string: "para --\n", attributes: [
-            .font: UIFont.preferredFont(forTextStyle: .body),
-            .paragraphStyle: { () -> NSMutableParagraphStyle in
-                let s = NSMutableParagraphStyle()
-                s.paragraphSpacing = 20
-                return s
-            }(),
-        ])
+        let styles:
+            [(
+                String, pointSize: CGFloat, UIFont.Weight, paragraphBefore: CGFloat,
+                paragraphAfter: CGFloat
+            )] = [
+                ("Heading 1", 27, .medium, 50, 15),
+                ("Heading 2", 23.5, .medium, 22, 15),
+                ("Heading 3", 17, .semibold, 20, 16),
+                ("Heading 4", 17, .semibold, 4, 15),
+                ("Heading 5", 14, .semibold, 5, 15),
+                ("Heading 6", 12, .semibold, 4, 15),
+            ]
+        let para = NSAttributedString(
+            string: "para --\n",
+            attributes: [
+                .font: UIFont.preferredFont(forTextStyle: .body),
+                .paragraphStyle: { () -> NSMutableParagraphStyle in
+                    let s = NSMutableParagraphStyle()
+                    s.paragraphSpacing = 20
+                    return s
+                }(),
+            ])
         let text = NSMutableAttributedString()
         text.append(NSAttributedString(string: "para --\n"))
         for style in styles {
@@ -393,10 +410,13 @@ class EditorSnapshotTests: FBSnapshotTestCase {
                 NSTextTab(textAlignment: .natural, location: 30, options: [:]),
                 NSTextTab(textAlignment: .natural, location: 60, options: [:]),
             ]
-            text.append(NSAttributedString(string: "\(style.0)\n", attributes: [
-                .font: UIFont.systemFont(ofSize: style.pointSize, weight: style.2),
-                .paragraphStyle: pstyle,
-            ]))
+            text.append(
+                NSAttributedString(
+                    string: "\(style.0)\n",
+                    attributes: [
+                        .font: UIFont.systemFont(ofSize: style.pointSize, weight: style.2),
+                        .paragraphStyle: pstyle,
+                    ]))
             text.append(para)
         }
 

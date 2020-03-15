@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class DummyCollabCommand: EditorCommand {
     func execute(on editor: EditorView) {
@@ -23,7 +22,8 @@ class DummyCollabCommand: EditorCommand {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [editor] in
             let text = "collab edit "
             editor.replaceCharacters(in: .zero, with: text)
-            editor.selectedRange = NSRange(location: editor.selectedRange.location + text.count, length: 0)
+            editor.selectedRange = NSRange(
+                location: editor.selectedRange.location + text.count, length: 0)
             let insertedTextRange = NSRange(location: 0, length: text.count)
             let selectionRangeRect = editor.rects(for: insertedTextRange)
             let selectionView = UIView(frame: selectionRangeRect[0])

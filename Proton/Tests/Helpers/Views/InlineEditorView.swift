@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class InlineEditorView: EditorView, InlineContent {
     public var name: EditorContent.Name {

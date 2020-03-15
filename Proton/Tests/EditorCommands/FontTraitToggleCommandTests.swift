@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import XCTest
-
 import Proton
+import XCTest
 
 class FontTraitToggleCommandTests: XCTestCase {
     func testSetsTypingAttributesInEmptyEditor() {
@@ -62,7 +61,9 @@ class FontTraitToggleCommandTests: XCTestCase {
             (text: "some text", isBold: false, isItalics: false),
         ]
         var counter = 0
-        editorText.enumerateAttribute(.font, in: editorText.fullRange, options: .longestEffectiveRangeNotRequired) { (font, range, _) in
+        editorText.enumerateAttribute(
+            .font, in: editorText.fullRange, options: .longestEffectiveRangeNotRequired
+        ) { (font, range, _) in
             let text = editorText.attributedSubstring(from: range)
             let font = assertUnwrap(text.attribute(.font, at: 0, effectiveRange: nil) as? UIFont)
             let expectedValue = expectedValues[counter]

@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 protocol AttributedStringAttributesDecoding {
     associatedtype TypeToDecode

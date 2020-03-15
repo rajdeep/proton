@@ -19,7 +19,10 @@ class MockTextProcessor: TextProcessing {
 
     var processorCondition: (EditorView, NSRange) -> Bool
 
-    init(name: String = "MockTextProcessor", processorCondition: @escaping (EditorView, NSRange) -> Bool) {
+    init(
+        name: String = "MockTextProcessor",
+        processorCondition: @escaping (EditorView, NSRange) -> Bool
+    ) {
         self.name = name
         self.processorCondition = processorCondition
     }
@@ -28,7 +31,9 @@ class MockTextProcessor: TextProcessing {
         onWillProcess?(deletedText, insertedText)
     }
 
-    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int) -> Processed {
+    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int)
+        -> Processed
+    {
         guard processorCondition(editor, editedRange) else {
             return false
         }

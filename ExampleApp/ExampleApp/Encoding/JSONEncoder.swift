@@ -7,16 +7,15 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 typealias JSON = [String: Any]
 
 struct JSONEncoder: EditorContentEncoder {
     let textEncoders: [EditorContent.Name: AnyEditorTextEncoding<JSON>] = [
         EditorContent.Name.paragraph: AnyEditorTextEncoding(ParagraphEncoder()),
-        .text: AnyEditorTextEncoding(TextEncoder())
+        .text: AnyEditorTextEncoding(TextEncoder()),
     ]
 
     let attachmentEncoders: [EditorContent.Name: AnyEditorContentAttachmentEncoding<JSON>] = [

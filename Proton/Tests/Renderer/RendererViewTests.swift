@@ -17,7 +17,8 @@ class RendererViewTests: XCTestCase {
         let testExpectation = functionExpectation()
 
         let delegate = MockRendererViewDelegate()
-        let renderer = RendererView(frame: CGRect(origin: .zero, size: CGSize(width: 200, height: 50)))
+        let renderer = RendererView(
+            frame: CGRect(origin: .zero, size: CGSize(width: 200, height: 50)))
         renderer.attributedText = NSAttributedString(string: "This is a test string")
         renderer.delegate = delegate
         renderer.enableSelectionHandles = false
@@ -57,7 +58,8 @@ class RendererViewTests: XCTestCase {
         let testExpectation = functionExpectation()
 
         let delegate = MockRendererViewDelegate()
-        let renderer = RendererView(frame: CGRect(origin: .zero, size: CGSize(width: 200, height: 50)))
+        let renderer = RendererView(
+            frame: CGRect(origin: .zero, size: CGSize(width: 200, height: 50)))
         let attachment = Attachment(PanelView(), size: .fullWidth)
         let attrString = NSMutableAttributedString(string: "This is a test string")
         attrString.append(attachment.string)

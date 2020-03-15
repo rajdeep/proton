@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 enum InlineValueType {
     case single(value: Any?)
@@ -24,7 +23,8 @@ protocol InlineEncoding {
 struct TextEncoder: EditorTextEncoding {
     func encode(name: EditorContent.Name, string: NSAttributedString) -> JSON {
         var text = JSON()
-        string.enumerateAttributes(in: string.fullRange, options: .longestEffectiveRangeNotRequired) { (attributes, range, _) in
+        string.enumerateAttributes(in: string.fullRange, options: .longestEffectiveRangeNotRequired)
+        { (attributes, range, _) in
             let substring = string.attributedSubstring(from: range)
             text.type = name.rawValue
             text["text"] = substring.string

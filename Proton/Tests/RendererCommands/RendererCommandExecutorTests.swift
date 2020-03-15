@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import XCTest
-
 import Proton
+import XCTest
 
 class RendererCommandExecutorTests: XCTestCase {
     func testExecutesCommandOnRenderer() {
@@ -21,13 +20,17 @@ class RendererCommandExecutorTests: XCTestCase {
         renderer.attributedText = NSAttributedString(string: "This is some text")
         renderer.selectedRange = selectedRange
 
-        let color = renderer.selectedText.attribute(.backgroundColor, at: 0, effectiveRange: nil) as? UIColor
+        let color = renderer.selectedText.attribute(.backgroundColor, at: 0, effectiveRange: nil)
+            as? UIColor
         XCTAssertNil(color)
 
         let command = HighlightTextCommand()
         commandExecutor.execute(command)
 
-        guard let highlightColor = renderer.selectedText.attribute(.backgroundColor, at: 0, effectiveRange: nil) as? UIColor else {
+        guard
+            let highlightColor = renderer.selectedText.attribute(
+                .backgroundColor, at: 0, effectiveRange: nil) as? UIColor
+        else {
             XCTFail("Failed to get background color information")
             return
         }

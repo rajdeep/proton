@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class RendererTestViewController: SnapshotTestViewController {
     let renderer: RendererView

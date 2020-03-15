@@ -33,7 +33,8 @@ class TextStorageTests: XCTestCase {
         paragraphStyle.lineSpacing = 10
         paragraphStyle.firstLineHeadIndent = 6
 
-        let textFormattingProvider = MockDefaultTextFormattingProvider(font: font, paragraphStyle: paragraphStyle)
+        let textFormattingProvider = MockDefaultTextFormattingProvider(
+            font: font, paragraphStyle: paragraphStyle)
 
         let string = "This is a test string"
         textStorage.defaultTextFormattingProvider = textFormattingProvider
@@ -80,10 +81,13 @@ class TextStorageTests: XCTestCase {
         XCTAssertNil(attributes[key])
         XCTAssertEqual(effectiveRange, range)
 
-        let keyAttributes = textStorage.attributes(at: range.length, effectiveRange: &effectiveRange)
+        let keyAttributes = textStorage.attributes(
+            at: range.length, effectiveRange: &effectiveRange)
 
         XCTAssertEqual(keyAttributes[key] as? Bool, true)
-        XCTAssertEqual(effectiveRange, NSRange(location: range.length, length: testString.count - range.length))
+        XCTAssertEqual(
+            effectiveRange, NSRange(location: range.length, length: testString.count - range.length)
+        )
     }
 
     func testFixesMissingDefaultAttributesWhenRemoved() {
@@ -96,7 +100,8 @@ class TextStorageTests: XCTestCase {
         XCTAssertTrue(defaultAttributes.contains { $0.key == .foregroundColor })
         XCTAssertTrue(defaultAttributes.contains { $0.key == .paragraphStyle })
 
-        textStorage.removeAttributes([.font, .foregroundColor, .paragraphStyle], range: textStorage.fullRange)
+        textStorage.removeAttributes(
+            [.font, .foregroundColor, .paragraphStyle], range: textStorage.fullRange)
 
         let fixedAttributes = textStorage.attributes(at: 0, effectiveRange: nil)
         XCTAssertTrue(fixedAttributes.contains { $0.key == .font })

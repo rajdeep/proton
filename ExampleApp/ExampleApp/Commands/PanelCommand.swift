@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class PanelCommand: EditorCommand {
     func execute(on editor: EditorView) {

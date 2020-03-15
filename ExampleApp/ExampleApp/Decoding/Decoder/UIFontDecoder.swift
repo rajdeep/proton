@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 struct UIFontDecoder: AttributedStringAttributesDecoding {
     var name: String { return "font" }
@@ -18,8 +17,9 @@ struct UIFontDecoder: AttributedStringAttributesDecoding {
         guard
             let size = json["size"] as? CGFloat,
             let style = json["textStyle"] as? String,
-            let family = json["family"] as? String else {
-                return [.font: UIFont.preferredFont(forTextStyle: .body)]
+            let family = json["family"] as? String
+        else {
+            return [.font: UIFont.preferredFont(forTextStyle: .body)]
         }
 
         let textStyle = UIFont.TextStyle(rawValue: style)

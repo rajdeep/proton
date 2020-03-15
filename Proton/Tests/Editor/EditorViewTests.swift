@@ -70,7 +70,8 @@ class EditorViewTests: XCTestCase {
         let spacerContent1 = contents[2]
         if case let .text(name, attributedString) = spacerContent1.type {
             XCTAssertEqual(name, EditorContent.Name.paragraph)
-            XCTAssertEqual(attributedString.string.trimmingCharacters(in: .whitespacesAndNewlines), "")
+            XCTAssertEqual(
+                attributedString.string.trimmingCharacters(in: .whitespacesAndNewlines), "")
         } else {
             XCTFail("Failed to get correct content [Spacer]")
         }
@@ -87,7 +88,8 @@ class EditorViewTests: XCTestCase {
         let spacerContent2 = contents[4]
         if case let .text(name, attributedString) = spacerContent2.type {
             XCTAssertEqual(name, EditorContent.Name.newline)
-            XCTAssertEqual(attributedString.string.trimmingCharacters(in: .whitespacesAndNewlines), "")
+            XCTAssertEqual(
+                attributedString.string.trimmingCharacters(in: .whitespacesAndNewlines), "")
         } else {
             XCTFail("Failed to get correct content [Spacer]")
         }
@@ -131,7 +133,9 @@ class EditorViewTests: XCTestCase {
         let transformedContents = editor.transformContents(using: TextTransformer())
         XCTAssertEqual(transformedContents.count, 3)
         XCTAssertEqual(transformedContents[0], "Name: `paragraph` Text: `Some text in Editor `")
-        XCTAssertEqual(transformedContents[1], "Name: `textField` ContentView: `AutogrowingTextField` Type: `inline`")
+        XCTAssertEqual(
+            transformedContents[1],
+            "Name: `textField` ContentView: `AutogrowingTextField` Type: `inline`")
         XCTAssertEqual(transformedContents[2], "Name: `paragraph` Text: ` `")
     }
 
@@ -166,7 +170,8 @@ class EditorViewTests: XCTestCase {
 
         editor.replaceCharacters(in: .zero, with: testString)
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
-        editor.addAttributes(attributesToAdd, at: NSRange(location: 7, length: editor.contentLength - 7))
+        editor.addAttributes(
+            attributesToAdd, at: NSRange(location: 7, length: editor.contentLength - 7))
         waitForExpectations(timeout: 1.0)
     }
 
@@ -340,7 +345,7 @@ class EditorViewTests: XCTestCase {
         editor.registerCommand(command)
 
         XCTAssertEqual(editor.registeredCommands?.count, 1)
-        XCTAssertTrue(editor.registeredCommands?.contains{ $0 === command } ?? false)
+        XCTAssertTrue(editor.registeredCommands?.contains { $0 === command } ?? false)
     }
 
     func testUnregistersCommands() {
@@ -352,7 +357,7 @@ class EditorViewTests: XCTestCase {
 
         editor.unregisterCommand(command1)
         XCTAssertEqual(editor.registeredCommands?.count, 1)
-        XCTAssertTrue(editor.registeredCommands?.contains{ $0 === command2 } ?? false)
+        XCTAssertTrue(editor.registeredCommands?.contains { $0 === command2 } ?? false)
     }
 
     func testReturnsNilForInvalidNextLine() throws {
@@ -378,11 +383,13 @@ class EditorViewTests: XCTestCase {
     func testResetsAttributesWhenCleared() {
         let editor = EditorView()
         editor.textColor = UIColor.red
-        let attrString = NSMutableAttributedString(string: "This is a test string", attributes: [.foregroundColor: UIColor.blue])
+        let attrString = NSMutableAttributedString(
+            string: "This is a test string", attributes: [.foregroundColor: UIColor.blue])
         editor.attributedText = attrString
         editor.clear()
         editor.appendCharacters(NSAttributedString(string: "test"))
-        let color = editor.attributedText.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor
+        let color = editor.attributedText.attribute(.foregroundColor, at: 0, effectiveRange: nil)
+            as? UIColor
         XCTAssertEqual(color, editor.textColor)
     }
 }

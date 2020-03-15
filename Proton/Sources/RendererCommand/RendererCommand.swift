@@ -24,8 +24,8 @@ public protocol RendererCommand {
     func execute(on renderer: RendererView)
 }
 
-public extension RendererCommand {
-    func canExecute(on renderer: RendererView) -> Bool {
+extension RendererCommand {
+    public func canExecute(on renderer: RendererView) -> Bool {
         return true
     }
 }

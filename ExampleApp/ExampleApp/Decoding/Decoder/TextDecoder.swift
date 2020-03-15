@@ -7,16 +7,16 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 struct TextDecoder: EditorContentDecoding {
     func decode(mode: EditorContentMode, maxSize: CGSize, value: JSON) -> NSAttributedString {
         let text = value["text"] as? String ?? ""
         let string = NSMutableAttributedString(string: text)
         if let font = value["font"] as? JSON,
-            let decoder = EditorContentJSONDecoder.attributeDecoders["font"] {
+            let decoder = EditorContentJSONDecoder.attributeDecoders["font"]
+        {
             let attr = decoder.decode(font)
             string.addAttributes(attr, range: string.fullRange)
         }

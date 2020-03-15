@@ -29,7 +29,8 @@ class EditorViewDelegateTests: XCTestCase {
         let richTextViewDelegate = richTextView.richTextViewDelegate
         var handled = true
 
-        richTextViewDelegate?.richTextView(richTextView, didReceiveKey: .enter, at: .zero, handled: &handled)
+        richTextViewDelegate?.richTextView(
+            richTextView, didReceiveKey: .enter, at: .zero, handled: &handled)
         waitForExpectations(timeout: 1.0)
     }
 
@@ -49,7 +50,8 @@ class EditorViewDelegateTests: XCTestCase {
         let richTextView = editor.richTextView
         let richTextViewDelegate = richTextView.richTextViewDelegate
 
-        richTextViewDelegate?.richTextView(richTextView, didChangeSelection: .zero, attributes: [:], contentType: .paragraph)
+        richTextViewDelegate?.richTextView(
+            richTextView, didChangeSelection: .zero, attributes: [:], contentType: .paragraph)
         waitForExpectations(timeout: 1.0)
     }
 

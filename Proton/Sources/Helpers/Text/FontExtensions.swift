@@ -9,40 +9,40 @@
 import Foundation
 import UIKit
 
-public extension UIFont {
+extension UIFont {
 
-    var traits: UIFontDescriptor.SymbolicTraits {
+    public var traits: UIFontDescriptor.SymbolicTraits {
         return fontDescriptor.symbolicTraits
     }
 
-    var isBold: Bool {
+    public var isBold: Bool {
         return traits.contains(.traitBold)
     }
 
-    var isItalics: Bool {
+    public var isItalics: Bool {
         return traits.contains(.traitItalic)
     }
 
-    var isMonoSpaced: Bool {
+    public var isMonoSpaced: Bool {
         return traits.contains(.traitMonoSpace)
     }
 
-    var textStyle: UIFont.TextStyle {
+    public var textStyle: UIFont.TextStyle {
         guard let style = fontDescriptor.object(forKey: .textStyle) as? String else {
             return .body
         }
         return UIFont.TextStyle(rawValue: style)
     }
 
-    var isNonDynamicTextStyle: Bool {
+    public var isNonDynamicTextStyle: Bool {
         return textStyle.rawValue == "CTFontRegularUsage"
     }
 
-    func contains(trait: UIFontDescriptor.SymbolicTraits) -> Bool {
+    public func contains(trait: UIFontDescriptor.SymbolicTraits) -> Bool {
         return traits.contains(trait)
     }
 
-    func toggled(trait: UIFontDescriptor.SymbolicTraits) -> UIFont {
+    public func toggled(trait: UIFontDescriptor.SymbolicTraits) -> UIFont {
         let updatedFont: UIFont
         if self.contains(trait: trait) {
             updatedFont = removing(trait: trait)
@@ -53,7 +53,7 @@ public extension UIFont {
         return updatedFont
     }
 
-    func adding(trait: UIFontDescriptor.SymbolicTraits) -> UIFont {
+    public func adding(trait: UIFontDescriptor.SymbolicTraits) -> UIFont {
         var traits = self.traits
         traits.formUnion(trait)
         guard let updatedFontDescriptor = fontDescriptor.withSymbolicTraits(traits) else {
@@ -63,7 +63,7 @@ public extension UIFont {
         return UIFont(descriptor: updatedFontDescriptor, size: 0.0)
     }
 
-    func removing(trait: UIFontDescriptor.SymbolicTraits) -> UIFont {
+    public func removing(trait: UIFontDescriptor.SymbolicTraits) -> UIFont {
         var traits = self.traits
         traits.subtract(trait)
         guard let updatedFontDescriptor = fontDescriptor.withSymbolicTraits(traits) else {

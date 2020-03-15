@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class TestTextProcessor: TextProcessing {
     var name: String { return "TestTextProcessor" }
@@ -19,7 +18,9 @@ class TestTextProcessor: TextProcessing {
     var onProcess: ((EditorView, NSRange) -> Processed)?
     var onProcessInterrupted: ((EditorView, NSRange) -> Void)?
 
-    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int) -> Processed {
+    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int)
+        -> Processed
+    {
         return onProcess?(editor, editedRange) ?? false
     }
 

@@ -7,15 +7,14 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 struct EditorContentJSONDecoder: EditorContentDecoding {
     static let contentDecoders: [EditorContent.Name: AnyEditorContentDecoding<JSON>] = [
         EditorContent.Name.paragraph: AnyEditorContentDecoding(ParagraphDecoder()),
         EditorContent.Name.text: AnyEditorContentDecoding(TextDecoder()),
-        EditorContent.Name("panel"): AnyEditorContentDecoding(PanelDecoder())
+        EditorContent.Name("panel"): AnyEditorContentDecoding(PanelDecoder()),
     ]
 
     static let attributeDecoders: [String: AnyAttributedStringAttributeDecoding<JSON>] = [
@@ -29,7 +28,8 @@ struct EditorContentJSONDecoder: EditorContentDecoding {
             if let type = content.type {
                 let typeName = EditorContent.Name(type)
                 let decoder = EditorContentJSONDecoder.contentDecoders[typeName]
-                let contentValue = decoder?.decode(mode: mode, maxSize: maxSize, value: content) ?? NSAttributedString()
+                let contentValue = decoder?.decode(mode: mode, maxSize: maxSize, value: content)
+                    ?? NSAttributedString()
                 string.append(contentValue)
             }
         }

@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class EditorTestViewController: SnapshotTestViewController {
     let editor: EditorView
@@ -35,7 +34,7 @@ class EditorTestViewController: SnapshotTestViewController {
             editor.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
             editor.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             view.trailingAnchor.constraint(equalTo: editor.trailingAnchor, constant: 20),
-            editor.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor)
+            editor.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor),
         ])
 
         guard let height = self.height else { return }

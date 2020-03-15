@@ -6,9 +6,9 @@
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 
+import FBSnapshotTestCase
 import Foundation
 import XCTest
-import FBSnapshotTestCase
 
 @testable import Proton
 
@@ -31,7 +31,7 @@ class RichTextViewSnapshotTests: FBSnapshotTestCase {
         view.addSubview(textView)
         NSLayoutConstraint.activate([
             textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
         ])
 
         viewController.render()
@@ -48,11 +48,13 @@ class RichTextViewSnapshotTests: FBSnapshotTestCase {
         paragraphStyle.firstLineHeadIndent = 10
         paragraphStyle.lineSpacing = 6
 
-        let formattingProvider = MockDefaultTextFormattingProvider(font: font, paragraphStyle: paragraphStyle)
+        let formattingProvider = MockDefaultTextFormattingProvider(
+            font: font, paragraphStyle: paragraphStyle)
         textView.defaultTextFormattingProvider = formattingProvider
 
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.text = "Sample with multiple lines of text. This text flows into the second line because of width constraint on textview"
+        textView.text =
+            "Sample with multiple lines of text. This text flows into the second line because of width constraint on textview"
         textView.addBorder()
 
         let view = viewController.view!
@@ -60,7 +62,7 @@ class RichTextViewSnapshotTests: FBSnapshotTestCase {
         NSLayoutConstraint.activate([
             textView.widthAnchor.constraint(equalToConstant: 280),
             textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10)
+            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
         ])
 
         viewController.render(size: CGSize(width: 300, height: 150))

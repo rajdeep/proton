@@ -22,7 +22,7 @@ extension NSParagraphStyle: Encoding {
             "alignment": alignment.rawValue,
             "firstLineHeadIndent": firstLineHeadIndent,
             "linespacing": lineSpacing,
-            "paragraphSpacing": paragraphSpacing
+            "paragraphSpacing": paragraphSpacing,
         ]
         return attributes
     }
@@ -39,7 +39,8 @@ extension UIFont: InlineEncoding {
             "isBold": fontDescriptor.symbolicTraits.contains(.traitBold),
             "isItalics": fontDescriptor.symbolicTraits.contains(.traitItalic),
             "isMonospace": fontDescriptor.symbolicTraits.contains(.traitMonoSpace),
-            "textStyle": fontDescriptor.object(forKey: .textStyle) as? String ?? "UICTFontTextStyleBody"
+            "textStyle": fontDescriptor.object(forKey: .textStyle) as? String
+                ?? "UICTFontTextStyleBody",
         ]
         return .json(value: attributes)
     }

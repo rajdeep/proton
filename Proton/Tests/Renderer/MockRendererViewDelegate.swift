@@ -7,15 +7,16 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class MockRendererViewDelegate: RendererViewDelegate {
     var onDidTap: ((RendererView, CGPoint, NSRange?) -> Void)?
     var onDidChangeSelection: ((RendererView, NSRange) -> Void)?
 
-    func didTap(_ renderer: RendererView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
+    func didTap(
+        _ renderer: RendererView, didTapAtLocation location: CGPoint, characterRange: NSRange?
+    ) {
         onDidTap?(renderer, location, characterRange)
     }
 

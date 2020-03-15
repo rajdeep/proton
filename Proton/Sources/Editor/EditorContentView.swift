@@ -20,32 +20,32 @@ public protocol EditorContentView: Focusable {
     func becomeFirstResponder() -> Bool
 }
 
-public extension EditorContentView {
-    var attributedText: NSAttributedString {
+extension EditorContentView {
+    public var attributedText: NSAttributedString {
         get { editor.attributedText }
         set { editor.attributedText = newValue }
     }
 
-    func becomeFirstResponder() -> Bool {
+    public func becomeFirstResponder() -> Bool {
         return editor.becomeFirstResponder()
     }
 
-    var maxHeight: CGFloat {
+    public var maxHeight: CGFloat {
         get { editor.maxHeight }
         set { editor.maxHeight = newValue }
     }
 
-    var boundsObserver: BoundsObserving? {
+    public var boundsObserver: BoundsObserving? {
         get { editor.boundsObserver }
         set { editor.boundsObserver = newValue }
     }
 
-    var delegate: EditorViewDelegate? {
+    public var delegate: EditorViewDelegate? {
         get { editor.delegate }
         set { editor.delegate = newValue }
     }
 
-    func setFocus() {
+    public func setFocus() {
         editor.becomeFirstResponder()
     }
 }

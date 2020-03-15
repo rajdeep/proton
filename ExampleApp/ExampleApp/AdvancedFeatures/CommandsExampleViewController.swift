@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class EditorCommandButton: UIButton {
     let command: EditorCommand
@@ -94,9 +93,12 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         scrollView.addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            scrollView.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            scrollView.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            scrollView.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
 
             scrollView.heightAnchor.constraint(equalTo: stackView.heightAnchor, constant: 10),
 
@@ -107,8 +109,10 @@ class CommandsExampleViewController: ExamplesBaseViewController {
             stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
 
             editor.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20),
-            editor.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            editor.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            editor.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            editor.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
             editor.heightAnchor.constraint(lessThanOrEqualToConstant: 300),
         ])
@@ -173,8 +177,8 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         self.encodedContents = ["contents": value]
 
         let printableContents = """
-            { "contents":  \(jsonString) }
-        """
+                { "contents":  \(jsonString) }
+            """
 
         print(printableContents)
 
@@ -183,7 +187,8 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
     @objc
     func decodeContents(sender: UIButton) {
-        let text = EditorContentJSONDecoder().decode(mode: .editor, maxSize: editor.frame.size, value: encodedContents)
+        let text = EditorContentJSONDecoder().decode(
+            mode: .editor, maxSize: editor.frame.size, value: encodedContents)
         self.editor.attributedText = text
     }
 
@@ -193,7 +198,8 @@ class CommandsExampleViewController: ExamplesBaseViewController {
             return
         }
 
-        let text = EditorContentJSONDecoder().decode(mode: .editor, maxSize: editor.frame.size, value: contents)
+        let text = EditorContentJSONDecoder().decode(
+            mode: .editor, maxSize: editor.frame.size, value: contents)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
             self.editor.attributedText = text
         }
@@ -201,7 +207,10 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 }
 
 extension CommandsExampleViewController: EditorViewDelegate {
-    func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
+    func editor(
+        _ editor: EditorView, didChangeSelectionAt range: NSRange,
+        attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name
+    ) {
         guard let font = attributes[.font] as? UIFont else { return }
 
         buttons.first(where: { $0.titleLabel?.text == "Bold" })?.isSelected = font.isBold

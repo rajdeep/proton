@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import XCTest
-
 import Proton
+import XCTest
 
 //class EditorContentEncoderTests: XCTestCase {
 //    func testEncoding() {

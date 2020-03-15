@@ -9,12 +9,12 @@
 import Foundation
 import UIKit
 
-public extension NSAttributedString {
-    var fullRange: NSRange {
+extension NSAttributedString {
+    public var fullRange: NSRange {
         return NSRange(location: 0, length: length)
     }
 
-    var attachmentRanges: [(attachment: Attachment, range: NSRange)] {
+    public var attachmentRanges: [(attachment: Attachment, range: NSRange)] {
         var ranges = [(Attachment, NSRange)]()
 
         let fullRange = NSRange(location: 0, length: self.length)
@@ -26,18 +26,19 @@ public extension NSAttributedString {
         return ranges
     }
 
-    func rangeFor(attachment: Attachment) -> NSRange? {
+    public func rangeFor(attachment: Attachment) -> NSRange? {
         return attachmentRanges.reversed().first(where: { $0.attachment == attachment })?.range
     }
 
-    func rangesOf(characterSet: CharacterSet) -> [NSRange] {
+    public func rangesOf(characterSet: CharacterSet) -> [NSRange] {
         return string.rangesOf(characterSet: characterSet).map { string.makeNSRange(from: $0) }
     }
 
-    func reverseAttributedSubstring(from range: NSRange) -> NSAttributedString? {
+    public func reverseAttributedSubstring(from range: NSRange) -> NSAttributedString? {
         guard length > 0 && range.location + range.length < length else {
             return nil
         }
-        return attributedSubstring(from: NSRange(location: range.location - range.length, length: range.length))
+        return attributedSubstring(
+            from: NSRange(location: range.location - range.length, length: range.length))
     }
 }

@@ -32,7 +32,7 @@ class AutogrowingTextView: UITextView {
         maxHeightConstraint = heightAnchor.constraint(lessThanOrEqualToConstant: frame.height)
         isScrollEnabled = false
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(greaterThanOrEqualToConstant: frame.height)
+            heightAnchor.constraint(greaterThanOrEqualToConstant: frame.height),
         ])
     }
 
@@ -44,8 +44,10 @@ class AutogrowingTextView: UITextView {
         super.layoutSubviews()
         let bounds = self.bounds
         updateDimensionsCalculatingTextView()
-        let fittingSize = dimensionsCalculatingTextView.sizeThatFits(CGSize(width: frame.width, height: .greatestFiniteMagnitude))
-        isScrollEnabled = (fittingSize.height > bounds.height) || (maxHeight > 0 && maxHeight < fittingSize.height)
+        let fittingSize = dimensionsCalculatingTextView.sizeThatFits(
+            CGSize(width: frame.width, height: .greatestFiniteMagnitude))
+        isScrollEnabled = (fittingSize.height > bounds.height)
+            || (maxHeight > 0 && maxHeight < fittingSize.height)
     }
 
     override open func sizeThatFits(_ size: CGSize) -> CGSize {

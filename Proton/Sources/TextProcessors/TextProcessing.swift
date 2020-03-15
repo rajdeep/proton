@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 
 public typealias TextProcessingPriority = Int
-public extension TextProcessingPriority {
-    static let exclusive: TextProcessingPriority = 1000
-    static let high: TextProcessingPriority = 750
-    static let medium: TextProcessingPriority = 500
-    static let low: TextProcessingPriority = 250
+extension TextProcessingPriority {
+    public static let exclusive: TextProcessingPriority = 1000
+    public static let high: TextProcessingPriority = 750
+    public static let medium: TextProcessingPriority = 500
+    public static let low: TextProcessingPriority = 250
 }
 
 public typealias Processed = Bool
@@ -42,15 +42,16 @@ public protocol TextProcessing {
     /// - Parameter processed: Set this to `true` is the `TextProcessor` has made any changes to the text or attributes in the `EditorView`
     /// - Returns: Return `true` to indicate the processing had been done by the current processor. In case of .exclusive priority processors,
     /// returning `true` notifies all other processors of interruption.
-    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int) -> Processed
+    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int)
+        -> Processed
 
     /// Fired when processing has been interrupted by another `TextProcessor` running in the same pass. This allows `TextProcessor` to revert
     /// any changes that may not have been committed.
     /// - Parameter editor:`EditorView` in which text is being changed.
     /// - Parameter range: Current range that is being modified.
-    func processInterrupted(editor: EditorView, at range: NSRange) // fired when processor is interrupted as a result of an exclusive priority processor
+    func processInterrupted(editor: EditorView, at range: NSRange)  // fired when processor is interrupted as a result of an exclusive priority processor
 }
 
-public extension TextProcessing {
-    func willProcess(deletedText: NSAttributedString, insertedText: String) { }
+extension TextProcessing {
+    public func willProcess(deletedText: NSAttributedString, insertedText: String) {}
 }

@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class AutogrowingEditorViewExampleViewController: ExamplesBaseViewController {
 
@@ -24,10 +23,12 @@ class AutogrowingEditorViewExampleViewController: ExamplesBaseViewController {
 
         NSLayoutConstraint.activate([
             editor.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            editor.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            editor.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            editor.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            editor.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
-            editor.heightAnchor.constraint(lessThanOrEqualToConstant: 200)
+            editor.heightAnchor.constraint(lessThanOrEqualToConstant: 200),
         ])
 
         editor.placeholderText = NSAttributedString(
@@ -35,6 +36,6 @@ class AutogrowingEditorViewExampleViewController: ExamplesBaseViewController {
             attributes: [
                 .font: editor.font,
                 .foregroundColor: UIColor.tertiaryLabel,
-        ])
+            ])
     }
 }

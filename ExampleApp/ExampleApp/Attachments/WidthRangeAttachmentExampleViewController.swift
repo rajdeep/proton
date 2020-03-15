@@ -7,21 +7,22 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class WidthRangeAttachmentExampleViewController: ExamplesBaseViewController {
     let minWidthTextField = UITextField()
     let maxWidthTextField = UITextField()
 
     var minWidth: CGFloat {
-        let width = CGFloat(exactly: NumberFormatter().number(from: minWidthTextField.text ?? "") ?? 40) ?? 40
+        let width = CGFloat(
+            exactly: NumberFormatter().number(from: minWidthTextField.text ?? "") ?? 40) ?? 40
         return width
     }
 
     var maxWidth: CGFloat {
-        let width = CGFloat(exactly: NumberFormatter().number(from: maxWidthTextField.text ?? "") ?? 120) ?? 120
+        let width = CGFloat(
+            exactly: NumberFormatter().number(from: maxWidthTextField.text ?? "") ?? 120) ?? 120
         return width
     }
 
@@ -55,7 +56,8 @@ class WidthRangeAttachmentExampleViewController: ExamplesBaseViewController {
 
         NSLayoutConstraint.activate([
             button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            button.leadingAnchor.constraint(equalTo: maxWidthTextField.trailingAnchor, constant: 10),
+            button.leadingAnchor.constraint(
+                equalTo: maxWidthTextField.trailingAnchor, constant: 10),
 
             minWidthTextField.topAnchor.constraint(equalTo: button.topAnchor),
             minWidthTextField.widthAnchor.constraint(equalToConstant: 60),
@@ -63,12 +65,15 @@ class WidthRangeAttachmentExampleViewController: ExamplesBaseViewController {
 
             maxWidthTextField.topAnchor.constraint(equalTo: button.topAnchor),
             maxWidthTextField.widthAnchor.constraint(equalToConstant: 60),
-            maxWidthTextField.leadingAnchor.constraint(equalTo: minWidthTextField.trailingAnchor, constant: 10),
+            maxWidthTextField.leadingAnchor.constraint(
+                equalTo: minWidthTextField.trailingAnchor, constant: 10),
 
             editor.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 20),
-            editor.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            editor.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
+            editor.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            editor.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
         ])
     }
 
@@ -90,7 +95,11 @@ class WidthRangeAttachmentExampleViewController: ExamplesBaseViewController {
 }
 
 extension WidthRangeAttachmentExampleViewController: AttachmentOffsetProviding {
-    func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint {
+    func offset(
+        for attachment: Attachment, in textContainer: NSTextContainer,
+        proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint,
+        characterIndex charIndex: Int
+    ) -> CGPoint {
         return CGPoint(x: 0, y: -2)
     }
 }

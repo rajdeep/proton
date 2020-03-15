@@ -38,7 +38,9 @@ class TextStorage: NSTextStorage {
         storage.setAttributedString(attributedString)
     }
 
-    @available(*, unavailable, message: "init(itemProviderData:typeIdentifier:) unavailable, use init")
+    @available(
+        *, unavailable, message: "init(itemProviderData:typeIdentifier:) unavailable, use init"
+    )
     required init(itemProviderData data: Data, typeIdentifier: String) throws {
         fatalError("init(itemProviderData:typeIdentifier:) has not been implemented")
     }
@@ -52,7 +54,9 @@ class TextStorage: NSTextStorage {
         return storage.string
     }
 
-    override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [NSAttributedString.Key: Any] {
+    override func attributes(at location: Int, effectiveRange range: NSRangePointer?)
+        -> [NSAttributedString.Key: Any]
+    {
         guard storage.length > location else {
             return [:]
         }
@@ -81,16 +85,21 @@ class TextStorage: NSTextStorage {
         let updatedAttributes = applyingDefaultFormattingIfRequired(attrs)
         storage.setAttributes(updatedAttributes, range: range)
         storage.rangesOf(characterSet: .newlines)
-            .forEach { storage.addAttribute(.contentType, value: EditorContent.Name.newline, range: $0) }
+            .forEach {
+                storage.addAttribute(.contentType, value: EditorContent.Name.newline, range: $0)
+            }
         storage.fixAttributes(in: NSRange(location: 0, length: storage.length))
         edited([.editedAttributes], range: range, changeInLength: 0)
         endEditing()
     }
 
-    private func applyingDefaultFormattingIfRequired(_ attributes: RichTextAttributes?) -> RichTextAttributes {
+    private func applyingDefaultFormattingIfRequired(_ attributes: RichTextAttributes?)
+        -> RichTextAttributes
+    {
         var updatedAttributes = attributes ?? [:]
         if attributes?[.paragraphStyle] == nil {
-            updatedAttributes[.paragraphStyle] = defaultTextFormattingProvider?.paragraphStyle ?? defaultParagraphStyle
+            updatedAttributes[.paragraphStyle] = defaultTextFormattingProvider?.paragraphStyle
+                ?? defaultParagraphStyle
         }
 
         if attributes?[.font] == nil {
@@ -98,7 +107,8 @@ class TextStorage: NSTextStorage {
         }
 
         if attributes?[.foregroundColor] == nil {
-            updatedAttributes[.foregroundColor] = defaultTextFormattingProvider?.textColor ?? defaultTextColor
+            updatedAttributes[.foregroundColor] = defaultTextFormattingProvider?.textColor
+                ?? defaultTextColor
         }
 
         return updatedAttributes
@@ -121,7 +131,9 @@ class TextStorage: NSTextStorage {
         endEditing()
     }
 
-    private func fixMissingAttributes(deletedAttributes attrs: [NSAttributedString.Key], range: NSRange) {
+    private func fixMissingAttributes(
+        deletedAttributes attrs: [NSAttributedString.Key], range: NSRange
+    ) {
         if attrs.contains(.foregroundColor) {
             storage.addAttribute(.foregroundColor, value: defaultTextColor, range: range)
         }
@@ -143,27 +155,33 @@ class TextStorage: NSTextStorage {
         let spacer = attachment.spacer.string
         var hasPrevSpacer = false
         if range.length + range.location > 0 {
-            hasPrevSpacer = attributedSubstring(from: NSRange(location: max(range.location - 1, 0), length: 1)).string == spacer
+            hasPrevSpacer =
+                attributedSubstring(from: NSRange(location: max(range.location - 1, 0), length: 1))
+                .string == spacer
         }
         var hasNextSpacer = false
         if (range.location + range.length + 1) <= length {
-            hasNextSpacer = attributedSubstring(from: NSRange(location: range.location, length: 1)).string == spacer
+            hasNextSpacer =
+                attributedSubstring(from: NSRange(location: range.location, length: 1)).string
+                == spacer
         }
 
-        let attachmentString = attachment.stringWithSpacers(appendPrev: !hasPrevSpacer, appendNext: !hasNextSpacer)
+        let attachmentString = attachment.stringWithSpacers(
+            appendPrev: !hasPrevSpacer, appendNext: !hasNextSpacer)
         replaceCharacters(in: range, with: attachmentString)
     }
 
     private func getAttachments(in range: NSRange) -> [Attachment] {
         var attachments = [Attachment]()
-        storage.enumerateAttribute(.attachment,
-                                   in: range,
-                                   options: .longestEffectiveRangeNotRequired,
-                                   using: { (attribute, _, _) in
-                                    if let attachment = attribute as? Attachment {
-                                        attachments.append(attachment)
-                                    }
-        })
+        storage.enumerateAttribute(
+            .attachment,
+            in: range,
+            options: .longestEffectiveRangeNotRequired,
+            using: { (attribute, _, _) in
+                if let attachment = attribute as? Attachment {
+                    attachments.append(attachment)
+                }
+            })
         return attachments
     }
 }

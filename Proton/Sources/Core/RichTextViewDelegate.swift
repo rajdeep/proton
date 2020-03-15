@@ -15,11 +15,22 @@ public enum EditorKey {
 }
 
 protocol RichTextViewDelegate: AnyObject {
-    func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name)
-    func richTextView(_ richTextView: RichTextView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool)
+    func richTextView(
+        _ richTextView: RichTextView, didChangeSelection range: NSRange,
+        attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name
+    )
+
+    func richTextView(
+        _ richTextView: RichTextView, didReceiveKey key: EditorKey, at range: NSRange,
+        handled: inout Bool
+    )
+
     func richTextView(_ richTextView: RichTextView, didReceiveFocusAt range: NSRange)
     func richTextView(_ richTextView: RichTextView, didLoseFocusFrom range: NSRange)
     func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool)
     func richTextView(_ richTextView: RichTextView, didChangeTextAtRange range: NSRange)
-    func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?)
+
+    func richTextView(
+        _ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?
+    )
 }

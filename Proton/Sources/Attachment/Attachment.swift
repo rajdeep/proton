@@ -23,7 +23,11 @@ public protocol DynamicBoundsProviding: AnyObject {
 /// While offset can be provided for any type of `Attachment` i.e. Inline or Block, it is recommended that offset be provided only for Inline. If an offset is provided for Block attachment,
 /// it is possible that the attachment starts overlapping the content in `Editor` in the following line since the offset does not affect the line height.
 public protocol AttachmentOffsetProviding: AnyObject {
-    func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint
+    func offset(
+        for attachment: Attachment, in textContainer: NSTextContainer,
+        proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint,
+        characterIndex charIndex: Int
+    ) -> CGPoint
 }
 
 class AttachmentContentView: UIView {
@@ -86,9 +90,9 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
     func stringWithSpacers(appendPrev: Bool, appendNext: Bool) -> NSAttributedString {
         let updatedString = NSMutableAttributedString()
-//        if appendPrev {
-//            updatedString.append(spacer)
-//        }
+        //        if appendPrev {
+        //            updatedString.append(spacer)
+        //        }
         updatedString.append(string)
         if appendNext {
             updatedString.append(spacer)
@@ -97,15 +101,18 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     }
 
     public var string: NSAttributedString {
-        guard let isBlockAttachment = isBlockAttachment else { return NSAttributedString(string: "<UNKNOWN CONTENT TYPE>") }
-//        let key = isBlockAttachment == true ? NSAttributedString.Key.contentType: NSAttributedString.Key.inlineContentType
+        guard let isBlockAttachment = isBlockAttachment else {
+            return NSAttributedString(string: "<UNKNOWN CONTENT TYPE>")
+        }
+        //        let key = isBlockAttachment == true ? NSAttributedString.Key.contentType: NSAttributedString.Key.inlineContentType
         let string = NSMutableAttributedString(attachment: self)
         let value = name ?? EditorContent.Name.unknown
-        string.addAttributes([
-            .contentType: value,
-            .isBlockAttachment: isBlockAttachment,
-            .isInlineAttachment: !isBlockAttachment
-        ], range: string.fullRange)
+        string.addAttributes(
+            [
+                .contentType: value,
+                .isBlockAttachment: isBlockAttachment,
+                .isInlineAttachment: !isBlockAttachment,
+            ], range: string.fullRange)
         return string
     }
 
@@ -152,7 +159,9 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     }
 
     // This cannot be made convenience init as it prevents this being called from a class that inherits from `Attachment`
-    public init<AttachmentView: UIView & BlockContent>(_ contentView: AttachmentView, size: AttachmentSize) {
+    public init<AttachmentView: UIView & BlockContent>(
+        _ contentView: AttachmentView, size: AttachmentSize
+    ) {
         self.view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
         self.size = size
         super.init(data: nil, ofType: nil)
@@ -162,7 +171,9 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     }
 
     // This cannot be made convenience init as it prevents this being called from a class that inherits from `Attachment`
-    public init<AttachmentView: UIView & InlineContent>(_ contentView: AttachmentView, size: AttachmentSize) {
+    public init<AttachmentView: UIView & InlineContent>(
+        _ contentView: AttachmentView, size: AttachmentSize
+    ) {
         self.view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
         self.size = size
         super.init(data: nil, ofType: nil)
@@ -194,23 +205,24 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
         NSLayoutConstraint.activate([
             contentView.topAnchor.constraint(equalTo: view.topAnchor),
-            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: contentView.frame.height),
+            contentView.heightAnchor.constraint(
+                greaterThanOrEqualToConstant: contentView.frame.height),
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
         ])
 
         switch size {
         case .fullWidth, .matchContent, .percent:
             NSLayoutConstraint.activate([
-                contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+                contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             ])
         case let .fixed(width):
             NSLayoutConstraint.activate([
-                contentView.widthAnchor.constraint(equalToConstant: width)
+                contentView.widthAnchor.constraint(equalToConstant: width),
             ])
         case let .range(minWidth, maxWidth):
             NSLayoutConstraint.activate([
                 contentView.widthAnchor.constraint(greaterThanOrEqualToConstant: minWidth),
-                contentView.widthAnchor.constraint(lessThanOrEqualToConstant: maxWidth)
+                contentView.widthAnchor.constraint(lessThanOrEqualToConstant: maxWidth),
             ])
         }
     }
@@ -221,7 +233,8 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
     public func removeFromContainer() {
         guard let containerTextView = containerTextView,
-        let range = containerTextView.attributedText.rangeFor(attachment: self) else {
+            let range = containerTextView.attributedText.rangeFor(attachment: self)
+        else {
             return
         }
         containerTextView.textStorage.replaceCharacters(in: range, with: "")
@@ -231,11 +244,15 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         return containerTextView?.attributedText.rangeFor(attachment: self)
     }
 
-    open func addedAttributesOnContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key: Any]) {
+    open func addedAttributesOnContainingRange(
+        rangeInContainer range: NSRange, attributes: [NSAttributedString.Key: Any]
+    ) {
 
     }
 
-    open func removedAttributesFromContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key]) {
+    open func removedAttributesFromContainingRange(
+        rangeInContainer range: NSRange, attributes: [NSAttributedString.Key]
+    ) {
 
     }
 
@@ -244,7 +261,10 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override func attachmentBounds(for textContainer: NSTextContainer?, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGRect {
+    public override func attachmentBounds(
+        for textContainer: NSTextContainer?, proposedLineFragment lineFrag: CGRect,
+        glyphPosition position: CGPoint, characterIndex charIndex: Int
+    ) -> CGRect {
         guard let textContainer = textContainer else { return .zero }
 
         var size: CGSize
@@ -256,7 +276,8 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         }
 
         if size == .zero,
-            let fittingSize = contentView?.systemLayoutSizeFitting(textContainer.size) {
+            let fittingSize = contentView?.systemLayoutSizeFitting(textContainer.size)
+        {
             size = fittingSize
         }
 
@@ -283,7 +304,9 @@ open class Attachment: NSTextAttachment, BoundsObserving {
             size = CGSize(width: percentWidth, height: size.height)
         }
 
-        let offset = offsetProvider?.offset(for: self, in: textContainer, proposedLineFragment: lineFrag, glyphPosition: position, characterIndex: charIndex) ?? .zero
+        let offset = offsetProvider?.offset(
+            for: self, in: textContainer, proposedLineFragment: lineFrag, glyphPosition: position,
+            characterIndex: charIndex) ?? .zero
 
         self.bounds = CGRect(origin: offset, size: size)
         return self.bounds
@@ -296,7 +319,8 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         self.view.layoutIfNeeded()
 
         if var editorContentView = contentView as? EditorContentView,
-            editorContentView.delegate == nil {
+            editorContentView.delegate == nil
+        {
             editorContentView.delegate = editorView.delegate
         }
     }
@@ -306,7 +330,8 @@ extension Attachment {
     /// Invalidates the current layout and triggers a layout update.
     public func invalidateLayout() {
         guard let editor = containerEditorView,
-            let range = editor.attributedText.rangeFor(attachment: self) else { return }
+            let range = editor.attributedText.rangeFor(attachment: self)
+        else { return }
 
         editor.invalidateLayout(for: range)
         editor.relayoutAttachments()

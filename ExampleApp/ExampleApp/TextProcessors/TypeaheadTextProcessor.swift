@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 protocol TypeaheadTextProcessorDelegate: AnyObject {
     func typeaheadQueryDidChange(trigger: String, query: String, range: NSRange)
@@ -41,7 +40,8 @@ class TypeaheadTextProcessor: TextProcessing {
         let range = deleted.mutableString.range(of: "@")
         if range.location != NSNotFound {
             let triggerChar = deletedText.attributedSubstring(from: range)
-            let typeaheadAttribute = triggerChar.attribute(.typeahead, at: 0, effectiveRange: nil) as? Bool ?? true
+            let typeaheadAttribute = triggerChar.attribute(.typeahead, at: 0, effectiveRange: nil)
+                as? Bool ?? true
             if typeaheadAttribute != false {
                 triggerDeleted = true
                 delegate?.typeadheadQueryDidEnd(reason: .triggerDeleted)
@@ -49,7 +49,9 @@ class TypeaheadTextProcessor: TextProcessing {
         }
     }
 
-    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int) -> Processed {
+    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int)
+        -> Processed
+    {
         guard triggerDeleted == false else {
             editor.removeAttribute(.foregroundColor, at: editedRange)
             triggerDeleted = false
@@ -57,8 +59,11 @@ class TypeaheadTextProcessor: TextProcessing {
         }
 
         let textStorage = editor.attributedText
-        guard let range = textStorage.reverseRange(of: "@", currentPosition: editedRange.location + editedRange.length),
-            isValidTrigger(editor: editor, range: range.firstCharacterRange) else { return false }
+        guard
+            let range = textStorage.reverseRange(
+                of: "@", currentPosition: editedRange.location + editedRange.length),
+            isValidTrigger(editor: editor, range: range.firstCharacterRange)
+        else { return false }
 
         let triggerRange = NSRange(location: range.location, length: 1)
         let queryRange = NSRange(location: range.location + 1, length: range.length - 1)
@@ -83,7 +88,7 @@ class TypeaheadTextProcessor: TextProcessing {
         return true
     }
 
-    func processInterrupted(editor: EditorView, at range: NSRange) { }
+    func processInterrupted(editor: EditorView, at range: NSRange) {}
 
     private func isValidTrigger(editor: EditorView, range: NSRange) -> Bool {
         guard range != NSRange(location: 0, length: 1) else { return true }

@@ -85,6 +85,7 @@ open class EditorView: UIView {
 
     /// An object interested in responding to editing and focus related events in the `EditorView`.
     public weak var delegate: EditorViewDelegate?
+
     var textProcessor: TextProcessor?
 
     /// List of commands supported by the editor.
@@ -201,17 +202,17 @@ open class EditorView: UIView {
     /// Current line information based the caret position or selected range. If the selected range spans across multiple
     /// lines, only the line information of the line containing the start of the range is returned.
     public var currentLine: EditorLine? {
-        return editorLineFrom(range: richTextView.currentLineRange )
+        return editorLineFrom(range: richTextView.currentLineRange)
     }
 
     /// First line of content in the Editor. Nil if editor is empty.
     public var firstLine: EditorLine? {
-        return editorLineFrom(range: NSRange(location: 1, length: 0) )
+        return editorLineFrom(range: NSRange(location: 1, length: 0))
     }
 
     /// Last line of content in the Editor. Nil if editor is empty.
     public var lastLine: EditorLine? {
-        return editorLineFrom(range: NSRange(location: contentLength - 1, length: 0) )
+        return editorLineFrom(range: NSRange(location: contentLength - 1, length: 0))
     }
 
     /// Selected text in the editor.
@@ -369,7 +370,7 @@ open class EditorView: UIView {
 
         typingAttributes = [
             .font: font,
-            .paragraphStyle: paragraphStyle
+            .paragraphStyle: paragraphStyle,
         ]
         richTextView.adjustsFontForContentSizeCategory = true
     }
@@ -396,7 +397,8 @@ open class EditorView: UIView {
     /// `EditorLine` after the given line. Nil if the Editor is empty or given line is last line in the Editor.
     public func lineAfter(_ line: EditorLine) -> EditorLine? {
         let lineRange = line.range
-        let nextLineStartRange = NSRange(location: lineRange.location + lineRange.length + 1, length: 0)
+        let nextLineStartRange = NSRange(
+            location: lineRange.location + lineRange.length + 1, length: 0)
         guard nextLineStartRange.isValidIn(richTextView) else { return nil }
         return editorLineFrom(range: nextLineStartRange)
     }
@@ -414,7 +416,8 @@ open class EditorView: UIView {
 
     private func editorLineFrom(range: NSRange?) -> EditorLine? {
         guard let range = range,
-            let lineRange = richTextView.lineRange(from: range.location) else { return nil }
+            let lineRange = richTextView.lineRange(from: range.location)
+        else { return nil }
 
         let text = attributedText.attributedSubstring(from: lineRange)
         return EditorLine(text: text, range: lineRange)
@@ -439,7 +442,8 @@ open class EditorView: UIView {
     /// - Returns:
     /// Rectangle for caret based on the line height and given location.
     public func caretRect(for position: Int) -> CGRect {
-        let textPosition = richTextView.position(from: richTextView.beginningOfDocument, offset: position) ?? richTextView.endOfDocument
+        let textPosition = richTextView.position(
+            from: richTextView.beginningOfDocument, offset: position) ?? richTextView.endOfDocument
         return richTextView.caretRect(for: textPosition)
     }
 
@@ -497,7 +501,9 @@ open class EditorView: UIView {
     /// - Parameter transformer: Transformer capable of transforming `EditorContent` to given type
     /// - Returns:
     /// Array of transformed contents based on given transformer.
-    public func transformContents<T: EditorContentEncoding>(in range: NSRange? = nil, using transformer: T) -> [T.EncodedType] {
+    public func transformContents<T: EditorContentEncoding>(
+        in range: NSRange? = nil, using transformer: T
+    ) -> [T.EncodedType] {
         return richTextView.transformContents(in: range, using: transformer)
     }
 
@@ -517,11 +523,13 @@ open class EditorView: UIView {
     /// - Parameter range: Range of text to replace. For an empty `EditorView`, you may pass `NSRange.zero` to insert text at the beginning.
     /// - Parameter string: String to replace the range of text with. The string will use default `font` and `paragraphStyle` defined in the `EditorView`.
     public func replaceCharacters(in range: NSRange, with string: String) {
-        let attributedString = NSAttributedString(string: string, attributes: [
-            .paragraphStyle: paragraphStyle,
-            .font: font,
-            .foregroundColor: textColor
-        ])
+        let attributedString = NSAttributedString(
+            string: string,
+            attributes: [
+                .paragraphStyle: paragraphStyle,
+                .font: font,
+                .foregroundColor: textColor,
+            ])
         richTextView.replaceCharacters(in: range, with: attributedString)
     }
 
@@ -603,9 +611,12 @@ extension EditorView {
     ///   - range: Range on which attributes should be applied to.
     public func addAttributes(_ attributes: [NSAttributedString.Key: Any], at range: NSRange) {
         self.richTextView.addAttributes(attributes, range: range)
-        self.richTextView.enumerateAttribute(.attachment, in: range, options: .longestEffectiveRangeNotRequired) { value, rangeInContainer, _ in
+        self.richTextView.enumerateAttribute(
+            .attachment, in: range, options: .longestEffectiveRangeNotRequired
+        ) { value, rangeInContainer, _ in
             if let attachment = value as? Attachment {
-                attachment.addedAttributesOnContainingRange(rangeInContainer: rangeInContainer, attributes: attributes)
+                attachment.addedAttributesOnContainingRange(
+                    rangeInContainer: rangeInContainer, attributes: attributes)
             }
         }
     }
@@ -616,9 +627,12 @@ extension EditorView {
     ///   - range: Range to remove the attributes from.
     public func removeAttributes(_ attributes: [NSAttributedString.Key], at range: NSRange) {
         self.richTextView.removeAttributes(attributes, range: range)
-        self.richTextView.enumerateAttribute(.attachment, in: range, options: .longestEffectiveRangeNotRequired) { value, rangeInContainer, _ in
+        self.richTextView.enumerateAttribute(
+            .attachment, in: range, options: .longestEffectiveRangeNotRequired
+        ) { value, rangeInContainer, _ in
             if let attachment = value as? Attachment {
-                attachment.removedAttributesFromContainingRange(rangeInContainer: rangeInContainer, attributes: attributes)
+                attachment.removedAttributesFromContainingRange(
+                    rangeInContainer: rangeInContainer, attributes: attributes)
             }
         }
     }
@@ -641,14 +655,21 @@ extension EditorView {
     }
 }
 
-extension EditorView: DefaultTextFormattingProviding { }
+extension EditorView: DefaultTextFormattingProviding {}
 
 extension EditorView: RichTextViewDelegate {
-    func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
-        delegate?.editor(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
+    func richTextView(
+        _ richTextView: RichTextView, didChangeSelection range: NSRange,
+        attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name
+    ) {
+        delegate?.editor(
+            self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
     }
 
-    func richTextView(_ richTextView: RichTextView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool) {
+    func richTextView(
+        _ richTextView: RichTextView, didReceiveKey key: EditorKey, at range: NSRange,
+        handled: inout Bool
+    ) {
         delegate?.editor(self, didReceiveKey: key, at: range, handled: &handled)
     }
 
@@ -669,7 +690,9 @@ extension EditorView: RichTextViewDelegate {
         relayoutAttachments()
     }
 
-    func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) { }
+    func richTextView(
+        _ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?
+    ) {}
 }
 
 extension EditorView {
@@ -678,7 +701,10 @@ extension EditorView {
     }
 
     func relayoutAttachments() {
-        richTextView.enumerateAttribute(.attachment, in: NSRange(location: 0, length: richTextView.contentLength), options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
+        richTextView.enumerateAttribute(
+            .attachment, in: NSRange(location: 0, length: richTextView.contentLength),
+            options: .longestEffectiveRangeNotRequired
+        ) { (attach, range, _) in
             guard let attachment = attach as? Attachment else { return }
 
             // Remove attachment from container if it is already added to another Editor
@@ -692,7 +718,8 @@ extension EditorView {
 
             var size = attachment.frame.size
             if size == .zero,
-                let contentSize = attachment.contentView?.systemLayoutSizeFitting(bounds.size) {
+                let contentSize = attachment.contentView?.systemLayoutSizeFitting(bounds.size)
+            {
                 size = contentSize
             }
 
@@ -709,11 +736,11 @@ extension EditorView {
     }
 }
 
-public extension EditorView {
+extension EditorView {
     /// Creates a `RendererView` from current `EditorView`
     /// - Returns:
     /// `RendererView` for the Editor
-    func convertToRenderer() -> RendererView {
+    public func convertToRenderer() -> RendererView {
         return RendererView(editor: self)
     }
 
@@ -722,7 +749,7 @@ public extension EditorView {
     /// - Parameter command: Command to validate
     /// - Returns:
     /// `true` if the command is registered with the Editor.
-    func isCommandRegistered(_ command: EditorCommand) -> Bool {
+    public func isCommandRegistered(_ command: EditorCommand) -> Bool {
         return registeredCommands?.contains { $0 === command } ?? true
     }
 }

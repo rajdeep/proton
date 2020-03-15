@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class MatchContentAttachmentExampleViewController: ExamplesBaseViewController {
 
@@ -37,9 +36,11 @@ class MatchContentAttachmentExampleViewController: ExamplesBaseViewController {
             button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
 
             editor.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 20),
-            editor.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            editor.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
+            editor.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            editor.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
         ])
     }
 
@@ -61,7 +62,11 @@ class MatchContentAttachmentExampleViewController: ExamplesBaseViewController {
 }
 
 extension MatchContentAttachmentExampleViewController: AttachmentOffsetProviding {
-    func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint {
+    func offset(
+        for attachment: Attachment, in textContainer: NSTextContainer,
+        proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint,
+        characterIndex charIndex: Int
+    ) -> CGPoint {
         return CGPoint(x: 0, y: -8)
     }
 }

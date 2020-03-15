@@ -9,8 +9,11 @@
 import Foundation
 import UIKit
 
-public extension UIView {
-    func flash(numberOfFlashes: Float = 2, maxOpacity: Float = 0.5, minOpacity: Float = 0.1, onCompletion completion: ((UIView) -> Void)? = nil) {
+extension UIView {
+    public func flash(
+        numberOfFlashes: Float = 2, maxOpacity: Float = 0.5, minOpacity: Float = 0.1,
+        onCompletion completion: ((UIView) -> Void)? = nil
+    ) {
         CATransaction.begin()
         CATransaction.setCompletionBlock {
             completion?(self)
@@ -26,10 +29,12 @@ public extension UIView {
         CATransaction.commit()
     }
 
-    func blink() {
+    public func blink() {
         self.alpha = 1
-        UIView.animate(withDuration: 1.0, delay: 0, options: [.repeat], animations: {
-            self.alpha = 0
-        }, completion: nil)
+        UIView.animate(
+            withDuration: 1.0, delay: 0, options: [.repeat],
+            animations: {
+                self.alpha = 0
+            }, completion: nil)
     }
 }

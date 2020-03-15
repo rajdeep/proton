@@ -7,17 +7,22 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 extension EditorContent.Name {
     static let panel = EditorContent.Name("panel")
 }
 
 protocol PanelViewDelegate: AnyObject {
-    func panel(_ panel: PanelView, didRecieveKey key: EditorKey, at range: NSRange, handled: inout Bool)
-    func panel(_ panel: PanelView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name)
+    func panel(
+        _ panel: PanelView, didRecieveKey key: EditorKey, at range: NSRange, handled: inout Bool
+    )
+
+    func panel(
+        _ panel: PanelView, didChangeSelectionAt range: NSRange,
+        attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name
+    )
 }
 
 class PanelView: UIView, BlockContent, EditorContentView {
@@ -82,7 +87,8 @@ class PanelView: UIView, BlockContent, EditorContentView {
             iconView.topAnchor.constraint(equalTo: container.topAnchor, constant: 10),
             iconView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 10),
 
-            editor.topAnchor.constraint(equalTo: iconView.topAnchor, constant: -editor.textContainerInset.top),
+            editor.topAnchor.constraint(
+                equalTo: iconView.topAnchor, constant: -editor.textContainerInset.top),
             editor.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 5),
             editor.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -5),
             editor.bottomAnchor.constraint(equalTo: container.bottomAnchor),
@@ -99,15 +105,21 @@ class PanelView: UIView, BlockContent, EditorContentView {
 }
 
 extension PanelView: EditorViewDelegate {
-    func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool) {
+    func editor(
+        _ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool
+    ) {
         delegate?.panel(self, didRecieveKey: key, at: range, handled: &handled)
     }
 
-    func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
+    func editor(
+        _ editor: EditorView, didChangeSelectionAt range: NSRange,
+        attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name
+    ) {
         // Relay the changed selection command to container `EditorView`'s delegate
         // This needs to be done as an additional step as container `EditorView`'s delegate is not registered as `PanelView`'s
         // editor as the `PanelView` register's itself as the `EditorView`'s delegate
-        delegate?.panel(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
+        delegate?.panel(
+            self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
     }
 }
 

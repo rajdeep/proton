@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 extension JSON {
     var type: String? {
@@ -27,7 +26,9 @@ struct ParagraphEncoder: EditorTextEncoding {
     func encode(name: EditorContent.Name, string: NSAttributedString) -> JSON {
         var paragraph = JSON()
         paragraph.type = name.rawValue
-        if let style = string.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle {
+        if let style = string.attribute(.paragraphStyle, at: 0, effectiveRange: nil)
+            as? NSParagraphStyle
+        {
             paragraph[style.key] = style.value
         }
         paragraph.contents = contentsFrom(string)

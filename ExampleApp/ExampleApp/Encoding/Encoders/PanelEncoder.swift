@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 struct PanelEncoder: AttachmentEncoding {
     func encode(name: EditorContent.Name, view: UIView) -> JSON {

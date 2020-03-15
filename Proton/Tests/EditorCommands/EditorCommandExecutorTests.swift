@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import XCTest
-
 import Proton
+import XCTest
 
 class EditorCommandExecutorTests: XCTestCase {
     func testExecutesCommandOnEditor() {
@@ -21,7 +20,8 @@ class EditorCommandExecutorTests: XCTestCase {
         editor.replaceCharacters(in: .zero, with: "This is some text")
         editor.selectedRange = selectedRange
 
-        guard let font = editor.selectedText.attribute(.font, at: 0, effectiveRange: nil) as? UIFont else {
+        guard let font = editor.selectedText.attribute(.font, at: 0, effectiveRange: nil) as? UIFont
+        else {
             XCTFail("Failed to get font information")
             return
         }
@@ -30,7 +30,10 @@ class EditorCommandExecutorTests: XCTestCase {
 
         commandExecutor.execute(BoldCommand())
 
-        guard let updatedFont = editor.selectedText.attribute(.font, at: 0, effectiveRange: nil) as? UIFont else {
+        guard
+            let updatedFont = editor.selectedText.attribute(.font, at: 0, effectiveRange: nil)
+                as? UIFont
+        else {
             XCTFail("Failed to get font information")
             return
         }

@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class FindTextCommand: RendererCommand {
     var text = ""
@@ -22,9 +21,12 @@ class FindTextCommand: RendererCommand {
         for content in renderer.contents() {
             if case let .text(_, attributedString) = content.type,
                 let range = attributedString.string.range(of: text),
-                let enclosingRange = content.enclosingRange {
+                let enclosingRange = content.enclosingRange
+            {
                 let contentRange = attributedString.string.makeNSRange(from: range)
-                let scrollRange = NSRange(location: enclosingRange.location + contentRange.location, length: contentRange.length)
+                let scrollRange = NSRange(
+                    location: enclosingRange.location + contentRange.location,
+                    length: contentRange.length)
                 renderer.addAttribute(.backgroundColor, value: UIColor.cyan, at: scrollRange)
                 renderer.scrollRangeToVisible(scrollRange)
                 break

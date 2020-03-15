@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class PanelAttachment: Attachment {
     var view: PanelView
@@ -26,29 +25,46 @@ class PanelAttachment: Attachment {
         set { view.attributedText = newValue }
     }
 
-    override func addedAttributesOnContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key: Any]) {
+    override func addedAttributesOnContainingRange(
+        rangeInContainer range: NSRange, attributes: [NSAttributedString.Key: Any]
+    ) {
         view.editor.addAttributes(attributes, at: view.editor.attributedText.fullRange)
     }
 
-    override func removedAttributesFromContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key]) {
+    override func removedAttributesFromContainingRange(
+        rangeInContainer range: NSRange, attributes: [NSAttributedString.Key]
+    ) {
         view.editor.removeAttributes(attributes, at: view.editor.attributedText.fullRange)
     }
 }
 
 extension PanelAttachment: PanelViewDelegate {
-    func panel(_ panel: PanelView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
+    func panel(
+        _ panel: PanelView, didChangeSelectionAt range: NSRange,
+        attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name
+    ) {
         guard let containerEditor = self.containerEditorView else { return }
-        containerEditor.delegate?.editor(containerEditor, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
+        containerEditor.delegate?.editor(
+            containerEditor, didChangeSelectionAt: range, attributes: attributes,
+            contentType: contentType)
     }
 
-    func panel(_ panel: PanelView, didRecieveKey key: EditorKey, at range: NSRange, handled: inout Bool) {
-        if key == .backspace, range == .zero, panel.editor.attributedText.string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+    func panel(
+        _ panel: PanelView, didRecieveKey key: EditorKey, at range: NSRange, handled: inout Bool
+    ) {
+        if key == .backspace, range == .zero,
+            panel.editor.attributedText.string.trimmingCharacters(in: .whitespacesAndNewlines)
+                .isEmpty
+        {
             removeFromContainer()
             handled = true
         } else if key == .enter,
             let range = rangeInContainer()?.nextPosition,
-            let containerBounds = containerBounds {
-            let newAttachment = PanelAttachment(frame: CGRect(origin: .zero, size: CGSize(width: containerBounds.width, height: 30)))
+            let containerBounds = containerBounds
+        {
+            let newAttachment = PanelAttachment(
+                frame: CGRect(origin: .zero, size: CGSize(width: containerBounds.width, height: 30))
+            )
             self.containerEditorView?.insertAttachment(in: range, attachment: newAttachment)
             handled = true
         }

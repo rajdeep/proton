@@ -6,10 +6,13 @@
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 
-import Foundation
 import CoreGraphics
+import Foundation
 
 public protocol RendererViewDelegate: AnyObject {
-    func didTap(_ renderer: RendererView, didTapAtLocation location: CGPoint, characterRange: NSRange?)
+    func didTap(
+        _ renderer: RendererView, didTapAtLocation location: CGPoint, characterRange: NSRange?
+    )
+
     func didChangeSelection(_ renderer: RendererView, range: NSRange)
 }

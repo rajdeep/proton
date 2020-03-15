@@ -28,7 +28,8 @@ public class RendererCommandExecutor {
         guard let activeRenderer = context.activeTextView,
             let editor = activeRenderer.superview as? EditorView,
             let renderer = editor.superview as? RendererView,
-            command.canExecute(on: renderer) else { return }
+            command.canExecute(on: renderer)
+        else { return }
         command.execute(on: renderer)
     }
 }

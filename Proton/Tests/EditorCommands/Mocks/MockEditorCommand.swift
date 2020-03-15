@@ -7,16 +7,17 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class MockEditorCommand: EditorCommand {
     var onCanExecute: (EditorView) -> Bool
     var onExecute: (EditorView) -> Void
 
-    init(onCanExecute: @escaping ((EditorView) -> Bool) = { _ in true },
-         onExecute: @escaping ((EditorView) -> Void)) {
+    init(
+        onCanExecute: @escaping ((EditorView) -> Bool) = { _ in true },
+        onExecute: @escaping ((EditorView) -> Void)
+    ) {
         self.onCanExecute = onCanExecute
         self.onExecute = onExecute
     }

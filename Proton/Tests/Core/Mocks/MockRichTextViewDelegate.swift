@@ -12,7 +12,9 @@ import UIKit
 @testable import Proton
 
 class MockRichTextViewDelegate: RichTextViewDelegate {
-    var onSelectionChanged: ((RichTextView, NSRange, [NSAttributedString.Key: Any], EditorContent.Name) -> Void)?
+    var onSelectionChanged:
+        ((RichTextView, NSRange, [NSAttributedString.Key: Any], EditorContent.Name) -> Void)?
+
     var onKeyReceived: ((RichTextView, EditorKey, NSRange, Bool) -> Void)?
     var onReceivedFocus: ((RichTextView, NSRange) -> Void)?
     var onLostFocus: ((RichTextView, NSRange) -> Void)?
@@ -20,11 +22,17 @@ class MockRichTextViewDelegate: RichTextViewDelegate {
     var onDidFinishLayout: ((RichTextView, Bool) -> Void)?
     var onDidTapAtLocation: ((RichTextView, CGPoint, NSRange?) -> Void)?
 
-    func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
+    func richTextView(
+        _ richTextView: RichTextView, didChangeSelection range: NSRange,
+        attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name
+    ) {
         onSelectionChanged?(richTextView, range, attributes, contentType)
     }
 
-    func richTextView(_ richTextView: RichTextView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool) {
+    func richTextView(
+        _ richTextView: RichTextView, didReceiveKey key: EditorKey, at range: NSRange,
+        handled: inout Bool
+    ) {
         onKeyReceived?(richTextView, key, range, handled)
     }
 
@@ -44,7 +52,9 @@ class MockRichTextViewDelegate: RichTextViewDelegate {
         onDidChangeText?(richTextView, range)
     }
 
-    func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
+    func richTextView(
+        _ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?
+    ) {
         onDidTapAtLocation?(richTextView, location, characterRange)
     }
 }

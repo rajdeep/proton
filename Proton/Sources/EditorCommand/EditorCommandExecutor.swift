@@ -28,7 +28,8 @@ public class EditorCommandExecutor {
         guard let activeEditor = context.activeTextView,
             let editor = activeEditor.superview as? EditorView,
             editor.isCommandRegistered(command),
-            command.canExecute(on: editor) else { return }
+            command.canExecute(on: editor)
+        else { return }
         command.execute(on: editor)
     }
 }

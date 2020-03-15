@@ -7,10 +7,9 @@
 //
 
 import Foundation
+import Proton
 import UIKit
 import XCTest
-
-import Proton
 
 class EditorContentTransformerTests: XCTestCase {
     func testTransformsText() {

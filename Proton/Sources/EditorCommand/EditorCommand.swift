@@ -24,8 +24,8 @@ public protocol EditorCommand: AnyObject {
     func execute(on editor: EditorView)
 }
 
-public extension EditorCommand {
-    func canExecute(on editor: EditorView) -> Bool {
+extension EditorCommand {
+    public func canExecute(on editor: EditorView) -> Bool {
         return editor.registeredCommands?.contains { $0 === self } ?? true
     }
 }

@@ -42,8 +42,8 @@ public struct EditorContent {
     }
 }
 
-public extension EditorContent {
-    struct Name: Hashable, Equatable, RawRepresentable {
+extension EditorContent {
+    public struct Name: Hashable, Equatable, RawRepresentable {
         public var rawValue: String
 
         public static let paragraph = Name("paragraph")

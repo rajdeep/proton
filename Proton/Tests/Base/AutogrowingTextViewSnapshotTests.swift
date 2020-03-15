@@ -6,9 +6,9 @@
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 
+import FBSnapshotTestCase
 import Foundation
 import XCTest
-import FBSnapshotTestCase
 
 @testable import Proton
 
@@ -31,7 +31,7 @@ class AutogrowingTextViewSnapshotTests: FBSnapshotTestCase {
         view.addSubview(textView)
         NSLayoutConstraint.activate([
             textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
         ])
 
         viewController.render()
@@ -43,7 +43,8 @@ class AutogrowingTextViewSnapshotTests: FBSnapshotTestCase {
         let viewController = SnapshotTestViewController()
         let textView = AutogrowingTextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.text = "Sample with multiple lines of text. This text flows into the second line because of width constraint on textview"
+        textView.text =
+            "Sample with multiple lines of text. This text flows into the second line because of width constraint on textview"
         textView.addBorder()
 
         let view = viewController.view!
@@ -51,7 +52,7 @@ class AutogrowingTextViewSnapshotTests: FBSnapshotTestCase {
         NSLayoutConstraint.activate([
             textView.widthAnchor.constraint(equalToConstant: 280),
             textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10)
+            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
         ])
 
         viewController.render()

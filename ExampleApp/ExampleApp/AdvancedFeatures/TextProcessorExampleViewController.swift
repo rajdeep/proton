@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class TextProcessorExampleViewController: ExamplesBaseViewController {
 
@@ -29,13 +28,15 @@ class TextProcessorExampleViewController: ExamplesBaseViewController {
 
         NSLayoutConstraint.activate([
             editor.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            editor.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            editor.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            editor.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            editor.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
             editor.heightAnchor.constraint(lessThanOrEqualToConstant: 300),
 
             typeaheadLabel.topAnchor.constraint(equalTo: editor.bottomAnchor, constant: 50),
-            typeaheadLabel.leadingAnchor.constraint(equalTo: editor.leadingAnchor)
+            typeaheadLabel.leadingAnchor.constraint(equalTo: editor.leadingAnchor),
         ])
 
         registerTextProcessors()

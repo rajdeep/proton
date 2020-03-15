@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class RendererCommandButton: UIButton {
     var command: RendererCommand!
@@ -65,7 +64,8 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
         view.addSubview(searchText)
 
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            stackView.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
             searchText.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20),
@@ -73,20 +73,23 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
             searchText.widthAnchor.constraint(equalToConstant: 300),
 
             renderer.topAnchor.constraint(equalTo: searchText.bottomAnchor, constant: 20),
-            renderer.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            renderer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            renderer.heightAnchor.constraint(equalToConstant: 300)
+            renderer.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            renderer.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            renderer.heightAnchor.constraint(equalToConstant: 300),
         ])
 
         setText()
     }
 
     func setText() {
-        renderer.attributedText = NSAttributedString(string: """
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vel aliquam enim. Nam lobortis, ipsum ullamcorper accumsan aliquam, orci velit lobortis lacus, at volutpat augue sem at enim. Maecenas porta velit eget eleifend rutrum. Mauris vel dui diam. Suspendisse porttitor dictum massa, sit amet imperdiet mi facilisis a. Duis viverra facilisis justo, sit amet congue mauris. Nullam vitae pellentesque eros. Aenean ut erat ultrices, vulputate massa vel, ultricies velit. Nam at arcu lacinia, ullamcorper augue eget, lobortis dui. Vestibulum iaculis tortor id diam suscipit consectetur. Nulla sit amet pretium purus. Donec ac congue est, et porttitor dolor. Curabitur dictum, nunc et aliquam venenatis, quam nisi porta nunc, accumsan tincidunt magna tortor sed justo. Donec quis iaculis leo, sed feugiat lectus. Sed non libero nibh.
+        renderer.attributedText = NSAttributedString(
+            string: """
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vel aliquam enim. Nam lobortis, ipsum ullamcorper accumsan aliquam, orci velit lobortis lacus, at volutpat augue sem at enim. Maecenas porta velit eget eleifend rutrum. Mauris vel dui diam. Suspendisse porttitor dictum massa, sit amet imperdiet mi facilisis a. Duis viverra facilisis justo, sit amet congue mauris. Nullam vitae pellentesque eros. Aenean ut erat ultrices, vulputate massa vel, ultricies velit. Nam at arcu lacinia, ullamcorper augue eget, lobortis dui. Vestibulum iaculis tortor id diam suscipit consectetur. Nulla sit amet pretium purus. Donec ac congue est, et porttitor dolor. Curabitur dictum, nunc et aliquam venenatis, quam nisi porta nunc, accumsan tincidunt magna tortor sed justo. Donec quis iaculis leo, sed feugiat lectus. Sed non libero nibh.
 
-            Donec dignissim sollicitudin diam, a egestas mi elementum ac. Fusce orci ligula, consectetur vel eleifend at, consectetur a turpis. Sed sed volutpat nisl. Donec vel sollicitudin turpis. Vivamus auctor iaculis dui, eget consectetur sapien. Nullam hendrerit egestas efficitur. Nam vestibulum massa libero, eget facilisis mauris eleifend nec. Mauris placerat semper eros, nec sagittis ipsum dapibus in. Curabitur faucibus est quis enim sodales, placerat sollicitudin eros blandit. Proin a fringilla augue. Morbi ullamcorper a metus quis placerat.
-        """
+                    Donec dignissim sollicitudin diam, a egestas mi elementum ac. Fusce orci ligula, consectetur vel eleifend at, consectetur a turpis. Sed sed volutpat nisl. Donec vel sollicitudin turpis. Vivamus auctor iaculis dui, eget consectetur sapien. Nullam hendrerit egestas efficitur. Nam vestibulum massa libero, eget facilisis mauris eleifend nec. Mauris placerat semper eros, nec sagittis ipsum dapibus in. Curabitur faucibus est quis enim sodales, placerat sollicitudin eros blandit. Proin a fringilla augue. Morbi ullamcorper a metus quis placerat.
+                """
         )
     }
 
@@ -119,7 +122,9 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
 }
 
 extension RendererCommandsExampleViewController: RendererViewDelegate {
-    func didTap(_ renderer: RendererView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
+    func didTap(
+        _ renderer: RendererView, didTapAtLocation location: CGPoint, characterRange: NSRange?
+    ) {
         guard let charRange = characterRange else { return }
         print("Tapped: \(renderer.attributedText.attributedSubstring(from: charRange))")
     }

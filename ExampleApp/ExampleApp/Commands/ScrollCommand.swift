@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class ScrollCommand: RendererCommand {
     var text = "Fusce"
@@ -20,9 +19,12 @@ class ScrollCommand: RendererCommand {
         for content in renderer.contents(in: range) {
             if case let .text(_, attributedString) = content.type,
                 let range = attributedString.string.range(of: text, options: .caseInsensitive),
-                let enclosingRange = content.enclosingRange {
+                let enclosingRange = content.enclosingRange
+            {
                 let contentRange = attributedString.string.makeNSRange(from: range)
-                let scrollRange = NSRange(location: enclosingRange.location + contentRange.location + location, length: contentRange.length)
+                let scrollRange = NSRange(
+                    location: enclosingRange.location + contentRange.location + location,
+                    length: contentRange.length)
                 renderer.selectedRange = scrollRange
                 renderer.scrollRangeToVisible(scrollRange)
                 break

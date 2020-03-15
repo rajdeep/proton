@@ -39,7 +39,10 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         }
     }
 
-    func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int) {
+    func textStorage(
+        _ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorage.EditActions,
+        range editedRange: NSRange, changeInLength delta: Int
+    ) {
         guard let editor = editor else { return }
 
         var processed = false
@@ -52,13 +55,18 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         }
     }
 
-    func textStorage(_ textStorage: NSTextStorage, willProcessDeletedText deletedText: NSAttributedString, insertedText: String) {
+    func textStorage(
+        _ textStorage: NSTextStorage, willProcessDeletedText deletedText: NSAttributedString,
+        insertedText: String
+    ) {
         for processor in sortedProcessors {
             processor.willProcess(deletedText: deletedText, insertedText: insertedText)
         }
     }
 
-    private func notifyInterruption(by processor: TextProcessing, editor: EditorView, at range: NSRange) {
+    private func notifyInterruption(
+        by processor: TextProcessing, editor: EditorView, at range: NSRange
+    ) {
         let processors = activeProcessors.filter { $0.name != processor.name }
         processors.forEach { $0.processInterrupted(editor: editor, at: range) }
     }

@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
+import UIKit
 
 class PanelView: UIView, BlockContent, EditorContentView {
     let editor: EditorView
@@ -50,10 +49,11 @@ class PanelView: UIView, BlockContent, EditorContentView {
             iconView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
             iconView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
 
-            editor.topAnchor.constraint(equalTo: iconView.topAnchor, constant: -editor.textContainerInset.top),
+            editor.topAnchor.constraint(
+                equalTo: iconView.topAnchor, constant: -editor.textContainerInset.top),
             editor.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 5),
             editor.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
-            editor.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+            editor.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
         ])
 
         iconView.layer.borderColor = UIColor.black.cgColor

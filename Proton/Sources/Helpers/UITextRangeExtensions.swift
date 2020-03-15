@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-public extension UITextRange {
-    func toNSRange(in input: UITextInput) -> NSRange? {
+extension UITextRange {
+    public func toNSRange(in input: UITextInput) -> NSRange? {
         let location = input.offset(from: input.beginningOfDocument, to: start)
         let length = input.offset(from: start, to: end)
         return NSRange(location: location, length: length)
