@@ -19,7 +19,6 @@ struct NavigationItem {
 }
 
 class MasterViewController: UITableViewController {
-
     let navigation = [
         Navigation(title: "Basic features", items: [
             NavigationItem(title: "Autogrowing Editor", viewController: AutogrowingEditorViewExampleViewController()),
@@ -36,7 +35,7 @@ class MasterViewController: UITableViewController {
             NavigationItem(title: "Text Processors", viewController: TextProcessorExampleViewController()),
         ]),
         Navigation(title: "Renderer", items: [
-            NavigationItem(title: "Commands", viewController: RendererCommandsExampleViewController())
+            NavigationItem(title: "Commands", viewController: RendererCommandsExampleViewController()),
         ]),
     ]
 
@@ -47,16 +46,16 @@ class MasterViewController: UITableViewController {
 
     // MARK: - Table View
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return navigation.count
+    override func numberOfSections(in _: UITableView) -> Int {
+        navigation.count
     }
 
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_: UITableView, titleForHeaderInSection section: Int) -> String? {
         navigation[section].title
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return navigation[section].items.count
+    override func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+        navigation[section].items.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -66,16 +65,16 @@ class MasterViewController: UITableViewController {
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = navigation.item(at: indexPath)
         let viewController = item.viewController
         viewController.title = item.title
-        self.showDetailViewController(viewController, sender: self)
+        showDetailViewController(viewController, sender: self)
     }
 }
 
 extension Array where Element == Navigation {
     func item(at indexPath: IndexPath) -> NavigationItem {
-        return self[indexPath.section].items[indexPath.row]
+        self[indexPath.section].items[indexPath.row]
     }
 }

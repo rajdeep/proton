@@ -12,16 +12,15 @@ import UIKit
 import Proton
 
 class ExamplesBaseViewController: UIViewController {
-
     let editor = EditorView()
 
     func setup() {
-        self.view.backgroundColor = .secondarySystemBackground
+        view.backgroundColor = .secondarySystemBackground
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setup()
+        setup()
     }
 
     override func viewDidAppear(_ animated: Bool) {

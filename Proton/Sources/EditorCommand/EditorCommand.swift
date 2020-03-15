@@ -12,7 +12,6 @@ import Foundation
 /// However, in a typical usage scenario, these should be invoked via `EditorCommandExecutor` which manages all the `EditorView`s in the
 /// view including the ones that are contained in the attachments.
 public protocol EditorCommand: AnyObject {
-
     /// Determines if the current command can be executed on the given `EditorView`. When a command is executed using `EditorCommandExecutor`, it ensures
     /// that only the commands returning `true` for the active `EditorView` are executed when invoked. Defaults to `true`.
     /// - Parameter editor: `EditorView` to execute the command on.
@@ -26,6 +25,6 @@ public protocol EditorCommand: AnyObject {
 
 public extension EditorCommand {
     func canExecute(on editor: EditorView) -> Bool {
-        return editor.registeredCommands?.contains { $0 === self } ?? true
+        editor.registeredCommands?.contains { $0 === self } ?? true
     }
 }

@@ -16,17 +16,17 @@ class PanelView: UIView, BlockContent, EditorContentView {
     let iconView = UIImageView()
 
     var name: EditorContent.Name {
-        return EditorContent.Name("panel")
+        EditorContent.Name("panel")
     }
 
     override init(frame: CGRect) {
-        self.editor = EditorView(frame: frame)
+        editor = EditorView(frame: frame)
         super.init(frame: frame)
 
         setup()
     }
 
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -53,7 +53,7 @@ class PanelView: UIView, BlockContent, EditorContentView {
             editor.topAnchor.constraint(equalTo: iconView.topAnchor, constant: -editor.textContainerInset.top),
             editor.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 5),
             editor.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
-            editor.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+            editor.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
         ])
 
         iconView.layer.borderColor = UIColor.black.cgColor

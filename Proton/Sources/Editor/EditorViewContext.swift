@@ -28,7 +28,7 @@ public class EditorViewContext {
     /// Initializes a new context
     /// - Parameter name: Friendly name for the context.
     public init(name: String) {
-        self.id = UUID().uuidString
+        id = UUID().uuidString
         self.name = name
         richTextViewContext = RichTextEditorContext()
     }

@@ -33,7 +33,7 @@ class AutogrowingTextViewTests: XCTestCase {
         NSLayoutConstraint.activate([
             textView.widthAnchor.constraint(equalToConstant: 80),
             textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
         ])
 
         viewController.render()

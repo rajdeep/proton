@@ -14,7 +14,7 @@ import Proton
 class MockAttachmentOffsetProvider: AttachmentOffsetProviding {
     var offset = CGPoint.zero
 
-    func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint {
-        return offset
+    func offset(for _: Attachment, in _: NSTextContainer, proposedLineFragment _: CGRect, glyphPosition _: CGPoint, characterIndex _: Int) -> CGPoint {
+        offset
     }
 }

@@ -27,7 +27,7 @@ class RichTextViewTests: XCTestCase {
         view.addSubview(textView)
         NSLayoutConstraint.activate([
             textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
         ])
 
         viewController.render()
@@ -54,6 +54,5 @@ class RichTextViewTests: XCTestCase {
         let postColor = try XCTUnwrap(textView.typingAttributes[.foregroundColor] as? UIColor)
         let typingAttributeColor = try XCTUnwrap(textView.defaultTypingAttributes[.foregroundColor] as? UIColor)
         XCTAssertEqual(postColor, typingAttributeColor)
-
     }
 }

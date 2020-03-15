@@ -21,7 +21,6 @@ public typealias Processed = Bool
 
 /// An object capable of intercepting and modifying the text and attributes in an `EditorView` when registered with the `EditorView`.
 public protocol TextProcessing {
-
     /// Name of the TextProcessor
     var name: String { get }
 
@@ -52,5 +51,5 @@ public protocol TextProcessing {
 }
 
 public extension TextProcessing {
-    func willProcess(deletedText: NSAttributedString, insertedText: String) { }
+    func willProcess(deletedText _: NSAttributedString, insertedText _: String) {}
 }

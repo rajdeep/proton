@@ -15,14 +15,14 @@ class MarkupProcessor: TextProcessing {
     private let rangeMarker = "start"
 
     var name: String {
-        return "Markup"
+        "Markup"
     }
 
     var priority: TextProcessingPriority {
-        return .medium
+        .medium
     }
 
-    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int) -> Processed {
+    func process(editor: EditorView, range editedRange: NSRange, changeInLength _: Int) -> Processed {
         let textStorage = editor.attributedText
         let char = textStorage.attributedSubstring(from: editedRange)
 
@@ -31,9 +31,9 @@ class MarkupProcessor: TextProcessing {
         guard let markupRange = textStorage.reverseRange(of: "*", currentPosition: editedRange.location),
             let attr = textStorage.attribute(markupKey, at: markupRange.location, effectiveRange: nil) as? String,
             attr == rangeMarker
-            else {
-                editor.addAttributes([markupKey: rangeMarker], at: editedRange)
-                return true
+        else {
+            editor.addAttributes([markupKey: rangeMarker], at: editedRange)
+            return true
         }
 
         let attrs = textStorage.attributes(at: markupRange.location, effectiveRange: nil)

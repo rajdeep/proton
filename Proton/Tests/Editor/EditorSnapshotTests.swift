@@ -6,9 +6,9 @@
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 
+import FBSnapshotTestCase
 import Foundation
 import XCTest
-import FBSnapshotTestCase
 
 @testable import Proton
 
@@ -25,7 +25,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         let font = UIFont(name: "Verdana", size: 17) ?? UIFont()
         let placeholderString = NSMutableAttributedString(string: "Placeholder text that is so long that it wraps into the next line", attributes: [
             NSAttributedString.Key.font: font,
-            NSAttributedString.Key.foregroundColor: UIColor.lightGray
+            NSAttributedString.Key.foregroundColor: UIColor.lightGray,
         ])
 
         placeholderString.addAttribute(.font, value: font.adding(trait: .traitBold), range: NSRange(location: 12, length: 4))
@@ -293,9 +293,9 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         let editor = viewController.editor
 
         let text =
-        """
-        Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text
-        """
+            """
+            Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text
+            """
 
         let line1Location = NSRange(location: 10, length: 1)
         let line2Location = NSRange(location: 40, length: 1)
@@ -327,9 +327,9 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         let editor = viewController.editor
 
         let text =
-        """
-        Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 2 text Line 3 text Line 3
-        """
+            """
+            Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 2 text Line 3 text Line 3
+            """
 
         let line1Location = NSRange(location: 10, length: 1)
         let line2Location = NSRange(location: 40, length: 1)
@@ -359,7 +359,6 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         XCTAssertEqual(lastLineText, expectedText2)
 
         XCTAssertEqual(nextLine.text.string, prevLine.text.string)
-
     }
 
     func testParagraphStyling() {

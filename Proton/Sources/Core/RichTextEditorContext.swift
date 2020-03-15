@@ -6,9 +6,9 @@
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 
+import CoreServices
 import Foundation
 import UIKit
-import CoreServices
 
 class RichTextEditorContext: RichTextViewContext {
     static let `default` = RichTextEditorContext()
@@ -52,7 +52,7 @@ class RichTextEditorContext: RichTextViewContext {
             guard substring.length > 0,
                 let attachment = substring.attribute(.attachment, at: 0, effectiveRange: nil) as? Attachment,
                 attachment.selectBeforeDelete else {
-                    return true
+                return true
             }
 
             if attachment.isSelected {

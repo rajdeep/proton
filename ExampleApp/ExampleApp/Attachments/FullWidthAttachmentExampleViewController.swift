@@ -12,7 +12,6 @@ import UIKit
 import Proton
 
 class FullWidthAttachmentExampleViewController: ExamplesBaseViewController {
-
     override func setup() {
         super.setup()
 
@@ -36,12 +35,12 @@ class FullWidthAttachmentExampleViewController: ExamplesBaseViewController {
             editor.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 20),
             editor.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             editor.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
+            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
         ])
     }
 
     @objc
-    func insertAttachment(sender: UIButton) {
+    func insertAttachment(sender _: UIButton) {
         var panel = PanelView()
         panel.backgroundColor = .systemTeal
         panel.textColor = .black

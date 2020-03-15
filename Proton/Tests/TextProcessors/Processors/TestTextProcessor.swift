@@ -12,15 +12,15 @@ import UIKit
 import Proton
 
 class TestTextProcessor: TextProcessing {
-    var name: String { return "TestTextProcessor" }
+    var name: String { "TestTextProcessor" }
 
     var priority: TextProcessingPriority = .medium
 
     var onProcess: ((EditorView, NSRange) -> Processed)?
     var onProcessInterrupted: ((EditorView, NSRange) -> Void)?
 
-    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int) -> Processed {
-        return onProcess?(editor, editedRange) ?? false
+    func process(editor: EditorView, range editedRange: NSRange, changeInLength _: Int) -> Processed {
+        onProcess?(editor, editedRange) ?? false
     }
 
     func processInterrupted(editor: EditorView, at range: NSRange) {

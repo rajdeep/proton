@@ -6,14 +6,13 @@
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 
+import FBSnapshotTestCase
 import Foundation
 import XCTest
-import FBSnapshotTestCase
 
 @testable import Proton
 
 class AttachmentSnapshotTests: FBSnapshotTestCase {
-
     override func setUp() {
         super.setUp()
 
@@ -118,7 +117,7 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
 }
 
 extension AttachmentSnapshotTests: AttachmentOffsetProviding {
-    func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint {
-        return CGPoint(x: 0, y: -3)
+    func offset(for _: Attachment, in _: NSTextContainer, proposedLineFragment _: CGRect, glyphPosition _: CGPoint, characterIndex _: Int) -> CGPoint {
+        CGPoint(x: 0, y: -3)
     }
 }

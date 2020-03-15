@@ -11,25 +11,25 @@ import UIKit
 
 public extension NSRange {
     static var zero: NSRange {
-        return NSRange(location: 0, length: 0)
+        NSRange(location: 0, length: 0)
     }
 
     var firstCharacterRange: NSRange {
-        return NSRange(location: location, length: 1)
+        NSRange(location: location, length: 1)
     }
 
     var lastCharacterRange: NSRange {
-        return NSRange(location: location + length, length: 1)
+        NSRange(location: location + length, length: 1)
     }
 
     var nextPosition: NSRange {
-        return NSRange(location: location + 1, length: 0)
+        NSRange(location: location + 1, length: 0)
     }
 
     func toTextRange(textInput: UITextInput) -> UITextRange? {
         guard let rangeStart = textInput.position(from: textInput.beginningOfDocument, offset: location),
             let rangeEnd = textInput.position(from: rangeStart, offset: length) else {
-                return nil
+            return nil
         }
         return textInput.textRange(from: rangeStart, to: rangeEnd)
     }

@@ -6,14 +6,13 @@
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 
+import FBSnapshotTestCase
 import Foundation
 import XCTest
-import FBSnapshotTestCase
 
 @testable import Proton
 
 class AutogrowingTextViewSnapshotTests: FBSnapshotTestCase {
-
     override func setUp() {
         super.setUp()
 
@@ -31,7 +30,7 @@ class AutogrowingTextViewSnapshotTests: FBSnapshotTestCase {
         view.addSubview(textView)
         NSLayoutConstraint.activate([
             textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
         ])
 
         viewController.render()
@@ -51,7 +50,7 @@ class AutogrowingTextViewSnapshotTests: FBSnapshotTestCase {
         NSLayoutConstraint.activate([
             textView.widthAnchor.constraint(equalToConstant: 280),
             textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10)
+            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
         ])
 
         viewController.render()

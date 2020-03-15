@@ -12,8 +12,8 @@ import UIKit
 class RichTextViewContext: NSObject, UITextViewDelegate {
     var activeTextView: RichTextView?
 
-    func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        return interaction != .presentActions
+    func textView(_: UITextView, shouldInteractWith _: NSTextAttachment, in _: NSRange, interaction: UITextItemInteraction) -> Bool {
+        interaction != .presentActions
     }
 
     func textViewDidChangeSelection(_ textView: UITextView) {
@@ -34,7 +34,7 @@ class RichTextViewContext: NSObject, UITextViewDelegate {
         let substring = textView.attributedText.attributedSubstring(from: range)
 
         // Mark attachments as selected if there are any in the selected range
-        substring.enumerateAttribute(.attachment, in: substring.fullRange, options: .longestEffectiveRangeNotRequired) { attachment, range, _ in
+        substring.enumerateAttribute(.attachment, in: substring.fullRange, options: .longestEffectiveRangeNotRequired) { attachment, _, _ in
             if let attachment = attachment as? Attachment {
                 attachment.isSelected = true
             }

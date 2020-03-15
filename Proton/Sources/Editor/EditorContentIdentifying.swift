@@ -17,6 +17,6 @@ public protocol EditorContentIdentifying {
 // Convenience type for a UIView that can be placed within the Editor as the content of an `Attachment`
 typealias AttachmentView = UIView & EditorContentIdentifying
 
-public protocol BlockContent: EditorContentIdentifying { }
+public protocol BlockContent: EditorContentIdentifying {}
 
-public protocol InlineContent: EditorContentIdentifying { }
+public protocol InlineContent: EditorContentIdentifying {}

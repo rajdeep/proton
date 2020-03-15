@@ -21,11 +21,11 @@ public struct AnyAttributeDecoding<EncodedType>: AttributesDecoding {
     let decoding: (EncodedType) -> Attributes
 
     public init<D: AttributesDecoding>(_ decoder: D) where EncodedType == D.TypeToDecode {
-        self.name = decoder.name
-        self.decoding = decoder.decode
+        name = decoder.name
+        decoding = decoder.decode
     }
 
     public func decode(_ value: EncodedType) -> Attributes {
-        return decoding(value)
+        decoding(value)
     }
 }

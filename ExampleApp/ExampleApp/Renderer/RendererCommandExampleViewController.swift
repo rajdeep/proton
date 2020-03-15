@@ -50,7 +50,7 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
 
         renderer.delegate = self
 
-        self.buttons = makeCommandButtons()
+        buttons = makeCommandButtons()
         for button in buttons {
             stackView.addArrangedSubview(button)
         }
@@ -75,7 +75,7 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
             renderer.topAnchor.constraint(equalTo: searchText.bottomAnchor, constant: 20),
             renderer.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             renderer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            renderer.heightAnchor.constraint(equalToConstant: 300)
+            renderer.heightAnchor.constraint(equalToConstant: 300),
         ])
 
         setText()
@@ -119,7 +119,7 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
 }
 
 extension RendererCommandsExampleViewController: RendererViewDelegate {
-    func didTap(_ renderer: RendererView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
+    func didTap(_ renderer: RendererView, didTapAtLocation _: CGPoint, characterRange: NSRange?) {
         guard let charRange = characterRange else { return }
         print("Tapped: \(renderer.attributedText.attributedSubstring(from: charRange))")
     }

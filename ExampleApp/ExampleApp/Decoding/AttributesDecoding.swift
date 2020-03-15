@@ -22,11 +22,11 @@ struct AnyAttributedStringAttributeDecoding<EncodedType>: AttributedStringAttrib
     let decoding: (EncodedType) -> Attributes
 
     init<D: AttributedStringAttributesDecoding>(_ decoder: D) where EncodedType == D.TypeToDecode {
-        self.name = decoder.name
-        self.decoding = decoder.decode
+        name = decoder.name
+        decoding = decoder.decode
     }
 
     func decode(_ value: EncodedType) -> Attributes {
-        return decoding(value)
+        decoding(value)
     }
 }

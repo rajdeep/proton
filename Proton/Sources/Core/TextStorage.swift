@@ -16,7 +16,6 @@ protocol DefaultTextFormattingProviding: AnyObject {
 }
 
 class TextStorage: NSTextStorage {
-
     let storage = NSTextStorage()
 
     let defaultParagraphStyle = NSParagraphStyle()
@@ -26,7 +25,7 @@ class TextStorage: NSTextStorage {
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding?
 
     var textEndRange: NSRange {
-        return NSRange(location: length, length: 0)
+        NSRange(location: length, length: 0)
     }
 
     override init() {
@@ -39,17 +38,17 @@ class TextStorage: NSTextStorage {
     }
 
     @available(*, unavailable, message: "init(itemProviderData:typeIdentifier:) unavailable, use init")
-    required init(itemProviderData data: Data, typeIdentifier: String) throws {
+    required init(itemProviderData _: Data, typeIdentifier _: String) throws {
         fatalError("init(itemProviderData:typeIdentifier:) has not been implemented")
     }
 
     @available(*, unavailable, message: "init(coder:) unavailable, use init")
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override var string: String {
-        return storage.string
+        storage.string
     }
 
     override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [NSAttributedString.Key: Any] {
@@ -159,10 +158,10 @@ class TextStorage: NSTextStorage {
         storage.enumerateAttribute(.attachment,
                                    in: range,
                                    options: .longestEffectiveRangeNotRequired,
-                                   using: { (attribute, _, _) in
-                                    if let attachment = attribute as? Attachment {
-                                        attachments.append(attachment)
-                                    }
+                                   using: { attribute, _, _ in
+                                       if let attachment = attribute as? Attachment {
+                                           attachments.append(attachment)
+                                       }
         })
         return attachments
     }

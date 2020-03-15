@@ -12,7 +12,6 @@ import UIKit
 import Proton
 
 class TextProcessorExampleViewController: ExamplesBaseViewController {
-
     let typeaheadLabel = UILabel()
 
     override func setup() {
@@ -35,7 +34,7 @@ class TextProcessorExampleViewController: ExamplesBaseViewController {
             editor.heightAnchor.constraint(lessThanOrEqualToConstant: 300),
 
             typeaheadLabel.topAnchor.constraint(equalTo: editor.bottomAnchor, constant: 50),
-            typeaheadLabel.leadingAnchor.constraint(equalTo: editor.leadingAnchor)
+            typeaheadLabel.leadingAnchor.constraint(equalTo: editor.leadingAnchor),
         ])
 
         registerTextProcessors()

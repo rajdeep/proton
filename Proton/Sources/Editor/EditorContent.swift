@@ -24,7 +24,6 @@ public enum EditorContentType {
 
 /// Defines a content type for `Editor`. This may be used to serialize the contents of an `Editor` via enumerating through the contents of the `Editor`.
 public struct EditorContent {
-
     /// Type of `EditorContent`
     public let type: EditorContentType
 
@@ -33,7 +32,7 @@ public struct EditorContent {
 
     init(type: EditorContentType) {
         self.type = type
-        self.enclosingRange = nil
+        enclosingRange = nil
     }
 
     init(type: EditorContentType, enclosingRange: NSRange) {

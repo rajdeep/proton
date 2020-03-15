@@ -28,10 +28,10 @@ class RichTextView: AutogrowingTextView {
     }
 
     var defaultTypingAttributes: RichTextAttributes {
-        return [
+        [
             .font: defaultTextFormattingProvider?.font ?? storage.defaultFont,
             .paragraphStyle: defaultTextFormattingProvider?.paragraphStyle ?? storage.defaultParagraphStyle,
-            .foregroundColor: defaultTextFormattingProvider?.textColor ?? storage.defaultTextColor
+            .foregroundColor: defaultTextFormattingProvider?.textColor ?? storage.defaultTextColor,
         ]
     }
 
@@ -45,20 +45,20 @@ class RichTextView: AutogrowingTextView {
         super.init(frame: frame, textContainer: textContainer)
         layoutManager.delegate = self
         textContainer.textView = self
-        self.delegate = context
+        delegate = context
 
-        self.backgroundColor = .systemBackground
-        self.textColor = .label
+        backgroundColor = .systemBackground
+        textColor = .label
 
         setupPlaceholder()
     }
 
     var richTextStorage: TextStorage {
-        return storage
+        storage
     }
 
     var contentLength: Int {
-        return storage.length
+        storage.length
     }
 
     weak var textProcessor: TextProcessor? {
@@ -68,11 +68,11 @@ class RichTextView: AutogrowingTextView {
     }
 
     var textEndRange: NSRange {
-        return storage.textEndRange
+        storage.textEndRange
     }
 
     var currentLineRange: NSRange? {
-        return lineRange(from: selectedRange.location)
+        lineRange(from: selectedRange.location)
     }
 
     var visibleRange: NSRange {
@@ -81,15 +81,15 @@ class RichTextView: AutogrowingTextView {
     }
 
     @available(*, unavailable, message: "init(coder:) unavailable, use init")
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     #if targetEnvironment(macCatalyst)
-    @objc(_focusRingType)
-    var focusRingType: UInt {
-        return 1 //NSFocusRingTypeNone
-    }
+        @objc(_focusRingType)
+        var focusRingType: UInt {
+            1 // NSFocusRingTypeNone
+        }
     #endif
 
     private func setupPlaceholder() {
@@ -100,11 +100,11 @@ class RichTextView: AutogrowingTextView {
         addSubview(placeholderLabel)
         placeholderLabel.attributedText = placeholderText
         NSLayoutConstraint.activate([
-            placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: textContainerInset.top),
-            placeholderLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -textContainerInset.bottom),
-            placeholderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: textContainer.lineFragmentPadding),
-            placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -textContainer.lineFragmentPadding),
-            placeholderLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -textContainer.lineFragmentPadding)
+            placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: textContainerInset.top),
+            placeholderLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -textContainerInset.bottom),
+            placeholderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: textContainer.lineFragmentPadding),
+            placeholderLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -textContainer.lineFragmentPadding),
+            placeholderLabel.widthAnchor.constraint(equalTo: widthAnchor, constant: -textContainer.lineFragmentPadding),
         ])
     }
 
@@ -112,7 +112,7 @@ class RichTextView: AutogrowingTextView {
         guard let position = self.position(from: beginningOfDocument, offset: location),
             let wordRange = tokenizer.rangeEnclosingPosition(position, with: .word, inDirection: UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)),
             let range = wordRange.toNSRange(in: self) else {
-                return nil
+            return nil
         }
         return attributedText.attributedSubstring(from: range)
     }
@@ -125,7 +125,7 @@ class RichTextView: AutogrowingTextView {
         // will not have been laid out by layoutManager but would be present in TextStorage. It can also happen
         // when deleting multiple characters where layout is pending in the same case. Following logic finds the
         // last valid glyph that is already laid out.
-        while currentLocation > 0 && layoutManager.isValidGlyphIndex(currentLocation) == false {
+        while currentLocation > 0, layoutManager.isValidGlyphIndex(currentLocation) == false {
             currentLocation -= 1
         }
         guard layoutManager.isValidGlyphIndex(currentLocation) else { return NSRange(location: 0, length: 1) }
@@ -150,7 +150,7 @@ class RichTextView: AutogrowingTextView {
         guard contentLength == 0 else {
             return
         }
-        self.typingAttributes = defaultTypingAttributes
+        typingAttributes = defaultTypingAttributes
     }
 
     func insertAttachment(in range: NSRange, attachment: Attachment) {
@@ -168,7 +168,7 @@ class RichTextView: AutogrowingTextView {
     }
 
     func transformContents<T: EditorContentEncoding>(in range: NSRange? = nil, using transformer: T) -> [T.EncodedType] {
-        return contents(in: range).compactMap(transformer.encode)
+        contents(in: range).compactMap(transformer.encode)
     }
 
     func replaceCharacters(in range: NSRange, with attrString: NSAttributedString) {
@@ -182,7 +182,7 @@ class RichTextView: AutogrowingTextView {
     }
 
     private func updatePlaceholderVisibility() {
-        self.placeholderLabel.attributedText = self.attributedText.length == 0 ? self.placeholderText : NSAttributedString()
+        placeholderLabel.attributedText = attributedText.length == 0 ? placeholderText : NSAttributedString()
     }
 
     func attributeValue(at location: CGPoint, for attribute: NSAttributedString.Key) -> Any? {
@@ -197,11 +197,11 @@ class RichTextView: AutogrowingTextView {
     }
 
     func boundingRect(forGlyphRange range: NSRange) -> CGRect {
-        return layoutManager.boundingRect(forGlyphRange: range, in: textContainer)
+        layoutManager.boundingRect(forGlyphRange: range, in: textContainer)
     }
 
     func contents(in range: NSRange? = nil) -> AnySequence<EditorContent> {
-        return self.attributedText.enumerateContents(in: range)
+        attributedText.enumerateContents(in: range)
     }
 
     func addAttributes(_ attrs: [NSAttributedString.Key: Any], range: NSRange) {
@@ -217,10 +217,10 @@ class RichTextView: AutogrowingTextView {
     }
 
     func rangeOfCharacter(at point: CGPoint) -> NSRange? {
-        return characterRange(at: point)?.toNSRange(in: self)
+        characterRange(at: point)?.toNSRange(in: self)
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with _: UIEvent?) {
         if let touch = touches.first {
             let position = touch.location(in: self)
             didTap(at: position)
@@ -234,7 +234,7 @@ class RichTextView: AutogrowingTextView {
 }
 
 extension RichTextView: NSLayoutManagerDelegate {
-    func layoutManager(_ layoutManager: NSLayoutManager, didCompleteLayoutFor textContainer: NSTextContainer?, atEnd layoutFinishedFlag: Bool) {
+    func layoutManager(_: NSLayoutManager, didCompleteLayoutFor _: NSTextContainer?, atEnd layoutFinishedFlag: Bool) {
         updatePlaceholderVisibility()
         richTextViewDelegate?.richTextView(self, didFinishLayout: layoutFinishedFlag)
     }

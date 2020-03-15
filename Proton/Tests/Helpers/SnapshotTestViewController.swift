@@ -10,10 +10,9 @@ import Foundation
 import UIKit
 
 class SnapshotTestViewController: UIViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .lightGray
+        view.backgroundColor = .lightGray
     }
 
     func render(size: CGSize = CGSize(width: 300, height: 100)) {

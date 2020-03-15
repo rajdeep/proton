@@ -14,7 +14,7 @@ public extension String {
 
         guard let from = range.lowerBound.samePosition(in: utf16),
             let to = range.upperBound.samePosition(in: utf16) else {
-                return NSRange(location: NSNotFound, length: 0)
+            return NSRange(location: NSNotFound, length: 0)
         }
 
         return NSRange(location: utf16.distance(from: utf16.startIndex, to: from),
@@ -27,11 +27,11 @@ public extension String {
             let to16 = utf16.index(utf16.startIndex, offsetBy: range.location + range.length, limitedBy: utf16.endIndex),
             let from = from16.samePosition(in: self),
             let to = to16.samePosition(in: self)
-            else { return nil }
+        else { return nil }
         return from ..< to
     }
 
-    func rangesOf(characterSet: CharacterSet) -> [Range<String.Index>] {
+    func rangesOf(characterSet _: CharacterSet) -> [Range<String.Index>] {
         var ranges = [Range<String.Index>]()
         var newlineRange = rangeOfCharacter(from: .newlines, options: [], range: nil)
         while newlineRange != nil {

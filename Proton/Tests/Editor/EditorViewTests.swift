@@ -13,7 +13,6 @@ import XCTest
 @testable import Proton
 
 class EditorViewTests: XCTestCase {
-
     func testInvokesRegisteredProcessor() {
         let testExpectation = functionExpectation()
         let editor = EditorView()
@@ -340,7 +339,7 @@ class EditorViewTests: XCTestCase {
         editor.registerCommand(command)
 
         XCTAssertEqual(editor.registeredCommands?.count, 1)
-        XCTAssertTrue(editor.registeredCommands?.contains{ $0 === command } ?? false)
+        XCTAssertTrue(editor.registeredCommands?.contains { $0 === command } ?? false)
     }
 
     func testUnregistersCommands() {
@@ -352,7 +351,7 @@ class EditorViewTests: XCTestCase {
 
         editor.unregisterCommand(command1)
         XCTAssertEqual(editor.registeredCommands?.count, 1)
-        XCTAssertTrue(editor.registeredCommands?.contains{ $0 === command2 } ?? false)
+        XCTAssertTrue(editor.registeredCommands?.contains { $0 === command2 } ?? false)
     }
 
     func testReturnsNilForInvalidNextLine() throws {

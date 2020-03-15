@@ -27,7 +27,7 @@ public extension EditorContentView {
     }
 
     func becomeFirstResponder() -> Bool {
-        return editor.becomeFirstResponder()
+        editor.becomeFirstResponder()
     }
 
     var maxHeight: CGFloat {

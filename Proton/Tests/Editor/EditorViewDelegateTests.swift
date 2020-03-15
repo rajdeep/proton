@@ -13,11 +13,10 @@ import XCTest
 @testable import Proton
 
 class EditorViewDelegateTests: XCTestCase {
-
     func testDidReceiveKey() {
         let delegateExpectation = functionExpectation()
         let delegate = MockEditorViewDelegate()
-        delegate.onKeyReceived = { editor, key, range, _ in
+        delegate.onKeyReceived = { _, key, range, _ in
             XCTAssertEqual(key, .enter)
             XCTAssertEqual(range, .zero)
             delegateExpectation.fulfill()
@@ -90,5 +89,4 @@ class EditorViewDelegateTests: XCTestCase {
         richTextViewDelegate?.richTextView(richTextView, didLoseFocusFrom: expectedRange)
         waitForExpectations(timeout: 1.0)
     }
-
 }

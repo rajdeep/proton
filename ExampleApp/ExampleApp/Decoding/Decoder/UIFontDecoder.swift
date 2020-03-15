@@ -12,14 +12,14 @@ import UIKit
 import Proton
 
 struct UIFontDecoder: AttributedStringAttributesDecoding {
-    var name: String { return "font" }
+    var name: String { "font" }
 
     func decode(_ json: JSON) -> Attributes {
         guard
             let size = json["size"] as? CGFloat,
             let style = json["textStyle"] as? String,
             let family = json["family"] as? String else {
-                return [.font: UIFont.preferredFont(forTextStyle: .body)]
+            return [.font: UIFont.preferredFont(forTextStyle: .body)]
         }
 
         let textStyle = UIFont.TextStyle(rawValue: style)

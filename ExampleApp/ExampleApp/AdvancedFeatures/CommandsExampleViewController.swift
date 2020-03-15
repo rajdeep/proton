@@ -24,7 +24,7 @@ class EditorCommandButton: UIButton {
         isSelected = false
     }
 
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -37,7 +37,6 @@ class EditorCommandButton: UIButton {
 }
 
 class CommandsExampleViewController: ExamplesBaseViewController {
-
     let commandExecutor = EditorCommandExecutor()
     var buttons = [UIButton]()
 
@@ -80,7 +79,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
         editor.delegate = self
 
-        self.buttons = makeCommandButtons()
+        buttons = makeCommandButtons()
         for button in buttons {
             stackView.addArrangedSubview(button)
         }
@@ -166,11 +165,11 @@ class CommandsExampleViewController: ExamplesBaseViewController {
     }
 
     @objc
-    func encodeContents(sender: UIButton) {
+    func encodeContents(sender _: UIButton) {
         let value = editor.transformContents(using: JSONEncoder())
         let data = try! JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
         let jsonString = String(data: data, encoding: .utf8)!
-        self.encodedContents = ["contents": value]
+        encodedContents = ["contents": value]
 
         let printableContents = """
             { "contents":  \(jsonString) }
@@ -182,13 +181,13 @@ class CommandsExampleViewController: ExamplesBaseViewController {
     }
 
     @objc
-    func decodeContents(sender: UIButton) {
+    func decodeContents(sender _: UIButton) {
         let text = EditorContentJSONDecoder().decode(mode: .editor, maxSize: editor.frame.size, value: encodedContents)
-        self.editor.attributedText = text
+        editor.attributedText = text
     }
 
     @objc
-    func loadSample(sender: UIButton) {
+    func loadSample(sender _: UIButton) {
         guard let contents = Bundle.main.jsonFromFile("SampleDoc") else {
             return
         }
@@ -201,7 +200,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 }
 
 extension CommandsExampleViewController: EditorViewDelegate {
-    func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
+    func editor(_: EditorView, didChangeSelectionAt _: NSRange, attributes: [NSAttributedString.Key: Any], contentType _: EditorContent.Name) {
         guard let font = attributes[.font] as? UIFont else { return }
 
         buttons.first(where: { $0.titleLabel?.text == "Bold" })?.isSelected = font.isBold

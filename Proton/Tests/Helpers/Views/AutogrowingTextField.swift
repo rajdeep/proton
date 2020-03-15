@@ -29,17 +29,17 @@ class AutogrowingTextField: UITextField, UITextFieldDelegate {
     }
 
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.insetBy(dx: 4, dy: 4)
+        bounds.insetBy(dx: 4, dy: 4)
     }
 
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return textRect(forBounds: bounds)
+        textRect(forBounds: bounds)
     }
 }
 
 extension AutogrowingTextField: InlineContent {
     var name: EditorContent.Name {
-        return EditorContent.Name(rawValue: "textField")
+        EditorContent.Name(rawValue: "textField")
     }
 }
 

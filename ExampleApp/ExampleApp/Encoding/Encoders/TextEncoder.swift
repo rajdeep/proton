@@ -24,7 +24,7 @@ protocol InlineEncoding {
 struct TextEncoder: EditorTextEncoding {
     func encode(name: EditorContent.Name, string: NSAttributedString) -> JSON {
         var text = JSON()
-        string.enumerateAttributes(in: string.fullRange, options: .longestEffectiveRangeNotRequired) { (attributes, range, _) in
+        string.enumerateAttributes(in: string.fullRange, options: .longestEffectiveRangeNotRequired) { attributes, range, _ in
             let substring = string.attributedSubstring(from: range)
             text.type = name.rawValue
             text["text"] = substring.string
@@ -33,7 +33,7 @@ struct TextEncoder: EditorTextEncoding {
                     switch encoding.value {
                     case let .json(value):
                         text[encoding.key] = value
-                    case .single(let value):
+                    case let .single(value):
                         text[encoding.key] = value
                     }
                 }

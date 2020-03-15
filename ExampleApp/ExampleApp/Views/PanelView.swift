@@ -28,17 +28,17 @@ class PanelView: UIView, BlockContent, EditorContentView {
     weak var delegate: PanelViewDelegate?
 
     var name: EditorContent.Name {
-        return .panel
+        .panel
     }
 
     override init(frame: CGRect) {
-        self.editor = EditorView(frame: frame)
+        editor = EditorView(frame: frame)
         super.init(frame: frame)
 
         setup()
     }
 
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -99,11 +99,11 @@ class PanelView: UIView, BlockContent, EditorContentView {
 }
 
 extension PanelView: EditorViewDelegate {
-    func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool) {
+    func editor(_: EditorView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool) {
         delegate?.panel(self, didRecieveKey: key, at: range, handled: &handled)
     }
 
-    func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
+    func editor(_: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
         // Relay the changed selection command to container `EditorView`'s delegate
         // This needs to be done as an additional step as container `EditorView`'s delegate is not registered as `PanelView`'s
         // editor as the `PanelView` register's itself as the `EditorView`'s delegate

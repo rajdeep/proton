@@ -35,7 +35,7 @@ class AttachmentContentView: UIView {
         super.init(frame: frame)
     }
 
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
@@ -43,7 +43,6 @@ class AttachmentContentView: UIView {
 /// An attachment can be used as a container for any view object. Based on the `AttachmentSize` provided, the attachment automatically renders itself alongside the text in `EditorView`.
 /// `Attachment` also provides helper functions like `deleteFromContainer` and `rangeInContainer`
 open class Attachment: NSTextAttachment, BoundsObserving {
-
     private let view: AttachmentContentView
     private let size: AttachmentSize
 
@@ -60,11 +59,11 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     }
 
     var name: EditorContent.Name? {
-        return (contentView as? EditorContentIdentifying)?.name
+        (contentView as? EditorContentIdentifying)?.name
     }
 
     var isRendered: Bool {
-        return view.superview != nil
+        view.superview != nil
     }
 
     private let selectionView = SelectionView()
@@ -84,7 +83,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         return NSAttributedString(string: spacer)
     }
 
-    func stringWithSpacers(appendPrev: Bool, appendNext: Bool) -> NSAttributedString {
+    func stringWithSpacers(appendPrev _: Bool, appendNext: Bool) -> NSAttributedString {
         let updatedString = NSMutableAttributedString()
 //        if appendPrev {
 //            updatedString.append(spacer)
@@ -104,7 +103,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         string.addAttributes([
             .contentType: value,
             .isBlockAttachment: isBlockAttachment,
-            .isInlineAttachment: !isBlockAttachment
+            .isInlineAttachment: !isBlockAttachment,
         ], range: string.fullRange)
         return string
     }
@@ -122,14 +121,14 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     public private(set) var containerEditorView: EditorView?
 
     public var containerContentName: EditorContent.Name? {
-        return containerEditorView?.contentName
+        containerEditorView?.contentName
     }
 
     private var containerTextView: RichTextView? {
-        return containerEditorView?.richTextView
+        containerEditorView?.richTextView
     }
 
-    public func didChangeBounds(_ bounds: CGRect) {
+    public func didChangeBounds(_: CGRect) {
         invalidateLayout()
     }
 
@@ -144,7 +143,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     }
 
     public var containerBounds: CGRect? {
-        return containerTextView?.bounds
+        containerTextView?.bounds
     }
 
     public override var bounds: CGRect {
@@ -153,31 +152,31 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
     // This cannot be made convenience init as it prevents this being called from a class that inherits from `Attachment`
     public init<AttachmentView: UIView & BlockContent>(_ contentView: AttachmentView, size: AttachmentSize) {
-        self.view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
+        view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
         self.size = size
         super.init(data: nil, ofType: nil)
         // TODO: revisit - can this be done differently i.e. not setting afterwards
-        self.view.attachment = self
+        view.attachment = self
         initialize(contentView: contentView)
     }
 
     // This cannot be made convenience init as it prevents this being called from a class that inherits from `Attachment`
     public init<AttachmentView: UIView & InlineContent>(_ contentView: AttachmentView, size: AttachmentSize) {
-        self.view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
+        view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
         self.size = size
         super.init(data: nil, ofType: nil)
         // TODO: revisit - can this be done differently i.e. not setting afterwards
-        self.view.attachment = self
+        view.attachment = self
         initialize(contentView: contentView)
     }
 
     private func initialize(contentView: AttachmentView) {
         self.contentView = contentView
         setup()
-        self.bounds = contentView.bounds
+        bounds = contentView.bounds
 
         // Required to disable rendering of default attachment image on iOS 13+
-        self.image = UIColor.clear.image()
+        image = UIColor.clear.image()
     }
 
     /// Offsets for the attachment. Can be used to align attachment with the text. Defaults to `.zero`
@@ -201,16 +200,16 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         switch size {
         case .fullWidth, .matchContent, .percent:
             NSLayoutConstraint.activate([
-                contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+                contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             ])
         case let .fixed(width):
             NSLayoutConstraint.activate([
-                contentView.widthAnchor.constraint(equalToConstant: width)
+                contentView.widthAnchor.constraint(equalToConstant: width),
             ])
         case let .range(minWidth, maxWidth):
             NSLayoutConstraint.activate([
                 contentView.widthAnchor.constraint(greaterThanOrEqualToConstant: minWidth),
-                contentView.widthAnchor.constraint(lessThanOrEqualToConstant: maxWidth)
+                contentView.widthAnchor.constraint(lessThanOrEqualToConstant: maxWidth),
             ])
         }
     }
@@ -221,26 +220,22 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
     public func removeFromContainer() {
         guard let containerTextView = containerTextView,
-        let range = containerTextView.attributedText.rangeFor(attachment: self) else {
+            let range = containerTextView.attributedText.rangeFor(attachment: self) else {
             return
         }
         containerTextView.textStorage.replaceCharacters(in: range, with: "")
     }
 
     public func rangeInContainer() -> NSRange? {
-        return containerTextView?.attributedText.rangeFor(attachment: self)
+        containerTextView?.attributedText.rangeFor(attachment: self)
     }
 
-    open func addedAttributesOnContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key: Any]) {
+    open func addedAttributesOnContainingRange(rangeInContainer _: NSRange, attributes _: [NSAttributedString.Key: Any]) {}
 
-    }
-
-    open func removedAttributesFromContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key]) {
-
-    }
+    open func removedAttributesFromContainingRange(rangeInContainer _: NSRange, attributes _: [NSAttributedString.Key]) {}
 
     @available(*, unavailable, message: "init(coder:) unavailable, use init")
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -285,15 +280,15 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
         let offset = offsetProvider?.offset(for: self, in: textContainer, proposedLineFragment: lineFrag, glyphPosition: position, characterIndex: charIndex) ?? .zero
 
-        self.bounds = CGRect(origin: offset, size: size)
-        return self.bounds
+        bounds = CGRect(origin: offset, size: size)
+        return bounds
     }
 
     func render(in editorView: EditorView) {
-        self.containerEditorView = editorView
+        containerEditorView = editorView
         guard view.superview == nil else { return }
-        editorView.richTextView.addSubview(self.view)
-        self.view.layoutIfNeeded()
+        editorView.richTextView.addSubview(view)
+        view.layoutIfNeeded()
 
         if var editorContentView = contentView as? EditorContentView,
             editorContentView.delegate == nil {

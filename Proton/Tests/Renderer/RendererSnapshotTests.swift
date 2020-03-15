@@ -6,8 +6,8 @@
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 
-import Foundation
 import FBSnapshotTestCase
+import Foundation
 import XCTest
 
 import Proton

@@ -13,7 +13,5 @@ import XCTest
 import Proton
 
 class EditorContentTransformerTests: XCTestCase {
-    func testTransformsText() {
-
-    }
+    func testTransformsText() {}
 }

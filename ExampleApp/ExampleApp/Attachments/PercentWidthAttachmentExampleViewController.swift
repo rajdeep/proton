@@ -52,12 +52,12 @@ class PercentWidthAttachmentExampleViewController: ExamplesBaseViewController {
             editor.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 20),
             editor.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             editor.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
+            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
         ])
     }
 
     @objc
-    func insertAttachment(sender: UIButton) {
+    func insertAttachment(sender _: UIButton) {
         let textField = AutogrowingTextField()
         textField.backgroundColor = .systemTeal
         textField.textColor = .black
@@ -74,7 +74,7 @@ class PercentWidthAttachmentExampleViewController: ExamplesBaseViewController {
 }
 
 extension PercentWidthAttachmentExampleViewController: AttachmentOffsetProviding {
-    func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint {
-        return CGPoint(x: 0, y: -2)
+    func offset(for _: Attachment, in _: NSTextContainer, proposedLineFragment _: CGRect, glyphPosition _: CGPoint, characterIndex _: Int) -> CGPoint {
+        CGPoint(x: 0, y: -2)
     }
 }

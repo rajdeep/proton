@@ -37,7 +37,7 @@ open class RendererView: UIView {
     }
 
     @available(*, unavailable, message: "init(coder:) unavailable, use init")
-    public required init?(coder: NSCoder) {
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -78,21 +78,21 @@ open class RendererView: UIView {
 
     /// Selected text in the editor.
     public var selectedText: NSAttributedString {
-        return readOnlyEditorView.selectedText
+        readOnlyEditorView.selectedText
     }
 
     /// Returns the visible text range.
     /// - Note:
     /// The range may also contains lines that are partially visible owing to the current scroll position.
     public var visibleRange: NSRange {
-        return readOnlyEditorView.visibleRange
+        readOnlyEditorView.visibleRange
     }
 
     /// Get all the content from `Renderer`.
     /// - SeeAlso:
     /// If you need to get content in a given range, please use `contents(in range:NSRange)`.
     public var contents: [EditorContent] {
-        return readOnlyEditorView.contents()
+        readOnlyEditorView.contents()
     }
 
     /// Gets and sets the content offset.
@@ -121,14 +121,14 @@ open class RendererView: UIView {
     /// Gets the contents in the given range
     /// - Parameter range: Range to get contents from.
     public func contents(in range: NSRange? = nil) -> [EditorContent] {
-        return readOnlyEditorView.contents(in: range)
+        readOnlyEditorView.contents(in: range)
     }
 
     /// Gets the bounding rectangles for the given range. If the range spans across multiple lines,
     /// in the `RendererView`, a rectangle is returned for each of the line.
     /// - Parameter range: Range to get bounding rectangles for.
     public func rects(for range: NSRange) -> [CGRect] {
-        return readOnlyEditorView.rects(for: range)
+        readOnlyEditorView.rects(for: range)
     }
 
     func didTap(at location: CGPoint) {
@@ -152,29 +152,28 @@ open class RendererView: UIView {
 }
 
 extension RendererView: RichTextViewDelegate {
-    func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
+    func richTextView(_: RichTextView, didChangeSelection range: NSRange, attributes _: [NSAttributedString.Key: Any], contentType _: EditorContent.Name) {
         delegate?.didChangeSelection(self, range: range)
     }
 
-    func richTextView(_ richTextView: RichTextView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool) { }
+    func richTextView(_: RichTextView, didReceiveKey _: EditorKey, at _: NSRange, handled _: inout Bool) {}
 
-    func richTextView(_ richTextView: RichTextView, didReceiveFocusAt range: NSRange) { }
+    func richTextView(_: RichTextView, didReceiveFocusAt _: NSRange) {}
 
-    func richTextView(_ richTextView: RichTextView, didLoseFocusFrom range: NSRange) { }
+    func richTextView(_: RichTextView, didLoseFocusFrom _: NSRange) {}
 
-    func richTextView(_ richTextView: RichTextView, didChangeTextAtRange range: NSRange) { }
+    func richTextView(_: RichTextView, didChangeTextAtRange _: NSRange) {}
 
-    func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool) {
+    func richTextView(_: RichTextView, didFinishLayout _: Bool) {
         readOnlyEditorView.relayoutAttachments()
     }
 
-    func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
+    func richTextView(_: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
         delegate?.didTap(self, didTapAtLocation: location, characterRange: characterRange)
     }
 }
 
 extension RendererView {
-
     /// Adds given attributes to the range provided. If the range already contains a value for an attribute being provided,
     /// existing value will be overwritten by the new value provided in the attributes.
     /// - Parameters:

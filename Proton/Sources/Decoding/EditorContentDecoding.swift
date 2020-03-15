@@ -6,9 +6,9 @@
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 
+import CoreServices
 import Foundation
 import UIKit
-import CoreServices
 
 /// Content mode for `Editor`. This may be used while decoding the content for the Editor/Renderer to let the Decoder know
 /// which mode the content is being decoded for. For e.g. you may  want to have different decoded value based on whether the
@@ -44,12 +44,12 @@ public struct AnyEditorContentDecoding<T>: EditorContentDecoding {
         decoding = decoder.decode
     }
 
-   /// Decodes the given value to `NSAttributedString`
+    /// Decodes the given value to `NSAttributedString`
     /// - Parameters:
     ///   - mode: Mode for decoding
     ///   - maxSize: Maximum available size of the container in which the content will be rendered.
     ///   - value: Value to decode.
     public func decode(mode: EditorContentMode, maxSize: CGSize, value: T) -> NSAttributedString {
-        return decoding(mode, maxSize, value)
+        decoding(mode, maxSize, value)
     }
 }

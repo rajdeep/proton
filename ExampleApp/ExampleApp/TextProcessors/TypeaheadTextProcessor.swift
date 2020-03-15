@@ -26,17 +26,16 @@ enum TypeaheadExitReason {
 }
 
 class TypeaheadTextProcessor: TextProcessing {
-
-    var name: String { return "Typeahead" }
+    var name: String { "Typeahead" }
 
     var priority: TextProcessingPriority {
-        return .exclusive
+        .exclusive
     }
 
     weak var delegate: TypeaheadTextProcessorDelegate?
     var triggerDeleted = false
 
-    func willProcess(deletedText: NSAttributedString, insertedText: String) {
+    func willProcess(deletedText: NSAttributedString, insertedText _: String) {
         let deleted = NSMutableAttributedString(attributedString: deletedText)
         let range = deleted.mutableString.range(of: "@")
         if range.location != NSNotFound {
@@ -49,7 +48,7 @@ class TypeaheadTextProcessor: TextProcessing {
         }
     }
 
-    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int) -> Processed {
+    func process(editor: EditorView, range editedRange: NSRange, changeInLength _: Int) -> Processed {
         guard triggerDeleted == false else {
             editor.removeAttribute(.foregroundColor, at: editedRange)
             triggerDeleted = false
@@ -83,7 +82,7 @@ class TypeaheadTextProcessor: TextProcessing {
         return true
     }
 
-    func processInterrupted(editor: EditorView, at range: NSRange) { }
+    func processInterrupted(editor _: EditorView, at _: NSRange) {}
 
     private func isValidTrigger(editor: EditorView, range: NSRange) -> Bool {
         guard range != NSRange(location: 0, length: 1) else { return true }

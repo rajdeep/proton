@@ -11,13 +11,13 @@ import XCTest
 
 import Proton
 
-//class EditorContentEncoderTests: XCTestCase {
+// class EditorContentEncoderTests: XCTestCase {
 //    func testEncoding() {
 //
 //    }
-//}
+// }
 //
-//struct ParagraphEncoder: EditorContentStringEncoding {
+// struct ParagraphEncoder: EditorContentStringEncoding {
 //    func encode(name: EditorContent.Name, string: NSAttributedString) -> JSON {
 //        var paragraph = JSON()
 //        paragraph.type = name.rawValue
@@ -27,9 +27,9 @@ import Proton
 //        paragraph.contents = contentsFrom(string)
 //        return paragraph
 //    }
-//}
+// }
 //
-//struct PanelEncoding: EditorContentAttachmentEncoding {
+// struct PanelEncoding: EditorContentAttachmentEncoding {
 //    func encode(name: EditorContent.Name, view: UIView) -> JSON {
 //        guard let view = view as? PanelView else { return JSON() }
 //
@@ -40,5 +40,5 @@ import Proton
 //        json.contents = contents
 //        return json
 //    }
-//}
+// }
 //

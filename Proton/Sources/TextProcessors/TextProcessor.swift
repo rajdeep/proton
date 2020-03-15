@@ -18,7 +18,7 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
     }
 
     var sortedProcessors: [TextProcessing] {
-        return activeProcessors.sorted { $0.priority > $1.priority }
+        activeProcessors.sorted { $0.priority > $1.priority }
     }
 
     func register(_ processor: TextProcessing) {
@@ -39,7 +39,7 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         }
     }
 
-    func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int) {
+    func textStorage(_: NSTextStorage, willProcessEditing _: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int) {
         guard let editor = editor else { return }
 
         var processed = false
@@ -52,7 +52,7 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         }
     }
 
-    func textStorage(_ textStorage: NSTextStorage, willProcessDeletedText deletedText: NSAttributedString, insertedText: String) {
+    func textStorage(_: NSTextStorage, willProcessDeletedText deletedText: NSAttributedString, insertedText: String) {
         for processor in sortedProcessors {
             processor.willProcess(deletedText: deletedText, insertedText: insertedText)
         }

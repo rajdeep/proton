@@ -6,9 +6,9 @@
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 
+import CoreServices
 import Foundation
 import UIKit
-import CoreServices
 
 /// An object capable of encoding `EditorContent` to given type.
 public protocol EditorContentEncoding {
@@ -64,7 +64,7 @@ public extension EditorContentEncoder {
             guard let encodable = attachmentEncoders[name] else { return nil }
             return encodable.encode(name: name, view: contentView)
         case let .text(name, attributedString):
-            guard let encodable = textEncoders[name] else {  return nil }
+            guard let encodable = textEncoders[name] else { return nil }
             return encodable.encode(name: name, string: attributedString)
         }
     }

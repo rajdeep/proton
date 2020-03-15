@@ -23,7 +23,7 @@ public struct AnyEditorTextEncoding<T>: EditorTextEncoding {
     }
 
     public func encode(name: EditorContent.Name, string: NSAttributedString) -> T {
-        return encoding(name, string)
+        encoding(name, string)
     }
 }
 
@@ -41,6 +41,6 @@ public struct AnyEditorContentAttachmentEncoding<T>: AttachmentEncoding {
     }
 
     public func encode(name: EditorContent.Name, view: UIView) -> T {
-        return encoding(name, view)
+        encoding(name, view)
     }
 }

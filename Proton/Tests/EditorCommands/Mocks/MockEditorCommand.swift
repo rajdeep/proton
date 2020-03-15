@@ -22,7 +22,7 @@ class MockEditorCommand: EditorCommand {
     }
 
     func canExecute(on editor: EditorView) -> Bool {
-        return onCanExecute(editor)
+        onCanExecute(editor)
     }
 
     func execute(on editor: EditorView) {

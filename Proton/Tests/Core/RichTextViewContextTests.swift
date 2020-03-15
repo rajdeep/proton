@@ -12,7 +12,6 @@ import XCTest
 @testable import Proton
 
 class RichTextViewContextTests: XCTestCase {
-
     func testInvokesSelectionChange() {
         let testExpectation = expectation(description: #function)
         let mockTextViewDelegate = MockRichTextViewDelegate()

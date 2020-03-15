@@ -13,6 +13,6 @@ import Proton
 
 class InlineEditorView: EditorView, InlineContent {
     public var name: EditorContent.Name {
-        return EditorContent.Name("Editor")
+        EditorContent.Name("Editor")
     }
 }

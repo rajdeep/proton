@@ -12,7 +12,7 @@ import UIKit
 import Proton
 
 struct ParagraphStyleDecoder: AttributedStringAttributesDecoding {
-    var name: String { return "style" }
+    var name: String { "style" }
 
     func decode(_ json: JSON) -> Attributes {
         let style = NSMutableParagraphStyle()

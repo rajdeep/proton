@@ -27,7 +27,7 @@ public extension UIView {
     }
 
     func blink() {
-        self.alpha = 1
+        alpha = 1
         UIView.animate(withDuration: 1.0, delay: 0, options: [.repeat], animations: {
             self.alpha = 0
         }, completion: nil)

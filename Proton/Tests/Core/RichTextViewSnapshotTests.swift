@@ -6,14 +6,13 @@
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 
+import FBSnapshotTestCase
 import Foundation
 import XCTest
-import FBSnapshotTestCase
 
 @testable import Proton
 
 class RichTextViewSnapshotTests: FBSnapshotTestCase {
-
     override func setUp() {
         super.setUp()
 
@@ -31,7 +30,7 @@ class RichTextViewSnapshotTests: FBSnapshotTestCase {
         view.addSubview(textView)
         NSLayoutConstraint.activate([
             textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
         ])
 
         viewController.render()
@@ -60,7 +59,7 @@ class RichTextViewSnapshotTests: FBSnapshotTestCase {
         NSLayoutConstraint.activate([
             textView.widthAnchor.constraint(equalToConstant: 280),
             textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10)
+            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
         ])
 
         viewController.render(size: CGSize(width: 300, height: 150))

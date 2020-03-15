@@ -10,7 +10,7 @@ import Foundation
 
 extension Bundle {
     func dataFromFile(_ fileName: String, fileExtension: String) -> Data? {
-        guard let file = self.url(forResource: fileName, withExtension: fileExtension) else {
+        guard let file = url(forResource: fileName, withExtension: fileExtension) else {
             return nil
         }
         let data = try? Data(contentsOf: file)
@@ -20,7 +20,7 @@ extension Bundle {
     func jsonFromFile(_ fileName: String) -> [String: Any]? {
         guard let data = dataFromFile(fileName, fileExtension: "json"),
             let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
-                return nil
+            return nil
         }
         return json
     }

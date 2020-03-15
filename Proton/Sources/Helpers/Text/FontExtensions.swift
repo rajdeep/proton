@@ -10,21 +10,20 @@ import Foundation
 import UIKit
 
 public extension UIFont {
-
     var traits: UIFontDescriptor.SymbolicTraits {
-        return fontDescriptor.symbolicTraits
+        fontDescriptor.symbolicTraits
     }
 
     var isBold: Bool {
-        return traits.contains(.traitBold)
+        traits.contains(.traitBold)
     }
 
     var isItalics: Bool {
-        return traits.contains(.traitItalic)
+        traits.contains(.traitItalic)
     }
 
     var isMonoSpaced: Bool {
-        return traits.contains(.traitMonoSpace)
+        traits.contains(.traitMonoSpace)
     }
 
     var textStyle: UIFont.TextStyle {
@@ -35,16 +34,16 @@ public extension UIFont {
     }
 
     var isNonDynamicTextStyle: Bool {
-        return textStyle.rawValue == "CTFontRegularUsage"
+        textStyle.rawValue == "CTFontRegularUsage"
     }
 
     func contains(trait: UIFontDescriptor.SymbolicTraits) -> Bool {
-        return traits.contains(trait)
+        traits.contains(trait)
     }
 
     func toggled(trait: UIFontDescriptor.SymbolicTraits) -> UIFont {
         let updatedFont: UIFont
-        if self.contains(trait: trait) {
+        if contains(trait: trait) {
             updatedFont = removing(trait: trait)
         } else {
             updatedFont = adding(trait: trait)

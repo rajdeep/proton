@@ -11,18 +11,18 @@ import UIKit
 
 public extension NSAttributedString {
     func enumerateContents(in range: NSRange? = nil) -> AnySequence<EditorContent> {
-        return self.enumerateContentType(.contentType, defaultIfMissing: .paragraph, in: range) { attributes in
+        enumerateContentType(.contentType, defaultIfMissing: .paragraph, in: range) { attributes in
             attributes[.isBlockAttachment] as? Bool != false
         }
     }
 
     func enumerateInlineContents(in range: NSRange? = nil) -> AnySequence<EditorContent> {
-        return self.enumerateContentType(.contentType, defaultIfMissing: .text, in: range) { attributes in
+        enumerateContentType(.contentType, defaultIfMissing: .text, in: range) { attributes in
             attributes[.isInlineAttachment] as? Bool != false
         }
     }
 
-    func rangeOfCharacter(from characterSet: CharacterSet) -> NSRange? {
+    func rangeOfCharacter(from _: CharacterSet) -> NSRange? {
         guard let newlineRange = string.rangeOfCharacter(from: .newlines) else {
             return nil
         }
@@ -31,9 +31,9 @@ public extension NSAttributedString {
 }
 
 extension NSAttributedString {
-    func enumerateContentType(_ type: NSAttributedString.Key, defaultIfMissing: EditorContent.Name, in range: NSRange? = nil, where filter: @escaping ((RichTextAttributes) -> Bool) = { _ in return true}) -> AnySequence<EditorContent> {
-        let range = range ?? self.fullRange
-        let contentString = self.attributedSubstring(from: range)
+    func enumerateContentType(_ type: NSAttributedString.Key, defaultIfMissing: EditorContent.Name, in range: NSRange? = nil, where _: @escaping ((RichTextAttributes) -> Bool) = { _ in true }) -> AnySequence<EditorContent> {
+        let range = range ?? fullRange
+        let contentString = attributedSubstring(from: range)
         return AnySequence { () -> AnyIterator<EditorContent> in
             var substringRange = NSRange(location: 0, length: contentString.length)
 
@@ -43,8 +43,8 @@ extension NSAttributedString {
                 }
 
                 var content: EditorContent?
-                
-                contentString.enumerateAttribute(type, in: substringRange, options: [.longestEffectiveRangeNotRequired]) { (name, range, stop) in
+
+                contentString.enumerateAttribute(type, in: substringRange, options: [.longestEffectiveRangeNotRequired]) { name, range, stop in
                     let contentName = name as? EditorContent.Name ?? defaultIfMissing
                     let substring = contentString.attributedSubstring(from: range)
                     stop.pointee = true
