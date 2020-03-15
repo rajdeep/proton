@@ -8,12 +8,14 @@
 
 import Foundation
 
+/// An object capable of decoding attributes for use in `NSAttributedString`
 public protocol AttributesDecoding {
     associatedtype TypeToDecode
     var name: String { get }
     func decode(_ value: TypeToDecode) -> Attributes
 }
 
+/// A type-erased implementation of `AttributesDecoding`
 public struct AnyAttributeDecoding<EncodedType>: AttributesDecoding {
     public let name: String
     let decoding: (EncodedType) -> Attributes

@@ -39,7 +39,8 @@ public protocol BoundsObserving: AnyObject {
 
 /// Representation of a line of text in `EditorView`. A line is defined as a single fragment starting from the beginning of
 /// bounds of `EditorView` to the end. A line may have any number of characters based on the contents in the `EditorView`.
-/// - Note: A line does not represent a full sentence in the `EditorView` but instead may start and/or end in the middle of
+/// - Note:
+/// A line does not represent a full sentence in the `EditorView` but instead may start and/or end in the middle of
 /// another based on how the content is laid  out in the `EditorView`.
 public struct EditorLine {
 
@@ -52,6 +53,8 @@ public struct EditorLine {
     /// Determines if the current line starts with given text.
     /// Text comparison is case-sensitive.
     /// - Parameter text: Text to compare
+    /// - Returns:
+    /// `true` if the current line text starts with the given string.
     public func startsWith(_ text: String) -> Bool {
         return self.text.string.hasPrefix(text)
     }
@@ -59,6 +62,8 @@ public struct EditorLine {
     /// Determines if the current line ends with given text.
     /// Text comparison is case-sensitive.
     /// - Parameter text: Text to compare
+    /// - Returns:
+    /// `true` if the current line text ends with the given string.
     public func endsWith(_ text: String) -> Bool {
         self.text.string.hasSuffix(text)
     }
@@ -83,7 +88,7 @@ open class EditorView: UIView {
     var textProcessor: TextProcessor?
 
     /// List of commands supported by the editor.
-    /// -Note:
+    /// - Note:
     /// * To support any command, set value to nil. Default behaviour.
     /// * To prevent any command to be executed, set value to be an empty array.
     public var registeredCommands: [EditorCommand]?
@@ -156,13 +161,13 @@ open class EditorView: UIView {
         set { richTextView.placeholderText = newValue }
     }
 
-    /// Default value is UIEdgeInsetsZero. Add insets for additional scroll area around the content.
+    /// Gets or sets insets for additional scroll area around the content. Default value is UIEdgeInsetsZero.
     public var contentInset: UIEdgeInsets {
         get { richTextView.contentInset }
         set { richTextView.contentInset = newValue }
     }
 
-    /// Inset the text container's layout area within the editor's content area
+    /// Gets or sets the insets for the text container's layout area within the editor's content area
     public var textContainerInset: UIEdgeInsets {
         get { richTextView.textContainerInset }
         set { richTextView.textContainerInset = newValue }
@@ -175,7 +180,8 @@ open class EditorView: UIView {
     }
 
     /// Length of content within the Editor.
-    /// - Note: An attachment is only counted as a single character. Content length does not include
+    /// - Note:
+    /// An attachment is only counted as a single character. Content length does not include
     /// length of content within the Attachment that is hosting another `EditorView`.
     public var contentLength: Int {
         return attributedText.length
@@ -198,10 +204,12 @@ open class EditorView: UIView {
         return editorLineFrom(range: richTextView.currentLineRange )
     }
 
+    /// First line of content in the Editor. Nil if editor is empty.
     public var firstLine: EditorLine? {
         return editorLineFrom(range: NSRange(location: 1, length: 0) )
     }
 
+    /// Last line of content in the Editor. Nil if editor is empty.
     public var lastLine: EditorLine? {
         return editorLineFrom(range: NSRange(location: contentLength - 1, length: 0) )
     }
@@ -257,7 +265,7 @@ open class EditorView: UIView {
         }
     }
 
-    /// Determines if the selection handles should be shown when `selectedRange` is set. Defaults to `true`.
+    /// Determines if the selection handles should be shown when `selectedRange` is set programatically. Defaults is `true`.
     public var enableSelectionHandles = true
 
     /// Gets or sets the selected range in the `EditorView`.
@@ -291,7 +299,7 @@ open class EditorView: UIView {
         set { richTextView.contentOffset = newValue }
     }
 
-    /// Range of end of text in the `EditorView`
+    /// Range of end of text in the `EditorView`. The range has always has length of 0.
     public var textEndRange: NSRange {
         return richTextView.textEndRange
     }
@@ -366,10 +374,17 @@ open class EditorView: UIView {
         richTextView.adjustsFontForContentSizeCategory = true
     }
 
+    /// Asks the view to calculate and return the size that best fits the specified size.
+    /// - Parameter size: The size for which the view should calculate its best-fitting size.
+    /// - Returns:
+    /// A new size that fits the receiver’s subviews.
     override open func sizeThatFits(_ size: CGSize) -> CGSize {
         return richTextView.sizeThatFits(size)
     }
 
+    /// Asks UIKit to make this object the first responder in its window.
+    /// - Returns:
+    /// `true` if this object is now the first-responder or `false` if it is not.
     @discardableResult
     public override func becomeFirstResponder() -> Bool {
         return richTextView.becomeFirstResponder()
@@ -377,7 +392,9 @@ open class EditorView: UIView {
 
     /// Gets the line preceding the given line. Nil if the given line is invalid or is first line
     /// - Parameter line: Reference line
-    public func lineNext(to line: EditorLine) -> EditorLine? {
+    /// - Returns:
+    /// `EditorLine` after the given line. Nil if the Editor is empty or given line is last line in the Editor.
+    public func lineAfter(_ line: EditorLine) -> EditorLine? {
         let lineRange = line.range
         let nextLineStartRange = NSRange(location: lineRange.location + lineRange.length + 1, length: 0)
         guard nextLineStartRange.isValidIn(richTextView) else { return nil }
@@ -386,7 +403,9 @@ open class EditorView: UIView {
 
     /// Gets the line after the given line. Nil if the given line is invalid or is last line
     /// - Parameter line: Reference line
-    public func linePrevious(to line: EditorLine) -> EditorLine? {
+    /// - Returns:
+    /// `EditorLine` before the given line. Nil if the Editor is empty or given line is first line in the Editor.
+    public func lineBefore(_ line: EditorLine) -> EditorLine? {
         let lineRange = line.range
         let previousLineStartRange = NSRange(location: lineRange.location - 1, length: 0)
         guard previousLineStartRange.isValidIn(richTextView) else { return nil }
@@ -404,6 +423,8 @@ open class EditorView: UIView {
     /// Returns the rectangles for line fragments spanned by the range. Based on the span of the range,
     /// multiple rectangles may be returned.
     /// - Parameter range: Range to be queried.
+    /// - Returns:
+    /// Array of rectangles for the given range.
     public func rects(for range: NSRange) -> [CGRect] {
         guard let textRange = range.toTextRange(textInput: richTextView) else { return [] }
         let rects = richTextView.selectionRects(for: textRange)
@@ -413,7 +434,10 @@ open class EditorView: UIView {
     /// Returns the caret rectangle for given position in the editor content.
     /// - Parameter position: Location to be queried within the editor content.
     /// - Note:
-    ///  If the location is beyond the bounds of content length, the last valid position is used to get caret rectangle.
+    ///  If the location is beyond the bounds of content length, the last valid position is used to get caret rectangle. This function
+    ///  only returns the rectangle denoting the caret positioning. The actual caret is not moved and no new carets are drawn.
+    /// - Returns:
+    /// Rectangle for caret based on the line height and given location.
     public func caretRect(for position: Int) -> CGRect {
         let textPosition = richTextView.position(from: richTextView.beginningOfDocument, offset: position) ?? richTextView.endOfDocument
         return richTextView.caretRect(for: textPosition)
@@ -421,6 +445,8 @@ open class EditorView: UIView {
 
     /// Gets the word from text at given location in editor content
     /// - Parameter location: Location to be queried.
+    /// - Returns:
+    /// Word  at the given location. Nil is there's no content.
     public func word(at location: Int) -> NSAttributedString? {
         return richTextView.wordAt(location)
     }
@@ -469,6 +495,8 @@ open class EditorView: UIView {
     /// is  a type of transformation that can also be decoded.
     /// - Parameter range: Range of `Editor` to transform the contents. By default, entire range is used.
     /// - Parameter transformer: Transformer capable of transforming `EditorContent` to given type
+    /// - Returns:
+    /// Array of transformed contents based on given transformer.
     public func transformContents<T: EditorContentEncoding>(in range: NSRange? = nil, using transformer: T) -> [T.EncodedType] {
         return richTextView.transformContents(in: range, using: transformer)
     }
@@ -683,6 +711,8 @@ extension EditorView {
 
 public extension EditorView {
     /// Creates a `RendererView` from current `EditorView`
+    /// - Returns:
+    /// `RendererView` for the Editor
     func convertToRenderer() -> RendererView {
         return RendererView(editor: self)
     }
@@ -690,6 +720,8 @@ public extension EditorView {
     /// Determines if the given command can be executed on the current editor. The command is allowed to be executed if
     /// `requiresSupportedCommandsRegistration` is false or if the command has been registered with the editor.
     /// - Parameter command: Command to validate
+    /// - Returns:
+    /// `true` if the command is registered with the Editor.
     func isCommandRegistered(_ command: EditorCommand) -> Bool {
         return registeredCommands?.contains { $0 === command } ?? true
     }

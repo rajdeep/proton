@@ -346,9 +346,9 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         FBSnapshotVerifyView(viewController.view)
 
         let firstLine = try XCTUnwrap(editor.firstLine)
-        let nextLine = try XCTUnwrap(editor.lineNext(to: firstLine))
+        let nextLine = try XCTUnwrap(editor.lineAfter(firstLine))
         let lastLine = try XCTUnwrap(editor.lastLine)
-        let prevLine = try XCTUnwrap(editor.linePrevious(to: lastLine))
+        let prevLine = try XCTUnwrap(editor.lineBefore(lastLine))
 
         let firstLineText = editor.firstLine?.text.string
         let expectedText1 = "Line 1 text Line 1 text Line 1 text "

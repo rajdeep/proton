@@ -362,7 +362,7 @@ class EditorViewTests: XCTestCase {
 
         let currentLine = try XCTUnwrap(editor.currentLine)
         XCTAssertEqual(currentLine.text.string, attrString.string)
-        XCTAssertNil(editor.lineNext(to: currentLine))
+        XCTAssertNil(editor.lineAfter(currentLine))
     }
 
     func testReturnsNilForInvalidPreviousLine() throws {
@@ -372,7 +372,7 @@ class EditorViewTests: XCTestCase {
 
         let currentLine = try XCTUnwrap(editor.currentLine)
         XCTAssertEqual(currentLine.text.string, attrString.string)
-        XCTAssertNil(editor.linePrevious(to: currentLine))
+        XCTAssertNil(editor.lineBefore(currentLine))
     }
 
     func testResetsAttributesWhenCleared() {
