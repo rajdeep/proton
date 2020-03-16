@@ -35,6 +35,14 @@ class RichTextView: AutogrowingTextView {
         ]
     }
 
+    override var selectedTextRange: UITextRange? {
+        didSet{
+            let old = oldValue?.toNSRange(in: self)
+            let new = selectedTextRange?.toNSRange(in: self)
+            richTextViewDelegate?.richTextView(self, selectedRangeChangedFrom: old, to: new)
+        }
+    }
+
     init(frame: CGRect = .zero, context: RichTextViewContext) {
         let textContainer = TextContainer()
         let layoutManager = NSLayoutManager()

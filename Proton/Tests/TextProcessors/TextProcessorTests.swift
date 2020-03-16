@@ -167,4 +167,27 @@ class TextProcessorTests: XCTestCase {
 
         waitForExpectations(timeout: 1.0)
     }
+
+    func testGetsNotifiedOfSelectedRangeChanges() {
+        let testExpectation = functionExpectation()
+        let editor = EditorView()
+
+        let name = "TextProcessorTest"
+        let mockProcessor = MockTextProcessor(name: name, processorCondition: { _, _ in true })
+        let originalRange = NSRange(location: 2, length: 1)
+        let rangeToSet = NSRange(location: 5, length: 4)
+        editor.attributedText = NSAttributedString(string: "This is a test")
+
+        editor.richTextView.selectedTextRange = originalRange.toTextRange(textInput: editor.richTextView)
+
+        mockProcessor.onSelectedRangeChanged = { _, old, new in
+            XCTAssertEqual(old, originalRange)
+            XCTAssertEqual(new, rangeToSet)
+            testExpectation.fulfill()
+        }
+
+        editor.registerProcessor(mockProcessor)
+        editor.richTextView.selectedTextRange = rangeToSet.toTextRange(textInput: editor.richTextView)
+        waitForExpectations(timeout: 1.0)
+    }
 }

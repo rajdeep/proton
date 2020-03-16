@@ -19,6 +19,7 @@ class MockRichTextViewDelegate: RichTextViewDelegate {
     var onDidChangeText: ((RichTextView, NSRange) -> Void)?
     var onDidFinishLayout: ((RichTextView, Bool) -> Void)?
     var onDidTapAtLocation: ((RichTextView, CGPoint, NSRange?) -> Void)?
+    var onSelectedRangeChanged: ((RichTextView, NSRange?, NSRange?) -> Void)?
 
     func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
         onSelectionChanged?(richTextView, range, attributes, contentType)
@@ -46,5 +47,9 @@ class MockRichTextViewDelegate: RichTextViewDelegate {
 
     func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
         onDidTapAtLocation?(richTextView, location, characterRange)
+    }
+
+    func richTextView(_ richTextView: RichTextView, selectedRangeChangedFrom oldRange: NSRange?, to newRange: NSRange?) {
+        onSelectedRangeChanged?(richTextView, oldRange, newRange)
     }
 }

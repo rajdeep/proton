@@ -54,6 +54,22 @@ class RichTextViewTests: XCTestCase {
         let postColor = try XCTUnwrap(textView.typingAttributes[.foregroundColor] as? UIColor)
         let typingAttributeColor = try XCTUnwrap(textView.defaultTypingAttributes[.foregroundColor] as? UIColor)
         XCTAssertEqual(postColor, typingAttributeColor)
+    }
 
+    func testNotifiesDelegateOfSelectedRangeChanges() {
+        let funcExpectation = functionExpectation()
+        let textView = RichTextView(context: RichTextViewContext())
+        let richTextViewDelegate = MockRichTextViewDelegate()
+        textView.richTextViewDelegate = richTextViewDelegate
+        textView.attributedText = NSAttributedString(string: "This is a test string")
+        let rangeToSet = NSRange(location: 5, length: 3)
+
+        richTextViewDelegate.onSelectedRangeChanged = { _, old, new in
+            XCTAssertEqual(old, textView.textEndRange)
+            XCTAssertEqual(new, rangeToSet)
+            funcExpectation.fulfill()
+        }
+        textView.selectedTextRange = rangeToSet.toTextRange(textInput: textView)
+        waitForExpectations(timeout: 1.0)
     }
 }

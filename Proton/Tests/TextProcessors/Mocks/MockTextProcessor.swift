@@ -16,6 +16,7 @@ class MockTextProcessor: TextProcessing {
     var onWillProcess: ((NSAttributedString, String) -> Void)?
     var onProcess: ((EditorView, NSRange, Int) -> Void)?
     var onProcessInterrupted: ((EditorView, NSRange) -> Void)?
+    var onSelectedRangeChanged: ((EditorView, NSRange?, NSRange?) -> Void)?
 
     var processorCondition: (EditorView, NSRange) -> Bool
 
@@ -38,5 +39,9 @@ class MockTextProcessor: TextProcessing {
 
     func processInterrupted(editor: EditorView, at range: NSRange) {
         onProcessInterrupted?(editor, range)
+    }
+
+    func selectedRangeChanged(editor: EditorView, oldRange: NSRange?, newRange: NSRange?) {
+        onSelectedRangeChanged?(editor, oldRange, newRange)
     }
 }

@@ -49,8 +49,21 @@ public protocol TextProcessing {
     /// - Parameter editor:`EditorView` in which text is being changed.
     /// - Parameter range: Current range that is being modified.
     func processInterrupted(editor: EditorView, at range: NSRange) // fired when processor is interrupted as a result of an exclusive priority processor
+
+    /// Notifies the processor that the selected range has changed in the EditorView due to a reason other than typing text
+    /// for e.g. moving cursor using keyboard, mouse or tap.
+    /// - Note:
+    /// This function is also called if the user selects text by dragging. Each individual character selection during drag operation
+    /// results in an independent call to this function. If old or new range has zero length, it indicates the caret (insertion point).
+    /// If the range object is nil, it indicates that there is no previous/current selection.
+    /// - Parameters:
+    ///   - editor: EditorView in which selected range changed
+    ///   - oldRange: Original range before the change
+    ///   - newRange: Current range after the change
+    func selectedRangeChanged(editor: EditorView, oldRange: NSRange?, newRange: NSRange?)
 }
 
 public extension TextProcessing {
     func willProcess(deletedText: NSAttributedString, insertedText: String) { }
+    func selectedRangeChanged(editor: EditorView, oldRange: NSRange?, newRange: NSRange?) { }
 }

@@ -669,6 +669,10 @@ extension EditorView: RichTextViewDelegate {
         relayoutAttachments()
     }
 
+    func richTextView(_ richTextView: RichTextView, selectedRangeChangedFrom oldRange: NSRange?, to newRange: NSRange?) {
+        textProcessor?.activeProcessors.forEach{ $0.selectedRangeChanged(editor: self, oldRange: oldRange, newRange: newRange) }
+    }
+
     func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) { }
 }
 

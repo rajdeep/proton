@@ -164,6 +164,8 @@ extension RendererView: RichTextViewDelegate {
 
     func richTextView(_ richTextView: RichTextView, didChangeTextAtRange range: NSRange) { }
 
+    func richTextView(_ richTextView: RichTextView, selectedRangeChangedFrom oldRange: NSRange?, to newRange: NSRange?) { }
+
     func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool) {
         readOnlyEditorView.relayoutAttachments()
     }
