@@ -14,6 +14,7 @@ public protocol EditorViewDelegate: AnyObject {
     func editor(_ editor: EditorView, didLoseFocusFrom range: NSRange)
     func editor(_ editor: EditorView, didChangeTextAt range: NSRange)
     func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name)
+    func editor(_ editor: EditorView, didExecuteProcessors processors: [TextProcessing], at range: NSRange)
 }
 
 public extension EditorViewDelegate {
@@ -22,4 +23,5 @@ public extension EditorViewDelegate {
     func editor(_ editor: EditorView, didLoseFocusFrom range: NSRange) { }
     func editor(_ editor: EditorView, didChangeTextAt range: NSRange) { }
     func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) { }
+    func editor(_ editor: EditorView, didExecuteProcessors processors: [TextProcessing], at range: NSRange) { }
 }

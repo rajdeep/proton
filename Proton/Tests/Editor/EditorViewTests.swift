@@ -385,4 +385,32 @@ class EditorViewTests: XCTestCase {
         let color = editor.attributedText.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor
         XCTAssertEqual(color, editor.textColor)
     }
+
+    func testNotifiesEditorDelegateOfExecutedProcessors() {
+        let testExpectation = functionExpectation()
+        let editor = EditorView()
+        let delegate = MockEditorViewDelegate()
+        editor.delegate = delegate
+
+        let name1 = "TextProcessorTest1"
+        let name2 = "TextProcessorTest2"
+        let name3 = "TextProcessorTest3"
+
+        let mockProcessor1 = MockTextProcessor(name: name1, processorCondition: { _, _ in true })
+        let mockProcessor2 = MockTextProcessor(name: name2, processorCondition: { _, _ in false })
+        let mockProcessor3 = MockTextProcessor(name: name3, processorCondition: { _, _ in true })
+
+        editor.registerProcessors([mockProcessor1, mockProcessor2, mockProcessor3])
+
+        delegate.onDidExecuteProcessors = { _, processors, range in
+            XCTAssertEqual(processors.count, 2)
+            XCTAssertEqual(processors[0].name, name1)
+            XCTAssertEqual(processors[1].name, name3)
+            XCTAssertEqual(range, editor.attributedText.fullRange)
+            testExpectation.fulfill()
+        }
+
+        editor.appendCharacters("test")
+        waitForExpectations(timeout: 1.0)
+    }
 }

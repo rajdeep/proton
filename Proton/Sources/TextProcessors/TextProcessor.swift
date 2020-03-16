@@ -41,15 +41,17 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
 
     func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int) {
         guard let editor = editor else { return }
-
+        var executedProcessors = [TextProcessing]()
         var processed = false
         for processor in sortedProcessors {
             processed = processor.process(editor: editor, range: editedRange, changeInLength: delta)
+            if processed { executedProcessors.append(processor) }
             if processor.priority == .exclusive, processed == true {
                 notifyInterruption(by: processor, editor: editor, at: editedRange)
                 break
             }
         }
+        editor.delegate?.editor(editor, didExecuteProcessors: executedProcessors, at: editedRange)
     }
 
     func textStorage(_ textStorage: NSTextStorage, willProcessDeletedText deletedText: NSAttributedString, insertedText: String) {
