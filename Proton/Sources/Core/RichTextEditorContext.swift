@@ -41,7 +41,7 @@ class RichTextEditorContext: RichTextViewContext {
 
         // if backspace
         var handled = false
-        if (text.isEmpty && range.length > 0) || (text.isEmpty && range == .zero) {
+        if text.isBackspace {
             richTextView.richTextViewDelegate?.richTextView(richTextView, didReceiveKey: .backspace, at: range, handled: &handled)
 
             guard handled == false else {
