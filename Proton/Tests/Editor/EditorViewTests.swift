@@ -59,8 +59,9 @@ class EditorViewTests: XCTestCase {
         XCTAssertEqual(paragraphContent.enclosingRange, editorString.fullRange)
 
         let inlineAttachment = contents[1]
-        if case let .attachment(name, contentView, type) = inlineAttachment.type {
+        if case let .attachment(name, attachment, contentView, type) = inlineAttachment.type {
             XCTAssertEqual(name, textField.name)
+            XCTAssertEqual(attachment, textFieldAttachment)
             XCTAssertEqual(contentView, textField)
             XCTAssertEqual(type, .inline)
         } else {
@@ -76,8 +77,9 @@ class EditorViewTests: XCTestCase {
         }
 
         let blockAttachment = contents[3]
-        if case let .attachment(name, contentView, type) = blockAttachment.type {
+        if case let .attachment(name, attachment, contentView, type) = blockAttachment.type {
             XCTAssertEqual(name, panelView.name)
+            XCTAssertEqual(attachment, panelAttachment)
             XCTAssertEqual(contentView, panelView)
             XCTAssertEqual(type, .block)
         } else {

@@ -60,7 +60,7 @@ public extension EditorContentEncoder {
         switch content.type {
         case .viewOnly:
             return nil
-        case let .attachment(name, contentView, _):
+        case let .attachment(name, _, contentView, _):
             guard let encodable = attachmentEncoders[name] else { return nil }
             return encodable.encode(name: name, view: contentView)
         case let .text(name, attributedString):

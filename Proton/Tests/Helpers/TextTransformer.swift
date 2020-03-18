@@ -17,7 +17,7 @@ class TextTransformer: EditorContentEncoding {
         let text: String
 
         switch content.type {
-        case let .attachment(name, contentView, attachmentType):
+        case let .attachment(name, _, contentView, attachmentType):
             let contentViewType = String(describing: type(of: contentView))
             text = "Name: `\(name.rawValue)` ContentView: `\(contentViewType)` Type: `\(attachmentType)`"
         case let .text(name, attributedString):
