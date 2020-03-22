@@ -91,4 +91,35 @@ class EditorViewDelegateTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
 
+    func testNotifiesBackspace() throws {
+        try assertKeyPress(.backspace, replacementText: "")
+    }
+
+    func testNotifiesEnter() throws {
+        try assertKeyPress(.enter, replacementText: "\n")
+    }
+
+    func testNotifiesTab() throws {
+        try assertKeyPress(.tab, replacementText: "\t")
+    }
+
+    private func assertKeyPress(_ key: EditorKey, replacementText: String, file: StaticString = #file, line: UInt = #line) throws {
+        let delegateExpectation = functionExpectation()
+        let delegate = MockEditorViewDelegate()
+        delegate.onKeyReceived = { editor, key, range, _ in
+            XCTAssertEqual(key, .tab, file: file, line: line)
+            XCTAssertEqual(range, .zero, file: file, line: line)
+            delegateExpectation.fulfill()
+        }
+
+        let editor = EditorView()
+        editor.delegate = delegate
+
+        let context = try XCTUnwrap(editor.richTextView.delegate)
+        context.textViewDidBeginEditing?(editor.richTextView)
+        _ = context.textView?(editor.richTextView, shouldChangeTextIn: editor.selectedRange, replacementText: "\t")
+
+        waitForExpectations(timeout: 1.0)
+    }
+
 }

@@ -12,6 +12,7 @@ import UIKit
 public enum EditorKey {
     case enter
     case backspace
+    case tab
 }
 
 protocol RichTextViewDelegate: AnyObject {

@@ -154,6 +154,11 @@ open class EditorView: UIView {
         return textProcessor?.activeProcessors ?? []
     }
 
+    public var selectedTextRange: UITextRange? {
+        get { richTextView.selectedTextRange }
+        set { richTextView.selectedTextRange = newValue }
+    }
+
     /// Placeholder text for the `EditorView`. The value can contain any attributes which is natively
     /// supported in the `NSAttributedString`.
     public var placeholderText: NSAttributedString? {
