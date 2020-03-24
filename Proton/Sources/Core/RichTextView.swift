@@ -39,8 +39,50 @@ class RichTextView: AutogrowingTextView {
         didSet{
             let old = oldValue?.toNSRange(in: self)
             let new = selectedTextRange?.toNSRange(in: self)
+
+            // Handle the case where caret is moved using keys or direct taps on given location.
+            // When selecting text or using backspace/delete, this code is skipped
+            if oldValue != selectedTextRange,
+                let new = new, new.length <= 1,
+                new.location < attributedText.length - 1 {
+
+                let newTextRange = attributedText.attributedSubstring(from: NSRange(location: new.location, length: 1))
+                let isNonFocus = newTextRange.attribute(.noFocus, at: 0, effectiveRange: nil) as? Bool == true
+
+                if isNonFocus == true {
+                    adjustRangeOnNonFocus(oldRange: oldValue)
+                }
+            }
             richTextViewDelegate?.richTextView(self, selectedRangeChangedFrom: old, to: new)
         }
+    }
+
+    private func adjustRangeOnNonFocus(oldRange: UITextRange?) {
+        guard let currentRange = selectedTextRange?.toNSRange(in: self),
+            let previousRange = oldRange?.toNSRange(in: self) else { return }
+
+        var rangeToSet: NSRange?
+        let isReverseTraversal = currentRange.location < previousRange.location
+        var rangeToTraverse = NSRange(location: currentRange.location, length: attributedText.length - (currentRange.location + currentRange.length))
+
+        if isReverseTraversal == true {
+            rangeToTraverse = NSRange(location: 0, length: currentRange.location)
+            attributedText.enumerateAttribute(.noFocus, in: rangeToTraverse, options: [.longestEffectiveRangeNotRequired, .reverse]) { val, range, stop in
+                if (val as? Bool != true), rangeToSet == nil {
+                    rangeToSet = NSRange(location: range.location + range.length, length: 0)
+                    stop.pointee = true
+                }
+            }
+        }  else {
+            attributedText.enumerateAttribute(.noFocus, in: rangeToTraverse, options: [.longestEffectiveRangeNotRequired]) { val, range, stop in
+                if (val as? Bool != true), rangeToSet == nil {
+                    rangeToSet = NSRange(location: range.location, length: 0)
+                    stop.pointee = true
+                }
+            }
+        }
+
+        selectedTextRange = rangeToSet?.toTextRange(textInput: self) ?? oldRange
     }
 
     init(frame: CGRect = .zero, context: RichTextViewContext) {
