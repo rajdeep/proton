@@ -33,7 +33,7 @@ class TextStorage: NSTextStorage {
 
     let defaultParagraphStyle = NSParagraphStyle()
     let defaultFont = UIFont.preferredFont(forTextStyle: .body)
-    let defaultTextColor = UIColor.label
+    let defaultTextColor: UIColor
 
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding?
 
@@ -42,11 +42,16 @@ class TextStorage: NSTextStorage {
     }
 
     override init() {
+        if #available(iOS 13.0, *) {
+            self.defaultTextColor = .label
+        } else {
+            self.defaultTextColor = .black
+        }
         super.init()
     }
 
-    override init(attributedString: NSAttributedString) {
-        super.init()
+    override convenience init(attributedString: NSAttributedString) {
+        self.init()
         storage.setAttributedString(attributedString)
     }
 

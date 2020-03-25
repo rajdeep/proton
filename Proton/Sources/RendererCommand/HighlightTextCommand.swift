@@ -25,6 +25,7 @@ public extension NSAttributedString.Key {
     static let isHighlighted = NSAttributedString.Key("IsHighlighted")
 }
 
+@available(iOS 13.0, *)
 public class HighlightTextCommand: RendererCommand {
     public let color = UIColor(dynamicProvider: { traightCollection -> UIColor in
         switch traightCollection.userInterfaceStyle {

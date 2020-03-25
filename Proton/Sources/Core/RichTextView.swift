@@ -109,8 +109,13 @@ class RichTextView: AutogrowingTextView {
         textContainer.textView = self
         self.delegate = context
 
-        self.backgroundColor = .systemBackground
-        self.textColor = .label
+        if #available(iOS 13.0, *) {
+            self.backgroundColor = .systemBackground
+            self.textColor = .label
+        } else {
+            self.backgroundColor = .white
+            self.textColor = .black
+        }
 
         setupPlaceholder()
     }
