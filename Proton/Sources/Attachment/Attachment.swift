@@ -255,14 +255,14 @@ open class Attachment: NSTextAttachment, BoundsObserving {
             size = contentView?.bounds.integral.size ?? view.bounds.integral.size
         }
 
-        if size == .zero,
+        if (size.width == 0 || size.height == 0),
             let fittingSize = contentView?.systemLayoutSizeFitting(textContainer.size) {
             size = fittingSize
         }
 
         switch self.size {
         case .matchContent:
-            size = contentView?.bounds.integral.size ?? view.bounds.integral.size
+            break
         case let .fixed(width):
             size = CGSize(width: min(size.width, width), height: size.height)
         case .fullWidth:
