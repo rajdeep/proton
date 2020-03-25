@@ -71,5 +71,6 @@ class AutogrowingTextView: UITextView {
     private func updateDimensionsCalculatingTextView() {
         dimensionsCalculatingTextView.font = font
         dimensionsCalculatingTextView.attributedText = attributedText
+        dimensionsCalculatingTextView.textContainerInset = textContainerInset
     }
 }
