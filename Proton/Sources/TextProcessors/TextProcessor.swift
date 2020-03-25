@@ -43,8 +43,15 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         guard let editor = editor else { return }
         var executedProcessors = [TextProcessing]()
         var processed = false
+        let changedText = textStorage.attributedSubstring(from: editedRange).string
         for processor in sortedProcessors {
-            processed = processor.process(editor: editor, range: editedRange, changeInLength: delta)
+            if changedText == "\n" {
+                processor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: editedRange)
+            } else if changedText == "\t" {
+                processor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: editedRange)
+            } else {
+                processed = processor.process(editor: editor, range: editedRange, changeInLength: delta)
+            }
             if processed { executedProcessors.append(processor) }
             if processor.priority == .exclusive, processed == true {
                 notifyInterruption(by: processor, editor: editor, at: editedRange)

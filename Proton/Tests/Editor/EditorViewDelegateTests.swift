@@ -29,7 +29,7 @@ class EditorViewDelegateTests: XCTestCase {
         let richTextViewDelegate = richTextView.richTextViewDelegate
         var handled = true
 
-        richTextViewDelegate?.richTextView(richTextView, didReceiveKey: .enter, at: .zero, handled: &handled)
+        richTextViewDelegate?.richTextView(richTextView, didReceiveKey: .enter, modifierFlags: [], at: .zero, handled: &handled)
         waitForExpectations(timeout: 1.0)
     }
 

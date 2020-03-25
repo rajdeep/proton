@@ -398,9 +398,9 @@ class EditorViewTests: XCTestCase {
         let name2 = "TextProcessorTest2"
         let name3 = "TextProcessorTest3"
 
-        let mockProcessor1 = MockTextProcessor(name: name1, processorCondition: { _, _ in true })
+        let mockProcessor1 = MockTextProcessor(name: name1)
         let mockProcessor2 = MockTextProcessor(name: name2, processorCondition: { _, _ in false })
-        let mockProcessor3 = MockTextProcessor(name: name3, processorCondition: { _, _ in true })
+        let mockProcessor3 = MockTextProcessor(name: name3)
 
         editor.registerProcessors([mockProcessor1, mockProcessor2, mockProcessor3])
 

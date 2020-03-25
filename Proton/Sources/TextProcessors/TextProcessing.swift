@@ -32,17 +32,33 @@ public protocol TextProcessing {
     /// executed. It is responsibility of these `TextProcessors` to do any cleanup/rollback if that needs to be done.
     var priority: TextProcessingPriority { get }
 
+    /// Invoked before changes are processed by the editor.
+    /// - Attention:
+    /// This is fired before the text has changed in the editor. This can be helpful if any state needs to be changed based on edited text.
+    /// However, it should be noted that the changes are done only in `process` and not in this function owing to the lifecycle of TextKit components.
+    /// - Parameters:
+    ///   - deletedText: Text that has been deleted, if any.
+    ///   - insertedText: Text that is inserted, if any.
     func willProcess(deletedText: NSAttributedString, insertedText: String)
 
     /// Allows to change attributes and text in the `EditorView` as the text is changed.
-    /// - Parameter editor:`EditorView` in which text is being changed.
-    /// - Parameter editedRange: Current range that is being modified.
-    /// - Parameter delta: Change in length of the text as a result of typing text. The length may be more than 1 if multiple characters are selected
+    /// - Parameters:
+    ///   - editor:`EditorView` in which text is being changed.
+    ///   - editedRange: Current range that is being modified.
+    ///   - delta: Change in length of the text as a result of typing text. The length may be more than 1 if multiple characters are selected
     /// before content is typed. It may also happen if text containing a string is pasted.
-    /// - Parameter processed: Set this to `true` is the `TextProcessor` has made any changes to the text or attributes in the `EditorView`
+    ///   - processed: Set this to `true` is the `TextProcessor` has made any changes to the text or attributes in the `EditorView`
     /// - Returns: Return `true` to indicate the processing had been done by the current processor. In case of .exclusive priority processors,
     /// returning `true` notifies all other processors of interruption.
     func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int) -> Processed
+
+    /// Allows to change attributes and text in the `EditorView` as the text is changed.
+    /// - Parameters:
+    ///   - editor:`EditorView` in which text is being changed.
+    ///   - key: `EditorKey` that is entered.
+    ///   - modifierFlags: The bit mask of modifier flags that were pressed with the key.
+    ///   - editedRange: Current range that is being modified.
+    func handleKeyWithModifiers(editor: EditorView, key: EditorKey, modifierFlags: UIKeyModifierFlags, range editedRange: NSRange)
 
     /// Fired when processing has been interrupted by another `TextProcessor` running in the same pass. This allows `TextProcessor` to revert
     /// any changes that may not have been committed.
@@ -65,5 +81,6 @@ public protocol TextProcessing {
 
 public extension TextProcessing {
     func willProcess(deletedText: NSAttributedString, insertedText: String) { }
+    func handleKeyWithModifiers(editor: EditorView, key: EditorKey, modifierFlags: UIKeyModifierFlags, range editedRange: NSRange) { }
     func selectedRangeChanged(editor: EditorView, oldRange: NSRange?, newRange: NSRange?) { }
 }

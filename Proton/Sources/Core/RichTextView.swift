@@ -130,6 +130,18 @@ class RichTextView: AutogrowingTextView {
         return layoutManager.glyphRange(forBoundingRect: textBounds, in: textContainer)
     }
 
+    override var keyCommands: [UIKeyCommand]? {
+        let tab = "\t"
+        let enter = "\r"
+
+        return [
+            UIKeyCommand(input: tab, modifierFlags: .shift, action: #selector(handleKeyCommand(command:))),
+            UIKeyCommand(input: enter, modifierFlags: .shift, action: #selector(handleKeyCommand(command:))),
+            UIKeyCommand(input: enter, modifierFlags: .control, action: #selector(handleKeyCommand(command:))),
+            UIKeyCommand(input: enter, modifierFlags: .alternate, action: #selector(handleKeyCommand(command:))),
+        ]
+    }
+
     @available(*, unavailable, message: "init(coder:) unavailable, use init")
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -141,6 +153,16 @@ class RichTextView: AutogrowingTextView {
         return 1 //NSFocusRingTypeNone
     }
     #endif
+
+    @objc
+    func handleKeyCommand(command: UIKeyCommand) {
+        guard let input = command.input,
+            let key = EditorKey(input) else { return }
+        
+        let modifierFlags = command.modifierFlags
+        var handled = false
+        richTextViewDelegate?.richTextView(self, didReceiveKey: key, modifierFlags: modifierFlags, at: selectedRange, handled: &handled)
+    }
 
     private func setupPlaceholder() {
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false

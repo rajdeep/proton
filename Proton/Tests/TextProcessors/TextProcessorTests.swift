@@ -15,7 +15,7 @@ class TextProcessorTests: XCTestCase {
     func testRegistersTextProcessor() {
         let textProcessor = TextProcessor(editor: EditorView())
         let name = "TextProcessorTest"
-        let mockProcessor = MockTextProcessor(name: name, processorCondition: { _, _ in true })
+        let mockProcessor = MockTextProcessor(name: name)
         textProcessor.register(mockProcessor)
 
         XCTAssertEqual(textProcessor.sortedProcessors.count, 1)
@@ -25,7 +25,7 @@ class TextProcessorTests: XCTestCase {
     func testUnregistersTextProcessor() {
         let textProcessor = TextProcessor(editor: EditorView())
         let name = "TextProcessorTest"
-        let mockProcessor = MockTextProcessor(name: name, processorCondition: { _, _ in true })
+        let mockProcessor = MockTextProcessor(name: name)
         textProcessor.register(mockProcessor)
 
         textProcessor.unregister(mockProcessor)
@@ -40,7 +40,7 @@ class TextProcessorTests: XCTestCase {
 
         let name = "TextProcessorTest"
         let replacementString = "replacement string"
-        let mockProcessor = MockTextProcessor(name: name, processorCondition: { _, _ in true })
+        let mockProcessor = MockTextProcessor(name: name)
         mockProcessor.onWillProcess = { deleted, inserted in
             XCTAssertEqual(deleted.string, "some")
             XCTAssertEqual(inserted, replacementString)
@@ -63,7 +63,7 @@ class TextProcessorTests: XCTestCase {
         let editor = EditorView()
 
         let name = "TextProcessorTest"
-        let mockProcessor = MockTextProcessor(name: name, processorCondition: { _, _ in true })
+        let mockProcessor = MockTextProcessor(name: name)
         mockProcessor.onProcess = { processedEditor, _, _ in
             XCTAssertEqual(processedEditor, editor)
             testExpectation.fulfill()
@@ -80,9 +80,9 @@ class TextProcessorTests: XCTestCase {
 
         let editor = EditorView()
 
-        let mockProcessor1 = MockTextProcessor(name: "p1", processorCondition: { _, _ in true })
+        let mockProcessor1 = MockTextProcessor(name: "p1")
         mockProcessor1.priority = .high
-        let mockProcessor2 = MockTextProcessor(name: "p2", processorCondition: { _, _ in true })
+        let mockProcessor2 = MockTextProcessor(name: "p2")
         mockProcessor2.priority = .low
 
         var order = 0
@@ -115,9 +115,9 @@ class TextProcessorTests: XCTestCase {
 
         let editor = EditorView()
 
-        let mockProcessor1 = MockTextProcessor(name: "e1", processorCondition: { _, _ in true })
+        let mockProcessor1 = MockTextProcessor(name: "e1")
         mockProcessor1.priority = .exclusive
-        let mockProcessor2 = MockTextProcessor(name: "p1", processorCondition: { _, _ in true })
+        let mockProcessor2 = MockTextProcessor(name: "p1")
         mockProcessor2.priority = .medium
 
         mockProcessor2.onProcess = { _, _, _ in
@@ -173,7 +173,7 @@ class TextProcessorTests: XCTestCase {
         let editor = EditorView()
 
         let name = "TextProcessorTest"
-        let mockProcessor = MockTextProcessor(name: name, processorCondition: { _, _ in true })
+        let mockProcessor = MockTextProcessor(name: name)
         let originalRange = NSRange(location: 2, length: 1)
         let rangeToSet = NSRange(location: 5, length: 4)
         editor.attributedText = NSAttributedString(string: "This is a test")
@@ -188,6 +188,44 @@ class TextProcessorTests: XCTestCase {
 
         editor.registerProcessor(mockProcessor)
         editor.richTextView.selectedTextRange = rangeToSet.toTextRange(textInput: editor.richTextView)
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testProcessesEnterKey() {
+        let testExpectation = functionExpectation()
+        let editor = EditorView()
+
+        let name = "TextProcessorTest"
+        let mockProcessor = MockTextProcessor(name: name)
+        mockProcessor.onKeyWithModifier = {_, key, _, range in
+            XCTAssertEqual(key, .enter)
+            XCTAssertEqual(range, NSRange(location: 5, length: 1))
+            testExpectation.fulfill()
+        }
+
+        editor.registerProcessor(mockProcessor)
+        editor.appendCharacters(NSAttributedString(string: "test "))
+        editor.appendCharacters("\n")
+
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testProcessesTabKey() {
+        let testExpectation = functionExpectation()
+        let editor = EditorView()
+
+        let name = "TextProcessorTest"
+        let mockProcessor = MockTextProcessor(name: name)
+        mockProcessor.onKeyWithModifier = {_, key, _, range in
+            XCTAssertEqual(key, .tab)
+            XCTAssertEqual(range, NSRange(location: 5, length: 1))
+            testExpectation.fulfill()
+        }
+
+        editor.registerProcessor(mockProcessor)
+        editor.appendCharacters(NSAttributedString(string: "test "))
+        editor.appendCharacters("\t")
+
         waitForExpectations(timeout: 1.0)
     }
 }

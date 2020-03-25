@@ -8,6 +8,7 @@
 
 import Foundation
 import XCTest
+import UIKit
 
 @testable import Proton
 
@@ -96,4 +97,56 @@ class RichTextViewTests: XCTestCase {
         textView.selectedTextRange = range
         XCTAssertEqual(textView.selectedRange, NSRange(location: 8, length: 0))
     }
+
+    func testInvokesDelegateOnShiftTab() {
+        let assertions: ((EditorKey, UIKeyModifierFlags) -> Void) = { key, flags in
+            XCTAssertEqual(key, .tab)
+            XCTAssertEqual(flags, .shift)
+        }
+        assertKeyCommand(input: "\t", modifierFlags: .shift, assertions: assertions)
+    }
+
+    func testInvokesDelegateOnShiftEnter() {
+        let assertions: ((EditorKey, UIKeyModifierFlags) -> Void) = { key, flags in
+            XCTAssertEqual(key, .enter)
+            XCTAssertEqual(flags, .shift)
+        }
+        assertKeyCommand(input: "\r", modifierFlags: .shift, assertions: assertions)
+    }
+
+    func testInvokesDelegateOnAltEnter() {
+        let assertions: ((EditorKey, UIKeyModifierFlags) -> Void) = { key, flags in
+            XCTAssertEqual(key, .enter)
+            XCTAssertEqual(flags, .alternate)
+        }
+        assertKeyCommand(input: "\r", modifierFlags: .alternate, assertions: assertions)
+    }
+
+    func testInvokesDelegateOnControlEnter() {
+        let assertions: ((EditorKey, UIKeyModifierFlags) -> Void) = { key, flags in
+            XCTAssertEqual(key, .enter)
+            XCTAssertEqual(flags, .control)
+        }
+        assertKeyCommand(input: "\r", modifierFlags: .control, assertions: assertions)
+    }
+
+    private func assertKeyCommand(input: String, modifierFlags: UIKeyModifierFlags, assertions: @escaping ((EditorKey, UIKeyModifierFlags) -> Void), file: StaticString = #file, line: UInt = #line) {
+        let funcExpectation = functionExpectation()
+        let textView = RichTextView(context: RichTextViewContext())
+        let richTextViewDelegate = MockRichTextViewDelegate()
+        textView.richTextViewDelegate = richTextViewDelegate
+
+        richTextViewDelegate.onKeyReceived = { _, key, flags, _, _  in
+            assertions(key, flags)
+            funcExpectation.fulfill()
+        }
+
+        let command = UIKeyCommand(input: input, modifierFlags: modifierFlags, action: #selector(dummySelector))
+        textView.handleKeyCommand(command: command)
+
+        waitForExpectations(timeout: 1.0)
+    }
+
+    @objc
+    private func dummySelector() { }
 }

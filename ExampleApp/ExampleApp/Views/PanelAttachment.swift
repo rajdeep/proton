@@ -41,7 +41,7 @@ extension PanelAttachment: PanelViewDelegate {
         containerEditor.delegate?.editor(containerEditor, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
     }
 
-    func panel(_ panel: PanelView, didRecieveKey key: EditorKey, at range: NSRange, handled: inout Bool) {
+    func panel(_ panel: PanelView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool) {
         if key == .backspace, range == .zero, panel.editor.attributedText.string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             removeFromContainer()
             handled = true

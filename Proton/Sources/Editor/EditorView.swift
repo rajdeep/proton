@@ -653,7 +653,13 @@ extension EditorView: RichTextViewDelegate {
         delegate?.editor(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
     }
 
-    func richTextView(_ richTextView: RichTextView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool) {
+    func richTextView(_ richTextView: RichTextView, didReceiveKey key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange, handled: inout Bool) {
+        guard modifierFlags.isEmpty else {
+            textProcessor?.activeProcessors.forEach { processor in
+                processor.handleKeyWithModifiers(editor: self, key: key, modifierFlags: modifierFlags, range: range)
+            }
+            return
+        }
         delegate?.editor(self, didReceiveKey: key, at: range, handled: &handled)
     }
 

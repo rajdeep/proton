@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import UIKit
+
 import Proton
 
 class MockTextProcessor: TextProcessing {
@@ -15,12 +17,13 @@ class MockTextProcessor: TextProcessing {
 
     var onWillProcess: ((NSAttributedString, String) -> Void)?
     var onProcess: ((EditorView, NSRange, Int) -> Void)?
+    var onKeyWithModifier: ((EditorView, EditorKey, UIKeyModifierFlags, NSRange) -> Void)?
     var onProcessInterrupted: ((EditorView, NSRange) -> Void)?
     var onSelectedRangeChanged: ((EditorView, NSRange?, NSRange?) -> Void)?
 
     var processorCondition: (EditorView, NSRange) -> Bool
 
-    init(name: String = "MockTextProcessor", processorCondition: @escaping (EditorView, NSRange) -> Bool) {
+    init(name: String = "MockTextProcessor", processorCondition: @escaping (EditorView, NSRange) -> Bool = { _, _ in true }) {
         self.name = name
         self.processorCondition = processorCondition
     }
@@ -35,6 +38,12 @@ class MockTextProcessor: TextProcessing {
         }
         onProcess?(editor, editedRange, delta)
         return true
+    }
+
+    func handleKeyWithModifiers(editor: EditorView, key: EditorKey, modifierFlags: UIKeyModifierFlags, range editedRange: NSRange) {
+        guard processorCondition(editor, editedRange) else { return }
+
+        onKeyWithModifier?(editor, key, modifierFlags, editedRange)
     }
 
     func processInterrupted(editor: EditorView, at range: NSRange) {
