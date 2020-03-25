@@ -22,7 +22,7 @@ class AutogrowingTextViewSnapshotTests: FBSnapshotTestCase {
 
     func testRendersTextViewBasedOnContent() {
         let viewController = SnapshotTestViewController()
-        let textView = AutogrowingTextView()
+        let textView = AutogrowingTextView(frame: .zero, textContainer: nil, allowsScrollingMagic: false)
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.text = "Sample with single line text"
         textView.addBorder()
@@ -41,7 +41,7 @@ class AutogrowingTextViewSnapshotTests: FBSnapshotTestCase {
 
     func testRendersMultilineTextViewBasedOnContent() {
         let viewController = SnapshotTestViewController()
-        let textView = AutogrowingTextView()
+        let textView = AutogrowingTextView(frame: .zero, textContainer: nil, allowsScrollingMagic: false)
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.text = "Sample with multiple lines of text. This text flows into the second line because of width constraint on textview"
         textView.addBorder()

@@ -15,7 +15,7 @@ class AutogrowingTextViewTests: XCTestCase {
     func testNotifiesDelegateOfBoundsChange() {
         let boundsObserver = MockBoundsObserver()
         let viewController = SnapshotTestViewController()
-        let textView = AutogrowingTextView()
+        let textView = AutogrowingTextView(frame: .zero, textContainer: nil, allowsScrollingMagic: false)
 
         let boundsChangeExpectation = expectation(description: #function)
         boundsChangeExpectation.expectedFulfillmentCount = 2
