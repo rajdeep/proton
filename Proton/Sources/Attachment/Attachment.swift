@@ -96,8 +96,8 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         return updatedString
     }
 
-    public var string: NSAttributedString {
-        guard let isBlockAttachment = isBlockAttachment else { return NSAttributedString(string: "<UNKNOWN CONTENT TYPE>") }
+    public var string: NSMutableAttributedString {
+        guard let isBlockAttachment = isBlockAttachment else { return NSMutableAttributedString(string: "<UNKNOWN CONTENT TYPE>") }
 //        let key = isBlockAttachment == true ? NSAttributedString.Key.contentType: NSAttributedString.Key.inlineContentType
         let string = NSMutableAttributedString(attachment: self)
         let value = name ?? EditorContent.Name.unknown
