@@ -113,8 +113,20 @@ open class EditorView: UIView {
     ///   - context: Optional context to be used. `EditorViewContext` is link between `EditorCommandExecutor` and the `EditorView`.
     ///   `EditorCommandExecutor` needs to have same context as the `EditorView` to execute a command on it. Unless you need to have
     ///    restriction around some commands to be restricted in execution on certain specific editors, the default value may be used.
-    public convenience init(frame: CGRect = .zero, context: EditorViewContext = .shared) {
-        self.init(frame: frame, richTextViewContext: context.richTextViewContext)
+    public init(frame: CGRect = .zero, context: EditorViewContext = .shared) {
+        self.context = context.richTextViewContext
+        self.richTextView = RichTextView(frame: frame, context: self.context)
+        if #available(iOS 13.0, *) {
+            self.textColor = .label
+        } else {
+            self.textColor = .black
+        }
+
+        super.init(frame: frame)
+
+        self.textProcessor = TextProcessor(editor: self)
+        self.richTextView.textProcessor = textProcessor
+        setup()
     }
 
     init(frame: CGRect, richTextViewContext: RichTextViewContext) {
