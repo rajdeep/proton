@@ -26,7 +26,7 @@ public extension NSAttributedString {
         guard let range = string.rangeOfCharacter(from: characterSet) else {
             return nil
         }
-        return string.makeNSRange(from: newlineRange)
+        return string.makeNSRange(from: range)
     }
 }
 
