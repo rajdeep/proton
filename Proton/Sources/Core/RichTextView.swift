@@ -46,6 +46,20 @@ class RichTextView: AutogrowingTextView {
             .foregroundColor: defaultTextFormattingProvider?.textColor ?? storage.defaultTextColor
         ]
     }
+    var defaultTextColor: UIColor {
+        if #available(iOS 13.0, *) {
+            return .label
+        } else {
+            return .black
+        }
+    }
+    var defaultBackgroundColor: UIColor {
+        if #available(iOS 13.0, *) {
+            return .systemBackground
+        } else {
+            return .white
+        }
+    }
 
     override var selectedTextRange: UITextRange? {
         didSet{
@@ -109,13 +123,8 @@ class RichTextView: AutogrowingTextView {
         textContainer.textView = self
         self.delegate = context
 
-        if #available(iOS 13.0, *) {
-            self.backgroundColor = .systemBackground
-            self.textColor = .label
-        } else {
-            self.backgroundColor = .white
-            self.textColor = .black
-        }
+        self.backgroundColor = defaultBackgroundColor
+        self.textColor = defaultTextColor
 
         setupPlaceholder()
     }

@@ -116,11 +116,6 @@ open class EditorView: UIView {
     public init(frame: CGRect = .zero, context: EditorViewContext = .shared) {
         self.context = context.richTextViewContext
         self.richTextView = RichTextView(frame: frame, context: self.context)
-        if #available(iOS 13.0, *) {
-            self.textColor = .label
-        } else {
-            self.textColor = .black
-        }
 
         super.init(frame: frame)
 
@@ -132,11 +127,6 @@ open class EditorView: UIView {
     init(frame: CGRect, richTextViewContext: RichTextViewContext) {
         self.context = richTextViewContext
         self.richTextView = RichTextView(frame: frame, context: context)
-        if #available(iOS 13.0, *) {
-            self.textColor = .label
-        } else {
-            self.textColor = .black
-        }
 
         super.init(frame: frame)
 
@@ -267,9 +257,17 @@ open class EditorView: UIView {
 
     /// Default text color to be used by the Editor. The color may be overridden on whole or part of content in
     /// `EditorView` by an `EditorCommand` or `TextProcessing` conformances.
-    public var textColor: UIColor {
+    public var textColor: UIColor = EditorView.defaultTextColor {
         didSet {
             richTextView.textColor = textColor
+        }
+    }
+    
+    static var defaultTextColor: UIColor {
+        if #available(iOS 13.0, *) {
+            return .label
+        } else {
+            return .black
         }
     }
 
