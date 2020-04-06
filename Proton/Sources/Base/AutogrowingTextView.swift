@@ -12,10 +12,11 @@ import UIKit
 class AutogrowingTextView: UITextView {
     private let dimensionsCalculatingTextView = UITextView()
 
-    private let allowsScrollingMagic: Bool
+    private let growsInfinitely: Bool
+    private var allowsScrolling: Bool { !growsInfinitely }
     var maxHeight: CGFloat = 0 {
         didSet {
-            assert(maxHeight == 0 || allowsScrollingMagic, "maxHeight not allowed when content scrolling is disabled")
+            assert(maxHeight == 0 || allowsScrolling, "'.maxHeight' not allowed when '.growsInfinitely = true'")
             guard maxHeight > 0 else {
                 maxHeightConstraint.isActive = false
                 return
@@ -29,12 +30,12 @@ class AutogrowingTextView: UITextView {
     weak var boundsObserver: BoundsObserving?
     private var maxHeightConstraint: NSLayoutConstraint!
 
-    init(frame: CGRect, textContainer: NSTextContainer?, allowsScrollingMagic: Bool) {
-        self.allowsScrollingMagic = allowsScrollingMagic
+    init(frame: CGRect, textContainer: NSTextContainer?, growsInfinitely: Bool) {
+        self.growsInfinitely = growsInfinitely
         super.init(frame: frame, textContainer: textContainer)
         isScrollEnabled = false
         maxHeightConstraint = heightAnchor.constraint(lessThanOrEqualToConstant: frame.height)
-        if allowsScrollingMagic {
+        if allowsScrolling {
             NSLayoutConstraint.activate([
                 heightAnchor.constraint(greaterThanOrEqualToConstant: frame.height)
             ])
@@ -47,12 +48,11 @@ class AutogrowingTextView: UITextView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        if allowsScrollingMagic {
-            let bounds = self.bounds
-            updateDimensionsCalculatingTextView()
-            let fittingSize = dimensionsCalculatingTextView.sizeThatFits(CGSize(width: frame.width, height: .greatestFiniteMagnitude))
-            isScrollEnabled = (fittingSize.height > bounds.height) || (maxHeight > 0 && maxHeight < fittingSize.height)
-        }
+        guard allowsScrolling else { return }
+        let bounds = self.bounds
+        updateDimensionsCalculatingTextView()
+        let fittingSize = dimensionsCalculatingTextView.sizeThatFits(CGSize(width: frame.width, height: .greatestFiniteMagnitude))
+        isScrollEnabled = (fittingSize.height > bounds.height) || (maxHeight > 0 && maxHeight < fittingSize.height)
     }
 
     override open func sizeThatFits(_ size: CGSize) -> CGSize {

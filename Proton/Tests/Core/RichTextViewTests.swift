@@ -17,7 +17,7 @@ class RichTextViewTests: XCTestCase {
         let key = NSAttributedString.Key("test_key")
         let value = "value"
         let viewController = SnapshotTestViewController()
-        let textView = RichTextView(frame: .zero, context: RichTextViewContext())
+        let textView = RichTextView(frame: .zero, context: RichTextViewContext(), growsInfinitely: true)
         textView.translatesAutoresizingMaskIntoConstraints = false
         let attributedText = NSMutableAttributedString(string: "This is a test string")
         attributedText.addAttributes([key: value], range: NSRange(location: 0, length: 4))
@@ -47,7 +47,7 @@ class RichTextViewTests: XCTestCase {
 
     func testResetsTypingAttributesOnDeleteBackwards() throws {
         let text = NSAttributedString(string: "a", attributes: [.foregroundColor: UIColor.blue])
-        let textView = RichTextView(context: RichTextViewContext())
+        let textView = RichTextView(context: RichTextViewContext(), growsInfinitely: true)
         textView.attributedText = text
         let preColor = try XCTUnwrap(textView.typingAttributes[.foregroundColor] as? UIColor)
         XCTAssertEqual(preColor, UIColor.blue)
@@ -59,7 +59,7 @@ class RichTextViewTests: XCTestCase {
 
     func testNotifiesDelegateOfSelectedRangeChanges() {
         let funcExpectation = functionExpectation()
-        let textView = RichTextView(context: RichTextViewContext())
+        let textView = RichTextView(context: RichTextViewContext(), growsInfinitely: true)
         let richTextViewDelegate = MockRichTextViewDelegate()
         textView.richTextViewDelegate = richTextViewDelegate
         textView.attributedText = NSAttributedString(string: "This is a test string")
@@ -75,7 +75,7 @@ class RichTextViewTests: XCTestCase {
     }
 
     func testSetsFocusBeforeForNonFocusableText() {
-        let textView = RichTextView(context: RichTextViewContext())
+        let textView = RichTextView(context: RichTextViewContext(), growsInfinitely: true)
         let text = NSMutableAttributedString(string: "0123")
         text.append(NSAttributedString(string: "4567", attributes: [.noFocus: true]))
         text.append(NSAttributedString(string: "890"))
@@ -87,7 +87,7 @@ class RichTextViewTests: XCTestCase {
     }
 
     func testSetsFocusAfterForNonFocusableText() {
-        let textView = RichTextView(context: RichTextViewContext())
+        let textView = RichTextView(context: RichTextViewContext(), growsInfinitely: true)
         let text = NSMutableAttributedString(string: "0123")
         text.append(NSAttributedString(string: "4567", attributes: [.noFocus: true]))
         text.append(NSAttributedString(string: "890"))
@@ -132,7 +132,7 @@ class RichTextViewTests: XCTestCase {
 
     private func assertKeyCommand(input: String, modifierFlags: UIKeyModifierFlags, assertions: @escaping ((EditorKey, UIKeyModifierFlags) -> Void), file: StaticString = #file, line: UInt = #line) {
         let funcExpectation = functionExpectation()
-        let textView = RichTextView(context: RichTextViewContext())
+        let textView = RichTextView(context: RichTextViewContext(), growsInfinitely: true)
         let richTextViewDelegate = MockRichTextViewDelegate()
         textView.richTextViewDelegate = richTextViewDelegate
 
