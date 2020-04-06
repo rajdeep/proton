@@ -33,11 +33,11 @@ public extension String {
 
     func rangesOf(characterSet: CharacterSet) -> [Range<String.Index>] {
         var ranges = [Range<String.Index>]()
-        var newlineRange = rangeOfCharacter(from: .newlines, options: [], range: nil)
+        var newlineRange = rangeOfCharacter(from: characterSet, options: [], range: nil)
         while newlineRange != nil {
             guard let range = newlineRange else { break }
             ranges.append(range)
-            newlineRange = rangeOfCharacter(from: .newlines, options: [], range: range.upperBound ..< endIndex)
+            newlineRange = rangeOfCharacter(from: characterSet, options: [], range: range.upperBound ..< endIndex)
         }
         return ranges
     }

@@ -28,12 +28,26 @@ class NSAttributedStringExtensionTests: XCTestCase {
         XCTAssertEqual(range, NSRange(location: string.count, length: 1))
     }
 
-    func testGetsRangeForCharacterSet() {
+    func testGetsRangesForNewLinesCharacter() {
         let text = NSAttributedString(string: "This is a test string\nAnd second line\n")
         let ranges = text.rangesOf(characterSet: .newlines)
         XCTAssertEqual(ranges.count, 2)
         XCTAssertEqual(ranges[0], NSRange(location: 21, length: 1))
         XCTAssertEqual(ranges[1], NSRange(location: 37, length: 1))
+    }
+
+    func testGetsRangesForCharacterSet() {
+        let text = NSAttributedString(string: "0123456789")
+        let ranges = text.rangesOf(characterSet: CharacterSet(charactersIn: "17"))
+        XCTAssertEqual(ranges.count, 2)
+        XCTAssertEqual(ranges[0], NSRange(location: 1, length: 1))
+        XCTAssertEqual(ranges[1], NSRange(location: 7, length: 1))
+    }
+
+    func testGetsRangeForCharacterSet() {
+        let text = NSAttributedString(string: "0123456789")
+        let range = text.rangeOfCharacter(from: CharacterSet(charactersIn: "5"))
+        XCTAssertEqual(range, NSRange(location: 5, length: 1))
     }
 
     func testReturnsNilForInvalidReverseRange() {

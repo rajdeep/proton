@@ -23,10 +23,10 @@ public extension NSAttributedString {
     }
 
     func rangeOfCharacter(from characterSet: CharacterSet) -> NSRange? {
-        guard let newlineRange = string.rangeOfCharacter(from: .newlines) else {
+        guard let range = string.rangeOfCharacter(from: characterSet) else {
             return nil
         }
-        return string.makeNSRange(from: newlineRange)
+        return string.makeNSRange(from: range)
     }
 }
 
