@@ -1,6 +1,6 @@
 # Proton
 
-![Proton logo](/logo.png)
+ <img src="/logo.png" width="80%" alt="Proton logo"/>
 
 > **Note:** While Proton is already a very powerful and flexible framework, it is still in early stages of development. The APIs and public interfaces are still undergoing revisions and may introduce breaking changes with every version bump before reaching stable version 1.0.0. 
 
@@ -169,25 +169,25 @@ Checkout the complete code in the ExamplesApp.
 ## Example usages
 1. Changing text as it is typed using custom `TextProcessor`:
 
-   ![Markup text processor](/exampleImages/markup.gif)
+    <img src="/exampleImages/markup.gif" width="50%" alt="Markup text processor"/>
 2. Adding attributes as it is typed using custom `TextProcessor`:
 
-    ![Markup text processor](/exampleImages/mentions.gif)
+    <img src="/exampleImages/mentions.gif" width="50%" alt="Mentions text processor"/>
 3. Nested editors
 
-    ![Markup text processor](/exampleImages/nested-panels.gif)
+     <img src="/exampleImages/nested-panels.gif" width="50%" alt="Nested editors"/>
 4. Panel from existing text:
 
-   ![Markup text processor](/exampleImages/panel-from-text.gif)
+   <img src="/exampleImages/panel-from-text.gif" width="50%" alt="Panel from text"/>
 5. Relaying attributes to editor contained in an attachment:
 
-    ![Markup text processor](/exampleImages/relay-attributes.gif)
+    <img src="/exampleImages/relay-attributes.gif" width="50%" alt="Relay attributes"/>
 6.  Highlighting using custom command in Renderer:
 
-    ![Markup text processor](/exampleImages/renderer-highlight.gif)
+    <img src="/exampleImages/renderer-highlight.gif" width="50%" alt="Highlight in Renderer"/>
 7. Find text and scroll in Renderer:
 
-    ![Markup text processor](/exampleImages/renderer-find.gif)
+    <img src="/exampleImages/renderer-find.gif" width="50%" alt="Find in Renderer"/>
 
 
 ## Questions and feature requests
