@@ -257,18 +257,9 @@ open class EditorView: UIView {
 
     /// Default text color to be used by the Editor. The color may be overridden on whole or part of content in
     /// `EditorView` by an `EditorCommand` or `TextProcessing` conformances.
-    public var textColor: UIColor = EditorView.defaultTextColor {
-        didSet {
-            richTextView.textColor = textColor
-        }
-    }
-    
-    static var defaultTextColor: UIColor {
-        if #available(iOS 13.0, *) {
-            return .label
-        } else {
-            return .black
-        }
+    public var textColor: UIColor {
+        get { richTextView.textColor ?? richTextView.defaultTextColor }
+        set { richTextView.textColor = newValue }
     }
 
     /// Maximum height that the `EditorView` can expand to. After reaching the maximum specified height, the editor becomes scrollable.

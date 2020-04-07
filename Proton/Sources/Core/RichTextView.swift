@@ -46,13 +46,7 @@ class RichTextView: AutogrowingTextView {
             .foregroundColor: defaultTextFormattingProvider?.textColor ?? storage.defaultTextColor
         ]
     }
-    var defaultTextColor: UIColor {
-        if #available(iOS 13.0, *) {
-            return .label
-        } else {
-            return .black
-        }
-    }
+    var defaultTextColor: UIColor { storage.defaultTextColor }
     var defaultBackgroundColor: UIColor {
         if #available(iOS 13.0, *) {
             return .systemBackground
