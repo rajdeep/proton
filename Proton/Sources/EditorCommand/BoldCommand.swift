@@ -23,6 +23,6 @@ import UIKit
 
 public class BoldCommand: FontTraitToggleCommand {
     public init() {
-        super.init(trait: .traitBold)
+        super.init(name: CommandName("_BoldCommand"), trait: .traitBold)
     }
 }

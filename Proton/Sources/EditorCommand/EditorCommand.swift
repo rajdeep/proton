@@ -24,6 +24,9 @@ import Foundation
 /// However, in a typical usage scenario, these should be invoked via `EditorCommandExecutor` which manages all the `EditorView`s in the
 /// view including the ones that are contained in the attachments.
 public protocol EditorCommand: AnyObject {
+    /// Identifies a command. This value is used to maintain unique registrations of commands in an Editor. Adding a command with the same name
+    /// as one registered already would end up replacing the previously registered command with the same name.
+    var name: CommandName { get }
 
     /// Determines if the current command can be executed on the given `EditorView`. When a command is executed using `EditorCommandExecutor`, it ensures
     /// that only the commands returning `true` for the active `EditorView` are executed when invoked. Defaults to `true`.

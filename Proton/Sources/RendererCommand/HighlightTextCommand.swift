@@ -26,6 +26,9 @@ public extension NSAttributedString.Key {
 }
 
 public class HighlightTextCommand: RendererCommand {
+
+    public let name = CommandName("_highlightCommand")
+
     public let color = UIColor(dynamicProvider: { traightCollection -> UIColor in
         switch traightCollection.userInterfaceStyle {
         case .dark:

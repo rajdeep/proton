@@ -24,7 +24,10 @@ import UIKit
 public class FontTraitToggleCommand: EditorCommand {
     public let trait: UIFontDescriptor.SymbolicTraits
 
-    public init(trait: UIFontDescriptor.SymbolicTraits) {
+    public let name: CommandName
+
+    public init(name: CommandName, trait: UIFontDescriptor.SymbolicTraits) {
+        self.name = name
         self.trait = trait
     }
 

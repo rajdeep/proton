@@ -86,12 +86,12 @@ class EditorCommandExecutorTests: XCTestCase {
         editor.replaceCharacters(in: .zero, with: "This is some text")
         editor.selectedRange = editor.textEndRange
 
-        let command1 = MockEditorCommand { e in
+        let command1 = MockEditorCommand(name: "command1") { e in
             XCTAssertEqual(e, editor)
             command1Expectation.fulfill()
         }
 
-        let command2 = MockEditorCommand { e in
+        let command2 = MockEditorCommand(name: "command2") { e in
             XCTAssertEqual(e, editor)
             command2Expectation.fulfill()
         }

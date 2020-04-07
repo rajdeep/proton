@@ -82,6 +82,7 @@
 		1BD1791723C57F140066DC13 /* ItalicsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1791623C57F140066DC13 /* ItalicsCommand.swift */; };
 		1BD1791923C57F430066DC13 /* FontTraitToggleCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1791823C57F430066DC13 /* FontTraitToggleCommand.swift */; };
 		1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */; };
+		1BD9323E243CA506005E4136 /* CommandName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD9323D243CA506005E4136 /* CommandName.swift */; };
 		1BD993B123C995B000563ACB /* TextProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993B023C995B000563ACB /* TextProcessorTests.swift */; };
 		1BD993B423C9966A00563ACB /* MockTextProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993B323C9966A00563ACB /* MockTextProcessor.swift */; };
 		1BD993B623C999AF00563ACB /* EditorViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993B523C999AF00563ACB /* EditorViewTests.swift */; };
@@ -222,6 +223,7 @@
 		1BD1791623C57F140066DC13 /* ItalicsCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItalicsCommand.swift; sourceTree = "<group>"; };
 		1BD1791823C57F430066DC13 /* FontTraitToggleCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTraitToggleCommand.swift; sourceTree = "<group>"; };
 		1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommandExecutorTests.swift; sourceTree = "<group>"; };
+		1BD9323D243CA506005E4136 /* CommandName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandName.swift; sourceTree = "<group>"; };
 		1BD993B023C995B000563ACB /* TextProcessorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessorTests.swift; sourceTree = "<group>"; };
 		1BD993B323C9966A00563ACB /* MockTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTextProcessor.swift; sourceTree = "<group>"; };
 		1BD993B523C999AF00563ACB /* EditorViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewTests.swift; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 				1B975AFE23CD454700EC410C /* RichTextViewContext.swift */,
 				1B7A985623C4828A00C34B14 /* RichTextEditorContext.swift */,
 				1B975AFC23CD40D200EC410C /* RichTextRendererContext.swift */,
+				1BD9323D243CA506005E4136 /* CommandName.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -897,6 +900,7 @@
 				1B82571223C5799C0033A0A9 /* FontExtensions.swift in Sources */,
 				1B45CDE423C05916001EB196 /* SelectionView.swift in Sources */,
 				1BD1791923C57F430066DC13 /* FontTraitToggleCommand.swift in Sources */,
+				1BD9323E243CA506005E4136 /* CommandName.swift in Sources */,
 				1B82570B23C567B90033A0A9 /* EditorCommandExecutor.swift in Sources */,
 				1B183D8C23CEA90400AE83E5 /* EditorContentEncoding.swift in Sources */,
 			);

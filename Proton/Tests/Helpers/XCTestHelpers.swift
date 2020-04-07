@@ -23,6 +23,6 @@ import XCTest
 
 extension XCTestCase {
     open func functionExpectation(_ id: String = "", caller: String = #function) -> XCTestExpectation {
-        return expectation(description: "\(caller)\(id)")
+        return expectation(description: "\(caller) - {\(id)}")
     }
 }

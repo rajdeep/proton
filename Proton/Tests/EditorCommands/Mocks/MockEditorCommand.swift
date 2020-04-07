@@ -26,9 +26,11 @@ import Proton
 class MockEditorCommand: EditorCommand {
     var onCanExecute: (EditorView) -> Bool
     var onExecute: (EditorView) -> Void
+    let name: CommandName
 
-    init(onCanExecute: @escaping ((EditorView) -> Bool) = { _ in true },
+    init(name: String = "_MockEditorCommand", onCanExecute: @escaping ((EditorView) -> Bool) = { _ in true },
          onExecute: @escaping ((EditorView) -> Void)) {
+        self.name = CommandName(name)
         self.onCanExecute = onCanExecute
         self.onExecute = onExecute
     }

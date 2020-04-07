@@ -24,6 +24,7 @@ import UIKit
 import Proton
 
 class PanelCommand: EditorCommand {
+    let name = CommandName("panelCommand")
     func execute(on editor: EditorView) {
         let selectedText = editor.selectedText
 
