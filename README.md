@@ -1,7 +1,6 @@
  <img src="/logo.png" width="80%" alt="Proton logo"/>
 
-[![Build](https://github.com/rajdeep/proton/workflows/swift/badge.svg)]()
-
+![](https://github.comrajdeep/proton/workflows/Swift/badge.svg)
 
 > **Note:** While Proton is already a very powerful and flexible framework, it is still in early stages of development. The APIs and public interfaces are still undergoing revisions and may introduce breaking changes with every version bump before reaching stable version 1.0.0. 
 
