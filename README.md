@@ -1,5 +1,3 @@
-# Proton
-
  <img src="/logo.png" width="80%" alt="Proton logo"/>
 
 > **Note:** While Proton is already a very powerful and flexible framework, it is still in early stages of development. The APIs and public interfaces are still undergoing revisions and may introduce breaking changes with every version bump before reaching stable version 1.0.0. 
@@ -16,7 +14,7 @@ Proton is designed keeping the following requirements in mind:
 * Respect the bounds of the container i.e. resize to change bounds when the device orientation changes.
 * Support a default font and styling like alignment and head indentation.
 * Have a Native Renderer based on the Editor similar to analogy of `UITextView` and `UILabel`.
-* And of course, support all this on macOS as well with almost no additional effort.
+* And of course, support all this on macOS Catalyst as well with almost no additional effort.
 
 ## Core Concepts
 
