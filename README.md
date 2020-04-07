@@ -1,5 +1,7 @@
 # Proton
 
+ <img src="/logo.png" width="80%" alt="Proton logo"/>
+
 > **Note:** While Proton is already a very powerful and flexible framework, it is still in early stages of development. The APIs and public interfaces are still undergoing revisions and may introduce breaking changes with every version bump before reaching stable version 1.0.0. 
 
 Proton is a simple library that allows you to extend the behavior of a textview to add rich content that you always wanted. It provides simple API that allows you to extend the textView to include complex content like nested textViews or for that matter, any other UIView. In the simplest terms - It's what you always wanted `UITextView` to be.
@@ -156,7 +158,7 @@ Let's take an example of a `TextPanel` and see how that can be created in the `E
         if key == .backspace, range == .zero, panel.editor.attributedText.string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             removeFromContainer()
             handled = true
-            } 
+            }
         }
     }    
     ```
@@ -164,5 +166,30 @@ Let's take an example of a `TextPanel` and see how that can be created in the `E
 
 Checkout the complete code in the ExamplesApp.
 
+## Example usages
+1. Changing text as it is typed using custom `TextProcessor`:
+
+    <img src="/exampleImages/markup.gif" width="50%" alt="Markup text processor"/>
+2. Adding attributes as it is typed using custom `TextProcessor`:
+
+    <img src="/exampleImages/mentions.gif" width="50%" alt="Mentions text processor"/>
+3. Nested editors
+
+     <img src="/exampleImages/nested-panels.gif" width="50%" alt="Nested editors"/>
+4. Panel from existing text:
+
+   <img src="/exampleImages/panel-from-text.gif" width="50%" alt="Panel from text"/>
+5. Relaying attributes to editor contained in an attachment:
+
+    <img src="/exampleImages/relay-attributes.gif" width="50%" alt="Relay attributes"/>
+6.  Highlighting using custom command in Renderer:
+
+    <img src="/exampleImages/renderer-highlight.gif" width="50%" alt="Highlight in Renderer"/>
+7. Find text and scroll in Renderer:
+
+    <img src="/exampleImages/renderer-find.gif" width="50%" alt="Find in Renderer"/>
+
+
 ## Questions and feature requests
-Feel free to create issues in github should you have any questions or feature requests. While Proton is created as a side project, I'll endeavour to respond to your issues at earliet possible. 
+
+Feel free to create issues in github should you have any questions or feature requests. While Proton is created as a side project, I'll endeavour to respond to your issues at earliest possible.
