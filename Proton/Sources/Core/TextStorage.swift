@@ -33,7 +33,13 @@ class TextStorage: NSTextStorage {
 
     let defaultParagraphStyle = NSParagraphStyle()
     let defaultFont = UIFont.preferredFont(forTextStyle: .body)
-    let defaultTextColor = UIColor.label
+    var defaultTextColor: UIColor {
+        if #available(iOS 13.0, *) {
+            return .label
+        } else {
+            return .black
+        }
+    }
 
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding?
 
