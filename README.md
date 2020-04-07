@@ -1,5 +1,7 @@
 # Proton
 
+![Proton logo](/logo.png)
+
 > **Note:** While Proton is already a very powerful and flexible framework, it is still in early stages of development. The APIs and public interfaces are still undergoing revisions and may introduce breaking changes with every version bump before reaching stable version 1.0.0. 
 
 Proton is a simple library that allows you to extend the behavior of a textview to add rich content that you always wanted. It provides simple API that allows you to extend the textView to include complex content like nested textViews or for that matter, any other UIView. In the simplest terms - It's what you always wanted `UITextView` to be.
@@ -156,7 +158,7 @@ Let's take an example of a `TextPanel` and see how that can be created in the `E
         if key == .backspace, range == .zero, panel.editor.attributedText.string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             removeFromContainer()
             handled = true
-            } 
+            }
         }
     }    
     ```
@@ -164,5 +166,30 @@ Let's take an example of a `TextPanel` and see how that can be created in the `E
 
 Checkout the complete code in the ExamplesApp.
 
+## Example usages
+1. Changing text as it is typed using custom `TextProcessor`:
+
+   ![Markup text processor](/exampleImages/markup.gif)
+2. Adding attributes as it is typed using custom `TextProcessor`:
+
+    ![Markup text processor](/exampleImages/mentions.gif)
+3. Nested editors
+
+    ![Markup text processor](/exampleImages/nested-panels.gif)
+4. Panel from existing text:
+
+   ![Markup text processor](/exampleImages/panel-from-text.gif)
+5. Relaying attributes to editor contained in an attachment:
+
+    ![Markup text processor](/exampleImages/relay-attributes.gif)
+6.  Highlighting using custom command in Renderer:
+
+    ![Markup text processor](/exampleImages/renderer-highlight.gif)
+7. Find text and scroll in Renderer:
+
+    ![Markup text processor](/exampleImages/renderer-find.gif)
+
+
 ## Questions and feature requests
-Feel free to create issues in github should you have any questions or feature requests. While Proton is created as a side project, I'll endeavour to respond to your issues at earliet possible. 
+
+Feel free to create issues in github should you have any questions or feature requests. While Proton is created as a side project, I'll endeavour to respond to your issues at earliest possible.
