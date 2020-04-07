@@ -34,7 +34,7 @@ class RichTextViewSnapshotTests: FBSnapshotTestCase {
 
     func testRendersTextInTextView() {
         let viewController = SnapshotTestViewController()
-        let textView = RichTextView(frame: .zero, context: RichTextViewContext())
+        let textView = RichTextView(frame: .zero, context: RichTextViewContext(), growsInfinitely: true)
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.text = "Sample with single line text"
         textView.addBorder()
@@ -53,7 +53,7 @@ class RichTextViewSnapshotTests: FBSnapshotTestCase {
 
     func testRendersMultilineTextViewBasedOnContent() {
         let viewController = SnapshotTestViewController()
-        let textView = RichTextView(frame: .zero, context: RichTextViewContext())
+        let textView = RichTextView(frame: .zero, context: RichTextViewContext(), growsInfinitely: true)
 
         guard let font = try? XCTUnwrap(UIFont(name: "Papyrus", size: 12)) else {
             XCTFail("Unable to get font information")

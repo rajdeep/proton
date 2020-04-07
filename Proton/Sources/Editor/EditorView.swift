@@ -130,10 +130,11 @@ open class EditorView: UIView {
     ///   - context: Optional context to be used. `EditorViewContext` is link between `EditorCommandExecutor` and the `EditorView`.
     ///   `EditorCommandExecutor` needs to have same context as the `EditorView` to execute a command on it. Unless you need to have
     ///    restriction around some commands to be restricted in execution on certain specific editors, the default value may be used.
-    public init(frame: CGRect = .zero, context: EditorViewContext = .shared) {
+    ///   - growsInfinitely: `true` will optimise for full-height without scroll bars
+    public init(frame: CGRect = .zero, context: EditorViewContext = .shared, growsInfinitely: Bool = false) {
         self.context = context.richTextViewContext
         self.editorViewContext = context
-        self.richTextView = RichTextView(frame: frame, context: self.context)
+        self.richTextView = RichTextView(frame: frame, context: self.context, growsInfinitely: growsInfinitely)
 
         super.init(frame: frame)
 
@@ -142,9 +143,9 @@ open class EditorView: UIView {
         setup()
     }
 
-    init(frame: CGRect, richTextViewContext: RichTextViewContext) {
+    init(frame: CGRect, richTextViewContext: RichTextViewContext, growsInfinitely: Bool = false) {
         self.context = richTextViewContext
-        self.richTextView = RichTextView(frame: frame, context: context)
+        self.richTextView = RichTextView(frame: frame, context: context, growsInfinitely: growsInfinitely)
         self.editorViewContext = nil
         super.init(frame: frame)
 
@@ -422,6 +423,13 @@ open class EditorView: UIView {
     @discardableResult
     public override func becomeFirstResponder() -> Bool {
         return richTextView.becomeFirstResponder()
+    }
+    
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if previousTraitCollection?.preferredContentSizeCategory != traitCollection.preferredContentSizeCategory {
+            // Recalculate fonts!?
+        }
     }
 
     /// Gets the line preceding the given line. Nil if the given line is invalid or is first line
