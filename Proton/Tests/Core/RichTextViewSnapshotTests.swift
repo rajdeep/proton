@@ -55,7 +55,11 @@ class RichTextViewSnapshotTests: FBSnapshotTestCase {
         let viewController = SnapshotTestViewController()
         let textView = RichTextView(frame: .zero, context: RichTextViewContext())
 
-        let font = assertUnwrap(UIFont(name: "Papyrus", size: 12))
+        guard let font = try? XCTUnwrap(UIFont(name: "Papyrus", size: 12)) else {
+            XCTFail("Unable to get font information")
+            return
+        }
+
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.firstLineHeadIndent = 10
         paragraphStyle.lineSpacing = 6

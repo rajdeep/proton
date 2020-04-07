@@ -45,10 +45,10 @@ class TextProcessorTests: XCTestCase {
         XCTAssertEqual(textProcessor.sortedProcessors.count, 0)
     }
 
-    func testInvokesWillProcess() {
+    func testInvokesWillProcess() throws {
         let testExpectation = functionExpectation()
         let editor = EditorView()
-        let richTextEditorContext = assertUnwrap(editor.context as? RichTextEditorContext)
+        let richTextEditorContext = try XCTUnwrap(editor.context as? RichTextEditorContext)
 
         let name = "TextProcessorTest"
         let replacementString = "replacement string"

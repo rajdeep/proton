@@ -24,19 +24,19 @@ import XCTest
 import Proton
 
 class FontTraitToggleCommandTests: XCTestCase {
-    func testSetsTypingAttributesInEmptyEditor() {
+    func testSetsTypingAttributesInEmptyEditor() throws {
         let editor = EditorView()
         let command = BoldCommand()
 
-        let font = assertUnwrap(editor.typingAttributes[.font] as? UIFont)
+        let font: UIFont = try XCTUnwrap(editor.typingAttributes[.font] as? UIFont)
         XCTAssertFalse(font.isBold)
         command.execute(on: editor)
 
-        let updatedFont = assertUnwrap(editor.typingAttributes[.font] as? UIFont)
+        let updatedFont = try XCTUnwrap(editor.typingAttributes[.font] as? UIFont)
         XCTAssertTrue(updatedFont.isBold)
     }
 
-    func testSetsToggledTypingAttributesInEmptySelectionInNonEmptyEditor() {
+    func testSetsToggledTypingAttributesInEmptySelectionInNonEmptyEditor() throws {
         let editor = EditorView()
         editor.replaceCharacters(in: .zero, with: "This is a test")
         editor.selectedRange = NSRange(location: 0, length: 4)
@@ -46,7 +46,7 @@ class FontTraitToggleCommandTests: XCTestCase {
         editor.selectedRange = NSRange(location: 4, length: 0)
         command.execute(on: editor)
 
-        let updatedFont = assertUnwrap(editor.typingAttributes[.font] as? UIFont)
+        let updatedFont = try XCTUnwrap(editor.typingAttributes[.font] as? UIFont)
         XCTAssertFalse(updatedFont.isItalics)
     }
 
@@ -76,7 +76,11 @@ class FontTraitToggleCommandTests: XCTestCase {
         var counter = 0
         editorText.enumerateAttribute(.font, in: editorText.fullRange, options: .longestEffectiveRangeNotRequired) { (font, range, _) in
             let text = editorText.attributedSubstring(from: range)
-            let font = assertUnwrap(text.attribute(.font, at: 0, effectiveRange: nil) as? UIFont)
+            guard let font = try? XCTUnwrap(text.attribute(.font, at: 0, effectiveRange: nil) as? UIFont) else {
+                XCTFail("Unable to get font information")
+                return
+            }
+
             let expectedValue = expectedValues[counter]
 
             XCTAssertEqual(text.string, expectedValue.text)
