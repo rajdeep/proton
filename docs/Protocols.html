@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Protocols  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Section/Protocols" class="dashAnchor"></a>
+    <a title="Protocols  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">Proton Docs</a> (75% documented)</p>
+        <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">Proton Reference</a>
+        <img id="carat" src="img/carat.png" />
+        Protocols  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/Attachment.html">Attachment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/BoldCommand.html">BoldCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/EditorCommandExecutor.html">EditorCommandExecutor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/EditorView.html">EditorView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/EditorViewContext.html">EditorViewContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/FontTraitToggleCommand.html">FontTraitToggleCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/HighlightTextCommand.html">HighlightTextCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/ItalicsCommand.html">ItalicsCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/RendererCommandExecutor.html">RendererCommandExecutor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/RendererView.html">RendererView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/RendererViewContext.html">RendererViewContext</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/AttachmentSize.html">AttachmentSize</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/AttachmentType.html">AttachmentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/EditorContentMode.html">EditorContentMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/EditorContentType.html">EditorContentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/EditorKey.html">EditorKey</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/NSAttributedString.html">NSAttributedString</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/NSAttributedString/Key.html">– Key</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/NSRange.html">NSRange</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/String.html">String</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/TextProcessingPriority.html">TextProcessingPriority</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/UIFont.html">UIFont</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/UITextRange.html">UITextRange</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/AttachmentEncoding.html">AttachmentEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/AttachmentOffsetProviding.html">AttachmentOffsetProviding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/AttributesDecoding.html">AttributesDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols.html#/s:6Proton12BlockContentP">BlockContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/BoundsObserving.html">BoundsObserving</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/DynamicBoundsProviding.html">DynamicBoundsProviding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/EditorCommand.html">EditorCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/EditorContentDecoding.html">EditorContentDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/EditorContentEncoder.html">EditorContentEncoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/EditorContentEncoding.html">EditorContentEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/EditorContentIdentifying.html">EditorContentIdentifying</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/EditorContentView.html">EditorContentView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/EditorTextEncoding.html">EditorTextEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/EditorViewDelegate.html">EditorViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/Focusable.html">Focusable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols.html#/s:6Proton13InlineContentP">InlineContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/RendererCommand.html">RendererCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/RendererViewDelegate.html">RendererViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/TextProcessing.html">TextProcessing</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/AnyAttributeDecoding.html">AnyAttributeDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/AnyEditorContentAttachmentEncoding.html">AnyEditorContentAttachmentEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/AnyEditorContentDecoding.html">AnyEditorContentDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/AnyEditorTextEncoding.html">AnyEditorTextEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/CommandName.html">CommandName</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/EditorContent.html">EditorContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/EditorContent/Name.html">– Name</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/EditorLine.html">EditorLine</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:6Proton10Attributesa">Attributes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:6Proton9Processeda">Processed</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:6Proton22TextProcessingPrioritya">TextProcessingPriority</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Protocols</h1>
+            <p>The following protocols are available globally.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton22DynamicBoundsProvidingP"></a>
+                    <a name="//apple_ref/swift/Protocol/DynamicBoundsProviding" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton22DynamicBoundsProvidingP">DynamicBoundsProviding</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes an object (typically attachment view) that may change size during the layout pass</p>
+
+                        <a href="Protocols/DynamicBoundsProviding.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">DynamicBoundsProviding</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton25AttachmentOffsetProvidingP"></a>
+                    <a name="//apple_ref/swift/Protocol/AttachmentOffsetProviding" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton25AttachmentOffsetProvidingP">AttachmentOffsetProviding</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes an object capable of providing offsets for the <code><a href="Classes/Attachment.html">Attachment</a></code>. The value is used to offset the <code><a href="Classes/Attachment.html">Attachment</a></code> when rendered alongside the text. This may
+be used to align the content baselines in <code><a href="Classes/Attachment.html">Attachment</a></code> content to that of it&rsquo;s container&rsquo;s content baselines.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This function may be called m0re than once in the same rendering pass. Changing offsets does not resize the container i.e. unlike how container resizes to fit the attachment, if the
+offset is change such that the attachment ends up rendering outside the bounds of it&rsquo;s container, it will not resize the container.
+
+</div><div class="aside aside-attention">
+    <p class="aside-title">Attention</p>
+    While offset can be provided for any type of <code><a href="Classes/Attachment.html">Attachment</a></code> i.e. Inline or Block, it is recommended that offset be provided only for Inline. If an offset is provided for Block attachment,
+it is possible that the attachment starts overlapping the content in <code>Editor</code> in the following line since the offset does not affect the line height.
+
+</div>
+
+                        <a href="Protocols/AttachmentOffsetProviding.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">AttachmentOffsetProviding</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton9FocusableP"></a>
+                    <a name="//apple_ref/swift/Protocol/Focusable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton9FocusableP">Focusable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes an object capable of gaining focus.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    If a content view in an <code><a href="Classes/Attachment.html">Attachment</a></code> is made <code>Focusable</code>, <code>setFocus</code> will automatically be called when the
+attachment with a focusable view is added to the editor.
+
+</div>
+
+                        <a href="Protocols/Focusable.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Focusable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton18AttributesDecodingP"></a>
+                    <a name="//apple_ref/swift/Protocol/AttributesDecoding" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton18AttributesDecodingP">AttributesDecoding</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An object capable of decoding attributes for use in <code>NSAttributedString</code></p>
+
+                        <a href="Protocols/AttributesDecoding.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">AttributesDecoding</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton21EditorContentDecodingP"></a>
+                    <a name="//apple_ref/swift/Protocol/EditorContentDecoding" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton21EditorContentDecodingP">EditorContentDecoding</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An object capable of decoding the given type of content into <code>NSAttributedString</code> for using in <code><a href="Classes/EditorView.html">EditorView</a></code> or the <code><a href="Classes/RendererView.html">RendererView</a></code>.</p>
+
+                        <a href="Protocols/EditorContentDecoding.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">EditorContentDecoding</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton24EditorContentIdentifyingP"></a>
+                    <a name="//apple_ref/swift/Protocol/EditorContentIdentifying" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton24EditorContentIdentifyingP">EditorContentIdentifying</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Identifies a content type within the <code>Editor</code></p>
+
+                        <a href="Protocols/EditorContentIdentifying.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">EditorContentIdentifying</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton12BlockContentP"></a>
+                    <a name="//apple_ref/swift/Protocol/BlockContent" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton12BlockContentP">BlockContent</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Block type content hosted within the editor. Any attachment containing <code>BlockContent</code> will have a new line character appended
+after the attachment on insertion.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">BlockContent</span> <span class="p">:</span> <span class="kt"><a href="Protocols/EditorContentIdentifying.html">EditorContentIdentifying</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton13InlineContentP"></a>
+                    <a name="//apple_ref/swift/Protocol/InlineContent" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton13InlineContentP">InlineContent</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Inline content hosted within the editor. Any attachment containing <code>InlineContent</code> will have a whitespace character appended
+after the attachment on insertion.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">InlineContent</span> <span class="p">:</span> <span class="kt"><a href="Protocols/EditorContentIdentifying.html">EditorContentIdentifying</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton17EditorContentViewP"></a>
+                    <a name="//apple_ref/swift/Protocol/EditorContentView" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton17EditorContentViewP">EditorContentView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes a view contained in <code><a href="Classes/Attachment.html">Attachment</a></code> that contains a single <code><a href="Classes/EditorView.html">EditorView</a></code>.
+This is a helper protocol that can be applied to the view so that
+basic properties and functions are made available on the view as passthrough.</p>
+
+                        <a href="Protocols/EditorContentView.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">EditorContentView</span> <span class="p">:</span> <span class="kt"><a href="Protocols/Focusable.html">Focusable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton15BoundsObservingP"></a>
+                    <a name="//apple_ref/swift/Protocol/BoundsObserving" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton15BoundsObservingP">BoundsObserving</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes an object interested in observing the bounds of a view. <code><a href="Classes/Attachment.html">Attachment</a></code> is <code>BoundsObserving</code> and reacts to
+changes in the bounds of views hosted within the <code><a href="Classes/Attachment.html">Attachment</a></code>. Any view contained in the <code><a href="Classes/Attachment.html">Attachment</a></code> that is capable of
+changing its bounds must define and set <code>BoundsObserving</code> to <code><a href="Classes/Attachment.html">Attachment</a></code>.</p>
+<h3 id='usage-example' class='heading'>Usage Example</h3>
+<pre class="highlight swift"><code> <span class="kd">class</span> <span class="kt">MyAttachmentView</span><span class="p">:</span> <span class="kt">UIView</span> <span class="p">{</span>
+ <span class="k">weak</span> <span class="k">var</span> <span class="nv">boundsObserver</span><span class="p">:</span> <span class="kt">BoundsObserving</span><span class="p">?</span>
+
+ <span class="k">override</span> <span class="k">var</span> <span class="nv">bounds</span><span class="p">:</span> <span class="kt">CGRect</span> <span class="p">{</span>
+     <span class="k">didSet</span> <span class="p">{</span>
+         <span class="k">guard</span> <span class="n">oldValue</span> <span class="o">!=</span> <span class="n">bounds</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
+         <span class="n">boundsObserver</span><span class="p">?</span><span class="o">.</span><span class="nf">didChangeBounds</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span>
+     <span class="p">}</span>
+    <span class="p">}</span>
+ <span class="p">}</span>
+
+ <span class="k">let</span> <span class="nv">myView</span> <span class="o">=</span> <span class="kt">MyAttachmentView</span><span class="p">()</span>
+ <span class="k">let</span> <span class="nv">attachment</span> <span class="o">=</span> <span class="kt">Attachment</span><span class="p">(</span><span class="n">myView</span><span class="p">,</span> <span class="nv">size</span><span class="p">:</span> <span class="o">.</span><span class="n">matchContent</span><span class="p">)</span>
+ <span class="n">myView</span><span class="o">.</span><span class="n">boundsObserver</span> <span class="o">=</span> <span class="n">attachment</span>
+</code></pre>
+
+                        <a href="Protocols/BoundsObserving.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">BoundsObserving</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton18EditorViewDelegateP"></a>
+                    <a name="//apple_ref/swift/Protocol/EditorViewDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton18EditorViewDelegateP">EditorViewDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes an object interested in listening to events raised from EditorView</p>
+
+                        <a href="Protocols/EditorViewDelegate.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">EditorViewDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton13EditorCommandP"></a>
+                    <a name="//apple_ref/swift/Protocol/EditorCommand" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton13EditorCommandP">EditorCommand</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes a command that can be executed on <code><a href="Classes/EditorView.html">EditorView</a></code>. A command may be invoked directly on the <code>editor</code> by providing an instance.
+However, in a typical usage scenario, these should be invoked via <code><a href="Classes/EditorCommandExecutor.html">EditorCommandExecutor</a></code> which manages all the <code><a href="Classes/EditorView.html">EditorView</a></code>s in the
+view including the ones that are contained in the attachments.</p>
+
+                        <a href="Protocols/EditorCommand.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">EditorCommand</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton18EditorTextEncodingP"></a>
+                    <a name="//apple_ref/swift/Protocol/EditorTextEncoding" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton18EditorTextEncodingP">EditorTextEncoding</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes an encoder for a content type in Editor. This can be used in conjunction with <code><a href="Structs/AnyEditorTextEncoding.html">AnyEditorTextEncoding</a></code>
+ to register various encoders for each of the supported content types.
+ ### Usage Example ###</p>
+<pre class="highlight swift"><code> <span class="kd">struct</span> <span class="kt">ParagraphEncoder</span><span class="p">:</span> <span class="kt">EditorTextEncoding</span> <span class="p">{</span>
+     <span class="kd">func</span> <span class="nf">encode</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">EditorContent</span><span class="o">.</span><span class="kt">Name</span><span class="p">,</span> <span class="nv">string</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">JSON</span> <span class="p">{</span>
+         <span class="k">var</span> <span class="nv">paragraph</span> <span class="o">=</span> <span class="kt">JSON</span><span class="p">()</span>
+         <span class="n">paragraph</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">rawValue</span>
+         <span class="k">if</span> <span class="k">let</span> <span class="nv">style</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="nf">attribute</span><span class="p">(</span><span class="o">.</span><span class="n">paragraphStyle</span><span class="p">,</span> <span class="nv">at</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">effectiveRange</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span> <span class="k">as?</span> <span class="kt">NSParagraphStyle</span> <span class="p">{</span>
+             <span class="n">paragraph</span><span class="p">[</span><span class="n">style</span><span class="o">.</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">style</span><span class="o">.</span><span class="n">value</span>
+         <span class="p">}</span>
+         <span class="n">paragraph</span><span class="o">.</span><span class="n">contents</span> <span class="o">=</span> <span class="nf">contentsFrom</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">paragraph</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+</code></pre>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <code><a href="Protocols/EditorContentEncoder.html">EditorContentEncoder</a></code>
+
+</div>
+
+                        <a href="Protocols/EditorTextEncoding.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">EditorTextEncoding</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton18AttachmentEncodingP"></a>
+                    <a name="//apple_ref/swift/Protocol/AttachmentEncoding" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton18AttachmentEncodingP">AttachmentEncoding</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes an object capable of encoding contents of at <code><a href="Classes/Attachment.html">Attachment</a></code></p>
+
+                        <a href="Protocols/AttachmentEncoding.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">AttachmentEncoding</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton21EditorContentEncodingP"></a>
+                    <a name="//apple_ref/swift/Protocol/EditorContentEncoding" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton21EditorContentEncodingP">EditorContentEncoding</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An object capable of encoding <code><a href="Structs/EditorContent.html">EditorContent</a></code> to given type.</p>
+
+                        <a href="Protocols/EditorContentEncoding.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">EditorContentEncoding</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton20EditorContentEncoderP"></a>
+                    <a name="//apple_ref/swift/Protocol/EditorContentEncoder" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton20EditorContentEncoderP">EditorContentEncoder</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A generic encoder for encoding <code><a href="Structs/EditorContent.html">EditorContent</a></code>. You may create encoders for individual types of contents in the <code>Editor</code>, and
+use <code>EditorContentEncoder</code> to register and encode the all the contents of the given <code><a href="Classes/EditorView.html">EditorView</a></code>.</p>
+<h3 id='usage-example' class='heading'>Usage Example</h3>
+<pre class="highlight swift"><code><span class="kd">typealias</span> <span class="kt">JSON</span> <span class="o">=</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span>
+<span class="kd">struct</span> <span class="kt">JSONEncoder</span><span class="p">:</span> <span class="kt">EditorContentEncoder</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">textEncoders</span><span class="p">:</span> <span class="p">[</span><span class="kt">EditorContent</span><span class="o">.</span><span class="kt">Name</span><span class="p">:</span> <span class="kt">AnyEditorTextEncoding</span><span class="o">&lt;</span><span class="kt">JSON</span><span class="o">&gt;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="o">.</span><span class="nv">paragraph</span><span class="p">:</span> <span class="kt">AnyEditorTextEncoding</span><span class="p">(</span><span class="kt">ParagraphEncoder</span><span class="p">()),</span>
+        <span class="o">.</span><span class="nv">text</span><span class="p">:</span> <span class="kt">AnyEditorTextEncoding</span><span class="p">(</span><span class="kt">TextEncoder</span><span class="p">())</span>
+    <span class="p">]</span>
+    <span class="k">let</span> <span class="nv">attachmentEncoders</span><span class="p">:</span> <span class="p">[</span><span class="kt">EditorContent</span><span class="o">.</span><span class="kt">Name</span><span class="p">:</span> <span class="kt">AnyEditorContentAttachmentEncoding</span><span class="o">&lt;</span><span class="kt">JSON</span><span class="o">&gt;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+       <span class="o">.</span><span class="nv">panel</span><span class="p">:</span> <span class="kt">AnyEditorContentAttachmentEncoding</span><span class="p">(</span><span class="kt">PanelEncoder</span><span class="p">()),</span>
+       <span class="o">.</span><span class="nv">media</span><span class="p">:</span> <span class="kt">AnyEditorContentAttachmentEncoding</span><span class="p">(</span><span class="kt">MediaEncoder</span><span class="p">()),</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1">// Get the encoded content from the editor</span>
+<span class="k">let</span> <span class="nv">encodedContent</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="nf">transformContents</span><span class="p">(</span><span class="nv">using</span><span class="p">:</span> <span class="kt">JSONEncoder</span><span class="p">())</span>
+</code></pre>
+
+                        <a href="Protocols/EditorContentEncoder.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">EditorContentEncoder</span> <span class="p">:</span> <span class="kt"><a href="Protocols/EditorContentEncoding.html">EditorContentEncoding</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton20RendererViewDelegateP"></a>
+                    <a name="//apple_ref/swift/Protocol/RendererViewDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton20RendererViewDelegateP">RendererViewDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An object that is interested in listening to events raised within the Renderer.</p>
+
+                        <a href="Protocols/RendererViewDelegate.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RendererViewDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton15RendererCommandP"></a>
+                    <a name="//apple_ref/swift/Protocol/RendererCommand" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton15RendererCommandP">RendererCommand</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes a command that can be executed on <code><a href="Classes/RendererView.html">RendererView</a></code>. A command may be invoked directly on the <code>renderer</code> by providing an instance.
+However, in a typical usage scenario, these should be invoked via <code><a href="Classes/RendererCommandExecutor.html">RendererCommandExecutor</a></code> which manages all the <code><a href="Classes/RendererView.html">RendererView</a></code>s in the
+view including the ones that are contained in the attachments.</p>
+
+                        <a href="Protocols/RendererCommand.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RendererCommand</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton14TextProcessingP"></a>
+                    <a name="//apple_ref/swift/Protocol/TextProcessing" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton14TextProcessingP">TextProcessing</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An object capable of intercepting and modifying the text and attributes in an <code><a href="Classes/EditorView.html">EditorView</a></code> when registered with the <code><a href="Classes/EditorView.html">EditorView</a></code>.</p>
+
+                        <a href="Protocols/TextProcessing.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TextProcessing</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-04-08)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

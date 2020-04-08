@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TextProcessing Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Protocol/TextProcessing" class="dashAnchor"></a>
+    <a title="TextProcessing Protocol Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Proton Docs</a> (75% documented)</p>
+        <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">Proton Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        TextProcessing Protocol Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/Attachment.html">Attachment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BoldCommand.html">BoldCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/EditorCommandExecutor.html">EditorCommandExecutor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/EditorView.html">EditorView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/EditorViewContext.html">EditorViewContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FontTraitToggleCommand.html">FontTraitToggleCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/HighlightTextCommand.html">HighlightTextCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ItalicsCommand.html">ItalicsCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RendererCommandExecutor.html">RendererCommandExecutor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RendererView.html">RendererView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RendererViewContext.html">RendererViewContext</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/AttachmentSize.html">AttachmentSize</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/AttachmentType.html">AttachmentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/EditorContentMode.html">EditorContentMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/EditorContentType.html">EditorContentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/EditorKey.html">EditorKey</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/NSAttributedString.html">NSAttributedString</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSAttributedString/Key.html">– Key</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSRange.html">NSRange</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/TextProcessingPriority.html">TextProcessingPriority</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIFont.html">UIFont</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UITextRange.html">UITextRange</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AttachmentEncoding.html">AttachmentEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AttachmentOffsetProviding.html">AttachmentOffsetProviding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AttributesDecoding.html">AttributesDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:6Proton12BlockContentP">BlockContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/BoundsObserving.html">BoundsObserving</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/DynamicBoundsProviding.html">DynamicBoundsProviding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorCommand.html">EditorCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentDecoding.html">EditorContentDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentEncoder.html">EditorContentEncoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentEncoding.html">EditorContentEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentIdentifying.html">EditorContentIdentifying</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentView.html">EditorContentView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorTextEncoding.html">EditorTextEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorViewDelegate.html">EditorViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Focusable.html">Focusable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:6Proton13InlineContentP">InlineContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RendererCommand.html">RendererCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RendererViewDelegate.html">RendererViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TextProcessing.html">TextProcessing</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/AnyAttributeDecoding.html">AnyAttributeDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyEditorContentAttachmentEncoding.html">AnyEditorContentAttachmentEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyEditorContentDecoding.html">AnyEditorContentDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyEditorTextEncoding.html">AnyEditorTextEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CommandName.html">CommandName</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/EditorContent.html">EditorContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/EditorContent/Name.html">– Name</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/EditorLine.html">EditorLine</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton10Attributesa">Attributes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton9Processeda">Processed</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton22TextProcessingPrioritya">TextProcessingPriority</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>TextProcessing</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TextProcessing</span></code></pre>
+
+                </div>
+              </div>
+            <p>An object capable of intercepting and modifying the text and attributes in an <code><a href="../Classes/EditorView.html">EditorView</a></code> when registered with the <code><a href="../Classes/EditorView.html">EditorView</a></code>.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton14TextProcessingP4nameSSvp"></a>
+                    <a name="//apple_ref/swift/Property/name" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton14TextProcessingP4nameSSvp">name</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Name of the TextProcessor</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton14TextProcessingP8prioritySivp"></a>
+                    <a name="//apple_ref/swift/Property/priority" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton14TextProcessingP8prioritySivp">priority</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Priority of the TextProcessor. An <code><a href="../Classes/EditorView.html">EditorView</a></code> can have multiple <code>TextProcessors</code> registered. These will be executed in the order of <code>Priority</code>.</p>
+<div class="aside aside-attention">
+    <p class="aside-title">Attention</p>
+    When a <code>textProcessor</code> with priority is set to <code>.exclusive</code> is executed, it will prevent all other registered <code>TextProcessors</code> from being
+executed. If multiple such <code>TextProcessors</code> are registered, only the one registered earlier is executed. When this happens, all other registered
+<code>TextProcessors</code> which are prevented from being executed receive <code>processInterrupted</code> with the <code>range</code> in which exclusive <code>TextProcessor</code> is
+executed. It is responsibility of these <code>TextProcessors</code> to do any cleanup/rollback if that needs to be done.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">priority</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:6Proton22TextProcessingPrioritya">TextProcessingPriority</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton14TextProcessingP11willProcess07deletedB008insertedB0ySo18NSAttributedStringC_SStF"></a>
+                    <a name="//apple_ref/swift/Method/willProcess(deletedText:insertedText:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton14TextProcessingP11willProcess07deletedB008insertedB0ySo18NSAttributedStringC_SStF">willProcess(deletedText:insertedText:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Invoked before changes are processed by the editor.</p>
+<div class="aside aside-attention">
+    <p class="aside-title">Attention</p>
+    This is fired before the text has changed in the editor. This can be helpful if any state needs to be changed based on edited text.
+However, it should be noted that the changes are done only in <code>process</code> and not in this function owing to the lifecycle of TextKit components.
+
+</div>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">willProcess</span><span class="p">(</span><span class="nv">deletedText</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="p">,</span> <span class="nv">insertedText</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>deletedText</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Text that has been deleted, if any.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>insertedText</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Text that is inserted, if any.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton14TextProcessingP7process6editor5range14changeInLengthSbAA10EditorViewC_So8_NSRangeVSitF"></a>
+                    <a name="//apple_ref/swift/Method/process(editor:range:changeInLength:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton14TextProcessingP7process6editor5range14changeInLengthSbAA10EditorViewC_So8_NSRangeVSitF">process(editor:range:changeInLength:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Allows to change attributes and text in the <code><a href="../Classes/EditorView.html">EditorView</a></code> as the text is changed.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">process</span><span class="p">(</span><span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="n">range</span> <span class="nv">editedRange</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">,</span> <span class="n">changeInLength</span> <span class="nv">delta</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Proton9Processeda">Processed</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>editor</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Classes/EditorView.html">EditorView</a></code> in which text is being changed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>editedRange</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Current range that is being modified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>delta</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Change in length of the text as a result of typing text. The length may be more than 1 if multiple characters are selected
+before content is typed. It may also happen if text containing a string is pasted.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>processed</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Set this to <code>true</code> is the <code>TextProcessor</code> has made any changes to the text or attributes in the <code><a href="../Classes/EditorView.html">EditorView</a></code></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Return <code>true</code> to indicate the processing had been done by the current processor. In case of .exclusive priority processors,
+returning <code>true</code> notifies all other processors of interruption.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton14TextProcessingP22handleKeyWithModifiers6editor3key13modifierFlags5rangeyAA10EditorViewC_AA0mE0OSo013UIKeyModifierK0VSo8_NSRangeVtF"></a>
+                    <a name="//apple_ref/swift/Method/handleKeyWithModifiers(editor:key:modifierFlags:range:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton14TextProcessingP22handleKeyWithModifiers6editor3key13modifierFlags5rangeyAA10EditorViewC_AA0mE0OSo013UIKeyModifierK0VSo8_NSRangeVtF">handleKeyWithModifiers(editor:key:modifierFlags:range:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Allows to change attributes and text in the <code><a href="../Classes/EditorView.html">EditorView</a></code> as the text is changed.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">handleKeyWithModifiers</span><span class="p">(</span><span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="nv">key</span><span class="p">:</span> <span class="kt"><a href="../Enums/EditorKey.html">EditorKey</a></span><span class="p">,</span> <span class="nv">modifierFlags</span><span class="p">:</span> <span class="kt">UIKeyModifierFlags</span><span class="p">,</span> <span class="n">range</span> <span class="nv">editedRange</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>editor</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Classes/EditorView.html">EditorView</a></code> in which text is being changed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Enums/EditorKey.html">EditorKey</a></code> that is entered.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>modifierFlags</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The bit mask of modifier flags that were pressed with the key.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>editedRange</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Current range that is being modified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton14TextProcessingP18processInterrupted6editor2atyAA10EditorViewC_So8_NSRangeVtF"></a>
+                    <a name="//apple_ref/swift/Method/processInterrupted(editor:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton14TextProcessingP18processInterrupted6editor2atyAA10EditorViewC_So8_NSRangeVtF">processInterrupted(editor:at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fired when processing has been interrupted by another <code>TextProcessor</code> running in the same pass. This allows <code>TextProcessor</code> to revert
+any changes that may not have been committed.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">processInterrupted</span><span class="p">(</span><span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="n">at</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>editor</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Classes/EditorView.html">EditorView</a></code> in which text is being changed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Current range that is being modified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton14TextProcessingP20selectedRangeChanged6editor03oldE003newE0yAA10EditorViewC_So8_NSRangeVSgALtF"></a>
+                    <a name="//apple_ref/swift/Method/selectedRangeChanged(editor:oldRange:newRange:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton14TextProcessingP20selectedRangeChanged6editor03oldE003newE0yAA10EditorViewC_So8_NSRangeVSgALtF">selectedRangeChanged(editor:oldRange:newRange:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Notifies the processor that the selected range has changed in the EditorView due to a reason other than typing text
+for e.g. moving cursor using keyboard, mouse or tap.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This function is also called if the user selects text by dragging. Each individual character selection during drag operation
+results in an independent call to this function. If old or new range has zero length, it indicates the caret (insertion point).
+If the range object is nil, it indicates that there is no previous/current selection.
+
+</div>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">selectedRangeChanged</span><span class="p">(</span><span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="nv">oldRange</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">?,</span> <span class="nv">newRange</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>editor</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>EditorView in which selected range changed</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>oldRange</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Original range before the change</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>newRange</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Current range after the change</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-04-08)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

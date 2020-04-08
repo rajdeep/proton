@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Attachment Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/Attachment" class="dashAnchor"></a>
+    <a title="Attachment Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Proton Docs</a> (75% documented)</p>
+        <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">Proton Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        Attachment Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/Attachment.html">Attachment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BoldCommand.html">BoldCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/EditorCommandExecutor.html">EditorCommandExecutor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/EditorView.html">EditorView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/EditorViewContext.html">EditorViewContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FontTraitToggleCommand.html">FontTraitToggleCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/HighlightTextCommand.html">HighlightTextCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ItalicsCommand.html">ItalicsCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RendererCommandExecutor.html">RendererCommandExecutor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RendererView.html">RendererView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RendererViewContext.html">RendererViewContext</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/AttachmentSize.html">AttachmentSize</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/AttachmentType.html">AttachmentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/EditorContentMode.html">EditorContentMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/EditorContentType.html">EditorContentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/EditorKey.html">EditorKey</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/NSAttributedString.html">NSAttributedString</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSAttributedString/Key.html">– Key</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSRange.html">NSRange</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/TextProcessingPriority.html">TextProcessingPriority</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIFont.html">UIFont</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UITextRange.html">UITextRange</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AttachmentEncoding.html">AttachmentEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AttachmentOffsetProviding.html">AttachmentOffsetProviding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AttributesDecoding.html">AttributesDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:6Proton12BlockContentP">BlockContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/BoundsObserving.html">BoundsObserving</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/DynamicBoundsProviding.html">DynamicBoundsProviding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorCommand.html">EditorCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentDecoding.html">EditorContentDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentEncoder.html">EditorContentEncoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentEncoding.html">EditorContentEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentIdentifying.html">EditorContentIdentifying</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentView.html">EditorContentView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorTextEncoding.html">EditorTextEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorViewDelegate.html">EditorViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Focusable.html">Focusable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:6Proton13InlineContentP">InlineContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RendererCommand.html">RendererCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RendererViewDelegate.html">RendererViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TextProcessing.html">TextProcessing</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/AnyAttributeDecoding.html">AnyAttributeDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyEditorContentAttachmentEncoding.html">AnyEditorContentAttachmentEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyEditorContentDecoding.html">AnyEditorContentDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyEditorTextEncoding.html">AnyEditorTextEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CommandName.html">CommandName</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/EditorContent.html">EditorContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/EditorContent/Name.html">– Name</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/EditorLine.html">EditorLine</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton10Attributesa">Attributes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton9Processeda">Processed</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton22TextProcessingPrioritya">TextProcessingPriority</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Attachment</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">Attachment</span> <span class="p">:</span> <span class="kt">NSTextAttachment</span><span class="p">,</span> <span class="kt"><a href="../Protocols/BoundsObserving.html">BoundsObserving</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>An attachment can be used as a container for any view object. Based on the <code><a href="../Enums/AttachmentSize.html">AttachmentSize</a></code> provided, the attachment automatically renders itself alongside the text in <code><a href="../Classes/EditorView.html">EditorView</a></code>.
+<code>Attachment</code> also provides helper functions like <code>deleteFromContainer</code> and <code>rangeInContainer</code></p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10AttachmentC18selectBeforeDeleteSbvp"></a>
+                    <a name="//apple_ref/swift/Property/selectBeforeDelete" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC18selectBeforeDeleteSbvp">selectBeforeDelete</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Governs if the attachment should be selected before being deleted. When <code>true</code>, tapping the backspace key the first time on range containing <code>Attachment</code> will only
+select the attachment i.e. show as highlighted. Tapping the backspace again will delete the attachment. If the value is <code>false</code>, the attachment will be deleted on the first backspace itself.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">selectBeforeDelete</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10AttachmentC6stringSo18NSAttributedStringCvp"></a>
+                    <a name="//apple_ref/swift/Property/string" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC6stringSo18NSAttributedStringCvp">string</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Attributed string representation of the <code>Attachment</code>. This can be used directly to replace a range of text in <code><a href="../Classes/EditorView.html">EditorView</a></code></p>
+<h3 id='usage-example' class='heading'>Usage Example</h3>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">attachment</span> <span class="o">=</span> <span class="kt">Attachment</span><span class="p">(</span><span class="kt">PanelView</span><span class="p">(),</span> <span class="nv">size</span><span class="p">:</span> <span class="o">.</span><span class="n">fullWidth</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">attrString</span> <span class="o">=</span> <span class="kt">NSMutableAttributedString</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"This is a test string"</span><span class="p">)</span>
+<span class="n">attrString</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="n">attachment</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
+<span class="n">editor</span><span class="o">.</span><span class="n">attributedText</span> <span class="o">=</span> <span class="n">attrString</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">string</span><span class="p">:</span> <span class="kt">NSAttributedString</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10AttachmentC19containerEditorViewAA0dE0CSgvp"></a>
+                    <a name="//apple_ref/swift/Property/containerEditorView" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC19containerEditorViewAA0dE0CSgvp">containerEditorView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code><a href="../Classes/EditorView.html">EditorView</a></code> containing this attachment</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">containerEditorView</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10AttachmentC20containerContentNameAA06EditorD0V0E0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/containerContentName" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC20containerContentNameAA06EditorD0V0E0VSgvp">containerContentName</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Name of the content for the <code><a href="../Classes/EditorView.html">EditorView</a></code></p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <code><a href="../Classes/EditorView.html">EditorView</a></code>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">containerContentName</span><span class="p">:</span> <span class="kt"><a href="../Structs/EditorContent.html">EditorContent</a></span><span class="o">.</span><span class="kt">Name</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10AttachmentC15didChangeBoundsyySo6CGRectVF"></a>
+                    <a name="//apple_ref/swift/Method/didChangeBounds(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC15didChangeBoundsyySo6CGRectVF">didChangeBounds(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Causes invalidation of layout of the attachment when the containing view bounds are changed</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <code><a href="../Protocols/BoundsObserving.html">BoundsObserving</a></code>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didChangeBounds</span><span class="p">(</span><span class="n">_</span> <span class="nv">bounds</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>bounds</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Updated bounds</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10AttachmentC15containerBoundsSo6CGRectVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/containerBounds" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC15containerBoundsSo6CGRectVSgvp">containerBounds</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Bounds of the container</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">containerBounds</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@Proton@objc(cs)Attachment(py)bounds"></a>
+                    <a name="//apple_ref/swift/Property/bounds" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Proton@objc(cs)Attachment(py)bounds">bounds</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The bounds rectangle, which describes the attachment&rsquo;s location and size in its own coordinate system.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">bounds</span><span class="p">:</span> <span class="kt">CGRect</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10AttachmentC_4sizeACx_AA0B4SizeOtcSo6UIViewCRbzAA12BlockContentRzlufc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:size:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC_4sizeACx_AA0B4SizeOtcSo6UIViewCRbzAA12BlockContentRzlufc">init(_:size:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initializes the attachment with the given content view</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">AttachmentView</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">contentView</span><span class="p">:</span> <span class="kt">AttachmentView</span><span class="p">,</span> <span class="nv">size</span><span class="p">:</span> <span class="kt"><a href="../Enums/AttachmentSize.html">AttachmentSize</a></span><span class="p">)</span> <span class="k">where</span> <span class="kt">AttachmentView</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">,</span> <span class="kt">AttachmentView</span> <span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:6Proton12BlockContentP">BlockContent</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>contentView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Content view to be hosted within the attachment</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>size</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Size rule for attachment</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10AttachmentC_4sizeACx_AA0B4SizeOtcSo6UIViewCRbzAA13InlineContentRzlufc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:size:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC_4sizeACx_AA0B4SizeOtcSo6UIViewCRbzAA13InlineContentRzlufc">init(_:size:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initializes the attachment with the given content view</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">AttachmentView</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">contentView</span><span class="p">:</span> <span class="kt">AttachmentView</span><span class="p">,</span> <span class="nv">size</span><span class="p">:</span> <span class="kt"><a href="../Enums/AttachmentSize.html">AttachmentSize</a></span><span class="p">)</span> <span class="k">where</span> <span class="kt">AttachmentView</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">,</span> <span class="kt">AttachmentView</span> <span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:6Proton13InlineContentP">InlineContent</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>contentView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Content view to be hosted within the attachment</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>size</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Size rule for attachment</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10AttachmentC14offsetProviderAA0B15OffsetProviding_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/offsetProvider" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC14offsetProviderAA0B15OffsetProviding_pSgvp">offsetProvider</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Offsets for the attachment. Can be used to align attachment with the text. Defaults to <code>.zero</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">offsetProvider</span><span class="p">:</span> <span class="kt"><a href="../Protocols/AttachmentOffsetProviding.html">AttachmentOffsetProviding</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10AttachmentC19removeFromContaineryyF"></a>
+                    <a name="//apple_ref/swift/Method/removeFromContainer()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC19removeFromContaineryyF">removeFromContainer()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Removes this attachment from the <code><a href="../Classes/EditorView.html">EditorView</a></code> it is contained in.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeFromContainer</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10AttachmentC16rangeInContainerSo8_NSRangeVSgyF"></a>
+                    <a name="//apple_ref/swift/Method/rangeInContainer()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC16rangeInContainerSo8_NSRangeVSgyF">rangeInContainer()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Range of this attachment in it&rsquo;s container</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">rangeInContainer</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">NSRange</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10AttachmentC32addedAttributesOnContainingRange16rangeInContainer10attributesySo8_NSRangeV_SDySo21NSAttributedStringKeyaypGtF"></a>
+                    <a name="//apple_ref/swift/Method/addedAttributesOnContainingRange(rangeInContainer:attributes:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC32addedAttributesOnContainingRange16rangeInContainer10attributesySo8_NSRangeV_SDySo21NSAttributedStringKeyaypGtF">addedAttributesOnContainingRange(rangeInContainer:attributes:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Invoked when attributes are added in the containing <code><a href="../Classes/EditorView.html">EditorView</a></code> in the range of string in which this attachment is contained.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">addedAttributesOnContainingRange</span><span class="p">(</span><span class="n">rangeInContainer</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">,</span> <span class="nv">attributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">NSAttributedString</span><span class="o">.</span><span class="kt">Key</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Affected range</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>attributes</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Attributes applied</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10AttachmentC36removedAttributesFromContainingRange16rangeInContainer10attributesySo8_NSRangeV_SaySo21NSAttributedStringKeyaGtF"></a>
+                    <a name="//apple_ref/swift/Method/removedAttributesFromContainingRange(rangeInContainer:attributes:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC36removedAttributesFromContainingRange16rangeInContainer10attributesySo8_NSRangeV_SaySo21NSAttributedStringKeyaGtF">removedAttributesFromContainingRange(rangeInContainer:attributes:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">removedAttributesFromContainingRange</span><span class="p">(</span><span class="n">rangeInContainer</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">,</span> <span class="nv">attributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">NSAttributedString</span><span class="o">.</span><span class="kt">Key</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Affected range</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>attributes</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Attributes removed</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@Proton@objc(cs)Attachment(im)attachmentBoundsForTextContainer:proposedLineFragment:glyphPosition:characterIndex:"></a>
+                    <a name="//apple_ref/swift/Method/attachmentBounds(for:proposedLineFragment:glyphPosition:characterIndex:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Proton@objc(cs)Attachment(im)attachmentBoundsForTextContainer:proposedLineFragment:glyphPosition:characterIndex:">attachmentBounds(for:proposedLineFragment:glyphPosition:characterIndex:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the calculated bounds for the attachment based on size rule and content view provided during initialization.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">attachmentBounds</span><span class="p">(</span><span class="k">for</span> <span class="nv">textContainer</span><span class="p">:</span> <span class="kt">NSTextContainer</span><span class="p">?,</span> <span class="n">proposedLineFragment</span> <span class="nv">lineFrag</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">,</span> <span class="n">glyphPosition</span> <span class="nv">position</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">,</span> <span class="n">characterIndex</span> <span class="nv">charIndex</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGRect</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>textContainer</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Text container for attachment</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>lineFrag</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Line fragment containing the attachment</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>position</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Position in the text container.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>charIndex</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Character index</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10AttachmentC16invalidateLayoutyyF"></a>
+                    <a name="//apple_ref/swift/Method/invalidateLayout()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC16invalidateLayoutyyF">invalidateLayout()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Invalidates the current layout and triggers a layout update.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">invalidateLayout</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-04-08)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

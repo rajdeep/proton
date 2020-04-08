@@ -1,0 +1,2886 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>EditorView Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/EditorView" class="dashAnchor"></a>
+    <a title="EditorView Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Proton Docs</a> (75% documented)</p>
+        <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">Proton Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        EditorView Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/Attachment.html">Attachment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BoldCommand.html">BoldCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/EditorCommandExecutor.html">EditorCommandExecutor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/EditorView.html">EditorView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/EditorViewContext.html">EditorViewContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FontTraitToggleCommand.html">FontTraitToggleCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/HighlightTextCommand.html">HighlightTextCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ItalicsCommand.html">ItalicsCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RendererCommandExecutor.html">RendererCommandExecutor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RendererView.html">RendererView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RendererViewContext.html">RendererViewContext</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/AttachmentSize.html">AttachmentSize</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/AttachmentType.html">AttachmentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/EditorContentMode.html">EditorContentMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/EditorContentType.html">EditorContentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/EditorKey.html">EditorKey</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/NSAttributedString.html">NSAttributedString</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSAttributedString/Key.html">– Key</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSRange.html">NSRange</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/TextProcessingPriority.html">TextProcessingPriority</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIFont.html">UIFont</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UITextRange.html">UITextRange</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AttachmentEncoding.html">AttachmentEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AttachmentOffsetProviding.html">AttachmentOffsetProviding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AttributesDecoding.html">AttributesDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:6Proton12BlockContentP">BlockContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/BoundsObserving.html">BoundsObserving</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/DynamicBoundsProviding.html">DynamicBoundsProviding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorCommand.html">EditorCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentDecoding.html">EditorContentDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentEncoder.html">EditorContentEncoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentEncoding.html">EditorContentEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentIdentifying.html">EditorContentIdentifying</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentView.html">EditorContentView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorTextEncoding.html">EditorTextEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorViewDelegate.html">EditorViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Focusable.html">Focusable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:6Proton13InlineContentP">InlineContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RendererCommand.html">RendererCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RendererViewDelegate.html">RendererViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TextProcessing.html">TextProcessing</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/AnyAttributeDecoding.html">AnyAttributeDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyEditorContentAttachmentEncoding.html">AnyEditorContentAttachmentEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyEditorContentDecoding.html">AnyEditorContentDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyEditorTextEncoding.html">AnyEditorTextEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CommandName.html">CommandName</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/EditorContent.html">EditorContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/EditorContent/Name.html">– Name</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/EditorLine.html">EditorLine</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton10Attributesa">Attributes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton9Processeda">Processed</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton22TextProcessingPrioritya">TextProcessingPriority</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>EditorView</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">EditorView</span> <span class="p">:</span> <span class="kt">UIView</span></code></pre>
+
+                </div>
+              </div>
+            <p>A scrollable, multiline text region capable of resizing itself based of the height of the content. Maximum height of <code>EditorView</code>
+may be restricted using an absolute value or by using auto-layout constraints. Instantiation of <code>EditorView</code> is simple and straightforward
+and can be used to host simple formatted text or complex layout containing multiple nested <code>EditorView</code> via use of <code><a href="../Classes/Attachment.html">Attachment</a></code>.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC8delegateAA0bC8Delegate_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC8delegateAA0bC8Delegate_pSgvp">delegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An object interested in responding to editing and focus related events in the <code>EditorView</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/EditorViewDelegate.html">EditorViewDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC18registeredCommandsSayAA0B7Command_pGSgvp"></a>
+                    <a name="//apple_ref/swift/Property/registeredCommands" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC18registeredCommandsSayAA0B7Command_pGSgvp">registeredCommands</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>List of commands supported by the editor.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    
+</div><ul>
+<li>To support any command, set value to nil. Default behaviour.</li>
+<li>To prevent any command to be executed, set value to be an empty array.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">registeredCommands</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/EditorCommand.html">EditorCommand</a></span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC5frame7contextACSo6CGRectV_AA0bC7ContextCtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(frame:context:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC5frame7contextACSo6CGRectV_AA0bC7ContextCtcfc">init(frame:context:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initializes the EditorView</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">frame</span><span class="p">:</span> <span class="kt">CGRect</span> <span class="o">=</span> <span class="o">.</span><span class="n">zero</span><span class="p">,</span> <span class="nv">context</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorViewContext.html">EditorViewContext</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">shared</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>frame</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Frame to be used for <code>EditorView</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Optional context to be used. <code><a href="../Classes/EditorViewContext.html">EditorViewContext</a></code> is link between <code><a href="../Classes/EditorCommandExecutor.html">EditorCommandExecutor</a></code> and the <code>EditorView</code>.
+<code><a href="../Classes/EditorCommandExecutor.html">EditorCommandExecutor</a></code> needs to have same context as the <code>EditorView</code> to execute a command on it. Unless you need to have
+restriction around some commands to be restricted in execution on certain specific editors, the default value may be used.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC020editorInputAccessoryC0So6UIViewCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/editorInputAccessoryView" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC020editorInputAccessoryC0So6UIViewCSgvp">editorInputAccessoryView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Input accessory view to be used</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">editorInputAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC011editorInputC0So6UIViewCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/editorInputView" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC011editorInputC0So6UIViewCSgvp">editorInputView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Input view to be used</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">editorInputView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@Proton@objc(cs)EditorView(im)initWithCoder:"></a>
+                    <a name="//apple_ref/swift/Method/init(coder:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Proton@objc(cs)EditorView(im)initWithCoder:">init(coder:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC20registeredProcessorsSayAA14TextProcessing_pGvp"></a>
+                    <a name="//apple_ref/swift/Property/registeredProcessors" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC20registeredProcessorsSayAA14TextProcessing_pGvp">registeredProcessors</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>List of all the registered <code>TextProcessors</code> in the <code>EditorView</code>. This may be used by nested <code>EditorView</code> to inherit all the
+text processors from the container <code>EditorView</code>.</p>
+<h3 id='usage-example' class='heading'>Usage example</h3>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">execute</span><span class="p">(</span><span class="n">on</span> <span class="nv">editor</span><span class="p">:</span> <span class="kt">EditorView</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">attachment</span> <span class="o">=</span> <span class="kt">PanelAttachment</span><span class="p">(</span><span class="nv">frame</span><span class="p">:</span> <span class="o">.</span><span class="n">zero</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">panel</span> <span class="o">=</span> <span class="n">attachment</span><span class="o">.</span><span class="n">view</span>
+    <span class="n">panel</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="nf">registerProcessors</span><span class="p">(</span><span class="n">editor</span><span class="o">.</span><span class="n">registeredProcessors</span><span class="p">)</span>
+    <span class="n">editor</span><span class="o">.</span><span class="nf">insertAttachment</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="n">editor</span><span class="o">.</span><span class="n">selectedRange</span><span class="p">,</span> <span class="nv">attachment</span><span class="p">:</span> <span class="n">attachment</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">registeredProcessors</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/TextProcessing.html">TextProcessing</a></span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC17selectedTextRangeSo06UITextF0CSgvp"></a>
+                    <a name="//apple_ref/swift/Property/selectedTextRange" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC17selectedTextRangeSo06UITextF0CSgvp">selectedTextRange</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">selectedTextRange</span><span class="p">:</span> <span class="kt">UITextRange</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC15placeholderTextSo18NSAttributedStringCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/placeholderText" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC15placeholderTextSo18NSAttributedStringCSgvp">placeholderText</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Placeholder text for the <code>EditorView</code>. The value can contain any attributes which is natively
+supported in the <code>NSAttributedString</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">placeholderText</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC12contentInsetSo12UIEdgeInsetsVvp"></a>
+                    <a name="//apple_ref/swift/Property/contentInset" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC12contentInsetSo12UIEdgeInsetsVvp">contentInset</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets or sets insets for additional scroll area around the content. Default value is UIEdgeInsetsZero.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">contentInset</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC18textContainerInsetSo12UIEdgeInsetsVvp"></a>
+                    <a name="//apple_ref/swift/Property/textContainerInset" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC18textContainerInsetSo12UIEdgeInsetsVvp">textContainerInset</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets or sets the insets for the text container&rsquo;s layout area within the editor&rsquo;s content area</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">textContainerInset</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC17dataDetectorTypesSo06UIDataeF0Vvp"></a>
+                    <a name="//apple_ref/swift/Property/dataDetectorTypes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC17dataDetectorTypesSo06UIDataeF0Vvp">dataDetectorTypes</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The types of data converted to tappable URLs in the editor view.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">dataDetectorTypes</span><span class="p">:</span> <span class="kt">UIDataDetectorTypes</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC13contentLengthSivp"></a>
+                    <a name="//apple_ref/swift/Property/contentLength" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC13contentLengthSivp">contentLength</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Length of content within the Editor.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    An attachment is only counted as a single character. Content length does not include
+length of content within the Attachment that is hosting another <code>EditorView</code>.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">contentLength</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC10isEditableSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isEditable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC10isEditableSbvp">isEditable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Determines if the <code>EditorView</code> is editable or not.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isEditable</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC7isEmptySbvp"></a>
+                    <a name="//apple_ref/swift/Property/isEmpty" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC7isEmptySbvp">isEmpty</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Determines if the editor is empty.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isEmpty</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC11currentLineAA0bE0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/currentLine" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC11currentLineAA0bE0VSgvp">currentLine</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Current line information based the caret position or selected range. If the selected range spans across multiple
+lines, only the line information of the line containing the start of the range is returned.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">currentLine</span><span class="p">:</span> <span class="kt"><a href="../Structs/EditorLine.html">EditorLine</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC9firstLineAA0bE0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/firstLine" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC9firstLineAA0bE0VSgvp">firstLine</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>First line of content in the Editor. Nil if editor is empty.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">firstLine</span><span class="p">:</span> <span class="kt"><a href="../Structs/EditorLine.html">EditorLine</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC8lastLineAA0bE0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/lastLine" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC8lastLineAA0bE0VSgvp">lastLine</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Last line of content in the Editor. Nil if editor is empty.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">lastLine</span><span class="p">:</span> <span class="kt"><a href="../Structs/EditorLine.html">EditorLine</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC12selectedTextSo18NSAttributedStringCvp"></a>
+                    <a name="//apple_ref/swift/Property/selectedText" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC12selectedTextSo18NSAttributedStringCvp">selectedText</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Selected text in the editor.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">selectedText</span><span class="p">:</span> <span class="kt">NSAttributedString</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@Proton@objc(cs)EditorView(py)backgroundColor"></a>
+                    <a name="//apple_ref/swift/Property/backgroundColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Proton@objc(cs)EditorView(py)backgroundColor">backgroundColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Background color for the editor.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">backgroundColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC4fontSo6UIFontCvp"></a>
+                    <a name="//apple_ref/swift/Property/font" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC4fontSo6UIFontCvp">font</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Default font to be used by the Editor. A font may be overridden on whole or part of content in <code>EditorView</code> by an <code><a href="../Protocols/EditorCommand.html">EditorCommand</a></code> or
+<code><a href="../Protocols/TextProcessing.html">TextProcessing</a></code> conformances.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">font</span><span class="p">:</span> <span class="kt">UIFont</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC14paragraphStyleSo018NSMutableParagraphE0Cvp"></a>
+                    <a name="//apple_ref/swift/Property/paragraphStyle" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC14paragraphStyleSo018NSMutableParagraphE0Cvp">paragraphStyle</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Default paragraph style to be used by the Editor. The style may be overridden on whole or part of content in
+<code>EditorView</code> by an <code><a href="../Protocols/EditorCommand.html">EditorCommand</a></code> or <code><a href="../Protocols/TextProcessing.html">TextProcessing</a></code> conformances.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">paragraphStyle</span><span class="p">:</span> <span class="kt">NSMutableParagraphStyle</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC9textColorSo7UIColorCvp"></a>
+                    <a name="//apple_ref/swift/Property/textColor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC9textColorSo7UIColorCvp">textColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Default text color to be used by the Editor. The color may be overridden on whole or part of content in
+<code>EditorView</code> by an <code><a href="../Protocols/EditorCommand.html">EditorCommand</a></code> or <code><a href="../Protocols/TextProcessing.html">TextProcessing</a></code> conformances.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">textColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC9maxHeight12CoreGraphics7CGFloatVvp"></a>
+                    <a name="//apple_ref/swift/Property/maxHeight" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC9maxHeight12CoreGraphics7CGFloatVvp">maxHeight</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Maximum height that the <code>EditorView</code> can expand to. After reaching the maximum specified height, the editor becomes scrollable.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    If both auto-layout constraints and <code>maxHeight</code> are used, the lower of the two height would be used as maximum allowed height.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">maxHeight</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC14attributedTextSo18NSAttributedStringCvp"></a>
+                    <a name="//apple_ref/swift/Property/attributedText" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC14attributedTextSo18NSAttributedStringCvp">attributedText</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Text to be set in the <code>EditorView</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">attributedText</span><span class="p">:</span> <span class="kt">NSAttributedString</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC22enableSelectionHandlesSbvp"></a>
+                    <a name="//apple_ref/swift/Property/enableSelectionHandles" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC22enableSelectionHandlesSbvp">enableSelectionHandles</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Determines if the selection handles should be shown when <code><a href="../Classes/EditorView.html#/s:6Proton10EditorViewC13selectedRangeSo8_NSRangeVvp">selectedRange</a></code> is set programatically. Defaults is <code>true</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">enableSelectionHandles</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC13selectedRangeSo8_NSRangeVvp"></a>
+                    <a name="//apple_ref/swift/Property/selectedRange" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC13selectedRangeSo8_NSRangeVvp">selectedRange</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets or sets the selected range in the <code>EditorView</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">selectedRange</span><span class="p">:</span> <span class="kt">NSRange</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC16typingAttributesSDySo21NSAttributedStringKeyaypGvp"></a>
+                    <a name="//apple_ref/swift/Property/typingAttributes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC16typingAttributesSDySo21NSAttributedStringKeyaypGvp">typingAttributes</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Typing attributes to be used. Automatically resets when the selection changes.
+To apply an attribute in the current position such that it is applied as text is typed,
+the attribute must be added to <code>typingAttributes</code> collection.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">typingAttributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">NSAttributedString</span><span class="o">.</span><span class="kt">Key</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC14boundsObserverAA15BoundsObserving_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/boundsObserver" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC14boundsObserverAA15BoundsObserving_pSgvp">boundsObserver</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An object interested in observing the changes in bounds of the <code>Editor</code>, typically an <code><a href="../Classes/Attachment.html">Attachment</a></code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">boundsObserver</span><span class="p">:</span> <span class="kt"><a href="../Protocols/BoundsObserving.html">BoundsObserving</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC13contentOffsetSo7CGPointVvp"></a>
+                    <a name="//apple_ref/swift/Property/contentOffset" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC13contentOffsetSo7CGPointVvp">contentOffset</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets and sets the content offset.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">contentOffset</span><span class="p">:</span> <span class="kt">CGPoint</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC12textEndRangeSo8_NSRangeVvp"></a>
+                    <a name="//apple_ref/swift/Property/textEndRange" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC12textEndRangeSo8_NSRangeVvp">textEndRange</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Range of end of text in the <code>EditorView</code>. The range has always has length of 0.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">textEndRange</span><span class="p">:</span> <span class="kt">NSRange</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC25isContainedInAnAttachmentSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isContainedInAnAttachment" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC25isContainedInAnAttachmentSbvp">isContainedInAnAttachment</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Determines if the current Editor is contained in an attachment</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isContainedInAnAttachment</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC11contentNameAA0B7ContentV0E0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/contentName" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC11contentNameAA0B7ContentV0E0VSgvp">contentName</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Name of the content if the Editor is contained within an <code><a href="../Classes/Attachment.html">Attachment</a></code>.
+This is done by recursive look-up of views in the <code><a href="../Classes/Attachment.html">Attachment</a></code> content view
+i.e. the Editor may be nested in subviews within the contentView of Attachment.
+The value is nil if the Editor is not contained within an <code><a href="../Classes/Attachment.html">Attachment</a></code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">contentName</span><span class="p">:</span> <span class="kt"><a href="../Structs/EditorContent.html">EditorContent</a></span><span class="o">.</span><span class="kt">Name</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC12visibleRangeSo8_NSRangeVvp"></a>
+                    <a name="//apple_ref/swift/Property/visibleRange" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC12visibleRangeSo8_NSRangeVvp">visibleRange</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the visible text range.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">visibleRange</span><span class="p">:</span> <span class="kt">NSRange</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC19containerAttachmentAA0E0CSgvp"></a>
+                    <a name="//apple_ref/swift/Property/containerAttachment" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC19containerAttachmentAA0E0CSgvp">containerAttachment</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Attachment containing the current Editor.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">containerAttachment</span><span class="p">:</span> <span class="kt"><a href="../Classes/Attachment.html">Attachment</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC12nestingLevelSivp"></a>
+                    <a name="//apple_ref/swift/Property/nestingLevel" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC12nestingLevelSivp">nestingLevel</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Nesting level of current Editor within other attachments containing Editors.
+0 indicates that the Editor is not contained in an attachment.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">nestingLevel</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC5clearyyF"></a>
+                    <a name="//apple_ref/swift/Method/clear()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC5clearyyF">clear()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Clears the contents in the Editor.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">clear</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@Proton@objc(cs)EditorView(im)sizeThatFits:"></a>
+                    <a name="//apple_ref/swift/Method/sizeThatFits(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Proton@objc(cs)EditorView(im)sizeThatFits:">sizeThatFits(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Asks the view to calculate and return the size that best fits the specified size.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">open</span> <span class="kd">func</span> <span class="nf">sizeThatFits</span><span class="p">(</span><span class="n">_</span> <span class="nv">size</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGSize</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>size</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The size for which the view should calculate its best-fitting size.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A new size that fits the receiver’s subviews.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@Proton@objc(cs)EditorView(im)becomeFirstResponder"></a>
+                    <a name="//apple_ref/swift/Method/becomeFirstResponder()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Proton@objc(cs)EditorView(im)becomeFirstResponder">becomeFirstResponder()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Asks UIKit to make this object the first responder in its window.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">becomeFirstResponder</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>true</code> if this object is now the first-responder or <code>false</code> if it is not.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC9lineAfteryAA0B4LineVSgAFF"></a>
+                    <a name="//apple_ref/swift/Method/lineAfter(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC9lineAfteryAA0B4LineVSgAFF">lineAfter(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets the line preceding the given line. Nil if the given line is invalid or is first line</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">lineAfter</span><span class="p">(</span><span class="n">_</span> <span class="nv">line</span><span class="p">:</span> <span class="kt"><a href="../Structs/EditorLine.html">EditorLine</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/EditorLine.html">EditorLine</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>line</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Reference line</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code><a href="../Structs/EditorLine.html">EditorLine</a></code> after the given line. Nil if the Editor is empty or given line is last line in the Editor.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC10lineBeforeyAA0B4LineVSgAFF"></a>
+                    <a name="//apple_ref/swift/Method/lineBefore(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC10lineBeforeyAA0B4LineVSgAFF">lineBefore(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets the line after the given line. Nil if the given line is invalid or is last line</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">lineBefore</span><span class="p">(</span><span class="n">_</span> <span class="nv">line</span><span class="p">:</span> <span class="kt"><a href="../Structs/EditorLine.html">EditorLine</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/EditorLine.html">EditorLine</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>line</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Reference line</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code><a href="../Structs/EditorLine.html">EditorLine</a></code> before the given line. Nil if the Editor is empty or given line is first line in the Editor.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC5rects3forSaySo6CGRectVGSo8_NSRangeV_tF"></a>
+                    <a name="//apple_ref/swift/Method/rects(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC5rects3forSaySo6CGRectVGSo8_NSRangeV_tF">rects(for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the rectangles for line fragments spanned by the range. Based on the span of the range,
+multiple rectangles may be returned.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">rects</span><span class="p">(</span><span class="k">for</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">CGRect</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Range to be queried.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Array of rectangles for the given range.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC9caretRect3forSo6CGRectVSi_tF"></a>
+                    <a name="//apple_ref/swift/Method/caretRect(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC9caretRect3forSo6CGRectVSi_tF">caretRect(for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the caret rectangle for given position in the editor content.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    If the location is beyond the bounds of content length, the last valid position is used to get caret rectangle. This function
+only returns the rectangle denoting the caret positioning. The actual caret is not moved and no new carets are drawn.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">caretRect</span><span class="p">(</span><span class="k">for</span> <span class="nv">position</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGRect</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>position</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Location to be queried within the editor content.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Rectangle for caret based on the line height and given location.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC4word2atSo18NSAttributedStringCSgSi_tF"></a>
+                    <a name="//apple_ref/swift/Method/word(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC4word2atSo18NSAttributedStringCSgSi_tF">word(at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets the word from text at given location in editor content</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">word</span><span class="p">(</span><span class="n">at</span> <span class="nv">location</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">NSAttributedString</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>location</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Location to be queried.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Word  at the given location. Nil is there&rsquo;s no content.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC16insertAttachment2in10attachmentySo8_NSRangeV_AA0E0CtF"></a>
+                    <a name="//apple_ref/swift/Method/insertAttachment(in:attachment:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC16insertAttachment2in10attachmentySo8_NSRangeV_AA0E0CtF">insertAttachment(in:attachment:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Inserts an <code><a href="../Classes/Attachment.html">Attachment</a></code> in the <code>EditorView</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">insertAttachment</span><span class="p">(</span><span class="k">in</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">,</span> <span class="nv">attachment</span><span class="p">:</span> <span class="kt"><a href="../Classes/Attachment.html">Attachment</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Range where the <code><a href="../Classes/Attachment.html">Attachment</a></code> should be inserted. If the range contains existing content, the content
+will be replaced by the <code><a href="../Classes/Attachment.html">Attachment</a></code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>attachment</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Attachment to be inserted.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC8setFocusyyF"></a>
+                    <a name="//apple_ref/swift/Method/setFocus()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC8setFocusyyF">setFocus()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Sets the focus in the <code>EditorView</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setFocus</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC11resignFocusyyF"></a>
+                    <a name="//apple_ref/swift/Method/resignFocus()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC11resignFocusyyF">resignFocus()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Makes the <code>EditorView</code> lose focus.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">resignFocus</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC20scrollRangeToVisibleyySo8_NSRangeVF"></a>
+                    <a name="//apple_ref/swift/Method/scrollRangeToVisible(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC20scrollRangeToVisibleyySo8_NSRangeVF">scrollRangeToVisible(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Makes the <code>EditorView</code> scroll to given range such that it is visible. No-op if the range is already visible.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">scrollRangeToVisible</span><span class="p">(</span><span class="n">_</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Range of content to scroll to.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC19scrollRectToVisible_8animatedySo6CGRectV_SbtF"></a>
+                    <a name="//apple_ref/swift/Method/scrollRectToVisible(_:animated:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC19scrollRectToVisible_8animatedySo6CGRectV_SbtF">scrollRectToVisible(_:animated:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Makes the <code>EditorView</code> scroll to given range such that it is visible. No-op if the range is already visible.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">scrollRectToVisible</span><span class="p">(</span><span class="n">_</span> <span class="nv">rect</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Range of content to scroll to.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC8contents2inSayAA0B7ContentVGSo8_NSRangeVSg_tF"></a>
+                    <a name="//apple_ref/swift/Method/contents(in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC8contents2inSayAA0B7ContentVGSo8_NSRangeVSg_tF">contents(in:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets the contents within the <code>Editor</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">contents</span><span class="p">(</span><span class="k">in</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Structs/EditorContent.html">EditorContent</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Range to be enumerated to get the contents. If no range is specified, entire content range is
+enumerated.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC17transformContents2in5usingSay11EncodedTypeQzGSo8_NSRangeVSg_xtAA0B15ContentEncodingRzlF"></a>
+                    <a name="//apple_ref/swift/Method/transformContents(in:using:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC17transformContents2in5usingSay11EncodedTypeQzGSo8_NSRangeVSg_xtAA0B15ContentEncodingRzlF">transformContents(in:using:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Transforms <code><a href="../Structs/EditorContent.html">EditorContent</a></code> into given type. This function can also be used to encode content into a different type for  e.g. encoding the contents to JSON. Encoding
+is  a type of transformation that can also be decoded.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">transformContents</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="k">in</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="n">using</span> <span class="nv">transformer</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">T</span><span class="o">.</span><span class="kt">EncodedType</span><span class="p">]</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/EditorContentEncoding.html">EditorContentEncoding</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Range of <code>Editor</code> to transform the contents. By default, entire range is used.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>transformer</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Transformer capable of transforming <code><a href="../Structs/EditorContent.html">EditorContent</a></code> to given type</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Array of transformed contents based on given transformer.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC17replaceCharacters2in4withySo8_NSRangeV_So18NSAttributedStringCtF"></a>
+                    <a name="//apple_ref/swift/Method/replaceCharacters(in:with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC17replaceCharacters2in4withySo8_NSRangeV_So18NSAttributedStringCtF">replaceCharacters(in:with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Replaces the given range of content with the attributedString provided.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">replaceCharacters</span><span class="p">(</span><span class="k">in</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">,</span> <span class="n">with</span> <span class="nv">attributedString</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Range to replace.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>attributedString</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Text to replace the range of content with.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC17replaceCharacters2in4withySo8_NSRangeV_SStF"></a>
+                    <a name="//apple_ref/swift/Method/replaceCharacters(in:with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC17replaceCharacters2in4withySo8_NSRangeV_SStF">replaceCharacters(in:with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Replaces the characters in the given range with the string provided.</p>
+<div class="aside aside-attention">
+    <p class="aside-title">Attention</p>
+    The string provided will use the default <code><a href="../Classes/EditorView.html#/s:6Proton10EditorViewC4fontSo6UIFontCvp">font</a></code> and <code><a href="../Classes/EditorView.html#/s:6Proton10EditorViewC14paragraphStyleSo018NSMutableParagraphE0Cvp">paragraphStyle</a></code> set in the <code>EditorView</code>. It will not retain any other attributes already applied on
+the range of text being replaced by the <code>string</code>. If you would like add any other attributes, it is best to use <code>replaceCharacters</code> with the parameter value of
+type <code>NSAttributedString</code> that may have additional attributes defined, as well as customised <code><a href="../Classes/EditorView.html#/s:6Proton10EditorViewC4fontSo6UIFontCvp">font</a></code> and <code><a href="../Classes/EditorView.html#/s:6Proton10EditorViewC14paragraphStyleSo018NSMutableParagraphE0Cvp">paragraphStyle</a></code> applied.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">replaceCharacters</span><span class="p">(</span><span class="k">in</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">,</span> <span class="n">with</span> <span class="nv">string</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Range of text to replace. For an empty <code>EditorView</code>, you may pass <code><a href="../Extensions/NSRange.html#/s:So8_NSRangeV6ProtonE4zeroABvpZ">NSRange.zero</a></code> to insert text at the beginning.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>string</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>String to replace the range of text with. The string will use default <code><a href="../Classes/EditorView.html#/s:6Proton10EditorViewC4fontSo6UIFontCvp">font</a></code> and <code><a href="../Classes/EditorView.html#/s:6Proton10EditorViewC14paragraphStyleSo018NSMutableParagraphE0Cvp">paragraphStyle</a></code> defined in the <code>EditorView</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC16appendCharactersyySo18NSAttributedStringCF"></a>
+                    <a name="//apple_ref/swift/Method/appendCharacters(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC16appendCharactersyySo18NSAttributedStringCF">appendCharacters(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Appends the given attributed text to the end of content in <code>EditorView</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">appendCharacters</span><span class="p">(</span><span class="n">_</span> <span class="nv">attributedString</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>attributedString</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Text to append.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC16appendCharactersyySSF"></a>
+                    <a name="//apple_ref/swift/Method/appendCharacters(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC16appendCharactersyySSF">appendCharacters(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Appends the given attributed text to the end of content in <code>EditorView</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">appendCharacters</span><span class="p">(</span><span class="n">_</span> <span class="nv">string</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>string</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Text to append.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC17registerProcessoryyAA14TextProcessing_pF"></a>
+                    <a name="//apple_ref/swift/Method/registerProcessor(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC17registerProcessoryyAA14TextProcessing_pF">registerProcessor(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Registers the given text processor with the editor.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">registerProcessor</span><span class="p">(</span><span class="n">_</span> <span class="nv">processor</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TextProcessing.html">TextProcessing</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>processor</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Text processor to register</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC19unregisterProcessoryyAA14TextProcessing_pF"></a>
+                    <a name="//apple_ref/swift/Method/unregisterProcessor(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC19unregisterProcessoryyAA14TextProcessing_pF">unregisterProcessor(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Unregisters the given text processor from the editor.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">unregisterProcessor</span><span class="p">(</span><span class="n">_</span> <span class="nv">processor</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TextProcessing.html">TextProcessing</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>processor</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Text processor to unregister</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC18registerProcessorsyySayAA14TextProcessing_pGF"></a>
+                    <a name="//apple_ref/swift/Method/registerProcessors(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC18registerProcessorsyySayAA14TextProcessing_pGF">registerProcessors(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Registers the given text processors with the editor.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">registerProcessors</span><span class="p">(</span><span class="n">_</span> <span class="nv">processors</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/TextProcessing.html">TextProcessing</a></span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>processors</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Text processors to register</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC20unregisterProcessorsyySayAA14TextProcessing_pGF"></a>
+                    <a name="//apple_ref/swift/Method/unregisterProcessors(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC20unregisterProcessorsyySayAA14TextProcessing_pGF">unregisterProcessors(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Unregisters the given text processors from the editor.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">unregisterProcessors</span><span class="p">(</span><span class="n">_</span> <span class="nv">processors</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/TextProcessing.html">TextProcessing</a></span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>processors</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Text processors to unregister</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC16registerCommandsyySayAA0B7Command_pGF"></a>
+                    <a name="//apple_ref/swift/Method/registerCommands(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC16registerCommandsyySayAA0B7Command_pGF">registerCommands(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Registers the given commands with the Editor. Only registered commands can be executed if any is added to the Editor.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">registerCommands</span><span class="p">(</span><span class="n">_</span> <span class="nv">commands</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/EditorCommand.html">EditorCommand</a></span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>commands</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Commands to register</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC18unregisterCommandsyySayAA0B7Command_pGF"></a>
+                    <a name="//apple_ref/swift/Method/unregisterCommands(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC18unregisterCommandsyySayAA0B7Command_pGF">unregisterCommands(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Unregisters the given commands from the Editor. When all commands are unregistered, any command can be executed on the editor.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">unregisterCommands</span><span class="p">(</span><span class="n">_</span> <span class="nv">commands</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/EditorCommand.html">EditorCommand</a></span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>commands</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Commands to unregister</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC15registerCommandyyAA0bE0_pF"></a>
+                    <a name="//apple_ref/swift/Method/registerCommand(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC15registerCommandyyAA0bE0_pF">registerCommand(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Registers the given command with the Editor. Only registered commands can be executed if any is added to the Editor.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">registerCommand</span><span class="p">(</span><span class="n">_</span> <span class="nv">command</span><span class="p">:</span> <span class="kt"><a href="../Protocols/EditorCommand.html">EditorCommand</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>commands</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Command to register</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC17unregisterCommandyyAA0bE0_pF"></a>
+                    <a name="//apple_ref/swift/Method/unregisterCommand(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC17unregisterCommandyyAA0bE0_pF">unregisterCommand(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Unregisters the given command from the Editor. When all commands are unregistered, any command can be executed on the editor.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">unregisterCommand</span><span class="p">(</span><span class="n">_</span> <span class="nv">command</span><span class="p">:</span> <span class="kt"><a href="../Protocols/EditorCommand.html">EditorCommand</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>commands</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Command to unregister</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC13addAttributes_2atySDySo21NSAttributedStringKeyaypG_So8_NSRangeVtF"></a>
+                    <a name="//apple_ref/swift/Method/addAttributes(_:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC13addAttributes_2atySDySo21NSAttributedStringKeyaypG_So8_NSRangeVtF">addAttributes(_:at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds given attributes to the range provided. If the range already contains a value for an attribute being provided,
+existing value will be overwritten by the new value provided in the attributes.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addAttributes</span><span class="p">(</span><span class="n">_</span> <span class="nv">attributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">NSAttributedString</span><span class="o">.</span><span class="kt">Key</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">],</span> <span class="n">at</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>attributes</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Attributes to be added.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Range on which attributes should be applied to.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC16removeAttributes_2atySaySo21NSAttributedStringKeyaG_So8_NSRangeVtF"></a>
+                    <a name="//apple_ref/swift/Method/removeAttributes(_:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC16removeAttributes_2atySaySo21NSAttributedStringKeyaG_So8_NSRangeVtF">removeAttributes(_:at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Removes the given attributes from the range provided. If the attribute does not exist in the range, it will be a no-op.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeAttributes</span><span class="p">(</span><span class="n">_</span> <span class="nv">attributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">NSAttributedString</span><span class="o">.</span><span class="kt">Key</span><span class="p">],</span> <span class="n">at</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>attributes</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Attributes to remove.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Range to remove the attributes from.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC12addAttribute_5value2atySo21NSAttributedStringKeya_ypSo8_NSRangeVtF"></a>
+                    <a name="//apple_ref/swift/Method/addAttribute(_:value:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC12addAttribute_5value2atySo21NSAttributedStringKeya_ypSo8_NSRangeVtF">addAttribute(_:value:at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds given attribute to the range provided. If the attribute already exists in the range, it will be overwritten with the new value provided here.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addAttribute</span><span class="p">(</span><span class="n">_</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="o">.</span><span class="kt">Key</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Any</span><span class="p">,</span> <span class="n">at</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>name</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Key of the attribute to add.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>value</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Value of the attribute.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Range to which attribute should be added.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC15removeAttribute_2atySo21NSAttributedStringKeya_So8_NSRangeVtF"></a>
+                    <a name="//apple_ref/swift/Method/removeAttribute(_:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC15removeAttribute_2atySo21NSAttributedStringKeya_So8_NSRangeVtF">removeAttribute(_:at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Removes the attribute from given range. If the attribute does not exist in the range, it is a no-op.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeAttribute</span><span class="p">(</span><span class="n">_</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="o">.</span><span class="kt">Key</span><span class="p">,</span> <span class="n">at</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>name</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Key of attribute to be removed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Range from which attribute should be removed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC17convertToRendererAA0fC0CyF"></a>
+                    <a name="//apple_ref/swift/Method/convertToRenderer()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC17convertToRendererAA0fC0CyF">convertToRenderer()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a <code><a href="../Classes/RendererView.html">RendererView</a></code> from current <code>EditorView</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">convertToRenderer</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/RendererView.html">RendererView</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code><a href="../Classes/RendererView.html">RendererView</a></code> for the Editor</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC19isCommandRegisteredySbAA0E4NameVF"></a>
+                    <a name="//apple_ref/swift/Method/isCommandRegistered(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC19isCommandRegisteredySbAA0E4NameVF">isCommandRegistered(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Determines if the given command can be executed on the current editor. The command is allowed to be executed if
+<code>requiresSupportedCommandsRegistration</code> is false or if the command has been registered with the editor.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">isCommandRegistered</span><span class="p">(</span><span class="n">_</span> <span class="nv">name</span><span class="p">:</span> <span class="kt"><a href="../Structs/CommandName.html">CommandName</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>command</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Command to validate</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>true</code> if the command is registered with the Editor.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-04-08)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
