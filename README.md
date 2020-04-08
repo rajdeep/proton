@@ -1,4 +1,4 @@
- <img src="/logo.png" width="80%" alt="Proton logo"/>
+ <img src="https://github.com/rajdeep/proton/raw/master/logo.png" width="80%" alt="Proton logo"/>
 
 > **Note:** While Proton is already a very powerful and flexible framework, it is still in early stages of development. The APIs and public interfaces are still undergoing revisions and may introduce breaking changes with every version bump before reaching stable version 1.0.0. 
 
@@ -31,7 +31,7 @@ At it's core, Proton constitutes of following key components:
 
 The power of `EditorView` to host rich content is made possible by the use of `Attachment` which allows hosting any `UIView` in the `EditorView`. This is further enhanced by use of `TextProcessor` and `EditorCommand` to add interactive behavior to the editing experience.
 
-Let's take an example of a `TextPanel` and see how that can be created in the `EditorView`. Following are the key requirements for a `TextPanel`:
+Let's take an example of a `Panel` and see how that can be created in the `EditorView`. Following are the key requirements for a `Panel`:
 
 1. A text block that is indented and has a custom UI besides the `Editor`.
 2. Change height based on the content being typed.
@@ -41,117 +41,106 @@ Let's take an example of a `TextPanel` and see how that can be created in the `E
 6. Able to be inserted in a given Editor by use of `>> ` char.
 7. Nice to have: delete using `backspace` key when empty similar to a `Blockquote`.
 
-### TextPanel view
+### Panel view
 
-1. The first thing that is required is to create a view that represents the `TextPanel`. Once we have created this view, we can add it to an attachment and insert it in the `EditorView`.
+1. The first thing that is required is to create a view that represents the `Panel`. Once we have created this view, we can add it to an attachment and insert it in the `EditorView`.
 
-   ``` Swift
-   extension EditorContent.Name {
-       static let panel = EditorContent.Name("panel")
-   }
+    ``` swift
+    extension EditorContent.Name {
+        static let panel = EditorContent.Name("panel")
+    }
+    class PanelView: UIView, BlockContent, EditorContentView {
+        let container = UIView()
+        let editor: EditorView
+        let iconView = UIImageView()    
+        var name: EditorContent.Name {
+            return .panel
+        }   
+        override init(frame: CGRect) {
+            self.editor = EditorView(frame: frame)
+            super.init(frame: frame)    
+            setup()
+        }   
+        var textColor: UIColor {
+            get { editor.textColor }
+            set { editor.textColor = newValue }
+        }   
+        override var backgroundColor: UIColor? {
+            get { container.backgroundColor }
+            set {
+                container.backgroundColor = newValue
+                editor.backgroundColor = newValue
+            }
+        }   
+        private func setup() {
+            // setup view by creating required constraints
+        }
+    }
+    ```
 
-   class PanelView: UIView, BlockContent, EditorContentView {
-       let container = UIView()
-       let editor: EditorView
-       let iconView = UIImageView()
+2. As the `Panel` contains an `Editor` inside itself, the height will automatically change based on the content as it is typed in. To restrict the height to a given maximum value, an absolute size or autolayout constraint may be used.
 
-       var name: EditorContent.Name {
-           return .panel
-       }
-
-       override init(frame: CGRect) {
-           self.editor = EditorView(frame: frame)
-           super.init(frame: frame)
-
-           setup()
-       }
-
-       var textColor: UIColor {
-           get { editor.textColor }
-           set { editor.textColor = newValue }
-       }
-
-       override var backgroundColor: UIColor? {
-           get { container.backgroundColor }
-           set {
-               container.backgroundColor = newValue
-               editor.backgroundColor = newValue
-           }
-       }
-
-       private func setup() {
-           // setup view by creating required constraints
-       }
-   }
-   ```
-
-2. Since the `Panel` contains an `Editor` inside itself, the height will automatically change based on the content as it is typed in. To restrict the height to a given maximum value, an absolute size or autolayout constraint may be used.
 3. Using the `textColor` property, the default font color may be changed.
+
 4. For the ability to add `Panel` to the `Editor` using a button, we can make use of `EditorCommand`. A `Command` can be executed on a given `EditorView` or via `CommandExecutor` that automatically takes care of executing the command on the focussed `EditorView`. To insert an `EditorView` inside another, we need to first create an `Attachment` and then used a `Command` to add to the desired position:
 
-   ```Swift
-
-   class PanelAttachment: Attachment {
-       var view: PanelView
-
-       init(frame: CGRect) {
-           view = PanelView(frame: frame)
-           super.init(view, size: .fullWidth)
-           view.delegate = self
-           view.boundsObserver = self
-       }
-
-       var attributedText: NSAttributedString {
-           get { view.attributedText }
-           set { view.attributedText = newValue }
-       }   
-   }
-
-   class PanelCommand: EditorCommand {
-       func execute(on editor: EditorView) {
-           let selectedText = editor.selectedText
-
-           let attachment = PanelAttachment(frame: .zero)
-           attachment.selectBeforeDelete = true
-           editor.insertAttachment(in: editor.selectedRange, attachment: attachment)
-
-           let panel = attachment.view
-           panel.editor.maxHeight = 300
-           panel.editor.replaceCharacters(in: .zero, with: selectedText)
-           panel.editor.selectedRange = panel.editor.textEndRange
-       }
-   }
-   ```
+    ```swift
+    class PanelAttachment: Attachment {
+        var view: PanelView 
+        init(frame: CGRect) {
+            view = PanelView(frame: frame)
+            super.init(view, size: .fullWidth)
+            view.delegate = self
+            view.boundsObserver = self
+        }   
+        var attributedText: NSAttributedString {
+            get { view.attributedText }
+            set { view.attributedText = newValue }
+        }   
+    }   
+    class PanelCommand: EditorCommand {
+        func execute(on editor: EditorView) {
+            let selectedText = editor.selectedText  
+            let attachment = PanelAttachment(frame: .zero)
+            attachment.selectBeforeDelete = true
+            editor.insertAttachment(in: editor.selectedRange, attachment: attachment)   
+            let panel = attachment.view
+            panel.editor.maxHeight = 300
+            panel.editor.replaceCharacters(in: .zero, with: selectedText)
+            panel.editor.selectedRange = panel.editor.textEndRange
+        }
+    }
+    ```
 
 5. The code in `PanelCommand.execute` reads the `selectedText` from `editor` and sets it back in `panel.editor`. This makes it possible to take the selected text from main editor, wrap it in a panel and then insert the panel in the main editor replacing the selected text.
+
 6. To allow insertion of a `Panel` using a shortcut text input instead of clicking a button, you can use a `TextProcessor`:
-   ```Swift
-   class PanelTextProcessor: TextProcessing {
 
-    private let trigger = ">> "
-    var name: String {
-        return "PanelTextProcessor"
-    }
+    ```swift
+    class PanelTextProcessor: TextProcessing {  
+     private let trigger = ">> "
+     var name: String {
+         return "PanelTextProcessor"
+     }  
+     var priority: TextProcessingPriority {
+         return .medium
+     }  
+     func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int, processed: inout Bool) {
+         let line = editor.currentLine
+         guard line.text.string == trigger else {
+             return
+         }
+         let attachment = PanelAttachment(frame: .zero)
+         attachment.selectBeforeDelete = true        
+         editor.insertAttachment(in: line.range, attachment: attachment)
+     }
+    ```
 
-    var priority: TextProcessingPriority {
-        return .medium
-    }
-
-    func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int, processed: inout Bool) {
-        let line = editor.currentLine
-        guard line.text.string == trigger else {
-            return
-        }
-        let attachment = PanelAttachment(frame: .zero)
-        attachment.selectBeforeDelete = true        
-        editor.insertAttachment(in: line.range, attachment: attachment)
-    }
-   ```
 7. For a requirement like deleting the `Panel` when backspace is tapped at index 0 on an empty Panel, `EdtiorViewDelegate` may be utilized:
-    
+
     ```swift
     extension PanelAttachment: PanelViewDelegate {
-    
+
     func panel(_ panel: PanelView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool) {
         if key == .backspace, range == .zero, panel.editor.attributedText.string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             removeFromContainer()
@@ -160,32 +149,34 @@ Let's take an example of a `TextPanel` and see how that can be created in the `E
         }
     }    
     ```
+
     In the code above, `PanelViewDelegate` is acting as a passthrough for `EditorViewDelegate` for the `Editor` inside the `PanelView`.
 
-Checkout the complete code in the ExamplesApp.
+    Checkout the complete code in the ExamplesApp.
 
 ## Example usages
+
 1. Changing text as it is typed using custom `TextProcessor`:
 
-    <img src="/exampleImages/markup.gif" width="50%" alt="Markup text processor"/>
+    <img src="https://github.com/rajdeep/proton/raw/master/exampleImages/markup.gif" width="50%" alt="Markup text processor"/>
 2. Adding attributes as it is typed using custom `TextProcessor`:
 
-    <img src="/exampleImages/mentions.gif" width="50%" alt="Mentions text processor"/>
+    <img src="https://github.com/rajdeep/proton/raw/master/exampleImages/mentions.gif" width="50%" alt="Mentions text processor"/>
 3. Nested editors
 
-     <img src="/exampleImages/nested-panels.gif" width="50%" alt="Nested editors"/>
+    <img src="https://github.com/rajdeep/proton/raw/master/exampleImages/nested-panels.gif" width="50%" alt="Nested editors"/>
 4. Panel from existing text:
 
-   <img src="/exampleImages/panel-from-text.gif" width="50%" alt="Panel from text"/>
+    <img src="https://github.com/rajdeep/proton/raw/master/exampleImages/panel-from-text.gif" width="50%" alt="Panel from text"/>
 5. Relaying attributes to editor contained in an attachment:
 
-    <img src="/exampleImages/relay-attributes.gif" width="50%" alt="Relay attributes"/>
+    <img src="https://github.com/rajdeep/proton/raw/master/exampleImages/relay-attributes.gif" width="50%" alt="Relay attributes"/>
 6.  Highlighting using custom command in Renderer:
 
-    <img src="/exampleImages/renderer-highlight.gif" width="50%" alt="Highlight in Renderer"/>
+    <img src="https://github.com/rajdeep/proton/raw/master/exampleImages/renderer-highlight.gif" width="50%" alt="Highlight in Renderer"/>
 7. Find text and scroll in Renderer:
 
-    <img src="/exampleImages/renderer-find.gif" width="50%" alt="Find in Renderer"/>
+    <img src="https://github.com/rajdeep/proton/raw/master/exampleImages/renderer-find.gif" width="50%" alt="Find in Renderer"/>
 
 
 ## Questions and feature requests
@@ -194,4 +185,4 @@ Feel free to create issues in github should you have any questions or feature re
 
 ## License
 
-Proton is released under the Apache 2.0 license. See [LICENSE](LICENSE) for details.
+Proton is released under the Apache 2.0 license. Please see [LICENSE](LICENSE) for details.
