@@ -26,6 +26,8 @@ import Proton
 class ScrollCommand: RendererCommand {
     var text = "Fusce"
 
+    let name = CommandName("scrollCommand")
+
     func execute(on renderer: RendererView) {
         let location = renderer.selectedRange.location + renderer.selectedRange.length
         let range = NSRange(location: location, length: renderer.attributedText.length - location)

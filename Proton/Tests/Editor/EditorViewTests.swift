@@ -359,14 +359,14 @@ class EditorViewTests: XCTestCase {
 
     func testUnregistersCommands() {
         let editor = EditorView()
-        let command1 = MockEditorCommand { _ in }
-        let command2 = MockEditorCommand { _ in }
+        let command1 = MockEditorCommand(name: "command1") { _ in }
+        let command2 = MockEditorCommand(name: "command2")  { _ in }
         editor.registerCommand(command1)
         editor.registerCommand(command2)
 
         editor.unregisterCommand(command1)
         XCTAssertEqual(editor.registeredCommands?.count, 1)
-        XCTAssertTrue(editor.registeredCommands?.contains{ $0 === command2 } ?? false)
+        XCTAssertTrue(editor.registeredCommands?.contains{ $0.name == command2.name } ?? false)
     }
 
     func testReturnsNilForInvalidNextLine() throws {
@@ -426,5 +426,24 @@ class EditorViewTests: XCTestCase {
 
         editor.appendCharacters("test")
         waitForExpectations(timeout: 1.0)
+    }
+
+    func testRegistersUniqueCommands() throws {
+        let command1 = MockEditorCommand(name: "set1") { _ in  }
+        let command2 = MockEditorCommand(name: "set1") { _ in  }
+        let command3 = MockEditorCommand(name: "set2") { _ in  }
+        let command4 = MockEditorCommand(name: "set2") { _ in  }
+
+        let editor = EditorView()
+        editor.registerCommands([command1, command2])
+
+        editor.registerCommand(command3)
+        editor.registerCommand(command4)
+
+        let registeredCommands = try XCTUnwrap(editor.registeredCommands)
+
+        XCTAssertEqual(registeredCommands.count, 2)
+        XCTAssertTrue(registeredCommands[0] === command2)
+        XCTAssertTrue(registeredCommands[1] === command4)
     }
 }

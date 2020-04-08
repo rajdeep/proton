@@ -1,8 +1,8 @@
 //
-//  EncodeContentsCommand.swift
-//  ExampleApp
+//  CommandName.swift
+//  Proton
 //
-//  Created by Rajdeep Kwatra on 15/1/20.
+//  Created by Rajdeep Kwatra on 7/4/20.
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,17 +19,17 @@
 //
 
 import Foundation
-import UIKit
 
-import Proton
+/// Identifies an EditorCommand or a RendererCommand
+public struct CommandName : Hashable, Equatable, RawRepresentable {
+    /// Name of the command. Must be unique across different types of commands.
+    public let rawValue: String
 
-class EncodeContentsCommand: EditorCommand {
-    let name = CommandName("encodeContents")
-    func execute(on editor: EditorView) {
-        let value = editor.transformContents(using: JSONEncoder())
-        let data = try! JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
-        let jsonString = String(data: data, encoding: .utf8)!
+    public init(_ rawValue: String) {
+        self.rawValue = rawValue
+    }
 
-        print(NSString(string: jsonString))
+    public init(rawValue: String) {
+        self.rawValue = rawValue
     }
 }

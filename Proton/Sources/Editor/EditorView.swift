@@ -583,14 +583,29 @@ open class EditorView: UIView {
         if registeredCommands == nil {
             registeredCommands = []
         }
-        registeredCommands?.append(contentsOf: commands)
+
+        // cleanup the array being passed in to include only the last command for registration
+        // if more than one commands have same name
+        var commandsToRegister = [EditorCommand]()
+        for c in commands {
+            if commandsToRegister.contains (where: { $0.name == c.name }) {
+                commandsToRegister.removeAll { $0.name == c.name }
+            }
+            commandsToRegister.append(c)
+        }
+
+        registeredCommands?.removeAll { c in
+            commandsToRegister.contains { $0.name == c.name }
+        }
+
+        registeredCommands?.append(contentsOf: commandsToRegister)
     }
 
     /// Unregisters the given commands from the Editor. When all commands are unregistered, any command can be executed on the editor.
     /// - Parameter commands: Commands to unregister
     public func unregisterCommands(_ commands: [EditorCommand]) {
         registeredCommands?.removeAll { c in
-            commands.contains { $0 === c }
+            commands.contains { $0.name == c.name }
         }
         if registeredCommands?.count == 0 {
             registeredCommands = nil
@@ -748,7 +763,7 @@ public extension EditorView {
     /// - Parameter command: Command to validate
     /// - Returns:
     /// `true` if the command is registered with the Editor.
-    func isCommandRegistered(_ command: EditorCommand) -> Bool {
-        return registeredCommands?.contains { $0 === command } ?? true
+    func isCommandRegistered(_ name: CommandName) -> Bool {
+        return registeredCommands?.contains { $0.name == name } ?? true
     }
 }

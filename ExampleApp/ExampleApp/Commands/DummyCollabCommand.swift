@@ -24,6 +24,8 @@ import UIKit
 import Proton
 
 class DummyCollabCommand: EditorCommand {
+    let name = CommandName("collabCommand")
+    
     func execute(on editor: EditorView) {
         let caretRect = editor.caretRect(for: 0)
 

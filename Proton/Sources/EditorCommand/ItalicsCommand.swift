@@ -23,6 +23,6 @@ import UIKit
 
 public class ItalicsCommand: FontTraitToggleCommand {
     public init() {
-        super.init(trait: .traitItalic)
+        super.init(name: CommandName("_ItalicsCommand"), trait: .traitItalic)
     }
 }

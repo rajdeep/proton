@@ -25,7 +25,7 @@ import Proton
 
 class FindTextCommand: RendererCommand {
     var text = ""
-
+    let name = CommandName("_findTextCommand")
     init(text: String) {
         self.text = text
     }
