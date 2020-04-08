@@ -21,7 +21,14 @@
 import Foundation
 import CoreGraphics
 
+/// An object that is interested in listening to events raised within the Renderer.
 public protocol RendererViewDelegate: AnyObject {
+
+    /// Invoked on tap/mouse click on the Renderer.
+    /// - Parameters:
+    ///   - renderer: Renderer view receiving the event.
+    ///   - location: Location of tap.
+    ///   - characterRange: Range at the tapped location.
     func didTap(_ renderer: RendererView, didTapAtLocation location: CGPoint, characterRange: NSRange?)
     func didChangeSelection(_ renderer: RendererView, range: NSRange)
 }

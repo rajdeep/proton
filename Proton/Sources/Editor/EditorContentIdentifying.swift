@@ -29,6 +29,10 @@ public protocol EditorContentIdentifying {
 // Convenience type for a UIView that can be placed within the Editor as the content of an `Attachment`
 typealias AttachmentView = UIView & EditorContentIdentifying
 
+/// Block type content hosted within the editor. Any attachment containing `BlockContent` will have a new line character appended
+/// after the attachment on insertion.
 public protocol BlockContent: EditorContentIdentifying { }
 
+/// Inline content hosted within the editor. Any attachment containing `InlineContent` will have a whitespace character appended
+/// after the attachment on insertion.
 public protocol InlineContent: EditorContentIdentifying { }

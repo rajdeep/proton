@@ -20,7 +20,10 @@
 
 import Foundation
 
-/// Describes an object capable of gaining focus
+/// Describes an object capable of gaining focus.
+/// - Note:
+/// If a content view in an `Attachment` is made `Focusable`, `setFocus` will automatically be called when the
+/// attachment with a focusable view is added to the editor.
 public protocol Focusable {
     func setFocus()
 }

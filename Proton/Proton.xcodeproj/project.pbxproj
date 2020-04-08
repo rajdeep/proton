@@ -34,7 +34,6 @@
 		1B45CDD023C007AF001EB196 /* RichTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDCF23C007AF001EB196 /* RichTextView.swift */; };
 		1B45CDD223C00856001EB196 /* TextContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDD123C00856001EB196 /* TextContainer.swift */; };
 		1B45CDD523C00927001EB196 /* EditorContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDD423C00927001EB196 /* EditorContent.swift */; };
-		1B45CDD723C00A0A001EB196 /* EditorAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDD623C00A0A001EB196 /* EditorAttribute.swift */; };
 		1B45CDD923C0484A001EB196 /* RichTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDD823C0484A001EB196 /* RichTextViewTests.swift */; };
 		1B45CDDB23C04BE3001EB196 /* RichTextViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDDA23C04BE3001EB196 /* RichTextViewSnapshotTests.swift */; };
 		1B45CDDD23C05340001EB196 /* Attachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDDC23C05340001EB196 /* Attachment.swift */; };
@@ -158,7 +157,6 @@
 		1B45CDCF23C007AF001EB196 /* RichTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextView.swift; sourceTree = "<group>"; };
 		1B45CDD123C00856001EB196 /* TextContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContainer.swift; sourceTree = "<group>"; };
 		1B45CDD423C00927001EB196 /* EditorContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContent.swift; sourceTree = "<group>"; };
-		1B45CDD623C00A0A001EB196 /* EditorAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorAttribute.swift; sourceTree = "<group>"; };
 		1B45CDD823C0484A001EB196 /* RichTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewTests.swift; sourceTree = "<group>"; };
 		1B45CDDA23C04BE3001EB196 /* RichTextViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewSnapshotTests.swift; sourceTree = "<group>"; };
 		1B45CDDC23C05340001EB196 /* Attachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attachment.swift; sourceTree = "<group>"; };
@@ -453,7 +451,6 @@
 			isa = PBXGroup;
 			children = (
 				1B45CDD423C00927001EB196 /* EditorContent.swift */,
-				1B45CDD623C00A0A001EB196 /* EditorAttribute.swift */,
 				1B45CDDE23C053FB001EB196 /* EditorContentIdentifying.swift */,
 				1B004EC623C1C287007893AA /* EditorView.swift */,
 				1BFFEF0B23C30D5200D2BA35 /* EditorContentView.swift */,
@@ -864,7 +861,6 @@
 				1B45CDE623C05942001EB196 /* AttachmentSize.swift in Sources */,
 				1B975AFB23CD3E9B00EC410C /* RendererView.swift in Sources */,
 				1B164F1023D1BE9900A0869A /* AttributesDecoding.swift in Sources */,
-				1B45CDD723C00A0A001EB196 /* EditorAttribute.swift in Sources */,
 				1B45CDC723BF14DF001EB196 /* NSAttributedString+Range.swift in Sources */,
 				1B45CDD223C00856001EB196 /* TextContainer.swift in Sources */,
 				1BBAC3CF23CD5A1B0088A1C8 /* UITextRangeExtensions.swift in Sources */,

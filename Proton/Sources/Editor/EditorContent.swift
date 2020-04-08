@@ -55,14 +55,17 @@ public struct EditorContent {
 }
 
 public extension EditorContent {
+
+    /// Name for the content within the Editor. All the content (text  and attachments) must have
+    /// a name. By default, text contained in Editor is considered a paragraph.
     struct Name: Hashable, Equatable, RawRepresentable {
         public var rawValue: String
 
-        public static let paragraph = Name("paragraph")
-        public static let viewOnly = Name("viewOnly")
-        public static let newline = Name("newline")
-        public static let text = Name("text")
-        public static let unknown = Name("unknown")
+        public static let paragraph = Name("_paragraph")
+        public static let viewOnly = Name("_viewOnly")
+        public static let newline = Name("_newline")
+        public static let text = Name("_text")
+        public static let unknown = Name("_unknown")
 
         public init(rawValue: String) {
             self.rawValue = rawValue

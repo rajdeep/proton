@@ -21,6 +21,7 @@
 import Foundation
 import UIKit
 
+/// Editor command that toggles Bold attribute to the selected range in the Editor.
 public class BoldCommand: FontTraitToggleCommand {
     public init() {
         super.init(name: CommandName("_BoldCommand"), trait: .traitBold)

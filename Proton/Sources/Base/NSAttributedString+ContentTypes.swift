@@ -29,5 +29,8 @@ extension NSAttributedString.Key {
 }
 
 public extension NSAttributedString.Key {
+    /// Applying this attribute with value of `true` to a range of text makes that text non-focusable.
+    /// The content can still be deleted and selected but cursor cannot be moved to non-focusable range
+    /// using taps or mouse/keys (macOS Catalyst)
     static let noFocus = NSAttributedString.Key("_noFocus")
 }

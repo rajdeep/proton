@@ -22,6 +22,8 @@ import Foundation
 import UIKit
 
 public extension NSRange {
+
+    /// Range with 0 location and length
     static var zero: NSRange {
         return NSRange(location: 0, length: 0)
     }
@@ -38,6 +40,9 @@ public extension NSRange {
         return NSRange(location: location + 1, length: 0)
     }
 
+
+    /// Converts the range to `UITextRange` in given `UITextInput`. Returns nil if the range is invalid in the `UITextInput`.
+    /// - Parameter textInput: UITextInput to convert the range in.
     func toTextRange(textInput: UITextInput) -> UITextRange? {
         guard let rangeStart = textInput.position(from: textInput.beginningOfDocument, offset: location),
             let rangeEnd = textInput.position(from: rangeStart, offset: length) else {
@@ -46,6 +51,8 @@ public extension NSRange {
         return textInput.textRange(from: rangeStart, to: rangeEnd)
     }
 
+    /// Checks if the range is valid in given `UITextInput`
+    /// - Parameter textInput: UITextInput to validate the range in.
     func isValidIn(_ textInput: UITextInput) -> Bool {
         guard location > 0 else { return false }
         let end = location + length

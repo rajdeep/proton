@@ -22,18 +22,24 @@ import Foundation
 import UIKit
 
 public extension NSAttributedString {
+
+    /// Enumerates block contents in given range.
+    /// - Parameter range: Range to enumerate contents in. Nil to enumerate in entire string.
     func enumerateContents(in range: NSRange? = nil) -> AnySequence<EditorContent> {
         return self.enumerateContentType(.contentType, defaultIfMissing: .paragraph, in: range) { attributes in
             attributes[.isBlockAttachment] as? Bool != false
         }
     }
-
+    /// Enumerates only inline content in given range.
+    /// - Parameter range: Range to enumerate contents in. Nil to enumerate in entire string.
     func enumerateInlineContents(in range: NSRange? = nil) -> AnySequence<EditorContent> {
         return self.enumerateContentType(.contentType, defaultIfMissing: .text, in: range) { attributes in
             attributes[.isInlineAttachment] as? Bool != false
         }
     }
 
+    /// Returns in range of CharacterSet from this string.
+    /// - Parameter characterSet: CharacterSet to search.
     func rangeOfCharacter(from characterSet: CharacterSet) -> NSRange? {
         guard let range = string.rangeOfCharacter(from: characterSet) else {
             return nil

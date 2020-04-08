@@ -21,6 +21,9 @@
 import Foundation
 
 public extension String {
+
+    /// Converts given Range to NSRange in this string.
+    /// - Parameter range: Range to convert.
     func makeNSRange(from range: Range<String.Index>) -> NSRange {
         let range = range.lowerBound ..< min(range.upperBound, endIndex)
 
@@ -33,6 +36,8 @@ public extension String {
                        length: utf16.distance(from: from, to: to))
     }
 
+    /// Created String Range from given NSRange. Returns nil if range cannot be converted.
+    /// - Parameter range: Range to convert.
     func rangeFromNSRange(range: NSRange) -> Range<String.Index>? {
         guard
             let from16 = utf16.index(utf16.startIndex, offsetBy: range.location, limitedBy: utf16.endIndex),
@@ -43,6 +48,8 @@ public extension String {
         return from ..< to
     }
 
+    /// Returns ranges of given CharacterSet in this string.
+    /// - Parameter characterSet: CharacterSet to find.
     func rangesOf(characterSet: CharacterSet) -> [Range<String.Index>] {
         var ranges = [Range<String.Index>]()
         var newlineRange = rangeOfCharacter(from: characterSet, options: [], range: nil)

@@ -108,6 +108,14 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         return updatedString
     }
 
+    /// Attributed string representation of the `Attachment`. This can be used directly to replace a range of text in `EditorView`
+    /// ### Usage Example ###
+    /// ```
+    /// let attachment = Attachment(PanelView(), size: .fullWidth)
+    /// let attrString = NSMutableAttributedString(string: "This is a test string")
+    /// attrString.append(attachment.string)
+    /// editor.attributedText = attrString
+    /// ```
     public var string: NSAttributedString {
         guard let isBlockAttachment = isBlockAttachment else { return NSAttributedString(string: "<UNKNOWN CONTENT TYPE>") }
 //        let key = isBlockAttachment == true ? NSAttributedString.Key.contentType: NSAttributedString.Key.inlineContentType
@@ -131,8 +139,12 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         }
     }
 
+    /// `EditorView` containing this attachment
     public private(set) var containerEditorView: EditorView?
 
+    /// Name of the content for the `EditorView`
+    /// - SeeAlso:
+    /// `EditorView`
     public var containerContentName: EditorContent.Name? {
         return containerEditorView?.contentName
     }
@@ -141,6 +153,10 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         return containerEditorView?.richTextView
     }
 
+    /// Causes invalidation of layout of the attachment when the containing view bounds are changed
+    /// - Parameter bounds: Updated bounds
+    /// - SeeAlso:
+    /// `BoundsObserving`
     public func didChangeBounds(_ bounds: CGRect) {
         invalidateLayout()
     }
@@ -155,15 +171,21 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         }
     }
 
+    /// Bounds of the container
     public var containerBounds: CGRect? {
         return containerTextView?.bounds
     }
 
+    /// The bounds rectangle, which describes the attachment's location and size in its own coordinate system.
     public override var bounds: CGRect {
         didSet { view.bounds = bounds }
     }
 
     // This cannot be made convenience init as it prevents this being called from a class that inherits from `Attachment`
+    /// Initializes the attachment with the given content view
+    /// - Parameters:
+    ///   - contentView: Content view to be hosted within the attachment
+    ///   - size: Size rule for attachment
     public init<AttachmentView: UIView & BlockContent>(_ contentView: AttachmentView, size: AttachmentSize) {
         self.view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
         self.size = size
@@ -174,6 +196,10 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     }
 
     // This cannot be made convenience init as it prevents this being called from a class that inherits from `Attachment`
+    /// Initializes the attachment with the given content view
+    /// - Parameters:
+    ///   - contentView: Content view to be hosted within the attachment
+    ///   - size: Size rule for attachment
     public init<AttachmentView: UIView & InlineContent>(_ contentView: AttachmentView, size: AttachmentSize) {
         self.view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
         self.size = size
@@ -231,6 +257,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         view.removeFromSuperview()
     }
 
+    /// Removes this attachment from the `EditorView` it is contained in.
     public func removeFromContainer() {
         guard let containerTextView = containerTextView,
         let range = containerTextView.attributedText.rangeFor(attachment: self) else {
@@ -239,14 +266,23 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         containerTextView.textStorage.replaceCharacters(in: range, with: "")
     }
 
+    /// Range of this attachment in it's container
     public func rangeInContainer() -> NSRange? {
         return containerTextView?.attributedText.rangeFor(attachment: self)
     }
 
+    /// Invoked when attributes are added in the containing `EditorView` in the range of string in which this attachment is contained.
+    /// - Parameters:
+    ///   - range: Affected range
+    ///   - attributes: Attributes applied
     open func addedAttributesOnContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key: Any]) {
 
     }
 
+    // Invoked when attributes are removed in the containing `EditorView` in the range of string in which this attachment is contained.
+    /// - Parameters:
+    ///   - range: Affected range
+    ///   - attributes: Attributes removed
     open func removedAttributesFromContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key]) {
 
     }
@@ -256,6 +292,12 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         fatalError("init(coder:) has not been implemented")
     }
 
+    /// Returns the calculated bounds for the attachment based on size rule and content view provided during initialization.
+    /// - Parameters:
+    ///   - textContainer: Text container for attachment
+    ///   - lineFrag: Line fragment containing the attachment
+    ///   - position: Position in the text container.
+    ///   - charIndex: Character index
     public override func attachmentBounds(for textContainer: NSTextContainer?, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGRect {
         guard let textContainer = textContainer else { return .zero }
 

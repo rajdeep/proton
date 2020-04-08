@@ -22,6 +22,9 @@ import Foundation
 import UIKit
 
 public extension UITextRange {
+
+    /// Converts this range to `NSRange`. Returns nil if range cannot be converted.
+    /// - Parameter input: Input to use to get range.
     func toNSRange(in input: UITextInput) -> NSRange? {
         let location = input.offset(from: input.beginningOfDocument, to: start)
         let length = input.offset(from: start, to: end)

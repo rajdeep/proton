@@ -22,10 +22,13 @@ import Foundation
 import UIKit
 
 public extension NSAttributedString {
+
+    /// Full range of this attributed string.
     var fullRange: NSRange {
         return NSRange(location: 0, length: length)
     }
 
+    /// Collection of all the attachments with containing ranges in this attributed string.
     var attachmentRanges: [(attachment: Attachment, range: NSRange)] {
         var ranges = [(Attachment, NSRange)]()
 
@@ -38,14 +41,21 @@ public extension NSAttributedString {
         return ranges
     }
 
+    /// Range of given attachment in this attributed string.
+    /// - Parameter attachment: Attachment to find. Nil if given attachment does not exists in this attributed string.
     func rangeFor(attachment: Attachment) -> NSRange? {
         return attachmentRanges.reversed().first(where: { $0.attachment == attachment })?.range
     }
 
+    /// Ranges of `CharacterSet` in this attributed string.
+    /// - Parameter characterSet: CharacterSet to search.
     func rangesOf(characterSet: CharacterSet) -> [NSRange] {
         return string.rangesOf(characterSet: characterSet).map { string.makeNSRange(from: $0) }
     }
 
+    /// Attributed substring in reverse direction.
+    /// - Parameter range: Range for substring. Substring starts from location in range to number of characters towards beginning per length
+    /// specified in range.
     func reverseAttributedSubstring(from range: NSRange) -> NSAttributedString? {
         guard length > 0 && range.location + range.length < length else {
             return nil

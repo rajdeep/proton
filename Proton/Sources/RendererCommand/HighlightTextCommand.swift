@@ -22,10 +22,11 @@ import Foundation
 import UIKit
 
 public extension NSAttributedString.Key {
-    static let isHighlighted = NSAttributedString.Key("IsHighlighted")
+    static let isHighlighted = NSAttributedString.Key("_IsHighlighted")
 }
 
 @available(iOS 13.0, *)
+/// Renderer command that toggles highlights in the selected range in Renderer.
 public class HighlightTextCommand: RendererCommand {
 
     public let name = CommandName("_highlightCommand")
@@ -38,7 +39,11 @@ public class HighlightTextCommand: RendererCommand {
             return UIColor(red: 1.0, green: 0.98, blue: 0.80, alpha: 1.0)
         }
     })
+
     public init() { }
+
+    /// Executes the command on Renderer in the selected range
+    /// - Parameter renderer: Renderer to execute the command on.
     public func execute(on renderer: RendererView) {
         guard renderer.selectedText.length > 0 else { return }
         let highlightedColor = renderer.selectedText.attribute(.backgroundColor, at: 0, effectiveRange: nil) as? UIColor

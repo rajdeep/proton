@@ -21,6 +21,9 @@
 import Foundation
 import UIKit
 
+/// Describes a view contained in `Attachment` that contains a single `EditorView`.
+/// This is a helper protocol that can be applied to the view so that
+/// basic properties and functions are made available on the view as passthrough.
 public protocol EditorContentView: Focusable {
     var editor: EditorView { get }
 
