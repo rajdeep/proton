@@ -191,3 +191,7 @@ Checkout the complete code in the ExamplesApp.
 ## Questions and feature requests
 
 Feel free to create issues in github should you have any questions or feature requests. While Proton is created as a side project, I'll endeavour to respond to your issues at earliest possible.
+
+## License
+
+Proton is released under the Apache 2.0 license. See [LICENSE](LICENSE) for details.
