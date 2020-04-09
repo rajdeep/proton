@@ -21,4 +21,6 @@ jobs:
       run: xcodebuild build  -destination "name=iPhone 11 Pro" -scheme "ExampleApp"
     - name: Build and Test Proton
       run: xcodebuild build test -destination "name=iPhone 11 Pro" -scheme "Proton"
+    - name: Build and Test Proton Extensions
+      run: xcodebuild build test -destination "name=iPhone 11 Pro" -scheme "ProtonExtensions"
       

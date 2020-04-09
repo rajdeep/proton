@@ -22,6 +22,7 @@ import Foundation
 import UIKit
 
 import Proton
+import ProtonExtensions
 
 class RendererCommandButton: UIButton {
     var command: RendererCommand!

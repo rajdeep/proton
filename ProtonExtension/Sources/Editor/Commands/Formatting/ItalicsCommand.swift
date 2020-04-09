@@ -21,6 +21,8 @@
 import Foundation
 import UIKit
 
+import Proton
+
 /// Editor command that toggles Italics attribute to the selected range in the Editor.
 public class ItalicsCommand: FontTraitToggleCommand {
     public init() {

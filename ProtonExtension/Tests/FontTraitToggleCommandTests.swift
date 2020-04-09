@@ -22,6 +22,7 @@ import Foundation
 import XCTest
 
 import Proton
+import ProtonExtensions
 
 class FontTraitToggleCommandTests: XCTestCase {
     func testSetsTypingAttributesInEmptyEditor() throws {

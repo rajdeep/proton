@@ -21,6 +21,8 @@
 import Foundation
 import UIKit
 
+import Proton
+
 public extension NSAttributedString.Key {
     static let isHighlighted = NSAttributedString.Key("_IsHighlighted")
 }

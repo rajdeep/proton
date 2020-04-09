@@ -57,15 +57,23 @@ class EditorCommandSnapshotTests: FBSnapshotTestCase {
         let context = EditorViewContext(name: "test_context")
         let commandExecutor = EditorCommandExecutor(context: context)
 
+        let redColorCommand = MockEditorCommand { editor in
+            editor.addAttributes([.foregroundColor: UIColor.red], at: editor.selectedRange)
+        }
+
+        let blueColorCommand = MockEditorCommand { editor in
+            editor.addAttributes([.foregroundColor: UIColor.blue], at: editor.selectedRange)
+        }
+
         editor.selectedRange = NSRange(location: 5, length: 4)
         context.richTextViewContext.textViewDidBeginEditing(editor.richTextView)
-        commandExecutor.execute(BoldCommand())
+        commandExecutor.execute(redColorCommand)
 
         context.richTextViewContext.textViewDidEndEditing(editor.richTextView)
 
         panel.editor.richTextView.selectedRange = NSRange(location: 2, length: 11)
         context.richTextViewContext.textViewDidBeginEditing(panel.editor.richTextView)
-        commandExecutor.execute(ItalicsCommand())
+        commandExecutor.execute(blueColorCommand)
 
         viewController.render()
 

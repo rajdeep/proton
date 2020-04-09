@@ -36,14 +36,16 @@ class RendererCommandExecutorTests: XCTestCase {
         let color = renderer.selectedText.attribute(.backgroundColor, at: 0, effectiveRange: nil) as? UIColor
         XCTAssertNil(color)
 
-        let command = HighlightTextCommand()
+        let command = MockRendererCommand { renderer in
+            renderer.addAttributes([.foregroundColor: UIColor.red], at: renderer.selectedRange)
+        }
         commandExecutor.execute(command)
 
-        guard let highlightColor = renderer.selectedText.attribute(.backgroundColor, at: 0, effectiveRange: nil) as? UIColor else {
+        guard let newColor = renderer.selectedText.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor else {
             XCTFail("Failed to get background color information")
             return
         }
 
-        XCTAssertEqual(highlightColor, command.color)
+        XCTAssertEqual(newColor, UIColor.red)
     }
 }

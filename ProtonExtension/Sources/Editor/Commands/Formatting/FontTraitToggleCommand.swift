@@ -21,6 +21,8 @@
 import Foundation
 import UIKit
 
+import Proton
+
 /// Editor command that toggles given font trait to the selected range in the Editor.
 public class FontTraitToggleCommand: EditorCommand {
     public let trait: UIFontDescriptor.SymbolicTraits

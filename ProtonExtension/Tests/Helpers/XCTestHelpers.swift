@@ -1,8 +1,8 @@
 //
-//  BoldCommand.swift
+//  XCTestHelpers.swift
 //  Proton
 //
-//  Created by Rajdeep Kwatra on 8/1/20.
+//  Created by Rajdeep Kwatra on 3/1/20.
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,11 +19,10 @@
 //
 
 import Foundation
-import UIKit
+import XCTest
 
-/// Editor command that toggles Bold attribute to the selected range in the Editor.
-public class BoldCommand: FontTraitToggleCommand {
-    public init() {
-        super.init(name: CommandName("_BoldCommand"), trait: .traitBold)
+extension XCTestCase {
+    open func functionExpectation(_ id: String = "", caller: String = #function) -> XCTestExpectation {
+        return expectation(description: "\(caller) - {\(id)}")
     }
 }

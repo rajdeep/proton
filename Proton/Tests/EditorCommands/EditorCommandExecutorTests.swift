@@ -40,14 +40,18 @@ class EditorCommandExecutorTests: XCTestCase {
 
         XCTAssertFalse(font.isBold)
 
-        commandExecutor.execute(BoldCommand())
+        let colorCommand = MockEditorCommand { editor in
+            editor.addAttributes([.foregroundColor: UIColor.red], at: editor.selectedRange)
+        }
 
-        guard let updatedFont = editor.selectedText.attribute(.font, at: 0, effectiveRange: nil) as? UIFont else {
+        commandExecutor.execute(colorCommand)
+
+        guard let updatedColor = editor.selectedText.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor else {
             XCTFail("Failed to get font information")
             return
         }
 
-        XCTAssertTrue(updatedFont.isBold)
+        XCTAssertEqual(updatedColor, UIColor.red)
     }
 
     func testExecuteAllCommandsByDefault() {
