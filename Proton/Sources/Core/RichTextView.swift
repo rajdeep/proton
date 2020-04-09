@@ -116,6 +116,7 @@ class RichTextView: AutogrowingTextView {
         layoutManager.delegate = self
         textContainer.textView = self
         self.delegate = context
+        storage.textStorageDelegate = self
 
         self.backgroundColor = defaultBackgroundColor
         self.textColor = defaultTextColor
@@ -329,5 +330,11 @@ extension RichTextView: NSLayoutManagerDelegate {
     func layoutManager(_ layoutManager: NSLayoutManager, didCompleteLayoutFor textContainer: NSTextContainer?, atEnd layoutFinishedFlag: Bool) {
         updatePlaceholderVisibility()
         richTextViewDelegate?.richTextView(self, didFinishLayout: layoutFinishedFlag)
+    }
+}
+
+extension RichTextView: TextStorageDelegate {
+    func textStorage(_ textStorage: TextStorage, willDeleteText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) {
+        textProcessor?.textStorage(textStorage, willProcessDeletedText: deletedText, insertedText: insertedText)
     }
 }

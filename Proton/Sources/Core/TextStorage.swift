@@ -27,6 +27,10 @@ protocol DefaultTextFormattingProviding: AnyObject {
     var textColor: UIColor { get }
 }
 
+protocol TextStorageDelegate: AnyObject {
+    func textStorage(_ textStorage: TextStorage, willDeleteText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange)
+}
+
 class TextStorage: NSTextStorage {
 
     let storage = NSTextStorage()
@@ -42,6 +46,7 @@ class TextStorage: NSTextStorage {
     }
 
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding?
+    weak var textStorageDelegate: TextStorageDelegate?
 
     var textEndRange: NSRange {
         return NSRange(location: length, length: 0)
@@ -80,6 +85,8 @@ class TextStorage: NSTextStorage {
 
     override func replaceCharacters(in range: NSRange, with attrString: NSAttributedString) {
         // TODO: Add undo behaviour
+        let deletedText = storage.attributedSubstring(from: range)
+        textStorageDelegate?.textStorage(self, willDeleteText: deletedText, insertedText: attrString, range: range)
         super.replaceCharacters(in: range, with: attrString)
     }
 

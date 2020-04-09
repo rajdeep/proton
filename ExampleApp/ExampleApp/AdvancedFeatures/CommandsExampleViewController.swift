@@ -77,9 +77,6 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         editor.layer.borderColor = UIColor.systemBlue.cgColor
         editor.layer.borderWidth = 1.0
 
-        editor.paragraphStyle.firstLineHeadIndent = 10
-        editor.paragraphStyle.paragraphSpacing = 6
-
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
 

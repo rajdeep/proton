@@ -51,7 +51,7 @@ class TextProcessorTests: XCTestCase {
         let richTextEditorContext = try XCTUnwrap(editor.context as? RichTextEditorContext)
 
         let name = "TextProcessorTest"
-        let replacementString = "replacement string"
+        let replacementString = NSAttributedString(string: "replacement string")
         let mockProcessor = MockTextProcessor(name: name)
         mockProcessor.onWillProcess = { deleted, inserted in
             XCTAssertEqual(deleted.string, "some")
@@ -65,7 +65,6 @@ class TextProcessorTests: XCTestCase {
         editor.replaceCharacters(in: .zero, with: testString)
         editor.registerProcessor(mockProcessor)
         let replacementRange = NSRange(location: 5, length: 4)
-        _ = richTextEditorContext.textView(editor.richTextView, shouldChangeTextIn: replacementRange, replacementText: replacementString)
         editor.replaceCharacters(in: replacementRange, with: replacementString)
         waitForExpectations(timeout: 1.0)
     }

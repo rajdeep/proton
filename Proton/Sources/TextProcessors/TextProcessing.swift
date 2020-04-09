@@ -51,7 +51,7 @@ public protocol TextProcessing {
     /// - Parameters:
     ///   - deletedText: Text that has been deleted, if any.
     ///   - insertedText: Text that is inserted, if any.
-    func willProcess(deletedText: NSAttributedString, insertedText: String)
+    func willProcess(deletedText: NSAttributedString, insertedText: NSAttributedString)
 
     /// Allows to change attributes and text in the `EditorView` as the text is changed.
     /// - Parameters:
@@ -92,7 +92,7 @@ public protocol TextProcessing {
 }
 
 public extension TextProcessing {
-    func willProcess(deletedText: NSAttributedString, insertedText: String) { }
+    func willProcess(deletedText: NSAttributedString, insertedText: NSAttributedString) { }
     func handleKeyWithModifiers(editor: EditorView, key: EditorKey, modifierFlags: UIKeyModifierFlags, range editedRange: NSRange) { }
     func selectedRangeChanged(editor: EditorView, oldRange: NSRange?, newRange: NSRange?) { }
 }

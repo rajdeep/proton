@@ -144,9 +144,9 @@ class EditorViewTests: XCTestCase {
 
         let transformedContents = editor.transformContents(using: TextTransformer())
         XCTAssertEqual(transformedContents.count, 3)
-        XCTAssertEqual(transformedContents[0], "Name: `paragraph` Text: `Some text in Editor `")
-        XCTAssertEqual(transformedContents[1], "Name: `textField` ContentView: `AutogrowingTextField` Type: `inline`")
-        XCTAssertEqual(transformedContents[2], "Name: `paragraph` Text: ` `")
+        XCTAssertEqual(transformedContents[0], "Name: `\(EditorContent.Name.paragraph.rawValue)` Text: `Some text in Editor `")
+        XCTAssertEqual(transformedContents[1], "Name: `\(textField.name.rawValue)` ContentView: `AutogrowingTextField` Type: `inline`")
+        XCTAssertEqual(transformedContents[2], "Name: `\(EditorContent.Name.paragraph.rawValue)` Text: ` `")
     }
 
     func testTransformsContentsSplitsParagraphs() {
@@ -157,10 +157,10 @@ class EditorViewTests: XCTestCase {
 
         let transformedContents = editor.transformContents(using: TextTransformer())
         XCTAssertEqual(transformedContents.count, 4)
-        XCTAssertEqual(transformedContents[0], "Name: `newline` Text: `\n`")
-        XCTAssertEqual(transformedContents[1], "Name: `paragraph` Text: `Some text in Editor`")
-        XCTAssertEqual(transformedContents[2], "Name: `newline` Text: `\n`")
-        XCTAssertEqual(transformedContents[3], "Name: `paragraph` Text: `This is second line`")
+        XCTAssertEqual(transformedContents[0], "Name: `\(EditorContent.Name.newline.rawValue)` Text: `\n`")
+        XCTAssertEqual(transformedContents[1], "Name: `\(EditorContent.Name.paragraph.rawValue)` Text: `Some text in Editor`")
+        XCTAssertEqual(transformedContents[2], "Name: `\(EditorContent.Name.newline.rawValue)` Text: `\n`")
+        XCTAssertEqual(transformedContents[3], "Name: `\(EditorContent.Name.paragraph.rawValue)` Text: `This is second line`")
     }
 
     func testPropagatesAddAttributesToAttachments() {

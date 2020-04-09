@@ -73,7 +73,7 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         editor.delegate?.editor(editor, didExecuteProcessors: executedProcessors, at: editedRange)
     }
 
-    func textStorage(_ textStorage: NSTextStorage, willProcessDeletedText deletedText: NSAttributedString, insertedText: String) {
+    func textStorage(_ textStorage: NSTextStorage, willProcessDeletedText deletedText: NSAttributedString, insertedText: NSAttributedString) {
         for processor in sortedProcessors {
             processor.willProcess(deletedText: deletedText, insertedText: insertedText)
         }
