@@ -433,6 +433,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rajdeep.Proton.Extensions;
 				PRODUCT_NAME = ProtonExtensions;
 				SKIP_INSTALL = YES;
@@ -460,6 +461,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rajdeep.Proton.Extensions;
 				PRODUCT_NAME = ProtonExtensions;
 				SKIP_INSTALL = YES;
