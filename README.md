@@ -2,6 +2,8 @@
 
 > **Note:** While Proton is already a very powerful and flexible framework, it is still in early stages of development. The APIs and public interfaces are still undergoing revisions and may introduce breaking changes with every version bump before reaching stable version 1.0.0. 
 
+![Swift](https://github.com/rajdeep/proton/workflows/Swift/badge.svg)
+
 Proton is a simple library that allows you to extend the behavior of a textview to add rich content that you always wanted. It provides simple API that allows you to extend the textView to include complex content like nested textViews or for that matter, any other UIView. In the simplest terms - It's what you always wanted `UITextView` to be.
 
 Proton is designed keeping the following requirements in mind:

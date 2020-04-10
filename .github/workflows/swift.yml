@@ -1,4 +1,4 @@
-name: Swift
+name: Build
 
 on: 
   push:    
