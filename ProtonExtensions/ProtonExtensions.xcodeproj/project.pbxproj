@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B6BC526243FFB31002276B6 /* Proton.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1B8D81F6243F2E7C009AD38A /* Proton.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1B8D81E0243F2C3D009AD38A /* ProtonExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B8D81D6243F2C3D009AD38A /* ProtonExtensions.framework */; };
 		1B8D81F4243F2E2A009AD38A /* FontTraitToggleCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8D81F3243F2E2A009AD38A /* FontTraitToggleCommand.swift */; };
 		1B8D81F7243F2E7C009AD38A /* Proton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B8D81F6243F2E7C009AD38A /* Proton.framework */; };
@@ -26,6 +27,20 @@
 			remoteInfo = ProtonExtension;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1B6BC525243FFB0B002276B6 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1B6BC526243FFB31002276B6 /* Proton.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1B8D81D6243F2C3D009AD38A /* ProtonExtensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ProtonExtensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -179,6 +194,7 @@
 				1B8D81D2243F2C3D009AD38A /* Sources */,
 				1B8D81D3243F2C3D009AD38A /* Frameworks */,
 				1B8D81D4243F2C3D009AD38A /* Resources */,
+				1B6BC525243FFB0B002276B6 /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
