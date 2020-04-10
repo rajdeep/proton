@@ -28,6 +28,7 @@
 		1B2DA74D23F0C39B00F7EC52 /* DummyCollabCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2DA74C23F0C39B00F7EC52 /* DummyCollabCommand.swift */; };
 		1B45CD8B23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8A23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift */; };
 		1B45CD8D23BDD5FC001EB196 /* ExamplesBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8C23BDD5FC001EB196 /* ExamplesBaseViewController.swift */; };
+		1B6BC524243FFA5D002276B6 /* ProtonExtensions.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1B8D81FF243F3221009AD38A /* ProtonExtensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1B6D2FD123BD46ED0019CE40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6D2FD023BD46ED0019CE40 /* AppDelegate.swift */; };
 		1B6D2FD323BD46ED0019CE40 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6D2FD223BD46ED0019CE40 /* MasterViewController.swift */; };
 		1B6D2FD823BD46ED0019CE40 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B6D2FD623BD46ED0019CE40 /* Main.storyboard */; };
@@ -79,6 +80,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				1BB8904223C5A74700F087AE /* Proton.framework in Copy Frameworks */,
+				1B6BC524243FFA5D002276B6 /* ProtonExtensions.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
