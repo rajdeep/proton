@@ -25,6 +25,7 @@
 		1B183D9E23CEF6F200AE83E5 /* ParagraphStyle+Codables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9D23CEF6F200AE83E5 /* ParagraphStyle+Codables.swift */; };
 		1B183DA023CEF73C00AE83E5 /* TextEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9F23CEF73C00AE83E5 /* TextEncoder.swift */; };
 		1B183DA223CEF7D600AE83E5 /* PanelEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183DA123CEF7D600AE83E5 /* PanelEncoder.swift */; };
+		1B1C3725244B05F60028E1ED /* MenuExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1C3724244B05F60028E1ED /* MenuExampleViewController.swift */; };
 		1B2DA74D23F0C39B00F7EC52 /* DummyCollabCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2DA74C23F0C39B00F7EC52 /* DummyCollabCommand.swift */; };
 		1B45CD8B23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8A23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift */; };
 		1B45CD8D23BDD5FC001EB196 /* ExamplesBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8C23BDD5FC001EB196 /* ExamplesBaseViewController.swift */; };
@@ -106,6 +107,7 @@
 		1B183D9D23CEF6F200AE83E5 /* ParagraphStyle+Codables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ParagraphStyle+Codables.swift"; sourceTree = "<group>"; };
 		1B183D9F23CEF73C00AE83E5 /* TextEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEncoder.swift; sourceTree = "<group>"; };
 		1B183DA123CEF7D600AE83E5 /* PanelEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelEncoder.swift; sourceTree = "<group>"; };
+		1B1C3724244B05F60028E1ED /* MenuExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuExampleViewController.swift; sourceTree = "<group>"; };
 		1B2DA74C23F0C39B00F7EC52 /* DummyCollabCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyCollabCommand.swift; sourceTree = "<group>"; };
 		1B45CD8A23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingEditorViewExampleViewController.swift; sourceTree = "<group>"; };
 		1B45CD8C23BDD5FC001EB196 /* ExamplesBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplesBaseViewController.swift; sourceTree = "<group>"; };
@@ -226,6 +228,14 @@
 			path = Encoders;
 			sourceTree = "<group>";
 		};
+		1B1C3723244B05A90028E1ED /* Miscellaneous */ = {
+			isa = PBXGroup;
+			children = (
+				1B1C3724244B05F60028E1ED /* MenuExampleViewController.swift */,
+			);
+			path = Miscellaneous;
+			sourceTree = "<group>";
+		};
 		1B45CD8923BDD3B3001EB196 /* Basic */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,6 +280,7 @@
 				1BFFEF0823C30C7600D2BA35 /* Views */,
 				1BFFEEFC23C2D3AE00D2BA35 /* Attachments */,
 				1B45CD8923BDD3B3001EB196 /* Basic */,
+				1B1C3723244B05A90028E1ED /* Miscellaneous */,
 				1B6D2FD023BD46ED0019CE40 /* AppDelegate.swift */,
 				1B6D2FD223BD46ED0019CE40 /* MasterViewController.swift */,
 				1B45CD8C23BDD5FC001EB196 /* ExamplesBaseViewController.swift */,
@@ -516,6 +527,7 @@
 				1B164F2E23D282A500A0869A /* JSONDecoder.swift in Sources */,
 				1B6DE9DE23C598F1007F9859 /* CommandsExampleViewController.swift in Sources */,
 				1B6D2FD323BD46ED0019CE40 /* MasterViewController.swift in Sources */,
+				1B1C3725244B05F60028E1ED /* MenuExampleViewController.swift in Sources */,
 				1B183D9923CEF45000AE83E5 /* JSONEncoder.swift in Sources */,
 				1B183DA023CEF73C00AE83E5 /* TextEncoder.swift in Sources */,
 				1B6D2FD123BD46ED0019CE40 /* AppDelegate.swift in Sources */,
@@ -713,6 +725,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ExampleApp/ExampleApp.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
 				CODE_SIGN_STYLE = Automatic;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 5ET5H5LLAF;
@@ -736,6 +749,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ExampleApp/ExampleApp.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 5ET5H5LLAF;

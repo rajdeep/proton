@@ -15,6 +15,7 @@
 		1B183D8C23CEA90400AE83E5 /* EditorContentEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D8B23CEA90400AE83E5 /* EditorContentEncoding.swift */; };
 		1B183D8E23CEE9BA00AE83E5 /* AttributesEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D8D23CEE9BA00AE83E5 /* AttributesEncoding.swift */; };
 		1B183D9223CEEED900AE83E5 /* EditorContentEncoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9023CEEEC400AE83E5 /* EditorContentEncoderTests.swift */; };
+		1B1C3727244BE0D60028E1ED /* EditorViewContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1C3726244BE0D60028E1ED /* EditorViewContextTests.swift */; };
 		1B2BC0D823CF17E300407DEE /* EditorContentTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2BC0D723CF17E300407DEE /* EditorContentTransformerTests.swift */; };
 		1B2BC0DD23CF18C700407DEE /* EditorContentDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2BC0DB23CF18C100407DEE /* EditorContentDecoding.swift */; };
 		1B45CD9123BDD7E6001EB196 /* AutogrowingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8F23BDD7E6001EB196 /* AutogrowingTextView.swift */; };
@@ -132,6 +133,7 @@
 		1B183D8B23CEA90400AE83E5 /* EditorContentEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentEncoding.swift; sourceTree = "<group>"; };
 		1B183D8D23CEE9BA00AE83E5 /* AttributesEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesEncoding.swift; sourceTree = "<group>"; };
 		1B183D9023CEEEC400AE83E5 /* EditorContentEncoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentEncoderTests.swift; sourceTree = "<group>"; };
+		1B1C3726244BE0D60028E1ED /* EditorViewContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewContextTests.swift; sourceTree = "<group>"; };
 		1B2BC0D723CF17E300407DEE /* EditorContentTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentTransformerTests.swift; sourceTree = "<group>"; };
 		1B2BC0DB23CF18C100407DEE /* EditorContentDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentDecoding.swift; sourceTree = "<group>"; };
 		1B45CD8F23BDD7E6001EB196 /* AutogrowingTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutogrowingTextView.swift; sourceTree = "<group>"; };
@@ -689,6 +691,7 @@
 				1BFFEF1D23C3364900D2BA35 /* Mocks */,
 				1BFFEF1423C332A100D2BA35 /* EditorSnapshotTests.swift */,
 				1BD993B523C999AF00563ACB /* EditorViewTests.swift */,
+				1B1C3726244BE0D60028E1ED /* EditorViewContextTests.swift */,
 				1B8BE91C23C71E4B00353B17 /* EditorViewDelegateTests.swift */,
 				1BC25B532448768200FF88AC /* EditorContextDelegateTests.swift */,
 				1B2BC0D723CF17E300407DEE /* EditorContentTransformerTests.swift */,
@@ -914,6 +917,7 @@
 				1BFFEF2123C33EA900D2BA35 /* PanelView.swift in Sources */,
 				1B8BE91F23C71E8A00353B17 /* MockEditorViewDelegate.swift in Sources */,
 				1B45CDC223BF131E001EB196 /* TextStorageTests.swift in Sources */,
+				1B1C3727244BE0D60028E1ED /* EditorViewContextTests.swift in Sources */,
 				1BFFEF1723C333B400D2BA35 /* EditorTestViewController.swift in Sources */,
 				1B45CDCE23BF18A5001EB196 /* XCTestHelpers.swift in Sources */,
 				1BBAC3D223CD69250088A1C8 /* RendererSnapshotTests.swift in Sources */,

@@ -39,6 +39,12 @@ class RichTextView: AutogrowingTextView {
         }
     }
 
+    var supportedMenuSelectors: [Selector]?
+
+    var editorView: EditorView? {
+        return superview as? EditorView
+    }
+
     var defaultTypingAttributes: RichTextAttributes {
         return [
             .font: defaultTextFormattingProvider?.font ?? storage.defaultFont,
@@ -323,6 +329,10 @@ class RichTextView: AutogrowingTextView {
     func didTap(at location: CGPoint) {
         let characterRange = rangeOfCharacter(at: location)
         richTextViewDelegate?.richTextView(self, didTapAtLocation: location, characterRange: characterRange)
+    }
+
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return super.canPerformAction(action, withSender: sender) && supportedMenuSelectors?.contains(action) ?? false
     }
 }
 

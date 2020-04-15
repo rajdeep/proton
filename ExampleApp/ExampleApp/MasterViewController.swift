@@ -50,6 +50,9 @@ class MasterViewController: UITableViewController {
         Navigation(title: "Renderer", items: [
             NavigationItem(title: "Commands", viewController: RendererCommandsExampleViewController())
         ]),
+        Navigation(title: "Miscellaneous", items: [
+            NavigationItem(title: "Menu", viewController: MenuExampleViewController())
+        ]),
     ]
 
     override func viewWillAppear(_ animated: Bool) {
