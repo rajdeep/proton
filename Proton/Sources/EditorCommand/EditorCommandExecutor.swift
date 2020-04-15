@@ -37,8 +37,7 @@ public class EditorCommandExecutor {
     /// if the `EditorCommand.canExecute()` returns `true` for the active `EditorView`.
     /// - Parameter command: Command to execute
     public func execute(_ command: EditorCommand) {
-        guard let activeEditor = context.activeTextView,
-            let editor = activeEditor.superview as? EditorView,
+        guard let editor = context.activeTextView?.editorView,
             editor.isCommandRegistered(command.name),
             command.canExecute(on: editor) else { return }
         command.execute(on: editor)

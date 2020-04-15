@@ -43,7 +43,6 @@ import UIKit
 ///  myView.boundsObserver = attachment
 /// ```
 public protocol BoundsObserving: AnyObject {
-
     /// Lets the observer know that bounds of current object have changed
     /// - Parameter bounds: New bounds
     func didChangeBounds(_ bounds: CGRect)
@@ -111,6 +110,17 @@ open class EditorView: UIView {
     /// * To support any command, set value to nil. Default behaviour.
     /// * To prevent any command to be executed, set value to be an empty array.
     public var registeredCommands: [EditorCommand]?
+
+    /// List of actions to be supported by default. These actions are same as what is shown in
+    /// `UITextView` Edit menu and when added to the list, will show and execute based on default behaviour.
+    /// No code needs to be added for execution of these selectors.
+    /// - Note:
+    /// To change behavior of a predefined selector like copy or paste, custom menu item(s) must be added with
+    /// selector with the intended behavior. In this case, overridden predefined selector must not be added to this list.
+    public var supportedMenuSelectors: [Selector]? {
+        get { richTextView.supportedMenuSelectors }
+        set { richTextView.supportedMenuSelectors = newValue }
+    }
 
     // Making this a convenience init fails the test `testRendersWidthRangeAttachment` as the init of a class subclassed from
     // `EditorView` is returned as type `EditorView` and not the class itself, causing the test to fail.
@@ -630,6 +640,10 @@ open class EditorView: UIView {
     /// - Parameter commands: Command to unregister
     public func unregisterCommand(_ command: EditorCommand) {
         unregisterCommands([command])
+    }
+
+    public override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return richTextView.canPerformAction(action, withSender: sender)
     }
 }
 
