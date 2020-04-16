@@ -19,9 +19,9 @@ jobs:
       run: carthage bootstrap --platform iOS
     - name: Build and Test Proton
       run: xcodebuild build test -destination "name=iPhone 11 Pro" -scheme "Proton"
-    - name: Codecov
+    - name: Capture Code Coverage
       uses: codecov/codecov-action@v1.0.6
     - name: Build and Test Proton Extensions
       run: xcodebuild build test -destination "name=iPhone 11 Pro" -scheme "ProtonExtensions"
     - name: Build Example App
-      run: xcodebuild build -destination "name=iPhone 11 Pro" -scheme "ExampleApp
+      run: xcodebuild build -destination "name=iPhone 11 Pro" -scheme "ExampleApp"
