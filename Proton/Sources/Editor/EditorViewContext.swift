@@ -34,6 +34,14 @@ public class EditorViewContext {
     /// A context is uniquely identified by `id` and not the name.
     public let name: String
 
+    /// EditorView delegate at context level. This delegate will be notified about events in all the Editors that share this particular context.
+    /// This is in addition to the `delegate` available on `EditorView` which works at local level for the `EditorView`. If you are interested in
+    /// certain `EditorViewDelegate` events for all the editors sharing the same context e.g. an Editor with nested Editors sharing the same context.
+    /// - Note:
+    /// If the `EditorView` is instantiated without providing an explicit context, `delegate` can be set on `EditorViewContext.shared` which
+    /// is the default context for all the editors.
+    public weak var delegate: EditorViewDelegate?
+
     /// Default shared context. Use this in case there is only a single `EditorView` on the screen at the root level.
     public static let shared = EditorViewContext(name: "shared_editor_context")
 

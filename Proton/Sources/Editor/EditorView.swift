@@ -95,9 +95,16 @@ open class EditorView: UIView {
 
     let context: RichTextViewContext
 
+    var editorContextDelegate: EditorViewDelegate? {
+        get { editorViewContext?.delegate }
+    }
+
+    let editorViewContext: EditorViewContext?
+
+    var textProcessor: TextProcessor?
+
     /// An object interested in responding to editing and focus related events in the `EditorView`.
     public weak var delegate: EditorViewDelegate?
-    var textProcessor: TextProcessor?
 
     /// List of commands supported by the editor.
     /// - Note:
@@ -115,6 +122,7 @@ open class EditorView: UIView {
     ///    restriction around some commands to be restricted in execution on certain specific editors, the default value may be used.
     public init(frame: CGRect = .zero, context: EditorViewContext = .shared) {
         self.context = context.richTextViewContext
+        self.editorViewContext = context
         self.richTextView = RichTextView(frame: frame, context: self.context)
 
         super.init(frame: frame)
@@ -127,7 +135,7 @@ open class EditorView: UIView {
     init(frame: CGRect, richTextViewContext: RichTextViewContext) {
         self.context = richTextViewContext
         self.richTextView = RichTextView(frame: frame, context: context)
-
+        self.editorViewContext = nil
         super.init(frame: frame)
 
         self.textProcessor = TextProcessor(editor: self)
@@ -677,6 +685,7 @@ extension EditorView: DefaultTextFormattingProviding { }
 extension EditorView: RichTextViewDelegate {
     func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
         delegate?.editor(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
+        editorContextDelegate?.editor(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
     }
 
     func richTextView(_ richTextView: RichTextView, didReceiveKey key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange, handled: inout Bool) {
@@ -687,18 +696,22 @@ extension EditorView: RichTextViewDelegate {
             return
         }
         delegate?.editor(self, didReceiveKey: key, at: range, handled: &handled)
+        editorContextDelegate?.editor(self, didReceiveKey: key, at: range, handled: &handled)
     }
 
     func richTextView(_ richTextView: RichTextView, didReceiveFocusAt range: NSRange) {
         delegate?.editor(self, didReceiveFocusAt: range)
+        editorContextDelegate?.editor(self, didReceiveFocusAt: range)
     }
 
     func richTextView(_ richTextView: RichTextView, didLoseFocusFrom range: NSRange) {
         delegate?.editor(self, didLoseFocusFrom: range)
+        editorContextDelegate?.editor(self, didLoseFocusFrom: range)
     }
 
     func richTextView(_ richTextView: RichTextView, didChangeTextAtRange range: NSRange) {
         delegate?.editor(self, didChangeTextAt: range)
+        editorContextDelegate?.editor(self, didChangeTextAt: range)
     }
 
     func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool) {

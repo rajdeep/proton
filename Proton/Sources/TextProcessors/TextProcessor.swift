@@ -71,6 +71,7 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
             }
         }
         editor.delegate?.editor(editor, didExecuteProcessors: executedProcessors, at: editedRange)
+        editor.editorContextDelegate?.editor(editor, didExecuteProcessors: executedProcessors, at: editedRange)
     }
 
     func textStorage(_ textStorage: NSTextStorage, willProcessDeletedText deletedText: NSAttributedString, insertedText: NSAttributedString) {

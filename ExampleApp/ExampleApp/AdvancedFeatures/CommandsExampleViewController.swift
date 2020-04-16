@@ -89,6 +89,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         editor.delegate = self
+        EditorViewContext.shared.delegate = self
 
         self.buttons = makeCommandButtons()
         for button in buttons {
@@ -216,5 +217,9 @@ extension CommandsExampleViewController: EditorViewDelegate {
 
         buttons.first(where: { $0.titleLabel?.text == "Bold" })?.isSelected = font.isBold
         buttons.first(where: { $0.titleLabel?.text == "Italics" })?.isSelected = font.isItalics
+    }
+
+    func editor(_ editor: EditorView, didReceiveFocusAt range: NSRange) {
+        print("Focussed: `\(editor.contentName?.rawValue ?? "<root editor>")` at depth: \(editor.nestingLevel)")
     }
 }
