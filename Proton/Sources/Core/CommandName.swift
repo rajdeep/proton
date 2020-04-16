@@ -26,7 +26,7 @@ public struct CommandName : Hashable, Equatable, RawRepresentable {
     public let rawValue: String
 
     public init(_ rawValue: String) {
-        self.rawValue = rawValue
+        self.init(rawValue: rawValue)
     }
 
     public init(rawValue: String) {

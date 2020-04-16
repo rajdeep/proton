@@ -72,7 +72,7 @@ public extension EditorContent {
         }
 
         public init(_ rawValue: String) {
-            self.rawValue = rawValue
+            self.init(rawValue: rawValue)
         }
     }
 }
