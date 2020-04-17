@@ -7,4 +7,4 @@ flags:
       - ProtonExtensions/Sources
 
 ignore:
-  - "*/Tests/.*"
+  - "**/Tests/*.swift"
