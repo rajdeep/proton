@@ -1,0 +1,10 @@
+flags:
+  Proton:
+    paths:
+      - Proton/Sources
+  ProtonExtensions:
+    paths:
+      - ProtonExtensions/Sources
+
+ignore:
+  - "*/Tests/.*"
