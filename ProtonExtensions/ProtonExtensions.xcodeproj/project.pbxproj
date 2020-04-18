@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B1C3722244ACA050028E1ED /* HighlightTextCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1C3721244ACA050028E1ED /* HighlightTextCommandTests.swift */; };
 		1B6BC526243FFB31002276B6 /* Proton.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1B8D81F6243F2E7C009AD38A /* Proton.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1B8D81E0243F2C3D009AD38A /* ProtonExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B8D81D6243F2C3D009AD38A /* ProtonExtensions.framework */; };
 		1B8D81F4243F2E2A009AD38A /* FontTraitToggleCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8D81F3243F2E2A009AD38A /* FontTraitToggleCommand.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B1C3721244ACA050028E1ED /* HighlightTextCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightTextCommandTests.swift; sourceTree = "<group>"; };
 		1B8D81D6243F2C3D009AD38A /* ProtonExtensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ProtonExtensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B8D81DA243F2C3D009AD38A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1B8D81DF243F2C3D009AD38A /* ProtonExtensionsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonExtensionsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,6 +78,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B1C371D244AC9BB0028E1ED /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				1B1C3720244AC9E30028E1ED /* Commands */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		1B1C371E244AC9D90028E1ED /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				1B1C371F244AC9DE0028E1ED /* Commands */,
+			);
+			path = Editor;
+			sourceTree = "<group>";
+		};
+		1B1C371F244AC9DE0028E1ED /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				1B8D81FD243F2FAD009AD38A /* FontTraitToggleCommandTests.swift */,
+			);
+			path = Commands;
+			sourceTree = "<group>";
+		};
+		1B1C3720244AC9E30028E1ED /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				1B1C3721244ACA050028E1ED /* HighlightTextCommandTests.swift */,
+			);
+			path = Commands;
+			sourceTree = "<group>";
+		};
 		1B8D81CC243F2C3D009AD38A = {
 			isa = PBXGroup;
 			children = (
@@ -108,8 +142,9 @@
 		1B8D81E3243F2C3D009AD38A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				1B1C371E244AC9D90028E1ED /* Editor */,
+				1B1C371D244AC9BB0028E1ED /* Renderer */,
 				1B8D8209243F34A1009AD38A /* Helpers */,
-				1B8D81FD243F2FAD009AD38A /* FontTraitToggleCommandTests.swift */,
 				1B8D81E6243F2C3D009AD38A /* Info.plist */,
 			);
 			path = Tests;
@@ -296,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B8D820B243F34B5009AD38A /* XCTestHelpers.swift in Sources */,
+				1B1C3722244ACA050028E1ED /* HighlightTextCommandTests.swift in Sources */,
 				1B8D81FE243F2FAD009AD38A /* FontTraitToggleCommandTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

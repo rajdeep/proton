@@ -33,8 +33,8 @@ public class HighlightTextCommand: RendererCommand {
 
     public let name = CommandName("_highlightCommand")
 
-    public let color = UIColor(dynamicProvider: { traightCollection -> UIColor in
-        switch traightCollection.userInterfaceStyle {
+    let defaultColor = UIColor(dynamicProvider: { traitCollection -> UIColor in
+        switch traitCollection.userInterfaceStyle {
         case .dark:
             return UIColor.systemYellow.withAlphaComponent(0.2)
         default:
@@ -42,12 +42,16 @@ public class HighlightTextCommand: RendererCommand {
         }
     })
 
+    public var color: UIColor?
+
     public init() { }
 
     /// Executes the command on Renderer in the selected range
     /// - Parameter renderer: Renderer to execute the command on.
     public func execute(on renderer: RendererView) {
         guard renderer.selectedText.length > 0 else { return }
+
+        let color = self.color ?? defaultColor
         let highlightedColor = renderer.selectedText.attribute(.backgroundColor, at: 0, effectiveRange: nil) as? UIColor
 
         guard highlightedColor != color else {
