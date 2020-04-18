@@ -180,6 +180,10 @@ Let's take an example of a `Panel` and see how that can be created in the `Edito
 
     <img src="https://github.com/rajdeep/proton/raw/master/exampleImages/renderer-find.gif" width="50%" alt="Find in Renderer"/>
 
+## Learn more
+
+* Proton API reference is available [here](https://rajdeep.github.io/proton/).
+* For sample code, including the ones for examples shown above, please refer to the [Example app](/ExampleApp/).
 
 ## Questions and feature requests
 
