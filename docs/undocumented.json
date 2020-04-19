@@ -296,43 +296,22 @@
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 150,
+      "line": 168,
       "symbol": "EditorView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 169,
+      "line": 187,
       "symbol": "EditorView.selectedTextRange",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/EditorCommand/BoldCommand.swift",
-      "line": 26,
-      "symbol": "BoldCommand.init()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/EditorCommand/FontTraitToggleCommand.swift",
-      "line": 26,
-      "symbol": "FontTraitToggleCommand.trait",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/EditorCommand/FontTraitToggleCommand.swift",
-      "line": 30,
-      "symbol": "FontTraitToggleCommand.init(name:trait:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/EditorCommand/ItalicsCommand.swift",
-      "line": 26,
-      "symbol": "ItalicsCommand.init()",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
+      "line": 645,
+      "symbol": "EditorView.canPerformAction(_:withSender:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -480,34 +459,6 @@
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Renderer/RendererViewDelegate.swift",
       "line": 33,
       "symbol": "RendererViewDelegate.didChangeSelection(_:range:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/RendererCommand/HighlightTextCommand.swift",
-      "line": 25,
-      "symbol": "NSAttributedString.Key.isHighlighted",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/RendererCommand/HighlightTextCommand.swift",
-      "line": 30,
-      "symbol": "HighlightTextCommand",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/RendererCommand/HighlightTextCommand.swift",
-      "line": 34,
-      "symbol": "HighlightTextCommand.color",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/RendererCommand/HighlightTextCommand.swift",
-      "line": 43,
-      "symbol": "HighlightTextCommand.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },

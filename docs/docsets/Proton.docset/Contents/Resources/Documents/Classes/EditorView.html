@@ -14,7 +14,7 @@
     <a title="EditorView Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Proton Docs</a> (75% documented)</p>
+        <p><a href="../index.html">Proton Docs</a> (77% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -35,9 +35,6 @@
                 <a href="../Classes/Attachment.html">Attachment</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/BoldCommand.html">BoldCommand</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Classes/EditorCommandExecutor.html">EditorCommandExecutor</a>
               </li>
               <li class="nav-group-task">
@@ -45,15 +42,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/EditorViewContext.html">EditorViewContext</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/FontTraitToggleCommand.html">FontTraitToggleCommand</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/HighlightTextCommand.html">HighlightTextCommand</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/ItalicsCommand.html">ItalicsCommand</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RendererCommandExecutor.html">RendererCommandExecutor</a>
@@ -301,9 +289,44 @@ and can be used to host simple formatted text or complex layout containing multi
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton10EditorViewC22supportedMenuSelectorsSay10ObjectiveC8SelectorVGSgvp"></a>
+                    <a name="//apple_ref/swift/Property/supportedMenuSelectors" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC22supportedMenuSelectorsSay10ObjectiveC8SelectorVGSgvp">supportedMenuSelectors</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>List of actions to be supported by default. These actions are same as what is shown in
+<code>UITextView</code> Edit menu and when added to the list, will show and execute based on default behaviour.
+No code needs to be added for execution of these selectors.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    To change behavior of a predefined selector like copy or paste, custom menu item(s) must be added with
+selector with the intended behavior. In this case, overridden predefined selector must not be added to this list.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">supportedMenuSelectors</span><span class="p">:</span> <span class="p">[</span><span class="kt">Selector</span><span class="p">]?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton10EditorViewC5frame7contextACSo6CGRectV_AA0bC7ContextCtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(frame:context:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC5frame7contextACSo6CGRectV_AA0bC7ContextCtcfc">init(frame:context:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC5frame7contextACSo6CGRectV_AA0bC7ContextCtcfc">init(frame:<wbr>context:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -417,7 +440,7 @@ restriction around some commands to be restricted in execution on certain specif
                     <code>
                     <a name="/c:@M@Proton@objc(cs)EditorView(im)initWithCoder:"></a>
                     <a name="//apple_ref/swift/Method/init(coder:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@Proton@objc(cs)EditorView(im)initWithCoder:">init(coder:)</a>
+                    <a class="token" href="#/c:@M@Proton@objc(cs)EditorView(im)initWithCoder:">init(coder:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1312,7 +1335,7 @@ The value is nil if the Editor is not contained within an <code><a href="../Clas
                     <code>
                     <a name="/c:@M@Proton@objc(cs)EditorView(im)sizeThatFits:"></a>
                     <a name="//apple_ref/swift/Method/sizeThatFits(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@Proton@objc(cs)EditorView(im)sizeThatFits:">sizeThatFits(_:)</a>
+                    <a class="token" href="#/c:@M@Proton@objc(cs)EditorView(im)sizeThatFits:">sizeThatFits(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1394,7 +1417,7 @@ The value is nil if the Editor is not contained within an <code><a href="../Clas
                     <code>
                     <a name="/s:6Proton10EditorViewC9lineAfteryAA0B4LineVSgAFF"></a>
                     <a name="//apple_ref/swift/Method/lineAfter(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC9lineAfteryAA0B4LineVSgAFF">lineAfter(_:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC9lineAfteryAA0B4LineVSgAFF">lineAfter(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1444,7 +1467,7 @@ The value is nil if the Editor is not contained within an <code><a href="../Clas
                     <code>
                     <a name="/s:6Proton10EditorViewC10lineBeforeyAA0B4LineVSgAFF"></a>
                     <a name="//apple_ref/swift/Method/lineBefore(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC10lineBeforeyAA0B4LineVSgAFF">lineBefore(_:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC10lineBeforeyAA0B4LineVSgAFF">lineBefore(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1494,7 +1517,7 @@ The value is nil if the Editor is not contained within an <code><a href="../Clas
                     <code>
                     <a name="/s:6Proton10EditorViewC5rects3forSaySo6CGRectVGSo8_NSRangeV_tF"></a>
                     <a name="//apple_ref/swift/Method/rects(for:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC5rects3forSaySo6CGRectVGSo8_NSRangeV_tF">rects(for:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC5rects3forSaySo6CGRectVGSo8_NSRangeV_tF">rects(for:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1545,7 +1568,7 @@ multiple rectangles may be returned.</p>
                     <code>
                     <a name="/s:6Proton10EditorViewC9caretRect3forSo6CGRectVSi_tF"></a>
                     <a name="//apple_ref/swift/Method/caretRect(for:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC9caretRect3forSo6CGRectVSi_tF">caretRect(for:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC9caretRect3forSo6CGRectVSi_tF">caretRect(for:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1601,7 +1624,7 @@ only returns the rectangle denoting the caret positioning. The actual caret is n
                     <code>
                     <a name="/s:6Proton10EditorViewC4word2atSo18NSAttributedStringCSgSi_tF"></a>
                     <a name="//apple_ref/swift/Method/word(at:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC4word2atSo18NSAttributedStringCSgSi_tF">word(at:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC4word2atSo18NSAttributedStringCSgSi_tF">word(at:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1651,7 +1674,7 @@ only returns the rectangle denoting the caret positioning. The actual caret is n
                     <code>
                     <a name="/s:6Proton10EditorViewC16insertAttachment2in10attachmentySo8_NSRangeV_AA0E0CtF"></a>
                     <a name="//apple_ref/swift/Method/insertAttachment(in:attachment:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC16insertAttachment2in10attachmentySo8_NSRangeV_AA0E0CtF">insertAttachment(in:attachment:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC16insertAttachment2in10attachmentySo8_NSRangeV_AA0E0CtF">insertAttachment(in:<wbr>attachment:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1764,7 +1787,7 @@ will be replaced by the <code><a href="../Classes/Attachment.html">Attachment</a
                     <code>
                     <a name="/s:6Proton10EditorViewC20scrollRangeToVisibleyySo8_NSRangeVF"></a>
                     <a name="//apple_ref/swift/Method/scrollRangeToVisible(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC20scrollRangeToVisibleyySo8_NSRangeVF">scrollRangeToVisible(_:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC20scrollRangeToVisibleyySo8_NSRangeVF">scrollRangeToVisible(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1810,7 +1833,7 @@ will be replaced by the <code><a href="../Classes/Attachment.html">Attachment</a
                     <code>
                     <a name="/s:6Proton10EditorViewC19scrollRectToVisible_8animatedySo6CGRectV_SbtF"></a>
                     <a name="//apple_ref/swift/Method/scrollRectToVisible(_:animated:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC19scrollRectToVisible_8animatedySo6CGRectV_SbtF">scrollRectToVisible(_:animated:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC19scrollRectToVisible_8animatedySo6CGRectV_SbtF">scrollRectToVisible(_:<wbr>animated:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1856,7 +1879,7 @@ will be replaced by the <code><a href="../Classes/Attachment.html">Attachment</a
                     <code>
                     <a name="/s:6Proton10EditorViewC8contents2inSayAA0B7ContentVGSo8_NSRangeVSg_tF"></a>
                     <a name="//apple_ref/swift/Method/contents(in:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC8contents2inSayAA0B7ContentVGSo8_NSRangeVSg_tF">contents(in:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC8contents2inSayAA0B7ContentVGSo8_NSRangeVSg_tF">contents(in:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1903,7 +1926,7 @@ enumerated.</p>
                     <code>
                     <a name="/s:6Proton10EditorViewC17transformContents2in5usingSay11EncodedTypeQzGSo8_NSRangeVSg_xtAA0B15ContentEncodingRzlF"></a>
                     <a name="//apple_ref/swift/Method/transformContents(in:using:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC17transformContents2in5usingSay11EncodedTypeQzGSo8_NSRangeVSg_xtAA0B15ContentEncodingRzlF">transformContents(in:using:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC17transformContents2in5usingSay11EncodedTypeQzGSo8_NSRangeVSg_xtAA0B15ContentEncodingRzlF">transformContents(in:<wbr>using:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1966,7 +1989,7 @@ is  a type of transformation that can also be decoded.</p>
                     <code>
                     <a name="/s:6Proton10EditorViewC17replaceCharacters2in4withySo8_NSRangeV_So18NSAttributedStringCtF"></a>
                     <a name="//apple_ref/swift/Method/replaceCharacters(in:with:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC17replaceCharacters2in4withySo8_NSRangeV_So18NSAttributedStringCtF">replaceCharacters(in:with:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC17replaceCharacters2in4withySo8_NSRangeV_So18NSAttributedStringCtF">replaceCharacters(in:<wbr>with:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2024,7 +2047,7 @@ is  a type of transformation that can also be decoded.</p>
                     <code>
                     <a name="/s:6Proton10EditorViewC17replaceCharacters2in4withySo8_NSRangeV_SStF"></a>
                     <a name="//apple_ref/swift/Method/replaceCharacters(in:with:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC17replaceCharacters2in4withySo8_NSRangeV_SStF">replaceCharacters(in:with:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC17replaceCharacters2in4withySo8_NSRangeV_SStF">replaceCharacters(in:<wbr>with:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2089,7 +2112,7 @@ type <code>NSAttributedString</code> that may have additional attributes defined
                     <code>
                     <a name="/s:6Proton10EditorViewC16appendCharactersyySo18NSAttributedStringCF"></a>
                     <a name="//apple_ref/swift/Method/appendCharacters(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC16appendCharactersyySo18NSAttributedStringCF">appendCharacters(_:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC16appendCharactersyySo18NSAttributedStringCF">appendCharacters(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2135,7 +2158,7 @@ type <code>NSAttributedString</code> that may have additional attributes defined
                     <code>
                     <a name="/s:6Proton10EditorViewC16appendCharactersyySSF"></a>
                     <a name="//apple_ref/swift/Method/appendCharacters(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC16appendCharactersyySSF">appendCharacters(_:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC16appendCharactersyySSF">appendCharacters(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2181,7 +2204,7 @@ type <code>NSAttributedString</code> that may have additional attributes defined
                     <code>
                     <a name="/s:6Proton10EditorViewC17registerProcessoryyAA14TextProcessing_pF"></a>
                     <a name="//apple_ref/swift/Method/registerProcessor(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC17registerProcessoryyAA14TextProcessing_pF">registerProcessor(_:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC17registerProcessoryyAA14TextProcessing_pF">registerProcessor(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2227,7 +2250,7 @@ type <code>NSAttributedString</code> that may have additional attributes defined
                     <code>
                     <a name="/s:6Proton10EditorViewC19unregisterProcessoryyAA14TextProcessing_pF"></a>
                     <a name="//apple_ref/swift/Method/unregisterProcessor(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC19unregisterProcessoryyAA14TextProcessing_pF">unregisterProcessor(_:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC19unregisterProcessoryyAA14TextProcessing_pF">unregisterProcessor(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2273,7 +2296,7 @@ type <code>NSAttributedString</code> that may have additional attributes defined
                     <code>
                     <a name="/s:6Proton10EditorViewC18registerProcessorsyySayAA14TextProcessing_pGF"></a>
                     <a name="//apple_ref/swift/Method/registerProcessors(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC18registerProcessorsyySayAA14TextProcessing_pGF">registerProcessors(_:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC18registerProcessorsyySayAA14TextProcessing_pGF">registerProcessors(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2319,7 +2342,7 @@ type <code>NSAttributedString</code> that may have additional attributes defined
                     <code>
                     <a name="/s:6Proton10EditorViewC20unregisterProcessorsyySayAA14TextProcessing_pGF"></a>
                     <a name="//apple_ref/swift/Method/unregisterProcessors(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC20unregisterProcessorsyySayAA14TextProcessing_pGF">unregisterProcessors(_:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC20unregisterProcessorsyySayAA14TextProcessing_pGF">unregisterProcessors(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2365,7 +2388,7 @@ type <code>NSAttributedString</code> that may have additional attributes defined
                     <code>
                     <a name="/s:6Proton10EditorViewC16registerCommandsyySayAA0B7Command_pGF"></a>
                     <a name="//apple_ref/swift/Method/registerCommands(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC16registerCommandsyySayAA0B7Command_pGF">registerCommands(_:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC16registerCommandsyySayAA0B7Command_pGF">registerCommands(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2411,7 +2434,7 @@ type <code>NSAttributedString</code> that may have additional attributes defined
                     <code>
                     <a name="/s:6Proton10EditorViewC18unregisterCommandsyySayAA0B7Command_pGF"></a>
                     <a name="//apple_ref/swift/Method/unregisterCommands(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC18unregisterCommandsyySayAA0B7Command_pGF">unregisterCommands(_:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC18unregisterCommandsyySayAA0B7Command_pGF">unregisterCommands(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2457,7 +2480,7 @@ type <code>NSAttributedString</code> that may have additional attributes defined
                     <code>
                     <a name="/s:6Proton10EditorViewC15registerCommandyyAA0bE0_pF"></a>
                     <a name="//apple_ref/swift/Method/registerCommand(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC15registerCommandyyAA0bE0_pF">registerCommand(_:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC15registerCommandyyAA0bE0_pF">registerCommand(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2503,7 +2526,7 @@ type <code>NSAttributedString</code> that may have additional attributes defined
                     <code>
                     <a name="/s:6Proton10EditorViewC17unregisterCommandyyAA0bE0_pF"></a>
                     <a name="//apple_ref/swift/Method/unregisterCommand(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC17unregisterCommandyyAA0bE0_pF">unregisterCommand(_:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC17unregisterCommandyyAA0bE0_pF">unregisterCommand(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2547,9 +2570,36 @@ type <code>NSAttributedString</code> that may have additional attributes defined
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:@M@Proton@objc(cs)EditorView(im)canPerformAction:withSender:"></a>
+                    <a name="//apple_ref/swift/Method/canPerformAction(_:withSender:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Proton@objc(cs)EditorView(im)canPerformAction:withSender:">canPerformAction(_:<wbr>withSender:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">canPerformAction</span><span class="p">(</span><span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">Selector</span><span class="p">,</span> <span class="n">withSender</span> <span class="nv">sender</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton10EditorViewC13addAttributes_2atySDySo21NSAttributedStringKeyaypG_So8_NSRangeVtF"></a>
                     <a name="//apple_ref/swift/Method/addAttributes(_:at:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC13addAttributes_2atySDySo21NSAttributedStringKeyaypG_So8_NSRangeVtF">addAttributes(_:at:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC13addAttributes_2atySDySo21NSAttributedStringKeyaypG_So8_NSRangeVtF">addAttributes(_:<wbr>at:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2608,7 +2658,7 @@ existing value will be overwritten by the new value provided in the attributes.<
                     <code>
                     <a name="/s:6Proton10EditorViewC16removeAttributes_2atySaySo21NSAttributedStringKeyaG_So8_NSRangeVtF"></a>
                     <a name="//apple_ref/swift/Method/removeAttributes(_:at:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC16removeAttributes_2atySaySo21NSAttributedStringKeyaG_So8_NSRangeVtF">removeAttributes(_:at:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC16removeAttributes_2atySaySo21NSAttributedStringKeyaG_So8_NSRangeVtF">removeAttributes(_:<wbr>at:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2666,7 +2716,7 @@ existing value will be overwritten by the new value provided in the attributes.<
                     <code>
                     <a name="/s:6Proton10EditorViewC12addAttribute_5value2atySo21NSAttributedStringKeya_ypSo8_NSRangeVtF"></a>
                     <a name="//apple_ref/swift/Method/addAttribute(_:value:at:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC12addAttribute_5value2atySo21NSAttributedStringKeya_ypSo8_NSRangeVtF">addAttribute(_:value:at:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC12addAttribute_5value2atySo21NSAttributedStringKeya_ypSo8_NSRangeVtF">addAttribute(_:<wbr>value:<wbr>at:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2736,7 +2786,7 @@ existing value will be overwritten by the new value provided in the attributes.<
                     <code>
                     <a name="/s:6Proton10EditorViewC15removeAttribute_2atySo21NSAttributedStringKeya_So8_NSRangeVtF"></a>
                     <a name="//apple_ref/swift/Method/removeAttribute(_:at:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC15removeAttribute_2atySo21NSAttributedStringKeya_So8_NSRangeVtF">removeAttribute(_:at:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC15removeAttribute_2atySo21NSAttributedStringKeya_So8_NSRangeVtF">removeAttribute(_:<wbr>at:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2825,7 +2875,7 @@ existing value will be overwritten by the new value provided in the attributes.<
                     <code>
                     <a name="/s:6Proton10EditorViewC19isCommandRegisteredySbAA0E4NameVF"></a>
                     <a name="//apple_ref/swift/Method/isCommandRegistered(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC19isCommandRegisteredySbAA0E4NameVF">isCommandRegistered(_:)</a>
+                    <a class="token" href="#/s:6Proton10EditorViewC19isCommandRegisteredySbAA0E4NameVF">isCommandRegistered(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2876,8 +2926,8 @@ existing value will be overwritten by the new value provided in the attributes.<
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-04-08)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-04-19)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

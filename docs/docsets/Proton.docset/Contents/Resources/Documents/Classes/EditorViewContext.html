@@ -14,7 +14,7 @@
     <a title="EditorViewContext Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Proton Docs</a> (75% documented)</p>
+        <p><a href="../index.html">Proton Docs</a> (77% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -35,9 +35,6 @@
                 <a href="../Classes/Attachment.html">Attachment</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/BoldCommand.html">BoldCommand</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Classes/EditorCommandExecutor.html">EditorCommandExecutor</a>
               </li>
               <li class="nav-group-task">
@@ -45,15 +42,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/EditorViewContext.html">EditorViewContext</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/FontTraitToggleCommand.html">FontTraitToggleCommand</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/HighlightTextCommand.html">HighlightTextCommand</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/ItalicsCommand.html">ItalicsCommand</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RendererCommandExecutor.html">RendererCommandExecutor</a>
@@ -296,6 +284,41 @@ A context is uniquely identified by <code><a href="../Classes/EditorViewContext.
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton17EditorViewContextC8delegateAA0bC8Delegate_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton17EditorViewContextC8delegateAA0bC8Delegate_pSgvp">delegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>EditorView delegate at context level. This delegate will be notified about events in all the Editors that share this particular context.
+This is in addition to the <code>delegate</code> available on <code><a href="../Classes/EditorView.html">EditorView</a></code> which works at local level for the <code><a href="../Classes/EditorView.html">EditorView</a></code>. If you are interested in
+certain <code><a href="../Protocols/EditorViewDelegate.html">EditorViewDelegate</a></code> events for all the editors sharing the same context e.g. an Editor with nested Editors sharing the same context.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    If the <code><a href="../Classes/EditorView.html">EditorView</a></code> is instantiated without providing an explicit context, <code>delegate</code> can be set on <code><a href="../Classes/EditorViewContext.html#/s:6Proton17EditorViewContextC6sharedACvpZ">EditorViewContext.shared</a></code> which
+is the default context for all the editors.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/EditorViewDelegate.html">EditorViewDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton17EditorViewContextC6sharedACvpZ"></a>
                     <a name="//apple_ref/swift/Variable/shared" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton17EditorViewContextC6sharedACvpZ">shared</a>
@@ -323,9 +346,36 @@ A context is uniquely identified by <code><a href="../Classes/EditorViewContext.
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton17EditorViewContextC06activebC0AA0bC0CSgvp"></a>
+                    <a name="//apple_ref/swift/Property/activeEditorView" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton17EditorViewContextC06activebC0AA0bC0CSgvp">activeEditorView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code><a href="../Classes/EditorView.html">EditorView</a></code> for this context that is currently active.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">activeEditorView</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton17EditorViewContextC4nameACSS_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(name:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton17EditorViewContextC4nameACSS_tcfc">init(name:)</a>
+                    <a class="token" href="#/s:6Proton17EditorViewContextC4nameACSS_tcfc">init(name:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -371,8 +421,8 @@ A context is uniquely identified by <code><a href="../Classes/EditorViewContext.
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-04-08)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-04-19)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
