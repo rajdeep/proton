@@ -32,8 +32,8 @@ class RichTextEditorContext: RichTextViewContext {
 
         let range = textView.selectedRange
         var attributes = richTextView.typingAttributes
-        let contentType = attributes[.contentType] as? EditorContent.Name ?? .unknown
-        attributes[.contentType] = nil
+        let contentType = attributes[.blockContentType] as? EditorContent.Name ?? .unknown
+        attributes[.blockContentType] = nil
         richTextView.richTextViewDelegate?.richTextView(richTextView, didChangeSelection: range, attributes: attributes, contentType: contentType)
     }
 

@@ -19,24 +19,62 @@
 //
 
 import Foundation
+import UIKit
 
 import Proton
 
-class TextTransformer: EditorContentEncoding {
-    typealias EncodedType = String
+struct TextEncoder: EditorContentEncoder {
+    let textEncoders: [EditorContent.Name: AnyEditorTextEncoding<String>] = [
+        EditorContent.Name.paragraph: AnyEditorTextEncoding(ParagraphTextEncoder()),
+        .text: AnyEditorTextEncoding(TextTransformer()),
+        .newline: AnyEditorTextEncoding(NewlineTextEncoder()),
+    ]
 
-    func encode(_ content: EditorContent) -> String! {
-        let text: String
+    let attachmentEncoders: [EditorContent.Name: AnyEditorContentAttachmentEncoding<String>] = [
+        EditorContent.Name("textField") : AnyEditorContentAttachmentEncoding(TextTransformer()),
+    ]
+}
 
-        switch content.type {
-        case let .attachment(name, _, contentView, attachmentType):
-            let contentViewType = String(describing: type(of: contentView))
-            text = "Name: `\(name.rawValue)` ContentView: `\(contentViewType)` Type: `\(attachmentType)`"
-        case let .text(name, attributedString):
-            text = "Name: `\(name.rawValue)` Text: `\(attributedString.string)`"
-        case .viewOnly:
-            text = "ViewOnly"
+struct ParagraphTextEncoder: EditorTextEncoding {
+    func encode(name: EditorContent.Name, string: NSAttributedString) -> String {
+        return contentsFrom(string).joined(separator: "\n")
+    }
+}
+
+struct NewlineTextEncoder: EditorTextEncoding {
+    func encode(name: EditorContent.Name, string: NSAttributedString) -> String {
+        return "Name: `\(EditorContent.Name.newline.rawValue)` Text: `\n`"
+    }
+}
+
+
+extension ParagraphTextEncoder {
+    func contentsFrom(_ string: NSAttributedString) -> [String] {
+        var contents = [String]()
+        string.enumerateInlineContents().forEach { content in
+            switch content.type {
+            case .viewOnly:
+                break
+            case let .text(name, attributedString):
+                let text = TextTransformer().encode(name: name, string: attributedString)
+                contents.append(text)
+            case let .attachment(name, _, contentView, _):
+                let text = TextTransformer().encode(name: name, view: contentView)
+                contents.append(text)
+            }
         }
-        return text
+        return contents
+    }
+}
+
+struct TextTransformer: EditorTextEncoding, AttachmentEncoding {
+    func encode(name: EditorContent.Name, string: NSAttributedString) -> String {
+        return "Name: `\(name.rawValue)` Text: `\(string.string)`"
+    }
+
+    func encode(name: EditorContent.Name, view: UIView) -> String {
+        let contentViewType = String(describing: type(of: view))
+        return  "Name: `\(name.rawValue)` ContentView: `\(contentViewType)`"
+        //Type: `\(attachmentType)`
     }
 }
