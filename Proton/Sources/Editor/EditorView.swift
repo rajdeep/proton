@@ -333,6 +333,12 @@ open class EditorView: UIView {
         set { richTextView.contentOffset = newValue }
     }
 
+    /// The attributes to apply to links.
+    public var linkTextAttributes: [NSAttributedString.Key: Any]! {
+        get { richTextView.linkTextAttributes }
+        set { richTextView.linkTextAttributes = newValue }
+    }
+
     /// Range of end of text in the `EditorView`. The range has always has length of 0.
     public var textEndRange: NSRange {
         return richTextView.textEndRange
