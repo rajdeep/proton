@@ -73,4 +73,55 @@ class NSAttributedStringExtensionTests: XCTestCase {
         let substring = text.reverseAttributedSubstring(from: NSRange(location: 9, length: 4))
         XCTAssertEqual(substring?.string, "is a")
     }
+
+    func testGetsRangeOfAttributeAtLocation() {
+        let testAttribute = NSAttributedString.Key("testAttr")
+        let text = NSMutableAttributedString(string: "This is a test string")
+        let attributeRange = NSRange(location: 10, length: 4)
+        text.addAttribute(testAttribute, value: true, range: attributeRange)
+        let attributedString = NSAttributedString(attributedString: text)
+        let range = attributedString.rangeOf(attribute: testAttribute, startingLocation: 2)
+        XCTAssertEqual(range, attributeRange)
+    }
+
+    func testGetsRangeOfAttributeAtLocationTraversingReverse() {
+        let testAttribute = NSAttributedString.Key("testAttr")
+        let text = NSMutableAttributedString(string: "This is a test string")
+        let attributeRange = NSRange(location: 10, length: 4)
+        text.addAttribute(testAttribute, value: true, range: attributeRange)
+        let attributedString = NSAttributedString(attributedString: text)
+        let range = attributedString.rangeOf(attribute: testAttribute, startingLocation: 17, reverseLookup: true)
+        XCTAssertEqual(range, attributeRange)
+    }
+
+    func testRangeOfAttributeInEmptyString() {
+        let testAttribute = NSAttributedString.Key("testAttr")
+        let text = NSAttributedString()
+        let range = text.rangeOf(attribute: testAttribute, startingLocation: 5)
+        XCTAssertNil(range)
+    }
+
+    func testGetsAttributeAtLocation() {
+        let testAttribute = NSAttributedString.Key("testAttr")
+        let text = NSMutableAttributedString(string: "This is a test string")
+        let attributeRange = NSRange(location: 10, length: 4)
+        text.addAttribute(testAttribute, value: true, range: attributeRange)
+        let attributedString = NSAttributedString(attributedString: text)
+        let attributeValue: Bool? = attributedString.attributeValue(for: testAttribute, at: 12)
+        XCTAssertEqual(attributeValue, true)
+    }
+
+    func testMissingAttributeAtLocation() {
+        let testAttribute = NSAttributedString.Key("testAttr")
+        let text = NSAttributedString(string: "This is a test string")
+        let attributeValue: Bool? = text.attributeValue(for: testAttribute, at: 12)
+        XCTAssertNil(attributeValue)
+    }
+
+    func testAttributeAtLocationInEmptyString() {
+        let testAttribute = NSAttributedString.Key("testAttr")
+        let text = NSAttributedString()
+        let attributeValue: Bool? = text.attributeValue(for: testAttribute, at: 12)
+        XCTAssertNil(attributeValue)
+    }
 }

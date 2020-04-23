@@ -62,4 +62,32 @@ public extension NSAttributedString {
         }
         return attributedSubstring(from: NSRange(location: range.location - range.length, length: range.length))
     }
+
+    /// Gets the next range of attribute starting at the given location in direction based on reverse lookup flag
+    /// - Parameters:
+    ///   - attribute: Name of the attribute to look up
+    ///   - location: Starting location
+    ///   - reverseLookup: When true, look up is carried out in reverse direction. Default is false.
+    func rangeOf(attribute: NSAttributedString.Key, startingLocation location: Int, reverseLookup: Bool = false) -> NSRange? {
+        let range = reverseLookup ? NSRange(location: 0, length: location) : NSRange(location: location, length: length - location)
+        let options = reverseLookup ? EnumerationOptions.reverse : []
+
+        var attributeRange: NSRange? = nil
+        enumerateAttribute(attribute, in: range, options: options) { val, attrRange, stop in
+            if val != nil {
+                attributeRange = attrRange
+                stop.pointee = true
+            }
+        }
+
+        return attributeRange
+    }
+
+    /// Gets the value of attribute at the given location, if present.
+    /// - Parameters:
+    ///   - attributeKey: Name of the attribute
+    ///   - location: Location to check
+    func attributeValue<T>(for attributeKey: NSAttributedString.Key, at location: Int) -> T? {
+        return attribute(attributeKey, at: location, effectiveRange: nil) as? T
+    }
 }
