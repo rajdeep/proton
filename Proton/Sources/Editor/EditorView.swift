@@ -378,6 +378,13 @@ open class EditorView: UIView {
         self.attributedText = NSAttributedString()
     }
 
+    /// The autocorrection style for the text object.
+    /// The default value for this property is `UITextAutocorrectionType.no`.
+    public var autocorrectionType: UITextAutocorrectionType {
+        get { richTextView.autocorrectionType }
+        set { richTextView.autocorrectionType = newValue }
+    }
+    
     private func getAttachmentContentView(view: UIView?) -> AttachmentContentView? {
         guard let view = view else { return nil }
         if let attachmentContentView = view.superview as? AttachmentContentView {
