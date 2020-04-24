@@ -52,6 +52,16 @@ class AutogrowingTextView: UITextView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override var isScrollEnabled: Bool {
+        didSet {
+            // Invalidate intrinsic content size when scrolling is disabled again as a result of text
+            // getting cleared/removed. In absence of the following code, the textview does not
+            // resize when cleared until a character is typed in.
+            guard isScrollEnabled == false, oldValue == true else { return }
+            invalidateIntrinsicContentSize()
+        }
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
         let bounds = self.bounds
