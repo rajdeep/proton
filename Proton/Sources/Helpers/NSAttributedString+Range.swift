@@ -83,11 +83,38 @@ public extension NSAttributedString {
         return attributeRange
     }
 
+    /// Gets the complete range of attribute at the given location. The attribute is looked up in both forward and
+    /// reverse direction and a combined range is returned.  Nil if the attribute does not exist in the given location
+    /// - Parameters:
+    ///   - attribute: Attribute to search
+    ///   - location: Location to inspect
+    func rangeOf(attribute: NSAttributedString.Key, at location: Int) -> NSRange? {
+        guard location < length,
+            self.attribute(attribute, at: location, effectiveRange: nil) != nil else { return nil }
+
+        let forwardRange = rangeOf(attribute: attribute, startingLocation: location, reverseLookup: false)
+        let reverseRange = rangeOf(attribute: attribute, startingLocation: location, reverseLookup: true)
+
+        let range: NSRange?
+        switch (reverseRange,  forwardRange) {
+        case let (.some(r), .some(f)):
+            range = NSRange(location: r.location, length: r.length + f.length)
+        case let (.none, .some(f)):
+            range = f
+        case let (.some(r), .none):
+            range = r
+        default:
+            range = nil
+        }
+        return range
+    }
+
     /// Gets the value of attribute at the given location, if present.
     /// - Parameters:
     ///   - attributeKey: Name of the attribute
     ///   - location: Location to check
     func attributeValue<T>(for attributeKey: NSAttributedString.Key, at location: Int) -> T? {
+        guard location < length else { return nil }
         return attribute(attributeKey, at: location, effectiveRange: nil) as? T
     }
 }
