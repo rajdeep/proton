@@ -26,16 +26,12 @@ public extension NSAttributedString {
     /// Enumerates block contents in given range.
     /// - Parameter range: Range to enumerate contents in. Nil to enumerate in entire string.
     func enumerateContents(in range: NSRange? = nil) -> AnySequence<EditorContent> {
-        return self.enumerateContentType(.contentType, defaultIfMissing: .paragraph, in: range) { attributes in
-            attributes[.isBlockAttachment] as? Bool != false
-        }
+        return self.enumerateContentType(.blockContentType, options: [], defaultIfMissing: .paragraph, in: range)
     }
     /// Enumerates only inline content in given range.
     /// - Parameter range: Range to enumerate contents in. Nil to enumerate in entire string.
     func enumerateInlineContents(in range: NSRange? = nil) -> AnySequence<EditorContent> {
-        return self.enumerateContentType(.contentType, defaultIfMissing: .text, in: range) { attributes in
-            attributes[.isInlineAttachment] as? Bool != false
-        }
+        return self.enumerateContentType(.inlineContentType, options: [.longestEffectiveRangeNotRequired], defaultIfMissing: .text, in: range)
     }
 
     /// Returns in range of CharacterSet from this string.
@@ -49,7 +45,7 @@ public extension NSAttributedString {
 }
 
 extension NSAttributedString {
-    func enumerateContentType(_ type: NSAttributedString.Key, defaultIfMissing: EditorContent.Name, in range: NSRange? = nil, where filter: @escaping ((RichTextAttributes) -> Bool) = { _ in return true}) -> AnySequence<EditorContent> {
+    func enumerateContentType(_ type: NSAttributedString.Key, options: NSAttributedString.EnumerationOptions, defaultIfMissing: EditorContent.Name, in range: NSRange? = nil) -> AnySequence<EditorContent> {
         let range = range ?? self.fullRange
         let contentString = self.attributedSubstring(from: range)
         return AnySequence { () -> AnyIterator<EditorContent> in
@@ -62,10 +58,14 @@ extension NSAttributedString {
 
                 var content: EditorContent?
                 
-                contentString.enumerateAttribute(type, in: substringRange, options: [.longestEffectiveRangeNotRequired]) { (name, range, stop) in
+                contentString.enumerateAttribute(type, in: substringRange, options: options) { (name, range, stop) in
                     let contentName = name as? EditorContent.Name ?? defaultIfMissing
                     let substring = contentString.attributedSubstring(from: range)
                     stop.pointee = true
+
+                    let location = range.location + range.length
+                    substringRange = NSRange(location: location, length: contentString.length - location)
+
                     if contentName == EditorContent.Name.viewOnly {
                         content = EditorContent(type: .viewOnly, enclosingRange: range)
                     } else if let attachment = substring.attribute(.attachment, at: 0, effectiveRange: nil) as? Attachment {
@@ -75,12 +75,21 @@ extension NSAttributedString {
                             content = EditorContent(type: .attachment(name: contentName, attachment: attachment, contentView: contentView, type: attachmentType), enclosingRange: range)
                         }
                     } else {
-                        let contentSubstring = NSMutableAttributedString(attributedString: substring)
-                        content = EditorContent(type: .text(name: contentName, attributedString: contentSubstring), enclosingRange: range)
-                    }
+                        let location = range.location + range.length
+                        substringRange = NSRange(location: location, length: contentString.length - location)
 
-                    let location = range.location + range.length
-                    substringRange = NSRange(location: location, length: contentString.length - location)
+                        let contentSubstring = NSMutableAttributedString(attributedString: substring)
+                        // handle successive newlines as single newline element
+                        if contentSubstring.rangeOfCharacter(from: .newlines) == NSRange(location: 0, length: 1) {
+                            let enclosingRange = NSRange(location: range.location, length: 1)
+                            content = EditorContent(type: .text(name: contentName, attributedString: contentSubstring), enclosingRange: enclosingRange)
+                            let location = range.location + 1
+                            substringRange = NSRange(location: location, length: contentString.length - location)
+
+                        } else {
+                            content = EditorContent(type: .text(name: contentName, attributedString: contentSubstring), enclosingRange: range)
+                        }
+                    }
                 }
 
                 return content

@@ -37,8 +37,8 @@ class RichTextViewContext: NSObject, UITextViewDelegate {
         resetAttachmentSelection(textView)
         guard range.length > 0 else {
             var attributes = richTextView.typingAttributes
-            let contentType = attributes[.contentType] as? EditorContent.Name ?? .unknown
-            attributes[.contentType] = nil
+            let contentType = attributes[.blockContentType] as? EditorContent.Name ?? .unknown
+            attributes[.blockContentType] = nil
             richTextView.richTextViewDelegate?.richTextView(richTextView, didChangeSelection: range, attributes: attributes, contentType: contentType)
             return
         }
@@ -53,8 +53,8 @@ class RichTextViewContext: NSObject, UITextViewDelegate {
         }
 
         var attributes = substring.attributes(at: 0, effectiveRange: nil)
-        let contentType = attributes[.contentType] as? EditorContent.Name ?? .unknown
-        attributes[.contentType] = nil
+        let contentType = attributes[.blockContentType] as? EditorContent.Name ?? .unknown
+        attributes[.blockContentType] = nil
         richTextView.richTextViewDelegate?.richTextView(richTextView, didChangeSelection: range, attributes: attributes, contentType: contentType)
     }
 

@@ -88,6 +88,12 @@ open class RendererView: UIView {
         set { readOnlyEditorView.dataDetectorTypes = newValue }
     }
 
+    /// The attributes to apply to links.
+    public var linkTextAttributes: [NSAttributedString.Key: Any]! {
+        get { readOnlyEditorView.linkTextAttributes }
+        set { readOnlyEditorView.linkTextAttributes = newValue }
+    }
+
     /// Selected text in the editor.
     public var selectedText: NSAttributedString {
         return readOnlyEditorView.selectedText

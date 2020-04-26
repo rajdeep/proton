@@ -334,6 +334,12 @@ open class EditorView: UIView {
         set { richTextView.contentOffset = newValue }
     }
 
+    /// The attributes to apply to links.
+    public var linkTextAttributes: [NSAttributedString.Key: Any]! {
+        get { richTextView.linkTextAttributes }
+        set { richTextView.linkTextAttributes = newValue }
+    }
+
     /// Range of end of text in the `EditorView`. The range has always has length of 0.
     public var textEndRange: NSRange {
         return richTextView.textEndRange
@@ -379,6 +385,13 @@ open class EditorView: UIView {
         self.attributedText = NSAttributedString()
     }
 
+    /// The autocorrection style for the text object.
+    /// The default value for this property is `UITextAutocorrectionType.no`.
+    public var autocorrectionType: UITextAutocorrectionType {
+        get { richTextView.autocorrectionType }
+        set { richTextView.autocorrectionType = newValue }
+    }
+    
     private func getAttachmentContentView(view: UIView?) -> AttachmentContentView? {
         guard let view = view else { return nil }
         if let attachmentContentView = view.superview as? AttachmentContentView {

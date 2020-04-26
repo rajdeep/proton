@@ -60,35 +60,46 @@ class EditorViewTests: XCTestCase {
 
         let contents = editor.contents()
 
-        XCTAssertEqual(contents.count, 5)
+        XCTAssertEqual(contents.count, 3)
         let paragraphContent = contents[0]
         if case let .text(name, attributedString) = paragraphContent.type {
             XCTAssertEqual(name, EditorContent.Name.paragraph)
-            XCTAssertEqual(attributedString.string, editorString.string)
+
+            let paragraphContents = Array(attributedString.enumerateInlineContents())
+
+            XCTAssertEqual(paragraphContents.count, 3)
+
+            if case let .text(name, attributedString) = paragraphContents[0].type {
+                XCTAssertEqual(name, EditorContent.Name.text)
+                XCTAssertEqual(attributedString.string, editorString.string)
+            } else {
+                XCTFail("Failed to get correct content [Paragraph]")
+            }
+
+            let inlineAttachment = paragraphContents[1]
+            if case let .attachment(name, attachment, contentView, type) = inlineAttachment.type {
+                XCTAssertEqual(name, textField.name)
+                XCTAssertEqual(attachment, textFieldAttachment)
+                XCTAssertEqual(contentView, textField)
+                XCTAssertEqual(type, .inline)
+            } else {
+                XCTFail("Failed to get correct content [TextFieldAttachment]")
+            }
+
+            let spacerContent1 = paragraphContents[2]
+            if case let .text(name, attributedString) = spacerContent1.type {
+                XCTAssertEqual(name, EditorContent.Name.text)
+                XCTAssertEqual(attributedString.string.trimmingCharacters(in: .whitespacesAndNewlines), "")
+            } else {
+                XCTFail("Failed to get correct content [Spacer]")
+            }
         } else {
             XCTFail("Failed to get correct content [Paragraph]")
         }
-        XCTAssertEqual(paragraphContent.enclosingRange, editorString.fullRange)
+        XCTAssertEqual(paragraphContent.enclosingRange, NSRange(location: 0, length: editorString.length + 2)) // string + inline attachment + spacer
 
-        let inlineAttachment = contents[1]
-        if case let .attachment(name, attachment, contentView, type) = inlineAttachment.type {
-            XCTAssertEqual(name, textField.name)
-            XCTAssertEqual(attachment, textFieldAttachment)
-            XCTAssertEqual(contentView, textField)
-            XCTAssertEqual(type, .inline)
-        } else {
-            XCTFail("Failed to get correct content [TextFieldAttachment]")
-        }
 
-        let spacerContent1 = contents[2]
-        if case let .text(name, attributedString) = spacerContent1.type {
-            XCTAssertEqual(name, EditorContent.Name.paragraph)
-            XCTAssertEqual(attributedString.string.trimmingCharacters(in: .whitespacesAndNewlines), "")
-        } else {
-            XCTFail("Failed to get correct content [Spacer]")
-        }
-
-        let blockAttachment = contents[3]
+        let blockAttachment = contents[1]
         if case let .attachment(name, attachment, contentView, type) = blockAttachment.type {
             XCTAssertEqual(name, panelView.name)
             XCTAssertEqual(attachment, panelAttachment)
@@ -98,7 +109,7 @@ class EditorViewTests: XCTestCase {
             XCTFail("Failed to get correct content [TextFieldAttachment]")
         }
 
-        let spacerContent2 = contents[4]
+        let spacerContent2 = contents[2]
         if case let .text(name, attributedString) = spacerContent2.type {
             XCTAssertEqual(name, EditorContent.Name.newline)
             XCTAssertEqual(attributedString.string.trimmingCharacters(in: .whitespacesAndNewlines), "")
@@ -142,11 +153,14 @@ class EditorViewTests: XCTestCase {
         editor.replaceCharacters(in: .zero, with: editorString)
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
 
-        let transformedContents = editor.transformContents(using: TextTransformer())
-        XCTAssertEqual(transformedContents.count, 3)
-        XCTAssertEqual(transformedContents[0], "Name: `\(EditorContent.Name.paragraph.rawValue)` Text: `Some text in Editor `")
-        XCTAssertEqual(transformedContents[1], "Name: `\(textField.name.rawValue)` ContentView: `AutogrowingTextField` Type: `inline`")
-        XCTAssertEqual(transformedContents[2], "Name: `\(EditorContent.Name.paragraph.rawValue)` Text: ` `")
+        let transformedContents = editor.transformContents(using: TextEncoder())
+        XCTAssertEqual(transformedContents.count, 1)
+
+        let subContents = Array(transformedContents[0].split(separator: "\n"))
+        XCTAssertEqual(subContents.count, 3)
+        XCTAssertEqual(subContents[0], "Name: `\(EditorContent.Name.text.rawValue)` Text: `Some text in Editor `")
+        XCTAssertEqual(subContents[1], "Name: `\(textField.name.rawValue)` ContentView: `AutogrowingTextField`")
+        XCTAssertEqual(subContents[2], "Name: `\(EditorContent.Name.text.rawValue)` Text: ` `")
     }
 
     func testTransformsContentsSplitsParagraphs() {
@@ -155,12 +169,12 @@ class EditorViewTests: XCTestCase {
 
         editor.replaceCharacters(in: .zero, with: editorString)
 
-        let transformedContents = editor.transformContents(using: TextTransformer())
+        let transformedContents = editor.transformContents(using: TextEncoder())
         XCTAssertEqual(transformedContents.count, 4)
         XCTAssertEqual(transformedContents[0], "Name: `\(EditorContent.Name.newline.rawValue)` Text: `\n`")
-        XCTAssertEqual(transformedContents[1], "Name: `\(EditorContent.Name.paragraph.rawValue)` Text: `Some text in Editor`")
+        XCTAssertEqual(transformedContents[1], "Name: `\(EditorContent.Name.text.rawValue)` Text: `Some text in Editor`")
         XCTAssertEqual(transformedContents[2], "Name: `\(EditorContent.Name.newline.rawValue)` Text: `\n`")
-        XCTAssertEqual(transformedContents[3], "Name: `\(EditorContent.Name.paragraph.rawValue)` Text: `This is second line`")
+        XCTAssertEqual(transformedContents[3], "Name: `\(EditorContent.Name.text.rawValue)` Text: `This is second line`")
     }
 
     func testPropagatesAddAttributesToAttachments() {

@@ -73,4 +73,95 @@ class NSAttributedStringExtensionTests: XCTestCase {
         let substring = text.reverseAttributedSubstring(from: NSRange(location: 9, length: 4))
         XCTAssertEqual(substring?.string, "is a")
     }
+
+    func testGetsRangeOfAttributeStartingAtLocation() {
+        let testAttribute = NSAttributedString.Key("testAttr")
+        let text = NSMutableAttributedString(string: "This is a test string")
+        let attributeRange = NSRange(location: 10, length: 4)
+        text.addAttribute(testAttribute, value: true, range: attributeRange)
+        let attributedString = NSAttributedString(attributedString: text)
+        let range = attributedString.rangeOf(attribute: testAttribute, startingLocation: 2)
+        XCTAssertEqual(range, attributeRange)
+    }
+
+    func testGetsRangeOfAttributeStartingAtLocationTraversingReverse() {
+        let testAttribute = NSAttributedString.Key("testAttr")
+        let text = NSMutableAttributedString(string: "This is a test string")
+        let attributeRange = NSRange(location: 10, length: 4)
+        text.addAttribute(testAttribute, value: true, range: attributeRange)
+        let attributedString = NSAttributedString(attributedString: text)
+        let range = attributedString.rangeOf(attribute: testAttribute, startingLocation: 17, reverseLookup: true)
+        XCTAssertEqual(range, attributeRange)
+    }
+
+    func testStartingRangeOfAttributeInEmptyString() {
+        let testAttribute = NSAttributedString.Key("testAttr")
+        let text = NSAttributedString()
+        let range = text.rangeOf(attribute: testAttribute, startingLocation: 5)
+        XCTAssertNil(range)
+    }
+
+    func testGetsAttributeStartingAtLocation() {
+        let testAttribute = NSAttributedString.Key("testAttr")
+        let text = NSMutableAttributedString(string: "This is a test string")
+        let attributeRange = NSRange(location: 10, length: 4)
+        text.addAttribute(testAttribute, value: true, range: attributeRange)
+        let attributedString = NSAttributedString(attributedString: text)
+        let attributeValue: Bool? = attributedString.attributeValue(for: testAttribute, at: 12)
+        XCTAssertEqual(attributeValue, true)
+    }
+
+    func testMissingAttributeAtLocation() {
+        let testAttribute = NSAttributedString.Key("testAttr")
+        let text = NSAttributedString(string: "This is a test string")
+        let attributeValue: Bool? = text.attributeValue(for: testAttribute, at: 12)
+        XCTAssertNil(attributeValue)
+    }
+
+    func testAttributeAtLocationInEmptyString() {
+        let testAttribute = NSAttributedString.Key("testAttr")
+        let text = NSAttributedString()
+        let attributeValue: Bool? = text.attributeValue(for: testAttribute, at: 12)
+        XCTAssertNil(attributeValue)
+    }
+
+    func testRangeOfAttributeAtLocationAtStart()  {
+        let testAttribute = NSAttributedString.Key("testAttr")
+        let text = NSMutableAttributedString(string: "This is a test string")
+        let attributeRange = NSRange(location: 10, length: 4)
+        text.addAttribute(testAttribute, value: true, range: attributeRange)
+        let attributedString = NSAttributedString(attributedString: text)
+        let range = attributedString.rangeOf(attribute: testAttribute, at: 10)
+        XCTAssertEqual(range, attributeRange)
+    }
+
+    func testRangeOfAttributeAtLocationInMiddle()  {
+        let testAttribute = NSAttributedString.Key("testAttr")
+        let text = NSMutableAttributedString(string: "This is a test string")
+        let attributeRange = NSRange(location: 10, length: 4)
+        text.addAttribute(testAttribute, value: true, range: attributeRange)
+        let attributedString = NSAttributedString(attributedString: text)
+        let range = attributedString.rangeOf(attribute: testAttribute, at: 12)
+        XCTAssertEqual(range, attributeRange)
+    }
+
+    func testRangeOfAttributeAtLocationAtEnd()  {
+        let testAttribute = NSAttributedString.Key("testAttr")
+        let text = NSMutableAttributedString(string: "This is a test string")
+        let attributeRange = NSRange(location: 10, length: 4)
+        text.addAttribute(testAttribute, value: true, range: attributeRange)
+        let attributedString = NSAttributedString(attributedString: text)
+        let range = attributedString.rangeOf(attribute: testAttribute, at: 13)
+        XCTAssertEqual(range, attributeRange)
+    }
+
+    func testRangeOfAttributeAtLocationOutsideRange()  {
+        let testAttribute = NSAttributedString.Key("testAttr")
+        let text = NSMutableAttributedString(string: "This is a test string")
+        let attributeRange = NSRange(location: 10, length: 4)
+        text.addAttribute(testAttribute, value: true, range: attributeRange)
+        let attributedString = NSAttributedString(attributedString: text)
+        let range = attributedString.rangeOf(attribute: testAttribute, at: 0)
+        XCTAssertNil(range)
+    }
 }
