@@ -34,16 +34,30 @@ class EditorViewContextTests: XCTestCase {
     }
 
     func testGetsActiveEditorViewAcrossMultipleContexts() {
-        let editor1 = EditorView()
         let context1 = EditorViewContext(name: "context1")
+        let editor1 = EditorView(frame: .zero, context: context1)
+
         context1.richTextViewContext.textViewDidBeginEditing(editor1.richTextView)
 
-        let editor2 = EditorView()
         let context2 = EditorViewContext(name: "context2")
+        let editor2 = EditorView(frame: .zero, context: context2)
+
         context1.richTextViewContext.textViewDidEndEditing(editor1.richTextView)
         context2.richTextViewContext.textViewDidBeginEditing(editor2.richTextView)
 
         XCTAssertNil(context1.activeEditorView)
         XCTAssertEqual(context2.activeEditorView, editor2)
+    }
+
+    func testAppliesSameContextAsParentToNestedEditor() {
+        let context = EditorViewContext(name: "context1")
+        let editor = EditorView(frame: .zero, context: context)
+
+        let nestedEditor = PanelView(context: context)
+        let attachment = Attachment(nestedEditor, size: .fullWidth)
+        editor.appendCharacters(attachment.string)
+
+        XCTAssertNotNil(nestedEditor.editor.editorViewContext)
+        XCTAssertTrue(nestedEditor.editor.editorViewContext === editor.editorViewContext)
     }
 }

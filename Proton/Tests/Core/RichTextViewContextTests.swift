@@ -30,7 +30,7 @@ class RichTextViewContextTests: XCTestCase {
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
         let context = RichTextEditorContext.default
-        let textView = RichTextView(context: RichTextViewContext())
+        let textView = RichTextView(context: context)
         textView.richTextViewDelegate = mockTextViewDelegate
         textView.text = "Sample text"
 
@@ -51,7 +51,7 @@ class RichTextViewContextTests: XCTestCase {
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
         let context = RichTextEditorContext.default
-        let textView = RichTextView(context: RichTextViewContext())
+        let textView = RichTextView(context: context)
         textView.richTextViewDelegate = mockTextViewDelegate
         textView.text = "Sample text"
 

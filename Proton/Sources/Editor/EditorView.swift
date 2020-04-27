@@ -95,10 +95,11 @@ open class EditorView: UIView {
     let context: RichTextViewContext
 
     var editorContextDelegate: EditorViewDelegate? {
-        get { editorViewContext?.delegate }
+        get { editorViewContext.delegate }
     }
 
-    let editorViewContext: EditorViewContext?
+    /// Context for the current Editor
+    public let editorViewContext: EditorViewContext
 
     var textProcessor: TextProcessor?
 
@@ -145,7 +146,7 @@ open class EditorView: UIView {
     init(frame: CGRect, richTextViewContext: RichTextViewContext) {
         self.context = richTextViewContext
         self.richTextView = RichTextView(frame: frame, context: context)
-        self.editorViewContext = nil
+        self.editorViewContext = .null
         super.init(frame: frame)
 
         self.textProcessor = TextProcessor(editor: self)

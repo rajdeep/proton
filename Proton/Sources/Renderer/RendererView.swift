@@ -30,6 +30,9 @@ open class RendererView: UIView {
     /// An object interested in intercepting and responding to user interaction like tap and selecting changes in the `RendererView`.
     public weak var delegate: RendererViewDelegate?
 
+    /// Context for the current renderer
+    public let context: RendererViewContext
+
     /// Initializes the RendererView
     /// - Parameters:
     ///   - frame: Initial frame to be used for `RendererView`
@@ -38,12 +41,14 @@ open class RendererView: UIView {
     ///    restriction around some commands to be restricted in execution on certain specific renderers, the default value may be used.
     public init(frame: CGRect = .zero, context: RendererViewContext = .shared) {
         readOnlyEditorView = EditorView(frame: frame, richTextViewContext: context.richTextRendererContext)
+        self.context = context
         super.init(frame: frame)
         setup()
     }
 
     init(editor: EditorView) {
         readOnlyEditorView = editor
+        self.context = .null
         super.init(frame: editor.frame)
         setup()
     }

@@ -31,6 +31,13 @@ class PanelView: UIView, BlockContent, EditorContentView {
         return EditorContent.Name("panel")
     }
 
+    init(context: EditorViewContext) {
+        self.editor = EditorView(frame: .zero, context: context)
+        super.init(frame: .zero)
+
+        setup()
+    }
+
     override init(frame: CGRect) {
         self.editor = EditorView(frame: frame)
         super.init(frame: frame)
