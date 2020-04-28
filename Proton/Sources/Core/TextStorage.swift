@@ -93,12 +93,14 @@ class TextStorage: NSTextStorage {
     override func replaceCharacters(in range: NSRange, with str: String) {
         beginEditing()
         let delta = str.utf16.count - range.length
+
         let attachmentsToDelete = getAttachments(in: range)
+        attachmentsToDelete.forEach { $0.removeFromSuperView() }
+
         storage.replaceCharacters(in: range, with: str)
         storage.fixAttributes(in: NSRange(location: 0, length: storage.length))
         edited([.editedCharacters, .editedAttributes], range: range, changeInLength: delta)
         endEditing()
-        attachmentsToDelete.forEach { $0.removeFromSuperView() }
     }
 
     override func setAttributes(_ attrs: [NSAttributedString.Key: Any]?, range: NSRange) {
