@@ -295,7 +295,7 @@ open class EditorView: UIView {
         set {
             // Focus needs to be set in the Editor without which the
             // encode command fails on macOS
-            richTextView.becomeFirstResponder()
+//            richTextView.becomeFirstResponder()
             richTextView.attributedText = newValue
         }
     }
@@ -663,7 +663,7 @@ open class EditorView: UIView {
         unregisterCommands([command])
     }
 
-    public override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+    open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return richTextView.canPerformAction(action, withSender: sender)
     }
 }
