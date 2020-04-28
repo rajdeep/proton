@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>RendererCommandExecutor Class Reference</title>
+    <title>MenuDelegate Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/RendererCommandExecutor" class="dashAnchor"></a>
-    <a title="RendererCommandExecutor Class Reference"></a>
+    <a name="//apple_ref/swift/Protocol/MenuDelegate" class="dashAnchor"></a>
+    <a title="MenuDelegate Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">Proton Docs</a> (78% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">Proton Reference</a>
         <img id="carat" src="../img/carat.png" />
-        RendererCommandExecutor Class Reference
+        MenuDelegate Protocol Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -213,16 +213,15 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>RendererCommandExecutor</h1>
+            <h1>MenuDelegate</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">RendererCommandExecutor</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MenuDelegate</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
 
                 </div>
               </div>
-            <p><code>RendererCommandExecutor</code> manages all the <code><a href="../Classes/RendererView.html">RendererView</a></code> in the main <code><a href="../Classes/RendererView.html">RendererView</a></code>. Sub renderers may have been added as <code><a href="../Classes/Attachment.html">Attachment</a></code> in the <code><a href="../Classes/RendererView.html">RendererView</a></code>.
-All the <code><a href="../Classes/RendererView.html">RendererView</a></code>s in the hierarchy sharing the same <code>RendererContext</code> will automatically be handled by the <code>RendererCommandExecutor</code>.
-<code>RendererCommandExecutor</code> keeps the track of the <code><a href="../Classes/RendererView.html">RendererView</a></code> that has been selected and executes the given command in the active <code><a href="../Classes/RendererView.html">RendererView</a></code>.</p>
+            <p>Describes an object responsible for providing the actions shown in the menu on
+right-click/tap. The object must conform to <code>NSObjectProtocol</code>.</p>
 
           </section>
           <section class="section task-group-section">
@@ -231,9 +230,9 @@ All the <code><a href="../Classes/RendererView.html">RendererView</a></code>s in
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton23RendererCommandExecutorC7contextAcA0B11ViewContextC_tcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(context:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton23RendererCommandExecutorC7contextAcA0B11ViewContextC_tcfc">init(context:<wbr>)</a>
+                    <a name="/s:6Proton12MenuDelegateP23canPerformDefaultAction_10withSenderSb10ObjectiveC8SelectorV_ypSgtF"></a>
+                    <a name="//apple_ref/swift/Method/canPerformDefaultAction(_:withSender:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton12MenuDelegateP23canPerformDefaultAction_10withSenderSb10ObjectiveC8SelectorV_ypSgtF">canPerformDefaultAction(_:<wbr>withSender:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -241,14 +240,26 @@ All the <code><a href="../Classes/RendererView.html">RendererView</a></code>s in
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Initializes the <code>RendererCommandExecutor</code></p>
+                        <p>Returns all the supported default(inbuilt) actions for the editor/renderer e.g. select, select all, copy, paste  etc.
+Value of <code>true</code> must be returned for all the actions that are supported.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This function only expects <code>true</code> to be returned for the supported actions. Whether the action is shown in the menu or not,
+is handled automatically based on the context. For e.g. even if <code>true</code> is returned for selector <code>select(:)</code>, it  will not be
+shown if the editor/renderer is empty as there is nothing to select.
+
+</div>
+
+<p>Any custom menu item that needs to be displayed must be added to <code>UIMenuController.shared.menuItems</code>. Also, <code>canPerformAction(action:sender)</code> should
+be overridden to return true/false based on the context. These items will be shown in the menu in addition to default actions supported
+by this function.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">context</span><span class="p">:</span> <span class="kt"><a href="../Classes/RendererViewContext.html">RendererViewContext</a></span> <span class="o">=</span> <span class="kt"><a href="../Classes/RendererViewContext.html">RendererViewContext</a></span><span class="o">.</span><span class="n">shared</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">canPerformDefaultAction</span><span class="p">(</span><span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">Selector</span><span class="p">,</span> <span class="n">withSender</span> <span class="nv">sender</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -259,60 +270,24 @@ All the <code><a href="../Classes/RendererView.html">RendererView</a></code>s in
                             <tr>
                               <td>
                                 <code>
-                                <em>context</em>
+                                <em>action</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The context for the command executor. <code>RendererCommandExecutor</code> is capable of executing commands only on the <code><a href="../Classes/RendererView.html">RendererView</a></code>s
-which are created using the same <code>context</code>. Default value is <code><a href="../Classes/RendererViewContext.html#/s:6Proton19RendererViewContextC6sharedACvpZ">RendererViewContext.shared</a></code></p>
+                                  <p>Name of the action</p>
                                 </div>
                               </td>
                             </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:6Proton23RendererCommandExecutorC7executeyyAA0bC0_pF"></a>
-                    <a name="//apple_ref/swift/Method/execute(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton23RendererCommandExecutorC7executeyyAA0bC0_pF">execute(_:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Executes the given command on the active <code><a href="../Classes/RendererView.html">RendererView</a></code> having the same <code>Context</code> as the Command Executor. <code><a href="../Protocols/RendererCommand.html">RendererCommand</a></code> will be executed only
-if the <code>RendererCommand.canExecute()</code> returns <code>true</code> for the selected <code><a href="../Classes/RendererView.html">RendererView</a></code>.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">execute</span><span class="p">(</span><span class="n">_</span> <span class="nv">command</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RendererCommand.html">RendererCommand</a></span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
                             <tr>
                               <td>
                                 <code>
-                                <em>command</em>
+                                <em>sender</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>Command to execute</p>
+                                  <p>sender  of the action</p>
                                 </div>
                               </td>
                             </tr>
