@@ -110,7 +110,7 @@ extension MenuExampleViewController: MenuDelegate {
         // Add any default textview actions. Returning true will show the menu item if applicable. e.g.
         // copy will be shown only if something is selected first.
         return action == #selector(select(_:))
-            || action  == #selector(selectAll(_:))
+            || action == #selector(selectAll(_:))
             || action == #selector(cut(_:))
             || action == #selector(copy(_:))
             || action == #selector(paste(_:))

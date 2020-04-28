@@ -332,8 +332,9 @@ class RichTextView: AutogrowingTextView {
     }
 
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        return menuDelegate?.canPerformDefaultAction(action,  withSender: sender) == true
-            && super.responds(to: action) && super.canPerformAction(action, withSender: sender)
+        return menuDelegate?.canPerformDefaultAction(action, withSender: sender) == true
+            && super.responds(to: action)
+            && super.canPerformAction(action, withSender: sender)
     }
 
     override func perform(_ aSelector: Selector!) -> Unmanaged<AnyObject>! {
