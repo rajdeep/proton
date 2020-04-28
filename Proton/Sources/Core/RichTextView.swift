@@ -39,7 +39,7 @@ class RichTextView: AutogrowingTextView {
         }
     }
 
-    var supportedMenuSelectors: [Selector]?
+    weak var menuDelegate: MenuDelegate?
 
     var editorView: EditorView? {
         return superview as? EditorView
@@ -332,8 +332,22 @@ class RichTextView: AutogrowingTextView {
     }
 
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        return super.canPerformAction(action, withSender: sender) && supportedMenuSelectors?.contains(action) ?? false
+        return menuDelegate?.canPerformDefaultAction(action,  withSender: sender) == true
+            && super.responds(to: action) && super.canPerformAction(action, withSender: sender)
     }
+
+    override func perform(_ aSelector: Selector!) -> Unmanaged<AnyObject>! {
+        super.perform(aSelector)
+    }
+
+    override func perform(_ aSelector: Selector!, with object: Any!) -> Unmanaged<AnyObject>! {
+        if menuDelegate?.responds(to: aSelector) == true {
+            return menuDelegate?.perform(aSelector, with: object)
+        } else {
+            return super.perform(aSelector, with: object)
+        }
+    }
+
 }
 
 extension RichTextView: NSLayoutManagerDelegate {

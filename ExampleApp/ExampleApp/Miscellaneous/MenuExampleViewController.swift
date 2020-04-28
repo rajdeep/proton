@@ -38,11 +38,8 @@ class MenuExampleViewController: ExamplesBaseViewController {
         editor.layer.borderColor = UIColor.systemBlue.cgColor
         editor.layer.borderWidth = 1.0
 
-        // Add any default command that you would like to support. This will assume default
-        // behaviour for purposes of showing menu and executing action. Check documentation for details
-        editor.supportedMenuSelectors = [#selector(select(_:)),
-                                         #selector(copy(_:))]
         editor.delegate = self
+        editor.menuDelegate = self
 
         let button = UIButton(type: .system)
         button.setTitle("Insert panel", for: .normal)
@@ -80,10 +77,51 @@ class MenuExampleViewController: ExamplesBaseViewController {
             title = "\(title)..."
         #endif
 
+        // Add custom menu items to UIMenuController. This is other than default items of cut/copy/paste etc.
         let testMenu = UIMenuItem(title: title, action: #selector(showSubMenu))
         UIMenuController.shared.menuItems = [
             testMenu
         ]
+    }
+
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        // Add any custom  menu item selectors here
+        return (action == #selector(a) ||
+            action == #selector(b) ||
+            action == #selector(showSubMenu))
+    }
+}
+
+extension MenuExampleViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
+
+extension MenuExampleViewController: EditorViewDelegate {
+    func editor(_ editor: EditorView, didChangeTextAt range: NSRange) {
+        UIMenuController.shared.menuItems = nil
+        UIMenuController.shared.hideMenu()
+    }
+}
+
+extension MenuExampleViewController: MenuDelegate {
+    func canPerformDefaultAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        // Add any default textview actions. Returning true will show the menu item if applicable. e.g.
+        // copy will be shown only if something is selected first.
+        return action == #selector(select(_:))
+            || action  == #selector(selectAll(_:))
+            || action == #selector(cut(_:))
+            || action == #selector(copy(_:))
+            || action == #selector(paste(_:))
+    }
+
+    override func copy(_ sender: Any?) {
+        print("Custom copy")
+    }
+
+    override func paste(_ sender: Any?) {
+        print("Custom Paste")
     }
 
     @objc func a() {
@@ -110,24 +148,5 @@ class MenuExampleViewController: ExamplesBaseViewController {
         menu.showMenu(from: editor, rect: frame)
     }
 
-    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        guard EditorViewContext.shared.activeEditorView?.selectedRange.length == 0 else { return false }
-        return
-            action == #selector(a) ||
-            action == #selector(b) ||
-            action == #selector(showSubMenu)
-    }
-}
 
-extension MenuExampleViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-}
-
-extension MenuExampleViewController: EditorViewDelegate {
-    func editor(_ editor: EditorView, didChangeTextAt range: NSRange) {
-        UIMenuController.shared.menuItems = nil
-        UIMenuController.shared.hideMenu()
-    }
 }

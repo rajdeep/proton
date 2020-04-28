@@ -58,6 +58,17 @@ open class RendererView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    /// Delegate to manage visibility of default(inbuilt) actions in the editor. These actions are same as what is shown in
+    /// `UITextView` Edit menu and when returned by the delegate, will show and execute based on default behaviour.
+    ///
+    /// - Note:
+    /// To change behavior of a predefined selector like select or copy, the selector must be overridden in the conformance
+    /// of`MenuDelegate` with the intended behavior.
+    public var menuDelegate: MenuDelegate? {
+        get { readOnlyEditorView.menuDelegate }
+        set { readOnlyEditorView.menuDelegate = newValue }
+    }
+
     /// Default font to be used for the rendered content.
     /// - Note:
     /// This font is only applied in case where the `attributedText` does not have
