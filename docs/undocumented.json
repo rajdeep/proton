@@ -296,21 +296,21 @@
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 168,
+      "line": 169,
       "symbol": "EditorView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 187,
+      "line": 188,
       "symbol": "EditorView.selectedTextRange",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 658,
+      "line": 659,
       "symbol": "EditorView.canPerformAction(_:withSender:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

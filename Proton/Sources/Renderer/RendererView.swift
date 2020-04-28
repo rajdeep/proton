@@ -30,6 +30,9 @@ open class RendererView: UIView {
     /// An object interested in intercepting and responding to user interaction like tap and selecting changes in the `RendererView`.
     public weak var delegate: RendererViewDelegate?
 
+    /// Context for the current renderer
+    public let context: RendererViewContext
+
     /// Initializes the RendererView
     /// - Parameters:
     ///   - frame: Initial frame to be used for `RendererView`
@@ -38,12 +41,14 @@ open class RendererView: UIView {
     ///    restriction around some commands to be restricted in execution on certain specific renderers, the default value may be used.
     public init(frame: CGRect = .zero, context: RendererViewContext = .shared) {
         readOnlyEditorView = EditorView(frame: frame, richTextViewContext: context.richTextRendererContext)
+        self.context = context
         super.init(frame: frame)
         setup()
     }
 
     init(editor: EditorView) {
         readOnlyEditorView = editor
+        self.context = .null
         super.init(frame: editor.frame)
         setup()
     }
@@ -51,6 +56,17 @@ open class RendererView: UIView {
     @available(*, unavailable, message: "init(coder:) unavailable, use init")
     public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    /// Delegate to manage visibility of default(inbuilt) actions in the editor. These actions are same as what is shown in
+    /// `UITextView` Edit menu and when returned by the delegate, will show and execute based on default behaviour.
+    ///
+    /// - Note:
+    /// To change behavior of a predefined selector like select or copy, the selector must be overridden in the conformance
+    /// of`MenuDelegate` with the intended behavior.
+    public var menuDelegate: MenuDelegate? {
+        get { readOnlyEditorView.menuDelegate }
+        set { readOnlyEditorView.menuDelegate = newValue }
     }
 
     /// Default font to be used for the rendered content.

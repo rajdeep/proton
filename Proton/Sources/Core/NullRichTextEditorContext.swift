@@ -1,8 +1,8 @@
 //
-//  RichTextRendererContext.swift
+//  NullRichTextEditorContext.swift
 //  Proton
 //
-//  Created by Rajdeep Kwatra on 14/1/20.
+//  Created by Rajdeep Kwatra on 27/4/20.
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,11 +21,11 @@
 import Foundation
 import UIKit
 
-class RichTextRendererContext: RichTextViewContext {
-    static let `default` = RichTextRendererContext()
-    static let null = NullRichTextRendererContext()
-}
-
-class NullRichTextRendererContext: RichTextRendererContext {
-    override func textViewDidChangeSelection(_ textView: UITextView) { }
+class NullRichTextEditorContext: RichTextEditorContext {
+    override func textViewDidBeginEditing(_ textView: UITextView) { }
+    override func textViewDidEndEditing(_ textView: UITextView) { }
+    override func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        return true
+    }
+    override func textViewDidChange(_ textView: UITextView) { }
 }

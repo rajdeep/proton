@@ -45,6 +45,9 @@ public class EditorViewContext {
     /// Default shared context. Use this in case there is only a single `EditorView` on the screen at the root level.
     public static let shared = EditorViewContext(name: "shared_editor_context")
 
+    // for use with common base shared with Renderer
+    static let null = EditorViewContext(name: "null_editor_context", context: NullRichTextEditorContext())
+
     /// `EditorView` for this context that is currently active.
     public var activeEditorView: EditorView? {
         return richTextViewContext.activeTextView?.editorView
@@ -52,9 +55,13 @@ public class EditorViewContext {
 
     /// Initializes a new context
     /// - Parameter name: Friendly name for the context.
-    public init(name: String) {
+    public convenience init(name: String) {
+        self.init(name: name, context: RichTextEditorContext())
+    }
+
+    init(name: String, context: RichTextEditorContext) {
         self.id = UUID().uuidString
         self.name = name
-        richTextViewContext = RichTextEditorContext()
+        richTextViewContext = context
     }
 }

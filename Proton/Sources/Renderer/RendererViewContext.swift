@@ -37,11 +37,18 @@ public class RendererViewContext {
     /// Default shared context. Use this in case there is only a single `RendererView` on the screen at the root level.
     public static let shared = RendererViewContext(name: "shared_renderer_context")
 
+    static let null = RendererViewContext(name: "null_renderer_context", context: .null)
+
     /// Initializes a new context
     /// - Parameter name: Friendly name for the context.
-    public init(name: String) {
+    public convenience init(name: String) {
+        self.init(name: name, context: RichTextRendererContext.default)
+    }
+
+    init(name: String, context: RichTextRendererContext) {
         self.id = UUID().uuidString
         self.name = name
-        richTextRendererContext = RichTextRendererContext()
+        richTextRendererContext = context
     }
+
 }

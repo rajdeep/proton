@@ -1,8 +1,8 @@
 //
-//  RichTextRendererContext.swift
-//  Proton
+//  MockMenuDelegate.swift
+//  ProtonTests
 //
-//  Created by Rajdeep Kwatra on 14/1/20.
+//  Created by Rajdeep Kwatra on 28/4/20.
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,11 +21,12 @@
 import Foundation
 import UIKit
 
-class RichTextRendererContext: RichTextViewContext {
-    static let `default` = RichTextRendererContext()
-    static let null = NullRichTextRendererContext()
-}
+import Proton
 
-class NullRichTextRendererContext: RichTextRendererContext {
-    override func textViewDidChangeSelection(_ textView: UITextView) { }
+class MockMenuDelegate: NSObject, MenuDelegate {
+    var onCanPerformDefaultAction: ((Selector, Any?) -> Bool)?
+
+    func canPerformDefaultAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        onCanPerformDefaultAction?(action, sender) ?? false
+    }
 }

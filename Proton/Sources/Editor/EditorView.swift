@@ -95,10 +95,11 @@ open class EditorView: UIView {
     let context: RichTextViewContext
 
     var editorContextDelegate: EditorViewDelegate? {
-        get { editorViewContext?.delegate }
+        get { editorViewContext.delegate }
     }
 
-    let editorViewContext: EditorViewContext?
+    /// Context for the current Editor
+    public let editorViewContext: EditorViewContext
 
     var textProcessor: TextProcessor?
 
@@ -111,15 +112,15 @@ open class EditorView: UIView {
     /// * To prevent any command to be executed, set value to be an empty array.
     public var registeredCommands: [EditorCommand]?
 
-    /// List of actions to be supported by default. These actions are same as what is shown in
-    /// `UITextView` Edit menu and when added to the list, will show and execute based on default behaviour.
-    /// No code needs to be added for execution of these selectors.
+    /// Delegate to manage visibility of default(inbuilt) actions in the editor. These actions are same as what is shown in
+    /// `UITextView` Edit menu and when returned by the delegate, will show and execute based on default behaviour.
+    ///
     /// - Note:
-    /// To change behavior of a predefined selector like copy or paste, custom menu item(s) must be added with
-    /// selector with the intended behavior. In this case, overridden predefined selector must not be added to this list.
-    public var supportedMenuSelectors: [Selector]? {
-        get { richTextView.supportedMenuSelectors }
-        set { richTextView.supportedMenuSelectors = newValue }
+    /// To change behavior of a predefined selector like copy or paste, the selector must be overridden in the conformance
+    /// of`MenuDelegate` with the intended behavior.
+    public var menuDelegate: MenuDelegate? {
+        get { richTextView.menuDelegate }
+        set { richTextView.menuDelegate = newValue }
     }
 
     // Making this a convenience init fails the test `testRendersWidthRangeAttachment` as the init of a class subclassed from
@@ -146,7 +147,7 @@ open class EditorView: UIView {
     init(frame: CGRect, richTextViewContext: RichTextViewContext, growsInfinitely: Bool = false) {
         self.context = richTextViewContext
         self.richTextView = RichTextView(frame: frame, context: context, growsInfinitely: growsInfinitely)
-        self.editorViewContext = nil
+        self.editorViewContext = .null
         super.init(frame: frame)
 
         self.textProcessor = TextProcessor(editor: self)

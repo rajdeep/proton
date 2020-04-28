@@ -29,6 +29,8 @@ class RichTextViewContext: NSObject, UITextViewDelegate {
     }
 
     func textViewDidChangeSelection(_ textView: UITextView) {
+        guard textView.delegate === self else { return }
+
         activeTextView = textView as? RichTextView
 
         guard let richTextView = activeTextView else { return }
@@ -59,6 +61,8 @@ class RichTextViewContext: NSObject, UITextViewDelegate {
     }
 
     func resetAttachmentSelection(_ textView: UITextView) {
+        guard textView.delegate === self else { return }
+
         guard let attributedText = textView.attributedText else { return }
         attributedText.enumerateAttribute(.attachment, in: attributedText.fullRange, options: .longestEffectiveRangeNotRequired) { attachment, _, _ in
             if let attachment = attachment as? Attachment {

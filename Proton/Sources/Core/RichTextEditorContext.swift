@@ -26,6 +26,8 @@ class RichTextEditorContext: RichTextViewContext {
     static let `default` = RichTextEditorContext()
 
     func textViewDidBeginEditing(_ textView: UITextView) {
+        guard textView.delegate === self else { return }
+
         activeTextView = textView as? RichTextView
         guard let richTextView = activeTextView else { return }
         activeTextView?.richTextViewDelegate?.richTextView(richTextView, didReceiveFocusAt: textView.selectedRange)
@@ -38,6 +40,8 @@ class RichTextEditorContext: RichTextViewContext {
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {
+        guard textView.delegate === self else { return }
+
         defer {
             activeTextView = nil
         }
@@ -46,6 +50,8 @@ class RichTextEditorContext: RichTextViewContext {
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        guard textView.delegate === self else { return true }
+
         guard let richTextView = activeTextView else { return true }
 
         // if backspace
@@ -92,6 +98,8 @@ class RichTextEditorContext: RichTextViewContext {
     }
 
     func textViewDidChange(_ textView: UITextView) {
+        guard textView.delegate === self else { return }
+
         guard let richTextView = activeTextView else { return }
         richTextView.richTextViewDelegate?.richTextView(richTextView, didChangeTextAtRange: textView.selectedRange)
     }

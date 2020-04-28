@@ -54,7 +54,7 @@ class EditorCommandSnapshotTests: FBSnapshotTestCase {
         editor.replaceCharacters(in: .zero, with: "This text is in Editor ")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
 
-        let context = EditorViewContext(name: "test_context")
+        let context = EditorViewContext.shared
         let commandExecutor = EditorCommandExecutor(context: context)
 
         let redColorCommand = MockEditorCommand { editor in

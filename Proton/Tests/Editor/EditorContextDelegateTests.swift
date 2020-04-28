@@ -44,7 +44,7 @@ class EditorContextDelegateTests: XCTestCase {
             expectedEditors.remove(at: 0)
         }
 
-        editor1.editorViewContext?.delegate = delegate
+        editor1.editorViewContext.delegate = delegate
 
         let richTextView1 = editor1.richTextView
         let richTextViewDelegate1 = richTextView1.richTextViewDelegate
@@ -77,7 +77,7 @@ class EditorContextDelegateTests: XCTestCase {
             expectedEditors.remove(at: 0)
         }
 
-        editor1.editorViewContext?.delegate = delegate
+        editor1.editorViewContext.delegate = delegate
         let richTextView1 = editor1.richTextView
         let richTextViewDelegate1 = richTextView1.richTextViewDelegate
 
@@ -109,7 +109,7 @@ class EditorContextDelegateTests: XCTestCase {
             expectedEditors.remove(at: 0)
         }
 
-        editor1.editorViewContext?.delegate = delegate
+        editor1.editorViewContext.delegate = delegate
 
         let richTextView1 = editor1.richTextView
         let richTextViewDelegate1 = richTextView1.richTextViewDelegate
@@ -140,7 +140,7 @@ class EditorContextDelegateTests: XCTestCase {
             expectedEditors.remove(at: 0)
         }
 
-        editor1.editorViewContext?.delegate = delegate
+        editor1.editorViewContext.delegate = delegate
 
         let richTextView1 = editor1.richTextView
         let richTextViewDelegate1 = richTextView1.richTextViewDelegate
