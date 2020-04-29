@@ -24,19 +24,7 @@ import Foundation
 /// right-click/tap. The object must conform to `NSObjectProtocol`.
 public protocol MenuDelegate: NSObjectProtocol {
 
-    /// Returns all the supported default(inbuilt) actions for the editor/renderer e.g. select, select all, copy, paste  etc.
-    /// Value of `true` must be returned for all the actions that are supported.
-    ///
-    /// - Note:
-    /// This function only expects `true` to be returned for the supported actions. Whether the action is shown in the menu or not,
-    /// is handled automatically based on the context. For e.g. even if `true` is returned for selector `select(:)`, it  will not be
-    /// shown if the editor/renderer is empty as there is nothing to select.
-    ///
-    /// Any custom menu item that needs to be displayed must be added to `UIMenuController.shared.menuItems`. Also, `canPerformAction(action:sender)` should
-    /// be overridden to return true/false based on the context. These items will be shown in the menu in addition to default actions supported
-    /// by this function.
-    /// - Parameters:
-    ///   - action: Name of the action
-    ///   - sender: sender  of the action
     func canPerformDefaultAction(_ action: Selector, withSender sender: Any?) -> Bool
+    
+    func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool
 }
