@@ -281,7 +281,11 @@ class RichTextView: AutogrowingTextView {
     }
 
     private func updatePlaceholderVisibility() {
-        self.placeholderLabel.attributedText = self.attributedText.length == 0 ? self.placeholderText : NSAttributedString()
+        guard self.attributedText.length == 0 else {
+            placeholderLabel.removeFromSuperview()
+            return
+        }
+        setupPlaceholder()
     }
 
     func attributeValue(at location: CGPoint, for attribute: NSAttributedString.Key) -> Any? {
