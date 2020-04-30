@@ -39,8 +39,6 @@ class RichTextView: AutogrowingTextView {
         }
     }
 
-    weak var menuDelegate: MenuDelegate?
-
     var editorView: EditorView? {
         return superview as? EditorView
     }
@@ -323,6 +321,11 @@ class RichTextView: AutogrowingTextView {
         return characterRange(at: point)?.toNSRange(in: self)
     }
 
+    func didTap(at location: CGPoint) {
+        let characterRange = rangeOfCharacter(at: location)
+        richTextViewDelegate?.richTextView(self, didTapAtLocation: location, characterRange: characterRange)
+    }
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
             let position = touch.location(in: self)
@@ -330,28 +333,69 @@ class RichTextView: AutogrowingTextView {
         }
     }
 
-    func didTap(at location: CGPoint) {
-        let characterRange = rangeOfCharacter(at: location)
-        richTextViewDelegate?.richTextView(self, didTapAtLocation: location, characterRange: characterRange)
-    }
-
-    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        return menuDelegate?.canPerformDefaultAction(action,  withSender: sender) == true
-            && super.responds(to: action) && super.canPerformAction(action, withSender: sender)
-    }
-
-    override func perform(_ aSelector: Selector!) -> Unmanaged<AnyObject>! {
-        super.perform(aSelector)
-    }
-
-    override func perform(_ aSelector: Selector!, with object: Any!) -> Unmanaged<AnyObject>! {
-        if menuDelegate?.responds(to: aSelector) == true {
-            return menuDelegate?.perform(aSelector, with: object)
+    override func copy(_ sender: Any?) {
+        if editorView?.responds(to: #selector(copy(_:))) ?? false {
+            editorView?.copy(sender)
         } else {
-            return super.perform(aSelector, with: object)
+            super.copy(sender)
         }
     }
 
+    override func paste(_ sender: Any?) {
+        if editorView?.responds(to: #selector(paste(_:))) ?? false {
+            editorView?.paste(sender)
+        } else {
+            super.paste(sender)
+        }
+    }
+
+    override func cut(_ sender: Any?) {
+        if editorView?.responds(to: #selector(cut)) ?? false {
+            editorView?.cut(sender)
+        } else {
+            super.cut(sender)
+        }
+    }
+
+    override func select(_ sender: Any?) {
+        if editorView?.responds(to: #selector(select)) ?? false {
+            editorView?.select(sender)
+        } else {
+            super.select(sender)
+        }
+    }
+
+    override func selectAll(_ sender: Any?) {
+        if editorView?.responds(to: #selector(selectAll)) ?? false {
+            editorView?.selectAll(sender)
+        } else {
+            super.selectAll(sender)
+        }
+    }
+
+    override func toggleUnderline(_ sender: Any?) {
+        if editorView?.responds(to: #selector(toggleUnderline)) ?? false {
+            editorView?.toggleUnderline(sender)
+        } else {
+            super.toggleUnderline(sender)
+        }
+    }
+
+    override func toggleItalics(_ sender: Any?) {
+        if editorView?.responds(to: #selector(toggleItalics)) ?? false {
+            editorView?.toggleItalics(sender)
+        } else {
+            super.toggleItalics(sender)
+        }
+    }
+
+    override func toggleBoldface(_ sender: Any?) {
+        if editorView?.responds(to: #selector(toggleBoldface)) ?? false {
+            editorView?.toggleBoldface(sender)
+        } else {
+            super.toggleBoldface(sender)
+        }
+    }
 }
 
 extension RichTextView: NSLayoutManagerDelegate {
