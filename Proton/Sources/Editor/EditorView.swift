@@ -648,6 +648,11 @@ open class EditorView: UIView {
     public override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return richTextView.canPerformAction(action, withSender: sender)
     }
+
+    open func canPerformDefaultAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return true
+    }
+
 }
 
 extension EditorView {
