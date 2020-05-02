@@ -144,7 +144,7 @@ class TestEditor: EditorView {
         print("Custom Cut")
     }
 
-    override func canPerformDefaultAction(_ action: Selector, withSender sender: Any?) -> Bool {
+    override func canPerformMenuAction(_ action: Selector, withSender sender: Any?) -> Bool {
         // Example to disable selector. Copy only available when text length > 5 and also allowed by the UITextView's current state
         // e.g. even if text length is greater than 5, copy will be disabled if no text is selected.
         if action == #selector(copy(_:)) {
