@@ -649,10 +649,17 @@ open class EditorView: UIView {
         return richTextView.canPerformAction(action, withSender: sender)
     }
 
-    open func canPerformDefaultAction(_ action: Selector, withSender sender: Any?) -> Bool {
+    /// Determines if the given menu action can be invoked.
+    /// - Parameters:
+    ///   - action: Action to be invoked
+    ///   - sender: Sender of the action
+    /// - Returns:
+    /// `true` to invoke default behaviour.
+    /// `false` to conditionally disable/hide menu item. Display of menu item still depends on the context. E.g. Select is not shown
+    /// in case the editor is empty.
+    open func canPerformMenuAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return true
     }
-
 }
 
 extension EditorView {

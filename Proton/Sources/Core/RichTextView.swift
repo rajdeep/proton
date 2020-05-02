@@ -334,7 +334,7 @@ class RichTextView: AutogrowingTextView {
     }
 
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        guard editorView?.canPerformDefaultAction(action, withSender: sender) == true else {
+        guard editorView?.canPerformMenuAction(action, withSender: sender) == true else {
             return false
         }
 
