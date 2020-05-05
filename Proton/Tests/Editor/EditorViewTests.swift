@@ -460,21 +460,4 @@ class EditorViewTests: XCTestCase {
         XCTAssertTrue(registeredCommands[0] === command2)
         XCTAssertTrue(registeredCommands[1] === command4)
     }
-
-    func testInvokesCanPerformDefaultActionOnCanPerformAction() {
-        let testExpectation = functionExpectation()
-
-        let editor = EditorView()
-        let menuDelegate = MockMenuDelegate()
-        menuDelegate.onCanPerformDefaultAction = { action, _ in
-            XCTAssertEqual(action, #selector(editor.selectAll(_:)))
-            testExpectation.fulfill()
-            return true
-        }
-
-        editor.menuDelegate = menuDelegate
-        let _ = editor.canPerformAction(#selector(editor.selectAll(_:)), withSender: nil)
-        waitForExpectations(timeout: 1.0)
-
-    }
 }

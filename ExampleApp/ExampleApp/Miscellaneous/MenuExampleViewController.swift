@@ -32,6 +32,7 @@ class MenuExampleViewController: ExamplesBaseViewController {
     override func setup() {
         super.setup()
 
+        let editor = TestEditor()
         editor.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(editor)
 
@@ -39,7 +40,6 @@ class MenuExampleViewController: ExamplesBaseViewController {
         editor.layer.borderWidth = 1.0
 
         editor.delegate = self
-        editor.menuDelegate = self
 
         let button = UIButton(type: .system)
         button.setTitle("Insert panel", for: .normal)
@@ -105,25 +105,7 @@ extension MenuExampleViewController: EditorViewDelegate {
     }
 }
 
-extension MenuExampleViewController: MenuDelegate {
-    func canPerformDefaultAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        // Add any default textview actions. Returning true will show the menu item if applicable. e.g.
-        // copy will be shown only if something is selected first.
-        return action == #selector(select(_:))
-            || action == #selector(selectAll(_:))
-            || action == #selector(cut(_:))
-            || action == #selector(copy(_:))
-            || action == #selector(paste(_:))
-    }
-
-    override func copy(_ sender: Any?) {
-        print("Custom copy")
-    }
-
-    override func paste(_ sender: Any?) {
-        print("Custom Paste")
-    }
-
+extension MenuExampleViewController {
     @objc func a() {
         print("A")
         resetMenu()
@@ -147,6 +129,30 @@ extension MenuExampleViewController: MenuDelegate {
         menu.isMenuVisible = true
         menu.showMenu(from: editor, rect: frame)
     }
+}
 
+class TestEditor: EditorView {
+    override func copy(_ sender: Any?) {
+        print("Custom copy")
+    }
 
+    override func paste(_ sender: Any?) {
+        print("Custom Paste")
+    }
+
+    override func cut(_ sender: Any?) {
+        print("Custom Cut")
+    }
+
+    override func canPerformMenuAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        // Example to disable selector. Copy only available when text length > 5 and also allowed by the UITextView's current state
+        // e.g. even if text length is greater than 5, copy will be disabled if no text is selected.
+        if action == #selector(copy(_:)) {
+            return attributedText.length > 5
+        }
+
+        // to apply default behaviour, return true
+        return true
+
+    }
 }
