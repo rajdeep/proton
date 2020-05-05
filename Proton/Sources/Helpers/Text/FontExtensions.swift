@@ -39,6 +39,11 @@ public extension UIFont {
         return traits.contains(.traitMonoSpace)
     }
 
+    var isAppleEmoji: Bool {
+        return fontName == ".AppleColorEmojiUI" // inserted from iOS Emoji keyboard or macOS Character Viewer
+            || fontName == "LastResort" // interesting font available since Mac OS 8.5 to render unsupported emoji
+    }
+
     var textStyle: UIFont.TextStyle {
         guard let style = fontDescriptor.object(forKey: .textStyle) as? String else {
             return .body
