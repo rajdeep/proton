@@ -377,6 +377,12 @@ open class EditorView: UIView {
         set { richTextView.autocorrectionType = newValue }
     }
     
+    /// A Boolean value indicating whether the text view allows the user to edit style information.
+    public var allowsEditingTextAttributes: Bool {
+        get { richTextView.allowsEditingTextAttributes }
+        set { richTextView.allowsEditingTextAttributes = newValue }
+    }
+    
     private func getAttachmentContentView(view: UIView?) -> AttachmentContentView? {
         guard let view = view else { return nil }
         if let attachmentContentView = view.superview as? AttachmentContentView {
