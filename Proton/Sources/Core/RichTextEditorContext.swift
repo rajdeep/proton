@@ -94,6 +94,7 @@ class RichTextEditorContext: RichTextViewContext {
             }
         }
 
+        applyFontFixForEmojiIfRequired(in: richTextView, at: range)
         return true
     }
 
@@ -101,6 +102,31 @@ class RichTextEditorContext: RichTextViewContext {
         guard textView.delegate === self else { return }
 
         guard let richTextView = activeTextView else { return }
-        richTextView.richTextViewDelegate?.richTextView(richTextView, didChangeTextAtRange: textView.selectedRange)
+        applyFontFixForEmojiIfRequired(in: richTextView, at: textView.selectedRange)
+        richTextView.richTextViewDelegate?.richTextView(richTextView, didChangeTextAtRange: richTextView.selectedRange)
+    }
+
+    // This func is required to handle a bug in NSTextStorage/UITextView where after inserting an emoji character, the
+    // typing attributes are set to default Menlo font. This causes the editor to lose the applied font that exists before the emoji
+    // character. The code looks for existing font information before emoji char and resets that in the typing attributes.
+    private func applyFontFixForEmojiIfRequired(in textView: RichTextView, at range: NSRange) {
+        guard let font = textView.typingAttributes[.font] as? UIFont,
+            font.isAppleEmoji else {
+                return
+        }
+        textView.typingAttributes[.font] = getDefaultFont(textView: textView, before: range)
+    }
+
+    private func getDefaultFont(textView: RichTextView, before range: NSRange) -> UIFont {
+        var fontToApply: UIFont?
+        let traversalRange = NSRange(location: 0, length: range.location)
+        textView.enumerateAttribute(.font, in: traversalRange, options: [.longestEffectiveRangeNotRequired, .reverse]) { font, fontRange, stop in
+            if let font = font as? UIFont,
+                font.isAppleEmoji == false {
+                fontToApply = font
+                stop.pointee = true
+            }
+        }
+        return fontToApply ?? textView.richTextStorage.defaultFont
     }
 }
