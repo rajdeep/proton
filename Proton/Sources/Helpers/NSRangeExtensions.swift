@@ -40,6 +40,9 @@ public extension NSRange {
         return NSRange(location: location + 1, length: 0)
     }
 
+    var endLocation: Int {
+        return location + length
+    }
 
     /// Converts the range to `UITextRange` in given `UITextInput`. Returns nil if the range is invalid in the `UITextInput`.
     /// - Parameter textInput: UITextInput to convert the range in.

@@ -86,30 +86,6 @@ class RichTextViewTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
 
-    func testSetsFocusBeforeForNonFocusableText() {
-        let textView = RichTextView(context: RichTextViewContext())
-        let text = NSMutableAttributedString(string: "0123")
-        text.append(NSAttributedString(string: "4567", attributes: [.noFocus: true]))
-        text.append(NSAttributedString(string: "890"))
-        textView.attributedText = text
-
-        let range = NSRange(location: 5, length: 0).toTextRange(textInput: textView)
-        textView.selectedTextRange = range
-        XCTAssertEqual(textView.selectedRange, NSRange(location: 4, length: 0))
-    }
-
-    func testSetsFocusAfterForNonFocusableText() {
-        let textView = RichTextView(context: RichTextViewContext())
-        let text = NSMutableAttributedString(string: "0123")
-        text.append(NSAttributedString(string: "4567", attributes: [.noFocus: true]))
-        text.append(NSAttributedString(string: "890"))
-        textView.attributedText = text
-        textView.selectedTextRange = NSRange(location: 3, length: 0).toTextRange(textInput: textView)
-        let range = NSRange(location: 6, length: 0).toTextRange(textInput: textView)
-        textView.selectedTextRange = range
-        XCTAssertEqual(textView.selectedRange, NSRange(location: 8, length: 0))
-    }
-
     func testInvokesDelegateOnShiftTab() {
         let assertions: ((EditorKey, UIKeyModifierFlags) -> Void) = { key, flags in
             XCTAssertEqual(key, .tab)

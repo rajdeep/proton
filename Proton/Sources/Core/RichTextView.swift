@@ -64,20 +64,60 @@ class RichTextView: AutogrowingTextView {
             let old = oldValue?.toNSRange(in: self)
             let new = selectedTextRange?.toNSRange(in: self)
 
-            // Handle the case where caret is moved using keys or direct taps on given location.
-            // When selecting text or using backspace/delete, this code is skipped
-            if oldValue != selectedTextRange,
-                let new = new, new.length <= 1,
-                new.location < attributedText.length - 1 {
+            adjustTextBlockRangeOnSelectionChangeIfRequired(oldRange: old, newRange: new)
+            richTextViewDelegate?.richTextView(self, selectedRangeChangedFrom: old, to: selectedTextRange?.toNSRange(in: self))
+        }
+    }
 
-                let newTextRange = attributedText.attributedSubstring(from: NSRange(location: new.location, length: 1))
-                let isNonFocus = newTextRange.attribute(.noFocus, at: 0, effectiveRange: nil) as? Bool == true
+    private func adjustTextBlockRangeOnSelectionChangeIfRequired(oldRange: NSRange?, newRange: NSRange?) {
+        guard let old = oldRange,
+            let new = newRange,
+            old != new else { return }
 
-                if isNonFocus == true {
-                    adjustRangeOnNonFocus(oldRange: oldValue)
-                }
+        let isReverseTraversal = (new.location < old.location) || (new.endLocation < old.endLocation)
+
+        guard new.length > 0 else {
+            if let textBlockRange = attributedText.rangeOf(attribute: .noFocus, at: new.location),
+                textBlockRange.location != new.location {
+                let location = isReverseTraversal ? textBlockRange.location : textBlockRange.endLocation
+                selectedRange = NSRange(location: location, length: 0)
             }
-            richTextViewDelegate?.richTextView(self, selectedRangeChangedFrom: old, to: new)
+            return
+        }
+
+        let isLocationChanged = new.location != old.location
+        let location = isLocationChanged ? new.location : max(0, new.endLocation - 1)
+
+        guard let textBlockRange = attributedText.rangeOf(attribute: .noFocus, at: location),
+            textBlockRange.contains(location) else {
+                return
+        }
+
+        if isReverseTraversal {
+            adjustTextBlockRangeReverse(new: new, old: old, textBlockRange: textBlockRange)
+        } else {
+            adjustTextBlockRangeForward(new: new, old: old, textBlockRange: textBlockRange)
+        }
+    }
+
+    private func adjustTextBlockRangeReverse(new: NSRange, old: NSRange, textBlockRange: NSRange) {
+        if textBlockRange.union(new) == textBlockRange && new.endLocation == old.endLocation && textBlockRange.contains(new.location) == false {
+            selectedRange = NSRange(location: textBlockRange.location, length: old.endLocation - textBlockRange.endLocation)
+        } else if new.endLocation < textBlockRange.endLocation && new.endLocation > textBlockRange.location {
+            selectedRange = NSRange(location: new.location, length: textBlockRange.location - new.location)
+        } else {
+            selectedRange = textBlockRange.union(new)
+        }
+    }
+
+    private func adjustTextBlockRangeForward(new: NSRange, old: NSRange, textBlockRange: NSRange) {
+        let isLocationChanged = new.location != old.location
+        if (new.contains(textBlockRange.location) && new.contains(textBlockRange.endLocation - 1)
+            || (textBlockRange.union(new) == textBlockRange && new.length > 0 && isLocationChanged == false)
+            || isLocationChanged == false) {
+            selectedRange = new.union(textBlockRange)
+        } else {
+            selectedRange = NSRange(location: textBlockRange.endLocation, length: new.endLocation - textBlockRange.endLocation)
         }
     }
 
