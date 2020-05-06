@@ -292,12 +292,7 @@ open class EditorView: UIView {
     /// Text to be set in the `EditorView`
     public var attributedText: NSAttributedString {
         get { richTextView.attributedText }
-        set {
-            // Focus needs to be set in the Editor without which the
-            // encode command fails on macOS
-            richTextView.becomeFirstResponder()
-            richTextView.attributedText = newValue
-        }
+        set { richTextView.attributedText = newValue }
     }
 
     /// Determines if the selection handles should be shown when `selectedRange` is set programatically. Defaults is `true`.
