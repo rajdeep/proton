@@ -17,7 +17,6 @@
 		1B183D9223CEEED900AE83E5 /* EditorContentEncoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9023CEEEC400AE83E5 /* EditorContentEncoderTests.swift */; };
 		1B1C3727244BE0D60028E1ED /* EditorViewContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1C3726244BE0D60028E1ED /* EditorViewContextTests.swift */; };
 		1B238D6E2456A40200BF49D5 /* NullRichTextEditorContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B238D6D2456A40200BF49D5 /* NullRichTextEditorContext.swift */; };
-		1B238D712457D9D100BF49D5 /* MenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B238D702457D9D100BF49D5 /* MenuDelegate.swift */; };
 		1B2BC0D823CF17E300407DEE /* EditorContentTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2BC0D723CF17E300407DEE /* EditorContentTransformerTests.swift */; };
 		1B2BC0DD23CF18C700407DEE /* EditorContentDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2BC0DB23CF18C100407DEE /* EditorContentDecoding.swift */; };
 		1B45CD9123BDD7E6001EB196 /* AutogrowingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8F23BDD7E6001EB196 /* AutogrowingTextView.swift */; };
@@ -48,6 +47,7 @@
 		1B45CDEC23C1682C001EB196 /* AttachmentSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDEA23C16829001EB196 /* AttachmentSnapshotTests.swift */; };
 		1B45CDEE23C1686F001EB196 /* RichTextViewTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDED23C1686F001EB196 /* RichTextViewTestViewController.swift */; };
 		1B45CDF123C16EF4001EB196 /* RichTextAttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDF023C16EF4001EB196 /* RichTextAttachmentView.swift */; };
+		1B576089245ADDDA00D92AE8 /* EditorViewMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B576088245ADDDA00D92AE8 /* EditorViewMenuTests.swift */; };
 		1B5E2583240F5B0C00163E74 /* NSAttributedStringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5E2582240F5B0C00163E74 /* NSAttributedStringExtensionTests.swift */; };
 		1B6DE9D923C5940B007F9859 /* EditorCommandSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */; };
 		1B7A985723C4828A00C34B14 /* RichTextEditorContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A985623C4828A00C34B14 /* RichTextEditorContext.swift */; };
@@ -69,7 +69,6 @@
 		1B975AFD23CD40D200EC410C /* RichTextRendererContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975AFC23CD40D200EC410C /* RichTextRendererContext.swift */; };
 		1B975AFF23CD454700EC410C /* RichTextViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975AFE23CD454700EC410C /* RichTextViewContext.swift */; };
 		1B975B0123CD45DC00EC410C /* RendererViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975B0023CD45DC00EC410C /* RendererViewContext.swift */; };
-		1B9F89832457E066005BF9E8 /* MockMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9F89822457E066005BF9E8 /* MockMenuDelegate.swift */; };
 		1BB214D023BB2778008B84A0 /* Proton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB214C623BB2778008B84A0 /* Proton.framework */; };
 		1BBAC3CC23CD571D0088A1C8 /* RendererViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3CB23CD571D0088A1C8 /* RendererViewDelegate.swift */; };
 		1BBAC3CF23CD5A1B0088A1C8 /* UITextRangeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3CE23CD5A1B0088A1C8 /* UITextRangeExtensions.swift */; };
@@ -138,7 +137,6 @@
 		1B183D9023CEEEC400AE83E5 /* EditorContentEncoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentEncoderTests.swift; sourceTree = "<group>"; };
 		1B1C3726244BE0D60028E1ED /* EditorViewContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewContextTests.swift; sourceTree = "<group>"; };
 		1B238D6D2456A40200BF49D5 /* NullRichTextEditorContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NullRichTextEditorContext.swift; sourceTree = "<group>"; };
-		1B238D702457D9D100BF49D5 /* MenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDelegate.swift; sourceTree = "<group>"; };
 		1B2BC0D723CF17E300407DEE /* EditorContentTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentTransformerTests.swift; sourceTree = "<group>"; };
 		1B2BC0DB23CF18C100407DEE /* EditorContentDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentDecoding.swift; sourceTree = "<group>"; };
 		1B45CD8F23BDD7E6001EB196 /* AutogrowingTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutogrowingTextView.swift; sourceTree = "<group>"; };
@@ -171,6 +169,7 @@
 		1B45CDEA23C16829001EB196 /* AttachmentSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentSnapshotTests.swift; sourceTree = "<group>"; };
 		1B45CDED23C1686F001EB196 /* RichTextViewTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewTestViewController.swift; sourceTree = "<group>"; };
 		1B45CDF023C16EF4001EB196 /* RichTextAttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextAttachmentView.swift; sourceTree = "<group>"; };
+		1B576088245ADDDA00D92AE8 /* EditorViewMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewMenuTests.swift; sourceTree = "<group>"; };
 		1B5E2582240F5B0C00163E74 /* NSAttributedStringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedStringExtensionTests.swift; sourceTree = "<group>"; };
 		1B5F8393241B920400CAD5F4 /* testParagraphStyling@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testParagraphStyling@3x.png"; sourceTree = "<group>"; };
 		1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommandSnapshotTests.swift; sourceTree = "<group>"; };
@@ -205,7 +204,6 @@
 		1B975AFC23CD40D200EC410C /* RichTextRendererContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextRendererContext.swift; sourceTree = "<group>"; };
 		1B975AFE23CD454700EC410C /* RichTextViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewContext.swift; sourceTree = "<group>"; };
 		1B975B0023CD45DC00EC410C /* RendererViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererViewContext.swift; sourceTree = "<group>"; };
-		1B9F89822457E066005BF9E8 /* MockMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMenuDelegate.swift; sourceTree = "<group>"; };
 		1BB214C623BB2778008B84A0 /* Proton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Proton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BB214CA23BB2778008B84A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BB214CF23BB2778008B84A0 /* ProtonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -408,7 +406,6 @@
 				1B238D6D2456A40200BF49D5 /* NullRichTextEditorContext.swift */,
 				1B975AFC23CD40D200EC410C /* RichTextRendererContext.swift */,
 				1BD9323D243CA506005E4136 /* CommandName.swift */,
-				1B238D702457D9D100BF49D5 /* MenuDelegate.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -699,6 +696,7 @@
 				1BFFEF1D23C3364900D2BA35 /* Mocks */,
 				1BFFEF1423C332A100D2BA35 /* EditorSnapshotTests.swift */,
 				1BD993B523C999AF00563ACB /* EditorViewTests.swift */,
+				1B576088245ADDDA00D92AE8 /* EditorViewMenuTests.swift */,
 				1B1C3726244BE0D60028E1ED /* EditorViewContextTests.swift */,
 				1B8BE91C23C71E4B00353B17 /* EditorViewDelegateTests.swift */,
 				1BC25B532448768200FF88AC /* EditorContextDelegateTests.swift */,
@@ -721,7 +719,6 @@
 			isa = PBXGroup;
 			children = (
 				1BFFEF1E23C3366200D2BA35 /* MockAttachmentOffsetProvider.swift */,
-				1B9F89822457E066005BF9E8 /* MockMenuDelegate.swift */,
 				1B8BE91E23C71E8A00353B17 /* MockEditorViewDelegate.swift */,
 				1BD993C323CACCE100563ACB /* MockAttachment.swift */,
 			);
@@ -873,7 +870,6 @@
 				1B45CDC723BF14DF001EB196 /* NSAttributedString+Range.swift in Sources */,
 				1B45CDD223C00856001EB196 /* TextContainer.swift in Sources */,
 				1BBAC3CF23CD5A1B0088A1C8 /* UITextRangeExtensions.swift in Sources */,
-				1B238D712457D9D100BF49D5 /* MenuDelegate.swift in Sources */,
 				1B183D8E23CEE9BA00AE83E5 /* AttributesEncoding.swift in Sources */,
 				1BBAC3CC23CD571D0088A1C8 /* RendererViewDelegate.swift in Sources */,
 				1B91F4B323C72DC3003F9B55 /* TextProcessing.swift in Sources */,
@@ -946,8 +942,8 @@
 				1B183D9223CEEED900AE83E5 /* EditorContentEncoderTests.swift in Sources */,
 				1BBAC3D423CD696F0088A1C8 /* RendererTestViewController.swift in Sources */,
 				1BD993C423CACCE100563ACB /* MockAttachment.swift in Sources */,
+				1B576089245ADDDA00D92AE8 /* EditorViewMenuTests.swift in Sources */,
 				1BFFEF1C23C334D200D2BA35 /* InlineEditorView.swift in Sources */,
-				1B9F89832457E066005BF9E8 /* MockMenuDelegate.swift in Sources */,
 				1B45CDF123C16EF4001EB196 /* RichTextAttachmentView.swift in Sources */,
 				1BFFEF1F23C3366200D2BA35 /* MockAttachmentOffsetProvider.swift in Sources */,
 				1B45CD9423BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift in Sources */,

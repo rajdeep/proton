@@ -112,17 +112,6 @@ open class EditorView: UIView {
     /// * To prevent any command to be executed, set value to be an empty array.
     public var registeredCommands: [EditorCommand]?
 
-    /// Delegate to manage visibility of default(inbuilt) actions in the editor. These actions are same as what is shown in
-    /// `UITextView` Edit menu and when returned by the delegate, will show and execute based on default behaviour.
-    ///
-    /// - Note:
-    /// To change behavior of a predefined selector like copy or paste, the selector must be overridden in the conformance
-    /// of`MenuDelegate` with the intended behavior.
-    public var menuDelegate: MenuDelegate? {
-        get { richTextView.menuDelegate }
-        set { richTextView.menuDelegate = newValue }
-    }
-
     // Making this a convenience init fails the test `testRendersWidthRangeAttachment` as the init of a class subclassed from
     // `EditorView` is returned as type `EditorView` and not the class itself, causing the test to fail.
     /// Initializes the EditorView
@@ -653,6 +642,18 @@ open class EditorView: UIView {
 
     public override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return richTextView.canPerformAction(action, withSender: sender)
+    }
+
+    /// Determines if the given menu action can be invoked.
+    /// - Parameters:
+    ///   - action: Action to be invoked
+    ///   - sender: Sender of the action
+    /// - Returns:
+    /// `true` to invoke default behaviour.
+    /// `false` to conditionally disable/hide menu item. Display of menu item still depends on the context. E.g. Select is not shown
+    /// in case the editor is empty.
+    open func canPerformMenuAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return true
     }
 }
 
