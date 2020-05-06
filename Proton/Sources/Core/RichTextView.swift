@@ -64,61 +64,67 @@ class RichTextView: AutogrowingTextView {
             let old = oldValue?.toNSRange(in: self)
             let new = selectedTextRange?.toNSRange(in: self)
 
-            adjustTextBlockRangeOnSelectionChangeIfRequired(oldRange: old, newRange: new)
+            if let range = adjustedTextBlockRangeOnSelectionChange(oldRange: old, newRange: new) {
+                selectedRange = range
+            }
             richTextViewDelegate?.richTextView(self, selectedRangeChangedFrom: old, to: selectedTextRange?.toNSRange(in: self))
         }
     }
 
-    private func adjustTextBlockRangeOnSelectionChangeIfRequired(oldRange: NSRange?, newRange: NSRange?) {
+    private func adjustedTextBlockRangeOnSelectionChange(oldRange: NSRange?, newRange: NSRange?) -> NSRange? {
         guard let old = oldRange,
             let new = newRange,
-            old != new else { return }
+            old != new else { return nil }
 
         let isReverseTraversal = (new.location < old.location) || (new.endLocation < old.endLocation)
 
         guard new.length > 0 else {
-            if let textBlockRange = attributedText.rangeOf(attribute: .noFocus, at: new.location),
+            if let textBlockRange = attributedText.rangeOf(attribute: .textBlock, at: new.location),
                 textBlockRange.location != new.location {
                 let location = isReverseTraversal ? textBlockRange.location : textBlockRange.endLocation
-                selectedRange = NSRange(location: location, length: 0)
+                return NSRange(location: location, length: 0)
             }
-            return
+            return nil
         }
 
         let isLocationChanged = new.location != old.location
         let location = isLocationChanged ? new.location : max(0, new.endLocation - 1)
 
-        guard let textBlockRange = attributedText.rangeOf(attribute: .noFocus, at: location),
+        guard let textBlockRange = attributedText.rangeOf(attribute: .textBlock, at: location),
             textBlockRange.contains(location) else {
-                return
+                return nil
         }
 
         if isReverseTraversal {
-            adjustTextBlockRangeReverse(new: new, old: old, textBlockRange: textBlockRange)
+            return adjustedTextBlockRangeReverse(new: new, old: old, textBlockRange: textBlockRange)
         } else {
-            adjustTextBlockRangeForward(new: new, old: old, textBlockRange: textBlockRange)
+            return adjustedTextBlockRangeForward(new: new, old: old, textBlockRange: textBlockRange)
         }
     }
 
-    private func adjustTextBlockRangeReverse(new: NSRange, old: NSRange, textBlockRange: NSRange) {
+    private func adjustedTextBlockRangeReverse(new: NSRange, old: NSRange, textBlockRange: NSRange) -> NSRange {
+        let range: NSRange
         if textBlockRange.union(new) == textBlockRange && new.endLocation == old.endLocation && textBlockRange.contains(new.location) == false {
-            selectedRange = NSRange(location: textBlockRange.location, length: old.endLocation - textBlockRange.endLocation)
+            range = NSRange(location: textBlockRange.location, length: old.endLocation - textBlockRange.endLocation)
         } else if new.endLocation < textBlockRange.endLocation && new.endLocation > textBlockRange.location {
-            selectedRange = NSRange(location: new.location, length: textBlockRange.location - new.location)
+            range = NSRange(location: new.location, length: textBlockRange.location - new.location)
         } else {
-            selectedRange = textBlockRange.union(new)
+            range = textBlockRange.union(new)
         }
+        return range
     }
 
-    private func adjustTextBlockRangeForward(new: NSRange, old: NSRange, textBlockRange: NSRange) {
+    private func adjustedTextBlockRangeForward(new: NSRange, old: NSRange, textBlockRange: NSRange) -> NSRange {
+        let range: NSRange
         let isLocationChanged = new.location != old.location
         if (new.contains(textBlockRange.location) && new.contains(textBlockRange.endLocation - 1)
             || (textBlockRange.union(new) == textBlockRange && new.length > 0 && isLocationChanged == false)
             || isLocationChanged == false) {
-            selectedRange = new.union(textBlockRange)
+            range = new.union(textBlockRange)
         } else {
-            selectedRange = NSRange(location: textBlockRange.endLocation, length: new.endLocation - textBlockRange.endLocation)
+            range = NSRange(location: textBlockRange.endLocation, length: new.endLocation - textBlockRange.endLocation)
         }
+        return range
     }
 
     private func adjustRangeOnNonFocus(oldRange: UITextRange?) {
@@ -131,14 +137,14 @@ class RichTextView: AutogrowingTextView {
 
         if isReverseTraversal == true {
             rangeToTraverse = NSRange(location: 0, length: currentRange.location)
-            attributedText.enumerateAttribute(.noFocus, in: rangeToTraverse, options: [.longestEffectiveRangeNotRequired, .reverse]) { val, range, stop in
+            attributedText.enumerateAttribute(.textBlock, in: rangeToTraverse, options: [.longestEffectiveRangeNotRequired, .reverse]) { val, range, stop in
                 if (val as? Bool != true), rangeToSet == nil {
                     rangeToSet = NSRange(location: range.location + range.length, length: 0)
                     stop.pointee = true
                 }
             }
         }  else {
-            attributedText.enumerateAttribute(.noFocus, in: rangeToTraverse, options: [.longestEffectiveRangeNotRequired]) { val, range, stop in
+            attributedText.enumerateAttribute(.textBlock, in: rangeToTraverse, options: [.longestEffectiveRangeNotRequired]) { val, range, stop in
                 if (val as? Bool != true), rangeToSet == nil {
                     rangeToSet = NSRange(location: range.location, length: 0)
                     stop.pointee = true
@@ -283,11 +289,25 @@ class RichTextView: AutogrowingTextView {
     }
 
     override func deleteBackward() {
-        super.deleteBackward()
-        guard contentLength == 0 else {
+        defer {
+            if contentLength == 0 {
+                self.typingAttributes = defaultTypingAttributes
+            }
+        }
+
+        guard contentLength > 0 else { return }
+        let proposedRange = NSRange(location: max(0, selectedRange.location - 1), length: 0)
+
+        let attributeExists = (attributedText.attribute(.textBlock, at: proposedRange.location, effectiveRange: nil) as? Bool) == true
+
+        guard attributeExists, let textRange = adjustedTextBlockRangeOnSelectionChange(oldRange: selectedRange, newRange: proposedRange) else {
+            super.deleteBackward()
             return
         }
-        self.typingAttributes = defaultTypingAttributes
+
+        let rangeToDelete = NSRange(location: textRange.location, length: selectedRange.location - textRange.location)
+        replaceCharacters(in: rangeToDelete, with: NSAttributedString())
+        selectedRange = NSRange(location: textRange.location, length: 0)
     }
 
     func insertAttachment(in range: NSRange, attachment: Attachment) {

@@ -118,6 +118,35 @@ class RichTextViewTests: XCTestCase {
         assertKeyCommand(input: "\r", modifierFlags: .control, assertions: assertions)
     }
 
+    func testDeleteBackwards() {
+        let text = NSAttributedString(string: "test")
+        let textView = RichTextView(context: RichTextViewContext())
+        textView.attributedText = text
+        textView.selectedRange = textView.textEndRange
+        textView.deleteBackward()
+        XCTAssertEqual(textView.attributedText.string, "tes")
+    }
+
+    func testDeleteBackwardsToEmpty() {
+        let text = NSAttributedString(string: "A")
+        let textView = RichTextView(context: RichTextViewContext())
+        textView.attributedText = text
+        textView.selectedRange = textView.textEndRange
+        textView.deleteBackward()
+        // delete on empty
+        textView.deleteBackward()
+        XCTAssertEqual(textView.attributedText.string, "")
+    }
+
+    func testDeleteBackwardsWithSelection() {
+        let text = NSAttributedString(string: "test")
+        let textView = RichTextView(context: RichTextViewContext())
+        textView.attributedText = text
+        textView.selectedRange = text.fullRange
+        textView.deleteBackward()
+        XCTAssertEqual(textView.attributedText.string, "")
+    }
+
     private func assertKeyCommand(input: String, modifierFlags: UIKeyModifierFlags, assertions: @escaping ((EditorKey, UIKeyModifierFlags) -> Void), file: StaticString = #file, line: UInt = #line) {
         let funcExpectation = functionExpectation()
         let textView = RichTextView(context: RichTextViewContext())

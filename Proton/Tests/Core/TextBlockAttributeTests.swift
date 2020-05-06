@@ -29,7 +29,7 @@ class TextBlockAttributeTests: XCTestCase {
     func testSetsFocusAfterForNonFocusableText() {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "0123")
-        text.append(NSAttributedString(string: "4567", attributes: [.noFocus: true]))
+        text.append(NSAttributedString(string: "4567", attributes: [.textBlock: true]))
         text.append(NSAttributedString(string: "890"))
         textView.attributedText = text
 
@@ -42,7 +42,7 @@ class TextBlockAttributeTests: XCTestCase {
     func testSetsFocusBeforeForNonFocusableText() {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "0123")
-        text.append(NSAttributedString(string: "4567", attributes: [.noFocus: true]))
+        text.append(NSAttributedString(string: "4567", attributes: [.textBlock: true]))
         text.append(NSAttributedString(string: "890"))
         textView.attributedText = text
         textView.selectedRange = NSRange(location: 9, length: 0)
@@ -55,7 +55,7 @@ class TextBlockAttributeTests: XCTestCase {
         let textView = RichTextView(context: RichTextViewContext())
 
         let text = NSMutableAttributedString(string: "0123")
-        text.append(NSAttributedString(string: "4567", attributes: [.noFocus: true]))
+        text.append(NSAttributedString(string: "4567", attributes: [.textBlock: true]))
         text.append(NSAttributedString(string: "890"))
         textView.attributedText = text
         textView.selectedRange = NSRange(location: 8, length: 2)
@@ -68,7 +68,7 @@ class TextBlockAttributeTests: XCTestCase {
         let textView = RichTextView(context: RichTextViewContext())
 
         let text = NSMutableAttributedString(string: "0123")
-        text.append(NSAttributedString(string: "4567", attributes: [.noFocus: true]))
+        text.append(NSAttributedString(string: "4567", attributes: [.textBlock: true]))
         text.append(NSAttributedString(string: "890"))
         textView.attributedText = text
         textView.selectedRange = NSRange(location: 2, length: 1)
@@ -81,8 +81,8 @@ class TextBlockAttributeTests: XCTestCase {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "This is test string with attribute")
         textView.attributedText = text
-        textView.addAttributes([.noFocus: true], range: NSRange(location: 8, length: 4)) // test
-        textView.addAttributes([.noFocus: true], range: NSRange(location: 13, length: 6)) // string
+        textView.addAttributes([.textBlock: true], range: NSRange(location: 8, length: 4)) // test
+        textView.addAttributes([.textBlock: true], range: NSRange(location: 13, length: 6)) // string
 
         textView.selectedRange = NSRange(location: 12, length: 1) // space between test and string
         textView.selectedTextRange = NSRange(location: 11, length: 2).toTextRange(textInput: textView) // t (ending of test) and space
@@ -95,8 +95,8 @@ class TextBlockAttributeTests: XCTestCase {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "This is test string with attribute")
         textView.attributedText = text
-        textView.addAttributes([.noFocus: true], range: NSRange(location: 8, length: 4)) // test
-        textView.addAttributes([.noFocus: true], range: NSRange(location: 13, length: 6)) // string
+        textView.addAttributes([.textBlock: true], range: NSRange(location: 8, length: 4)) // test
+        textView.addAttributes([.textBlock: true], range: NSRange(location: 13, length: 6)) // string
 
         textView.selectedRange = NSRange(location: 12, length: 7) // " string" space followed by string
         textView.selectedTextRange = NSRange(location: 11, length: 8).toTextRange(textInput: textView) // "t string" t (ending of test), space and string
@@ -109,8 +109,8 @@ class TextBlockAttributeTests: XCTestCase {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "This is test string with attribute")
         textView.attributedText = text
-        textView.addAttributes([.noFocus: true], range: NSRange(location: 8, length: 4)) // test
-        textView.addAttributes([.noFocus: true], range: NSRange(location: 13, length: 6)) // string
+        textView.addAttributes([.textBlock: true], range: NSRange(location: 8, length: 4)) // test
+        textView.addAttributes([.textBlock: true], range: NSRange(location: 13, length: 6)) // string
 
         textView.selectedRange = NSRange(location: 12, length: 1) // space between test and string
         textView.selectedTextRange = NSRange(location: 12, length: 2).toTextRange(textInput: textView) //" s" space and (starting of string)
@@ -123,8 +123,8 @@ class TextBlockAttributeTests: XCTestCase {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "This is test string with attribute")
         textView.attributedText = text
-        textView.addAttributes([.noFocus: true], range: NSRange(location: 8, length: 4)) // test
-        textView.addAttributes([.noFocus: true], range: NSRange(location: 13, length: 6)) // string
+        textView.addAttributes([.textBlock: true], range: NSRange(location: 8, length: 4)) // test
+        textView.addAttributes([.textBlock: true], range: NSRange(location: 13, length: 6)) // string
 
         textView.selectedRange = NSRange(location: 8, length: 5) // " string" space followed by string
         textView.selectedTextRange = NSRange(location: 8, length: 6).toTextRange(textInput: textView) // "test s" test followed by space and s of string
@@ -137,8 +137,8 @@ class TextBlockAttributeTests: XCTestCase {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "This is test string with attribute")
         textView.attributedText = text
-        textView.addAttributes([.noFocus: true], range: NSRange(location: 8, length: 4)) // test
-        textView.addAttributes([.noFocus: true], range: NSRange(location: 13, length: 6)) // string
+        textView.addAttributes([.textBlock: true], range: NSRange(location: 8, length: 4)) // test
+        textView.addAttributes([.textBlock: true], range: NSRange(location: 13, length: 6)) // string
 
         textView.selectedRange = NSRange(location: 8, length: 11) // "test string" test, space and string
         textView.selectedTextRange = NSRange(location: 9, length: 10).toTextRange(textInput: textView) // "est string"
@@ -151,7 +151,7 @@ class TextBlockAttributeTests: XCTestCase {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "This is test string")
         textView.attributedText = text
-        textView.addAttributes([.noFocus: true], range: NSRange(location: 8, length: 4)) // test
+        textView.addAttributes([.textBlock: true], range: NSRange(location: 8, length: 4)) // test
 
         textView.selectedRange = NSRange(location: 8, length: 4) // "test"
         textView.selectedTextRange = NSRange(location: 9, length: 3).toTextRange(textInput: textView) // "est"
@@ -164,7 +164,7 @@ class TextBlockAttributeTests: XCTestCase {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "This is test string")
         textView.attributedText = text
-        textView.addAttributes([.noFocus: true], range: NSRange(location: 8, length: 4)) // test
+        textView.addAttributes([.textBlock: true], range: NSRange(location: 8, length: 4)) // test
 
         textView.selectedRange = NSRange(location: 8, length: 4) // "test"
         textView.selectedTextRange = NSRange(location: 8, length: 3).toTextRange(textInput: textView) // "tes"
@@ -177,7 +177,7 @@ class TextBlockAttributeTests: XCTestCase {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "This is test string")
         textView.attributedText = text
-        textView.addAttributes([.noFocus: true], range: NSRange(location: 8, length: 4)) // test
+        textView.addAttributes([.textBlock: true], range: NSRange(location: 8, length: 4)) // test
 
         textView.selectedRange = NSRange(location: 7, length: 5) // " test"
         textView.selectedTextRange = NSRange(location: 8, length: 4).toTextRange(textInput: textView) // "test"
@@ -189,7 +189,7 @@ class TextBlockAttributeTests: XCTestCase {
     func testSelectsTextBlockForward() {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "0123")
-        text.append(NSAttributedString(string: "4567", attributes: [.noFocus: true]))
+        text.append(NSAttributedString(string: "4567", attributes: [.textBlock: true]))
         text.append(NSAttributedString(string: "890"))
         textView.attributedText = text
 
@@ -202,7 +202,7 @@ class TextBlockAttributeTests: XCTestCase {
     func testSelectsTextBlockReverse() {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "0123")
-        text.append(NSAttributedString(string: "4567", attributes: [.noFocus: true]))
+        text.append(NSAttributedString(string: "4567", attributes: [.textBlock: true]))
         text.append(NSAttributedString(string: "890"))
         textView.attributedText = text
 
@@ -215,7 +215,7 @@ class TextBlockAttributeTests: XCTestCase {
     func testUnselectsTextBlockWithOtherTextReverse() {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "0123")
-        text.append(NSAttributedString(string: "4567", attributes: [.noFocus: true]))
+        text.append(NSAttributedString(string: "4567", attributes: [.textBlock: true]))
         text.append(NSAttributedString(string: "890"))
         textView.attributedText = text
 
@@ -228,7 +228,7 @@ class TextBlockAttributeTests: XCTestCase {
     func testUnselectsTextWithBlockSelectedReverse() {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "0123")
-        text.append(NSAttributedString(string: "4567", attributes: [.noFocus: true]))
+        text.append(NSAttributedString(string: "4567", attributes: [.textBlock: true]))
         text.append(NSAttributedString(string: "890"))
         textView.attributedText = text
 
@@ -236,5 +236,41 @@ class TextBlockAttributeTests: XCTestCase {
         let range = NSRange(location: 4, length: 4).toTextRange(textInput: textView)
         textView.selectedTextRange = range
         XCTAssertEqual(textView.selectedRange, NSRange(location: 4, length: 4))
+    }
+
+    func testDeleteBackwardsDefault() {
+        let textView = RichTextView(context: RichTextViewContext())
+        let text = NSMutableAttributedString(string: "0123")
+        text.append(NSAttributedString(string: "4567", attributes: [.textBlock: true]))
+        text.append(NSAttributedString(string: "890"))
+        textView.attributedText = text
+
+        textView.selectedRange = NSRange(location: 2, length: 0)
+        textView.deleteBackward()
+        XCTAssertEqual(textView.attributedText.string, "0234567890")
+    }
+
+    func testDeleteBackwardsOnTextBlock() {
+        let textView = RichTextView(context: RichTextViewContext())
+        let text = NSMutableAttributedString(string: "0123")
+        text.append(NSAttributedString(string: "4567", attributes: [.textBlock: true]))
+        text.append(NSAttributedString(string: "890"))
+        textView.attributedText = text
+
+        textView.selectedRange = NSRange(location: 8, length: 0)
+        textView.deleteBackward()
+        XCTAssertEqual(textView.attributedText.string, "0123890")
+    }
+
+    func testDeleteBackwardsOnTextBlockWithSelection() {
+        let textView = RichTextView(context: RichTextViewContext())
+        let text = NSMutableAttributedString(string: "0123")
+        text.append(NSAttributedString(string: "4567", attributes: [.textBlock: true]))
+        text.append(NSAttributedString(string: "890"))
+        textView.attributedText = text
+
+        textView.selectedRange = NSRange(location: 4, length: 6)
+        textView.deleteBackward()
+        XCTAssertEqual(textView.attributedText.string, "01230")
     }
 }
