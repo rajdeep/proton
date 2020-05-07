@@ -141,7 +141,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     }
 
     /// `EditorView` containing this attachment
-    public private(set) var containerEditorView: EditorView?
+    public private(set) weak var containerEditorView: EditorView?
 
     /// Name of the content for the `EditorView`
     /// - SeeAlso:

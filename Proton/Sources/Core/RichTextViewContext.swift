@@ -22,7 +22,7 @@ import Foundation
 import UIKit
 
 class RichTextViewContext: NSObject, UITextViewDelegate {
-    var activeTextView: RichTextView?
+    weak var activeTextView: RichTextView?
 
     func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         return interaction != .presentActions
