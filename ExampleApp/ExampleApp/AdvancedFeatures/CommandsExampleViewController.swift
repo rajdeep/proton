@@ -61,6 +61,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         (title: "Collab", command: DummyCollabCommand(), highlightOnTouch: false),
         (title: "Bold", command: BoldCommand(), highlightOnTouch: true),
         (title: "Italics", command: ItalicsCommand(), highlightOnTouch: true),
+        (title: "TextBlock", command: TextBlockCommand(), highlightOnTouch: false),
     ]
 
     let editorButtons: [(title: String, selector: Selector)] = [

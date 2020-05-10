@@ -157,7 +157,7 @@ class RichTextView: AutogrowingTextView {
 
     init(frame: CGRect = .zero, context: RichTextViewContext) {
         let textContainer = TextContainer()
-        let layoutManager = NSLayoutManager()
+        let layoutManager = LayoutManager()
 
         layoutManager.addTextContainer(textContainer)
         storage.addLayoutManager(layoutManager)

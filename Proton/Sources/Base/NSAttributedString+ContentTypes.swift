@@ -51,4 +51,10 @@ public extension NSAttributedString.Key {
     /// `EditorContentEncoder`
     /// `EditorView`
     static let inlineContentType = NSAttributedString.Key("_inlineContentType")
+
+    /// Additional style attribute for background color. Using this attribute in addition to `backgroundColor` attribute allows applying
+    /// shadow and corner radius to the background.
+    /// - Note:
+    /// This attribute only takes effect with `.backgroundColor`. In absence of `.backgroundColor`, this attribute has no effect.
+    static let backgroundStyle = NSAttributedString.Key("_backgroundStyle")
 }
