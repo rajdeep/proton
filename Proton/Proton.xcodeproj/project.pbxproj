@@ -81,6 +81,8 @@
 		1BBAC3E323CE85660088A1C8 /* RendererCommandExecutorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3E223CE85660088A1C8 /* RendererCommandExecutorTests.swift */; };
 		1BC25B542448768200FF88AC /* EditorContextDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC25B532448768200FF88AC /* EditorContextDelegateTests.swift */; };
 		1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */; };
+		1BD21554246951090000BCE2 /* LayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD21553246951090000BCE2 /* LayoutManager.swift */; };
+		1BD21556246952370000BCE2 /* BackgroundStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD21555246952370000BCE2 /* BackgroundStyle.swift */; };
 		1BD9323E243CA506005E4136 /* CommandName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD9323D243CA506005E4136 /* CommandName.swift */; };
 		1BD993B123C995B000563ACB /* TextProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993B023C995B000563ACB /* TextProcessorTests.swift */; };
 		1BD993B423C9966A00563ACB /* MockTextProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993B323C9966A00563ACB /* MockTextProcessor.swift */; };
@@ -88,6 +90,7 @@
 		1BD993B823C9AE4200563ACB /* NSAttributedString+Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993B723C9AE4200563ACB /* NSAttributedString+Content.swift */; };
 		1BD993C023C9EAA900563ACB /* TextTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993BF23C9EAA900563ACB /* TextTransformer.swift */; };
 		1BD993C423CACCE100563ACB /* MockAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993C323CACCE100563ACB /* MockAttachment.swift */; };
+		1BF90FB4245E503E00A411A3 /* TextBlockAttributeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90FB3245E503E00A411A3 /* TextBlockAttributeTests.swift */; };
 		1BFFEF0523C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF0423C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift */; };
 		1BFFEF0C23C30D5200D2BA35 /* EditorContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF0B23C30D5200D2BA35 /* EditorContentView.swift */; };
 		1BFFEF1523C332A100D2BA35 /* EditorSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF1423C332A100D2BA35 /* EditorSnapshotTests.swift */; };
@@ -220,6 +223,10 @@
 		1BBAC3E223CE85660088A1C8 /* RendererCommandExecutorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommandExecutorTests.swift; sourceTree = "<group>"; };
 		1BC25B532448768200FF88AC /* EditorContextDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContextDelegateTests.swift; sourceTree = "<group>"; };
 		1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommandExecutorTests.swift; sourceTree = "<group>"; };
+		1BD21553246951090000BCE2 /* LayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManager.swift; sourceTree = "<group>"; };
+		1BD21555246952370000BCE2 /* BackgroundStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundStyle.swift; sourceTree = "<group>"; };
+		1BD21557246961320000BCE2 /* testDefaultBackground@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testDefaultBackground@3x.png"; sourceTree = "<group>"; };
+		1BD21558246961320000BCE2 /* testBackgroundStyle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testBackgroundStyle@3x.png"; sourceTree = "<group>"; };
 		1BD9323D243CA506005E4136 /* CommandName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandName.swift; sourceTree = "<group>"; };
 		1BD993B023C995B000563ACB /* TextProcessorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessorTests.swift; sourceTree = "<group>"; };
 		1BD993B323C9966A00563ACB /* MockTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTextProcessor.swift; sourceTree = "<group>"; };
@@ -227,6 +234,7 @@
 		1BD993B723C9AE4200563ACB /* NSAttributedString+Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Content.swift"; sourceTree = "<group>"; };
 		1BD993BF23C9EAA900563ACB /* TextTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransformer.swift; sourceTree = "<group>"; };
 		1BD993C323CACCE100563ACB /* MockAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAttachment.swift; sourceTree = "<group>"; };
+		1BF90FB3245E503E00A411A3 /* TextBlockAttributeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBlockAttributeTests.swift; sourceTree = "<group>"; };
 		1BFFEF0423C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAutogrowingTextViewDelegate.swift; sourceTree = "<group>"; };
 		1BFFEF0B23C30D5200D2BA35 /* EditorContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentView.swift; sourceTree = "<group>"; };
 		1BFFEF1423C332A100D2BA35 /* EditorSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorSnapshotTests.swift; sourceTree = "<group>"; };
@@ -399,6 +407,7 @@
 			children = (
 				1B45CDB923BF10DF001EB196 /* TextStorage.swift */,
 				1B45CDCF23C007AF001EB196 /* RichTextView.swift */,
+				1BD21553246951090000BCE2 /* LayoutManager.swift */,
 				1B45CDD123C00856001EB196 /* TextContainer.swift */,
 				1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */,
 				1B975AFE23CD454700EC410C /* RichTextViewContext.swift */,
@@ -416,6 +425,7 @@
 				1B45CDC823BF15CF001EB196 /* Mocks */,
 				1B45CDC023BF131B001EB196 /* TextStorageTests.swift */,
 				1B45CDD823C0484A001EB196 /* RichTextViewTests.swift */,
+				1BF90FB3245E503E00A411A3 /* TextBlockAttributeTests.swift */,
 				1B82570523C48FEC0033A0A9 /* RichTextViewContextTests.swift */,
 				1B45CDDA23C04BE3001EB196 /* RichTextViewSnapshotTests.swift */,
 			);
@@ -618,6 +628,7 @@
 				1B45CD8F23BDD7E6001EB196 /* AutogrowingTextView.swift */,
 				1B45CDBB23BF1174001EB196 /* Types.swift */,
 				1B45CDBD23BF125D001EB196 /* NSAttributedString+ContentTypes.swift */,
+				1BD21555246952370000BCE2 /* BackgroundStyle.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -728,6 +739,8 @@
 		1BFFEF2223C3423800D2BA35 /* ProtonTests.EditorSnapshotTests */ = {
 			isa = PBXGroup;
 			children = (
+				1BD21558246961320000BCE2 /* testBackgroundStyle@3x.png */,
+				1BD21557246961320000BCE2 /* testDefaultBackground@3x.png */,
 				1B5F8393241B920400CAD5F4 /* testParagraphStyling@3x.png */,
 				1B872B9923EE4BB40070A92A /* testGetsCaretRectForPositionInEmptyEditor@3x.png */,
 				1B872B9823EE4BB40070A92A /* testGetsCaretRectForPositionOutsideBounds@3x.png */,
@@ -871,6 +884,7 @@
 				1B45CDD223C00856001EB196 /* TextContainer.swift in Sources */,
 				1BBAC3CF23CD5A1B0088A1C8 /* UITextRangeExtensions.swift in Sources */,
 				1B183D8E23CEE9BA00AE83E5 /* AttributesEncoding.swift in Sources */,
+				1BD21554246951090000BCE2 /* LayoutManager.swift in Sources */,
 				1BBAC3CC23CD571D0088A1C8 /* RendererViewDelegate.swift in Sources */,
 				1B91F4B323C72DC3003F9B55 /* TextProcessing.swift in Sources */,
 				1B45CDDD23C05340001EB196 /* Attachment.swift in Sources */,
@@ -878,6 +892,7 @@
 				1B004EC723C1C287007893AA /* EditorView.swift in Sources */,
 				1B8BE91B23C71CEA00353B17 /* EditorViewDelegate.swift in Sources */,
 				1BBAC3DD23CDB8C10088A1C8 /* RendererCommand.swift in Sources */,
+				1BD21556246952370000BCE2 /* BackgroundStyle.swift in Sources */,
 				1B91F4B123C72D87003F9B55 /* TextProcessor.swift in Sources */,
 				1B2BC0DD23CF18C700407DEE /* EditorContentDecoding.swift in Sources */,
 				1B45CDC523BF13D4001EB196 /* NSRangeExtensions.swift in Sources */,
@@ -917,6 +932,7 @@
 				1BD993B423C9966A00563ACB /* MockTextProcessor.swift in Sources */,
 				1B164F5223D2B9D400A0869A /* TestTextProcessor.swift in Sources */,
 				1BD993B123C995B000563ACB /* TextProcessorTests.swift in Sources */,
+				1BF90FB4245E503E00A411A3 /* TextBlockAttributeTests.swift in Sources */,
 				1BBAC3DA23CD7A8B0088A1C8 /* MockRendererViewDelegate.swift in Sources */,
 				1BFFEF1523C332A100D2BA35 /* EditorSnapshotTests.swift in Sources */,
 				1BD993C023C9EAA900563ACB /* TextTransformer.swift in Sources */,

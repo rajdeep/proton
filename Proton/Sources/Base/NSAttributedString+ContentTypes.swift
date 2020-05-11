@@ -29,10 +29,10 @@ extension NSAttributedString.Key {
 }
 
 public extension NSAttributedString.Key {
-    /// Applying this attribute with value of `true` to a range of text makes that text non-focusable.
-    /// The content can still be deleted and selected but cursor cannot be moved to non-focusable range
-    /// using taps or mouse/keys (macOS Catalyst)
-    static let noFocus = NSAttributedString.Key("_noFocus")
+    /// Applying this attribute with value of `true` to a range of text makes that text act as a single block/unit.
+    /// The content can still be deleted and selected but cursor cannot be moved into textBlock range
+    /// using taps or mouse/keys (macOS Catalyst). Selection and delete on part of the range works atomically on the entire range.
+    static let textBlock = NSAttributedString.Key("_textBlock")
 
     /// Identifies block based attributes. A block acts as a container for other content types. For e.g. a Paragraph is a block content
     /// that contains Text as inline content. A block content may contain multiple inline contents of different types.
@@ -51,4 +51,10 @@ public extension NSAttributedString.Key {
     /// `EditorContentEncoder`
     /// `EditorView`
     static let inlineContentType = NSAttributedString.Key("_inlineContentType")
+
+    /// Additional style attribute for background color. Using this attribute in addition to `backgroundColor` attribute allows applying
+    /// shadow and corner radius to the background.
+    /// - Note:
+    /// This attribute only takes effect with `.backgroundColor`. In absence of `.backgroundColor`, this attribute has no effect.
+    static let backgroundStyle = NSAttributedString.Key("_backgroundStyle")
 }
