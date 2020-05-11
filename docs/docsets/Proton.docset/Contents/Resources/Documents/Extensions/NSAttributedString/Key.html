@@ -14,7 +14,7 @@
     <a title="Key Extension Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../../index.html">Proton Docs</a> (78% documented)</p>
+        <p><a href="../../index.html">Proton Docs</a> (77% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -152,9 +152,6 @@
                 <a href="../../Protocols.html#/s:6Proton13InlineContentP">InlineContent</a>
               </li>
               <li class="nav-group-task">
-                <a href="../../Protocols/MenuDelegate.html">MenuDelegate</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../../Protocols/RendererCommand.html">RendererCommand</a>
               </li>
               <li class="nav-group-task">
@@ -181,6 +178,9 @@
                 <a href="../../Structs/AnyEditorTextEncoding.html">AnyEditorTextEncoding</a>
               </li>
               <li class="nav-group-task">
+                <a href="../../Structs/BackgroundStyle.html">BackgroundStyle</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../../Structs/CommandName.html">CommandName</a>
               </li>
               <li class="nav-group-task">
@@ -191,6 +191,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../../Structs/EditorLine.html">EditorLine</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Structs/ShadowStyle.html">ShadowStyle</a>
               </li>
             </ul>
           </li>
@@ -228,9 +231,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:So21NSAttributedStringKeya6ProtonE7noFocusABvpZ"></a>
-                    <a name="//apple_ref/swift/Variable/noFocus" class="dashAnchor"></a>
-                    <a class="token" href="#/s:So21NSAttributedStringKeya6ProtonE7noFocusABvpZ">noFocus</a>
+                    <a name="/s:So21NSAttributedStringKeya6ProtonE9textBlockABvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/textBlock" class="dashAnchor"></a>
+                    <a class="token" href="#/s:So21NSAttributedStringKeya6ProtonE9textBlockABvpZ">textBlock</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -238,16 +241,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Applying this attribute with value of <code>true</code> to a range of text makes that text non-focusable.
-The content can still be deleted and selected but cursor cannot be moved to non-focusable range
-using taps or mouse/keys (macOS Catalyst)</p>
+                        <p>Applying this attribute with value of <code>true</code> to a range of text makes that text act as a single block/unit.
+The content can still be deleted and selected but cursor cannot be moved into textBlock range
+using taps or mouse/keys (macOS Catalyst). Selection and delete on part of the range works atomically on the entire range.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">noFocus</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="o">.</span><span class="kt">Key</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">textBlock</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="o">.</span><span class="kt">Key</span></code></pre>
 
                         </div>
                       </div>
@@ -326,12 +329,45 @@ This utility functions allow breaking content in a block based content string in
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:So21NSAttributedStringKeya6ProtonE15backgroundStyleABvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/backgroundStyle" class="dashAnchor"></a>
+                    <a class="token" href="#/s:So21NSAttributedStringKeya6ProtonE15backgroundStyleABvpZ">backgroundStyle</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Additional style attribute for background color. Using this attribute in addition to <code>backgroundColor</code> attribute allows applying
+shadow and corner radius to the background.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This attribute only takes effect with <code>.backgroundColor</code>. In absence of <code>.backgroundColor</code>, this attribute has no effect.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">backgroundStyle</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="o">.</span><span class="kt">Key</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-04-28)</p>
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-05-11)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

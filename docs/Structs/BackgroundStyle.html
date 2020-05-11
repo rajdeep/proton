@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>EditorTextEncoding Protocol Reference</title>
+    <title>BackgroundStyle Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Protocol/EditorTextEncoding" class="dashAnchor"></a>
-    <a title="EditorTextEncoding Protocol Reference"></a>
+    <a name="//apple_ref/swift/Struct/BackgroundStyle" class="dashAnchor"></a>
+    <a title="BackgroundStyle Structure Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">Proton Docs</a> (77% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">Proton Reference</a>
         <img id="carat" src="../img/carat.png" />
-        EditorTextEncoding Protocol Reference
+        BackgroundStyle Structure Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -216,31 +216,18 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>EditorTextEncoding</h1>
+            <h1>BackgroundStyle</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">EditorTextEncoding</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">BackgroundStyle</span></code></pre>
 
                 </div>
               </div>
-            <p>Describes an encoder for a content type in Editor. This can be used in conjunction with <code><a href="../Structs/AnyEditorTextEncoding.html">AnyEditorTextEncoding</a></code>
- to register various encoders for each of the supported content types.
- ### Usage Example ###</p>
-<pre class="highlight swift"><code> <span class="kd">struct</span> <span class="kt">ParagraphEncoder</span><span class="p">:</span> <span class="kt">EditorTextEncoding</span> <span class="p">{</span>
-     <span class="kd">func</span> <span class="nf">encode</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">EditorContent</span><span class="o">.</span><span class="kt">Name</span><span class="p">,</span> <span class="nv">string</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">JSON</span> <span class="p">{</span>
-         <span class="k">var</span> <span class="nv">paragraph</span> <span class="o">=</span> <span class="kt">JSON</span><span class="p">()</span>
-         <span class="n">paragraph</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">rawValue</span>
-         <span class="k">if</span> <span class="k">let</span> <span class="nv">style</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="nf">attribute</span><span class="p">(</span><span class="o">.</span><span class="n">paragraphStyle</span><span class="p">,</span> <span class="nv">at</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">effectiveRange</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span> <span class="k">as?</span> <span class="kt">NSParagraphStyle</span> <span class="p">{</span>
-             <span class="n">paragraph</span><span class="p">[</span><span class="n">style</span><span class="o">.</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">style</span><span class="o">.</span><span class="n">value</span>
-         <span class="p">}</span>
-         <span class="n">paragraph</span><span class="o">.</span><span class="n">contents</span> <span class="o">=</span> <span class="nf">contentsFrom</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">paragraph</span>
-     <span class="p">}</span>
- <span class="p">}</span>
-</code></pre>
-<div class="aside aside-see-also">
-    <p class="aside-title">See also</p>
-    <code><a href="../Protocols/EditorContentEncoder.html">EditorContentEncoder</a></code>
+            <p>Additional style for background color attribute. Adding <code>BackgroundStyle</code> attribute in addition to
+<code>backgroundColor</code> attribute will apply shadow and rounded corners as specified.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This attribute had no effect in absence of <code>backgroundColor</code> attribute.
 
 </div>
 
@@ -251,9 +238,63 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton18EditorTextEncodingP11EncodedTypeQa"></a>
-                    <a name="//apple_ref/swift/Alias/EncodedType" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton18EditorTextEncodingP11EncodedTypeQa">EncodedType</a>
+                    <a name="/s:6Proton15BackgroundStyleV12cornerRadius12CoreGraphics7CGFloatVvp"></a>
+                    <a name="//apple_ref/swift/Property/cornerRadius" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton15BackgroundStyleV12cornerRadius12CoreGraphics7CGFloatVvp">cornerRadius</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Corner radius of the background</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">cornerRadius</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton15BackgroundStyleV6shadowAA06ShadowC0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/shadow" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton15BackgroundStyleV6shadowAA06ShadowC0VSgvp">shadow</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Optional shadow style for the background</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">shadow</span><span class="p">:</span> <span class="kt"><a href="../Structs/ShadowStyle.html">ShadowStyle</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton15BackgroundStyleV12cornerRadius6shadowAC12CoreGraphics7CGFloatV_AA06ShadowC0VSgtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(cornerRadius:shadow:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton15BackgroundStyleV12cornerRadius6shadowAC12CoreGraphics7CGFloatV_AA06ShadowC0VSgtcfc">init(cornerRadius:<wbr>shadow:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -268,67 +309,9 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">associatedtype</span> <span class="kt">EncodedType</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">cornerRadius</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">shadow</span><span class="p">:</span> <span class="kt"><a href="../Structs/ShadowStyle.html">ShadowStyle</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:6Proton18EditorTextEncodingP6encode4name6string11EncodedTypeQzAA0B7ContentV4NameV_So18NSAttributedStringCtF"></a>
-                    <a name="//apple_ref/swift/Method/encode(name:string:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton18EditorTextEncodingP6encode4name6string11EncodedTypeQzAA0B7ContentV4NameV_So18NSAttributedStringCtF">encode(name:<wbr>string:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Encodes the given attributed string to <code><a href="../Protocols/EditorTextEncoding.html#/s:6Proton18EditorTextEncodingP11EncodedTypeQa">EncodedType</a></code></p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">encode</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt"><a href="../Structs/EditorContent.html">EditorContent</a></span><span class="o">.</span><span class="kt">Name</span><span class="p">,</span> <span class="nv">string</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/EditorTextEncoding.html#/s:6Proton18EditorTextEncodingP11EncodedTypeQa">EncodedType</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>name</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Name of the content to encode</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>string</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Attributed string to encode</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
                       </div>
                     </section>
                   </div>
