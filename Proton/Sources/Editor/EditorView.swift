@@ -383,6 +383,18 @@ open class EditorView: UIView {
         set { richTextView.allowsEditingTextAttributes = newValue }
     }
     
+    @available(iOSApplicationExtension 11.0, *)
+    public var textDragDelegate: UITextDragDelegate? {
+        get { richTextView.textDragDelegate }
+        set { richTextView.textDragDelegate = newValue }
+    }
+    
+    @available(iOSApplicationExtension 11.0, *)
+    public var textDropDelegate: UITextDropDelegate? {
+        get { richTextView.textDropDelegate }
+        set { richTextView.textDropDelegate = newValue }
+    }
+        
     private func getAttachmentContentView(view: UIView?) -> AttachmentContentView? {
         guard let view = view else { return nil }
         if let attachmentContentView = view.superview as? AttachmentContentView {
