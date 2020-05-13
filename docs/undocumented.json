@@ -324,7 +324,7 @@
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 643,
+      "line": 663,
       "symbol": "EditorView.canPerformAction(_:withSender:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
