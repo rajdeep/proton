@@ -239,4 +239,99 @@ class TextProcessorTests: XCTestCase {
 
         waitForExpectations(timeout: 1.0)
     }
+
+    func testDidProcess() {
+        let testExpectation = functionExpectation()
+        let editor = EditorView()
+        let text = NSAttributedString(string: "test ")
+
+        let name = "TextProcessorTest"
+        let mockProcessor = MockTextProcessor(name: name)
+        mockProcessor.onDidProcess = { editor in
+            XCTAssertEqual(editor.attributedText.string, text.string)
+            testExpectation.fulfill()
+        }
+
+        editor.registerProcessor(mockProcessor)
+        editor.appendCharactersForTest(text)
+
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testShouldProcess() {
+        let testExpectation = functionExpectation()
+        testExpectation.isInverted = true
+
+        let editor = EditorView()
+        let text = NSAttributedString(string: "test ")
+
+        let name = "TextProcessorTest"
+        let mockProcessor = MockTextProcessor(name: name)
+        mockProcessor.onShouldProcess = { _, _, _ in
+            return false
+        }
+
+        mockProcessor.onDidProcess = { editor in
+            testExpectation.fulfill()
+        }
+
+        editor.registerProcessor(mockProcessor)
+        editor.appendCharactersForTest(text)
+
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testShouldProcessMultipleProcessors() {
+        let testExpectation1 = functionExpectation("1")
+        let testExpectation2 = functionExpectation("2")
+        let didProcessExpectation = functionExpectation("didProcess")
+
+        didProcessExpectation.isInverted = true
+
+        let editor = EditorView()
+        let text = NSAttributedString(string: "test ")
+
+        let name1 = "TextProcessorTest1"
+        let name2 = "TextProcessorTest2"
+
+        let mockProcessor1 = MockTextProcessor(name: name1)
+        let mockProcessor2 = MockTextProcessor(name: name2)
+
+        mockProcessor1.onShouldProcess = { _, _, _ in
+            testExpectation1.fulfill()
+            return true
+        }
+
+        mockProcessor2.onShouldProcess = { _, _, _ in
+            testExpectation2.fulfill()
+            return false
+        }
+
+        mockProcessor1.onDidProcess = { _ in
+            didProcessExpectation.fulfill()
+        }
+
+        mockProcessor2.onDidProcess = { _ in
+            didProcessExpectation.fulfill()
+        }
+
+        editor.registerProcessors([mockProcessor1, mockProcessor2])
+        editor.appendCharactersForTest(text)
+
+        waitForExpectations(timeout: 1.0)
+    }
+}
+
+extension EditorView {
+    func appendCharactersForTest(_ text: NSAttributedString) {
+        guard let textViewDelegate = richTextView.delegate else { return }
+        textViewDelegate.textViewDidBeginEditing?(richTextView)
+
+        if textViewDelegate.textView?(richTextView, shouldChangeTextIn: richTextView.textEndRange, replacementText: text.string) == false {
+            return
+        }
+
+        appendCharacters(text)
+        textViewDelegate.textViewDidChange?(richTextView)
+    }
 }

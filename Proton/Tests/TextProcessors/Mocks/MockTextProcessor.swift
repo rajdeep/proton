@@ -32,6 +32,8 @@ class MockTextProcessor: TextProcessing {
     var onKeyWithModifier: ((EditorView, EditorKey, UIKeyModifierFlags, NSRange) -> Void)?
     var onProcessInterrupted: ((EditorView, NSRange) -> Void)?
     var onSelectedRangeChanged: ((EditorView, NSRange?, NSRange?) -> Void)?
+    var onDidProcess: ((EditorView) -> Void)?
+    var onShouldProcess: ((EditorView, NSRange, String) -> Bool)?
 
     var processorCondition: (EditorView, NSRange) -> Bool
 
@@ -64,5 +66,13 @@ class MockTextProcessor: TextProcessing {
 
     func selectedRangeChanged(editor: EditorView, oldRange: NSRange?, newRange: NSRange?) {
         onSelectedRangeChanged?(editor, oldRange, newRange)
+    }
+
+    func didProcess(editor: EditorView) {
+        onDidProcess?(editor)
+    }
+
+    func shouldProcess(_ editorView: EditorView, shouldProcessTextIn range: NSRange, replacementText text: String) -> Bool {
+        return onShouldProcess?(editorView, range, text) ?? true
     }
 }
