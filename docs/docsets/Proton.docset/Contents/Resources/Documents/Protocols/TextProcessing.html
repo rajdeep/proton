@@ -14,7 +14,7 @@
     <a title="TextProcessing Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Proton Docs</a> (78% documented)</p>
+        <p><a href="../index.html">Proton Docs</a> (77% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -152,9 +152,6 @@
                 <a href="../Protocols.html#/s:6Proton13InlineContentP">InlineContent</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/MenuDelegate.html">MenuDelegate</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Protocols/RendererCommand.html">RendererCommand</a>
               </li>
               <li class="nav-group-task">
@@ -181,6 +178,9 @@
                 <a href="../Structs/AnyEditorTextEncoding.html">AnyEditorTextEncoding</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/BackgroundStyle.html">BackgroundStyle</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/CommandName.html">CommandName</a>
               </li>
               <li class="nav-group-task">
@@ -191,6 +191,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/EditorLine.html">EditorLine</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ShadowStyle.html">ShadowStyle</a>
               </li>
             </ul>
           </li>
@@ -284,6 +287,89 @@ executed. It is responsibility of these <code>TextProcessors</code> to do any cl
                           <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">priority</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:6Proton22TextProcessingPrioritya">TextProcessingPriority</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton14TextProcessingP13shouldProcess_0deB2In011replacementB0SbAA10EditorViewC_So8_NSRangeVSStF"></a>
+                    <a name="//apple_ref/swift/Method/shouldProcess(_:shouldProcessTextIn:replacementText:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton14TextProcessingP13shouldProcess_0deB2In011replacementB0SbAA10EditorViewC_So8_NSRangeVSStF">shouldProcess(_:<wbr>shouldProcessTextIn:<wbr>replacementText:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Determines if the text should be changed in the editor.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This function is invoked just before making the changes in the <code><a href="../Classes/EditorView.html">EditorView</a></code>. Besides preventing changing text in Editor in certain cases,
+this may also be used to do additional processing like updating <code>typingAttributes</code> on <code><a href="../Classes/EditorView.html">EditorView</a></code> based on presence of certain attributes.
+
+</div>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">shouldProcess</span><span class="p">(</span><span class="n">_</span> <span class="nv">editorView</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="n">shouldProcessTextIn</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">,</span> <span class="n">replacementText</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>editor</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Classes/EditorView.html">EditorView</a></code> in which text is being changed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Range where new text is going to be added.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>text</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Text to be inserted.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -680,12 +766,65 @@ If the range object is nil, it indicates that there is no previous/current selec
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton14TextProcessingP10didProcess6editoryAA10EditorViewC_tF"></a>
+                    <a name="//apple_ref/swift/Method/didProcess(editor:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton14TextProcessingP10didProcess6editoryAA10EditorViewC_tF">didProcess(editor:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Invoked after the text has been processed in the <code>Editor</code>.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">didProcess</span><span class="p">(</span><span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>editor</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>EditorView in which text is changed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-04-28)</p>
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-05-13)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

@@ -382,19 +382,21 @@ open class EditorView: UIView {
         get { richTextView.allowsEditingTextAttributes }
         set { richTextView.allowsEditingTextAttributes = newValue }
     }
-    
+
+    /// A text drag delegate object for customizing the drag source behavior of a text view.
     @available(iOSApplicationExtension 11.0, *)
     public var textDragDelegate: UITextDragDelegate? {
         get { richTextView.textDragDelegate }
         set { richTextView.textDragDelegate = newValue }
     }
-    
+
+    /// The text drop delegate for interacting with a drop activity in the text view.
     @available(iOSApplicationExtension 11.0, *)
     public var textDropDelegate: UITextDropDelegate? {
         get { richTextView.textDropDelegate }
         set { richTextView.textDropDelegate = newValue }
     }
-        
+
     private func getAttachmentContentView(view: UIView?) -> AttachmentContentView? {
         guard let view = view else { return nil }
         if let attachmentContentView = view.superview as? AttachmentContentView {

@@ -54,6 +54,10 @@ class RichTextEditorContext: RichTextViewContext {
 
         guard let richTextView = activeTextView else { return true }
 
+        if shouldChangeText(richTextView, range: range, replacementText: text) == false {
+            return false
+        }
+
         // if backspace
         var handled = false
         if text.isEmpty {
@@ -98,12 +102,35 @@ class RichTextEditorContext: RichTextViewContext {
         return true
     }
 
+    private func shouldChangeText(_ richTextView: RichTextView, range: NSRange, replacementText: String) -> Bool {
+        guard let editor = richTextView.superview as? EditorView else { return true }
+
+        for processor in richTextView.textProcessor?.sortedProcessors ?? [] {
+            let shouldProcess = processor.shouldProcess(editor, shouldProcessTextIn: range, replacementText: replacementText)
+            if shouldProcess == false {
+                return false
+            }
+        }
+        return true
+    }
+
     func textViewDidChange(_ textView: UITextView) {
         guard textView.delegate === self else { return }
 
         guard let richTextView = activeTextView else { return }
+
         applyFontFixForEmojiIfRequired(in: richTextView, at: textView.selectedRange)
+        invokeDidProcessIfRequired(richTextView)
+
         richTextView.richTextViewDelegate?.richTextView(richTextView, didChangeTextAtRange: richTextView.selectedRange)
+    }
+
+    private func invokeDidProcessIfRequired(_ richTextView: RichTextView) {
+        guard let editor = richTextView.superview as? EditorView else { return }
+
+        for processor in richTextView.textProcessor?.sortedProcessors ?? [] {
+            processor.didProcess(editor: editor)
+        }
     }
 
     // This func is required to handle a bug in NSTextStorage/UITextView where after inserting an emoji character, the

@@ -44,6 +44,16 @@ public protocol TextProcessing {
     /// executed. It is responsibility of these `TextProcessors` to do any cleanup/rollback if that needs to be done.
     var priority: TextProcessingPriority { get }
 
+    /// Determines if the text should be changed in the editor.
+    /// - Note:
+    /// This function is invoked just before making the changes in the `EditorView`. Besides preventing changing text in Editor in certain cases,
+    /// this may also be used to do additional processing like updating `typingAttributes` on `EditorView` based on presence of certain attributes.
+    /// - Parameters:
+    ///   - editor:`EditorView` in which text is being changed.
+    ///   - range: Range where new text is going to be added.
+    ///   - text: Text to be inserted.
+    func shouldProcess(_ editorView: EditorView, shouldProcessTextIn range: NSRange, replacementText text: String) -> Bool
+
     /// Invoked before changes are processed by the editor.
     /// - Attention:
     /// This is fired before the text has changed in the editor. This can be helpful if any state needs to be changed based on edited text.
@@ -89,10 +99,16 @@ public protocol TextProcessing {
     ///   - oldRange: Original range before the change
     ///   - newRange: Current range after the change
     func selectedRangeChanged(editor: EditorView, oldRange: NSRange?, newRange: NSRange?)
+
+    /// Invoked after the text has been processed in the `Editor`.
+    /// - Parameter editor: EditorView in which text is changed.
+    func didProcess(editor: EditorView)
 }
 
 public extension TextProcessing {
     func willProcess(deletedText: NSAttributedString, insertedText: NSAttributedString) { }
     func handleKeyWithModifiers(editor: EditorView, key: EditorKey, modifierFlags: UIKeyModifierFlags, range editedRange: NSRange) { }
     func selectedRangeChanged(editor: EditorView, oldRange: NSRange?, newRange: NSRange?) { }
+    func didProcess(editor: EditorView) { }
+    func shouldProcess(_ editorView: EditorView, shouldProcessTextIn range: NSRange, replacementText text: String) -> Bool { return true }
 }

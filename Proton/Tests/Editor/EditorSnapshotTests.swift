@@ -417,6 +417,49 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         FBSnapshotVerifyView(viewController.view)
     }
 
+    func testDefaultBackground() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let text =
+        """
+        Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 2 text Line 3 text Line 3
+        """
+
+        let line2Range = NSRange(location: 36, length: 36)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render()
+        editor.addAttribute(.backgroundColor, value: UIColor.green, at: line2Range)
+        viewController.render()
+        FBSnapshotVerifyView(viewController.view)
+    }
+
+    func testBackgroundStyle() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let text =
+        """
+        Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 2 text Line 3 text Line 3
+        """
+
+        let rangeToUpdate = NSRange(location: 30, length: 50)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render()
+        let backgroundStyle = BackgroundStyle(cornerRadius: 4, shadow: ShadowStyle(color: .gray, offset: CGSize(width: 2, height: 2), blur: 3))
+        editor.addAttribute(.backgroundColor, value: UIColor.green, at: rangeToUpdate)
+        editor.addAttributes([
+            .backgroundColor: UIColor.cyan,
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render()
+        FBSnapshotVerifyView(viewController.view)
+    }
+
+
     private func addCaretRect(at range: NSRange, in editor: EditorView, color: UIColor) {
         let rect = editor.caretRect(for: range.location)
         let view = UIView(frame: rect)

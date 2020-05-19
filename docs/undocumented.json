@@ -22,6 +22,20 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Base/BackgroundStyle.swift",
+      "line": 24,
+      "symbol": "ShadowStyle.init(color:offset:blur:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Base/BackgroundStyle.swift",
+      "line": 43,
+      "symbol": "BackgroundStyle.init(cornerRadius:shadow:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Base/Types.swift",
       "line": 25,
       "symbol": "Attributes",
@@ -296,21 +310,21 @@
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 169,
+      "line": 158,
       "symbol": "EditorView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 188,
+      "line": 177,
       "symbol": "EditorView.selectedTextRange",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 659,
+      "line": 663,
       "symbol": "EditorView.canPerformAction(_:withSender:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -386,6 +400,13 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/NSRangeExtensions.swift",
+      "line": 43,
+      "symbol": "NSRange.endLocation",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
       "line": 26,
       "symbol": "UIFont.traits",
@@ -416,41 +437,48 @@
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
       "line": 42,
+      "symbol": "UIFont.isAppleEmoji",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
+      "line": 47,
       "symbol": "UIFont.textStyle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
-      "line": 49,
+      "line": 54,
       "symbol": "UIFont.isNonDynamicTextStyle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
-      "line": 53,
+      "line": 58,
       "symbol": "UIFont.contains(trait:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
-      "line": 57,
+      "line": 62,
       "symbol": "UIFont.toggled(trait:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
-      "line": 68,
+      "line": 73,
       "symbol": "UIFont.adding(trait:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
-      "line": 78,
+      "line": 83,
       "symbol": "UIFont.removing(trait:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

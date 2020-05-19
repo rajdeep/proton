@@ -92,8 +92,17 @@ public extension NSAttributedString {
         guard location < length,
             self.attribute(attribute, at: location, effectiveRange: nil) != nil else { return nil }
 
-        let forwardRange = rangeOf(attribute: attribute, startingLocation: location, reverseLookup: false)
-        let reverseRange = rangeOf(attribute: attribute, startingLocation: location, reverseLookup: true)
+        var forwardRange = rangeOf(attribute: attribute, startingLocation: location, reverseLookup: false)
+        var reverseRange = rangeOf(attribute: attribute, startingLocation: location, reverseLookup: true)
+
+        if forwardRange?.contains(location) == false {
+            forwardRange = nil
+        }
+
+        if let r = reverseRange,
+            r.endLocation < location {
+            reverseRange = nil
+        }
 
         let range: NSRange?
         switch (reverseRange,  forwardRange) {

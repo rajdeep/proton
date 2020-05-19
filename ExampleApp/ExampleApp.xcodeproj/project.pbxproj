@@ -26,6 +26,7 @@
 		1B183DA023CEF73C00AE83E5 /* TextEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9F23CEF73C00AE83E5 /* TextEncoder.swift */; };
 		1B183DA223CEF7D600AE83E5 /* PanelEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183DA123CEF7D600AE83E5 /* PanelEncoder.swift */; };
 		1B1C3725244B05F60028E1ED /* MenuExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1C3724244B05F60028E1ED /* MenuExampleViewController.swift */; };
+		1B275F362463809200D5C377 /* TextBlockCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B275F352463809200D5C377 /* TextBlockCommand.swift */; };
 		1B2DA74D23F0C39B00F7EC52 /* DummyCollabCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2DA74C23F0C39B00F7EC52 /* DummyCollabCommand.swift */; };
 		1B45CD8B23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8A23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift */; };
 		1B45CD8D23BDD5FC001EB196 /* ExamplesBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8C23BDD5FC001EB196 /* ExamplesBaseViewController.swift */; };
@@ -108,6 +109,7 @@
 		1B183D9F23CEF73C00AE83E5 /* TextEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEncoder.swift; sourceTree = "<group>"; };
 		1B183DA123CEF7D600AE83E5 /* PanelEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelEncoder.swift; sourceTree = "<group>"; };
 		1B1C3724244B05F60028E1ED /* MenuExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuExampleViewController.swift; sourceTree = "<group>"; };
+		1B275F352463809200D5C377 /* TextBlockCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBlockCommand.swift; sourceTree = "<group>"; };
 		1B2DA74C23F0C39B00F7EC52 /* DummyCollabCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyCollabCommand.swift; sourceTree = "<group>"; };
 		1B45CD8A23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingEditorViewExampleViewController.swift; sourceTree = "<group>"; };
 		1B45CD8C23BDD5FC001EB196 /* ExamplesBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplesBaseViewController.swift; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 				1B164F3E23D29BF200A0869A /* ScrollCommand.swift */,
 				1B164F4223D2A5A000A0869A /* ResetCommand.swift */,
 				1B2DA74C23F0C39B00F7EC52 /* DummyCollabCommand.swift */,
+				1B275F352463809200D5C377 /* TextBlockCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -521,6 +524,7 @@
 				1B91F4B623C73D01003F9B55 /* TypeaheadTextProcessor.swift in Sources */,
 				1B45CD8D23BDD5FC001EB196 /* ExamplesBaseViewController.swift in Sources */,
 				1B91F4BA23C73D96003F9B55 /* TextProcessorExampleViewController.swift in Sources */,
+				1B275F362463809200D5C377 /* TextBlockCommand.swift in Sources */,
 				1BFFEEFE23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift in Sources */,
 				1B91F4B823C73D3C003F9B55 /* MarkupTextProcessor.swift in Sources */,
 				1B164F4323D2A5A000A0869A /* ResetCommand.swift in Sources */,
