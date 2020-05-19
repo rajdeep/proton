@@ -370,13 +370,87 @@ open class EditorView: UIView {
         self.attributedText = NSAttributedString()
     }
 
+    /// The auto-capitalization style for the text object.
+    /// default is `UITextAutocapitalizationTypeSentences`
+    public var autocapitalizationType: UITextAutocapitalizationType {
+        get { richTextView.autocapitalizationType }
+        set { richTextView.autocapitalizationType = newValue }
+    }
+
     /// The autocorrection style for the text object.
-    /// The default value for this property is `UITextAutocorrectionType.no`.
+    /// default is `UITextAutocorrectionTypeDefault`
     public var autocorrectionType: UITextAutocorrectionType {
         get { richTextView.autocorrectionType }
         set { richTextView.autocorrectionType = newValue }
     }
-    
+
+    /// The spell-checking style for the text object.
+    public var spellCheckingType: UITextSpellCheckingType {
+        get { richTextView.spellCheckingType }
+        set { richTextView.spellCheckingType = newValue }
+    }
+
+    /// The configuration state for smart quotes.
+    @available(iOS 11.0, *)
+    public var smartQuotesType: UITextSmartQuotesType {
+        get { richTextView.smartQuotesType }
+        set { richTextView.smartQuotesType = newValue }
+    }
+
+    /// The configuration state for smart dashes.
+    @available(iOS 11.0, *)
+    public var smartDashesType: UITextSmartDashesType {
+        get { richTextView.smartDashesType }
+        set { richTextView.smartDashesType = newValue }
+    }
+
+    /// The configuration state for the smart insertion and deletion of space characters.
+    @available(iOS 11.0, *)
+    public var smartInsertDeleteType: UITextSmartInsertDeleteType {
+        get { richTextView.smartInsertDeleteType }
+        set { richTextView.smartInsertDeleteType = newValue }
+    }
+
+    /// The keyboard style associated with the text object.
+    public var keyboardType: UIKeyboardType {
+        get { richTextView.keyboardType }
+        set { richTextView.keyboardType = newValue }
+    }
+
+    /// The appearance style of the keyboard that is associated with the text object
+    public var keyboardAppearance: UIKeyboardAppearance {
+        get { richTextView.keyboardAppearance }
+        set { richTextView.keyboardAppearance = newValue }
+    }
+
+    /// The visible title of the Return key.
+    public var returnKeyType: UIReturnKeyType {
+        get { richTextView.returnKeyType }
+        set { richTextView.returnKeyType = newValue }
+    }
+
+    /// A Boolean value indicating whether the Return key is automatically enabled when the user is entering text.
+    /// default is `NO` (when `YES`, will automatically disable return key when text widget has zero-length contents, and will automatically enable when text widget has non-zero-length contents)
+    public var enablesReturnKeyAutomatically: Bool {
+        get { richTextView.enablesReturnKeyAutomatically }
+        set { richTextView.enablesReturnKeyAutomatically = newValue }
+    }
+
+    /// Identifies whether the text object should disable text copying and in some cases hide the text being entered.
+    /// default is `NO`
+    public var isSecureTextEntry: Bool {
+        get { richTextView.isSecureTextEntry }
+        set { richTextView.isSecureTextEntry = newValue }
+    }
+
+    /// The semantic meaning expected by a text input area.
+    /// The textContentType property is to provide the keyboard with extra information about the semantic intent of the text document.
+    /// default is `nil`
+    public var textContentType: UITextContentType! {
+        get { richTextView.textContentType }
+        set { richTextView.textContentType = newValue }
+    }
+
     /// A Boolean value indicating whether the text view allows the user to edit style information.
     public var allowsEditingTextAttributes: Bool {
         get { richTextView.allowsEditingTextAttributes }
