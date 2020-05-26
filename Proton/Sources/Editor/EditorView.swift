@@ -103,6 +103,17 @@ open class EditorView: UIView {
 
     var textProcessor: TextProcessor?
 
+    @available(iOS 13.0, *)
+    public var textInteractions: [UITextInteraction] {
+        richTextView.interactions
+        .compactMap({ $0 as? UITextInteraction })
+    }
+    
+    @available(iOS, deprecated: 13.0, message: "Use textInteractions")
+    public var textViewGestures: [UIGestureRecognizer] {
+        richTextView.gestureRecognizers ?? []
+    }
+    
     /// An object interested in responding to editing and focus related events in the `EditorView`.
     public weak var delegate: EditorViewDelegate?
 
@@ -585,6 +596,11 @@ open class EditorView: UIView {
         return richTextView.wordAt(location)
     }
 
+    public func rangeOfCharacter(at point: CGPoint) -> NSRange? {
+        let location = richTextView.convert(point, from: self)
+        return richTextView.rangeOfCharacter(at: location)
+    }
+    
     /// Inserts an `Attachment` in the `EditorView`.
     /// - Parameters:
     ///   - range: Range where the `Attachment` should be inserted. If the range contains existing content, the content
