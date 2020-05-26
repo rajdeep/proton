@@ -300,7 +300,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     ///   - position: Position in the text container.
     ///   - charIndex: Character index
     public override func attachmentBounds(for textContainer: NSTextContainer?, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGRect {
-        guard let textContainer = textContainer else { return .zero }
+         guard let textContainer = textContainer, textContainer.size.height > 0 && textContainer.size.width > 0, isRendered else { return .zero }
 
         var size: CGSize
 
