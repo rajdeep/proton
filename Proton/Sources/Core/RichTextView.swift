@@ -201,6 +201,41 @@ class RichTextView: AutogrowingTextView {
         return layoutManager.glyphRange(forBoundingRect: textBounds, in: textContainer)
     }
 
+    func contentLinesInRange(_ range: NSRange) -> [EditorLine] {
+        var lines = [EditorLine]()
+        let endLocation = range.location + range.length
+        var startingRange = NSRange(location: range.location, length: 0)
+
+        while startingRange.location <= endLocation {
+            let paraRange = rangeOfParagraph(at: startingRange.location)
+            let text = self.attributedText.attributedSubstring(from: paraRange)
+            let editorLine = EditorLine(text: text, range: paraRange)
+            lines.append(editorLine)
+            startingRange = NSRange(location: paraRange.length + paraRange.location + 1, length: 0)
+        }
+
+        return lines
+    }
+
+    func rangeOfParagraph(at location: Int) -> NSRange {
+        guard let position = self.position(from: beginningOfDocument, offset: location),
+            let paraRange = tokenizer.rangeEnclosingPosition(position, with: .paragraph, inDirection: UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)),
+            let range = paraRange.toNSRange(in: self) else {
+                return NSRange(location: location, length: 0)
+        }
+        return range
+    }
+
+    func previousContentLine(from location: Int) -> EditorLine? {
+        let currentLineRange = rangeOfParagraph(at: location)
+        guard let position = self.position(from: beginningOfDocument, offset: currentLineRange.location - 1),
+            let paraRange = tokenizer.rangeEnclosingPosition(position, with: .paragraph, inDirection: UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)),
+            let range = paraRange.toNSRange(in: self) else {
+                return nil
+        }
+        return EditorLine(text: attributedText.attributedSubstring(from: range), range: range)
+    }
+
     override var keyCommands: [UIKeyCommand]? {
         let tab = "\t"
         let enter = "\r"
