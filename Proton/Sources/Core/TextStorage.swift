@@ -84,7 +84,7 @@ class TextStorage: NSTextStorage {
     }
 
     override func replaceCharacters(in range: NSRange, with attrString: NSAttributedString) {
-        // TODO: Add undo behaviour
+        // TODO: Add undo behavior
         let deletedText = storage.attributedSubstring(from: range)
         textStorageDelegate?.textStorage(self, willDeleteText: deletedText, insertedText: attrString, range: range)
         super.replaceCharacters(in: range, with: attrString)
