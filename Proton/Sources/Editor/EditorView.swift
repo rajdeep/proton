@@ -114,6 +114,12 @@ open class EditorView: UIView {
         richTextView.gestureRecognizers ?? []
     }
     
+    @available(iOS 11.0, *)
+    public var textDragInteractionEnabled: Bool {
+        get { richTextView.textDragInteraction?.isEnabled ?? false }
+        set { richTextView.textDragInteraction?.isEnabled = newValue }
+    }
+    
     /// An object interested in responding to editing and focus related events in the `EditorView`.
     public weak var delegate: EditorViewDelegate?
 
