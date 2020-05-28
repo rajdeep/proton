@@ -164,6 +164,7 @@ class RichTextView: AutogrowingTextView {
 
         super.init(frame: frame, textContainer: textContainer)
         layoutManager.delegate = self
+        layoutManager.layoutManagerDelegate = self
         textContainer.textView = self
         self.delegate = context
         storage.textStorageDelegate = self
@@ -181,6 +182,9 @@ class RichTextView: AutogrowingTextView {
     var contentLength: Int {
         return storage.length
     }
+
+    var listIndent: CGFloat = 25.0
+    var sequenceGenerators: [SequenceGenerator] = []
 
     weak var textProcessor: TextProcessor? {
         didSet {
@@ -511,5 +515,11 @@ extension RichTextView: NSLayoutManagerDelegate {
 extension RichTextView: TextStorageDelegate {
     func textStorage(_ textStorage: TextStorage, willDeleteText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) {
         textProcessor?.textStorage(textStorage, willProcessDeletedText: deletedText, insertedText: insertedText)
+    }
+}
+
+extension RichTextView: LayoutManagerDelegate {
+    var paragraphStyle: NSMutableParagraphStyle? {
+        return defaultTextFormattingProvider?.paragraphStyle
     }
 }

@@ -26,7 +26,7 @@ protocol LayoutManagerDelegate: AnyObject {
     var selectedRange: NSRange { get }
     var paragraphStyle: NSMutableParagraphStyle? { get }
     var font: UIFont? { get }
-    var textColor: UIColor { get }
+    var textColor: UIColor? { get }
 
     var sequenceGenerators: [SequenceGenerator] { get }
     var listIndent: CGFloat { get }
@@ -41,7 +41,11 @@ class LayoutManager: NSLayoutManager {
     private var bitmaps = [NSAttributedString: UIImage]()
 
     private var sequenceGenerators: [SequenceGenerator] {
-        return layoutManagerDelegate?.sequenceGenerators ?? [NumericSequenceGenerator()]
+        let sequenceGenerators = layoutManagerDelegate?.sequenceGenerators ?? []
+        guard sequenceGenerators.isEmpty == false else {
+            return [NumericSequenceGenerator()]
+        }
+        return sequenceGenerators
     }
 
     override func drawGlyphs(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
@@ -68,7 +72,7 @@ class LayoutManager: NSLayoutManager {
         var previousLevel = 1
 
         let defaultFont = self.layoutManagerDelegate?.font ?? UIFont.preferredFont(forTextStyle: .body)
-        var listIndent = layoutManagerDelegate?.listIndent ?? 25.0
+        let listIndent = layoutManagerDelegate?.listIndent ?? 25.0
 
         enumerateLineFragments(forGlyphRange: listRange) { (rect, usedRect, textContainer, glyphRange, stop) in
             var newLineRange = NSRange.zero
@@ -104,6 +108,7 @@ class LayoutManager: NSLayoutManager {
                     self.drawListItem(level: level, index: index, rect: rect, paraStyle: paraStyle, font: font)
                 }
 
+                // TODO: should this be moved inside level > 0 check above?
                 lastLayoutParaStyle = paraStyle
                 lastLayoutRect = rect
                 lastLayoutFont = font

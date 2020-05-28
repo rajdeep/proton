@@ -48,6 +48,7 @@
 		1B45CDEC23C1682C001EB196 /* AttachmentSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDEA23C16829001EB196 /* AttachmentSnapshotTests.swift */; };
 		1B45CDEE23C1686F001EB196 /* RichTextViewTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDED23C1686F001EB196 /* RichTextViewTestViewController.swift */; };
 		1B45CDF123C16EF4001EB196 /* RichTextAttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDF023C16EF4001EB196 /* RichTextAttachmentView.swift */; };
+		1B4B60C6247F692D002B63CF /* ListsSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B60C5247F692D002B63CF /* ListsSnapshotTests.swift */; };
 		1B576089245ADDDA00D92AE8 /* EditorViewMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B576088245ADDDA00D92AE8 /* EditorViewMenuTests.swift */; };
 		1B5E2583240F5B0C00163E74 /* NSAttributedStringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5E2582240F5B0C00163E74 /* NSAttributedStringExtensionTests.swift */; };
 		1B6DE9D923C5940B007F9859 /* EditorCommandSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */; };
@@ -174,6 +175,7 @@
 		1B45CDEA23C16829001EB196 /* AttachmentSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentSnapshotTests.swift; sourceTree = "<group>"; };
 		1B45CDED23C1686F001EB196 /* RichTextViewTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewTestViewController.swift; sourceTree = "<group>"; };
 		1B45CDF023C16EF4001EB196 /* RichTextAttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextAttachmentView.swift; sourceTree = "<group>"; };
+		1B4B60C5247F692D002B63CF /* ListsSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsSnapshotTests.swift; sourceTree = "<group>"; };
 		1B576088245ADDDA00D92AE8 /* EditorViewMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewMenuTests.swift; sourceTree = "<group>"; };
 		1B5E2582240F5B0C00163E74 /* NSAttributedStringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedStringExtensionTests.swift; sourceTree = "<group>"; };
 		1B5F8393241B920400CAD5F4 /* testParagraphStyling@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testParagraphStyling@3x.png"; sourceTree = "<group>"; };
@@ -431,6 +433,7 @@
 				1BF90FB3245E503E00A411A3 /* TextBlockAttributeTests.swift */,
 				1B82570523C48FEC0033A0A9 /* RichTextViewContextTests.swift */,
 				1B45CDDA23C04BE3001EB196 /* RichTextViewSnapshotTests.swift */,
+				1B4B60C5247F692D002B63CF /* ListsSnapshotTests.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -939,6 +942,7 @@
 				1BF90FB4245E503E00A411A3 /* TextBlockAttributeTests.swift in Sources */,
 				1BBAC3DA23CD7A8B0088A1C8 /* MockRendererViewDelegate.swift in Sources */,
 				1BFFEF1523C332A100D2BA35 /* EditorSnapshotTests.swift in Sources */,
+				1B4B60C6247F692D002B63CF /* ListsSnapshotTests.swift in Sources */,
 				1BD993C023C9EAA900563ACB /* TextTransformer.swift in Sources */,
 				1B8BE91D23C71E4B00353B17 /* EditorViewDelegateTests.swift in Sources */,
 				1BFFEF2123C33EA900D2BA35 /* PanelView.swift in Sources */,
