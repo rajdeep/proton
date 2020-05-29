@@ -70,16 +70,25 @@ public class ListTextProcessor: TextProcessing {
         guard let currentLine = editor.contentLinesInRange(editedRange).first,
             let previousLine = editor.previousContentLine(from: currentLine.range.location) else { return }
 
-        let isInList = previousLine.text.attribute(.listItem, at: 0, effectiveRange: nil) != nil
+        if let nextLine = editor.nextContentLine(from: currentLine.range.location),
+            nextLine.range.endLocation < editor.contentLength - 1 {
+            let nextLineText = editor.attributedText.attributedSubstring(from: NSRange(location: nextLine.range.location, length: 1))
+            if nextLineText.attribute(.listItem, at: 0, effectiveRange: nil) != nil {
+                return
+            }
+        }
 
-        if currentLine.text.length == 0, isInList {
-            executeOnDidProcess = { [blankLineFiller] editor in
-                editor.typingAttributes[.listItem] = nil
-                editor.typingAttributes[.paragraphStyle] = editor.paragraphStyle
 
-                let newLineRange = NSRange(location: previousLine.range.endLocation + 1, length: 1)
-                let filler = NSAttributedString(string: blankLineFiller, attributes: [.paragraphStyle: editor.paragraphStyle])
-                editor.replaceCharacters(in: newLineRange, with: filler)
+        var isInList = editor.typingAttributes[.listItem] != nil
+        if previousLine.text.length > 0 {
+            isInList = previousLine.text.attribute(.listItem, at: 0, effectiveRange: nil) != nil
+        }
+
+        if (currentLine.text.length == 0 || currentLine.text.string == blankLineFiller),
+            isInList {
+            executeOnDidProcess = { [weak self] editor in
+                self?.updateListItemIfRequired(editor: editor, editedRange: currentLine.range, indentMode: .outdent)
+                editor.replaceCharacters(in: NSRange(location: currentLine.range.location + 1, length: 1), with: "")
             }
         }
     }

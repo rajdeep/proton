@@ -240,11 +240,22 @@ class RichTextView: AutogrowingTextView {
         return EditorLine(text: attributedText.attributedSubstring(from: range), range: range)
     }
 
+    func nextContentLine(from location: Int) -> EditorLine? {
+        let currentLineRange = rangeOfParagraph(at: location)
+        guard let position = self.position(from: beginningOfDocument, offset: currentLineRange.location + 1),
+            let paraRange = tokenizer.rangeEnclosingPosition(position, with: .paragraph, inDirection: UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)),
+            let range = paraRange.toNSRange(in: self) else {
+                return nil
+        }
+        return EditorLine(text: attributedText.attributedSubstring(from: range), range: range)
+    }
+
     override var keyCommands: [UIKeyCommand]? {
         let tab = "\t"
         let enter = "\r"
 
         return [
+            UIKeyCommand(input: tab, modifierFlags: [], action: #selector(handleKeyCommand(command:))),
             UIKeyCommand(input: tab, modifierFlags: .shift, action: #selector(handleKeyCommand(command:))),
             UIKeyCommand(input: enter, modifierFlags: .shift, action: #selector(handleKeyCommand(command:))),
             UIKeyCommand(input: enter, modifierFlags: .control, action: #selector(handleKeyCommand(command:))),

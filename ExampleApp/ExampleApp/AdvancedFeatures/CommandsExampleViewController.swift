@@ -95,6 +95,12 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         editor.registerProcessor(ListTextProcessor())
 //        editor.paragraphStyle.paragraphSpacingBefore = 20
 
+        editor.sequenceGenerators = [
+            NumericSequenceGenerator(),
+            DiamondBulletSequenceGenerator(),
+            SquareBulletSequenceGenerator()
+        ]
+
         self.buttons = makeCommandButtons()
         for button in buttons {
             stackView.addArrangedSubview(button)

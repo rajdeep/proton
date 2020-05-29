@@ -324,6 +324,11 @@ open class EditorView: UIView {
         set { richTextView.linkTextAttributes = newValue }
     }
 
+    public var sequenceGenerators: [SequenceGenerator] {
+        get { richTextView.sequenceGenerators }
+        set { richTextView.sequenceGenerators = newValue }
+    }
+
     /// Range of end of text in the `EditorView`. The range has always has length of 0.
     public var textEndRange: NSRange {
         return richTextView.textEndRange
@@ -457,6 +462,10 @@ open class EditorView: UIView {
     /// - Returns: Content line if a newline character exists before the current location, else nil
     public func previousContentLine(from location: Int) -> EditorLine? {
         return richTextView.previousContentLine(from: location)
+    }
+
+    public func nextContentLine(from location: Int) -> EditorLine? {
+        return richTextView.nextContentLine(from: location)
     }
 
     /// Gets the line preceding the given line. Nil if the given line is invalid or is first line
@@ -750,11 +759,8 @@ extension EditorView: RichTextViewDelegate {
     }
 
     func richTextView(_ richTextView: RichTextView, didReceiveKey key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange, handled: inout Bool) {
-        guard modifierFlags.isEmpty else {
             textProcessor?.activeProcessors.forEach { processor in
                 processor.handleKeyWithModifiers(editor: self, key: key, modifierFlags: modifierFlags, range: range)
-            }
-            return
         }
         delegate?.editor(self, didReceiveKey: key, at: range, handled: &handled)
         editorContextDelegate?.editor(self, didReceiveKey: key, at: range, handled: &handled)

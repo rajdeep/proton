@@ -82,14 +82,6 @@ class RichTextEditorContext: RichTextViewContext {
             }
         }
 
-        if text == "\n" {
-            richTextView.richTextViewDelegate?.richTextView(richTextView, didReceiveKey: .enter, modifierFlags: [], at: range, handled: &handled)
-
-            guard handled == false else {
-                return false
-            }
-        }
-
         if text == "\t" {
             richTextView.richTextViewDelegate?.richTextView(richTextView, didReceiveKey: .tab, modifierFlags: [], at: range, handled: &handled)
 

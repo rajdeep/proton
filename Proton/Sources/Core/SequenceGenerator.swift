@@ -30,6 +30,7 @@ public protocol SequenceGenerator {
 
 /// Simple numeric sequence generator.
 public struct NumericSequenceGenerator: SequenceGenerator {
+    public init() { }
     public func value(at index: Int) -> String {
         return "\(index + 1)."
     }
@@ -37,6 +38,7 @@ public struct NumericSequenceGenerator: SequenceGenerator {
 
 /// Simple bullet sequence generator that returns a diamond symbol.
 public struct DiamondBulletSequenceGenerator: SequenceGenerator {
+    public init() { }
     public func value(at index: Int) -> String {
         return "◈"
     }
@@ -44,6 +46,7 @@ public struct DiamondBulletSequenceGenerator: SequenceGenerator {
 
 /// Simple bullet sequence generator that returns a square symbol.
 public struct SquareBulletSequenceGenerator: SequenceGenerator {
+    public init() { }
     public func value(at index: Int) -> String {
         return "▣"
     }
