@@ -62,16 +62,7 @@ public class ListCommand: EditorCommand {
     public func execute(on editor: EditorView) {
         let editedRange = editor.selectedRange
         guard editedRange.length > 0 else {
-            if editor.attributedText.attribute(.listItem, at: editedRange.location - 1, effectiveRange: nil) == nil {
-                let paraStyle = editor.attributedText.attribute(.paragraphStyle, at: editedRange.location - 1, effectiveRange: nil) as? NSParagraphStyle
-                let mutableStyle = ListStyles.updatedParagraphStyle(paraStyle: paraStyle, indentMode: .indent)
-                guard let line = editor.contentLinesInRange(editedRange).first else { return }
-
-                editor.addAttributes([
-                    .paragraphStyle: mutableStyle ?? editor.paragraphStyle,
-                    .listItem: 1
-                ], at: line.range)
-            }
+            ListTextProcessor().createListItemInANewLine(editor: editor, editedRange: editedRange, indentMode: .indent)
             return
         }
 

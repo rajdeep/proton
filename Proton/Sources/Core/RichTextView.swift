@@ -242,7 +242,7 @@ class RichTextView: AutogrowingTextView {
 
     func nextContentLine(from location: Int) -> EditorLine? {
         let currentLineRange = rangeOfParagraph(at: location)
-        guard let position = self.position(from: beginningOfDocument, offset: currentLineRange.location + 1),
+        guard let position = self.position(from: beginningOfDocument, offset: currentLineRange.endLocation + 1),
             let paraRange = tokenizer.rangeEnclosingPosition(position, with: .paragraph, inDirection: UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)),
             let range = paraRange.toNSRange(in: self) else {
                 return nil

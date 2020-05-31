@@ -512,4 +512,26 @@ class EditorViewTests: XCTestCase {
         let previousLine = editor.previousContentLine(from: 3)
         XCTAssertNil(previousLine)
     }
+
+    func testGetsNextLineFromLocation() {
+        let editor = EditorView()
+        let line1 = "Line 1"
+        let line2 = "Line 2"
+
+        editor.appendCharacters(NSAttributedString(string: line1))
+        editor.appendCharacters(NSAttributedString(string: "\n"))
+        editor.appendCharacters(NSAttributedString(string: line2))
+
+        let nextLine = editor.nextContentLine(from: 3)
+        XCTAssertEqual(nextLine?.text.string, line2)
+    }
+
+    func testGetsNextLineFromLocationWithNoEndingNewLine() {
+        let editor = EditorView()
+        let line1 = "Line 1"
+
+        editor.appendCharacters(NSAttributedString(string: line1))
+        let nextLine = editor.nextContentLine(from: 3)
+        XCTAssertNil(nextLine)
+    }
 }
