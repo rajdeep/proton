@@ -207,8 +207,9 @@ class RichTextView: AutogrowingTextView {
 
     func contentLinesInRange(_ range: NSRange) -> [EditorLine] {
         var lines = [EditorLine]()
-        let endLocation = range.location + range.length
+
         var startingRange = NSRange(location: range.location, length: 0)
+        let endLocation = max(startingRange.location, range.location + range.length - 1)
 
         while startingRange.location <= endLocation {
             let paraRange = rangeOfParagraph(at: startingRange.location)
