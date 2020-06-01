@@ -67,6 +67,8 @@ class RichTextEditorContext: RichTextViewContext {
                 return false
             }
 
+            guard range.endLocation <= textView.attributedText.length else { return false }
+
             let substring = textView.attributedText.attributedSubstring(from: range)
             guard substring.length > 0,
                 let attachment = substring.attribute(.attachment, at: 0, effectiveRange: nil) as? Attachment,

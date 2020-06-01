@@ -281,9 +281,11 @@ class EditorListsSnapshotTests: XCTestCase {
         Line 1
         Line 2
         Line 2a
+
         Line 2a1
+
         Line 2a2
-        line 3
+        Line 3
         """
 
         let viewController = EditorTestViewController()
@@ -293,21 +295,116 @@ class EditorListsSnapshotTests: XCTestCase {
         editor.selectedRange = editor.attributedText.fullRange
         listCommand.execute(on: editor)
 
-        let line2a = editor.contentLinesInRange(editor.attributedText.fullRange)[2]
-        let line2a1 = editor.contentLinesInRange(editor.attributedText.fullRange)[3]
-        let line2a2 = editor.contentLinesInRange(editor.attributedText.fullRange)[4]
+        viewController.render(size: CGSize(width: 300, height: 225))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
-//        editor.selectedRange = line2a.range.nextPosition
+        let line2a = editor.contentLinesInRange(editor.attributedText.fullRange)[2]
+        let line2a1 = editor.contentLinesInRange(editor.attributedText.fullRange)[4]
+        let line2a2 = editor.contentLinesInRange(editor.attributedText.fullRange)[6]
+
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: NSRange(location: line2a.range.location, length: line2a2.range.endLocation - line2a.range.location))
 
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: line2a1.range)
 
 
-        viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: true)
+        viewController.render(size: CGSize(width: 300, height: 225))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [.shift], range: line2a.range)
-        viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: true)
+        viewController.render(size: CGSize(width: 300, height: 225))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testIndentsNestedItems() {
+        let text = """
+        Line 1
+        Line 2
+        Line 2a
+
+        Line 2a1
+
+        Line 2a2
+        Line 3
+        """
+
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.sequenceGenerators = [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()]
+        editor.attributedText = NSAttributedString(string: text)
+        editor.selectedRange = editor.attributedText.fullRange
+        listCommand.execute(on: editor)
+
+        viewController.render(size: CGSize(width: 300, height: 225))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        let line2 = editor.contentLinesInRange(editor.attributedText.fullRange)[1]
+        let line2a = editor.contentLinesInRange(editor.attributedText.fullRange)[2]
+        let line2a2 = editor.contentLinesInRange(editor.attributedText.fullRange)[6]
+
+
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: NSRange(location: line2a.range.location, length: line2a2.range.endLocation - line2a.range.location))
+
+        viewController.render(size: CGSize(width: 300, height: 225))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: line2.range)
+        viewController.render(size: CGSize(width: 300, height: 225))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testOutdentsToZerothLevel() {
+        let text = """
+        a
+        b
+        c
+        d
+        e
+        """
+
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.sequenceGenerators = [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()]
+        editor.attributedText = NSAttributedString(string: text)
+        editor.selectedRange = editor.attributedText.fullRange
+        listCommand.execute(on: editor)
+
+        let lines = editor.contentLinesInRange(editor.attributedText.fullRange)
+        for i in 0..<lines.count {
+            for _ in 0...i {
+                listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: lines[i].range)
+            }
+        }
+
+        viewController.render(size: CGSize(width: 300, height: 400))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+//        editor.replaceCharacters(in: NSRange(location: editor.textEndRange.location - 1, length: 1), with: "")
+
+        let paraStyle = editor.attributedText.attribute(.paragraphStyle, at: editor.textEndRange.location - 1, effectiveRange: nil)
+
+        editor.appendCharacters(NSAttributedString(string: "\n", attributes:
+            [
+            .paragraphStyle: paraStyle,
+            .listItem: 1]))
+        editor.selectedRange =  NSRange(location: editor.textEndRange.location, length: 0)
+
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: NSRange(location: editor.textEndRange.location - 1, length: 1))
+        listTextProcessor.didProcess(editor: editor)
+
+        viewController.render(size: CGSize(width: 300, height: 400))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        for i in 0..<lines.count {
+            editor.selectedRange =  NSRange(location: editor.textEndRange.location, length: 0)
+            let paraStyle = editor.attributedText.attribute(.paragraphStyle, at: editor.textEndRange.location - 1, effectiveRange: nil)
+            editor.appendCharacters(NSAttributedString(string: "\n", attributes: [.paragraphStyle: paraStyle, .listItem: 1]))
+            listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: NSRange(location: editor.textEndRange.location - 1, length: 1))
+            listTextProcessor.didProcess(editor: editor)
+
+            viewController.render(size: CGSize(width: 300, height: 400))
+            assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        }
+
+
     }
 }
