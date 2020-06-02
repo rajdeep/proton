@@ -541,6 +541,23 @@ open class EditorView: UIView {
         }
     }
 
+    /// Gets the lines separated by newline characters from the given range.
+    /// - Parameter range: Range to get lines from.
+    /// - Returns: Array of `EditorLine` from the given content range.
+    /// - Note:
+    /// Lines returned from this function do not contain terminating newline character in the text content.
+    public func contentLinesInRange(_ range: NSRange) -> [EditorLine] {
+        return richTextView.contentLinesInRange(range)
+    }
+
+    /// Gets the previous line of content from the given location. A content line is defined by the presence of a
+    /// newline character.
+    /// - Parameter location: Location to find line from, in reverse direction
+    /// - Returns: Content line if a newline character exists before the current location, else nil
+    public func previousContentLine(from location: Int) -> EditorLine? {
+        return richTextView.previousContentLine(from: location)
+    }
+
     /// Gets the line preceding the given line. Nil if the given line is invalid or is first line
     /// - Parameter line: Reference line
     /// - Returns:
