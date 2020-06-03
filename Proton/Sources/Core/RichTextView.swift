@@ -282,8 +282,8 @@ class RichTextView: AutogrowingTextView {
             let key = EditorKey(input) else { return }
         
         let modifierFlags = command.modifierFlags
-        var handled = false
-        richTextViewDelegate?.richTextView(self, didReceiveKey: key, modifierFlags: modifierFlags, at: selectedRange, handled: &handled)
+
+        richTextViewDelegate?.richTextView(self, didReceive: key, modifierFlags: modifierFlags, at: selectedRange)
     }
 
     private func setupPlaceholder() {
