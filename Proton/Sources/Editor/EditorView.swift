@@ -342,6 +342,16 @@ open class EditorView: UIView {
         set { richTextView.linkTextAttributes = newValue }
     }
 
+    public var listIndent: CGFloat {
+        get { richTextView.listIndent }
+        set { richTextView.listIndent = newValue }
+    }
+
+    public var sequenceGenerators: [SequenceGenerator] {
+        get { richTextView.sequenceGenerators }
+        set { richTextView.sequenceGenerators = newValue }
+    }
+
     /// Range of end of text in the `EditorView`. The range has always has length of 0.
     public var textEndRange: NSRange {
         return richTextView.textEndRange
