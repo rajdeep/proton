@@ -26,4 +26,8 @@ public extension NSParagraphStyle {
         let copy = self.mutableCopy() as? NSMutableParagraphStyle
         return copy ?? NSMutableParagraphStyle()
     }
+
+    var lineFormatting: LineFormatting {
+        return LineFormatting(indentation: firstLineHeadIndent, spacingBefore: paragraphSpacingBefore)
+    }
 }

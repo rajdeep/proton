@@ -29,7 +29,7 @@ protocol LayoutManagerDelegate: AnyObject {
     var textColor: UIColor? { get }
 
     var sequenceGenerators: [SequenceGenerator] { get }
-    var listIndent: CGFloat { get }
+    var listLineFormatting: LineFormatting { get }
 }
 
 class LayoutManager: NSLayoutManager {
@@ -72,7 +72,7 @@ class LayoutManager: NSLayoutManager {
         var previousLevel = 1
 
         let defaultFont = self.layoutManagerDelegate?.font ?? UIFont.preferredFont(forTextStyle: .body)
-        let listIndent = layoutManagerDelegate?.listIndent ?? 25.0
+        let listIndent = layoutManagerDelegate?.listLineFormatting.indentation ?? 25.0
 
         enumerateLineFragments(forGlyphRange: listRange) { (rect, usedRect, textContainer, glyphRange, stop) in
             var newLineRange = NSRange.zero

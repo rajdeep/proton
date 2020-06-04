@@ -378,14 +378,12 @@ class EditorListsSnapshotTests: XCTestCase {
         viewController.render(size: CGSize(width: 300, height: 400))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
-//        editor.replaceCharacters(in: NSRange(location: editor.textEndRange.location - 1, length: 1), with: "")
+        let paraStyle = editor.attributedText.attribute(.paragraphStyle, at: editor.textEndRange.location - 1, effectiveRange: nil) ?? NSParagraphStyle()
 
-        let paraStyle = editor.attributedText.attribute(.paragraphStyle, at: editor.textEndRange.location - 1, effectiveRange: nil)
-
-        editor.appendCharacters(NSAttributedString(string: "\n", attributes:
-            [
-            .paragraphStyle: paraStyle,
-            .listItem: 1]))
+        editor.appendCharacters(NSAttributedString(string: "\n",
+                                                   attributes: [
+                                                    .paragraphStyle: paraStyle,
+                                                    .listItem: 1]))
         editor.selectedRange =  NSRange(location: editor.textEndRange.location, length: 0)
 
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: NSRange(location: editor.textEndRange.location - 1, length: 1))
@@ -394,9 +392,9 @@ class EditorListsSnapshotTests: XCTestCase {
         viewController.render(size: CGSize(width: 300, height: 400))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
-        for i in 0..<lines.count {
+        for _ in 0..<lines.count {
             editor.selectedRange =  NSRange(location: editor.textEndRange.location, length: 0)
-            let paraStyle = editor.attributedText.attribute(.paragraphStyle, at: editor.textEndRange.location - 1, effectiveRange: nil)
+            let paraStyle = editor.attributedText.attribute(.paragraphStyle, at: editor.textEndRange.location - 1, effectiveRange: nil) ?? NSParagraphStyle()
             editor.appendCharacters(NSAttributedString(string: "\n", attributes: [.paragraphStyle: paraStyle, .listItem: 1]))
             listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: NSRange(location: editor.textEndRange.location - 1, length: 1))
             listTextProcessor.didProcess(editor: editor)
@@ -404,7 +402,5 @@ class EditorListsSnapshotTests: XCTestCase {
             viewController.render(size: CGSize(width: 300, height: 400))
             assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
         }
-
-
     }
 }

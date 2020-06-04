@@ -131,18 +131,18 @@ public class ListTextProcessor: TextProcessing {
             }
 
             let paraStyle = line.text.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle
-            let mutableStyle = ListStyles.updatedParagraphStyle(paraStyle: paraStyle, indentMode: indentMode)
+            let mutableStyle = updatedParagraphStyle(paraStyle: paraStyle,  listLineFormatting: editor.listLineFormatting, indentMode: indentMode)
 
             let previousLine = editor.previousContentLine(from: line.range.location)
             if let previousLine = previousLine,
                 previousLine.text.length > 0 {
                 let previousStyle = previousLine.text.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle
-                guard mutableStyle?.firstLineHeadIndent ?? 0 <= (previousStyle?.firstLineHeadIndent ?? 0) + ListStyles.indentPoints else {
+                guard mutableStyle?.firstLineHeadIndent ?? 0 <= (previousStyle?.firstLineHeadIndent ?? 0) + editor.listLineFormatting.indentation else {
                     return
                 }
             }
             // exit indentation if the resulting indentation is more than 1 level indent points
-            else if (mutableStyle?.firstLineHeadIndent ?? 0) > ListStyles.indentPoints {
+            else if (mutableStyle?.firstLineHeadIndent ?? 0) > editor.listLineFormatting.indentation {
                 return
             }
 
@@ -168,8 +168,8 @@ public class ListTextProcessor: TextProcessing {
 
         editor.attributedText.enumerateAttribute(.paragraphStyle, in: subListRange, options: []) { value, range, stop in
             if let style = value as? NSParagraphStyle {
-                if style.firstLineHeadIndent >= originalParaStyle.firstLineHeadIndent + ListStyles.indentPoints {
-                    let mutableStyle = ListStyles.updatedParagraphStyle(paraStyle: style, indentMode: indentMode)
+                if style.firstLineHeadIndent >= originalParaStyle.firstLineHeadIndent + editor.listLineFormatting.indentation {
+                    let mutableStyle = updatedParagraphStyle(paraStyle: style, listLineFormatting: editor.listLineFormatting, indentMode: indentMode)
                     editor.addAttribute(.paragraphStyle, value: mutableStyle ?? editor.paragraphStyle, at: range)
                 } else {
                     stop.pointee = true
@@ -181,11 +181,30 @@ public class ListTextProcessor: TextProcessing {
     func createListItemInANewLine(editor: EditorView, editedRange: NSRange, indentMode: Indentation) {
         var attrs = editor.typingAttributes
         let paraStyle = attrs[.paragraphStyle] as? NSParagraphStyle
-        let updatedStyle = ListStyles.updatedParagraphStyle(paraStyle: paraStyle, indentMode: indentMode)
+        let updatedStyle = updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: indentMode)
         attrs[.paragraphStyle] = updatedStyle
         attrs[.listItem] = updatedStyle?.firstLineHeadIndent ?? 0 > 0.0 ? 1 : nil
         let marker = NSAttributedString(string: blankLineFiller, attributes: attrs)
         editor.replaceCharacters(in: editedRange, with: marker)
         editor.selectedRange = editedRange.nextPosition
+    }
+
+    func updatedParagraphStyle(paraStyle: NSParagraphStyle?, listLineFormatting: LineFormatting, indentMode: Indentation) -> NSParagraphStyle? {
+        let mutableStyle = paraStyle?.mutableCopy() as? NSMutableParagraphStyle
+        let indent = listLineFormatting.indentation
+        if indentMode == .indent {
+            mutableStyle?.firstLineHeadIndent += indent
+            mutableStyle?.headIndent = mutableStyle?.firstLineHeadIndent ?? 0
+        } else {
+            mutableStyle?.firstLineHeadIndent -= indent
+            mutableStyle?.headIndent = mutableStyle?.firstLineHeadIndent ?? 0
+        }
+        mutableStyle?.paragraphSpacingBefore = listLineFormatting.spacingBefore
+
+        if mutableStyle?.firstLineHeadIndent == 0, indentMode == .outdent {
+            mutableStyle?.paragraphSpacingBefore = paraStyle?.lineFormatting.spacingBefore ?? 0
+        }
+
+        return mutableStyle
     }
 }

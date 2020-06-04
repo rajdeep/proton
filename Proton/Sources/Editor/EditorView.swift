@@ -306,6 +306,11 @@ open class EditorView: UIView {
         set { richTextView.typingAttributes = newValue }
     }
 
+    public var listLineFormatting: LineFormatting {
+        get { richTextView.listLineFormatting }
+        set { richTextView.listLineFormatting = newValue }
+    }
+
     /// An object interested in observing the changes in bounds of the `Editor`, typically an `Attachment`.
     public var boundsObserver: BoundsObserving? {
         get { richTextView.boundsObserver }

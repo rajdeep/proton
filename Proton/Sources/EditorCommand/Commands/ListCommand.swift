@@ -26,30 +26,9 @@ enum Indentation {
     case outdent
 }
 
-struct ListStyles {
-    private init() { }
-
-    static let initialIndentPoints: CGFloat = 25.0
-    static let indentPoints: CGFloat = 25.0
-
-    static func updatedParagraphStyle(paraStyle: NSParagraphStyle?, indentMode: Indentation) -> NSParagraphStyle? {
-        let mutableStyle = paraStyle?.mutableCopy() as? NSMutableParagraphStyle
-        let indent = (paraStyle?.firstLineHeadIndent == 0) ? ListStyles.initialIndentPoints : ListStyles.indentPoints
-        if indentMode == .indent {
-            mutableStyle?.firstLineHeadIndent += indent
-            mutableStyle?.headIndent = mutableStyle?.firstLineHeadIndent ?? 0
-        } else {
-            mutableStyle?.firstLineHeadIndent -= indent
-            mutableStyle?.headIndent = mutableStyle?.firstLineHeadIndent ?? 0
-        }
-//        mutableStyle?.paragraphSpacingBefore = 5
-//
-//        if mutableStyle?.firstLineHeadIndent == 0, indentMode == .outdent {
-//            mutableStyle?.paragraphSpacingBefore = 20
-//        }
-
-        return mutableStyle
-    }
+public struct LineFormatting {
+    public let indentation: CGFloat
+    public let spacingBefore: CGFloat
 }
 
 public class ListCommand: EditorCommand {
@@ -68,7 +47,7 @@ public class ListCommand: EditorCommand {
 
         editor.attributedText.enumerateAttribute(.paragraphStyle, in: editor.selectedRange, options: []) { (value, range, _) in
             let paraStyle = value as? NSParagraphStyle
-            let mutableStyle = ListStyles.updatedParagraphStyle(paraStyle: paraStyle, indentMode: .indent)
+            let mutableStyle = ListTextProcessor().updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: .indent)
             editor.addAttribute(.paragraphStyle, value: mutableStyle ?? editor.paragraphStyle, at: range)
         }
         editor.addAttribute(.listItem, value: true, at: editor.selectedRange)

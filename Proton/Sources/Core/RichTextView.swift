@@ -183,7 +183,8 @@ class RichTextView: AutogrowingTextView {
         return storage.length
     }
 
-    var listIndent: CGFloat = 25.0
+    var listLineFormatting = LineFormatting(indentation: 25, spacingBefore: 0)
+
     var sequenceGenerators: [SequenceGenerator] = []
 
     weak var textProcessor: TextProcessor? {
