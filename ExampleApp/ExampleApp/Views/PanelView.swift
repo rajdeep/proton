@@ -28,7 +28,7 @@ extension EditorContent.Name {
 }
 
 protocol PanelViewDelegate: AnyObject {
-    func panel(_ panel: PanelView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool)
+    func panel(_ panel: PanelView, shouldHandle key: EditorKey, at range: NSRange, handled: inout Bool)
     func panel(_ panel: PanelView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name)
 }
 
@@ -111,8 +111,8 @@ class PanelView: UIView, BlockContent, EditorContentView {
 }
 
 extension PanelView: EditorViewDelegate {
-    func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool) {
-        delegate?.panel(self, didReceiveKey: key, at: range, handled: &handled)
+    func editor(_ editor: EditorView, shouldHandle key: EditorKey, at range: NSRange, handled: inout Bool) {
+        delegate?.panel(self, shouldHandle: key, at: range, handled: &handled)
     }
 
     func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {

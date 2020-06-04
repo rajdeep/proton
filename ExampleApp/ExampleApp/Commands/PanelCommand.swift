@@ -34,6 +34,8 @@ class PanelCommand: EditorCommand {
 
         let panel = attachment.view
         panel.editor.maxHeight = 300
+        panel.editor.registerProcessors(editor.registeredProcessors)
+        panel.editor.sequenceGenerators = editor.sequenceGenerators
         panel.editor.replaceCharacters(in: .zero, with: selectedText)
         panel.editor.selectedRange = panel.editor.textEndRange
     }

@@ -58,7 +58,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
     let commands: [(title: String, command: EditorCommand, highlightOnTouch: Bool)] = [
         (title: "Panel", command: PanelCommand(), highlightOnTouch: false),
-        (title: "Collab", command: DummyCollabCommand(), highlightOnTouch: false),
+        (title: "List", command: ListCommand(), highlightOnTouch: false),
         (title: "Bold", command: BoldCommand(), highlightOnTouch: true),
         (title: "Italics", command: ItalicsCommand(), highlightOnTouch: true),
         (title: "TextBlock", command: TextBlockCommand(), highlightOnTouch: false),
@@ -91,6 +91,15 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
         editor.delegate = self
         EditorViewContext.shared.delegate = self
+
+        editor.registerProcessor(ListTextProcessor())
+//        editor.paragraphStyle.paragraphSpacingBefore = 20
+
+        editor.sequenceGenerators = [
+            NumericSequenceGenerator(),
+            DiamondBulletSequenceGenerator(),
+            SquareBulletSequenceGenerator()
+        ]
 
         self.buttons = makeCommandButtons()
         for button in buttons {

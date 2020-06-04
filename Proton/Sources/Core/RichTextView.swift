@@ -207,8 +207,9 @@ class RichTextView: AutogrowingTextView {
 
     func contentLinesInRange(_ range: NSRange) -> [EditorLine] {
         var lines = [EditorLine]()
-        let endLocation = range.location + range.length
+
         var startingRange = NSRange(location: range.location, length: 0)
+        let endLocation = max(startingRange.location, range.location + range.length - 1)
 
         while startingRange.location <= endLocation {
             let paraRange = rangeOfParagraph(at: startingRange.location)
@@ -240,11 +241,22 @@ class RichTextView: AutogrowingTextView {
         return EditorLine(text: attributedText.attributedSubstring(from: range), range: range)
     }
 
+    func nextContentLine(from location: Int) -> EditorLine? {
+        let currentLineRange = rangeOfParagraph(at: location)
+        guard let position = self.position(from: beginningOfDocument, offset: currentLineRange.endLocation + 1),
+            let paraRange = tokenizer.rangeEnclosingPosition(position, with: .paragraph, inDirection: UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)),
+            let range = paraRange.toNSRange(in: self) else {
+                return nil
+        }
+        return EditorLine(text: attributedText.attributedSubstring(from: range), range: range)
+    }
+
     override var keyCommands: [UIKeyCommand]? {
         let tab = "\t"
         let enter = "\r"
 
         return [
+            UIKeyCommand(input: tab, modifierFlags: [], action: #selector(handleKeyCommand(command:))),
             UIKeyCommand(input: tab, modifierFlags: .shift, action: #selector(handleKeyCommand(command:))),
             UIKeyCommand(input: enter, modifierFlags: .shift, action: #selector(handleKeyCommand(command:))),
             UIKeyCommand(input: enter, modifierFlags: .control, action: #selector(handleKeyCommand(command:))),
@@ -270,8 +282,8 @@ class RichTextView: AutogrowingTextView {
             let key = EditorKey(input) else { return }
         
         let modifierFlags = command.modifierFlags
-        var handled = false
-        richTextViewDelegate?.richTextView(self, didReceiveKey: key, modifierFlags: modifierFlags, at: selectedRange, handled: &handled)
+
+        richTextViewDelegate?.richTextView(self, didReceive: key, modifierFlags: modifierFlags, at: selectedRange)
     }
 
     private func setupPlaceholder() {
