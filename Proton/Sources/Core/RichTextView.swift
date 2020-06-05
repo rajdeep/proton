@@ -345,6 +345,7 @@ class RichTextView: AutogrowingTextView {
             if contentLength == 0 {
                 self.typingAttributes = defaultTypingAttributes
             }
+            richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: selectedRange)
         }
 
         guard contentLength > 0 else { return }

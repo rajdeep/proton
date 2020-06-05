@@ -534,6 +534,10 @@ open class EditorView: UIView {
         return richTextView.wordAt(location)
     }
 
+    public func deleteBackward() {
+        richTextView.deleteBackward()
+    }
+
     /// Inserts an `Attachment` in the `EditorView`.
     /// - Parameters:
     ///   - range: Range where the `Attachment` should be inserted. If the range contains existing content, the content

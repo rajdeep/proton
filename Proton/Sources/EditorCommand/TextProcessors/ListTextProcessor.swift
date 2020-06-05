@@ -81,7 +81,7 @@ public class ListTextProcessor: TextProcessing {
                 editor.attributedText.attributedSubstring(from: NSRange(location: editedRange.location - 1, length: 1)).string == "\n" else {
                 return
             }
-            editor.richTextView.deleteBackward()
+            editor.deleteBackward()
         }
     }
 

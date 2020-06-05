@@ -179,7 +179,17 @@ class EditorListsSnapshotTests: XCTestCase {
         listCommand.execute(on: editor)
         editor.selectedRange = editor.textEndRange
         let attrs = editor.attributedText.attributes(at: editor.contentLength - 1, effectiveRange: nil)
-        editor.appendCharacters(NSAttributedString(string: "\n", attributes: attrs))
+//        editor.appendCharacters(NSAttributedString(string: "\n", attributes: attrs))
+
+        let paraStyle = attrs[.paragraphStyle] ?? NSParagraphStyle()
+        editor.appendCharacters(NSAttributedString(string: "\n",
+                                                   attributes: [
+                                                    .paragraphStyle: paraStyle,
+                                                    .listItem: 1]))
+        editor.selectedRange =  NSRange(location: editor.textEndRange.location, length: 0)
+
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: NSRange(location: editor.textEndRange.location - 1, length: 1))
+        listTextProcessor.didProcess(editor: editor)
 
         viewController.render(size: CGSize(width: 300, height: 175))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
@@ -402,5 +412,52 @@ class EditorListsSnapshotTests: XCTestCase {
             viewController.render(size: CGSize(width: 300, height: 400))
             assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
         }
+    }
+
+    func IGNORED_testDeletingBlankLineMovesToPreviousLine() {
+        let text = "Hello world"
+
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.attributedText = NSAttributedString(string: text)
+        editor.selectedRange = editor.attributedText.fullRange
+        editor.registerProcessor(listTextProcessor)
+        listCommand.execute(on: editor)
+
+        viewController.render(size: CGSize(width: 300, height: 400))
+        assertSnapshot(matching: viewController.view, as: .image, record: true)
+
+        let paraStyle = editor.attributedText.attribute(.paragraphStyle, at: editor.textEndRange.location - 1, effectiveRange: nil) ?? NSParagraphStyle()
+
+        editor.appendCharacters(NSAttributedString(string: "\n",
+                                                   attributes: [
+                                                    .paragraphStyle: paraStyle,
+                                                    .listItem: 1]))
+        editor.selectedRange =  NSRange(location: editor.textEndRange.location, length: 0)
+
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: NSRange(location: editor.textEndRange.location - 1, length: 1))
+        listTextProcessor.didProcess(editor: editor)
+
+        viewController.render(size: CGSize(width: 300, height: 400))
+        assertSnapshot(matching: viewController.view, as: .image, record: true)
+
+        editor.appendCharacters(NSAttributedString(string: "\n",
+                                                   attributes: [
+                                                    .paragraphStyle: paraStyle,
+                                                    .listItem: 1]))
+        editor.selectedRange =  NSRange(location: editor.textEndRange.location, length: 0)
+
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: NSRange(location: editor.textEndRange.location - 1, length: 1))
+        listTextProcessor.didProcess(editor: editor)
+
+        print("Before: \(editor.contentLength)  \(editor.attributedText)")
+        editor.deleteBackward()
+        print("After: \(editor.contentLength)  \(editor.attributedText)")
+
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .backspace, modifierFlags: [], range: NSRange(location: editor.textEndRange.location - 1, length: 1))
+
+        viewController.render(size: CGSize(width: 300, height: 400))
+        assertSnapshot(matching: viewController.view, as: .image, record: true)
+
     }
 }
