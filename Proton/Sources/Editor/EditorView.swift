@@ -210,6 +210,17 @@ open class EditorView: UIView {
         set { richTextView.contentInset = newValue }
     }
 
+    @available(iOSApplicationExtension 11.1, *)
+    public var verticalScrollIndicatorInsets: UIEdgeInsets {
+        get { richTextView.verticalScrollIndicatorInsets }
+        set { richTextView.verticalScrollIndicatorInsets = newValue }
+    }
+    
+    public var keyboardDismissMode: UIScrollView.KeyboardDismissMode {
+        get { richTextView.keyboardDismissMode }
+        set { richTextView.keyboardDismissMode = newValue }
+    }
+    
     /// Gets or sets the insets for the text container's layout area within the editor's content area
     public var textContainerInset: UIEdgeInsets {
         get { richTextView.textContainerInset }
