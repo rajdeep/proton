@@ -19,6 +19,13 @@
 //
 
 import Foundation
+import UIKit
+
+/// Marker for the list item
+public enum ListLineMarker {
+    case string(NSAttributedString)
+    case image(UIImage)
+}
 
 /// Describes an object capable of providing style and formatting information for rendering lists in `EditorView`.
 public protocol EditorListFormattingProvider: AnyObject {
@@ -36,7 +43,7 @@ public protocol EditorListFormattingProvider: AnyObject {
     /// - Returns: Marker to be drawn for the given list item.
     /// - Note: This function is called multiple times for same index level based on TextKit layout cycles. It is advisable to cache
     /// the values if calculation/drawing is performance intensive.
-    func listLineMarkerFor(editor: EditorView, index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> String
+    func listLineMarkerFor(editor: EditorView, index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker
 }
 
 /// Describes an object capable of providing style and formatting information for rendering lists in `EditorView`.
@@ -55,5 +62,5 @@ public protocol RendererListFormattingProvider: AnyObject {
     /// - Returns: Marker to be drawn for the given list item.
     /// - Note: This function is called multiple times for same index level based on TextKit layout cycles. It is advisable to cache
     /// the values if calculation/drawing is performance intensive.
-    func listLineMarkerFor(renderer: RendererView, index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> String
+    func listLineMarkerFor(renderer: RendererView, index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker
 }

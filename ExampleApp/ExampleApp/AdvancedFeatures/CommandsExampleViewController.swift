@@ -241,7 +241,7 @@ class ListFormattingProvider: EditorListFormattingProvider {
          DiamondBulletSequenceGenerator(),
          SquareBulletSequenceGenerator()]
 
-    func listLineMarkerFor(editor: EditorView, index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> String {
+    func listLineMarkerFor(editor: EditorView, index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
         let sequenceGenerator = self.sequenceGenerators[(level - 1) % self.sequenceGenerators.count]
         return sequenceGenerator.value(at: index)
     }

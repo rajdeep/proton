@@ -760,8 +760,11 @@ extension EditorView: RichTextViewListDelegate {
         return listFormattingProvider?.listLineFormatting ?? RichTextView.defaultListLineFormatting
     }
 
-    func richTextView(_ richTextView: RichTextView, listMarkerForItemAt index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> String {
-        return listFormattingProvider?.listLineMarkerFor(editor: self, index: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? "*"
+    func richTextView(_ richTextView: RichTextView, listMarkerForItemAt index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
+        let font = UIFont.preferredFont(forTextStyle: .body)
+        let defaultValue = NSAttributedString(string: "*", attributes: [.font: font])
+
+        return listFormattingProvider?.listLineMarkerFor(editor: self, index: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? .string(defaultValue)
     }
 }
 

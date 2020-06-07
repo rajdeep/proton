@@ -52,5 +52,5 @@ protocol RichTextViewDelegate: AnyObject {
 
 protocol RichTextViewListDelegate: AnyObject {
     var listLineFormatting: LineFormatting { get }
-    func richTextView(_ richTextView: RichTextView, listMarkerForItemAt index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> String
+    func richTextView(_ richTextView: RichTextView, listMarkerForItemAt index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker
 }

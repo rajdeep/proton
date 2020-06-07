@@ -30,7 +30,7 @@ class MockRichTextViewListDelegate: RichTextViewListDelegate {
         listFormattingProvider.listLineFormatting
     }
 
-    func richTextView(_ richTextView: RichTextView, listMarkerForItemAt index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> String {
+    func richTextView(_ richTextView: RichTextView, listMarkerForItemAt index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
         return listFormattingProvider.listLineMarkerFor(editor: EditorView(), index: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue)
     }
 }

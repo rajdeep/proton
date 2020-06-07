@@ -19,6 +19,8 @@
 //
 
 import Foundation
+import UIKit
+
 import Proton
 
 class MockListFormattingProvider: EditorListFormattingProvider {
@@ -36,9 +38,9 @@ class MockListFormattingProvider: EditorListFormattingProvider {
         self.listLineFormatting = listLineFormatting ?? LineFormatting(indentation: 25, spacingBefore: 0)
     }
 
-    func listLineMarkerFor(editor: EditorView, index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> String {
+    func listLineMarkerFor(editor: EditorView, index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
         let sequenceGenerator = self.sequenceGenerators[(level - 1) % self.sequenceGenerators.count]
-        return sequenceGenerator.value(at: index)
+        let value =  sequenceGenerator.value(at: index)
+        return value
     }
 }
-

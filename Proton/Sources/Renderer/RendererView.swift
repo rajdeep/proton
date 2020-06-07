@@ -210,8 +210,10 @@ extension RendererView: RichTextViewListDelegate {
         return listFormattingProvider?.listLineFormatting ?? LineFormatting(indentation: 25, spacingBefore: 0)
     }
 
-    func richTextView(_ richTextView: RichTextView, listMarkerForItemAt index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> String {
-        return listFormattingProvider?.listLineMarkerFor(renderer: self, index: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? "*"
+    func richTextView(_ richTextView: RichTextView, listMarkerForItemAt index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
+        let font = UIFont.preferredFont(forTextStyle: .body)
+        let defaultValue = NSAttributedString(string: "*", attributes: [.font: font])
+        return listFormattingProvider?.listLineMarkerFor(renderer: self, index: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? .string(defaultValue)
     }
 }
 

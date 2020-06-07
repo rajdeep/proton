@@ -539,7 +539,9 @@ extension RichTextView: LayoutManagerDelegate {
         return defaultTextFormattingProvider?.paragraphStyle
     }
 
-    func listMarkerForItem(at index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> String {
-        return richTextViewListDelegate?.richTextView(self, listMarkerForItemAt: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? "*"
+    func listMarkerForItem(at index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
+        let font = UIFont.preferredFont(forTextStyle: .body)
+        let defaultValue = NSAttributedString(string: "*", attributes: [.font: font])
+        return richTextViewListDelegate?.richTextView(self, listMarkerForItemAt: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? .string(defaultValue)
     }
 }
