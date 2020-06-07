@@ -43,10 +43,21 @@ public class ListCommand: EditorCommand {
         return CommandName("listCommand")
     }
 
+    public var attributeValue: Any?
+
     public func execute(on editor: EditorView) {
         let editedRange = editor.selectedRange
         guard editedRange.length > 0 else {
-            ListTextProcessor().createListItemInANewLine(editor: editor, editedRange: editedRange, indentMode: .indent)
+            ListTextProcessor().createListItemInANewLine(editor: editor, editedRange: editedRange, indentMode: .indent, attributeValue: attributeValue)
+            return
+        }
+
+        guard let attrValue = attributeValue else {
+            let paragraphStyle = editor.paragraphStyle
+            editor.addAttributes([
+                .paragraphStyle: paragraphStyle
+            ], at: editor.selectedRange)
+            editor.removeAttribute(.listItem, at: editor.selectedRange)
             return
         }
 
@@ -55,6 +66,12 @@ public class ListCommand: EditorCommand {
             let mutableStyle = ListTextProcessor().updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: .indent)
             editor.addAttribute(.paragraphStyle, value: mutableStyle ?? editor.paragraphStyle, at: range)
         }
-        editor.addAttribute(.listItem, value: true, at: editor.selectedRange)
+        editor.addAttribute(.listItem, value: attrValue, at: editor.selectedRange)
+        attributeValue = nil
+    }
+
+    public func execute(on editor: EditorView, attributeValue: Any?) {
+        self.attributeValue = attributeValue
+        execute(on: editor)
     }
 }

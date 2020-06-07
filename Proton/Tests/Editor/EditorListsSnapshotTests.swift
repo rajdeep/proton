@@ -21,6 +21,7 @@ class EditorListsSnapshotTests: XCTestCase {
     override func setUp() {
         super.setUp()
 //        recordMode = true
+        listCommand.attributeValue = true
     }
 
     func testInitiatesCreationOfList() {
@@ -75,7 +76,7 @@ class EditorListsSnapshotTests: XCTestCase {
         editor.selectedRange = rangeToSet
 
         // Indent second line
-            listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: editor.selectedRange)
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: editor.selectedRange)
         viewController.render(size: CGSize(width: 300, height: 175))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
@@ -472,7 +473,36 @@ class EditorListsSnapshotTests: XCTestCase {
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .backspace, modifierFlags: [], range: NSRange(location: editor.textEndRange.location - 1, length: 1))
 
         viewController.render(size: CGSize(width: 300, height: 400))
-        assertSnapshot(matching: viewController.view, as: .image, record: true)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 
+    func testQueriesDelegateForListLineMarker() {
+        let funcExpectation = functionExpectation()
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let listFormattingProvider = MockListFormattingProvider()
+        let attributeValue = "ListItemAttribute"
+
+        listFormattingProvider.onListMarkerForItem = { _, index, level, prevLevel, attrVal in
+            XCTAssertEqual(index, 0)
+            XCTAssertEqual(level, 1)
+            XCTAssertEqual(prevLevel, 0)
+            XCTAssertEqual(attrVal as? String, attributeValue)
+            funcExpectation.fulfill()
+        }
+
+        editor.listFormattingProvider = listFormattingProvider
+
+        editor.attributedText = NSAttributedString(string: "Test")
+
+        editor.selectedRange = editor.attributedText.fullRange
+
+        let listCommand = ListCommand()
+        listCommand.execute(on: editor, attributeValue: attributeValue)
+
+        viewController.render()
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        waitForExpectations(timeout: 1.0)
     }
 }

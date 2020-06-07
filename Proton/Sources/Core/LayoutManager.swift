@@ -46,7 +46,7 @@ class LayoutManager: NSLayoutManager {
 
         textStorage.enumerateAttribute(.listItem, in: textStorage.fullRange, options: []) { (value, range, _) in
             if value != nil {
-                drawListMarkers(textStorage: textStorage, listRange: range)
+                drawListMarkers(textStorage: textStorage, listRange: range, attributeValue: value)
             }
         }
     }
@@ -55,13 +55,13 @@ class LayoutManager: NSLayoutManager {
         return layoutManagerDelegate?.paragraphStyle ?? NSParagraphStyle()
     }
 
-    private func drawListMarkers(textStorage: NSTextStorage, listRange: NSRange) {
+    private func drawListMarkers(textStorage: NSTextStorage, listRange: NSRange, attributeValue: Any?) {
         var lastLayoutRect: CGRect?
         var lastLayoutParaStyle: NSParagraphStyle?
         var lastLayoutFont: UIFont?
 
         var counters = [Int: Int]()
-        var previousLevel = 1
+        var previousLevel = 0
 
         let defaultFont = self.layoutManagerDelegate?.font ?? UIFont.preferredFont(forTextStyle: .body)
         let listIndent = layoutManagerDelegate?.listLineFormatting.indentation ?? 25.0
@@ -96,7 +96,7 @@ class LayoutManager: NSLayoutManager {
                 }
 
                 if level > 0 {
-                    self.drawListItem(level: level, previousLevel: previousLevel, index: index, rect: rect, paraStyle: paraStyle, font: font)
+                    self.drawListItem(level: level, previousLevel: previousLevel, index: index, rect: rect, paraStyle: paraStyle, font: font, attributeValue: attributeValue)
                 }
                 previousLevel = level
 
@@ -132,16 +132,16 @@ class LayoutManager: NSLayoutManager {
         previousLevel = level
 
         let font = lastLayoutFont ?? defaultFont
-        drawListItem(level: level, previousLevel: previousLevel, index: index, rect: newLineRect, paraStyle: paraStyle, font: font)
+        drawListItem(level: level, previousLevel: previousLevel, index: index, rect: newLineRect, paraStyle: paraStyle, font: font, attributeValue: attributeValue)
     }
 
-    private func drawListItem(level: Int, previousLevel: Int, index: Int, rect: CGRect, paraStyle: NSParagraphStyle, font: UIFont) {
+    private func drawListItem(level: Int, previousLevel: Int, index: Int, rect: CGRect, paraStyle: NSParagraphStyle, font: UIFont, attributeValue: Any?) {
         guard  level > 0 else {  return }
 
         let color = layoutManagerDelegate?.textColor ?? self.defaultBulletColor
         color.set()
 
-        let marker = layoutManagerDelegate?.listMarkerForItem(at: index, level: level, previousLevel: previousLevel, attributeValue: 1) ?? .string(NSAttributedString(string: "*"))
+        let marker = layoutManagerDelegate?.listMarkerForItem(at: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? .string(NSAttributedString(string: "*"))
 
         let listMarkerImage: UIImage
         let markerRect: CGRect

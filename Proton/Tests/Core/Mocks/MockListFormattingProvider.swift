@@ -27,6 +27,7 @@ class MockListFormattingProvider: EditorListFormattingProvider {
 
     let sequenceGenerators: [SequenceGenerator]
     let listLineFormatting: LineFormatting
+    var onListMarkerForItem : ((EditorView, Int, Int, Int, Any) -> Void)?
 
     private let defaultSequenceGenerators: [SequenceGenerator]  =
         [NumericSequenceGenerator(),
@@ -41,6 +42,8 @@ class MockListFormattingProvider: EditorListFormattingProvider {
     func listLineMarkerFor(editor: EditorView, index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
         let sequenceGenerator = self.sequenceGenerators[(level - 1) % self.sequenceGenerators.count]
         let value =  sequenceGenerator.value(at: index)
+
+        onListMarkerForItem?(editor, index, level, previousLevel, attributeValue ?? "*")
         return value
     }
 }
