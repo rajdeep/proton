@@ -37,12 +37,7 @@ public class ListTextProcessor: TextProcessing {
         let rangeToCheck = max(0, range.endLocation - 1)
         if editorView.contentLength > 0,
             editorView.attributedText.attribute(.listItem, at: rangeToCheck, effectiveRange: nil) != nil,
-        (editorView.attributedText.attribute(.paragraphStyle, at: rangeToCheck, effectiveRange: nil) as? NSParagraphStyle)?.firstLineHeadIndent ?? 0 > 0 {
-//            if let currentLine = editorView.currentLine {
-//                if currentLine.startsWith(blankLineFiller), currentLine.text.length > 1 {
-//                    editorView.replaceCharacters(in: currentLine.range, with: "")
-//                }
-//            }
+            (editorView.attributedText.attribute(.paragraphStyle, at: rangeToCheck, effectiveRange: nil) as? NSParagraphStyle)?.firstLineHeadIndent ?? 0 > 0 {
             editorView.typingAttributes[.listItem] = 1
         }
         return true
@@ -58,9 +53,6 @@ public class ListTextProcessor: TextProcessing {
         guard editedRange != .zero else { return }
         switch key {
         case .tab:
-//            if editedRange.length == 0, editedRange.endLocation == editor.contentLength {
-//                return
-//            }
             // Indent only if previous character is a listItem
             guard editedRange.location > 0,
                 editor.attributedText.attribute(.listItem, at: editedRange.location - 1, effectiveRange: nil) != nil else {

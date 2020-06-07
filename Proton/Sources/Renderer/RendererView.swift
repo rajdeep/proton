@@ -30,6 +30,8 @@ open class RendererView: UIView {
     /// An object interested in intercepting and responding to user interaction like tap and selecting changes in the `RendererView`.
     public weak var delegate: RendererViewDelegate?
 
+    public weak var listFormattingProvider: RendererListFormattingProvider?
+
     /// Context for the current renderer
     public let context: RendererViewContext
 
@@ -200,6 +202,16 @@ extension RendererView: RichTextViewDelegate {
 
     func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
         delegate?.didTap(self, didTapAtLocation: location, characterRange: characterRange)
+    }
+}
+
+extension RendererView: RichTextViewListDelegate {
+    var listLineFormatting: LineFormatting {
+        return listFormattingProvider?.listLineFormatting ?? LineFormatting(indentation: 25, spacingBefore: 0)
+    }
+
+    func richTextView(_ richTextView: RichTextView, listMarkerForItemAt index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> String {
+        return listFormattingProvider?.listLineMarkerFor(renderer: self, index: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? "*"
     }
 }
 

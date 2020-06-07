@@ -16,6 +16,7 @@ class EditorListsSnapshotTests: XCTestCase {
     let listCommand = ListCommand()
     let listTextProcessor = ListTextProcessor()
     var recordMode = false
+    let listFormattingProvider = MockListFormattingProvider()
 
     override func setUp() {
         super.setUp()
@@ -25,6 +26,7 @@ class EditorListsSnapshotTests: XCTestCase {
     func testInitiatesCreationOfList() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
+        editor.listFormattingProvider = listFormattingProvider
         editor.selectedRange = .zero
         listCommand.execute(on: editor)
         viewController.render()
@@ -41,6 +43,7 @@ class EditorListsSnapshotTests: XCTestCase {
 
         let viewController = EditorTestViewController()
         let editor = viewController.editor
+        editor.listFormattingProvider = listFormattingProvider
         editor.attributedText = NSAttributedString(string: text)
         editor.selectedRange = editor.attributedText.fullRange
         listCommand.execute(on: editor)
@@ -61,7 +64,8 @@ class EditorListsSnapshotTests: XCTestCase {
 
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-        editor.sequenceGenerators = [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()]
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
         editor.attributedText = NSAttributedString(string: text)
         editor.selectedRange = editor.attributedText.fullRange
         listCommand.execute(on: editor)
@@ -90,7 +94,8 @@ class EditorListsSnapshotTests: XCTestCase {
 
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-        editor.sequenceGenerators = [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()]
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
         editor.attributedText = NSAttributedString(string: text)
         editor.selectedRange = editor.attributedText.fullRange
         listCommand.execute(on: editor)
@@ -111,33 +116,35 @@ class EditorListsSnapshotTests: XCTestCase {
     }
 
     func testIndentsAndOutdentsListWithoutSelectedRangeInMiddle() {
-           let text = """
+        let text = """
            This is line 1. This is line 1. This is line 1. This is line 1.
            This is line 2.
            This is line 3. This is line 3. This is line 3. This is line 3.
            """
 
-           let viewController = EditorTestViewController()
-           let editor = viewController.editor
-           editor.sequenceGenerators = [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()]
-           editor.attributedText = NSAttributedString(string: text)
-           editor.selectedRange = editor.attributedText.fullRange
-           listCommand.execute(on: editor)
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
 
-           let secondLine = editor.contentLinesInRange(editor.attributedText.fullRange)[1]
-           let rangeToSet = NSRange(location: secondLine.range.location, length: 4)
-           editor.selectedRange = rangeToSet
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
+        editor.attributedText = NSAttributedString(string: text)
+        editor.selectedRange = editor.attributedText.fullRange
+        listCommand.execute(on: editor)
 
-           // Indent second line
-               listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: editor.selectedRange)
-           viewController.render(size: CGSize(width: 300, height: 175))
-           assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        let secondLine = editor.contentLinesInRange(editor.attributedText.fullRange)[1]
+        let rangeToSet = NSRange(location: secondLine.range.location, length: 4)
+        editor.selectedRange = rangeToSet
 
-           // Outdent second line
-           listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [.shift], range: editor.selectedRange)
-           viewController.render(size: CGSize(width: 300, height: 175))
-           assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
-       }
+        // Indent second line
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: editor.selectedRange)
+        viewController.render(size: CGSize(width: 300, height: 175))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        // Outdent second line
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [.shift], range: editor.selectedRange)
+        viewController.render(size: CGSize(width: 300, height: 175))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 
     func testIndentsAndOutdentsListWithMultipleSelectedLines() {
         let text = """
@@ -148,7 +155,8 @@ class EditorListsSnapshotTests: XCTestCase {
 
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-        editor.sequenceGenerators = [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()]
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
         editor.attributedText = NSAttributedString(string: text)
         editor.selectedRange = editor.attributedText.fullRange
         listCommand.execute(on: editor)
@@ -173,7 +181,8 @@ class EditorListsSnapshotTests: XCTestCase {
 
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-        editor.sequenceGenerators = [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()]
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
         editor.attributedText = NSAttributedString(string: text)
         editor.selectedRange = editor.attributedText.fullRange
         listCommand.execute(on: editor)
@@ -200,7 +209,8 @@ class EditorListsSnapshotTests: XCTestCase {
 
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-        editor.sequenceGenerators = [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()]
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
         editor.attributedText = NSAttributedString(string: text)
         editor.selectedRange = editor.attributedText.fullRange
         listCommand.execute(on: editor)
@@ -231,7 +241,8 @@ class EditorListsSnapshotTests: XCTestCase {
 
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-        editor.sequenceGenerators = [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()]
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
         editor.attributedText = NSAttributedString(string: text)
         editor.selectedRange = editor.attributedText.fullRange
         listCommand.execute(on: editor)
@@ -268,7 +279,7 @@ class EditorListsSnapshotTests: XCTestCase {
 
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-        editor.sequenceGenerators = [NumericSequenceGenerator(), DiamondBulletSequenceGenerator(), SquareBulletSequenceGenerator()]
+        editor.listFormattingProvider = listFormattingProvider
         editor.attributedText = NSAttributedString(string: text)
         editor.selectedRange = editor.attributedText.fullRange
         listCommand.execute(on: editor)
@@ -300,7 +311,8 @@ class EditorListsSnapshotTests: XCTestCase {
 
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-        editor.sequenceGenerators = [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()]
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
         editor.attributedText = NSAttributedString(string: text)
         editor.selectedRange = editor.attributedText.fullRange
         listCommand.execute(on: editor)
@@ -339,7 +351,8 @@ class EditorListsSnapshotTests: XCTestCase {
 
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-        editor.sequenceGenerators = [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()]
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
         editor.attributedText = NSAttributedString(string: text)
         editor.selectedRange = editor.attributedText.fullRange
         listCommand.execute(on: editor)
@@ -373,7 +386,8 @@ class EditorListsSnapshotTests: XCTestCase {
 
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-        editor.sequenceGenerators = [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()]
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
         editor.attributedText = NSAttributedString(string: text)
         editor.selectedRange = editor.attributedText.fullRange
         listCommand.execute(on: editor)
@@ -419,6 +433,7 @@ class EditorListsSnapshotTests: XCTestCase {
 
         let viewController = EditorTestViewController()
         let editor = viewController.editor
+        editor.listFormattingProvider = listFormattingProvider
         editor.attributedText = NSAttributedString(string: text)
         editor.selectedRange = editor.attributedText.fullRange
         editor.registerProcessor(listTextProcessor)

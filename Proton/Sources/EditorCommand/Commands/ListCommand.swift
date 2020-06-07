@@ -29,6 +29,11 @@ enum Indentation {
 public struct LineFormatting {
     public let indentation: CGFloat
     public let spacingBefore: CGFloat
+
+    public init(indentation: CGFloat, spacingBefore: CGFloat) {
+        self.indentation = indentation
+        self.spacingBefore = spacingBefore
+    }
 }
 
 public class ListCommand: EditorCommand {

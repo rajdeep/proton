@@ -27,9 +27,11 @@ protocol LayoutManagerDelegate: AnyObject {
     var paragraphStyle: NSMutableParagraphStyle? { get }
     var font: UIFont? { get }
     var textColor: UIColor? { get }
+    var textContainerInset: UIEdgeInsets { get }
 
-    var sequenceGenerators: [SequenceGenerator] { get }
     var listLineFormatting: LineFormatting { get }
+
+    func listMarkerForItem(at index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> String
 }
 
 class LayoutManager: NSLayoutManager {
@@ -39,14 +41,6 @@ class LayoutManager: NSLayoutManager {
     weak var layoutManagerDelegate: LayoutManagerDelegate?
 
     private var bitmaps = [NSAttributedString: UIImage]()
-
-    private var sequenceGenerators: [SequenceGenerator] {
-        let sequenceGenerators = layoutManagerDelegate?.sequenceGenerators ?? []
-        guard sequenceGenerators.isEmpty == false else {
-            return [NumericSequenceGenerator()]
-        }
-        return sequenceGenerators
-    }
 
     override func drawGlyphs(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
         super.drawGlyphs(forGlyphRange: glyphsToShow, at: origin)
@@ -103,10 +97,10 @@ class LayoutManager: NSLayoutManager {
                     counters[level] = 1
                 }
 
-                previousLevel = level
                 if level > 0 {
-                    self.drawListItem(level: level, index: index, rect: rect, paraStyle: paraStyle, font: font)
+                    self.drawListItem(level: level, previousLevel: previousLevel, index: index, rect: rect, paraStyle: paraStyle, font: font)
                 }
+                previousLevel = level
 
                 // TODO: should this be moved inside level > 0 check above?
                 lastLayoutParaStyle = paraStyle
@@ -140,17 +134,16 @@ class LayoutManager: NSLayoutManager {
         previousLevel = level
 
         let font = lastLayoutFont ?? defaultFont
-        drawListItem(level: level, index: index, rect: newLineRect, paraStyle: paraStyle, font: font)
+        drawListItem(level: level, previousLevel: previousLevel, index: index, rect: newLineRect, paraStyle: paraStyle, font: font)
     }
 
-    private func drawListItem(level: Int, index: Int, rect: CGRect, paraStyle: NSParagraphStyle, font: UIFont) {
+    private func drawListItem(level: Int, previousLevel: Int, index: Int, rect: CGRect, paraStyle: NSParagraphStyle, font: UIFont) {
         guard  level > 0 else {  return }
 
         let color = layoutManagerDelegate?.textColor ?? self.defaultBulletColor
         color.set()
 
-        let sequenceGenerator = self.sequenceGenerators[(level - 1) % self.sequenceGenerators.count]
-        let text = sequenceGenerator.value(at: index)
+        let text = layoutManagerDelegate?.listMarkerForItem(at: index, level: level, previousLevel: previousLevel, attributeValue: 1) ?? "*"
 
         let string = NSAttributedString(string: text, attributes: [NSAttributedString.Key.font: font])
         let stringRect = self.rectForBullet(text: string, rect: rect, indent: paraStyle.firstLineHeadIndent, yOffset: paraStyle.paragraphSpacingBefore)
@@ -173,7 +166,8 @@ class LayoutManager: NSLayoutManager {
     }
 
     private func rectForBullet(text: NSAttributedString, rect: CGRect, indent: CGFloat, yOffset: CGFloat) -> CGRect {
-        let spacerRect = CGRect(origin: CGPoint(x: rect.minX, y: rect.minY + 8), size: CGSize(width: indent, height: rect.height))
+        let topInset = layoutManagerDelegate?.textContainerInset.top ?? 0
+        let spacerRect = CGRect(origin: CGPoint(x: rect.minX, y: rect.minY + topInset), size: CGSize(width: indent, height: rect.height))
         var stringRect = text.boundingRect(with: CGSize(width: indent, height: rect.height), options: [], context: nil)
         stringRect = CGRect(origin: CGPoint(x: spacerRect.maxX - stringRect.width, y: spacerRect.minY + yOffset), size: stringRect.size)
         return stringRect

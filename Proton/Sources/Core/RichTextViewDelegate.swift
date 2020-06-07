@@ -49,3 +49,8 @@ protocol RichTextViewDelegate: AnyObject {
     func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?)
     func richTextView(_ richTextView: RichTextView, selectedRangeChangedFrom oldRange: NSRange?, to newRange: NSRange?)
 }
+
+protocol RichTextViewListDelegate: AnyObject {
+    var listLineFormatting: LineFormatting { get }
+    func richTextView(_ richTextView: RichTextView, listMarkerForItemAt index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> String
+}
