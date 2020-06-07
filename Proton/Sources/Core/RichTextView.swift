@@ -23,8 +23,10 @@ import UIKit
 
 class RichTextView: AutogrowingTextView {
     private let storage = TextStorage()
+    static let defaultListLineFormatting = LineFormatting(indentation: 25, spacingBefore: 0)
 
     weak var richTextViewDelegate: RichTextViewDelegate?
+    weak var richTextViewListDelegate: RichTextViewListDelegate?
 
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding? {
         get { storage.defaultTextFormattingProvider }
@@ -182,9 +184,6 @@ class RichTextView: AutogrowingTextView {
     var contentLength: Int {
         return storage.length
     }
-
-    var listIndent: CGFloat = 25.0
-    var sequenceGenerators: [SequenceGenerator] = []
 
     weak var textProcessor: TextProcessor? {
         didSet {
@@ -344,6 +343,7 @@ class RichTextView: AutogrowingTextView {
             if contentLength == 0 {
                 self.typingAttributes = defaultTypingAttributes
             }
+            richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: selectedRange)
         }
 
         guard contentLength > 0 else { return }
@@ -531,7 +531,17 @@ extension RichTextView: TextStorageDelegate {
 }
 
 extension RichTextView: LayoutManagerDelegate {
+    var listLineFormatting: LineFormatting {
+        return richTextViewListDelegate?.listLineFormatting ?? RichTextView.defaultListLineFormatting
+    }
+
     var paragraphStyle: NSMutableParagraphStyle? {
         return defaultTextFormattingProvider?.paragraphStyle
+    }
+
+    func listMarkerForItem(at index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
+        let font = UIFont.preferredFont(forTextStyle: .body)
+        let defaultValue = NSAttributedString(string: "*", attributes: [.font: font])
+        return richTextViewListDelegate?.richTextView(self, listMarkerForItemAt: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? .string(defaultValue)
     }
 }

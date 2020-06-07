@@ -123,6 +123,9 @@ open class EditorView: UIView {
     /// An object interested in responding to editing and focus related events in the `EditorView`.
     public weak var delegate: EditorViewDelegate?
 
+    /// List formatting provider to be used for rendering lists in the Editor.
+    public weak var listFormattingProvider: EditorListFormattingProvider?
+
     /// List of commands supported by the editor.
     /// - Note:
     /// * To support any command, set value to nil. Default behaviour.
@@ -342,16 +345,6 @@ open class EditorView: UIView {
         set { richTextView.linkTextAttributes = newValue }
     }
 
-    public var listIndent: CGFloat {
-        get { richTextView.listIndent }
-        set { richTextView.listIndent = newValue }
-    }
-
-    public var sequenceGenerators: [SequenceGenerator] {
-        get { richTextView.sequenceGenerators }
-        set { richTextView.sequenceGenerators = newValue }
-    }
-
     /// Range of end of text in the `EditorView`. The range has always has length of 0.
     public var textEndRange: NSRange {
         return richTextView.textEndRange
@@ -512,6 +505,7 @@ open class EditorView: UIView {
         richTextView.translatesAutoresizingMaskIntoConstraints = false
         richTextView.defaultTextFormattingProvider = self
         richTextView.richTextViewDelegate = self
+        richTextView.richTextViewListDelegate = self
 
         addSubview(richTextView)
         NSLayoutConstraint.activate([
@@ -633,11 +627,15 @@ open class EditorView: UIView {
         return richTextView.wordAt(location)
     }
 
+    public func deleteBackward() {
+        richTextView.deleteBackward()
+    }
+
     public func rangeOfCharacter(at point: CGPoint) -> NSRange? {
         let location = richTextView.convert(point, from: self)
         return richTextView.rangeOfCharacter(at: location)
     }
-    
+
     /// Inserts an `Attachment` in the `EditorView`.
     /// - Parameters:
     ///   - range: Range where the `Attachment` should be inserted. If the range contains existing content, the content
@@ -861,7 +859,21 @@ extension EditorView {
 
 extension EditorView: DefaultTextFormattingProviding { }
 
+extension EditorView: RichTextViewListDelegate {
+    var listLineFormatting: LineFormatting {
+        return listFormattingProvider?.listLineFormatting ?? RichTextView.defaultListLineFormatting
+    }
+
+    func richTextView(_ richTextView: RichTextView, listMarkerForItemAt index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
+        let font = UIFont.preferredFont(forTextStyle: .body)
+        let defaultValue = NSAttributedString(string: "*", attributes: [.font: font])
+
+        return listFormattingProvider?.listLineMarkerFor(editor: self, index: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? .string(defaultValue)
+    }
+}
+
 extension EditorView: RichTextViewDelegate {
+
     func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
         delegate?.editor(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
         editorContextDelegate?.editor(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)

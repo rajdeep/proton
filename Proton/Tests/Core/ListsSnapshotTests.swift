@@ -26,6 +26,8 @@ import FBSnapshotTestCase
 
 class ListsSnapshotTests: FBSnapshotTestCase {
 
+    let mockRichTextViewListDelegate =  MockRichTextViewListDelegate()
+
     override func setUp() {
         super.setUp()
 
@@ -115,8 +117,9 @@ class ListsSnapshotTests: FBSnapshotTestCase {
     func renderList(text: NSAttributedString, viewSize: CGSize, sequenceGenerators: [SequenceGenerator] = []) -> UIView {
         let viewController = SnapshotTestViewController()
         let textView = RichTextView(frame: .zero, context: RichTextViewContext())
-
-        textView.sequenceGenerators = sequenceGenerators
+        let listStyleProvider = MockListFormattingProvider(sequenceGenerators: sequenceGenerators)
+        mockRichTextViewListDelegate.listFormattingProvider = listStyleProvider
+        textView.richTextViewListDelegate = mockRichTextViewListDelegate
 
         textView.translatesAutoresizingMaskIntoConstraints = false
 

@@ -70,6 +70,8 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         (title: "Sample", selector: #selector(loadSample(sender:))),
     ]
 
+    let listFormattingProvider = ListFormattingProvider()
+
     override func setup() {
         super.setup()
 
@@ -78,6 +80,8 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
         editor.layer.borderColor = UIColor.systemBlue.cgColor
         editor.layer.borderWidth = 1.0
+
+        editor.listFormattingProvider = listFormattingProvider
 
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -95,11 +99,6 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         editor.registerProcessor(ListTextProcessor())
 //        editor.paragraphStyle.paragraphSpacingBefore = 20
 
-        editor.sequenceGenerators = [
-            NumericSequenceGenerator(),
-            DiamondBulletSequenceGenerator(),
-            SquareBulletSequenceGenerator()
-        ]
 
         self.buttons = makeCommandButtons()
         for button in buttons {
@@ -231,5 +230,19 @@ extension CommandsExampleViewController: EditorViewDelegate {
 
     func editor(_ editor: EditorView, didReceiveFocusAt range: NSRange) {
         print("Focussed: `\(editor.contentName?.rawValue ?? "<root editor>")` at depth: \(editor.nestingLevel)")
+    }
+}
+
+class ListFormattingProvider: EditorListFormattingProvider {
+    var listLineFormatting: LineFormatting = LineFormatting(indentation: 25, spacingBefore: 0)
+
+    let sequenceGenerators: [SequenceGenerator] =
+        [NumericSequenceGenerator(),
+         DiamondBulletSequenceGenerator(),
+         SquareBulletSequenceGenerator()]
+
+    func listLineMarkerFor(editor: EditorView, index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
+        let sequenceGenerator = self.sequenceGenerators[(level - 1) % self.sequenceGenerators.count]
+        return sequenceGenerator.value(at: index)
     }
 }

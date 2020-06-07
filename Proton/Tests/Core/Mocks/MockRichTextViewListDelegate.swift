@@ -1,8 +1,8 @@
 //
-//  NSParagraphStyleExtensions.swift
-//  Proton
+//  MockRichTextViewListDelegate.swift
+//  ProtonTests
 //
-//  Created by Rajdeep Kwatra on 28/5/20.
+//  Created by Rajdeep Kwatra on 5/6/20.
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,13 +21,16 @@
 import Foundation
 import UIKit
 
-public extension NSParagraphStyle {
-    var mutableParagraphStyle: NSMutableParagraphStyle {
-        let copy = self.mutableCopy() as? NSMutableParagraphStyle
-        return copy ?? NSMutableParagraphStyle()
+@testable import Proton
+
+class MockRichTextViewListDelegate: RichTextViewListDelegate {
+    var listFormattingProvider = MockListFormattingProvider()
+
+    var listLineFormatting: LineFormatting {
+        listFormattingProvider.listLineFormatting
     }
 
-    var lineFormatting: LineFormatting {
-        return LineFormatting(indentation: firstLineHeadIndent, spacingBefore: paragraphSpacingBefore)
+    func richTextView(_ richTextView: RichTextView, listMarkerForItemAt index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
+        return listFormattingProvider.listLineMarkerFor(editor: EditorView(), index: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue)
     }
 }
