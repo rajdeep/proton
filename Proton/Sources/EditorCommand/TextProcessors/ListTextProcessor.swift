@@ -36,9 +36,9 @@ public class ListTextProcessor: TextProcessing {
     public func shouldProcess(_ editorView: EditorView, shouldProcessTextIn range: NSRange, replacementText text: String) -> Bool {
         let rangeToCheck = max(0, range.endLocation - 1)
         if editorView.contentLength > 0,
-            editorView.attributedText.attribute(.listItem, at: rangeToCheck, effectiveRange: nil) != nil,
+            let value = editorView.attributedText.attribute(.listItem, at: rangeToCheck, effectiveRange: nil),
             (editorView.attributedText.attribute(.paragraphStyle, at: rangeToCheck, effectiveRange: nil) as? NSParagraphStyle)?.firstLineHeadIndent ?? 0 > 0 {
-            editorView.typingAttributes[.listItem] = 1
+            editorView.typingAttributes[.listItem] = value
         }
         return true
     }
@@ -55,11 +55,11 @@ public class ListTextProcessor: TextProcessing {
         case .tab:
             // Indent only if previous character is a listItem
             guard editedRange.location > 0,
-                editor.attributedText.attribute(.listItem, at: editedRange.location - 1, effectiveRange: nil) != nil else {
+                let attributeValue = editor.attributedText.attribute(.listItem, at: editedRange.location - 1, effectiveRange: nil) else {
                     return
             }
             let indentMode: Indentation  = (modifierFlags == .shift) ? .outdent : .indent
-            updateListItemIfRequired(editor: editor, editedRange: editedRange, indentMode: indentMode)
+            updateListItemIfRequired(editor: editor, editedRange: editedRange, indentMode: indentMode, attributeValue: attributeValue)
         case .enter:
             let attrs = editor.attributedText.attributes(at: editedRange.location, effectiveRange: nil)
             if attrs[.listItem] != nil {
@@ -89,15 +89,15 @@ public class ListTextProcessor: TextProcessing {
             }
         }
 
-        var isInList = editor.typingAttributes[.listItem] != nil
+        var attributeValue = editor.typingAttributes[.listItem]
         if previousLine.text.length > 0 {
-            isInList = previousLine.text.attribute(.listItem, at: 0, effectiveRange: nil) != nil
+            attributeValue = previousLine.text.attribute(.listItem, at: 0, effectiveRange: nil)
         }
 
         if (currentLine.text.length == 0 || currentLine.text.string == blankLineFiller),
-            isInList {
+            attributeValue != nil {
             executeOnDidProcess = { [weak self] editor in
-                self?.updateListItemIfRequired(editor: editor, editedRange: currentLine.range, indentMode: .outdent)
+                self?.updateListItemIfRequired(editor: editor, editedRange: currentLine.range, indentMode: .outdent, attributeValue: attributeValue)
                 editor.replaceCharacters(in: NSRange(location: currentLine.range.location + 1, length: 1), with: "")
             }
         }
@@ -113,12 +113,12 @@ public class ListTextProcessor: TextProcessing {
         }
     }
 
-    private func updateListItemIfRequired(editor: EditorView, editedRange: NSRange, indentMode: Indentation) {
+    private func updateListItemIfRequired(editor: EditorView, editedRange: NSRange, indentMode: Indentation, attributeValue: Any?) {
         let lines = editor.contentLinesInRange(editedRange)
 
         for line in lines {
             if line.text.length == 0 || line.text.attribute(.listItem, at: 0, effectiveRange: nil) == nil {
-                createListItemInANewLine(editor: editor, editedRange: line.range, indentMode: indentMode)
+                createListItemInANewLine(editor: editor, editedRange: line.range, indentMode: indentMode, attributeValue: attributeValue)
                 continue
             }
 
@@ -170,12 +170,18 @@ public class ListTextProcessor: TextProcessing {
         }
     }
 
-    func createListItemInANewLine(editor: EditorView, editedRange: NSRange, indentMode: Indentation) {
+    func createListItemInANewLine(editor: EditorView, editedRange: NSRange, indentMode: Indentation, attributeValue: Any?) {
+        var listAttributeValue = attributeValue
+        if listAttributeValue == nil, editedRange.location > 0 {
+            listAttributeValue = editor.attributedText.attribute(.listItem, at: editedRange.location - 1, effectiveRange: nil)
+        }
+        listAttributeValue = listAttributeValue ?? "listItemValue" // default value in case no other value can be obtained.
+
         var attrs = editor.typingAttributes
         let paraStyle = attrs[.paragraphStyle] as? NSParagraphStyle
         let updatedStyle = updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: indentMode)
         attrs[.paragraphStyle] = updatedStyle
-        attrs[.listItem] = updatedStyle?.firstLineHeadIndent ?? 0 > 0.0 ? 1 : nil
+        attrs[.listItem] = updatedStyle?.firstLineHeadIndent ?? 0 > 0.0 ? listAttributeValue : nil
         let marker = NSAttributedString(string: blankLineFiller, attributes: attrs)
         editor.replaceCharacters(in: editedRange, with: marker)
         editor.selectedRange = editedRange.nextPosition

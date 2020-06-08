@@ -21,6 +21,7 @@ class EditorListsSnapshotTests: XCTestCase {
     override func setUp() {
         super.setUp()
 //        recordMode = true
+        listCommand.attributeValue = true
     }
 
     func testInitiatesCreationOfList() {
@@ -54,8 +55,6 @@ class EditorListsSnapshotTests: XCTestCase {
     }
 
     func testIndentsAndOutdentsListWithoutSelectedRangeInBeginning() {
-        // TODO: FIX - this is broken
-
         let text = """
         This is line 1. This is line 1. This is line 1. This is line 1.
         This is line 2.
@@ -75,7 +74,7 @@ class EditorListsSnapshotTests: XCTestCase {
         editor.selectedRange = rangeToSet
 
         // Indent second line
-            listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: editor.selectedRange)
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: editor.selectedRange)
         viewController.render(size: CGSize(width: 300, height: 175))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
@@ -188,7 +187,6 @@ class EditorListsSnapshotTests: XCTestCase {
         listCommand.execute(on: editor)
         editor.selectedRange = editor.textEndRange
         let attrs = editor.attributedText.attributes(at: editor.contentLength - 1, effectiveRange: nil)
-//        editor.appendCharacters(NSAttributedString(string: "\n", attributes: attrs))
 
         let paraStyle = attrs[.paragraphStyle] ?? NSParagraphStyle()
         editor.appendCharacters(NSAttributedString(string: "\n",
@@ -472,7 +470,89 @@ class EditorListsSnapshotTests: XCTestCase {
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .backspace, modifierFlags: [], range: NSRange(location: editor.textEndRange.location - 1, length: 1))
 
         viewController.render(size: CGSize(width: 300, height: 400))
-        assertSnapshot(matching: viewController.view, as: .image, record: true)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 
+    func testQueriesDelegateForListLineMarker() {
+        let funcExpectation = functionExpectation()
+        funcExpectation.expectedFulfillmentCount = 2
+
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let listFormattingProvider = MockListFormattingProvider()
+        let attributeValue = "ListItemAttribute"
+
+        var expectedValues = [
+            (index: 0, level: 1, prevLevel: 0, attributeValue: attributeValue),
+            (index: 0, level: 2, prevLevel: 1, attributeValue: attributeValue),
+        ]
+
+        listFormattingProvider.onListMarkerForItem = { _, index, level, prevLevel, attrVal in
+            XCTAssertEqual(index, expectedValues[0].index)
+            XCTAssertEqual(level, expectedValues[0].level)
+            XCTAssertEqual(prevLevel, expectedValues[0].prevLevel)
+            XCTAssertEqual(attrVal as? String, expectedValues[0].attributeValue)
+            funcExpectation.fulfill()
+            expectedValues.remove(at: 0)
+        }
+
+        editor.listFormattingProvider = listFormattingProvider
+
+        let text = "This is line 1.\nThis is line 2."
+
+        editor.attributedText = NSAttributedString(string: text)
+        editor.selectedRange = editor.attributedText.fullRange
+        listCommand.execute(on: editor, attributeValue: attributeValue)
+
+        let secondLine = editor.contentLinesInRange(editor.attributedText.fullRange)[1]
+        let rangeToSet = NSRange(location: secondLine.range.location, length: 0)
+        editor.selectedRange = rangeToSet
+
+        // Indent second line
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: editor.selectedRange)
+        viewController.render(size: CGSize(width: 300, height: 175))
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testRemoveListAttributeFromRange() {
+        let text = """
+        Line 1
+        Line 2
+        Line 2a
+        Line 2a1
+        Line 2a2
+        Line 3
+        """
+
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
+        editor.attributedText = NSAttributedString(string: text)
+        editor.selectedRange = editor.attributedText.fullRange
+        listCommand.execute(on: editor)
+
+        let line2 = editor.contentLinesInRange(editor.attributedText.fullRange)[1]
+        let line2a = editor.contentLinesInRange(editor.attributedText.fullRange)[2]
+        let line2a2 = editor.contentLinesInRange(editor.attributedText.fullRange)[4]
+
+
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: NSRange(location: line2a.range.location, length: line2a2.range.endLocation - line2a.range.location))
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: line2.range)
+
+        viewController.render(size: CGSize(width: 300, height: 225))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        editor.selectedRange = NSRange(location: 0, length: line2a.range.endLocation)
+        listCommand.execute(on: editor, attributeValue: nil)
+
+        viewController.render(size: CGSize(width: 300, height: 225))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        // For some reason, a re-render is required in tests
+        viewController.render(size: CGSize(width: 300, height: 225))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 }

@@ -180,8 +180,14 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         if sender.titleLabel?.text == "Encode" {
             sender.command.execute(on: editor)
             return
+        } else if sender.titleLabel?.text == "List" {
+            if let command = sender.command as? ListCommand,
+                let editor = editor.editorViewContext.activeEditorView,
+                editor.attributedText.attribute(.listItem, at: editor.selectedRange.location, effectiveRange: nil) == nil {
+                command.execute(on: editor, attributeValue: "listItemValue")
+                return
+            }
         }
-
         commandExecutor.execute(sender.command)
     }
 

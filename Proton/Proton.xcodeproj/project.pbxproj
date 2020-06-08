@@ -20,7 +20,7 @@
 		1B2BC0D823CF17E300407DEE /* EditorContentTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2BC0D723CF17E300407DEE /* EditorContentTransformerTests.swift */; };
 		1B2BC0DD23CF18C700407DEE /* EditorContentDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2BC0DB23CF18C100407DEE /* EditorContentDecoding.swift */; };
 		1B30A3602489CE3E00FA1D48 /* ListFormattingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B30A35F2489CE3E00FA1D48 /* ListFormattingProvider.swift */; };
-		1B30A3622489DC7B00FA1D48 /* MockListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B30A3612489DC7B00FA1D48 /* MockListDelegate.swift */; };
+		1B30A3622489DC7B00FA1D48 /* MockListFormattingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B30A3612489DC7B00FA1D48 /* MockListFormattingProvider.swift */; };
 		1B30A3642489E11F00FA1D48 /* MockRichTextViewListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B30A3632489E11F00FA1D48 /* MockRichTextViewListDelegate.swift */; };
 		1B3D19C8248346FF00B3AB59 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 1B3D19C7248346FF00B3AB59 /* SnapshotTesting */; };
 		1B3D19CA2483484A00B3AB59 /* EditorListsSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D19C92483484A00B3AB59 /* EditorListsSnapshotTests.swift */; };
@@ -89,6 +89,7 @@
 		1BBAC3DD23CDB8C10088A1C8 /* RendererCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3DC23CDB8C10088A1C8 /* RendererCommand.swift */; };
 		1BBAC3E023CE81F40088A1C8 /* RendererCommandExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3DF23CE81F40088A1C8 /* RendererCommandExecutor.swift */; };
 		1BBAC3E323CE85660088A1C8 /* RendererCommandExecutorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3E223CE85660088A1C8 /* RendererCommandExecutorTests.swift */; };
+		1BBE4EFC248CB15E00D1C788 /* ListCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */; };
 		1BC25B542448768200FF88AC /* EditorContextDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC25B532448768200FF88AC /* EditorContextDelegateTests.swift */; };
 		1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */; };
 		1BD21554246951090000BCE2 /* LayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD21553246951090000BCE2 /* LayoutManager.swift */; };
@@ -153,7 +154,7 @@
 		1B2BC0D723CF17E300407DEE /* EditorContentTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentTransformerTests.swift; sourceTree = "<group>"; };
 		1B2BC0DB23CF18C100407DEE /* EditorContentDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentDecoding.swift; sourceTree = "<group>"; };
 		1B30A35F2489CE3E00FA1D48 /* ListFormattingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFormattingProvider.swift; sourceTree = "<group>"; };
-		1B30A3612489DC7B00FA1D48 /* MockListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockListDelegate.swift; sourceTree = "<group>"; };
+		1B30A3612489DC7B00FA1D48 /* MockListFormattingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockListFormattingProvider.swift; sourceTree = "<group>"; };
 		1B30A3632489E11F00FA1D48 /* MockRichTextViewListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRichTextViewListDelegate.swift; sourceTree = "<group>"; };
 		1B3D19C92483484A00B3AB59 /* EditorListsSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorListsSnapshotTests.swift; sourceTree = "<group>"; };
 		1B45014E247E5AD9007B3EE9 /* SequenceGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceGenerator.swift; sourceTree = "<group>"; };
@@ -240,6 +241,7 @@
 		1BBAC3DC23CDB8C10088A1C8 /* RendererCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommand.swift; sourceTree = "<group>"; };
 		1BBAC3DF23CE81F40088A1C8 /* RendererCommandExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommandExecutor.swift; sourceTree = "<group>"; };
 		1BBAC3E223CE85660088A1C8 /* RendererCommandExecutorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommandExecutorTests.swift; sourceTree = "<group>"; };
+		1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCommandTests.swift; sourceTree = "<group>"; };
 		1BC25B532448768200FF88AC /* EditorContextDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContextDelegateTests.swift; sourceTree = "<group>"; };
 		1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommandExecutorTests.swift; sourceTree = "<group>"; };
 		1BD21553246951090000BCE2 /* LayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManager.swift; sourceTree = "<group>"; };
@@ -475,7 +477,7 @@
 				1B45CDC923BF161E001EB196 /* MockDefaultTextFormattingProvider.swift */,
 				1B82570323C48C350033A0A9 /* MockRichTextViewDelegate.swift */,
 				1B30A3632489E11F00FA1D48 /* MockRichTextViewListDelegate.swift */,
-				1B30A3612489DC7B00FA1D48 /* MockListDelegate.swift */,
+				1B30A3612489DC7B00FA1D48 /* MockListFormattingProvider.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -723,6 +725,7 @@
 				1B840F5F2401E61600D5E8F7 /* Mocks */,
 				1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */,
 				1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */,
+				1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */,
 			);
 			path = EditorCommands;
 			sourceTree = "<group>";
@@ -1010,6 +1013,7 @@
 				1B8D8208243F3386009AD38A /* MockRendererCommand.swift in Sources */,
 				1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */,
 				1B82570423C48C350033A0A9 /* MockRichTextViewDelegate.swift in Sources */,
+				1BBE4EFC248CB15E00D1C788 /* ListCommandTests.swift in Sources */,
 				1B5E2583240F5B0C00163E74 /* NSAttributedStringExtensionTests.swift in Sources */,
 				1B45CDCB23BF1621001EB196 /* MockDefaultTextFormattingProvider.swift in Sources */,
 				1B45CDA923BEED0E001EB196 /* AutogrowingTextViewTests.swift in Sources */,
@@ -1026,7 +1030,7 @@
 				1B45CDEC23C1682C001EB196 /* AttachmentSnapshotTests.swift in Sources */,
 				1B164F4923D2AC9B00A0869A /* FindTextCommand.swift in Sources */,
 				1BD993B623C999AF00563ACB /* EditorViewTests.swift in Sources */,
-				1B30A3622489DC7B00FA1D48 /* MockListDelegate.swift in Sources */,
+				1B30A3622489DC7B00FA1D48 /* MockListFormattingProvider.swift in Sources */,
 				1B6DE9D923C5940B007F9859 /* EditorCommandSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
