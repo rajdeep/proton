@@ -36,9 +36,9 @@ public class ListTextProcessor: TextProcessing {
     public func shouldProcess(_ editorView: EditorView, shouldProcessTextIn range: NSRange, replacementText text: String) -> Bool {
         let rangeToCheck = max(0, range.endLocation - 1)
         if editorView.contentLength > 0,
-            editorView.attributedText.attribute(.listItem, at: rangeToCheck, effectiveRange: nil) != nil,
+            let value = editorView.attributedText.attribute(.listItem, at: rangeToCheck, effectiveRange: nil),
             (editorView.attributedText.attribute(.paragraphStyle, at: rangeToCheck, effectiveRange: nil) as? NSParagraphStyle)?.firstLineHeadIndent ?? 0 > 0 {
-            editorView.typingAttributes[.listItem] = 1
+            editorView.typingAttributes[.listItem] = value
         }
         return true
     }
@@ -171,11 +171,17 @@ public class ListTextProcessor: TextProcessing {
     }
 
     func createListItemInANewLine(editor: EditorView, editedRange: NSRange, indentMode: Indentation, attributeValue: Any?) {
+        var listAttributeValue = attributeValue
+        if listAttributeValue == nil, editedRange.location > 0 {
+            listAttributeValue = editor.attributedText.attribute(.listItem, at: editedRange.location - 1, effectiveRange: nil)
+        }
+        listAttributeValue = listAttributeValue ?? "listItemValue" // default value in case no other value can be obtained.
+
         var attrs = editor.typingAttributes
         let paraStyle = attrs[.paragraphStyle] as? NSParagraphStyle
         let updatedStyle = updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: indentMode)
         attrs[.paragraphStyle] = updatedStyle
-        attrs[.listItem] = updatedStyle?.firstLineHeadIndent ?? 0 > 0.0 ? attributeValue ?? 1 : nil
+        attrs[.listItem] = updatedStyle?.firstLineHeadIndent ?? 0 > 0.0 ? listAttributeValue : nil
         let marker = NSAttributedString(string: blankLineFiller, attributes: attrs)
         editor.replaceCharacters(in: editedRange, with: marker)
         editor.selectedRange = editedRange.nextPosition
