@@ -555,4 +555,32 @@ class EditorListsSnapshotTests: XCTestCase {
         viewController.render(size: CGSize(width: 300, height: 225))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+    func testRendersListWithDifferentAttributeValues() {
+        let text = """
+        This is line 1.
+        This is line 2.
+        This is line 3.
+        This is line 4.
+        """
+
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
+        editor.attributedText = NSAttributedString(string: text)
+        editor.selectedRange = editor.attributedText.fullRange
+        listCommand.execute(on: editor)
+
+        let thirdLine = editor.contentLinesInRange(editor.attributedText.fullRange)[2]
+
+        let thirdAndFourthLineRange = NSRange(location: thirdLine.range.location, length: editor.contentLength - thirdLine.range.location)
+
+        // Indent third & fourth line
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: thirdAndFourthLineRange)
+        editor.addAttribute(.listItem, value: 2, at: thirdAndFourthLineRange)
+        
+        viewController.render(size: CGSize(width: 300, height: 175))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 }
