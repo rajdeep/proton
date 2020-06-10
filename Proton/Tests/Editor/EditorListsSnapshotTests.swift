@@ -603,13 +603,23 @@ class EditorListsSnapshotTests: XCTestCase {
         paraStyle3.firstLineHeadIndent = indent * 3
         paraStyle3.headIndent = indent * 3
 
-        editor.appendCharacters(NSAttributedString(string: "Ordered\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
-        editor.appendCharacters(NSAttributedString(string: "Unordered\n", attributes: [.listItem: 2, .paragraphStyle: paraStyle2]))
-        editor.appendCharacters(NSAttributedString(string: "Unordered\n", attributes: [.listItem: 2, .paragraphStyle: paraStyle2]))
-        editor.appendCharacters(NSAttributedString(string: "Ordered\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle3]))
-        editor.appendCharacters(NSAttributedString(string: "Ordered", attributes: [.listItem: 1, .paragraphStyle: paraStyle3]))
+        editor.appendCharacters(NSAttributedString(string: "Ordered 1\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "Unordered 2\n", attributes: [.listItem: 2, .paragraphStyle: paraStyle2]))
+        editor.appendCharacters(NSAttributedString(string: "Unordered 2\n", attributes: [.listItem: 2, .paragraphStyle: paraStyle2]))
+        editor.appendCharacters(NSAttributedString(string: "Ordered 3\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle3]))
+        editor.appendCharacters(NSAttributedString(string: "Ordered 3\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle3]))
+        editor.appendCharacters(NSAttributedString(string: "Ordered 1-2\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "Unordered 2\n", attributes: [.listItem: 2, .paragraphStyle: paraStyle2]))
+        editor.appendCharacters(NSAttributedString(string: "Unordered 2\n", attributes: [.listItem: 2, .paragraphStyle: paraStyle2]))
+        editor.appendCharacters(NSAttributedString(string: "Ordered 3\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle3]))
+        editor.appendCharacters(NSAttributedString(string: "Ordered 3\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle3]))
+        editor.appendCharacters(NSAttributedString(string: "Not in list\n", attributes: [.paragraphStyle: NSParagraphStyle()]))
+        editor.appendCharacters(NSAttributedString(string: "Ordered 1\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "Unordered 2\n", attributes: [.listItem: 2, .paragraphStyle: paraStyle2]))
+        editor.appendCharacters(NSAttributedString(string: "Unordered 2\n", attributes: [.listItem: 2, .paragraphStyle: paraStyle2]))
+        editor.appendCharacters(NSAttributedString(string: "Ordered 1", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
 
-        viewController.render(size: CGSize(width: 300, height: 175))
+        viewController.render(size: CGSize(width: 300, height: 375))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 }

@@ -37,6 +37,7 @@ protocol LayoutManagerDelegate: AnyObject {
 class LayoutManager: NSLayoutManager {
 
     private let defaultBulletColor = UIColor.black
+    private var counters = [Int: Int]()
 
     weak var layoutManagerDelegate: LayoutManagerDelegate?
 
@@ -60,7 +61,6 @@ class LayoutManager: NSLayoutManager {
         var lastLayoutParaStyle: NSParagraphStyle?
         var lastLayoutFont: UIFont?
 
-        var counters = [Int: Int]()
         var previousLevel = 0
 
         let defaultFont = self.layoutManagerDelegate?.font ?? UIFont.preferredFont(forTextStyle: .body)
@@ -71,6 +71,10 @@ class LayoutManager: NSLayoutManager {
         if listRange.location > 0,
             textStorage.attribute(.listItem, at: listRange.location - 1, effectiveRange: nil) != nil {
             prevStyle = textStorage.attribute(.paragraphStyle, at: listRange.location - 1, effectiveRange: nil) as? NSParagraphStyle
+        }
+
+        if prevStyle == nil {
+            counters = [:]
         }
 
         var levelToSet = 0
@@ -93,7 +97,9 @@ class LayoutManager: NSLayoutManager {
             }
         }
 
-        enumerateLineFragments(forGlyphRange: listRange) { (rect, usedRect, textContainer, glyphRange, stop) in
+        enumerateLineFragments(forGlyphRange: listRange) { [weak self] (rect, usedRect, textContainer, glyphRange, stop) in
+            guard let self = self else { return }
+
             var newLineRange = NSRange.zero
             if glyphRange.location > 0 {
                 newLineRange.location = glyphRange.location - 1
@@ -113,13 +119,13 @@ class LayoutManager: NSLayoutManager {
 
                 let paraStyle = textStorage.attribute(.paragraphStyle, at: glyphRange.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
                 let level = Int(paraStyle.firstLineHeadIndent/listIndent)
-                var index = (counters[level] ?? 0)
-                counters[level] = index + 1
+                var index = (self.counters[level] ?? 0)
+                self.counters[level] = index + 1
 
                 // reset index counter for level when list indentation (level) changes.
                 if level > previousLevel, level > 1 {
                     index = 0
-                    counters[level] = 1
+                    self.counters[level] = 1
                 }
 
                 if level > 0 {
@@ -142,16 +148,13 @@ class LayoutManager: NSLayoutManager {
         var para: NSParagraphStyle?
         if textStorage.length > listRange.endLocation {
             para = textStorage.attribute(.paragraphStyle, at: listRange.endLocation, effectiveRange: nil) as? NSParagraphStyle
-            if para?.firstLineHeadIndent == 0 {
+            // don't draw last rect if there's a following list item (in another indent level)
+            if para != nil {
                 return
             }
         }
 
-        // get the para style from last location of text or next. Use next if available as the indent level could be changing
-        // and the text bullet needs to be drawn for that level. If the text location is already at the end, then use the same indent level
-        let paraStyleForLastRect = para ?? paraStyle
-
-        let level = Int(paraStyleForLastRect.firstLineHeadIndent/listIndent)
+        let level = Int(paraStyle.firstLineHeadIndent/listIndent)
         var index = (counters[level] ?? 0)
         let origin = CGPoint(x: lastRect.minX, y: lastRect.maxY)
 
@@ -164,7 +167,7 @@ class LayoutManager: NSLayoutManager {
         previousLevel = level
 
         let font = lastLayoutFont ?? defaultFont
-        drawListItem(level: level, previousLevel: previousLevel, index: index, rect: newLineRect, paraStyle: paraStyleForLastRect, font: font, attributeValue: attributeValue)
+        drawListItem(level: level, previousLevel: previousLevel, index: index, rect: newLineRect, paraStyle: paraStyle, font: font, attributeValue: attributeValue)
     }
 
     private func drawListItem(level: Int, previousLevel: Int, index: Int, rect: CGRect, paraStyle: NSParagraphStyle, font: UIFont, attributeValue: Any?) {
