@@ -24,10 +24,6 @@ import UIKit
 public class ListTextProcessor: TextProcessing {
     public let name = "listProcessor"
 
-    // Zero width space - used for laying out the list bullet/number in an empty line.
-    // This is required when using tab on a blank bullet line. Without this, layout calculations are not performed.
-    private let blankLineFiller = "\u{200B}"
-
     public init() { }
     public let priority = TextProcessingPriority.medium
 
@@ -118,12 +114,13 @@ public class ListTextProcessor: TextProcessing {
 
         for line in lines {
             if line.text.length == 0 || line.text.attribute(.listItem, at: 0, effectiveRange: nil) == nil {
-                createListItemInANewLine(editor: editor, editedRange: line.range, indentMode: indentMode, attributeValue: attributeValue)
+                ListIndentCommand(indentMode: indentMode, editedRange: line.range, attributeValue: attributeValue)
+                    .execute(on: editor)
                 continue
             }
 
             let paraStyle = line.text.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle
-            let mutableStyle = updatedParagraphStyle(paraStyle: paraStyle,  listLineFormatting: editor.listLineFormatting, indentMode: indentMode)
+            let mutableStyle = Self.updatedParagraphStyle(paraStyle: paraStyle,  listLineFormatting: editor.listLineFormatting, indentMode: indentMode)
 
             let previousLine = editor.previousContentLine(from: line.range.location)
             if let previousLine = previousLine,
@@ -161,7 +158,7 @@ public class ListTextProcessor: TextProcessing {
         editor.attributedText.enumerateAttribute(.paragraphStyle, in: subListRange, options: []) { value, range, stop in
             if let style = value as? NSParagraphStyle {
                 if style.firstLineHeadIndent >= originalParaStyle.firstLineHeadIndent + editor.listLineFormatting.indentation {
-                    let mutableStyle = updatedParagraphStyle(paraStyle: style, listLineFormatting: editor.listLineFormatting, indentMode: indentMode)
+                    let mutableStyle = Self.updatedParagraphStyle(paraStyle: style, listLineFormatting: editor.listLineFormatting, indentMode: indentMode)
                     editor.addAttribute(.paragraphStyle, value: mutableStyle ?? editor.paragraphStyle, at: range)
                 } else {
                     stop.pointee = true
@@ -169,25 +166,8 @@ public class ListTextProcessor: TextProcessing {
             }
         }
     }
-
-    func createListItemInANewLine(editor: EditorView, editedRange: NSRange, indentMode: Indentation, attributeValue: Any?) {
-        var listAttributeValue = attributeValue
-        if listAttributeValue == nil, editedRange.location > 0 {
-            listAttributeValue = editor.attributedText.attribute(.listItem, at: editedRange.location - 1, effectiveRange: nil)
-        }
-        listAttributeValue = listAttributeValue ?? "listItemValue" // default value in case no other value can be obtained.
-
-        var attrs = editor.typingAttributes
-        let paraStyle = attrs[.paragraphStyle] as? NSParagraphStyle
-        let updatedStyle = updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: indentMode)
-        attrs[.paragraphStyle] = updatedStyle
-        attrs[.listItem] = updatedStyle?.firstLineHeadIndent ?? 0 > 0.0 ? listAttributeValue : nil
-        let marker = NSAttributedString(string: blankLineFiller, attributes: attrs)
-        editor.replaceCharacters(in: editedRange, with: marker)
-        editor.selectedRange = editedRange.nextPosition
-    }
-
-    func updatedParagraphStyle(paraStyle: NSParagraphStyle?, listLineFormatting: LineFormatting, indentMode: Indentation) -> NSParagraphStyle? {
+    
+    static func updatedParagraphStyle(paraStyle: NSParagraphStyle?, listLineFormatting: LineFormatting, indentMode: Indentation) -> NSParagraphStyle? {
         let mutableStyle = paraStyle?.mutableCopy() as? NSMutableParagraphStyle
         let indent = listLineFormatting.indentation
         if indentMode == .indent {
@@ -198,11 +178,58 @@ public class ListTextProcessor: TextProcessing {
             mutableStyle?.headIndent = mutableStyle?.firstLineHeadIndent ?? 0
         }
         mutableStyle?.paragraphSpacingBefore = listLineFormatting.spacingBefore
-
+        
         if mutableStyle?.firstLineHeadIndent == 0, indentMode == .outdent {
             mutableStyle?.paragraphSpacingBefore = paraStyle?.lineFormatting.spacingBefore ?? 0
         }
-
+        
         return mutableStyle
     }
 }
+
+public class ListIndentCommand: EditorCommand {
+    
+    public var name: CommandName { CommandName("proton.\(indentMode)") }
+    
+    let indentMode: Indentation
+    var editedRange: NSRange?
+    var attributeValue: Any?
+    
+    public init(
+        indentMode: Indentation,
+        editedRange: NSRange? = nil,
+        attributeValue: Any? = nil
+    ) {
+        self.indentMode = indentMode
+        self.editedRange = editedRange
+        self.attributeValue = attributeValue
+    }
+    
+    public func canExecute(on editor: EditorView) -> Bool {
+        attributeValue = editor.currentLine?.text.attribute(.listItem, at: 0, effectiveRange: nil)
+        return attributeValue != nil
+    }
+    
+    public func execute(on editor: EditorView) {
+        let editedRange = self.editedRange ?? editor.selectedRange
+        var listAttributeValue = attributeValue
+        if listAttributeValue == nil, editedRange.location > 0 {
+            listAttributeValue = editor.attributedText.attribute(.listItem, at: editedRange.location - 1, effectiveRange: nil)
+        }
+        listAttributeValue = listAttributeValue ?? "listItemValue" // default value in case no other value can be obtained.
+
+        var attrs = editor.typingAttributes
+        let paraStyle = attrs[.paragraphStyle] as? NSParagraphStyle
+        let updatedStyle = ListTextProcessor.updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: indentMode)
+        attrs[.paragraphStyle] = updatedStyle
+        attrs[.listItem] = updatedStyle?.firstLineHeadIndent ?? 0 > 0.0 ? listAttributeValue : nil
+        let marker = NSAttributedString(string: blankLineFiller, attributes: attrs)
+        editor.replaceCharacters(in: editedRange, with: marker)
+        editor.selectedRange = editedRange.nextPosition
+    }
+    
+}
+
+// Zero width space - used for laying out the list bullet/number in an empty line.
+// This is required when using tab on a blank bullet line. Without this, layout calculations are not performed.
+private let blankLineFiller = "\u{200B}"

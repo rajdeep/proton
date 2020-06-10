@@ -21,7 +21,7 @@
 import Foundation
 import UIKit
 
-enum Indentation {
+public enum Indentation {
     case indent
     case outdent
 }
@@ -48,7 +48,8 @@ public class ListCommand: EditorCommand {
     public func execute(on editor: EditorView) {
         let editedRange = editor.selectedRange
         guard editedRange.length > 0 else {
-            ListTextProcessor().createListItemInANewLine(editor: editor, editedRange: editedRange, indentMode: .indent, attributeValue: attributeValue)
+            ListIndentCommand(indentMode: .indent, attributeValue: attributeValue)
+                .execute(on: editor)
             return
         }
 
@@ -63,7 +64,7 @@ public class ListCommand: EditorCommand {
 
         editor.attributedText.enumerateAttribute(.paragraphStyle, in: editor.selectedRange, options: []) { (value, range, _) in
             let paraStyle = value as? NSParagraphStyle
-            let mutableStyle = ListTextProcessor().updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: .indent)
+            let mutableStyle = ListTextProcessor.updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: .indent)
             editor.addAttribute(.paragraphStyle, value: mutableStyle ?? editor.paragraphStyle, at: range)
         }
         editor.addAttribute(.listItem, value: attrValue, at: editor.selectedRange)
