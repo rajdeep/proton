@@ -142,16 +142,13 @@ class LayoutManager: NSLayoutManager {
         var para: NSParagraphStyle?
         if textStorage.length > listRange.endLocation {
             para = textStorage.attribute(.paragraphStyle, at: listRange.endLocation, effectiveRange: nil) as? NSParagraphStyle
-            if para?.firstLineHeadIndent == 0 {
+            // don't draw last rect if there's a following list item (in another indent level)
+            if para != nil {
                 return
             }
         }
 
-        // get the para style from last location of text or next. Use next if available as the indent level could be changing
-        // and the text bullet needs to be drawn for that level. If the text location is already at the end, then use the same indent level
-        let paraStyleForLastRect = para ?? paraStyle
-
-        let level = Int(paraStyleForLastRect.firstLineHeadIndent/listIndent)
+        let level = Int(paraStyle.firstLineHeadIndent/listIndent)
         var index = (counters[level] ?? 0)
         let origin = CGPoint(x: lastRect.minX, y: lastRect.maxY)
 
@@ -164,7 +161,7 @@ class LayoutManager: NSLayoutManager {
         previousLevel = level
 
         let font = lastLayoutFont ?? defaultFont
-        drawListItem(level: level, previousLevel: previousLevel, index: index, rect: newLineRect, paraStyle: paraStyleForLastRect, font: font, attributeValue: attributeValue)
+        drawListItem(level: level, previousLevel: previousLevel, index: index, rect: newLineRect, paraStyle: paraStyle, font: font, attributeValue: attributeValue)
     }
 
     private func drawListItem(level: Int, previousLevel: Int, index: Int, rect: CGRect, paraStyle: NSParagraphStyle, font: UIFont, attributeValue: Any?) {
