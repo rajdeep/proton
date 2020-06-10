@@ -37,6 +37,7 @@ protocol LayoutManagerDelegate: AnyObject {
 class LayoutManager: NSLayoutManager {
 
     private let defaultBulletColor = UIColor.black
+    private var counters = [Int: Int]()
 
     weak var layoutManagerDelegate: LayoutManagerDelegate?
 
@@ -60,7 +61,6 @@ class LayoutManager: NSLayoutManager {
         var lastLayoutParaStyle: NSParagraphStyle?
         var lastLayoutFont: UIFont?
 
-        var counters = [Int: Int]()
         var previousLevel = 0
 
         let defaultFont = self.layoutManagerDelegate?.font ?? UIFont.preferredFont(forTextStyle: .body)
@@ -71,6 +71,10 @@ class LayoutManager: NSLayoutManager {
         if listRange.location > 0,
             textStorage.attribute(.listItem, at: listRange.location - 1, effectiveRange: nil) != nil {
             prevStyle = textStorage.attribute(.paragraphStyle, at: listRange.location - 1, effectiveRange: nil) as? NSParagraphStyle
+        }
+
+        if prevStyle == nil {
+            counters = [:]
         }
 
         var levelToSet = 0
@@ -93,7 +97,9 @@ class LayoutManager: NSLayoutManager {
             }
         }
 
-        enumerateLineFragments(forGlyphRange: listRange) { (rect, usedRect, textContainer, glyphRange, stop) in
+        enumerateLineFragments(forGlyphRange: listRange) { [weak self] (rect, usedRect, textContainer, glyphRange, stop) in
+            guard let self = self else { return }
+
             var newLineRange = NSRange.zero
             if glyphRange.location > 0 {
                 newLineRange.location = glyphRange.location - 1
@@ -113,13 +119,13 @@ class LayoutManager: NSLayoutManager {
 
                 let paraStyle = textStorage.attribute(.paragraphStyle, at: glyphRange.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
                 let level = Int(paraStyle.firstLineHeadIndent/listIndent)
-                var index = (counters[level] ?? 0)
-                counters[level] = index + 1
+                var index = (self.counters[level] ?? 0)
+                self.counters[level] = index + 1
 
                 // reset index counter for level when list indentation (level) changes.
                 if level > previousLevel, level > 1 {
                     index = 0
-                    counters[level] = 1
+                    self.counters[level] = 1
                 }
 
                 if level > 0 {
