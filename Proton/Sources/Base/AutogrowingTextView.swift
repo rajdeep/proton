@@ -25,10 +25,10 @@ class AutogrowingTextView: UITextView {
     private let dimensionsCalculatingTextView = UITextView()
 
     private let growsInfinitely: Bool
-    private var allowsScrolling: Bool { !growsInfinitely }
+    private var allowsAutogrowing: Bool { !growsInfinitely }
     var maxHeight: CGFloat = 0 {
         didSet {
-            assert(maxHeight == 0 || allowsScrolling, "'.maxHeight' not allowed when '.growsInfinitely = true'")
+            assert(maxHeight == 0 || allowsAutogrowing, "'.maxHeight' not allowed when '.growsInfinitely = true'")
             guard maxHeight > 0 else {
                 maxHeightConstraint.isActive = false
                 return
@@ -47,7 +47,7 @@ class AutogrowingTextView: UITextView {
         super.init(frame: frame, textContainer: textContainer)
         isScrollEnabled = false
         maxHeightConstraint = heightAnchor.constraint(lessThanOrEqualToConstant: frame.height)
-        if allowsScrolling {
+        if allowsAutogrowing {
             NSLayoutConstraint.activate([
                 heightAnchor.constraint(greaterThanOrEqualToConstant: frame.height)
             ])
@@ -70,7 +70,7 @@ class AutogrowingTextView: UITextView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        guard allowsScrolling else { return }
+        guard allowsAutogrowing else { return }
         let bounds = self.bounds
         updateDimensionsCalculatingTextView()
         let fittingSize = dimensionsCalculatingTextView.sizeThatFits(CGSize(width: frame.width, height: .greatestFiniteMagnitude))
