@@ -55,7 +55,7 @@ class TextProcessorTests: XCTestCase {
         let mockProcessor = MockTextProcessor(name: name)
         mockProcessor.onWillProcess = { deleted, inserted in
             XCTAssertEqual(deleted.string, "some")
-            XCTAssertEqual(inserted, replacementString)
+            XCTAssertEqual(inserted.string, replacementString.string)
             testExpectation.fulfill()
         }
 

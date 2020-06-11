@@ -622,4 +622,43 @@ class EditorListsSnapshotTests: XCTestCase {
         viewController.render(size: CGSize(width: 300, height: 375))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+    func testContinuesNumberingWhenTwoListsAreCombined() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
+
+        let indent: CGFloat = 25
+        let paraStyle1 = NSMutableParagraphStyle()
+        paraStyle1.firstLineHeadIndent = indent * 1
+        paraStyle1.headIndent = indent * 1
+
+        let paraStyle2 = NSMutableParagraphStyle()
+        paraStyle2.firstLineHeadIndent = indent * 2
+        paraStyle2.headIndent = indent * 2
+
+        let paraStyle3 = NSMutableParagraphStyle()
+        paraStyle3.firstLineHeadIndent = indent * 3
+        paraStyle3.headIndent = indent * 3
+
+        editor.appendCharacters(NSAttributedString(string: "Item 1\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "Item 2\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "Item 3", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "\nNot in list", attributes: [.paragraphStyle: NSParagraphStyle()]))
+        editor.appendCharacters(NSAttributedString(string: "\nItem 4\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "Item 5", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+
+        viewController.render(size: CGSize(width: 300, height: 180))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        let lines = editor.contentLinesInRange(editor.attributedText.fullRange)
+        let notInListLine = lines[3]
+
+        editor.selectedRange = notInListLine.range
+        listCommand.execute(on: editor, attributeValue: 1)
+
+        viewController.render(size: CGSize(width: 300, height: 180))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 }
