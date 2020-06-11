@@ -58,6 +58,11 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         var executedProcessors = [TextProcessing]()
         var processed = false
         let changedText = textStorage.attributedSubstring(from: editedRange).string
+
+        // This func is invoked even when selected range changes without change in text. Guard the code so that delegate call backs are
+        // fired only when there is actual change in content
+        guard delta != 0 else { return }
+
         for processor in sortedProcessors {
             if changedText == "\n" {
                 processor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: editedRange)

@@ -153,7 +153,7 @@ class RichTextViewTests: XCTestCase {
         let richTextViewDelegate = MockRichTextViewDelegate()
         textView.richTextViewDelegate = richTextViewDelegate
 
-        richTextViewDelegate.onKeyReceived = { _, key, flags, _, _  in
+        richTextViewDelegate.onDidReceiveKey = { _, key, flags, _  in
             assertions(key, flags)
             funcExpectation.fulfill()
         }

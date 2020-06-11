@@ -100,7 +100,7 @@ class RichTextViewContextTests: XCTestCase {
         let selectedRange = NSRange(location: 5, length: 1)
         textView.selectedRange = selectedRange
 
-        mockTextViewDelegate.onKeyReceived = { _, key, _, range, _ in
+        mockTextViewDelegate.onShouldHandleKey = { _, key, _, range, _ in
             XCTAssertEqual(range, selectedRange)
             XCTAssertEqual(key, EditorKey.enter)
             testExpectation.fulfill()
@@ -122,7 +122,7 @@ class RichTextViewContextTests: XCTestCase {
         let selectedRange = NSRange(location: 5, length: 1)
         textView.selectedRange = selectedRange
 
-        mockTextViewDelegate.onKeyReceived = { _, key, _, range, _ in
+        mockTextViewDelegate.onShouldHandleKey = { _, key, _, range, _ in
             XCTAssertEqual(range, selectedRange)
             XCTAssertEqual(key, EditorKey.backspace)
             testExpectation.fulfill()
@@ -144,7 +144,7 @@ class RichTextViewContextTests: XCTestCase {
         let selectedRange = NSRange.zero
         textView.selectedRange = selectedRange
 
-        mockTextViewDelegate.onKeyReceived = { _, key, _, range, _ in
+        mockTextViewDelegate.onShouldHandleKey = { _, key, _, range, _ in
             XCTAssertEqual(range, selectedRange)
             XCTAssertEqual(key, EditorKey.backspace)
             testExpectation.fulfill()

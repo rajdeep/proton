@@ -23,8 +23,10 @@ import UIKit
 
 class RichTextView: AutogrowingTextView {
     private let storage = TextStorage()
+    static let defaultListLineFormatting = LineFormatting(indentation: 25, spacingBefore: 0)
 
     weak var richTextViewDelegate: RichTextViewDelegate?
+    weak var richTextViewListDelegate: RichTextViewListDelegate?
 
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding? {
         get { storage.defaultTextFormattingProvider }
@@ -164,6 +166,7 @@ class RichTextView: AutogrowingTextView {
 
         super.init(frame: frame, textContainer: textContainer, allowAutogrowing: allowAutogrowing)
         layoutManager.delegate = self
+        layoutManager.layoutManagerDelegate = self
         textContainer.textView = self
         self.delegate = context
         storage.textStorageDelegate = self
@@ -201,11 +204,58 @@ class RichTextView: AutogrowingTextView {
         return layoutManager.glyphRange(forBoundingRect: textBounds, in: textContainer)
     }
 
+    func contentLinesInRange(_ range: NSRange) -> [EditorLine] {
+        var lines = [EditorLine]()
+
+        var startingRange = NSRange(location: range.location, length: 0)
+        let endLocation = max(startingRange.location, range.location + range.length - 1)
+
+        while startingRange.location <= endLocation {
+            let paraRange = rangeOfParagraph(at: startingRange.location)
+            let text = self.attributedText.attributedSubstring(from: paraRange)
+            let editorLine = EditorLine(text: text, range: paraRange)
+            lines.append(editorLine)
+            startingRange = NSRange(location: paraRange.length + paraRange.location + 1, length: 0)
+        }
+
+        return lines
+    }
+
+    func rangeOfParagraph(at location: Int) -> NSRange {
+        guard let position = self.position(from: beginningOfDocument, offset: location),
+            let paraRange = tokenizer.rangeEnclosingPosition(position, with: .paragraph, inDirection: UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)),
+            let range = paraRange.toNSRange(in: self) else {
+                return NSRange(location: location, length: 0)
+        }
+        return range
+    }
+
+    func previousContentLine(from location: Int) -> EditorLine? {
+        let currentLineRange = rangeOfParagraph(at: location)
+        guard let position = self.position(from: beginningOfDocument, offset: currentLineRange.location - 1),
+            let paraRange = tokenizer.rangeEnclosingPosition(position, with: .paragraph, inDirection: UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)),
+            let range = paraRange.toNSRange(in: self) else {
+                return nil
+        }
+        return EditorLine(text: attributedText.attributedSubstring(from: range), range: range)
+    }
+
+    func nextContentLine(from location: Int) -> EditorLine? {
+        let currentLineRange = rangeOfParagraph(at: location)
+        guard let position = self.position(from: beginningOfDocument, offset: currentLineRange.endLocation + 1),
+            let paraRange = tokenizer.rangeEnclosingPosition(position, with: .paragraph, inDirection: UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)),
+            let range = paraRange.toNSRange(in: self) else {
+                return nil
+        }
+        return EditorLine(text: attributedText.attributedSubstring(from: range), range: range)
+    }
+
     override var keyCommands: [UIKeyCommand]? {
         let tab = "\t"
         let enter = "\r"
 
         return [
+            UIKeyCommand(input: tab, modifierFlags: [], action: #selector(handleKeyCommand(command:))),
             UIKeyCommand(input: tab, modifierFlags: .shift, action: #selector(handleKeyCommand(command:))),
             UIKeyCommand(input: enter, modifierFlags: .shift, action: #selector(handleKeyCommand(command:))),
             UIKeyCommand(input: enter, modifierFlags: .control, action: #selector(handleKeyCommand(command:))),
@@ -231,8 +281,8 @@ class RichTextView: AutogrowingTextView {
             let key = EditorKey(input) else { return }
         
         let modifierFlags = command.modifierFlags
-        var handled = false
-        richTextViewDelegate?.richTextView(self, didReceiveKey: key, modifierFlags: modifierFlags, at: selectedRange, handled: &handled)
+
+        richTextViewDelegate?.richTextView(self, didReceive: key, modifierFlags: modifierFlags, at: selectedRange)
     }
 
     private func setupPlaceholder() {
@@ -293,6 +343,7 @@ class RichTextView: AutogrowingTextView {
             if contentLength == 0 {
                 self.typingAttributes = defaultTypingAttributes
             }
+            richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: selectedRange)
         }
 
         guard contentLength > 0 else { return }
@@ -476,5 +527,21 @@ extension RichTextView: NSLayoutManagerDelegate {
 extension RichTextView: TextStorageDelegate {
     func textStorage(_ textStorage: TextStorage, willDeleteText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) {
         textProcessor?.textStorage(textStorage, willProcessDeletedText: deletedText, insertedText: insertedText)
+    }
+}
+
+extension RichTextView: LayoutManagerDelegate {
+    var listLineFormatting: LineFormatting {
+        return richTextViewListDelegate?.listLineFormatting ?? RichTextView.defaultListLineFormatting
+    }
+
+    var paragraphStyle: NSMutableParagraphStyle? {
+        return defaultTextFormattingProvider?.paragraphStyle
+    }
+
+    func listMarkerForItem(at index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
+        let font = UIFont.preferredFont(forTextStyle: .body)
+        let defaultValue = NSAttributedString(string: "*", attributes: [.font: font])
+        return richTextViewListDelegate?.richTextView(self, listMarkerForItemAt: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? .string(defaultValue)
     }
 }

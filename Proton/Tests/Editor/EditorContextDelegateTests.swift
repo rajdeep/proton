@@ -36,7 +36,7 @@ class EditorContextDelegateTests: XCTestCase {
         let editor2 = EditorView()
 
         var expectedEditors = [editor1, editor2]
-        delegate.onKeyReceived = { editor, key, range, _ in
+        delegate.onShouldHandleKey = { editor, key, range, _ in
             XCTAssertEqual(editor, expectedEditors[0])
             XCTAssertEqual(key, .enter)
             XCTAssertEqual(range, .zero)
@@ -50,12 +50,12 @@ class EditorContextDelegateTests: XCTestCase {
         let richTextViewDelegate1 = richTextView1.richTextViewDelegate
         var handled = true
 
-        richTextViewDelegate1?.richTextView(richTextView1, didReceiveKey: .enter, modifierFlags: [], at: .zero, handled: &handled)
+        richTextViewDelegate1?.richTextView(richTextView1, shouldHandle: .enter, modifierFlags: [], at: .zero, handled: &handled)
 
         let richTextView2 = editor2.richTextView
         let richTextViewDelegate2 = richTextView2.richTextViewDelegate
 
-        richTextViewDelegate2?.richTextView(richTextView2, didReceiveKey: .enter, modifierFlags: [], at: .zero, handled: &handled)
+        richTextViewDelegate2?.richTextView(richTextView2, shouldHandle: .enter, modifierFlags: [], at: .zero, handled: &handled)
         waitForExpectations(timeout: 1.0)
     }
 

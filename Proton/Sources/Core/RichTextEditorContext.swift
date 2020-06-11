@@ -61,11 +61,13 @@ class RichTextEditorContext: RichTextViewContext {
         // if backspace
         var handled = false
         if text.isEmpty {
-            richTextView.richTextViewDelegate?.richTextView(richTextView, didReceiveKey: .backspace, modifierFlags: [], at: range, handled: &handled)
+            richTextView.richTextViewDelegate?.richTextView(richTextView, shouldHandle: .backspace, modifierFlags: [], at: range, handled: &handled)
 
             guard handled == false else {
                 return false
             }
+
+            guard range.endLocation <= textView.attributedText.length else { return false }
 
             let substring = textView.attributedText.attributedSubstring(from: range)
             guard substring.length > 0,
@@ -83,7 +85,7 @@ class RichTextEditorContext: RichTextViewContext {
         }
 
         if text == "\n" {
-            richTextView.richTextViewDelegate?.richTextView(richTextView, didReceiveKey: .enter, modifierFlags: [], at: range, handled: &handled)
+            richTextView.richTextViewDelegate?.richTextView(richTextView, shouldHandle: .enter, modifierFlags: [], at: range, handled: &handled)
 
             guard handled == false else {
                 return false
@@ -91,7 +93,7 @@ class RichTextEditorContext: RichTextViewContext {
         }
 
         if text == "\t" {
-            richTextView.richTextViewDelegate?.richTextView(richTextView, didReceiveKey: .tab, modifierFlags: [], at: range, handled: &handled)
+            richTextView.richTextViewDelegate?.richTextView(richTextView, shouldHandle: .tab, modifierFlags: [], at: range, handled: &handled)
 
             guard handled == false else {
                 return false
