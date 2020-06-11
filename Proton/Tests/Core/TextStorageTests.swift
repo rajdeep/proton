@@ -115,4 +115,19 @@ class TextStorageTests: XCTestCase {
         XCTAssertTrue(fixedAttributes.contains { $0.key == .foregroundColor })
         XCTAssertTrue(fixedAttributes.contains { $0.key == .paragraphStyle })
     }
+
+    func testAddsMissingAttributesInTextBeingReplaced() {
+        let textStorage = TextStorage()
+        let testString = NSAttributedString(string: "test string", attributes: [NSAttributedString.Key("attr1"): 1, NSAttributedString.Key("attr2"): 2])
+        textStorage.replaceCharacters(in: .zero, with: testString)
+
+        let replacementString = NSAttributedString(string: "test string", attributes: [NSAttributedString.Key("attr1"): 11, NSAttributedString.Key("attr3"): 3])
+
+        textStorage.replaceCharacters(in: textStorage.fullRange, with: replacementString)
+        let attrs = textStorage.attributes(at: 0, effectiveRange: nil)
+
+        XCTAssertEqual(attrs[NSAttributedString.Key("attr1")] as? Int, 11)
+        XCTAssertEqual(attrs[NSAttributedString.Key("attr2")] as? Int, 2)
+        XCTAssertEqual(attrs[NSAttributedString.Key("attr3")] as? Int, 3)
+    }
 }
