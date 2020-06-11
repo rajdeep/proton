@@ -52,23 +52,29 @@ public class ListCommand: EditorCommand {
             return
         }
 
+        var selectedRange = editor.selectedRange
+        // Adjust to span entire line range if the selection starts in the middle of the line
+        if let currentLine = editor.contentLinesInRange(NSRange(location: selectedRange.location, length: 0)).first {
+            selectedRange = NSRange(location: currentLine.range.location, length: selectedRange.length + (selectedRange.location - currentLine.range.location))
+        }
+
         guard let attrValue = attributeValue else {
             let paragraphStyle = editor.paragraphStyle
             editor.addAttributes([
                 .paragraphStyle: paragraphStyle
-            ], at: editor.selectedRange)
-            editor.removeAttribute(.listItem, at: editor.selectedRange)
+            ], at: selectedRange)
+            editor.removeAttribute(.listItem, at: selectedRange)
             return
         }
 
-            // Fix the list attribute on the trailing `\n` in previous line, if previous line has a listItem attribute applied
-            if let previousLine = editor.previousContentLine(from: editor.selectedRange.location),
-                let listValue = editor.attributedText.attribute(.listItem, at: previousLine.range.endLocation - 1, effectiveRange: nil),
-                editor.attributedText.attribute(.listItem, at: previousLine.range.endLocation, effectiveRange: nil) == nil {
-                editor.addAttribute(.listItem, value: listValue, at: NSRange(location: previousLine.range.endLocation, length: 1))
-            }
+        // Fix the list attribute on the trailing `\n` in previous line, if previous line has a listItem attribute applied
+        if let previousLine = editor.previousContentLine(from: editor.selectedRange.location),
+            let listValue = editor.attributedText.attribute(.listItem, at: previousLine.range.endLocation - 1, effectiveRange: nil),
+            editor.attributedText.attribute(.listItem, at: previousLine.range.endLocation, effectiveRange: nil) == nil {
+            editor.addAttribute(.listItem, value: listValue, at: NSRange(location: previousLine.range.endLocation, length: 1))
+        }
 
-        editor.attributedText.enumerateAttribute(.paragraphStyle, in: editor.selectedRange, options: []) { (value, range, _) in
+        editor.attributedText.enumerateAttribute(.paragraphStyle, in: selectedRange, options: []) { (value, range, _) in
             let paraStyle = value as? NSParagraphStyle
             let mutableStyle = ListTextProcessor().updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: .indent)
             editor.addAttribute(.paragraphStyle, value: mutableStyle ?? editor.paragraphStyle, at: range)
