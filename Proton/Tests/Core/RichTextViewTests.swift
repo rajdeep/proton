@@ -29,7 +29,7 @@ class RichTextViewTests: XCTestCase {
         let key = NSAttributedString.Key("test_key")
         let value = "value"
         let viewController = SnapshotTestViewController()
-        let textView = RichTextView(frame: .zero, context: RichTextViewContext(), growsInfinitely: true)
+        let textView = RichTextView(frame: .zero, context: RichTextViewContext(), allowAutogrowing: false)
         textView.translatesAutoresizingMaskIntoConstraints = false
         let attributedText = NSMutableAttributedString(string: "This is a test string")
         attributedText.addAttributes([key: value], range: NSRange(location: 0, length: 4))
@@ -59,7 +59,7 @@ class RichTextViewTests: XCTestCase {
 
     func testResetsTypingAttributesOnDeleteBackwards() throws {
         let text = NSAttributedString(string: "a", attributes: [.foregroundColor: UIColor.blue])
-        let textView = RichTextView(context: RichTextViewContext(), growsInfinitely: true)
+        let textView = RichTextView(context: RichTextViewContext(), allowAutogrowing: false)
         textView.attributedText = text
         let preColor = try XCTUnwrap(textView.typingAttributes[.foregroundColor] as? UIColor)
         XCTAssertEqual(preColor, UIColor.blue)
@@ -71,7 +71,7 @@ class RichTextViewTests: XCTestCase {
 
     func testNotifiesDelegateOfSelectedRangeChanges() {
         let funcExpectation = functionExpectation()
-        let textView = RichTextView(context: RichTextViewContext(), growsInfinitely: true)
+        let textView = RichTextView(context: RichTextViewContext(), allowAutogrowing: false)
         let richTextViewDelegate = MockRichTextViewDelegate()
         textView.richTextViewDelegate = richTextViewDelegate
         textView.attributedText = NSAttributedString(string: "This is a test string")
@@ -120,7 +120,7 @@ class RichTextViewTests: XCTestCase {
 
     func testDeleteBackwards() {
         let text = NSAttributedString(string: "test")
-        let textView = RichTextView(context: RichTextViewContext(), growsInfinitely: true)
+        let textView = RichTextView(context: RichTextViewContext(), allowAutogrowing: false)
         textView.attributedText = text
         textView.selectedRange = textView.textEndRange
         textView.deleteBackward()
@@ -129,7 +129,7 @@ class RichTextViewTests: XCTestCase {
 
     func testDeleteBackwardsToEmpty() {
         let text = NSAttributedString(string: "A")
-        let textView = RichTextView(context: RichTextViewContext(), growsInfinitely: true)
+        let textView = RichTextView(context: RichTextViewContext(), allowAutogrowing: false)
         textView.attributedText = text
         textView.selectedRange = textView.textEndRange
         textView.deleteBackward()
@@ -140,7 +140,7 @@ class RichTextViewTests: XCTestCase {
 
     func testDeleteBackwardsWithSelection() {
         let text = NSAttributedString(string: "test")
-        let textView = RichTextView(context: RichTextViewContext(), growsInfinitely: true)
+        let textView = RichTextView(context: RichTextViewContext(), allowAutogrowing: false)
         textView.attributedText = text
         textView.selectedRange = text.fullRange
         textView.deleteBackward()
@@ -149,7 +149,7 @@ class RichTextViewTests: XCTestCase {
 
     private func assertKeyCommand(input: String, modifierFlags: UIKeyModifierFlags, assertions: @escaping ((EditorKey, UIKeyModifierFlags) -> Void), file: StaticString = #file, line: UInt = #line) {
         let funcExpectation = functionExpectation()
-        let textView = RichTextView(context: RichTextViewContext(), growsInfinitely: true)
+        let textView = RichTextView(context: RichTextViewContext(), allowAutogrowing: false)
         let richTextViewDelegate = MockRichTextViewDelegate()
         textView.richTextViewDelegate = richTextViewDelegate
 

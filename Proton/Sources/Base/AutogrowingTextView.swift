@@ -24,11 +24,10 @@ import UIKit
 class AutogrowingTextView: UITextView {
     private let dimensionsCalculatingTextView = UITextView()
 
-    private let growsInfinitely: Bool
-    private var allowsAutogrowing: Bool { !growsInfinitely }
+    private var allowAutogrowing: Bool
     var maxHeight: CGFloat = 0 {
         didSet {
-            assert(maxHeight == 0 || allowsAutogrowing, "'.maxHeight' not allowed when '.growsInfinitely = true'")
+            assert(maxHeight == 0 || allowAutogrowing, "'.maxHeight' not allowed when '.allowAutogrowing = false'")
             guard maxHeight > 0 else {
                 maxHeightConstraint.isActive = false
                 return
@@ -42,12 +41,12 @@ class AutogrowingTextView: UITextView {
     weak var boundsObserver: BoundsObserving?
     private var maxHeightConstraint: NSLayoutConstraint!
 
-    init(frame: CGRect, textContainer: NSTextContainer?, growsInfinitely: Bool) {
-        self.growsInfinitely = growsInfinitely
+    init(frame: CGRect, textContainer: NSTextContainer?, allowAutogrowing: Bool) {
+        self.allowAutogrowing = allowAutogrowing
         super.init(frame: frame, textContainer: textContainer)
         isScrollEnabled = false
         maxHeightConstraint = heightAnchor.constraint(lessThanOrEqualToConstant: frame.height)
-        if allowsAutogrowing {
+        if allowAutogrowing {
             NSLayoutConstraint.activate([
                 heightAnchor.constraint(greaterThanOrEqualToConstant: frame.height)
             ])
@@ -70,7 +69,7 @@ class AutogrowingTextView: UITextView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        guard allowsAutogrowing else { return }
+        guard allowAutogrowing else { return }
         let bounds = self.bounds
         updateDimensionsCalculatingTextView()
         let fittingSize = dimensionsCalculatingTextView.sizeThatFits(CGSize(width: frame.width, height: .greatestFiniteMagnitude))

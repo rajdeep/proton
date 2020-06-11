@@ -155,14 +155,14 @@ class RichTextView: AutogrowingTextView {
         selectedTextRange = rangeToSet?.toTextRange(textInput: self) ?? oldRange
     }
 
-    init(frame: CGRect = .zero, context: RichTextViewContext, growsInfinitely: Bool) {
+    init(frame: CGRect = .zero, context: RichTextViewContext, allowAutogrowing: Bool) {
         let textContainer = TextContainer()
         let layoutManager = LayoutManager()
 
         layoutManager.addTextContainer(textContainer)
         storage.addLayoutManager(layoutManager)
 
-        super.init(frame: frame, textContainer: textContainer, growsInfinitely: growsInfinitely)
+        super.init(frame: frame, textContainer: textContainer, allowAutogrowing: allowAutogrowing)
         layoutManager.delegate = self
         textContainer.textView = self
         self.delegate = context

@@ -30,7 +30,7 @@ class RichTextViewContextTests: XCTestCase {
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
         let context = RichTextEditorContext.default
-        let textView = RichTextView(context: context, growsInfinitely: true)
+        let textView = RichTextView(context: context, allowAutogrowing: false)
         textView.richTextViewDelegate = mockTextViewDelegate
         textView.text = "Sample text"
 
@@ -51,7 +51,7 @@ class RichTextViewContextTests: XCTestCase {
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
         let context = RichTextEditorContext.default
-        let textView = RichTextView(context: context, growsInfinitely: true)
+        let textView = RichTextView(context: context, allowAutogrowing: false)
         textView.richTextViewDelegate = mockTextViewDelegate
         textView.text = "Sample text"
 
@@ -72,7 +72,7 @@ class RichTextViewContextTests: XCTestCase {
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
         let context = RichTextEditorContext.default
-        let textView = RichTextView(context: context, growsInfinitely: true)
+        let textView = RichTextView(context: context, allowAutogrowing: false)
         textView.richTextViewDelegate = mockTextViewDelegate
         textView.text = "Sample text"
 
@@ -93,7 +93,7 @@ class RichTextViewContextTests: XCTestCase {
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
         let context = RichTextEditorContext.default
-        let textView = RichTextView(context: context, growsInfinitely: true)
+        let textView = RichTextView(context: context, allowAutogrowing: false)
         textView.richTextViewDelegate = mockTextViewDelegate
         textView.text = "Sample text"
 
@@ -115,7 +115,7 @@ class RichTextViewContextTests: XCTestCase {
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
         let context = RichTextEditorContext.default
-        let textView = RichTextView(context: context, growsInfinitely: true)
+        let textView = RichTextView(context: context, allowAutogrowing: false)
         textView.richTextViewDelegate = mockTextViewDelegate
         textView.text = "Sample text"
 
@@ -137,7 +137,7 @@ class RichTextViewContextTests: XCTestCase {
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
         let context = RichTextEditorContext.default
-        let textView = RichTextView(context: context, growsInfinitely: true)
+        let textView = RichTextView(context: context, allowAutogrowing: false)
         textView.richTextViewDelegate = mockTextViewDelegate
         textView.text = "Sample text"
 
@@ -159,7 +159,7 @@ class RichTextViewContextTests: XCTestCase {
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
         let context = RichTextEditorContext.default
-        let textView = RichTextView(context: context, growsInfinitely: true)
+        let textView = RichTextView(context: context, allowAutogrowing: false)
         textView.richTextViewDelegate = mockTextViewDelegate
         textView.text = "Sample text"
 
@@ -185,7 +185,7 @@ class RichTextViewContextTests: XCTestCase {
         let key2 = NSAttributedString.Key("key2")
 
         let context = RichTextViewContext()
-        let textView = RichTextView(context: context, growsInfinitely: true)
+        let textView = RichTextView(context: context, allowAutogrowing: false)
         textView.richTextViewDelegate = mockTextViewDelegate
         textView.text = "Sample text"
 
