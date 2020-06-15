@@ -77,6 +77,9 @@ class AutogrowingTextView: UITextView {
     }
 
     override open func sizeThatFits(_ size: CGSize) -> CGSize {
+        guard allowAutogrowing else {
+            return super.sizeThatFits(size)
+        }
         updateDimensionsCalculatingTextView()
         var fittingSize = dimensionsCalculatingTextView.sizeThatFits(size)
         if maxHeight > 0 {
