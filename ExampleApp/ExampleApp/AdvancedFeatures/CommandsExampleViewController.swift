@@ -182,9 +182,13 @@ class CommandsExampleViewController: ExamplesBaseViewController {
             return
         } else if sender.titleLabel?.text == "List" {
             if let command = sender.command as? ListCommand,
-                let editor = editor.editorViewContext.activeEditorView,
-                editor.attributedText.attribute(.listItem, at: editor.selectedRange.location, effectiveRange: nil) == nil {
-                command.execute(on: editor, attributeValue: "listItemValue")
+                let editor = editor.editorViewContext.activeEditorView {
+                var attributeValue: String? = "listItemValue"
+                if editor.contentLength > 0,
+                    editor.attributedText.attribute(.listItem, at: min(editor.contentLength - 1, editor.selectedRange.location), effectiveRange: nil) != nil {
+                    attributeValue = nil
+                }
+                command.execute(on: editor, attributeValue: attributeValue)
                 return
             }
         }

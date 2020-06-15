@@ -699,4 +699,74 @@ class EditorListsSnapshotTests: XCTestCase {
         viewController.render(size: CGSize(width: 300, height: 180))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+    func testCreatesListWithoutSelectionUsingCommandInBeginning() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.listFormattingProvider = listFormattingProvider
+        editor.appendCharacters("Create list with focus in beginning.")
+        editor.selectedRange = .zero
+        listCommand.execute(on: editor)
+        viewController.render()
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testCreatesListWithoutSelectionUsingCommandAtEnd() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.listFormattingProvider = listFormattingProvider
+        editor.appendCharacters("Create list with focus at the end.")
+        editor.selectedRange = editor.textEndRange
+        listCommand.execute(on: editor)
+        viewController.render()
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testCreatesListWithoutSelectionUsingCommandInTheMiddle() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.listFormattingProvider = listFormattingProvider
+        editor.appendCharacters("Create list with focus in the middle.")
+        editor.selectedRange = NSRange(location: 10, length: 0)
+        listCommand.execute(on: editor)
+        viewController.render()
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testRegeneratesNumbersOnChangesToNonListTextInMiddleOfLists() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.listFormattingProvider = listFormattingProvider
+
+        let listStyle = NSMutableParagraphStyle()
+        listStyle.firstLineHeadIndent = 25
+        listStyle.headIndent = 25
+
+        editor.appendCharacters(NSAttributedString(string: "Item 1\n"))
+        editor.appendCharacters(NSAttributedString(string: "Item 2\n"))
+        editor.appendCharacters(NSAttributedString(string: "Item 3"))
+
+        let lines = editor.contentLinesInRange(editor.attributedText.fullRange)
+
+        // Make line 1 a list
+        editor.selectedRange = NSRange(location: lines[0].range.location + 3, length: 0)
+        listCommand.execute(on: editor, attributeValue: 1)
+
+        // Make line 3 a separate list
+        editor.selectedRange = NSRange(location: lines[2].range.location + 3, length: 0)
+        listCommand.execute(on: editor, attributeValue: 1)
+
+        viewController.render(size: CGSize(width: 300, height: 120))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        // Make line 2 a list that should combine line 1 and line 3 in the same list
+        editor.selectedRange = NSRange(location: lines[1].range.location + 3, length: 0)
+        listCommand.execute(on: editor, attributeValue: 1)
+
+        viewController.render(size: CGSize(width: 300, height: 120))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 }
