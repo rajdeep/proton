@@ -97,6 +97,7 @@ class LayoutManager: NSLayoutManager {
             }
         }
 
+
         enumerateLineFragments(forGlyphRange: listRange) { [weak self] (rect, usedRect, textContainer, glyphRange, stop) in
             guard let self = self else { return }
 
@@ -144,7 +145,15 @@ class LayoutManager: NSLayoutManager {
             lastLayoutFont = font
         }
 
-        guard let lastRect = lastLayoutRect,
+        var skipMarker = false
+
+        if textStorage.length > 0 {
+            let lastChar = textStorage.attributedSubstring(from: NSRange(location: textStorage.length - 1, length: 1))
+            skipMarker = lastChar.string == "\n" && lastChar.attribute(.skipNextListMarker, at: 0, effectiveRange: nil) != nil
+        }
+
+        guard skipMarker == false,
+            let lastRect = lastLayoutRect,
             textStorage.length > 1,
             textStorage.attributedSubstring(from: NSRange(location: listRange.endLocation - 1, length: 1)).string == "\n",
             let paraStyle = lastLayoutParaStyle  else { return }

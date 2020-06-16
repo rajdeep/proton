@@ -822,4 +822,58 @@ class EditorListsSnapshotTests: XCTestCase {
         viewController.render(size: CGSize(width: 300, height: 180))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+
+    func testSkipsListMarkerOnShiftReturnKeyInMiddleOfList() {
+        let text = "Test line 1"
+
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
+        editor.attributedText = NSAttributedString(string: text)
+        editor.selectedRange = editor.attributedText.fullRange
+        listCommand.execute(on: editor)
+        editor.selectedRange = editor.textEndRange
+        let attrs = editor.attributedText.attributes(at: editor.contentLength - 1, effectiveRange: nil)
+
+        let paraStyle = attrs[.paragraphStyle] ?? NSParagraphStyle()
+        editor.selectedRange =  NSRange(location: editor.textEndRange.location, length: 0)
+
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [.shift], range: NSRange(location: editor.textEndRange.location, length: 0))
+
+        editor.appendCharacters(NSAttributedString(string: "Test line 2",
+                                                   attributes: [
+                                                    .paragraphStyle: paraStyle,
+                                                    .listItem: 1]))
+
+        editor.appendCharacters(NSAttributedString(string: "\nTest line 3",
+                                                   attributes: [
+                                                    .paragraphStyle: paraStyle,
+                                                    .listItem: 1]))
+
+
+        viewController.render(size: CGSize(width: 300, height: 175))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testSkipsListMarkerOnShiftReturnKeyAtEndOfTheList() {
+        let text = "Test line 1"
+
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
+        editor.attributedText = NSAttributedString(string: text)
+        editor.selectedRange = editor.attributedText.fullRange
+        listCommand.execute(on: editor)
+        editor.selectedRange = editor.textEndRange
+
+        editor.selectedRange =  NSRange(location: editor.textEndRange.location, length: 0)
+
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [.shift], range: NSRange(location: editor.textEndRange.location, length: 0))
+
+        viewController.render(size: CGSize(width: 300, height: 175))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 }
