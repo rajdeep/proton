@@ -58,7 +58,10 @@ public extension NSAttributedString.Key {
     /// This attribute only takes effect with `.backgroundColor`. In absence of `.backgroundColor`, this attribute has no effect.
     static let backgroundStyle = NSAttributedString.Key("_backgroundStyle")
 
-    /// Adding this attribute denotes the range as a list item. This attribute enables use of `ListTextProcessor` to indent/outdent list
+    /// Attribute denoting the range as a list item. This attribute enables use of `ListTextProcessor` to indent/outdent list
     /// using tab/shift-tab (macOS) as well as create a new list item on hitting enter key.
     static let listItem = NSAttributedString.Key("_listItem")
+
+    /// When applied to a new line char alongside `listItem` attribute, skips the rendering of list marker on subsequent line.
+    static let skipNextListMarker = NSAttributedString.Key("_skipNextListMarker")
 }

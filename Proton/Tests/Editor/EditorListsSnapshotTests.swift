@@ -794,4 +794,32 @@ class EditorListsSnapshotTests: XCTestCase {
         viewController.render(size: CGSize(width: 300, height: 175))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+    func testSkipListMarkerForSkipAttribute() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
+
+        let indent: CGFloat = 25
+        let paraStyle1 = NSMutableParagraphStyle()
+        paraStyle1.firstLineHeadIndent = indent
+        paraStyle1.headIndent = indent
+
+        let paraStyle2 = NSMutableParagraphStyle()
+        paraStyle2.firstLineHeadIndent = indent * 2
+        paraStyle2.headIndent = indent * 2
+
+        editor.appendCharacters(NSAttributedString(string: "Item 1", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "\n", attributes: [.skipNextListMarker: 1, .listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "Item 2 - skip marker\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "Item 3\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "Item 1", attributes: [.listItem: 1, .paragraphStyle: paraStyle2]))
+        editor.appendCharacters(NSAttributedString(string: "\n", attributes: [.skipNextListMarker: 1, .listItem: 1, .paragraphStyle: paraStyle2]))
+        editor.appendCharacters(NSAttributedString(string: "Item 2 - skip marker\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle2]))
+        editor.appendCharacters(NSAttributedString(string: "Item 3", attributes: [.listItem: 1, .paragraphStyle: paraStyle2]))
+
+        viewController.render(size: CGSize(width: 300, height: 180))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 }

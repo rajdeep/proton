@@ -109,15 +109,18 @@ class LayoutManager: NSLayoutManager {
             // Determines if previous line is completed i.e. terminates with a newline char. Absence of newline character means that the
             // line is wrapping and rendering the number/bullet should be skipped.
             var isPreviousLineComplete = true
+            var skipMarker = false
 
             if newLineRange.length > 0 {
-                isPreviousLineComplete = textStorage.attributedSubstring(from: newLineRange).string == "\n"
+                let newLineString = textStorage.attributedSubstring(from: newLineRange)
+                isPreviousLineComplete = newLineString.string == "\n"
+                skipMarker = newLineString.attribute(.skipNextListMarker, at: 0, effectiveRange: nil) != nil
             }
 
             let font = textStorage.attribute(.font, at: glyphRange.location, effectiveRange: nil) as? UIFont ?? defaultFont
             let paraStyle = textStorage.attribute(.paragraphStyle, at: glyphRange.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
 
-            if isPreviousLineComplete {
+            if isPreviousLineComplete && skipMarker == false {
 
                 let level = Int(paraStyle.firstLineHeadIndent/listIndent)
                 var index = (self.counters[level] ?? 0)
