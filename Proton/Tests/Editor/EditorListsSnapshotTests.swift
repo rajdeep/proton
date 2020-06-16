@@ -769,4 +769,29 @@ class EditorListsSnapshotTests: XCTestCase {
         viewController.render(size: CGSize(width: 300, height: 120))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+    func testSkipNumberingForMultilineText() {
+        //TODO: Fix the image bullet rendering in captured snapshot.
+        // The code works as expected in the app, but bullet in rendered snapshot is slightly truncated.
+
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.listFormattingProvider = listFormattingProvider
+        
+        let listStyle = NSMutableParagraphStyle()
+        listStyle.firstLineHeadIndent = 25
+        listStyle.headIndent = 25
+        
+        editor.appendCharacters(NSAttributedString(string: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed nulla vitae urna faucibus dapibus vitae non risus.\n"))
+        
+        
+        let lines = editor.contentLinesInRange(editor.attributedText.fullRange)
+        
+        // Make line 1 a list
+        editor.selectedRange = NSRange(location: lines[0].range.location + 3, length: 0)
+        listCommand.execute(on: editor, attributeValue: 1)
+        
+        viewController.render(size: CGSize(width: 300, height: 175))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 }

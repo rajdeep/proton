@@ -114,10 +114,11 @@ class LayoutManager: NSLayoutManager {
                 isPreviousLineComplete = textStorage.attributedSubstring(from: newLineRange).string == "\n"
             }
 
-            if isPreviousLineComplete {
-                let font = textStorage.attribute(.font, at: glyphRange.location, effectiveRange: nil) as? UIFont ?? defaultFont
+            let font = textStorage.attribute(.font, at: glyphRange.location, effectiveRange: nil) as? UIFont ?? defaultFont
+            let paraStyle = textStorage.attribute(.paragraphStyle, at: glyphRange.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
 
-                let paraStyle = textStorage.attribute(.paragraphStyle, at: glyphRange.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
+            if isPreviousLineComplete {
+
                 let level = Int(paraStyle.firstLineHeadIndent/listIndent)
                 var index = (self.counters[level] ?? 0)
                 self.counters[level] = index + 1
@@ -134,10 +135,10 @@ class LayoutManager: NSLayoutManager {
                 previousLevel = level
 
                 // TODO: should this be moved inside level > 0 check above?
-                lastLayoutParaStyle = paraStyle
-                lastLayoutRect = rect
-                lastLayoutFont = font
             }
+            lastLayoutParaStyle = paraStyle
+            lastLayoutRect = rect
+            lastLayoutFont = font
         }
 
         guard let lastRect = lastLayoutRect,
