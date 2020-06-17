@@ -100,7 +100,10 @@ public class ListTextProcessor: TextProcessing {
         if let nextLine = editor.nextContentLine(from: currentLine.range.location),
             nextLine.range.endLocation < editor.contentLength - 1 {
             let nextLineText = editor.attributedText.attributedSubstring(from: NSRange(location: nextLine.range.location, length: 1))
-            if nextLineText.attribute(.listItem, at: 0, effectiveRange: nil) != nil {
+            let paraStyle = nextLineText.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle
+            let isFirstLevelListItem = (paraStyle?.firstLineHeadIndent ?? 0) / editor.listLineFormatting.indentation == 1
+            if nextLineText.attribute(.listItem, at: 0, effectiveRange: nil) != nil,
+                (nextLineText.string != "\n" || isFirstLevelListItem == false) {
                 return
             }
         }
