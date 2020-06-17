@@ -230,6 +230,41 @@ class EditorListsSnapshotTests: XCTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testExitsNewListItemOnSecondReturnKeyWithTrailingNonListText() {
+        let text = "Test line 1.\nTest line 2.\nNot in list."
+
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
+        editor.attributedText = NSAttributedString(string: text)
+        let lines = editor.contentLinesInRange(editor.attributedText.fullRange)
+        let listRange = NSRange(location: lines[0].range.location, length: lines[1].range.endLocation)
+        editor.selectedRange = listRange
+        listCommand.execute(on: editor)
+
+        viewController.render(size: CGSize(width: 300, height: 175))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        var newLineLocation = lines[1].range.endLocation
+        let attrs = editor.attributedText.attributes(at: newLineLocation, effectiveRange: nil)
+        editor.replaceCharacters(in: NSRange(location: newLineLocation, length: 0), with: NSAttributedString(string: "\n", attributes: attrs))
+        var editedRange = NSRange(location: newLineLocation, length: 1)
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: editedRange)
+        listTextProcessor.didProcess(editor: editor) // invoke lifecycle event manually
+
+        newLineLocation += 1
+
+        editor.replaceCharacters(in: NSRange(location: newLineLocation, length: 0), with: NSAttributedString(string: "\n", attributes: attrs))
+        editedRange = NSRange(location: newLineLocation, length: 1)
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: editedRange)
+        listTextProcessor.didProcess(editor: editor) // invoke lifecycle event manually
+
+
+        viewController.render(size: CGSize(width: 300, height: 175))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     func testCreatesNewListItemOnSecondReturnKeyWhenInMiddleOfAList() {
         let text = """
                This is line 1.
