@@ -46,10 +46,22 @@ public class ListCommand: EditorCommand {
     public var attributeValue: Any?
 
     public func execute(on editor: EditorView) {
-        let editedRange = editor.selectedRange
-        guard editedRange.length > 0 else {
+        var selectedRange = editor.selectedRange
+        // Adjust to span entire line range if the selection starts in the middle of the line
+        if let currentLine = editor.contentLinesInRange(NSRange(location: selectedRange.location, length: 0)).first {
+            let location = currentLine.range.location
+            var length = max(currentLine.range.length, selectedRange.length + (selectedRange.location - currentLine.range.location))
+            let range = NSRange(location: location, length: length)
+            if editor.contentLength > range.endLocation,
+                editor.attributedText.attributedSubstring(from: NSRange(location: range.endLocation, length: 1)).string == "\n" {
+                length += 1
+            }
+            selectedRange = NSRange(location: location, length: length)
+        }
+
+        guard selectedRange.length > 0 else {
             ListIndentCommand(indentMode: .indent, attributeValue: attributeValue)
-                .execute(on: editor)
+                    .execute(on: editor)
             return
         }
 
@@ -57,17 +69,24 @@ public class ListCommand: EditorCommand {
             let paragraphStyle = editor.paragraphStyle
             editor.addAttributes([
                 .paragraphStyle: paragraphStyle
-            ], at: editor.selectedRange)
-            editor.removeAttribute(.listItem, at: editor.selectedRange)
+            ], at: selectedRange)
+            editor.removeAttribute(.listItem, at: selectedRange)
             return
         }
 
-        editor.attributedText.enumerateAttribute(.paragraphStyle, in: editor.selectedRange, options: []) { (value, range, _) in
+        // Fix the list attribute on the trailing `\n` in previous line, if previous line has a listItem attribute applied
+        if let previousLine = editor.previousContentLine(from: selectedRange.location),
+            let listValue = editor.attributedText.attribute(.listItem, at: previousLine.range.endLocation - 1, effectiveRange: nil),
+            editor.attributedText.attribute(.listItem, at: previousLine.range.endLocation, effectiveRange: nil) == nil {
+            editor.addAttribute(.listItem, value: listValue, at: NSRange(location: previousLine.range.endLocation, length: 1))
+        }
+
+        editor.attributedText.enumerateAttribute(.paragraphStyle, in: selectedRange, options: []) { (value, range, _) in
             let paraStyle = value as? NSParagraphStyle
             let mutableStyle = ListTextProcessor.updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: .indent)
             editor.addAttribute(.paragraphStyle, value: mutableStyle ?? editor.paragraphStyle, at: range)
         }
-        editor.addAttribute(.listItem, value: attrValue, at: editor.selectedRange)
+        editor.addAttribute(.listItem, value: attrValue, at: selectedRange)
         attributeValue = nil
     }
 

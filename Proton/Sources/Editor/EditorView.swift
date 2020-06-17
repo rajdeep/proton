@@ -516,7 +516,7 @@ open class EditorView: UIView {
     }
 
     private func setup() {
-        richTextView.autocorrectionType = .no
+        richTextView.autocorrectionType = .default
 
         richTextView.translatesAutoresizingMaskIntoConstraints = false
         richTextView.defaultTextFormattingProvider = self

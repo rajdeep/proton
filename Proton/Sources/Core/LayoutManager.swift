@@ -97,6 +97,7 @@ class LayoutManager: NSLayoutManager {
             }
         }
 
+
         enumerateLineFragments(forGlyphRange: listRange) { [weak self] (rect, usedRect, textContainer, glyphRange, stop) in
             guard let self = self else { return }
 
@@ -109,15 +110,19 @@ class LayoutManager: NSLayoutManager {
             // Determines if previous line is completed i.e. terminates with a newline char. Absence of newline character means that the
             // line is wrapping and rendering the number/bullet should be skipped.
             var isPreviousLineComplete = true
+            var skipMarker = false
 
             if newLineRange.length > 0 {
-                isPreviousLineComplete = textStorage.attributedSubstring(from: newLineRange).string == "\n"
+                let newLineString = textStorage.attributedSubstring(from: newLineRange)
+                isPreviousLineComplete = newLineString.string == "\n"
+                skipMarker = newLineString.attribute(.skipNextListMarker, at: 0, effectiveRange: nil) != nil
             }
 
-            if isPreviousLineComplete {
-                let font = textStorage.attribute(.font, at: glyphRange.location, effectiveRange: nil) as? UIFont ?? defaultFont
+            let font = textStorage.attribute(.font, at: glyphRange.location, effectiveRange: nil) as? UIFont ?? defaultFont
+            let paraStyle = textStorage.attribute(.paragraphStyle, at: glyphRange.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
 
-                let paraStyle = textStorage.attribute(.paragraphStyle, at: glyphRange.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
+            if isPreviousLineComplete && skipMarker == false {
+
                 let level = Int(paraStyle.firstLineHeadIndent/listIndent)
                 var index = (self.counters[level] ?? 0)
                 self.counters[level] = index + 1
@@ -134,13 +139,21 @@ class LayoutManager: NSLayoutManager {
                 previousLevel = level
 
                 // TODO: should this be moved inside level > 0 check above?
-                lastLayoutParaStyle = paraStyle
-                lastLayoutRect = rect
-                lastLayoutFont = font
             }
+            lastLayoutParaStyle = paraStyle
+            lastLayoutRect = rect
+            lastLayoutFont = font
         }
 
-        guard let lastRect = lastLayoutRect,
+        var skipMarker = false
+
+        if textStorage.length > 0 {
+            let lastChar = textStorage.attributedSubstring(from: NSRange(location: textStorage.length - 1, length: 1))
+            skipMarker = lastChar.string == "\n" && lastChar.attribute(.skipNextListMarker, at: 0, effectiveRange: nil) != nil
+        }
+
+        guard skipMarker == false,
+            let lastRect = lastLayoutRect,
             textStorage.length > 1,
             textStorage.attributedSubstring(from: NSRange(location: listRange.endLocation - 1, length: 1)).string == "\n",
             let paraStyle = lastLayoutParaStyle  else { return }

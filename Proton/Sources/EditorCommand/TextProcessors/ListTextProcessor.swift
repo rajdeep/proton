@@ -57,10 +57,17 @@ public class ListTextProcessor: TextProcessing {
             let indentMode: Indentation  = (modifierFlags == .shift) ? .outdent : .indent
             Self.updateListItemIfRequired(editor: editor, editedRange: editedRange, indentMode: indentMode, attributeValue: attributeValue)
         case .enter:
-            let attrs = editor.attributedText.attributes(at: editedRange.location, effectiveRange: nil)
+            let location = min(editedRange.location, editor.contentLength - 1)
+            guard location >= 0, editor.contentLength > 0 else { return }
+            let attrs = editor.attributedText.attributes(at: location, effectiveRange: nil)
             if attrs[.listItem] != nil {
-                exitListsIfRequired(editor: editor, editedRange: editedRange)
+                if modifierFlags == .shift {
+                    handleShiftReturn(editor: editor, editedRange: editedRange, attrs: attrs)
+                } else {
+                    exitListsIfRequired(editor: editor, editedRange: editedRange)
+                }
             }
+
         case .backspace:
             let text = editor.attributedText.attributedSubstring(from: editedRange)
             guard editedRange.location > 0,
@@ -71,6 +78,15 @@ public class ListTextProcessor: TextProcessing {
             }
             editor.deleteBackward()
         }
+    }
+
+    private func handleShiftReturn(editor: EditorView, editedRange: NSRange, attrs: [NSAttributedString.Key: Any]) {
+        var attributes = attrs
+        attributes[.skipNextListMarker] = 1
+        let newLineRange = NSRange(location: editedRange.location, length: 0)
+        let newLine = NSAttributedString(string: "\n", attributes: attributes)
+        editor.replaceCharacters(in: newLineRange, with: newLine)
+        editor.selectedRange = editedRange.nextPosition
     }
 
     private func exitListsIfRequired(editor: EditorView, editedRange: NSRange) {
@@ -109,6 +125,7 @@ public class ListTextProcessor: TextProcessing {
         if lastChar.string == blankLineFiller {
             editor.selectedRange = editor.selectedRange.nextPosition
         }
+        editor.typingAttributes[.skipNextListMarker] = nil
     }
 
     static func updateListItemIfRequired(editor: EditorView, editedRange: NSRange, indentMode: Indentation, attributeValue: Any?) {

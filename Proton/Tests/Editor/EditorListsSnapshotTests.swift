@@ -622,4 +622,258 @@ class EditorListsSnapshotTests: XCTestCase {
         viewController.render(size: CGSize(width: 300, height: 375))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+    func testContinuesNumberingWhenTwoListsAreCombined() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
+
+        let indent: CGFloat = 25
+        let paraStyle1 = NSMutableParagraphStyle()
+        paraStyle1.firstLineHeadIndent = indent * 1
+        paraStyle1.headIndent = indent * 1
+
+        let paraStyle2 = NSMutableParagraphStyle()
+        paraStyle2.firstLineHeadIndent = indent * 2
+        paraStyle2.headIndent = indent * 2
+
+        let paraStyle3 = NSMutableParagraphStyle()
+        paraStyle3.firstLineHeadIndent = indent * 3
+        paraStyle3.headIndent = indent * 3
+
+        editor.appendCharacters(NSAttributedString(string: "Item 1\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "Item 2\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "Item 3", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "\nNot in list", attributes: [.paragraphStyle: NSParagraphStyle()]))
+        editor.appendCharacters(NSAttributedString(string: "\nItem 4\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "Item 5", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+
+        viewController.render(size: CGSize(width: 300, height: 180))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        let lines = editor.contentLinesInRange(editor.attributedText.fullRange)
+        let notInListLine = lines[3]
+
+        editor.selectedRange = notInListLine.range
+        listCommand.execute(on: editor, attributeValue: 1)
+
+        viewController.render(size: CGSize(width: 300, height: 180))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testAppliesAndRemovesListStyleToEntireLineOnPartialSelection() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
+
+        let indent: CGFloat = 25
+        let paraStyle1 = NSMutableParagraphStyle()
+        paraStyle1.firstLineHeadIndent = indent * 1
+        paraStyle1.headIndent = indent * 1
+
+        let paraStyle2 = NSMutableParagraphStyle()
+        paraStyle2.firstLineHeadIndent = indent * 2
+        paraStyle2.headIndent = indent * 2
+
+        let paraStyle3 = NSMutableParagraphStyle()
+        paraStyle3.firstLineHeadIndent = indent * 3
+        paraStyle3.headIndent = indent * 3
+
+        editor.appendCharacters(NSAttributedString(string: "Item 1\n"))
+        editor.appendCharacters(NSAttributedString(string: "Item 2\n"))
+        editor.appendCharacters(NSAttributedString(string: "Item 3"))
+
+        viewController.render(size: CGSize(width: 300, height: 150))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        editor.selectedRange = NSRange(location: 3, length: editor.contentLength - 3)
+        listCommand.execute(on: editor, attributeValue: 1)
+
+        viewController.render(size: CGSize(width: 300, height: 180))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        listCommand.execute(on: editor, attributeValue: nil)
+
+        viewController.render(size: CGSize(width: 300, height: 180))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testCreatesListWithoutSelectionUsingCommandInBeginning() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.listFormattingProvider = listFormattingProvider
+        editor.appendCharacters("Create list with focus in beginning.")
+        editor.selectedRange = .zero
+        listCommand.execute(on: editor)
+        viewController.render()
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testCreatesListWithoutSelectionUsingCommandAtEnd() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.listFormattingProvider = listFormattingProvider
+        editor.appendCharacters("Create list with focus at the end.")
+        editor.selectedRange = editor.textEndRange
+        listCommand.execute(on: editor)
+        viewController.render()
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testCreatesListWithoutSelectionUsingCommandInTheMiddle() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.listFormattingProvider = listFormattingProvider
+        editor.appendCharacters("Create list with focus in the middle.")
+        editor.selectedRange = NSRange(location: 10, length: 0)
+        listCommand.execute(on: editor)
+        viewController.render()
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testRegeneratesNumbersOnChangesToNonListTextInMiddleOfLists() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.listFormattingProvider = listFormattingProvider
+
+        let listStyle = NSMutableParagraphStyle()
+        listStyle.firstLineHeadIndent = 25
+        listStyle.headIndent = 25
+
+        editor.appendCharacters(NSAttributedString(string: "Item 1\n"))
+        editor.appendCharacters(NSAttributedString(string: "Item 2\n"))
+        editor.appendCharacters(NSAttributedString(string: "Item 3"))
+
+        let lines = editor.contentLinesInRange(editor.attributedText.fullRange)
+
+        // Make line 1 a list
+        editor.selectedRange = NSRange(location: lines[0].range.location + 3, length: 0)
+        listCommand.execute(on: editor, attributeValue: 1)
+
+        // Make line 3 a separate list
+        editor.selectedRange = NSRange(location: lines[2].range.location + 3, length: 0)
+        listCommand.execute(on: editor, attributeValue: 1)
+
+        viewController.render(size: CGSize(width: 300, height: 120))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        // Make line 2 a list that should combine line 1 and line 3 in the same list
+        editor.selectedRange = NSRange(location: lines[1].range.location + 3, length: 0)
+        listCommand.execute(on: editor, attributeValue: 1)
+
+        viewController.render(size: CGSize(width: 300, height: 120))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testSkipNumberingForMultilineText() {
+        //TODO: Fix the image bullet rendering in captured snapshot.
+        // The code works as expected in the app, but bullet in rendered snapshot is slightly truncated.
+
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.listFormattingProvider = listFormattingProvider
+        
+        let listStyle = NSMutableParagraphStyle()
+        listStyle.firstLineHeadIndent = 25
+        listStyle.headIndent = 25
+        
+        editor.appendCharacters(NSAttributedString(string: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed nulla vitae urna faucibus dapibus vitae non risus.\n"))
+        
+        
+        let lines = editor.contentLinesInRange(editor.attributedText.fullRange)
+        
+        // Make line 1 a list
+        editor.selectedRange = NSRange(location: lines[0].range.location + 3, length: 0)
+        listCommand.execute(on: editor, attributeValue: 1)
+        
+        viewController.render(size: CGSize(width: 300, height: 175))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testSkipListMarkerForSkipAttribute() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
+
+        let indent: CGFloat = 25
+        let paraStyle1 = NSMutableParagraphStyle()
+        paraStyle1.firstLineHeadIndent = indent
+        paraStyle1.headIndent = indent
+
+        let paraStyle2 = NSMutableParagraphStyle()
+        paraStyle2.firstLineHeadIndent = indent * 2
+        paraStyle2.headIndent = indent * 2
+
+        editor.appendCharacters(NSAttributedString(string: "Item 1", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "\n", attributes: [.skipNextListMarker: 1, .listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "Item 2 - skip marker\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "Item 3\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "Item 1", attributes: [.listItem: 1, .paragraphStyle: paraStyle2]))
+        editor.appendCharacters(NSAttributedString(string: "\n", attributes: [.skipNextListMarker: 1, .listItem: 1, .paragraphStyle: paraStyle2]))
+        editor.appendCharacters(NSAttributedString(string: "Item 2 - skip marker\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle2]))
+        editor.appendCharacters(NSAttributedString(string: "Item 3", attributes: [.listItem: 1, .paragraphStyle: paraStyle2]))
+
+        viewController.render(size: CGSize(width: 300, height: 180))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+
+    func testSkipsListMarkerOnShiftReturnKeyInMiddleOfList() {
+        let text = "Test line 1"
+
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
+        editor.attributedText = NSAttributedString(string: text)
+        editor.selectedRange = editor.attributedText.fullRange
+        listCommand.execute(on: editor)
+        editor.selectedRange = editor.textEndRange
+        let attrs = editor.attributedText.attributes(at: editor.contentLength - 1, effectiveRange: nil)
+
+        let paraStyle = attrs[.paragraphStyle] ?? NSParagraphStyle()
+        editor.selectedRange =  NSRange(location: editor.textEndRange.location, length: 0)
+
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [.shift], range: NSRange(location: editor.textEndRange.location, length: 0))
+
+        editor.appendCharacters(NSAttributedString(string: "Test line 2",
+                                                   attributes: [
+                                                    .paragraphStyle: paraStyle,
+                                                    .listItem: 1]))
+
+        editor.appendCharacters(NSAttributedString(string: "\nTest line 3",
+                                                   attributes: [
+                                                    .paragraphStyle: paraStyle,
+                                                    .listItem: 1]))
+
+
+        viewController.render(size: CGSize(width: 300, height: 175))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testSkipsListMarkerOnShiftReturnKeyAtEndOfTheList() {
+        let text = "Test line 1"
+
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
+        editor.attributedText = NSAttributedString(string: text)
+        editor.selectedRange = editor.attributedText.fullRange
+        listCommand.execute(on: editor)
+        editor.selectedRange = editor.textEndRange
+
+        editor.selectedRange =  NSRange(location: editor.textEndRange.location, length: 0)
+
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [.shift], range: NSRange(location: editor.textEndRange.location, length: 0))
+
+        viewController.render(size: CGSize(width: 300, height: 175))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 }
