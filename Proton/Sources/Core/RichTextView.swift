@@ -515,6 +515,41 @@ class RichTextView: AutogrowingTextView {
             super.toggleBoldface(sender)
         }
     }
+    
+    private func lineRect(at position: UITextPosition) -> CGRect? {
+        let index = offset(from: beginningOfDocument, to: position)
+        guard layoutManager.isValidGlyphIndex(index) else {
+            return nil
+        }
+        var rect = layoutManager.lineFragmentUsedRect(forGlyphAt: index, effectiveRange: nil)
+        rect.origin.y += textContainerInset.top
+        return rect
+    }
+        
+    override func caretRect(for position: UITextPosition) -> CGRect {
+        let rect = super.caretRect(for: position)
+        guard let lineRect = lineRect(at: position) else {
+            return rect
+        }
+        return rect.fixingLineHeight(lineRect)
+    }
+    
+    override func selectionRects(for range: UITextRange) -> [UITextSelectionRect] {
+        let firstCharacterRect = lineRect(at: range.start)
+        let lastCharacterRect = lineRect(at: range.end)
+
+        return super.selectionRects(for: range).map { selectionRect -> UITextSelectionRect in
+            if selectionRect.containsStart {
+                guard let lineRect = firstCharacterRect else { return selectionRect }
+                return TextSelectionRect(selection: selectionRect, lineRect: lineRect)
+            } else if selectionRect.containsEnd {
+                guard let lineRect = lastCharacterRect else { return selectionRect }
+                return TextSelectionRect(selection: selectionRect, lineRect: lineRect)
+            } else {
+                return selectionRect
+            }
+        }
+    }
 }
 
 extension RichTextView: NSLayoutManagerDelegate {
@@ -543,5 +578,33 @@ extension RichTextView: LayoutManagerDelegate {
         let font = UIFont.preferredFont(forTextStyle: .body)
         let defaultValue = NSAttributedString(string: "*", attributes: [.font: font])
         return richTextViewListDelegate?.richTextView(self, listMarkerForItemAt: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? .string(defaultValue)
+    }
+}
+
+private final class TextSelectionRect: UITextSelectionRect {
+    override var rect: CGRect { _rect }
+    override var writingDirection: NSWritingDirection { _writingDirection }
+    override var containsStart: Bool { _containsStart }
+    override var containsEnd: Bool { _containsEnd }
+    override var isVertical: Bool { _isVertical }
+    
+    var _rect: CGRect
+    var _writingDirection: NSWritingDirection
+    var _containsStart: Bool
+    var _containsEnd: Bool
+    var _isVertical: Bool
+
+    init(selection: UITextSelectionRect, lineRect: CGRect) {
+        self._rect = selection.rect.fixingLineHeight(lineRect)
+        self._writingDirection = selection.writingDirection
+        self._containsStart = selection.containsStart
+        self._containsEnd = selection.containsEnd
+        self._isVertical = selection.isVertical
+    }
+}
+
+private extension CGRect {
+    func fixingLineHeight(_ lineHeight: CGRect) -> CGRect {
+        .init(x: origin.x, y: lineHeight.origin.y, width: width, height: lineHeight.height)
     }
 }
