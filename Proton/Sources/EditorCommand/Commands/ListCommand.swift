@@ -60,7 +60,7 @@ public class ListCommand: EditorCommand {
         }
 
         guard selectedRange.length > 0 else {
-            ListIndentCommand(indentMode: .indent, attributeValue: attributeValue)
+            ListIndentCommand(indentMode: .indent, editedRange: selectedRange, attributeValue: attributeValue)
                     .execute(on: editor)
             return
         }

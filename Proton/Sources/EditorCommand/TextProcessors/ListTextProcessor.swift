@@ -200,6 +200,7 @@ public class ListTextProcessor: TextProcessing {
         let updatedStyle = updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: indentMode)
         attrs[.paragraphStyle] = updatedStyle
         attrs[.listItem] = updatedStyle?.firstLineHeadIndent ?? 0 > 0.0 ? listAttributeValue : nil
+        attrs[.viewOnly] = ()
         let marker = NSAttributedString(string: blankLineFiller, attributes: attrs)
         editor.replaceCharacters(in: editedRange, with: marker)
         editor.selectedRange = editedRange.nextPosition
