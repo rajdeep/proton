@@ -311,7 +311,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         }
 
         if (size.width == 0 || size.height == 0),
-            let fittingSize = contentView?.systemLayoutSizeFitting(textContainer.size) {
+            let fittingSize = contentView?.frame.size {
             size = fittingSize
         }
 
