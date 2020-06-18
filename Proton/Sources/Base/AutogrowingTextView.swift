@@ -22,7 +22,6 @@ import Foundation
 import UIKit
 
 class AutogrowingTextView: UITextView {
-    private let dimensionsCalculatingTextView = UITextView()
 
     private var allowAutogrowing: Bool
     var maxHeight: CGFloat = 0 {
@@ -67,21 +66,28 @@ class AutogrowingTextView: UITextView {
         }
     }
 
+    let queue = DispatchQueue(label: "test", qos: .userInteractive)
     override func layoutSubviews() {
         super.layoutSubviews()
         guard allowAutogrowing else { return }
         let bounds = self.bounds
-        updateDimensionsCalculatingTextView()
-        let fittingSize = dimensionsCalculatingTextView.sizeThatFits(CGSize(width: frame.width, height: .greatestFiniteMagnitude))
-        isScrollEnabled = (fittingSize.height > bounds.height) || (maxHeight > 0 && maxHeight < fittingSize.height)
+        let fittingSize = self.calculatedSize(attributedText: attributedText, frame: frame, textContainerInset: textContainerInset)
+        self.isScrollEnabled = (fittingSize.height > bounds.height) || (self.maxHeight > 0 && self.maxHeight < fittingSize.height)
+    }
+
+    private func calculatedSize(attributedText: NSAttributedString, frame: CGRect, textContainerInset: UIEdgeInsets) -> CGSize {
+        let boundingRect = attributedText.boundingRect(with: CGSize(width: frame.width, height: .greatestFiniteMagnitude), options: [.usesLineFragmentOrigin], context: nil).integral
+
+        let insets = UIEdgeInsets(top: -textContainerInset.top, left: -textContainerInset.left, bottom: -textContainerInset.bottom, right: -textContainerInset.right)
+
+        return boundingRect.inset(by: insets).size
     }
 
     override open func sizeThatFits(_ size: CGSize) -> CGSize {
         guard allowAutogrowing else {
             return super.sizeThatFits(size)
         }
-        updateDimensionsCalculatingTextView()
-        var fittingSize = dimensionsCalculatingTextView.sizeThatFits(size)
+        var fittingSize = calculatedSize(attributedText: attributedText, frame: frame, textContainerInset: textContainerInset)
         if maxHeight > 0 {
             fittingSize.height = min(maxHeight, fittingSize.height)
         }
@@ -97,11 +103,5 @@ class AutogrowingTextView: UITextView {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.becomeFirstResponder()
-    }
-
-    private func updateDimensionsCalculatingTextView() {
-        dimensionsCalculatingTextView.font = font
-        dimensionsCalculatingTextView.attributedText = attributedText
-        dimensionsCalculatingTextView.textContainerInset = textContainerInset
     }
 }
