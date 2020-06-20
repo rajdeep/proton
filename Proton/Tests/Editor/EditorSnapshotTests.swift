@@ -279,6 +279,22 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         FBSnapshotVerifyView(viewController.view)
     }
 
+    func testCursorCaretRect() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        
+        editor.textContainerInset = .init(top: 24, left: 16, bottom: 12, right: 8)
+        editor.paragraphStyle.paragraphSpacingBefore = 16
+        editor.paragraphStyle.paragraphSpacing = 8
+        editor.attributedText = NSAttributedString(string: "One\nTwo\nThree")
+
+        [0, 4, 6, 20].forEach {
+            addCaretRect(at: .init(location: $0, length: 0), in: editor, color: .magenta)
+        }
+        viewController.render(size: .init(width: 300, height: 200))
+        FBSnapshotVerifyView(viewController.view)
+    }
+    
     func testGetsVisibleContentRange() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
