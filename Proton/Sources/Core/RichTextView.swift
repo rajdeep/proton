@@ -588,7 +588,6 @@ extension RichTextView: LayoutManagerDelegate {
     }
 
     var paragraphStyle: NSMutableParagraphStyle? {
-    let height: CGFloat
         return defaultTextFormattingProvider?.paragraphStyle
     }
 
