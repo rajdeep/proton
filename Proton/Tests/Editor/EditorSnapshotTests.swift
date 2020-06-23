@@ -283,18 +283,33 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
         
-        editor.textContainerInset = .init(top: 24, left: 16, bottom: 12, right: 8)
         editor.paragraphStyle.paragraphSpacingBefore = 16
         editor.paragraphStyle.paragraphSpacing = 8
         editor.attributedText = NSAttributedString(string: "One\nTwo\nThree")
 
-        [0, 4, 6, 20].forEach {
+        var panel = PanelView()
+        panel.backgroundColor = .cyan
+        panel.layer.borderWidth = 1.0
+        panel.layer.cornerRadius = 4.0
+        panel.layer.borderColor = UIColor.black.cgColor
+
+        let attachment = Attachment(panel, size: .fullWidth)
+        panel.boundsObserver = attachment
+        panel.editor.font = editor.font
+
+        panel.attributedText = NSAttributedString(string: "In \nfull-width \nattachment")
+
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        viewController.render(size: .init(width: 300, height: 300))
+
+        [0, 4, 6, 9, 14, 15].forEach {
             addCaretRect(at: .init(location: $0, length: 0), in: editor, color: .magenta)
         }
-        viewController.render(size: .init(width: 300, height: 200))
+
+        viewController.render(size: .init(width: 300, height: 300))
         FBSnapshotVerifyView(viewController.view)
     }
-    
+
     func testGetsVisibleContentRange() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
