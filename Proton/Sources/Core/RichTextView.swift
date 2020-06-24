@@ -474,6 +474,21 @@ class RichTextView: AutogrowingTextView {
         caretRect.size.height = lineRect.height
         return caretRect
     }
+    
+    override func selectionRects(for range: UITextRange) -> [UITextSelectionRect] {
+        let firstCharacterRect = caretRect(for: range.start)
+        let lastCharacterRect = caretRect(for: range.end)
+
+        return super.selectionRects(for: range).map { selectionRect -> UITextSelectionRect in
+            if selectionRect.containsStart {
+                return TextSelectionRect(selection: selectionRect, caretRect: firstCharacterRect)
+            } else if selectionRect.containsEnd {
+                return TextSelectionRect(selection: selectionRect, caretRect: lastCharacterRect)
+            } else {
+                return selectionRect
+            }
+        }
+    }
 }
 
 extension RichTextView: NSLayoutManagerDelegate {
@@ -486,5 +501,27 @@ extension RichTextView: NSLayoutManagerDelegate {
 extension RichTextView: TextStorageDelegate {
     func textStorage(_ textStorage: TextStorage, willDeleteText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) {
         textProcessor?.textStorage(textStorage, willProcessDeletedText: deletedText, insertedText: insertedText)
+    }
+}
+
+private final class TextSelectionRect: UITextSelectionRect {
+    override var rect: CGRect { _rect }
+    override var writingDirection: NSWritingDirection { _writingDirection }
+    override var containsStart: Bool { _containsStart }
+    override var containsEnd: Bool { _containsEnd }
+    override var isVertical: Bool { _isVertical }
+
+    private let _rect: CGRect
+    private let _writingDirection: NSWritingDirection
+    private let _containsStart: Bool
+    private let _containsEnd: Bool
+    private let _isVertical: Bool
+
+    init(selection: UITextSelectionRect, caretRect: CGRect) {
+        self._rect = .init(x: selection.rect.minX, y: caretRect.minY, width: selection.rect.width, height: caretRect.height)
+        self._writingDirection = selection.writingDirection
+        self._containsStart = selection.containsStart
+        self._containsEnd = selection.containsEnd
+        self._isVertical = selection.isVertical
     }
 }
