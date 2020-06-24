@@ -515,53 +515,26 @@ class RichTextView: AutogrowingTextView {
             super.toggleBoldface(sender)
         }
     }
-    
-    private func lineFragmentHeight(at textPosition: UITextPosition) -> LineHeightOffset? {
-        let index = offset(from: beginningOfDocument, to: textPosition)
-        guard layoutManager.isValidGlyphIndex(index) else {
-            // Can't get rect for the very last character. So try to use previous one instead, but ignore its origin.
-            guard let prevPosition = position(from: textPosition, offset: -1) else {
-                return nil
-            }
-            let prevIndex = offset(from: beginningOfDocument, to: prevPosition)
-            guard layoutManager.isValidGlyphIndex(prevIndex) else {
-                return nil
-            }
 
-            let rect = layoutManager.lineFragmentUsedRect(forGlyphAt: prevIndex, effectiveRange: nil)
-            return LineHeightOffset(origin: nil, height: rect.height)
-        }
+    override func caretRect(for position: UITextPosition) -> CGRect {
+        let location = offset(from: beginningOfDocument, to: position)
+        let lineRect = layoutManager.boundingRect(forGlyphRange: NSRange(location: location, length: 0), in: textContainer)
 
-        let rect = layoutManager.lineFragmentUsedRect(forGlyphAt: index, effectiveRange: nil)
-        return LineHeightOffset(origin: rect.origin.y + textContainerInset.top, height: rect.height)
-    }
-        
-    override func caretRect(for textPosition: UITextPosition) -> CGRect {
-        let rect = super.caretRect(for: textPosition)
-        guard let lineHeightRect = lineFragmentHeight(at: textPosition) else {
-            guard let prevPosition = position(from: textPosition, offset: -1) else {
-                return rect
-            }
-            if let prevlineRect = lineFragmentHeight(at: prevPosition) {
-                let heightDelta = rect.height - prevlineRect.height
-                return .init(x: rect.origin.x, y: rect.origin.y + heightDelta, width: rect.width, height: prevlineRect.height)
-            }
-            return rect
-        }
-        return rect.fixingLineHeight(lineHeightRect)
+        var caretRect = super.caretRect(for: position)
+        caretRect.origin.y = lineRect.minY + textContainerInset.top
+        caretRect.size.height = lineRect.height
+        return caretRect
     }
     
     override func selectionRects(for range: UITextRange) -> [UITextSelectionRect] {
-        let firstCharacterRect = lineFragmentHeight(at: range.start)
-        let lastCharacterRect = lineFragmentHeight(at: range.end)
+        let firstCharacterRect = caretRect(for: range.start)
+        let lastCharacterRect = caretRect(for: range.end)
 
         return super.selectionRects(for: range).map { selectionRect -> UITextSelectionRect in
             if selectionRect.containsStart {
-                guard let lineHeight = firstCharacterRect else { return selectionRect }
-                return TextSelectionRect(selection: selectionRect, lineHeight: lineHeight)
+                return TextSelectionRect(selection: selectionRect, caretRect: firstCharacterRect)
             } else if selectionRect.containsEnd {
-                guard let lineHeight = lastCharacterRect else { return selectionRect }
-                return TextSelectionRect(selection: selectionRect, lineHeight: lineHeight)
+                return TextSelectionRect(selection: selectionRect, caretRect: lastCharacterRect)
             } else {
                 return selectionRect
             }
@@ -598,11 +571,6 @@ extension RichTextView: LayoutManagerDelegate {
     }
 }
 
-private struct LineHeightOffset {
-    let origin: CGFloat?
-    let height: CGFloat
-}
-
 private final class TextSelectionRect: UITextSelectionRect {
     override var rect: CGRect { _rect }
     override var writingDirection: NSWritingDirection { _writingDirection }
@@ -616,20 +584,11 @@ private final class TextSelectionRect: UITextSelectionRect {
     private let _containsEnd: Bool
     private let _isVertical: Bool
 
-    init(selection: UITextSelectionRect, lineHeight: LineHeightOffset) {
-        self._rect = selection.rect.fixingLineHeight(lineHeight)
+    init(selection: UITextSelectionRect, caretRect: CGRect) {
+        self._rect = .init(x: selection.rect.minX, y: caretRect.minY, width: selection.rect.width, height: caretRect.height)
         self._writingDirection = selection.writingDirection
         self._containsStart = selection.containsStart
         self._containsEnd = selection.containsEnd
         self._isVertical = selection.isVertical
-    }
-}
-
-private extension CGRect {
-    func fixingLineHeight(_ lineHeight: LineHeightOffset) -> CGRect {
-        guard let originY = lineHeight.origin else {
-            return .init(x: origin.x, y: origin.y + height - lineHeight.height, width: width, height: lineHeight.height)
-        }
-        return .init(x: origin.x, y: originY, width: width, height: lineHeight.height)
     }
 }
