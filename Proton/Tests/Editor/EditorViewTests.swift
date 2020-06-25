@@ -460,4 +460,26 @@ class EditorViewTests: XCTestCase {
         XCTAssertTrue(registeredCommands[0] === command2)
         XCTAssertTrue(registeredCommands[1] === command4)
     }
+
+    func testNotifiesDelegateOfSizeChanges() {
+        let testExpectation = functionExpectation()
+
+        let delegate = MockEditorViewDelegate()
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        editor.delegate = delegate
+
+        delegate.onDidChangeSize  = { _, currentSize, previousSize in
+            XCTAssertEqual(previousSize, .zero)
+            XCTAssertNotEqual(currentSize, .zero)
+            testExpectation.fulfill()
+        }
+
+        let attrString = NSMutableAttributedString(string: "This is a test string")
+        editor.attributedText = attrString
+        viewController.render()
+
+        waitForExpectations(timeout: 1.0)
+    }
 }

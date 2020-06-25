@@ -103,6 +103,13 @@ open class EditorView: UIView {
 
     var textProcessor: TextProcessor?
 
+    public override var bounds: CGRect {
+        didSet {
+            guard oldValue != bounds else { return }
+            delegate?.editor(self, didChangeSize: bounds.size, previousSize: oldValue.size)
+        }
+    }
+
     /// An object interested in responding to editing and focus related events in the `EditorView`.
     public weak var delegate: EditorViewDelegate?
 

@@ -223,4 +223,8 @@ extension CommandsExampleViewController: EditorViewDelegate {
     func editor(_ editor: EditorView, didReceiveFocusAt range: NSRange) {
         print("Focussed: `\(editor.contentName?.rawValue ?? "<root editor>")` at depth: \(editor.nestingLevel)")
     }
+
+    func editor(_ editor: EditorView, didChangeSize currentSize: CGSize, previousSize: CGSize) {
+        print("Height changed from \(previousSize.height) to \(currentSize.height)")
+    }
 }
