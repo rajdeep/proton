@@ -22,7 +22,6 @@ import Foundation
 import UIKit
 
 class AutogrowingTextView: UITextView {
-    private let dimensionsCalculatingTextView = UITextView()
 
     var maxHeight: CGFloat = 0 {
         didSet {
@@ -64,15 +63,13 @@ class AutogrowingTextView: UITextView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        let bounds = self.bounds
-        updateDimensionsCalculatingTextView()
-        let fittingSize = dimensionsCalculatingTextView.sizeThatFits(CGSize(width: frame.width, height: .greatestFiniteMagnitude))
-        isScrollEnabled = (fittingSize.height > bounds.height) || (maxHeight > 0 && maxHeight < fittingSize.height)
+        let bounds = self.bounds.integral
+        let fittingSize = self.calculatedSize(attributedText: attributedText, frame: frame, textContainerInset: textContainerInset)
+        self.isScrollEnabled = (fittingSize.height > bounds.height) || (self.maxHeight > 0 && self.maxHeight < fittingSize.height)
     }
 
     override open func sizeThatFits(_ size: CGSize) -> CGSize {
-        updateDimensionsCalculatingTextView()
-        var fittingSize = dimensionsCalculatingTextView.sizeThatFits(size)
+        var fittingSize = calculatedSize(attributedText: attributedText, frame: frame, textContainerInset: textContainerInset)
         if maxHeight > 0 {
             fittingSize.height = min(maxHeight, fittingSize.height)
         }
@@ -90,9 +87,14 @@ class AutogrowingTextView: UITextView {
         self.becomeFirstResponder()
     }
 
-    private func updateDimensionsCalculatingTextView() {
-        dimensionsCalculatingTextView.font = font
-        dimensionsCalculatingTextView.attributedText = attributedText
-        dimensionsCalculatingTextView.textContainerInset = textContainerInset
+    private func calculatedSize(attributedText: NSAttributedString, frame: CGRect, textContainerInset: UIEdgeInsets) -> CGSize {
+        // Adjust for horizontal paddings in textview to exclude from overall available width for attachment
+        let horizontalAdjustments = (textContainer.lineFragmentPadding * 2) + (textContainerInset.left + textContainerInset.right)
+        let boundingRect = attributedText.boundingRect(with: CGSize(width: frame.width - horizontalAdjustments, height: .greatestFiniteMagnitude), options: [.usesLineFragmentOrigin], context: nil).integral
+
+        let insets = UIEdgeInsets(top: -textContainerInset.top, left: -textContainerInset.left, bottom: -textContainerInset.bottom, right: -textContainerInset.right)
+
+        return boundingRect.inset(by: insets).size
     }
+
 }
