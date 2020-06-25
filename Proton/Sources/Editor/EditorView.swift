@@ -782,8 +782,9 @@ extension EditorView {
         richTextView.invalidateLayout(for: range)
     }
 
-    func relayoutAttachments() {
-        richTextView.enumerateAttribute(.attachment, in: NSRange(location: 0, length: richTextView.contentLength), options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
+    func relayoutAttachments(in range: NSRange? = nil) {
+        let rangeToUse = range ?? richTextView.attributedText.fullRange
+        richTextView.enumerateAttribute(.attachment, in: rangeToUse, options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
             guard let attachment = attach as? Attachment else { return }
 
             // Remove attachment from container if it is already added to another Editor
