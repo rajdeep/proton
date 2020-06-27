@@ -515,6 +515,31 @@ class RichTextView: AutogrowingTextView {
             super.toggleBoldface(sender)
         }
     }
+
+    override func caretRect(for position: UITextPosition) -> CGRect {
+        let location = offset(from: beginningOfDocument, to: position)
+        let lineRect = layoutManager.boundingRect(forGlyphRange: NSRange(location: location, length: 0), in: textContainer)
+
+        var caretRect = super.caretRect(for: position)
+        caretRect.origin.y = lineRect.minY + textContainerInset.top
+        caretRect.size.height = lineRect.height
+        return caretRect
+    }
+    
+    override func selectionRects(for range: UITextRange) -> [UITextSelectionRect] {
+        let firstCharacterRect = caretRect(for: range.start)
+        let lastCharacterRect = caretRect(for: range.end)
+
+        return super.selectionRects(for: range).map { selectionRect -> UITextSelectionRect in
+            if selectionRect.containsStart {
+                return TextSelectionRect(selection: selectionRect, caretRect: firstCharacterRect)
+            } else if selectionRect.containsEnd {
+                return TextSelectionRect(selection: selectionRect, caretRect: lastCharacterRect)
+            } else {
+                return selectionRect
+            }
+        }
+    }
 }
 
 extension RichTextView: NSLayoutManagerDelegate {
@@ -543,5 +568,27 @@ extension RichTextView: LayoutManagerDelegate {
         let font = UIFont.preferredFont(forTextStyle: .body)
         let defaultValue = NSAttributedString(string: "*", attributes: [.font: font])
         return richTextViewListDelegate?.richTextView(self, listMarkerForItemAt: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? .string(defaultValue)
+    }
+}
+
+private final class TextSelectionRect: UITextSelectionRect {
+    override var rect: CGRect { _rect }
+    override var writingDirection: NSWritingDirection { _writingDirection }
+    override var containsStart: Bool { _containsStart }
+    override var containsEnd: Bool { _containsEnd }
+    override var isVertical: Bool { _isVertical }
+
+    private let _rect: CGRect
+    private let _writingDirection: NSWritingDirection
+    private let _containsStart: Bool
+    private let _containsEnd: Bool
+    private let _isVertical: Bool
+
+    init(selection: UITextSelectionRect, caretRect: CGRect) {
+        self._rect = .init(x: selection.rect.minX, y: caretRect.minY, width: selection.rect.width, height: caretRect.height)
+        self._writingDirection = selection.writingDirection
+        self._containsStart = selection.containsStart
+        self._containsEnd = selection.containsEnd
+        self._isVertical = selection.isVertical
     }
 }

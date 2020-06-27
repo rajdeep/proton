@@ -19,6 +19,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// Describes an object interested in listening to events raised from EditorView
 public protocol EditorViewDelegate: AnyObject {
@@ -70,6 +71,13 @@ public protocol EditorViewDelegate: AnyObject {
     ///   - processors: Processors that are executed.
     ///   - range: Range where processors are executed.
     func editor(_ editor: EditorView, didExecuteProcessors processors: [TextProcessing], at range: NSRange)
+
+    /// Invoked when the size of EditorView changes.
+    /// - Parameters:
+    ///   - editor:  Editor view receiving the event.
+    ///   - currentSize: Current size of Editor after updates.
+    ///   - previousSize: Size of Editor before the update.
+    func editor(_ editor: EditorView, didChangeSize currentSize: CGSize, previousSize: CGSize)
 }
 
 public extension EditorViewDelegate {
@@ -80,4 +88,5 @@ public extension EditorViewDelegate {
     func editor(_ editor: EditorView, didChangeTextAt range: NSRange) { }
     func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) { }
     func editor(_ editor: EditorView, didExecuteProcessors processors: [TextProcessing], at range: NSRange) { }
+    func editor(_ editor: EditorView, didChangeSize currentSize: CGSize, previousSize: CGSize) { }
 }

@@ -364,6 +364,6 @@ extension Attachment {
             let range = editor.attributedText.rangeFor(attachment: self) else { return }
 
         editor.invalidateLayout(for: range)
-        editor.relayoutAttachments()
+        editor.relayoutAttachments(in: range)
     }
 }

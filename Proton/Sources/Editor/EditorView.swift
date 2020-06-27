@@ -103,6 +103,13 @@ open class EditorView: UIView {
 
     var textProcessor: TextProcessor?
 
+    public override var bounds: CGRect {
+        didSet {
+            guard oldValue != bounds else { return }
+            delegate?.editor(self, didChangeSize: bounds.size, previousSize: oldValue.size)
+        }
+    }
+
     /// An object interested in responding to editing and focus related events in the `EditorView`.
     public weak var delegate: EditorViewDelegate?
 
@@ -820,8 +827,9 @@ extension EditorView {
         richTextView.invalidateLayout(for: range)
     }
 
-    func relayoutAttachments() {
-        richTextView.enumerateAttribute(.attachment, in: NSRange(location: 0, length: richTextView.contentLength), options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
+    func relayoutAttachments(in range: NSRange? = nil) {
+        let rangeToUse = range ?? richTextView.attributedText.fullRange
+        richTextView.enumerateAttribute(.attachment, in: rangeToUse, options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
             guard let attachment = attach as? Attachment else { return }
 
             // Remove attachment from container if it is already added to another Editor

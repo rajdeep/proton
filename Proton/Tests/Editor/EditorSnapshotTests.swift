@@ -279,6 +279,76 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         FBSnapshotVerifyView(viewController.view)
     }
 
+    func testCursorCaretRect() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        
+        editor.paragraphStyle.paragraphSpacingBefore = 16
+        editor.paragraphStyle.paragraphSpacing = 8
+        editor.attributedText = NSAttributedString(string: "One\nTwo\nThree")
+
+        var panel = PanelView()
+        panel.backgroundColor = .cyan
+        panel.layer.borderWidth = 1.0
+        panel.layer.cornerRadius = 4.0
+        panel.layer.borderColor = UIColor.black.cgColor
+
+        let attachment = Attachment(panel, size: .fullWidth)
+        panel.boundsObserver = attachment
+        panel.editor.font = editor.font
+
+        panel.attributedText = NSAttributedString(string: "In \nfull-width \nattachment")
+
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        viewController.render(size: .init(width: 300, height: 300))
+
+        [0, 4, 6, 9, 14, 15].forEach {
+            addCaretRect(at: .init(location: $0, length: 0), in: editor, color: .magenta)
+        }
+
+        viewController.render(size: .init(width: 300, height: 300))
+        FBSnapshotVerifyView(viewController.view)
+    }
+
+    func testSelectionRects() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        
+        editor.textContainerInset = .init(top: 8, left: 4, bottom: 2, right: 6)
+        editor.paragraphStyle.paragraphSpacingBefore = 16
+        editor.paragraphStyle.paragraphSpacing = 8
+        editor.attributedText = NSAttributedString(string: "One\nTwo\nThree")
+
+        var panel = PanelView()
+        panel.backgroundColor = .cyan
+        panel.layer.borderWidth = 1.0
+        panel.layer.cornerRadius = 4.0
+        panel.layer.borderColor = UIColor.black.cgColor
+
+        let attachment = Attachment(panel, size: .fullWidth)
+        panel.boundsObserver = attachment
+        panel.editor.font = editor.font
+
+        panel.attributedText = NSAttributedString(string: "In \nfull-width \nattachment")
+
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.appendCharacters("Four")
+        editor.layoutIfNeeded()
+
+        editor.selectedRange = NSRange(location: 6, length: 1)
+        addSelectionRects(at: editor.selectedTextRange!, in: editor, color: .blue)
+
+        editor.selectedRange = NSRange(location: 1, length: 4)
+        addSelectionRects(at: editor.selectedTextRange!, in: editor, color: .magenta)
+
+        editor.selectedRange = NSRange(location: 12, length: 10)
+        addSelectionRects(at: editor.selectedTextRange!, in: editor, color: .green)
+
+        editor.clipsToBounds = true
+        viewController.render(size: .init(width: 300, height: 300))
+        FBSnapshotVerifyView(viewController.view)
+    }
+    
     func testGetsVisibleContentRange() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
@@ -466,5 +536,20 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         view.backgroundColor = .clear
         view.addBorder(color)
         editor.addSubview(view)
+    }
+
+    private func addSelectionRects(at textRange: UITextRange, in editor: EditorView, color: UIColor) {
+        editor.richTextView.selectionRects(for: textRange).forEach { selectionRect in
+            let view = UIView(frame: editor.convert(selectionRect.rect, from: editor.richTextView))
+            if selectionRect.containsStart || selectionRect.containsEnd {
+                view.frame.origin.x -= 1
+                view.frame.size.width = 2
+                view.backgroundColor = .clear
+                view.addBorder(color)
+            } else {
+                view.backgroundColor = color.withAlphaComponent(0.3)
+            }
+            editor.addSubview(view)
+        }
     }
 }
