@@ -39,7 +39,10 @@ class PanelAttachment: Attachment {
     }
 
     override func addedAttributesOnContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key: Any]) {
-        view.editor.addAttributes(attributes, at: view.editor.attributedText.fullRange)
+        var attributesWithoutParaStyle = attributes
+        // Do not carry over para/list styles to panel content as it may be inconsistent based on outer content
+        attributesWithoutParaStyle[.paragraphStyle] = nil
+        view.editor.addAttributes(attributesWithoutParaStyle, at: view.editor.attributedText.fullRange)
     }
 
     override func removedAttributesFromContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key]) {
