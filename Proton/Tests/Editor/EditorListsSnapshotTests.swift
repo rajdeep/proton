@@ -911,4 +911,62 @@ class EditorListsSnapshotTests: XCTestCase {
         viewController.render(size: CGSize(width: 300, height: 175))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+    func testFullWidthAttachmentInLists() {
+        let text = "Test line 1\n"
+
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
+        let attributedText = NSMutableAttributedString(string: text)
+
+        var panel1 = PanelView()
+        panel1.backgroundColor = .cyan
+        panel1.layer.borderWidth = 1.0
+        panel1.layer.cornerRadius = 4.0
+        panel1.layer.borderColor = UIColor.black.cgColor
+
+        let attachment1 = Attachment(panel1, size: .fullWidth)
+        panel1.boundsObserver = attachment1
+        panel1.editor.font = editor.font
+
+        panel1.attributedText = NSAttributedString(string: "In full-width attachment")
+
+        attributedText.append(attachment1.string)
+
+        attributedText.append(NSAttributedString(string: "\nTest line 2\n"))
+
+        var panel2 = PanelView()
+        panel2.backgroundColor = .green
+        panel2.layer.borderWidth = 1.0
+        panel2.layer.cornerRadius = 4.0
+        panel2.layer.borderColor = UIColor.black.cgColor
+
+        let attachment2 = Attachment(panel2, size: .fullWidth)
+        panel2.boundsObserver = attachment2
+        panel2.editor.font = editor.font
+
+        panel2.attributedText = NSAttributedString(string: "Second panel")
+
+        attributedText.append(attachment2.string)
+
+        editor.attributedText = attributedText
+
+        editor.enableSelectionHandles = false
+        editor.selectedRange = editor.attributedText.fullRange
+
+        listCommand.execute(on: editor)
+
+        let lines = editor.contentLinesInRange(editor.attributedText.fullRange)
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: lines[2].range)
+
+        viewController.render(size: CGSize(width: 300, height: 200))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: lines[3].range)
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: lines[3].range)
+        viewController.render(size: CGSize(width: 300, height: 200))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 }
