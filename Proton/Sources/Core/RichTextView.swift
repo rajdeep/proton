@@ -416,6 +416,10 @@ class RichTextView: AutogrowingTextView {
         return self.attributedText.enumerateContents(in: range)
     }
 
+    func setAttributes(_ attrs: [NSAttributedString.Key: Any], range: NSRange) {
+        storage.setAttributes(attrs, range: range)
+    }
+    
     func addAttributes(_ attrs: [NSAttributedString.Key: Any], range: NSRange) {
         storage.addAttributes(attrs, range: range)
     }

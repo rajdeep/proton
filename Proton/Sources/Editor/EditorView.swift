@@ -842,6 +842,15 @@ extension EditorView {
         }
     }
 
+    public func setAttributes(_ attributes: [NSAttributedString.Key: Any], at range: NSRange) {
+        self.richTextView.setAttributes(attributes, range: range)
+        self.richTextView.enumerateAttribute(.attachment, in: range, options: .longestEffectiveRangeNotRequired) { value, rangeInContainer, _ in
+            if let attachment = value as? Attachment {
+                attachment.addedAttributesOnContainingRange(rangeInContainer: rangeInContainer, attributes: attributes)
+            }
+        }
+    }
+
     /// Removes the given attributes from the range provided. If the attribute does not exist in the range, it will be a no-op.
     /// - Parameters:
     ///   - attributes: Attributes to remove.
