@@ -22,11 +22,14 @@ import Foundation
 import UIKit
 
 public extension NSParagraphStyle {
+
+    /// Creates a mutable copy of current style
     var mutableParagraphStyle: NSMutableParagraphStyle {
         let copy = self.mutableCopy() as? NSMutableParagraphStyle
         return copy ?? NSMutableParagraphStyle()
     }
 
+    /// Returns `LineFormatting` based on current style
     var lineFormatting: LineFormatting {
         return LineFormatting(indentation: firstLineHeadIndent, spacingBefore: paragraphSpacingBefore)
     }

@@ -26,25 +26,48 @@ enum Indentation {
     case outdent
 }
 
+/// Describes the formatting of a line of text. While general purpose in nature, this is
+/// used by `EditorListFormattingProvider` for providing formatting for lists.
 public struct LineFormatting {
+
+    /// Indentation of line
     public let indentation: CGFloat
+
+    /// Vertical spacing before the line
     public let spacingBefore: CGFloat
 
+    /// Initializes
+    /// - Parameters:
+    ///   - indentation: Indentation for each line of text
+    ///   - spacingBefore: Vertical spacing before line of text
     public init(indentation: CGFloat, spacingBefore: CGFloat) {
         self.indentation = indentation
         self.spacingBefore = spacingBefore
     }
 }
 
+/// Command that can be used to toggle list attributes of selected range of text.
+/// If the length of selected range of text is 0, the attributes are applied on the current line of text.
 public class ListCommand: EditorCommand {
     public init() { }
 
+    /// Name of the command
     public var name: CommandName {
         return CommandName("listCommand")
     }
 
+    /// Value to be set for attribute `.listItem` when applying to a range of text.
+    /// This value is returned back by `ListFormattingProvider` when querying list marker for a given index.
+    /// This may be used to store info that helps generate appropriate markers for e.g. storing context related
+    /// to bullet vs ordered lists.
+    /// - Note:
+    /// When set to nil before running `execute`, it removes list formatting from the selected range of text.
     public var attributeValue: Any?
 
+
+    /// Executes the command with value of `attributeValue` for `.listItem` attribute. If the `attributeValue` is nil, executing
+    /// removed list formatting from the selected range of text.
+    /// - Parameter editor: Editor to execute the command on.
     public func execute(on editor: EditorView) {
         var selectedRange = editor.selectedRange
         // Adjust to span entire line range if the selection starts in the middle of the line
@@ -89,6 +112,10 @@ public class ListCommand: EditorCommand {
         attributeValue = nil
     }
 
+    /// Executes the command with value of `attributeValue` for `.listItem` attribute.
+    /// - Parameters:
+    ///   - editor: Editor to execute the command on.
+    ///   - attributeValue: Value of `.listItem` attribute. Use nil to remove list formatting.
     public func execute(on editor: EditorView, attributeValue: Any?) {
         self.attributeValue = attributeValue
         execute(on: editor)

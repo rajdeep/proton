@@ -248,8 +248,7 @@ extension CommandsExampleViewController: EditorViewDelegate {
 }
 
 class ListFormattingProvider: EditorListFormattingProvider {
-    var listLineFormatting: LineFormatting = LineFormatting(indentation: 25, spacingBefore: 0)
-
+    let listLineFormatting: LineFormatting = LineFormatting(indentation: 25, spacingBefore: 0)
     let sequenceGenerators: [SequenceGenerator] =
         [NumericSequenceGenerator(),
          DiamondBulletSequenceGenerator(),
