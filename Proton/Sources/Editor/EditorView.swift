@@ -473,7 +473,8 @@ open class EditorView: UIView {
 
     private func editorLineFrom(range: NSRange?) -> EditorLine? {
         guard let range = range,
-            let lineRange = richTextView.lineRange(from: range.location) else { return nil }
+            let lineRange = richTextView.lineRange(from: range.location),
+            contentLength >= lineRange.endLocation else { return nil }
 
         let text = attributedText.attributedSubstring(from: lineRange)
         return EditorLine(text: text, range: lineRange)
