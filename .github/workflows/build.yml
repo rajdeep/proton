@@ -20,10 +20,10 @@ jobs:
     - name: Build and Test Proton
       run: xcodebuild build test -destination "name=iPhone 11 Pro" -scheme "Proton"
     - name: Capture Proton Code Coverage
-      uses: codecov/codecov-action@v1.0.6
+      uses: codecov/codecov-action@v1.0.7
     - name: Build and Test Proton Extensions
       run: xcodebuild build test -destination "name=iPhone 11 Pro" -scheme "ProtonExtensions"
     - name: Capture ProtonExtensions Code Coverage
-      uses: codecov/codecov-action@v1.0.6
+      uses: codecov/codecov-action@v1.0.7
     - name: Build Example App
       run: xcodebuild build -destination "name=iPhone 11 Pro" -scheme "ExampleApp"

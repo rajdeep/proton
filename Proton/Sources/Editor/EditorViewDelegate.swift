@@ -30,7 +30,14 @@ public protocol EditorViewDelegate: AnyObject {
     ///   - key: Key that is intercepted.
     ///   - range: Range of the key in editor
     ///   - handled: Set to `true` to hijack the key press i.e. when `true`, the key press is not passed to the `Editor`
-    func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool)
+    func editor(_ editor: EditorView, shouldHandle key: EditorKey, at range: NSRange, handled: inout Bool)
+
+    /// Invoked when a special key like `enter`, `tab` etc. is entered in the `Editor`
+    /// - Parameters:
+    ///   - editor: Editor view receiving the event.
+    ///   - key: Key that is received.
+    ///   - range: Range of the key in editor
+    func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange)
 
     /// Invoked when editor receives focus.
     /// - Parameters:
@@ -74,7 +81,8 @@ public protocol EditorViewDelegate: AnyObject {
 }
 
 public extension EditorViewDelegate {
-    func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool) { }
+    func editor(_ editor: EditorView, shouldHandle key: EditorKey, at range: NSRange, handled: inout Bool) { }
+    func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange) { }
     func editor(_ editor: EditorView, didReceiveFocusAt range: NSRange) { }
     func editor(_ editor: EditorView, didLoseFocusFrom range: NSRange) { }
     func editor(_ editor: EditorView, didChangeTextAt range: NSRange) { }

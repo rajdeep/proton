@@ -30,6 +30,8 @@ open class RendererView: UIView {
     /// An object interested in intercepting and responding to user interaction like tap and selecting changes in the `RendererView`.
     public weak var delegate: RendererViewDelegate?
 
+    public weak var listFormattingProvider: RendererListFormattingProvider?
+
     /// Context for the current renderer
     public let context: RendererViewContext
 
@@ -175,11 +177,14 @@ open class RendererView: UIView {
 }
 
 extension RendererView: RichTextViewDelegate {
+
     func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
         delegate?.didChangeSelection(self, range: range)
     }
 
-    func richTextView(_ richTextView: RichTextView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool) { }
+    func richTextView(_ richTextView: RichTextView, shouldHandle key: EditorKey, at range: NSRange, handled: inout Bool) { }
+
+    func richTextView(_ richTextView: RichTextView, didReceive key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange) { }
 
     func richTextView(_ richTextView: RichTextView, didReceiveFocusAt range: NSRange) { }
 
@@ -189,7 +194,7 @@ extension RendererView: RichTextViewDelegate {
 
     func richTextView(_ richTextView: RichTextView, selectedRangeChangedFrom oldRange: NSRange?, to newRange: NSRange?) { }
 
-    func richTextView(_ richTextView: RichTextView, didReceiveKey key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange, handled: inout Bool) { }
+    func richTextView(_ richTextView: RichTextView, shouldHandle key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange, handled: inout Bool) { }
 
     func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool) {
         readOnlyEditorView.relayoutAttachments()
@@ -197,6 +202,18 @@ extension RendererView: RichTextViewDelegate {
 
     func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
         delegate?.didTap(self, didTapAtLocation: location, characterRange: characterRange)
+    }
+}
+
+extension RendererView: RichTextViewListDelegate {
+    var listLineFormatting: LineFormatting {
+        return listFormattingProvider?.listLineFormatting ?? LineFormatting(indentation: 25, spacingBefore: 0)
+    }
+
+    func richTextView(_ richTextView: RichTextView, listMarkerForItemAt index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
+        let font = UIFont.preferredFont(forTextStyle: .body)
+        let defaultValue = NSAttributedString(string: "*", attributes: [.font: font])
+        return listFormattingProvider?.listLineMarkerFor(renderer: self, index: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? .string(defaultValue)
     }
 }
 

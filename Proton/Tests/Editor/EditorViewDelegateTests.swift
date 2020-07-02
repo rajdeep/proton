@@ -29,7 +29,25 @@ class EditorViewDelegateTests: XCTestCase {
     func testDidReceiveKey() {
         let delegateExpectation = functionExpectation()
         let delegate = MockEditorViewDelegate()
-        delegate.onKeyReceived = { editor, key, range, _ in
+        delegate.onKeyReceived = { editor, key, range  in
+            XCTAssertEqual(key, .enter)
+            XCTAssertEqual(range, .zero)
+            delegateExpectation.fulfill()
+        }
+
+        let editor = EditorView()
+        editor.delegate = delegate
+        let richTextView = editor.richTextView
+        let richTextViewDelegate = richTextView.richTextViewDelegate
+
+        richTextViewDelegate?.richTextView(richTextView, didReceive: .enter, modifierFlags: [], at: .zero)
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testShouldHandleKey() {
+        let delegateExpectation = functionExpectation()
+        let delegate = MockEditorViewDelegate()
+        delegate.onShouldHandleKey = { editor, key, range, _  in
             XCTAssertEqual(key, .enter)
             XCTAssertEqual(range, .zero)
             delegateExpectation.fulfill()
@@ -41,7 +59,7 @@ class EditorViewDelegateTests: XCTestCase {
         let richTextViewDelegate = richTextView.richTextViewDelegate
         var handled = true
 
-        richTextViewDelegate?.richTextView(richTextView, didReceiveKey: .enter, modifierFlags: [], at: .zero, handled: &handled)
+        richTextViewDelegate?.richTextView(richTextView, shouldHandle: .enter, modifierFlags: [], at: .zero, handled: &handled)
         waitForExpectations(timeout: 1.0)
     }
 
@@ -118,8 +136,8 @@ class EditorViewDelegateTests: XCTestCase {
     private func assertKeyPress(_ key: EditorKey, replacementText: String, file: StaticString = #file, line: UInt = #line) throws {
         let delegateExpectation = functionExpectation()
         let delegate = MockEditorViewDelegate()
-        delegate.onKeyReceived = { editor, key, range, _ in
-            XCTAssertEqual(key, .tab, file: file, line: line)
+        delegate.onShouldHandleKey = { editor, key, range, _ in
+            XCTAssertEqual(key, key, file: file, line: line)
             XCTAssertEqual(range, .zero, file: file, line: line)
             delegateExpectation.fulfill()
         }
@@ -129,7 +147,7 @@ class EditorViewDelegateTests: XCTestCase {
 
         let context = try XCTUnwrap(editor.richTextView.delegate)
         context.textViewDidBeginEditing?(editor.richTextView)
-        _ = context.textView?(editor.richTextView, shouldChangeTextIn: editor.selectedRange, replacementText: "\t")
+        _ = context.textView?(editor.richTextView, shouldChangeTextIn: editor.selectedRange, replacementText: replacementText)
 
         waitForExpectations(timeout: 1.0)
     }

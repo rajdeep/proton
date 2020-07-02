@@ -25,7 +25,8 @@ import UIKit
 
 class MockEditorViewDelegate: EditorViewDelegate {
     var onSelectionChanged: ((EditorView, NSRange, [NSAttributedString.Key: Any], EditorContent.Name) -> Void)?
-    var onKeyReceived: ((EditorView, EditorKey, NSRange, Bool) -> Void)?
+    var onKeyReceived: ((EditorView, EditorKey, NSRange) -> Void)?
+    var onShouldHandleKey: ((EditorView, EditorKey, NSRange, Bool) -> Void)?
     var onReceivedFocus: ((EditorView, NSRange) -> Void)?
     var onLostFocus: ((EditorView, NSRange) -> Void)?
     var onDidExecuteProcessors: ((EditorView, [TextProcessing], NSRange) -> Void)?
@@ -35,8 +36,12 @@ class MockEditorViewDelegate: EditorViewDelegate {
         onSelectionChanged?(editor, range, attributes, contentType)
     }
 
-    func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool) {
-        onKeyReceived?(editor, key, range, handled)
+    func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange) {
+        onKeyReceived?(editor, key, range)
+    }
+
+    func editor(_ editor: EditorView, shouldHandle key: EditorKey, at range: NSRange, handled: inout Bool) {
+        onShouldHandleKey?(editor, key, range, handled)
     }
 
     func editor(_ editor: EditorView, didReceiveFocusAt range: NSRange) {

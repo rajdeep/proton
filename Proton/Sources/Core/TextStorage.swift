@@ -84,10 +84,21 @@ class TextStorage: NSTextStorage {
     }
 
     override func replaceCharacters(in range: NSRange, with attrString: NSAttributedString) {
-        // TODO: Add undo behaviour
+        // TODO: Add undo behavior
+        let replacementString = NSMutableAttributedString(attributedString: attrString)
+        // Fix any missing attribute that is in the location being replaced, but not in the text that
+        // is coming in.
+        if range.length > 0,
+            attrString.length > 0 {
+            let outgoingAttrs = storage.attributes(at: range.endLocation - 1, effectiveRange: nil)
+            let incomingAttrs = attrString.attributes(at: 0, effectiveRange: nil)
+            let diff = outgoingAttrs.filter { incomingAttrs[$0.key] == nil }
+            replacementString.addAttributes(diff, range: replacementString.fullRange)
+        }
+
         let deletedText = storage.attributedSubstring(from: range)
-        textStorageDelegate?.textStorage(self, willDeleteText: deletedText, insertedText: attrString, range: range)
-        super.replaceCharacters(in: range, with: attrString)
+        textStorageDelegate?.textStorage(self, willDeleteText: deletedText, insertedText: replacementString, range: range)
+        super.replaceCharacters(in: range, with: replacementString)
     }
 
     override func replaceCharacters(in range: NSRange, with str: String) {

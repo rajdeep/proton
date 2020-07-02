@@ -58,7 +58,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
     let commands: [(title: String, command: EditorCommand, highlightOnTouch: Bool)] = [
         (title: "Panel", command: PanelCommand(), highlightOnTouch: false),
-        (title: "Collab", command: DummyCollabCommand(), highlightOnTouch: false),
+        (title: "List", command: ListCommand(), highlightOnTouch: false),
         (title: "Bold", command: BoldCommand(), highlightOnTouch: true),
         (title: "Italics", command: ItalicsCommand(), highlightOnTouch: true),
         (title: "TextBlock", command: TextBlockCommand(), highlightOnTouch: false),
@@ -70,6 +70,8 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         (title: "Sample", selector: #selector(loadSample(sender:))),
     ]
 
+    let listFormattingProvider = ListFormattingProvider()
+
     override func setup() {
         super.setup()
 
@@ -78,6 +80,8 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
         editor.layer.borderColor = UIColor.systemBlue.cgColor
         editor.layer.borderWidth = 1.0
+
+        editor.listFormattingProvider = listFormattingProvider
 
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -91,6 +95,10 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
         editor.delegate = self
         EditorViewContext.shared.delegate = self
+
+        editor.registerProcessor(ListTextProcessor())
+//        editor.paragraphStyle.paragraphSpacingBefore = 20
+
 
         self.buttons = makeCommandButtons()
         for button in buttons {
@@ -172,8 +180,18 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         if sender.titleLabel?.text == "Encode" {
             sender.command.execute(on: editor)
             return
+        } else if sender.titleLabel?.text == "List" {
+            if let command = sender.command as? ListCommand,
+                let editor = editor.editorViewContext.activeEditorView {
+                var attributeValue: String? = "listItemValue"
+                if editor.contentLength > 0,
+                    editor.attributedText.attribute(.listItem, at: min(editor.contentLength - 1, editor.selectedRange.location), effectiveRange: nil) != nil {
+                    attributeValue = nil
+                }
+                command.execute(on: editor, attributeValue: attributeValue)
+                return
+            }
         }
-
         commandExecutor.execute(sender.command)
     }
 
@@ -226,5 +244,18 @@ extension CommandsExampleViewController: EditorViewDelegate {
 
     func editor(_ editor: EditorView, didChangeSize currentSize: CGSize, previousSize: CGSize) {
         print("Height changed from \(previousSize.height) to \(currentSize.height)")
+    }
+}
+
+class ListFormattingProvider: EditorListFormattingProvider {
+    let listLineFormatting: LineFormatting = LineFormatting(indentation: 25, spacingBefore: 0)
+    let sequenceGenerators: [SequenceGenerator] =
+        [NumericSequenceGenerator(),
+         DiamondBulletSequenceGenerator(),
+         SquareBulletSequenceGenerator()]
+
+    func listLineMarkerFor(editor: EditorView, index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
+        let sequenceGenerator = self.sequenceGenerators[(level - 1) % self.sequenceGenerators.count]
+        return sequenceGenerator.value(at: index)
     }
 }

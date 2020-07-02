@@ -14,7 +14,7 @@
     <a title="EditorView Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Proton Docs</a> (77% documented)</p>
+        <p><a href="../index.html">Proton Docs</a> (78% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -42,6 +42,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/EditorViewContext.html">EditorViewContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ListCommand.html">ListCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ListTextProcessor.html">ListTextProcessor</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RendererCommandExecutor.html">RendererCommandExecutor</a>
@@ -72,6 +78,9 @@
               <li class="nav-group-task">
                 <a href="../Enums/EditorKey.html">EditorKey</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ListLineMarker.html">ListLineMarker</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -82,6 +91,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/NSAttributedString/Key.html">– Key</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSParagraphStyle.html">NSParagraphStyle</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/NSRange.html">NSRange</a>
@@ -140,6 +152,9 @@
                 <a href="../Protocols/EditorContentView.html">EditorContentView</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/EditorListFormattingProvider.html">EditorListFormattingProvider</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/EditorTextEncoding.html">EditorTextEncoding</a>
               </li>
               <li class="nav-group-task">
@@ -155,7 +170,13 @@
                 <a href="../Protocols/RendererCommand.html">RendererCommand</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/RendererListFormattingProvider.html">RendererListFormattingProvider</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/RendererViewDelegate.html">RendererViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SequenceGenerator.html">SequenceGenerator</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/TextProcessing.html">TextProcessing</a>
@@ -184,6 +205,9 @@
                 <a href="../Structs/CommandName.html">CommandName</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/DiamondBulletSequenceGenerator.html">DiamondBulletSequenceGenerator</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/EditorContent.html">EditorContent</a>
               </li>
               <li class="nav-group-task">
@@ -193,7 +217,16 @@
                 <a href="../Structs/EditorLine.html">EditorLine</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/LineFormatting.html">LineFormatting</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/NumericSequenceGenerator.html">NumericSequenceGenerator</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/ShadowStyle.html">ShadowStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SquareBulletSequenceGenerator.html">SquareBulletSequenceGenerator</a>
               </li>
             </ul>
           </li>
@@ -261,6 +294,33 @@ and can be used to host simple formatted text or complex layout containing multi
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:@M@Proton@objc(cs)EditorView(py)bounds"></a>
+                    <a name="//apple_ref/swift/Property/bounds" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Proton@objc(cs)EditorView(py)bounds">bounds</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">bounds</span><span class="p">:</span> <span class="kt">CGRect</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton10EditorViewC8delegateAA0bC8Delegate_pSgvp"></a>
                     <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton10EditorViewC8delegateAA0bC8Delegate_pSgvp">delegate</a>
@@ -279,6 +339,33 @@ and can be used to host simple formatted text or complex layout containing multi
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/EditorViewDelegate.html">EditorViewDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC22listFormattingProviderAA0b4ListeF0_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/listFormattingProvider" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC22listFormattingProviderAA0b4ListeF0_pSgvp">listFormattingProvider</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>List formatting provider to be used for rendering lists in the Editor.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">listFormattingProvider</span><span class="p">:</span> <span class="kt"><a href="../Protocols/EditorListFormattingProvider.html">EditorListFormattingProvider</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -1551,6 +1638,139 @@ The default value for this property is <code>UITextAutocorrectionType.no</code>.
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton10EditorViewC19contentLinesInRangeySayAA0B4LineVGSo8_NSRangeVF"></a>
+                    <a name="//apple_ref/swift/Method/contentLinesInRange(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC19contentLinesInRangeySayAA0B4LineVGSo8_NSRangeVF">contentLinesInRange(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets the lines separated by newline characters from the given range.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Lines returned from this function do not contain terminating newline character in the text content.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">contentLinesInRange</span><span class="p">(</span><span class="n">_</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Structs/EditorLine.html">EditorLine</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Range to get lines from.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Array of <code><a href="../Structs/EditorLine.html">EditorLine</a></code> from the given content range.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC19previousContentLine4fromAA0bF0VSgSi_tF"></a>
+                    <a name="//apple_ref/swift/Method/previousContentLine(from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC19previousContentLine4fromAA0bF0VSgSi_tF">previousContentLine(from:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets the previous line of content from the given location. A content line is defined by the presence of a
+newline character.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">previousContentLine</span><span class="p">(</span><span class="n">from</span> <span class="nv">location</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/EditorLine.html">EditorLine</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>location</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Location to find line from, in reverse direction</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Content line if a newline character exists before the current location, else nil</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC15nextContentLine4fromAA0bF0VSgSi_tF"></a>
+                    <a name="//apple_ref/swift/Method/nextContentLine(from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC15nextContentLine4fromAA0bF0VSgSi_tF">nextContentLine(from:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">nextContentLine</span><span class="p">(</span><span class="n">from</span> <span class="nv">location</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/EditorLine.html">EditorLine</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton10EditorViewC9lineAfteryAA0B4LineVSgAFF"></a>
                     <a name="//apple_ref/swift/Method/lineAfter(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton10EditorViewC9lineAfteryAA0B4LineVSgAFF">lineAfter(_:<wbr>)</a>
@@ -1801,6 +2021,33 @@ only returns the rectangle denoting the caret positioning. The actual caret is n
                       <div>
                         <h4>Return Value</h4>
                         <p>Word  at the given location. Nil is there&rsquo;s no content.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC14deleteBackwardyyF"></a>
+                    <a name="//apple_ref/swift/Method/deleteBackward()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC14deleteBackwardyyF">deleteBackward()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">deleteBackward</span><span class="p">()</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -3126,7 +3373,7 @@ existing value will be overwritten by the new value provided in the attributes.<
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-05-13)</p>
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-06-29)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

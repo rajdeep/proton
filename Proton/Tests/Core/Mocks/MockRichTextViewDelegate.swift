@@ -25,7 +25,8 @@ import UIKit
 
 class MockRichTextViewDelegate: RichTextViewDelegate {
     var onSelectionChanged: ((RichTextView, NSRange, [NSAttributedString.Key: Any], EditorContent.Name) -> Void)?
-    var onKeyReceived: ((RichTextView, EditorKey, UIKeyModifierFlags, NSRange, Bool) -> Void)?
+    var onShouldHandleKey: ((RichTextView, EditorKey, UIKeyModifierFlags, NSRange, Bool) -> Void)?
+    var onDidReceiveKey: ((RichTextView, EditorKey, UIKeyModifierFlags, NSRange) -> Void)?
     var onReceivedFocus: ((RichTextView, NSRange) -> Void)?
     var onLostFocus: ((RichTextView, NSRange) -> Void)?
     var onDidChangeText: ((RichTextView, NSRange) -> Void)?
@@ -37,8 +38,12 @@ class MockRichTextViewDelegate: RichTextViewDelegate {
         onSelectionChanged?(richTextView, range, attributes, contentType)
     }
 
-    func richTextView(_ richTextView: RichTextView, didReceiveKey key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange, handled: inout Bool) {
-        onKeyReceived?(richTextView, key, modifierFlags, range, handled)
+    func richTextView(_ richTextView: RichTextView, shouldHandle key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange, handled: inout Bool) {
+        onShouldHandleKey?(richTextView, key, modifierFlags, range, handled)
+    }
+
+    func richTextView(_ richTextView: RichTextView, didReceive key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange) {
+        onDidReceiveKey?(richTextView, key, modifierFlags, range)
     }
 
     func richTextView(_ richTextView: RichTextView, didReceiveFocusAt range: NSRange) {

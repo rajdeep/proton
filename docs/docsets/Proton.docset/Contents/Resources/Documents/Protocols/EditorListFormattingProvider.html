@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>EditorListFormattingProvider Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Protocol/EditorListFormattingProvider" class="dashAnchor"></a>
+    <a title="EditorListFormattingProvider Protocol Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Proton Docs</a> (78% documented)</p>
+        <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">Proton Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        EditorListFormattingProvider Protocol Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/Attachment.html">Attachment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/EditorCommandExecutor.html">EditorCommandExecutor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/EditorView.html">EditorView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/EditorViewContext.html">EditorViewContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ListCommand.html">ListCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ListTextProcessor.html">ListTextProcessor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RendererCommandExecutor.html">RendererCommandExecutor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RendererView.html">RendererView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RendererViewContext.html">RendererViewContext</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/AttachmentSize.html">AttachmentSize</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/AttachmentType.html">AttachmentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/EditorContentMode.html">EditorContentMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/EditorContentType.html">EditorContentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/EditorKey.html">EditorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ListLineMarker.html">ListLineMarker</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/NSAttributedString.html">NSAttributedString</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSAttributedString/Key.html">– Key</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSParagraphStyle.html">NSParagraphStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSRange.html">NSRange</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/TextProcessingPriority.html">TextProcessingPriority</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIFont.html">UIFont</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UITextRange.html">UITextRange</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AttachmentEncoding.html">AttachmentEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AttachmentOffsetProviding.html">AttachmentOffsetProviding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AttributesDecoding.html">AttributesDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:6Proton12BlockContentP">BlockContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/BoundsObserving.html">BoundsObserving</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/DynamicBoundsProviding.html">DynamicBoundsProviding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorCommand.html">EditorCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentDecoding.html">EditorContentDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentEncoder.html">EditorContentEncoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentEncoding.html">EditorContentEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentIdentifying.html">EditorContentIdentifying</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorContentView.html">EditorContentView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorListFormattingProvider.html">EditorListFormattingProvider</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorTextEncoding.html">EditorTextEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EditorViewDelegate.html">EditorViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Focusable.html">Focusable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:6Proton13InlineContentP">InlineContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RendererCommand.html">RendererCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RendererListFormattingProvider.html">RendererListFormattingProvider</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RendererViewDelegate.html">RendererViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SequenceGenerator.html">SequenceGenerator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TextProcessing.html">TextProcessing</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/AnyAttributeDecoding.html">AnyAttributeDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyEditorContentAttachmentEncoding.html">AnyEditorContentAttachmentEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyEditorContentDecoding.html">AnyEditorContentDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyEditorTextEncoding.html">AnyEditorTextEncoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/BackgroundStyle.html">BackgroundStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CommandName.html">CommandName</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DiamondBulletSequenceGenerator.html">DiamondBulletSequenceGenerator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/EditorContent.html">EditorContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/EditorContent/Name.html">– Name</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/EditorLine.html">EditorLine</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/LineFormatting.html">LineFormatting</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/NumericSequenceGenerator.html">NumericSequenceGenerator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ShadowStyle.html">ShadowStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SquareBulletSequenceGenerator.html">SquareBulletSequenceGenerator</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton10Attributesa">Attributes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton9Processeda">Processed</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton22TextProcessingPrioritya">TextProcessingPriority</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>EditorListFormattingProvider</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">EditorListFormattingProvider</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>Describes an object capable of providing style and formatting information for rendering lists in <code><a href="../Classes/EditorView.html">EditorView</a></code>.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton28EditorListFormattingProviderP08listLineD0AA0gD0Vvp"></a>
+                    <a name="//apple_ref/swift/Property/listLineFormatting" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton28EditorListFormattingProviderP08listLineD0AA0gD0Vvp">listLineFormatting</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Line formatting to be used for a list item.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">listLineFormatting</span><span class="p">:</span> <span class="kt"><a href="../Structs/LineFormatting.html">LineFormatting</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton28EditorListFormattingProviderP17listLineMarkerFor6editor5index5level13previousLevel14attributeValueAA0cgH0OAA0B4ViewC_S3iypSgtF"></a>
+                    <a name="//apple_ref/swift/Method/listLineMarkerFor(editor:index:level:previousLevel:attributeValue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton28EditorListFormattingProviderP17listLineMarkerFor6editor5index5level13previousLevel14attributeValueAA0cgH0OAA0B4ViewC_S3iypSgtF">listLineMarkerFor(editor:<wbr>index:<wbr>level:<wbr>previousLevel:<wbr>attributeValue:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the marker to be drawn for list item (bullet/number etc.) for given parameters.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This function is called multiple times for same index level based on TextKit layout cycles. It is advisable to cache
+the values if calculation/drawing is performance intensive.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">listLineMarkerFor</span><span class="p">(</span><span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">level</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">previousLevel</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">attributeValue</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/ListLineMarker.html">ListLineMarker</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>editor</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Editor in which list marker is being drawn.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Index of list item in the given list.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>level</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Indentation level of the list.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>previousLevel</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Previous indentation level. Using this, it can be determined if the list is being indented, outdented or is at same level.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>attributeValue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Value of list item attribute for given index. Nil if there is no content set in list item yet.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Marker to be drawn for the given list item.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-06-29)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

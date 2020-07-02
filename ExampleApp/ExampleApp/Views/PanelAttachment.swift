@@ -42,6 +42,7 @@ class PanelAttachment: Attachment {
         var attributesWithoutParaStyle = attributes
         // Do not carry over para/list styles to panel content as it may be inconsistent based on outer content
         attributesWithoutParaStyle[.paragraphStyle] = nil
+        attributesWithoutParaStyle[.listItem] = nil
         view.editor.addAttributes(attributesWithoutParaStyle, at: view.editor.attributedText.fullRange)
     }
 
@@ -56,7 +57,7 @@ extension PanelAttachment: PanelViewDelegate {
         containerEditor.delegate?.editor(containerEditor, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
     }
 
-    func panel(_ panel: PanelView, didReceiveKey key: EditorKey, at range: NSRange, handled: inout Bool) {
+    func panel(_ panel: PanelView, shouldHandle key: EditorKey, at range: NSRange, handled: inout Bool) {
         if key == .backspace, range == .zero, panel.editor.attributedText.string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             removeFromContainer()
             handled = true

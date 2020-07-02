@@ -36,7 +36,7 @@ public extension NSAttributedString.Key {
 
     /// Identifies block based attributes. A block acts as a container for other content types. For e.g. a Paragraph is a block content
     /// that contains Text as inline content. A block content may contain multiple inline contents of different types.
-    /// This is utilised only when using `editor.contents(in:)` or `NSAttributedString.enumerateContents(in:)`.
+    /// This is utilized only when using `editor.contents(in:)` or `NSAttributedString.enumerateContents(in:)`.
     /// Both these utility functions allow breaking content in the editor into sub-parts that can be used to encode content.
     /// - SeeAlso:
     /// `EditorContentEncoder`
@@ -45,7 +45,7 @@ public extension NSAttributedString.Key {
 
     /// Identifies inline content attributes. An inline acts as a content in another content types. For e.g. an emoji is an inline content
     /// that may be contained in a Paragraph along side another inline content of Text.
-    /// This is utilised only when using  using `NSAttributedString.enumerateInlineContents(in:)`.
+    /// This is utilized only when using  using `NSAttributedString.enumerateInlineContents(in:)`.
     /// This utility functions allow breaking content in a block based content string into sub-parts that can then be used to encode content.
     /// - SeeAlso:
     /// `EditorContentEncoder`
@@ -57,4 +57,11 @@ public extension NSAttributedString.Key {
     /// - Note:
     /// This attribute only takes effect with `.backgroundColor`. In absence of `.backgroundColor`, this attribute has no effect.
     static let backgroundStyle = NSAttributedString.Key("_backgroundStyle")
+
+    /// Attribute denoting the range as a list item. This attribute enables use of `ListTextProcessor` to indent/outdent list
+    /// using tab/shift-tab (macOS) as well as create a new list item on hitting enter key.
+    static let listItem = NSAttributedString.Key("_listItem")
+
+    /// When applied to a new line char alongside `listItem` attribute, skips the rendering of list marker on subsequent line.
+    static let skipNextListMarker = NSAttributedString.Key("_skipNextListMarker")
 }
