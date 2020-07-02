@@ -108,18 +108,25 @@ open class EditorView: UIView {
         richTextView.interactions
         .compactMap({ $0 as? UITextInteraction })
     }
-    
+
     @available(iOS, deprecated: 13.0, message: "Use textInteractions")
     public var textViewGestures: [UIGestureRecognizer] {
         richTextView.gestureRecognizers ?? []
     }
-    
+
     @available(iOS 11.0, *)
     public var textDragInteractionEnabled: Bool {
         get { richTextView.textDragInteraction?.isEnabled ?? false }
         set { richTextView.textDragInteraction?.isEnabled = newValue }
     }
-    
+
+    public override var bounds: CGRect {
+        didSet {
+            guard oldValue != bounds else { return }
+            delegate?.editor(self, didChangeSize: bounds.size, previousSize: oldValue.size)
+        }
+    }
+
     /// An object interested in responding to editing and focus related events in the `EditorView`.
     public weak var delegate: EditorViewDelegate?
 
@@ -262,18 +269,33 @@ open class EditorView: UIView {
 
     /// Current line information based the caret position or selected range. If the selected range spans across multiple
     /// lines, only the line information of the line containing the start of the range is returned.
-    public var currentLine: EditorLine? {
-        return editorLineFrom(range: richTextView.currentLineRange )
+    /// - Note:
+    /// This is based on the layout of text in the `EditorView` and not on the actual lines based on `\n`. The range may
+    /// contain multiple lines or part of different lines separated by `\n`.
+    /// To get lines based on new line characters, please use `contentLinesInRange(range)`, `previousContentLine(location)`
+    /// and `nextContentLine(location)`.
+    public var currentLayoutLine: EditorLine? {
+        return editorLayoutLineFrom(range: richTextView.currentLineRange )
     }
 
-    /// First line of content in the Editor. Nil if editor is empty.
-    public var firstLine: EditorLine? {
-        return editorLineFrom(range: NSRange(location: 1, length: 0) )
+    /// First line of content based on layout in the Editor. Nil if editor is empty.
+    /// - Note:
+    /// This is based on the layout of text in the `EditorView` and not on the actual lines based on `\n`. The range may
+    /// contain multiple lines or part of different lines separated by `\n`.
+    /// To get lines based on new line characters, please use `contentLinesInRange(range)`, `previousContentLine(location)`
+    /// and `nextContentLine(location)`.
+    public var firstLayoutLine: EditorLine? {
+        return editorLayoutLineFrom(range: NSRange(location: 1, length: 0) )
     }
 
-    /// Last line of content in the Editor. Nil if editor is empty.
-    public var lastLine: EditorLine? {
-        return editorLineFrom(range: NSRange(location: contentLength - 1, length: 0) )
+    /// Last line of content based on layout in the Editor. Nil if editor is empty.
+    /// - Note:
+    /// This is based on the layout of text in the `EditorView` and not on the actual lines based on `\n`. The range may
+    /// contain multiple lines or part of different lines separated by `\n`.
+    /// To get lines based on new line characters, please use `contentLinesInRange(range)`, `previousContentLine(location)`
+    /// and `nextContentLine(location)`.
+    public var lastLayoutLine: EditorLine? {
+        return editorLayoutLineFrom(range: NSRange(location: contentLength - 1, length: 0) )
     }
 
     /// Selected text in the editor.
@@ -578,6 +600,10 @@ open class EditorView: UIView {
         return richTextView.previousContentLine(from: location)
     }
 
+    /// Gets the next line of content from the given location. A content line is defined by the presence of a
+    /// newline character.
+    /// - Parameter location: Location to find line from, in forward direction
+    /// - Returns: Content line if a newline character exists after the current location, else nil
     public func nextContentLine(from location: Int) -> EditorLine? {
         return richTextView.nextContentLine(from: location)
     }
@@ -586,27 +612,28 @@ open class EditorView: UIView {
     /// - Parameter line: Reference line
     /// - Returns:
     /// `EditorLine` after the given line. Nil if the Editor is empty or given line is last line in the Editor.
-    public func lineAfter(_ line: EditorLine) -> EditorLine? {
+    public func layoutLineAfter(_ line: EditorLine) -> EditorLine? {
         let lineRange = line.range
         let nextLineStartRange = NSRange(location: lineRange.location + lineRange.length + 1, length: 0)
         guard nextLineStartRange.isValidIn(richTextView) else { return nil }
-        return editorLineFrom(range: nextLineStartRange)
+        return editorLayoutLineFrom(range: nextLineStartRange)
     }
 
-    /// Gets the line after the given line. Nil if the given line is invalid or is last line
+    /// Gets the line before the given line. Nil if the given line is invalid or is first line
     /// - Parameter line: Reference line
     /// - Returns:
     /// `EditorLine` before the given line. Nil if the Editor is empty or given line is first line in the Editor.
-    public func lineBefore(_ line: EditorLine) -> EditorLine? {
+    public func layoutLineBefore(_ line: EditorLine) -> EditorLine? {
         let lineRange = line.range
         let previousLineStartRange = NSRange(location: lineRange.location - 1, length: 0)
         guard previousLineStartRange.isValidIn(richTextView) else { return nil }
-        return editorLineFrom(range: previousLineStartRange)
+        return editorLayoutLineFrom(range: previousLineStartRange)
     }
 
-    private func editorLineFrom(range: NSRange?) -> EditorLine? {
+    private func editorLayoutLineFrom(range: NSRange?) -> EditorLine? {
         guard let range = range,
-            let lineRange = richTextView.lineRange(from: range.location) else { return nil }
+            let lineRange = richTextView.lineRange(from: range.location),
+            contentLength >= lineRange.endLocation else { return nil }
 
         let text = attributedText.attributedSubstring(from: lineRange)
         return EditorLine(text: text, range: lineRange)
@@ -949,8 +976,9 @@ extension EditorView {
         richTextView.invalidateLayout(for: range)
     }
 
-    func relayoutAttachments() {
-        richTextView.enumerateAttribute(.attachment, in: NSRange(location: 0, length: richTextView.contentLength), options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
+    func relayoutAttachments(in range: NSRange? = nil) {
+        let rangeToUse = range ?? richTextView.attributedText.fullRange
+        richTextView.enumerateAttribute(.attachment, in: rangeToUse, options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
             guard let attachment = attach as? Attachment else { return }
 
             // Remove attachment from container if it is already added to another Editor

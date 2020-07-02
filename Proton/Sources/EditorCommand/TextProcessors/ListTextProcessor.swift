@@ -21,10 +21,23 @@
 import Foundation
 import UIKit
 
+/// Text process capable of processing keyboard inputs specific to lists. `ListTextProcessor` only works after a range of text
+/// has been converted to list using `ListCommand`.
+///
+/// Supports the following inputs:
+/// 1. Enter: Creates a new list item at the same level as the current one. Using Enter twice in a row at the last list item exits list.
+/// When used twice in a row in the middle of a list, it only creates empty list items and does not exit list.
+/// 2. Shift-Enter: Adds a soft line break i.e. does not create a new list item but moves to next line.
+/// 3. Tab: Indents the current level to next indentation level. A level may only be indented 1 level deeper than previous level.
+/// First level items cannot be indented.
+/// 4. Shift-Tab: Outdents text in list by one level each time. Using this on first level exits the list formatting for given text.
 public class ListTextProcessor: TextProcessing {
     public let name = "listProcessor"
 
+    /// Initializes text processor.
     public init() { }
+
+    /// Priority of the text processor.
     public let priority = TextProcessingPriority.medium
 
     var executeOnDidProcess: ((EditorView) -> Void)?

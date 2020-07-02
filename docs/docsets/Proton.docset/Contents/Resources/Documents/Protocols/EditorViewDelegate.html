@@ -14,7 +14,7 @@
     <a title="EditorViewDelegate Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Proton Docs</a> (77% documented)</p>
+        <p><a href="../index.html">Proton Docs</a> (78% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -42,6 +42,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/EditorViewContext.html">EditorViewContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ListCommand.html">ListCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ListTextProcessor.html">ListTextProcessor</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RendererCommandExecutor.html">RendererCommandExecutor</a>
@@ -72,6 +78,9 @@
               <li class="nav-group-task">
                 <a href="../Enums/EditorKey.html">EditorKey</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ListLineMarker.html">ListLineMarker</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -82,6 +91,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/NSAttributedString/Key.html">– Key</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSParagraphStyle.html">NSParagraphStyle</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/NSRange.html">NSRange</a>
@@ -140,6 +152,9 @@
                 <a href="../Protocols/EditorContentView.html">EditorContentView</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/EditorListFormattingProvider.html">EditorListFormattingProvider</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/EditorTextEncoding.html">EditorTextEncoding</a>
               </li>
               <li class="nav-group-task">
@@ -155,7 +170,13 @@
                 <a href="../Protocols/RendererCommand.html">RendererCommand</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/RendererListFormattingProvider.html">RendererListFormattingProvider</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/RendererViewDelegate.html">RendererViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SequenceGenerator.html">SequenceGenerator</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/TextProcessing.html">TextProcessing</a>
@@ -184,6 +205,9 @@
                 <a href="../Structs/CommandName.html">CommandName</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/DiamondBulletSequenceGenerator.html">DiamondBulletSequenceGenerator</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/EditorContent.html">EditorContent</a>
               </li>
               <li class="nav-group-task">
@@ -193,7 +217,16 @@
                 <a href="../Structs/EditorLine.html">EditorLine</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/LineFormatting.html">LineFormatting</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/NumericSequenceGenerator.html">NumericSequenceGenerator</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/ShadowStyle.html">ShadowStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SquareBulletSequenceGenerator.html">SquareBulletSequenceGenerator</a>
               </li>
             </ul>
           </li>
@@ -232,9 +265,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton18EditorViewDelegateP6editor_13didReceiveKey2at7handledyAA0bC0C_AA0bH0OSo8_NSRangeVSbztF"></a>
-                    <a name="//apple_ref/swift/Method/editor(_:didReceiveKey:at:handled:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton18EditorViewDelegateP6editor_13didReceiveKey2at7handledyAA0bC0C_AA0bH0OSo8_NSRangeVSbztF">editor(_:<wbr>didReceiveKey:<wbr>at:<wbr>handled:<wbr>)</a>
+                    <a name="/s:6Proton18EditorViewDelegateP6editor_12shouldHandle2at7handledyAA0bC0C_AA0B3KeyOSo8_NSRangeVSbztF"></a>
+                    <a name="//apple_ref/swift/Method/editor(_:shouldHandle:at:handled:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton18EditorViewDelegateP6editor_12shouldHandle2at7handledyAA0bC0C_AA0B3KeyOSo8_NSRangeVSbztF">editor(_:<wbr>shouldHandle:<wbr>at:<wbr>handled:<wbr>)</a>
                     </code>
                       <span class="declaration-note">
                         Default implementation
@@ -256,7 +289,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">editor</span><span class="p">(</span><span class="n">_</span> <span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="n">didReceiveKey</span> <span class="nv">key</span><span class="p">:</span> <span class="kt"><a href="../Enums/EditorKey.html">EditorKey</a></span><span class="p">,</span> <span class="n">at</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">,</span> <span class="nv">handled</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">editor</span><span class="p">(</span><span class="n">_</span> <span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="n">shouldHandle</span> <span class="nv">key</span><span class="p">:</span> <span class="kt"><a href="../Enums/EditorKey.html">EditorKey</a></span><span class="p">,</span> <span class="n">at</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">,</span> <span class="nv">handled</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -309,6 +342,83 @@
                               <td>
                                 <div>
                                   <p>Set to <code>true</code> to hijack the key press i.e. when <code>true</code>, the key press is not passed to the <code>Editor</code></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton18EditorViewDelegateP6editor_13didReceiveKey2atyAA0bC0C_AA0bH0OSo8_NSRangeVtF"></a>
+                    <a name="//apple_ref/swift/Method/editor(_:didReceiveKey:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton18EditorViewDelegateP6editor_13didReceiveKey2atyAA0bC0C_AA0bH0OSo8_NSRangeVtF">editor(_:<wbr>didReceiveKey:<wbr>at:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Invoked when a special key like <code>enter</code>, <code>tab</code> etc. is entered in the <code>Editor</code></p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">editor</span><span class="p">(</span><span class="n">_</span> <span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="n">didReceiveKey</span> <span class="nv">key</span><span class="p">:</span> <span class="kt"><a href="../Enums/EditorKey.html">EditorKey</a></span><span class="p">,</span> <span class="n">at</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>editor</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Editor view receiving the event.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Key that is received.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Range of the key in editor</p>
                                 </div>
                               </td>
                             </tr>
@@ -679,12 +789,89 @@
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton18EditorViewDelegateP6editor_13didChangeSize08previousH0yAA0bC0C_So6CGSizeVAJtF"></a>
+                    <a name="//apple_ref/swift/Method/editor(_:didChangeSize:previousSize:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton18EditorViewDelegateP6editor_13didChangeSize08previousH0yAA0bC0C_So6CGSizeVAJtF">editor(_:<wbr>didChangeSize:<wbr>previousSize:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Invoked when the size of EditorView changes.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">editor</span><span class="p">(</span><span class="n">_</span> <span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="n">didChangeSize</span> <span class="nv">currentSize</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">,</span> <span class="nv">previousSize</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>editor</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Editor view receiving the event.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>currentSize</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Current size of Editor after updates.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>previousSize</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Size of Editor before the update.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-05-13)</p>
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-07-02)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

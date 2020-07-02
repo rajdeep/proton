@@ -323,7 +323,9 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         case .fullWidth:
             let containerWidth = textContainer.size.width
             // Account for text leading and trailing margins within the textContainer
-            let adjustedContainerWidth = containerWidth - (textContainer.lineFragmentPadding * 2)
+            let paraStyle = self.containerEditorView?.attributedText.attribute(.paragraphStyle, at: charIndex, effectiveRange: nil) as? NSParagraphStyle
+            let indent = paraStyle?.firstLineHeadIndent ?? 0
+            let adjustedContainerWidth = containerWidth - (textContainer.lineFragmentPadding * 2) - indent
             size = CGSize(width: adjustedContainerWidth, height: size.height)
         case let .range(minWidth, maxWidth):
             if size.width < minWidth {
@@ -364,6 +366,6 @@ extension Attachment {
             let range = editor.attributedText.rangeFor(attachment: self) else { return }
 
         editor.invalidateLayout(for: range)
-        editor.relayoutAttachments()
+        editor.relayoutAttachments(in: range)
     }
 }

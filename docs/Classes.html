@@ -14,7 +14,7 @@
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">Proton Docs</a> (77% documented)</p>
+        <p><a href="index.html">Proton Docs</a> (78% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -42,6 +42,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/EditorViewContext.html">EditorViewContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/ListCommand.html">ListCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/ListTextProcessor.html">ListTextProcessor</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/RendererCommandExecutor.html">RendererCommandExecutor</a>
@@ -72,6 +78,9 @@
               <li class="nav-group-task">
                 <a href="Enums/EditorKey.html">EditorKey</a>
               </li>
+              <li class="nav-group-task">
+                <a href="Enums/ListLineMarker.html">ListLineMarker</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -82,6 +91,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Extensions/NSAttributedString/Key.html">– Key</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/NSParagraphStyle.html">NSParagraphStyle</a>
               </li>
               <li class="nav-group-task">
                 <a href="Extensions/NSRange.html">NSRange</a>
@@ -140,6 +152,9 @@
                 <a href="Protocols/EditorContentView.html">EditorContentView</a>
               </li>
               <li class="nav-group-task">
+                <a href="Protocols/EditorListFormattingProvider.html">EditorListFormattingProvider</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Protocols/EditorTextEncoding.html">EditorTextEncoding</a>
               </li>
               <li class="nav-group-task">
@@ -155,7 +170,13 @@
                 <a href="Protocols/RendererCommand.html">RendererCommand</a>
               </li>
               <li class="nav-group-task">
+                <a href="Protocols/RendererListFormattingProvider.html">RendererListFormattingProvider</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Protocols/RendererViewDelegate.html">RendererViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SequenceGenerator.html">SequenceGenerator</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/TextProcessing.html">TextProcessing</a>
@@ -184,6 +205,9 @@
                 <a href="Structs/CommandName.html">CommandName</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/DiamondBulletSequenceGenerator.html">DiamondBulletSequenceGenerator</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/EditorContent.html">EditorContent</a>
               </li>
               <li class="nav-group-task">
@@ -193,7 +217,16 @@
                 <a href="Structs/EditorLine.html">EditorLine</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/LineFormatting.html">LineFormatting</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/NumericSequenceGenerator.html">NumericSequenceGenerator</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/ShadowStyle.html">ShadowStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/SquareBulletSequenceGenerator.html">SquareBulletSequenceGenerator</a>
               </li>
             </ul>
           </li>
@@ -316,6 +349,35 @@ context as provided to the <code><a href="Classes/EditorCommandExecutor.html">Ed
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton11ListCommandC"></a>
+                    <a name="//apple_ref/swift/Class/ListCommand" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton11ListCommandC">ListCommand</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Command that can be used to toggle list attributes of selected range of text.
+If the length of selected range of text is 0, the attributes are applied on the current line of text.</p>
+
+                        <a href="Classes/ListCommand.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ListCommand</span> <span class="p">:</span> <span class="kt"><a href="Protocols/EditorCommand.html">EditorCommand</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton21EditorCommandExecutorC"></a>
                     <a name="//apple_ref/swift/Class/EditorCommandExecutor" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton21EditorCommandExecutorC">EditorCommandExecutor</a>
@@ -337,6 +399,46 @@ All the <code><a href="Classes/EditorView.html">EditorView</a></code>s in the hi
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">EditorCommandExecutor</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton17ListTextProcessorC"></a>
+                    <a name="//apple_ref/swift/Class/ListTextProcessor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton17ListTextProcessorC">ListTextProcessor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Text process capable of processing keyboard inputs specific to lists. <code>ListTextProcessor</code> only works after a range of text
+has been converted to list using <code><a href="Classes/ListCommand.html">ListCommand</a></code>.</p>
+
+<p>Supports the following inputs:</p>
+
+<ol>
+<li>Enter: Creates a new list item at the same level as the current one. Using Enter twice in a row at the last list item exits list.
+When used twice in a row in the middle of a list, it only creates empty list items and does not exit list.</li>
+<li>Shift-Enter: Adds a soft line break i.e. does not create a new list item but moves to next line.</li>
+<li>Tab: Indents the current level to next indentation level. A level may only be indented 1 level deeper than previous level.
+First level items cannot be indented.</li>
+<li>Shift-Tab: Outdents text in list by one level each time. Using this on first level exits the list formatting for given text.</li>
+</ol>
+
+                        <a href="Classes/ListTextProcessor.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ListTextProcessor</span> <span class="p">:</span> <span class="kt"><a href="Protocols/TextProcessing.html">TextProcessing</a></span></code></pre>
 
                         </div>
                       </div>
@@ -439,7 +541,7 @@ All the <code><a href="Classes/RendererView.html">RendererView</a></code>s in th
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-05-13)</p>
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-07-02)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

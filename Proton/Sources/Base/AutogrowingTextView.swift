@@ -70,17 +70,9 @@ class AutogrowingTextView: UITextView {
     override func layoutSubviews() {
         super.layoutSubviews()
         guard allowAutogrowing else { return }
-        let bounds = self.bounds
+        let bounds = self.bounds.integral
         let fittingSize = self.calculatedSize(attributedText: attributedText, frame: frame, textContainerInset: textContainerInset)
         self.isScrollEnabled = (fittingSize.height > bounds.height) || (self.maxHeight > 0 && self.maxHeight < fittingSize.height)
-    }
-
-    private func calculatedSize(attributedText: NSAttributedString, frame: CGRect, textContainerInset: UIEdgeInsets) -> CGSize {
-        let boundingRect = attributedText.boundingRect(with: CGSize(width: frame.width, height: .greatestFiniteMagnitude), options: [.usesLineFragmentOrigin], context: nil).integral
-
-        let insets = UIEdgeInsets(top: -textContainerInset.top, left: -textContainerInset.left, bottom: -textContainerInset.bottom, right: -textContainerInset.right)
-
-        return boundingRect.inset(by: insets).size
     }
 
     override open func sizeThatFits(_ size: CGSize) -> CGSize {
@@ -104,4 +96,15 @@ class AutogrowingTextView: UITextView {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.becomeFirstResponder()
     }
+
+    private func calculatedSize(attributedText: NSAttributedString, frame: CGRect, textContainerInset: UIEdgeInsets) -> CGSize {
+        // Adjust for horizontal paddings in textview to exclude from overall available width for attachment
+        let horizontalAdjustments = (textContainer.lineFragmentPadding * 2) + (textContainerInset.left + textContainerInset.right)
+        let boundingRect = attributedText.boundingRect(with: CGSize(width: frame.width - horizontalAdjustments, height: .greatestFiniteMagnitude), options: [.usesLineFragmentOrigin], context: nil).integral
+
+        let insets = UIEdgeInsets(top: -textContainerInset.top, left: -textContainerInset.left, bottom: -textContainerInset.bottom, right: -textContainerInset.right)
+
+        return boundingRect.inset(by: insets).size
+    }
+
 }
