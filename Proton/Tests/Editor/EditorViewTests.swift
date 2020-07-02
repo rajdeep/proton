@@ -247,7 +247,7 @@ class EditorViewTests: XCTestCase {
         editor.appendCharacters(line2)
         editor.selectedRange = NSRange(location: line1.length + 4, length: 1)
 
-        let currentLine = editor.currentLine
+        let currentLine = editor.currentLayoutLine
         XCTAssertEqual(currentLine?.text.string, line2.string)
         XCTAssertEqual(currentLine?.startsWith("And"), true)
         XCTAssertEqual(currentLine?.endsWith("line 2"), true)
@@ -255,7 +255,7 @@ class EditorViewTests: XCTestCase {
 
     func testReturnsZeroRangeForLineInEmptyEditor() {
         let editor = EditorView()
-        let line = editor.currentLine
+        let line = editor.currentLayoutLine
         XCTAssertEqual(line?.range, .zero)
     }
 
@@ -388,9 +388,9 @@ class EditorViewTests: XCTestCase {
         let attrString = NSMutableAttributedString(string: "This is a test string")
         editor.attributedText = attrString
 
-        let currentLine = try XCTUnwrap(editor.currentLine)
+        let currentLine = try XCTUnwrap(editor.currentLayoutLine)
         XCTAssertEqual(currentLine.text.string, attrString.string)
-        XCTAssertNil(editor.lineAfter(currentLine))
+        XCTAssertNil(editor.layoutLineAfter(currentLine))
     }
 
     func testReturnsNilForInvalidPreviousLine() throws {
@@ -398,7 +398,7 @@ class EditorViewTests: XCTestCase {
         let attrString = NSMutableAttributedString(string: "This is a test string")
         editor.attributedText = attrString
 
-        let currentLine = try XCTUnwrap(editor.currentLine)
+        let currentLine = try XCTUnwrap(editor.currentLayoutLine)
         XCTAssertEqual(currentLine.text.string, attrString.string)
         XCTAssertNil(editor.lineBefore(currentLine))
     }

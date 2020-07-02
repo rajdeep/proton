@@ -235,17 +235,32 @@ open class EditorView: UIView {
 
     /// Current line information based the caret position or selected range. If the selected range spans across multiple
     /// lines, only the line information of the line containing the start of the range is returned.
-    public var currentLine: EditorLine? {
+    /// - Note:
+    /// This is based on the layout of text in the `EditorView` and not on the actual lines based on `\n`. The range may
+    /// contain multiple lines or part of different lines separated by `\n`.
+    /// To get lines based on new line characters, please use `contentLinesInRange(range)`, `previousContentLine(location)`
+    /// and `nextContentLine(location)`.
+    public var currentLayoutLine: EditorLine? {
         return editorLineFrom(range: richTextView.currentLineRange )
     }
 
-    /// First line of content in the Editor. Nil if editor is empty.
-    public var firstLine: EditorLine? {
+    /// First line of content based on layout in the Editor. Nil if editor is empty.
+    /// - Note:
+    /// This is based on the layout of text in the `EditorView` and not on the actual lines based on `\n`. The range may
+    /// contain multiple lines or part of different lines separated by `\n`.
+    /// To get lines based on new line characters, please use `contentLinesInRange(range)`, `previousContentLine(location)`
+    /// and `nextContentLine(location)`.
+    public var firstLayoutLine: EditorLine? {
         return editorLineFrom(range: NSRange(location: 1, length: 0) )
     }
 
-    /// Last line of content in the Editor. Nil if editor is empty.
-    public var lastLine: EditorLine? {
+    /// Last line of content based on layout in the Editor. Nil if editor is empty.
+    /// - Note:
+    /// This is based on the layout of text in the `EditorView` and not on the actual lines based on `\n`. The range may
+    /// contain multiple lines or part of different lines separated by `\n`.
+    /// To get lines based on new line characters, please use `contentLinesInRange(range)`, `previousContentLine(location)`
+    /// and `nextContentLine(location)`.
+    public var lastLayoutLine: EditorLine? {
         return editorLineFrom(range: NSRange(location: contentLength - 1, length: 0) )
     }
 
@@ -470,6 +485,10 @@ open class EditorView: UIView {
         return richTextView.previousContentLine(from: location)
     }
 
+    /// Gets the next line of content from the given location. A content line is defined by the presence of a
+    /// newline character.
+    /// - Parameter location: Location to find line from, in forward direction
+    /// - Returns: Content line if a newline character exists after the current location, else nil
     public func nextContentLine(from location: Int) -> EditorLine? {
         return richTextView.nextContentLine(from: location)
     }
@@ -478,7 +497,7 @@ open class EditorView: UIView {
     /// - Parameter line: Reference line
     /// - Returns:
     /// `EditorLine` after the given line. Nil if the Editor is empty or given line is last line in the Editor.
-    public func lineAfter(_ line: EditorLine) -> EditorLine? {
+    public func layoutLineAfter(_ line: EditorLine) -> EditorLine? {
         let lineRange = line.range
         let nextLineStartRange = NSRange(location: lineRange.location + lineRange.length + 1, length: 0)
         guard nextLineStartRange.isValidIn(richTextView) else { return nil }

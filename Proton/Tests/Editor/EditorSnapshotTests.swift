@@ -419,14 +419,14 @@ class EditorSnapshotTests: FBSnapshotTestCase {
 
         FBSnapshotVerifyView(viewController.view)
 
-        let currentLineText1 = editor.currentLine?.text.string
+        let currentLineText1 = editor.currentLayoutLine?.text.string
         // refer to snapshot for visible text - green marker
         let expectedText1 = "Line 1 text Line 1 text Line 1 text "
         XCTAssertEqual(currentLineText1, expectedText1)
 
         // Change selected location to move to line 2
         editor.selectedRange = line2Location
-        let currentLineText2 = editor.currentLine?.text.string
+        let currentLineText2 = editor.currentLayoutLine?.text.string
         // refer to snapshot for visible text - red marker
         let expectedText2 = "Line 2 text Line 2 text"
         XCTAssertEqual(currentLineText2, expectedText2)
@@ -455,16 +455,16 @@ class EditorSnapshotTests: FBSnapshotTestCase {
 
         FBSnapshotVerifyView(viewController.view)
 
-        let firstLine = try XCTUnwrap(editor.firstLine)
-        let nextLine = try XCTUnwrap(editor.lineAfter(firstLine))
-        let lastLine = try XCTUnwrap(editor.lastLine)
+        let firstLine = try XCTUnwrap(editor.firstLayoutLine)
+        let nextLine = try XCTUnwrap(editor.layoutLineAfter(firstLine))
+        let lastLine = try XCTUnwrap(editor.lastLayoutLine)
         let prevLine = try XCTUnwrap(editor.lineBefore(lastLine))
 
-        let firstLineText = editor.firstLine?.text.string
+        let firstLineText = editor.firstLayoutLine?.text.string
         let expectedText1 = "Line 1 text Line 1 text Line 1 text "
         XCTAssertEqual(firstLineText, expectedText1)
 
-        let lastLineText = editor.lastLine?.text.string
+        let lastLineText = editor.lastLayoutLine?.text.string
         let expectedText2 = "Line 3 text Line 3"
         XCTAssertEqual(lastLineText, expectedText2)
 
