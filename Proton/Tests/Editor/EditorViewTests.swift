@@ -400,7 +400,7 @@ class EditorViewTests: XCTestCase {
 
         let currentLine = try XCTUnwrap(editor.currentLayoutLine)
         XCTAssertEqual(currentLine.text.string, attrString.string)
-        XCTAssertNil(editor.lineBefore(currentLine))
+        XCTAssertNil(editor.layoutLineBefore(currentLine))
     }
 
     func testResetsAttributesWhenCleared() {

@@ -241,7 +241,7 @@ open class EditorView: UIView {
     /// To get lines based on new line characters, please use `contentLinesInRange(range)`, `previousContentLine(location)`
     /// and `nextContentLine(location)`.
     public var currentLayoutLine: EditorLine? {
-        return editorLineFrom(range: richTextView.currentLineRange )
+        return editorLayoutLineFrom(range: richTextView.currentLineRange )
     }
 
     /// First line of content based on layout in the Editor. Nil if editor is empty.
@@ -251,7 +251,7 @@ open class EditorView: UIView {
     /// To get lines based on new line characters, please use `contentLinesInRange(range)`, `previousContentLine(location)`
     /// and `nextContentLine(location)`.
     public var firstLayoutLine: EditorLine? {
-        return editorLineFrom(range: NSRange(location: 1, length: 0) )
+        return editorLayoutLineFrom(range: NSRange(location: 1, length: 0) )
     }
 
     /// Last line of content based on layout in the Editor. Nil if editor is empty.
@@ -261,7 +261,7 @@ open class EditorView: UIView {
     /// To get lines based on new line characters, please use `contentLinesInRange(range)`, `previousContentLine(location)`
     /// and `nextContentLine(location)`.
     public var lastLayoutLine: EditorLine? {
-        return editorLineFrom(range: NSRange(location: contentLength - 1, length: 0) )
+        return editorLayoutLineFrom(range: NSRange(location: contentLength - 1, length: 0) )
     }
 
     /// Selected text in the editor.
@@ -501,21 +501,21 @@ open class EditorView: UIView {
         let lineRange = line.range
         let nextLineStartRange = NSRange(location: lineRange.location + lineRange.length + 1, length: 0)
         guard nextLineStartRange.isValidIn(richTextView) else { return nil }
-        return editorLineFrom(range: nextLineStartRange)
+        return editorLayoutLineFrom(range: nextLineStartRange)
     }
 
-    /// Gets the line after the given line. Nil if the given line is invalid or is last line
+    /// Gets the line before the given line. Nil if the given line is invalid or is first line
     /// - Parameter line: Reference line
     /// - Returns:
     /// `EditorLine` before the given line. Nil if the Editor is empty or given line is first line in the Editor.
-    public func lineBefore(_ line: EditorLine) -> EditorLine? {
+    public func layoutLineBefore(_ line: EditorLine) -> EditorLine? {
         let lineRange = line.range
         let previousLineStartRange = NSRange(location: lineRange.location - 1, length: 0)
         guard previousLineStartRange.isValidIn(richTextView) else { return nil }
-        return editorLineFrom(range: previousLineStartRange)
+        return editorLayoutLineFrom(range: previousLineStartRange)
     }
 
-    private func editorLineFrom(range: NSRange?) -> EditorLine? {
+    private func editorLayoutLineFrom(range: NSRange?) -> EditorLine? {
         guard let range = range,
             let lineRange = richTextView.lineRange(from: range.location),
             contentLength >= lineRange.endLocation else { return nil }

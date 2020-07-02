@@ -458,7 +458,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         let firstLine = try XCTUnwrap(editor.firstLayoutLine)
         let nextLine = try XCTUnwrap(editor.layoutLineAfter(firstLine))
         let lastLine = try XCTUnwrap(editor.lastLayoutLine)
-        let prevLine = try XCTUnwrap(editor.lineBefore(lastLine))
+        let prevLine = try XCTUnwrap(editor.layoutLineBefore(lastLine))
 
         let firstLineText = editor.firstLayoutLine?.text.string
         let expectedText1 = "Line 1 text Line 1 text Line 1 text "
