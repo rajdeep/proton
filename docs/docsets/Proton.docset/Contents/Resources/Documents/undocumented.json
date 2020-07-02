@@ -36,20 +36,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Base/NSParagraphStyleExtensions.swift",
-      "line": 25,
-      "symbol": "NSParagraphStyle.mutableParagraphStyle",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Base/NSParagraphStyleExtensions.swift",
-      "line": 30,
-      "symbol": "NSParagraphStyle.lineFormatting",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Base/Types.swift",
       "line": 25,
       "symbol": "Attributes",
