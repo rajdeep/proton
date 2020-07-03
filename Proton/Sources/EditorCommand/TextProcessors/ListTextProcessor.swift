@@ -258,7 +258,7 @@ public class ListIndentCommand: EditorCommand {
     }
     
     public func canExecute(on editor: EditorView) -> Bool {
-        attributeValue = editor.currentLine?.text.attribute(.listItem, at: 0, effectiveRange: nil)
+        attributeValue = editor.contentLinesInRange(editor.selectedRange).first?.text.attribute(.listItem, at: 0, effectiveRange: nil)
         return attributeValue != nil
     }
     
