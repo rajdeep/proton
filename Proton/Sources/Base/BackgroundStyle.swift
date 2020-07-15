@@ -40,6 +40,21 @@ public struct ShadowStyle {
     }
 }
 
+/// Border style for background attribute
+public struct BorderStyle {
+
+    /// Color of the border
+    public let color: UIColor
+
+    /// Width of the border
+    public let width: CGFloat
+
+    public init(color: UIColor, width: CGFloat) {
+        self.color = color
+        self.width = width
+    }
+}
+
 /// Additional style for background color attribute. Adding `BackgroundStyle` attribute in addition to
 /// `backgroundColor` attribute will apply shadow and rounded corners as specified.
 /// - Note:
@@ -49,11 +64,15 @@ public struct BackgroundStyle {
     /// Corner radius of the background
     public let cornerRadius: CGFloat
 
+    /// Optional border style for the background
+    public let border: BorderStyle?
+
     /// Optional shadow style for the background
     public let shadow: ShadowStyle?
 
-    public init(cornerRadius: CGFloat = 0, shadow: ShadowStyle? = nil) {
+    public init(cornerRadius: CGFloat = 0, border: BorderStyle? = nil, shadow: ShadowStyle? = nil) {
         self.cornerRadius = cornerRadius
+        self.border = border
         self.shadow = shadow
     }
 }
