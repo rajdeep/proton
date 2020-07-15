@@ -230,13 +230,16 @@ class LayoutManager: NSLayoutManager {
                 return
         }
 
+        currentCGContext.saveGState()
+
         let cornerRadius = backgroundStyle.cornerRadius
 
         let corners = getCornersForBackground(textStorage: textStorage, for: charRange)
 
         for i in 0..<rectCount  {
             let rect = rectArray[i]
-            let rectanglePath = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+            let bounds = rect.insetBy(dx: 0, dy: 1).offsetBy(dx: 0, dy: -1)
+            let rectanglePath = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
             color.set()
 
             if let shadowStyle = backgroundStyle.shadow {
@@ -249,7 +252,18 @@ class LayoutManager: NSLayoutManager {
             currentCGContext.setFillColor(color.cgColor)
             currentCGContext.addPath(rectanglePath.cgPath)
             currentCGContext.drawPath(using: .fill)
+
+
+            if let borderStyle = backgroundStyle.border {
+                currentCGContext.setShadow(offset: .zero, blur: 0.0)
+                currentCGContext.setStrokeColor(borderStyle.color.cgColor)
+                currentCGContext.setLineWidth(borderStyle.width)
+                currentCGContext.addPath(rectanglePath.cgPath)
+                currentCGContext.drawPath(using: .stroke)
+            }
+
         }
+        currentCGContext.restoreGState()
     }
 
     private func getCornersForBackground(textStorage: NSTextStorage, for charRange: NSRange) -> UIRectCorner {
