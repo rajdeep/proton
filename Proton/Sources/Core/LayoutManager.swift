@@ -223,9 +223,9 @@ class LayoutManager: NSLayoutManager {
     }
 
     override func drawBackground(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
+        super.drawBackground(forGlyphRange: glyphsToShow, at: origin)
         guard let textStorage = textStorage,
             let currentCGContext = UIGraphicsGetCurrentContext() else {
-                super.drawBackground(forGlyphRange: glyphsToShow, at: origin)
                 return
         }
 
@@ -239,8 +239,6 @@ class LayoutManager: NSLayoutManager {
                     rects.append(rect.offsetBy(dx: 0, dy: insetTop))
                 }
                 drawBackground(backgroundStyle: backgroundStyle, rects: rects, currentCGContext: currentCGContext)
-            } else {
-                super.drawBackground(forGlyphRange: glyphsToShow, at: origin)
             }
         }
     }
@@ -285,14 +283,14 @@ class LayoutManager: NSLayoutManager {
 
             currentCGContext.setShadow(offset: .zero, blur:0, color: UIColor.clear.cgColor)
 
-            let lineWidth = backgroundStyle.borderStyle?.lineWidth ?? 0
+            let lineWidth = backgroundStyle.border?.lineWidth ?? 0
             let path = UIBezierPath()
             if previousRect != .zero, (currentRect.maxX - previousRect.minX) > cornerRadius {
                 path.move(to: CGPoint(x: max(previousRect.minX, currentRect.minX) + lineWidth/2, y: previousRect.maxY))
                 path.addLine(to: CGPoint(x: min(previousRect.maxX, currentRect.maxX) - lineWidth/2, y: previousRect.maxY))
             }
 
-            if let borderColor = backgroundStyle.borderStyle?.color {
+            if let borderColor = backgroundStyle.border?.color {
                 currentCGContext.setLineWidth(lineWidth)
                 currentCGContext.setStrokeColor(borderColor.cgColor)
                 currentCGContext.addPath(rectanglePath.cgPath)

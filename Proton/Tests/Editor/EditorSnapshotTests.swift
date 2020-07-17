@@ -570,7 +570,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         viewController.render()
         let backgroundStyle = BackgroundStyle(color: .cyan,
                                               cornerRadius: 5,
-                                              borderStyle: BorderStyle(lineWidth: 2, color: .red),
+                                              border: BorderStyle(lineWidth: 2, color: .red),
                                               shadow: ShadowStyle(color: .gray, offset: CGSize(width: 2, height: 2), blur: 3))
         editor.addAttributes([
             .backgroundStyle: backgroundStyle
@@ -595,7 +595,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         viewController.render()
         let backgroundStyle = BackgroundStyle(color: .cyan,
                                               cornerRadius: 4,
-                                              borderStyle: BorderStyle(lineWidth: 1, color: .blue),
+                                              border: BorderStyle(lineWidth: 1, color: .blue),
                                               shadow: ShadowStyle(color: .gray, offset: CGSize(width: 2, height: 2), blur: 2))
         editor.addAttributes([
             .backgroundStyle: backgroundStyle
@@ -640,7 +640,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
 
         editor.appendCharacters(NSAttributedString(string: text))
         viewController.render()
-        let backgroundStyle = BackgroundStyle(color: .white, cornerRadius: 0, borderStyle: BorderStyle(lineWidth: 1, color: .brown))
+        let backgroundStyle = BackgroundStyle(color: .white, cornerRadius: 0, border: BorderStyle(lineWidth: 1, color: .brown))
         editor.addAttributes([
             .backgroundStyle: backgroundStyle
         ], at: rangeToUpdate)

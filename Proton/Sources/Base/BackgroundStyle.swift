@@ -72,15 +72,15 @@ public class BackgroundStyle {
     public let cornerRadius: CGFloat
 
     /// Optional border style for the background
-    public let borderStyle: BorderStyle?
+    public let border: BorderStyle?
 
     /// Optional shadow style for the background
     public let shadow: ShadowStyle?
 
-    public init(color: UIColor, cornerRadius: CGFloat = 0, borderStyle: BorderStyle? = nil, shadow: ShadowStyle? = nil) {
+    public init(color: UIColor, cornerRadius: CGFloat = 0, border: BorderStyle? = nil, shadow: ShadowStyle? = nil) {
         self.color = color
         self.cornerRadius = cornerRadius
-        self.borderStyle = borderStyle
+        self.border = border
         self.shadow = shadow
     }
 }
