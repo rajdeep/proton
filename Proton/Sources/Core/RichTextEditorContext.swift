@@ -119,7 +119,7 @@ class RichTextEditorContext: RichTextViewContext {
     }
 
     private func updateTypingAttributes(editor: EditorView, editedRange: NSRange) {
-        guard editedRange.location > 0, editedRange.location < editor.contentLength else { return }
+        guard editedRange.location > 0, editedRange.location <= editor.contentLength else { return }
 
         // custom attributes to carry over
         let customAttributesToApply: [NSAttributedString.Key] = [.backgroundStyle]
@@ -128,7 +128,11 @@ class RichTextEditorContext: RichTextViewContext {
         // exclude if previous range contains .textBlock as any attribute from textblock may not be carried over
         guard attributes.contains(where: { $0.key == .textBlock }) == false else { return }
 
-        editor.typingAttributes = attributes.filter { customAttributesToApply.contains($0.key) }
+        let filteredAttributes = attributes.filter { customAttributesToApply.contains($0.key) }
+        for attribute in filteredAttributes {
+            editor.typingAttributes[attribute.key] = attribute.value
+        }
+
     }
 
     func textViewDidChange(_ textView: UITextView) {
