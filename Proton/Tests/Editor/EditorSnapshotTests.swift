@@ -649,6 +649,58 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         FBSnapshotVerifyView(viewController.view)
     }
 
+    func testBackgroundStyleWithIncreasedParagraphSpacing() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.paragraphStyle.paragraphSpacing = 20
+
+        let text =
+        """
+        Line 1 text Line 1 text Line 1 text \nLine 2 text Line 2 text Line 2 text Line 3 text Line 3
+        """
+
+        let rangeToUpdate = NSRange(location: 20, length: 52)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render(size: CGSize(width: 300, height: 150))
+        let backgroundStyle = BackgroundStyle(color: .cyan,
+                                              cornerRadius: 5,
+                                              border: BorderStyle(lineWidth: 1, color: .blue),
+                                              shadow: ShadowStyle(color: .red, offset: CGSize(width: 2, height: 2), blur: 1))
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render(size: CGSize(width: 300, height: 150))
+        FBSnapshotVerifyView(viewController.view)
+    }
+
+    func testBackgroundStyleWithIncreasedFontSize() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.font = UIFont.preferredFont(forTextStyle: .title1)
+
+        let text =
+        """
+        Line 1 text Line 1 text Line 1 text \nLine 2 text Line 2 text Line 2 text Line 3 text Line 3
+        """
+
+        let rangeToUpdate = NSRange(location: 20, length: 52)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render(size: CGSize(width: 450, height: 150))
+        let backgroundStyle = BackgroundStyle(color: .green,
+                                              cornerRadius: 3,
+                                              border: BorderStyle(lineWidth: 1, color: .yellow),
+                                              shadow: ShadowStyle(color: .red, offset: CGSize(width: 2, height: -2), blur: 3))
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render(size: CGSize(width: 450, height: 150))
+        FBSnapshotVerifyView(viewController.view)
+    }
+
     private func addCaretRect(at range: NSRange, in editor: EditorView, color: UIColor) {
         let rect = editor.caretRect(for: range.location)
         let view = UIView(frame: rect)

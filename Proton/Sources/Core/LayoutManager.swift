@@ -281,26 +281,73 @@ class LayoutManager: NSLayoutManager {
             currentCGContext.addPath(rectanglePath.cgPath)
             currentCGContext.drawPath(using: .fill)
 
-            currentCGContext.setShadow(offset: .zero, blur:0, color: UIColor.clear.cgColor)
-
             let lineWidth = backgroundStyle.border?.lineWidth ?? 0
-            let path = UIBezierPath()
+            let overlappingLine = UIBezierPath()
+
+            // TODO: Revisit shadow drawing logic to simplify a bit
+
+            let leftVerticalJoiningLine = UIBezierPath()
+            let rightVerticalJoiningLine = UIBezierPath()
+            // Shadow for vertical lines need to be drawn separately to get the perfect alignment with shadow on rectangles.
+            let leftVerticalJoiningLineShadow = UIBezierPath()
+            let rightVerticalJoiningLineShadow = UIBezierPath()
+
             if previousRect != .zero, (currentRect.maxX - previousRect.minX) > cornerRadius {
-                path.move(to: CGPoint(x: max(previousRect.minX, currentRect.minX) + lineWidth/2, y: previousRect.maxY))
-                path.addLine(to: CGPoint(x: min(previousRect.maxX, currentRect.maxX) - lineWidth/2, y: previousRect.maxY))
+                let yDiff = currentRect.minY - previousRect.maxY
+                overlappingLine.move(to: CGPoint(x: max(previousRect.minX, currentRect.minX) + lineWidth/2, y: previousRect.maxY + yDiff/2))
+                overlappingLine.addLine(to: CGPoint(x: min(previousRect.maxX, currentRect.maxX) - lineWidth/2, y: previousRect.maxY + yDiff/2))
+
+                let leftX = max(previousRect.minX, currentRect.minX)
+                let rightX = min(previousRect.maxX, currentRect.maxX)
+
+                leftVerticalJoiningLine.move(to: CGPoint(x: leftX, y: previousRect.maxY))
+                leftVerticalJoiningLine.addLine(to: CGPoint(x: leftX, y: currentRect.minY))
+
+                rightVerticalJoiningLine.move(to: CGPoint(x: rightX, y: previousRect.maxY))
+                rightVerticalJoiningLine.addLine(to: CGPoint(x: rightX, y: currentRect.minY))
+
+                let leftShadowX = max(previousRect.minX, currentRect.minX) + lineWidth
+                let rightShadowX = min(previousRect.maxX, currentRect.maxX) - lineWidth
+
+                leftVerticalJoiningLineShadow.move(to: CGPoint(x: leftShadowX, y: previousRect.maxY))
+                leftVerticalJoiningLineShadow.addLine(to: CGPoint(x: leftShadowX, y: currentRect.minY))
+
+                rightVerticalJoiningLineShadow.move(to: CGPoint(x: rightShadowX, y: previousRect.maxY))
+                rightVerticalJoiningLineShadow.addLine(to: CGPoint(x: rightShadowX, y: currentRect.minY))
             }
+
+            if let borderColor = backgroundStyle.border?.color {
+                currentCGContext.setLineWidth(lineWidth * 2)
+                currentCGContext.setStrokeColor(borderColor.cgColor)
+
+                // always draw vertical joining lines
+                currentCGContext.addPath(leftVerticalJoiningLineShadow.cgPath)
+                currentCGContext.addPath(rightVerticalJoiningLineShadow.cgPath)
+
+                currentCGContext.drawPath(using: .stroke)
+            }
+
+            currentCGContext.setShadow(offset: .zero, blur:0, color: UIColor.clear.cgColor)
 
             if let borderColor = backgroundStyle.border?.color {
                 currentCGContext.setLineWidth(lineWidth)
                 currentCGContext.setStrokeColor(borderColor.cgColor)
                 currentCGContext.addPath(rectanglePath.cgPath)
+
+                // always draw vertical joining lines
+                currentCGContext.addPath(leftVerticalJoiningLine.cgPath)
+                currentCGContext.addPath(rightVerticalJoiningLine.cgPath)
+
                 currentCGContext.drawPath(using: .stroke)
             }
 
             // always draw over the overlapping bounds of previous and next rect to hide shadow/borders
             currentCGContext.setStrokeColor(color.cgColor)
-            currentCGContext.addPath(path.cgPath)
-            currentCGContext.setLineWidth(lineWidth + 1) // account for the color spread to hide the drawn line
+            currentCGContext.addPath(overlappingLine.cgPath)
+            // account for the spread of shadow
+            let blur = (backgroundStyle.shadow?.blur ?? 1) * 2
+            let offsetHeight = abs(backgroundStyle.shadow?.offset.height ?? 1)
+            currentCGContext.setLineWidth(lineWidth + (currentRect.minY - previousRect.maxY) + blur + offsetHeight + 1)
             currentCGContext.drawPath(using: .stroke)
         }
         currentCGContext.restoreGState()
