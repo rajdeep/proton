@@ -222,48 +222,167 @@ class LayoutManager: NSLayoutManager {
         return stringRect
     }
 
-    override func fillBackgroundRectArray(_ rectArray: UnsafePointer<CGRect>, count rectCount: Int, forCharacterRange charRange: NSRange, color: UIColor) {
+    override func drawBackground(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
+        super.drawBackground(forGlyphRange: glyphsToShow, at: origin)
         guard let textStorage = textStorage,
-            let currentCGContext = UIGraphicsGetCurrentContext(),
-            let backgroundStyle = textStorage.attribute(.backgroundStyle, at: charRange.location, effectiveRange: nil) as? BackgroundStyle else {
-                super.fillBackgroundRectArray(rectArray, count: rectCount, forCharacterRange: charRange, color: color)
+            let currentCGContext = UIGraphicsGetCurrentContext() else {
                 return
         }
 
+        textStorage.enumerateAttribute(.backgroundStyle, in: glyphsToShow, options: []) { attr, bgStyleRange, _ in
+            var rects = [CGRect]()
+            if let backgroundStyle = attr as? BackgroundStyle {
+                enumerateLineFragments(forGlyphRange: bgStyleRange) { _, _, textContainer, lineRange, _ in
+                    let rangeIntersection = NSIntersectionRange(bgStyleRange, lineRange)
+                    let rect = self.boundingRect(forGlyphRange: rangeIntersection, in: textContainer)
+                    let insetTop = self.layoutManagerDelegate?.textContainerInset.top ?? 0
+                    rects.append(rect.offsetBy(dx: 0, dy: insetTop))
+                }
+                drawBackground(backgroundStyle: backgroundStyle, rects: rects, currentCGContext: currentCGContext)
+            }
+        }
+    }
+
+    private func drawBackground(backgroundStyle: BackgroundStyle, rects: [CGRect], currentCGContext: CGContext) {
         currentCGContext.saveGState()
 
+        let rectCount = rects.count
+        let rectArray = rects
         let cornerRadius = backgroundStyle.cornerRadius
-
-        let corners = getCornersForBackground(textStorage: textStorage, for: charRange)
+        let color = backgroundStyle.color
 
         for i in 0..<rectCount  {
-            let rect = rectArray[i]
-            let bounds = rect.insetBy(dx: 0, dy: 1).offsetBy(dx: 0, dy: -1)
-            let rectanglePath = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+            var previousRect = CGRect.zero
+            var nextRect = CGRect.zero
+
+            let currentRect = rectArray[i]
+
+            if i > 0 {
+                previousRect = rectArray[i - 1]
+            }
+
+            if i < rectCount - 1 {
+                nextRect = rectArray[i + 1]
+            }
+
+            let corners = calculateCornersForBackground(previousRect: previousRect, currentRect: currentRect, nextRect: nextRect, cornerRadius: cornerRadius)
+
+            let rectanglePath = UIBezierPath(roundedRect: currentRect, byRoundingCorners: corners, cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
             color.set()
+
+            currentCGContext.setAllowsAntialiasing(true)
+            currentCGContext.setShouldAntialias(true)
 
             if let shadowStyle = backgroundStyle.shadow {
                 currentCGContext.setShadow(offset: shadowStyle.offset, blur: shadowStyle.blur, color: shadowStyle.color.cgColor)
             }
 
-            currentCGContext.setAllowsAntialiasing(true)
-            currentCGContext.setShouldAntialias(true)
-
             currentCGContext.setFillColor(color.cgColor)
             currentCGContext.addPath(rectanglePath.cgPath)
             currentCGContext.drawPath(using: .fill)
 
+            let lineWidth = backgroundStyle.border?.lineWidth ?? 0
+            let overlappingLine = UIBezierPath()
 
-            if let borderStyle = backgroundStyle.border {
-                currentCGContext.setShadow(offset: .zero, blur: 0.0)
-                currentCGContext.setStrokeColor(borderStyle.color.cgColor)
-                currentCGContext.setLineWidth(borderStyle.width)
-                currentCGContext.addPath(rectanglePath.cgPath)
+            // TODO: Revisit shadow drawing logic to simplify a bit
+
+            let leftVerticalJoiningLine = UIBezierPath()
+            let rightVerticalJoiningLine = UIBezierPath()
+            // Shadow for vertical lines need to be drawn separately to get the perfect alignment with shadow on rectangles.
+            let leftVerticalJoiningLineShadow = UIBezierPath()
+            let rightVerticalJoiningLineShadow = UIBezierPath()
+
+            if previousRect != .zero, (currentRect.maxX - previousRect.minX) > cornerRadius {
+                let yDiff = currentRect.minY - previousRect.maxY
+                overlappingLine.move(to: CGPoint(x: max(previousRect.minX, currentRect.minX) + lineWidth/2, y: previousRect.maxY + yDiff/2))
+                overlappingLine.addLine(to: CGPoint(x: min(previousRect.maxX, currentRect.maxX) - lineWidth/2, y: previousRect.maxY + yDiff/2))
+
+                let leftX = max(previousRect.minX, currentRect.minX)
+                let rightX = min(previousRect.maxX, currentRect.maxX)
+
+                leftVerticalJoiningLine.move(to: CGPoint(x: leftX, y: previousRect.maxY))
+                leftVerticalJoiningLine.addLine(to: CGPoint(x: leftX, y: currentRect.minY))
+
+                rightVerticalJoiningLine.move(to: CGPoint(x: rightX, y: previousRect.maxY))
+                rightVerticalJoiningLine.addLine(to: CGPoint(x: rightX, y: currentRect.minY))
+
+                let leftShadowX = max(previousRect.minX, currentRect.minX) + lineWidth
+                let rightShadowX = min(previousRect.maxX, currentRect.maxX) - lineWidth
+
+                leftVerticalJoiningLineShadow.move(to: CGPoint(x: leftShadowX, y: previousRect.maxY))
+                leftVerticalJoiningLineShadow.addLine(to: CGPoint(x: leftShadowX, y: currentRect.minY))
+
+                rightVerticalJoiningLineShadow.move(to: CGPoint(x: rightShadowX, y: previousRect.maxY))
+                rightVerticalJoiningLineShadow.addLine(to: CGPoint(x: rightShadowX, y: currentRect.minY))
+            }
+
+            if let borderColor = backgroundStyle.border?.color {
+                currentCGContext.setLineWidth(lineWidth * 2)
+                currentCGContext.setStrokeColor(borderColor.cgColor)
+
+                // always draw vertical joining lines
+                currentCGContext.addPath(leftVerticalJoiningLineShadow.cgPath)
+                currentCGContext.addPath(rightVerticalJoiningLineShadow.cgPath)
+
                 currentCGContext.drawPath(using: .stroke)
             }
 
+            currentCGContext.setShadow(offset: .zero, blur:0, color: UIColor.clear.cgColor)
+
+            if let borderColor = backgroundStyle.border?.color {
+                currentCGContext.setLineWidth(lineWidth)
+                currentCGContext.setStrokeColor(borderColor.cgColor)
+                currentCGContext.addPath(rectanglePath.cgPath)
+
+                // always draw vertical joining lines
+                currentCGContext.addPath(leftVerticalJoiningLine.cgPath)
+                currentCGContext.addPath(rightVerticalJoiningLine.cgPath)
+
+                currentCGContext.drawPath(using: .stroke)
+            }
+
+            // always draw over the overlapping bounds of previous and next rect to hide shadow/borders
+            currentCGContext.setStrokeColor(color.cgColor)
+            currentCGContext.addPath(overlappingLine.cgPath)
+            // account for the spread of shadow
+            let blur = (backgroundStyle.shadow?.blur ?? 1) * 2
+            let offsetHeight = abs(backgroundStyle.shadow?.offset.height ?? 1)
+            currentCGContext.setLineWidth(lineWidth + (currentRect.minY - previousRect.maxY) + blur + offsetHeight + 1)
+            currentCGContext.drawPath(using: .stroke)
         }
         currentCGContext.restoreGState()
+    }
+
+    private func calculateCornersForBackground(previousRect: CGRect, currentRect: CGRect, nextRect: CGRect, cornerRadius: CGFloat) -> UIRectCorner {
+        var corners = UIRectCorner()
+
+        if previousRect.minX > currentRect.minX {
+            corners.formUnion(.topLeft)
+        }
+
+        if previousRect.maxX < currentRect.maxX {
+            corners.formUnion(.topRight)
+        }
+
+        if currentRect.maxX > nextRect.maxX {
+            corners.formUnion(.bottomRight)
+        }
+
+        if currentRect.minX < nextRect.minX {
+            corners.formUnion(.bottomLeft)
+        }
+
+        if nextRect == .zero || nextRect.maxX <= currentRect.minX + cornerRadius {
+            corners.formUnion(.bottomLeft)
+            corners.formUnion(.bottomRight)
+        }
+
+        if previousRect == .zero || (currentRect.maxX <= previousRect.minX + cornerRadius) {
+            corners.formUnion(.topLeft)
+            corners.formUnion(.topRight)
+        }
+
+        return corners
     }
 
     private func getCornersForBackground(textStorage: NSTextStorage, for charRange: NSRange) -> UIRectCorner {

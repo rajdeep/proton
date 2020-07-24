@@ -60,4 +60,20 @@ class EditorViewContextTests: XCTestCase {
         XCTAssertNotNil(nestedEditor.editor.editorViewContext)
         XCTAssertTrue(nestedEditor.editor.editorViewContext === editor.editorViewContext)
     }
+
+    func testCarriesOverCustomTypingAttributes() {
+        let editor = EditorView()
+        let context = EditorViewContext.shared
+        context.richTextViewContext.textViewDidBeginEditing(editor.richTextView)
+
+        let backgroundStyle = BackgroundStyle(color: .red)
+        editor.attributedText = NSAttributedString(string: "abc", attributes: [
+            NSAttributedString.Key.backgroundStyle: backgroundStyle
+        ])
+        _ = context.richTextViewContext.textView(editor.richTextView, shouldChangeTextIn: editor.textEndRange, replacementText: "def")
+
+        XCTAssertTrue(context.activeEditorView?.typingAttributes.contains{ $0.key == .backgroundStyle } ?? false)
+        // Validate that existing attributes are not removed
+        XCTAssertTrue(context.activeEditorView?.typingAttributes.contains{ $0.key == .paragraphStyle } ?? false)
+    }
 }

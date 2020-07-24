@@ -21,8 +21,8 @@
 import Foundation
 import UIKit
 
-/// Shadow style for background attribute
-public struct ShadowStyle {
+/// Shadow style for `backgroundStyle` attribute
+public class ShadowStyle {
 
     /// Color of the shadow
     public let color: UIColor
@@ -40,26 +40,33 @@ public struct ShadowStyle {
     }
 }
 
-/// Border style for background attribute
-public struct BorderStyle {
+/// Border style for `backgroundStyle` attribute
+public class BorderStyle {
 
-    /// Color of the border
+    /// Color of border
     public let color: UIColor
 
     /// Width of the border
-    public let width: CGFloat
+    public let lineWidth: CGFloat
 
-    public init(color: UIColor, width: CGFloat) {
+    public init(lineWidth: CGFloat, color: UIColor) {
+        self.lineWidth = lineWidth
         self.color = color
-        self.width = width
     }
 }
 
-/// Additional style for background color attribute. Adding `BackgroundStyle` attribute in addition to
-/// `backgroundColor` attribute will apply shadow and rounded corners as specified.
+/// Style for background color attribute. Adding `backgroundStyle` attribute will add border, background and shadow
+/// as per the styles specified.
+/// - Important:
+/// This attribute is separate from `backgroundColor` attribute. Applying `backgroundColor` takes precedence over backgroundStyle`
+/// i.e. the background color shows over color of `backgroundStyle` and will not show rounded corners.
 /// - Note:
-/// This attribute had no effect in absence of `backgroundColor` attribute.
-public struct BackgroundStyle {
+/// Ideally `backgroundStyle` may be used instead of `backgroundColor` as it can mimic standard background color as well as
+/// border, shadow and rounded corners.
+public class BackgroundStyle {
+
+    /// Background color
+    public let color: UIColor
 
     /// Corner radius of the background
     public let cornerRadius: CGFloat
@@ -70,7 +77,8 @@ public struct BackgroundStyle {
     /// Optional shadow style for the background
     public let shadow: ShadowStyle?
 
-    public init(cornerRadius: CGFloat = 0, border: BorderStyle? = nil, shadow: ShadowStyle? = nil) {
+    public init(color: UIColor, cornerRadius: CGFloat = 0, border: BorderStyle? = nil, shadow: ShadowStyle? = nil) {
+        self.color = color
         self.cornerRadius = cornerRadius
         self.border = border
         self.shadow = shadow
