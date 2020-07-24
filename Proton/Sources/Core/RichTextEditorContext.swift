@@ -107,6 +107,8 @@ class RichTextEditorContext: RichTextViewContext {
     private func shouldChangeText(_ richTextView: RichTextView, range: NSRange, replacementText: String) -> Bool {
         guard let editor = richTextView.superview as? EditorView else { return true }
 
+        updateTypingAttributes(editor: editor, editedRange: range)
+
         for processor in richTextView.textProcessor?.sortedProcessors ?? [] {
             let shouldProcess = processor.shouldProcess(editor, shouldProcessTextIn: range, replacementText: replacementText)
             if shouldProcess == false {
@@ -114,6 +116,23 @@ class RichTextEditorContext: RichTextViewContext {
             }
         }
         return true
+    }
+
+    private func updateTypingAttributes(editor: EditorView, editedRange: NSRange) {
+        guard editedRange.location > 0, editedRange.location <= editor.contentLength else { return }
+
+        // custom attributes to carry over
+        let customAttributesToApply: [NSAttributedString.Key] = [.backgroundStyle]
+        let attributes = editor.attributedText.attributes(at: editedRange.location - 1, effectiveRange: nil)
+
+        // exclude if previous range contains .textBlock as any attribute from textblock may not be carried over
+        guard attributes.contains(where: { $0.key == .textBlock }) == false else { return }
+
+        let filteredAttributes = attributes.filter { customAttributesToApply.contains($0.key) }
+        for attribute in filteredAttributes {
+            editor.typingAttributes[attribute.key] = attribute.value
+        }
+
     }
 
     func textViewDidChange(_ textView: UITextView) {

@@ -533,7 +533,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         FBSnapshotVerifyView(viewController.view)
     }
 
-    func testBackgroundStyle() {
+    func testBackgroundStyleThreeLines() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
 
@@ -542,14 +542,12 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 2 text Line 3 text Line 3
         """
 
-        let rangeToUpdate = NSRange(location: 30, length: 50)
+        let rangeToUpdate = NSRange(location: 30, length: 49)
 
         editor.appendCharacters(NSAttributedString(string: text))
         viewController.render()
-        let backgroundStyle = BackgroundStyle(cornerRadius: 4, shadow: ShadowStyle(color: .gray, offset: CGSize(width: 2, height: 2), blur: 3))
-        editor.addAttribute(.backgroundColor, value: UIColor.green, at: rangeToUpdate)
+        let backgroundStyle = BackgroundStyle(color: .green, cornerRadius: 3, shadow: ShadowStyle(color: .gray, offset: CGSize(width: 2, height: 2), blur: 3))
         editor.addAttributes([
-            .backgroundColor: UIColor.cyan,
             .backgroundStyle: backgroundStyle
         ], at: rangeToUpdate)
 
@@ -557,6 +555,151 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         FBSnapshotVerifyView(viewController.view)
     }
 
+    func testBackgroundStyleTwoLinesOverlap() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let text =
+        """
+        Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 2 text Line 3 text Line 3
+        """
+
+        let rangeToUpdate = NSRange(location: 20, length: 52)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render()
+        let backgroundStyle = BackgroundStyle(color: .cyan,
+                                              cornerRadius: 5,
+                                              border: BorderStyle(lineWidth: 2, color: .red),
+                                              shadow: ShadowStyle(color: .gray, offset: CGSize(width: 2, height: 2), blur: 3))
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render()
+        FBSnapshotVerifyView(viewController.view)
+    }
+
+    func testBackgroundStyleTwoLinesNoOverlap() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let text =
+        """
+        Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 2 text Line 3 text Line 3
+        """
+
+        let rangeToUpdate = NSRange(location: 19, length: 35)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render()
+        let backgroundStyle = BackgroundStyle(color: .cyan,
+                                              cornerRadius: 4,
+                                              border: BorderStyle(lineWidth: 1, color: .blue),
+                                              shadow: ShadowStyle(color: .gray, offset: CGSize(width: 2, height: 2), blur: 2))
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render()
+        FBSnapshotVerifyView(viewController.view)
+    }
+
+    func testBackgroundStyleTwoLinesMinorOverlap() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let text =
+        """
+        Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 2 text Line 3 text Line 3
+        """
+
+        let rangeToUpdate = NSRange(location: 19, length: 36)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render()
+        let backgroundStyle = BackgroundStyle(color: .cyan, cornerRadius: 4, shadow: ShadowStyle(color: .gray, offset: CGSize(width: 2, height: 2), blur: 2))
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render()
+        FBSnapshotVerifyView(viewController.view)
+    }
+
+    func testBackgroundStyleWithBorders() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let text =
+        """
+        Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 2 text Line 3 text Line 3
+        """
+
+        let rangeToUpdate = NSRange(location: 19, length: 36)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render()
+        let backgroundStyle = BackgroundStyle(color: .white, cornerRadius: 0, border: BorderStyle(lineWidth: 1, color: .brown))
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render()
+        FBSnapshotVerifyView(viewController.view)
+    }
+
+    func testBackgroundStyleWithIncreasedParagraphSpacing() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.paragraphStyle.paragraphSpacing = 20
+
+        let text =
+        """
+        Line 1 text Line 1 text Line 1 text \nLine 2 text Line 2 text Line 2 text Line 3 text Line 3
+        """
+
+        let rangeToUpdate = NSRange(location: 20, length: 52)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render(size: CGSize(width: 300, height: 150))
+        let backgroundStyle = BackgroundStyle(color: .cyan,
+                                              cornerRadius: 5,
+                                              border: BorderStyle(lineWidth: 1, color: .blue),
+                                              shadow: ShadowStyle(color: .red, offset: CGSize(width: 2, height: 2), blur: 1))
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render(size: CGSize(width: 300, height: 150))
+        FBSnapshotVerifyView(viewController.view)
+    }
+
+    func testBackgroundStyleWithIncreasedFontSize() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.font = UIFont.preferredFont(forTextStyle: .title1)
+
+        let text =
+        """
+        Line 1 text Line 1 text Line 1 text \nLine 2 text Line 2 text Line 2 text Line 3 text Line 3
+        """
+
+        let rangeToUpdate = NSRange(location: 20, length: 52)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render(size: CGSize(width: 450, height: 150))
+        let backgroundStyle = BackgroundStyle(color: .green,
+                                              cornerRadius: 3,
+                                              border: BorderStyle(lineWidth: 1, color: .yellow),
+                                              shadow: ShadowStyle(color: .red, offset: CGSize(width: 2, height: -2), blur: 3))
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render(size: CGSize(width: 450, height: 150))
+        FBSnapshotVerifyView(viewController.view)
+    }
 
     private func addCaretRect(at range: NSRange, in editor: EditorView, color: UIColor) {
         let rect = editor.caretRect(for: range.location)

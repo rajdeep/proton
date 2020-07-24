@@ -323,8 +323,12 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         case .fullWidth:
             let containerWidth = textContainer.size.width
             // Account for text leading and trailing margins within the textContainer
-            let paraStyle = self.containerEditorView?.attributedText.attribute(.paragraphStyle, at: charIndex, effectiveRange: nil) as? NSParagraphStyle
-            let indent = paraStyle?.firstLineHeadIndent ?? 0
+            var indent: CGFloat = 0
+            if charIndex < self.containerEditorView?.contentLength ?? 0 {
+                let paraStyle = self.containerEditorView?.attributedText.attribute(.paragraphStyle, at: charIndex, effectiveRange: nil) as? NSParagraphStyle
+                indent = paraStyle?.firstLineHeadIndent ?? 0
+            }
+
             let adjustedContainerWidth = containerWidth - (textContainer.lineFragmentPadding * 2) - indent
             size = CGSize(width: adjustedContainerWidth, height: size.height)
         case let .range(minWidth, maxWidth):

@@ -35,6 +35,12 @@
                 <a href="Classes/Attachment.html">Attachment</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/BackgroundStyle.html">BackgroundStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/BorderStyle.html">BorderStyle</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/EditorCommandExecutor.html">EditorCommandExecutor</a>
               </li>
               <li class="nav-group-task">
@@ -57,6 +63,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/RendererViewContext.html">RendererViewContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/ShadowStyle.html">ShadowStyle</a>
               </li>
             </ul>
           </li>
@@ -199,9 +208,6 @@
                 <a href="Structs/AnyEditorTextEncoding.html">AnyEditorTextEncoding</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/BackgroundStyle.html">BackgroundStyle</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Structs/CommandName.html">CommandName</a>
               </li>
               <li class="nav-group-task">
@@ -221,9 +227,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Structs/NumericSequenceGenerator.html">NumericSequenceGenerator</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/ShadowStyle.html">ShadowStyle</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/SquareBulletSequenceGenerator.html">SquareBulletSequenceGenerator</a>
@@ -279,6 +282,102 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">Attachment</span> <span class="p">:</span> <span class="kt">NSTextAttachment</span><span class="p">,</span> <span class="kt"><a href="Protocols/BoundsObserving.html">BoundsObserving</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton11ShadowStyleC"></a>
+                    <a name="//apple_ref/swift/Class/ShadowStyle" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton11ShadowStyleC">ShadowStyle</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Shadow style for <code>backgroundStyle</code> attribute</p>
+
+                        <a href="Classes/ShadowStyle.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ShadowStyle</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton11BorderStyleC"></a>
+                    <a name="//apple_ref/swift/Class/BorderStyle" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton11BorderStyleC">BorderStyle</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Border style for <code>backgroundStyle</code> attribute</p>
+
+                        <a href="Classes/BorderStyle.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">BorderStyle</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton15BackgroundStyleC"></a>
+                    <a name="//apple_ref/swift/Class/BackgroundStyle" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton15BackgroundStyleC">BackgroundStyle</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Style for background color attribute. Adding <code>backgroundStyle</code> attribute will add border, background and shadow
+as per the styles specified.</p>
+<div class="aside aside-important">
+    <p class="aside-title">Important</p>
+    This attribute is separate from <code>backgroundColor</code> attribute. Applying <code>backgroundColor</code> takes precedence over backgroundStyle<code>
+i.e. the background color shows over color of</code>backgroundStyle` and will not show rounded corners.
+
+</div><div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Ideally <code>backgroundStyle</code> may be used instead of <code>backgroundColor</code> as it can mimic standard background color as well as
+border, shadow and rounded corners.
+
+</div>
+
+                        <a href="Classes/BackgroundStyle.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">BackgroundStyle</span></code></pre>
 
                         </div>
                       </div>
@@ -541,7 +640,7 @@ All the <code><a href="Classes/RendererView.html">RendererView</a></code>s in th
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-07-02)</p>
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-07-18)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
