@@ -255,7 +255,8 @@ class LayoutManager: NSLayoutManager {
             var previousRect = CGRect.zero
             var nextRect = CGRect.zero
 
-            let currentRect = rectArray[i]
+            // small offset to center align the smartlink icons in the card.
+            let currentRect = rectArray[i].offsetBy(dx: 0, dy: -1)
 
             if i > 0 {
                 previousRect = rectArray[i - 1]
