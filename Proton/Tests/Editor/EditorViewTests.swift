@@ -566,4 +566,12 @@ class EditorViewTests: XCTestCase {
 
         waitForExpectations(timeout: 1.0)
     }
+        
+    func testCaretRect() {
+        let editor = EditorView()
+        let yOffset: CGFloat = 50
+        editor.contentOffset = .init(x: 0, y: yOffset)
+        let cursorRect = editor.caretRect(for: 0)
+        XCTAssertEqual(cursorRect.origin.y, editor.textContainerInset.top - yOffset)
+    }
 }
