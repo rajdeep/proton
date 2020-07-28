@@ -307,6 +307,31 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         FBSnapshotVerifyView(viewController.view)
     }
 
+    func testGetsCaretRectForValidPositionWithScrollableContent() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.attributedText = NSAttributedString(string:
+            """
+            This is some long string that wraps into the next line.
+            This is some long string that wraps into the next line.
+            This is some long string that wraps into the next line.
+            This is some long string that wraps into the next line.
+            """
+        )
+
+        viewController.render()
+        editor.scrollRangeToVisible(NSRange(location: 150, length: 1))
+
+        let rect = editor.caretRect(for: 150)
+        let view = UIView(frame: rect)
+        view.backgroundColor = .clear
+        view.addBorder(.blue)
+        editor.addSubview(view)
+
+        viewController.render()
+        FBSnapshotVerifyView(viewController.view)
+    }
+
     func testCursorCaretRect() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
