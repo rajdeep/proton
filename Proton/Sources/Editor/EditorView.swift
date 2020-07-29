@@ -659,7 +659,8 @@ open class EditorView: UIView {
     /// Rectangle for caret based on the line height and given location.
     public func caretRect(for position: Int) -> CGRect {
         let textPosition = richTextView.position(from: richTextView.beginningOfDocument, offset: position) ?? richTextView.endOfDocument
-        return richTextView.caretRect(for: textPosition)
+        let rect = richTextView.caretRect(for: textPosition)
+        return convert(rect, from: richTextView)
     }
 
     /// Gets the word from text at given location in editor content
