@@ -515,6 +515,13 @@ open class EditorView: UIView {
         set { richTextView.allowsEditingTextAttributes = newValue }
     }
 
+    /// A Boolean value indicating whether the receiver is selectable.
+    /// This property controls the ability of the user to select content and interact with URLs and text attachments. The default value is true.
+    public var isSelectable: Bool {
+        get { richTextView.isSelectable }
+        set { richTextView.isSelectable = newValue }
+    }
+
     /// A text drag delegate object for customizing the drag source behavior of a text view.
     @available(iOSApplicationExtension 11.0, *)
     public var textDragDelegate: UITextDragDelegate? {
