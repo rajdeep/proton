@@ -243,7 +243,7 @@ public class ListIndentCommand: EditorCommand {
     
     public var name: CommandName { CommandName("proton.\(indentMode)") }
     
-    let indentMode: Indentation
+    public let indentMode: Indentation
     var editedRange: NSRange?
     var attributeValue: Any?
     
