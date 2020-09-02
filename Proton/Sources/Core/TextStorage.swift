@@ -92,12 +92,9 @@ class TextStorage: NSTextStorage {
             attrString.length > 0 {
             let outgoingAttrs = storage.attributes(at: range.endLocation - 1, effectiveRange: nil)
             let incomingAttrs = attrString.attributes(at: 0, effectiveRange: nil)
-            let diff = outgoingAttrs
-                .filter { incomingAttrs[$0.key] == nil }
-                // We do not want to fix the underline since it can be added by the input method for
-                // characters accepting diacritical marks (eg. vietnamese or spanish) and should be transient.
-                // See https://hello.atlassian.net/browse/BEE-1554
-                .filter { $0.key != NSAttributedString.Key.underlineStyle }
+            // We do not want to fix the underline since it can be added by the input method for
+            // characters accepting diacritical marks (eg. in vietnamese or spanish) and should be transient.
+            let diff = outgoingAttrs.filter { incomingAttrs[$0.key] == nil && $0.key != .underlineStyle }
             replacementString.addAttributes(diff, range: replacementString.fullRange)
         }
 
