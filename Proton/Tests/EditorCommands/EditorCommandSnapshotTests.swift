@@ -20,15 +20,16 @@
 
 import Foundation
 import XCTest
-import FBSnapshotTestCase
+import SnapshotTesting
 
 @testable import Proton
 
-class EditorCommandSnapshotTests: FBSnapshotTestCase {
+class EditorCommandSnapshotTests: XCTestCase {
+    var recordMode = false
     override func setUp() {
         super.setUp()
 
-        recordMode = false
+//        recordMode = true
     }
 
     func testExecutesCommandOnNestedEditors() {
@@ -77,6 +78,6 @@ class EditorCommandSnapshotTests: FBSnapshotTestCase {
 
         viewController.render()
 
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 }
