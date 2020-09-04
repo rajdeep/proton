@@ -10,15 +10,19 @@ let package = Package(
     products: [
         .library(name: "Proton", targets: ["Proton"])
     ],
+    dependencies: [
+        .package(name: "SnapshotTesting", url: "https://github.com/pointfreeco/swift-snapshot-testing.git", .branch("master"))
+    ],
     targets: [
         .target(
             name: "Proton",
             dependencies: [],
             path: "Proton/Sources"
         ),
-        /*.testTarget(
+        .testTarget(
             name: "ProtonTests",
+            dependencies: ["Proton", "SnapshotTesting"],
             path: "Proton/Tests"
-        )*/
+        )
     ]
 )
