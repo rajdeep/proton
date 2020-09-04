@@ -27,7 +27,6 @@
 		1B45014F247E5AD9007B3EE9 /* SequenceGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45014E247E5AD9007B3EE9 /* SequenceGenerator.swift */; };
 		1B45CD9123BDD7E6001EB196 /* AutogrowingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8F23BDD7E6001EB196 /* AutogrowingTextView.swift */; };
 		1B45CD9423BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD9323BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift */; };
-		1B45CD9923BED0B8001EB196 /* FBSnapshotTestCase.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1B45CD9623BED05A001EB196 /* FBSnapshotTestCase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1B45CD9D23BEDA8F001EB196 /* UIView+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD9C23BEDA8F001EB196 /* UIView+Render.swift */; };
 		1B45CD9F23BEE997001EB196 /* SnapshotTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD9E23BEE997001EB196 /* SnapshotTestViewController.swift */; };
 		1B45CDA923BEED0E001EB196 /* AutogrowingTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDA823BEED0E001EB196 /* AutogrowingTextViewTests.swift */; };
@@ -129,7 +128,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1B45CD9923BED0B8001EB196 /* FBSnapshotTestCase.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -161,7 +159,6 @@
 		1B45014E247E5AD9007B3EE9 /* SequenceGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceGenerator.swift; sourceTree = "<group>"; };
 		1B45CD8F23BDD7E6001EB196 /* AutogrowingTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutogrowingTextView.swift; sourceTree = "<group>"; };
 		1B45CD9323BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingTextViewSnapshotTests.swift; sourceTree = "<group>"; };
-		1B45CD9623BED05A001EB196 /* FBSnapshotTestCase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSnapshotTestCase.framework; path = ../Carthage/Build/iOS/FBSnapshotTestCase.framework; sourceTree = "<group>"; };
 		1B45CD9C23BEDA8F001EB196 /* UIView+Render.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Render.swift"; sourceTree = "<group>"; };
 		1B45CD9E23BEE997001EB196 /* SnapshotTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTestViewController.swift; sourceTree = "<group>"; };
 		1B45CDA323BEEC3D001EB196 /* testRendersTextViewBasedOnContent@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersTextViewBasedOnContent@3x.png"; sourceTree = "<group>"; };
@@ -367,7 +364,6 @@
 		1B45CD9523BED059001EB196 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1B45CD9623BED05A001EB196 /* FBSnapshotTestCase.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

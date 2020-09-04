@@ -20,16 +20,17 @@
 
 import Foundation
 import XCTest
-import FBSnapshotTestCase
+import SnapshotTesting
 
 @testable import Proton
 
-class AutogrowingTextViewSnapshotTests: FBSnapshotTestCase {
+class AutogrowingTextViewSnapshotTests: XCTestCase {
 
+    var recordMode = false
     override func setUp() {
         super.setUp()
 
-        recordMode = false
+//        recordMode = true
     }
 
     func testRendersTextViewBasedOnContent() {
@@ -48,7 +49,7 @@ class AutogrowingTextViewSnapshotTests: FBSnapshotTestCase {
 
         viewController.render()
 
-        FBSnapshotVerifyView(view)
+        assertSnapshot(matching: view, as: .image, record: recordMode)
     }
 
     func testRendersMultilineTextViewBasedOnContent() {
@@ -68,6 +69,6 @@ class AutogrowingTextViewSnapshotTests: FBSnapshotTestCase {
 
         viewController.render()
 
-        FBSnapshotVerifyView(view)
+        assertSnapshot(matching: view, as: .image, record: recordMode)
     }
 }

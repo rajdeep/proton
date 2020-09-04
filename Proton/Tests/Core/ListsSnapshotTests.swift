@@ -20,18 +20,19 @@
 
 import Foundation
 import XCTest
-import FBSnapshotTestCase
+import SnapshotTesting
 
 @testable import Proton
 
-class ListsSnapshotTests: FBSnapshotTestCase {
+class ListsSnapshotTests: XCTestCase {
 
     let mockRichTextViewListDelegate =  MockRichTextViewListDelegate()
 
+    var recordMode = false
     override func setUp() {
         super.setUp()
 
-        recordMode = false
+//        recordMode = true
     }
 
     func testSingleLevelList() {
@@ -46,7 +47,7 @@ class ListsSnapshotTests: FBSnapshotTestCase {
         let attributedText = NSAttributedString(string: text, attributes: [.listItem: 1, .paragraphStyle: paraStyle])
         let view = renderList(text: attributedText, viewSize: CGSize(width: 300, height: 150))
 
-        FBSnapshotVerifyView(view)
+        assertSnapshot(matching: view, as: .image, record: recordMode)
     }
 
     func testMultiLevelList() {
@@ -65,7 +66,7 @@ class ListsSnapshotTests: FBSnapshotTestCase {
         attributedString.addAttribute(.listItem, value: 1, range: attributedString.fullRange)
 
         let view = renderList(text: attributedString, viewSize: CGSize(width: 300, height: 175), sequenceGenerators: sequenceGenerators)
-        FBSnapshotVerifyView(view)
+        assertSnapshot(matching: view, as: .image, record: recordMode)
     }
 
     func testSequenceGeneratorsRepetition() {
@@ -88,7 +89,7 @@ class ListsSnapshotTests: FBSnapshotTestCase {
         let attributedText = attributedString
         let view = renderList(text: attributedText, viewSize: CGSize(width: 225, height: 325), sequenceGenerators: sequenceGenerators)
 
-        FBSnapshotVerifyView(view)
+        assertSnapshot(matching: view, as: .image, record: recordMode)
     }
 
     func testMultiLevelRepeatingText() {
@@ -111,7 +112,7 @@ class ListsSnapshotTests: FBSnapshotTestCase {
         let attributedText = attributedString
         let view = renderList(text: attributedText, viewSize: CGSize(width: 225, height: 325), sequenceGenerators: sequenceGenerators)
 
-        FBSnapshotVerifyView(view)
+        assertSnapshot(matching: view, as: .image, record: recordMode)
     }
 
     func renderList(text: NSAttributedString, viewSize: CGSize, sequenceGenerators: [SequenceGenerator] = []) -> UIView {
