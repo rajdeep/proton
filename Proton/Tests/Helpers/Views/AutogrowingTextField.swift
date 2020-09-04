@@ -54,9 +54,3 @@ extension AutogrowingTextField: InlineContent {
         return EditorContent.Name(rawValue: "textField")
     }
 }
-
-extension AutogrowingTextField: Focusable {
-    func setFocus() {
-        becomeFirstResponder()
-    }
-}
