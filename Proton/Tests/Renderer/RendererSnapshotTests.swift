@@ -19,16 +19,18 @@
 //
 
 import Foundation
-import FBSnapshotTestCase
+import SnapshotTesting
 import XCTest
 
 import Proton
 
-class RendererSnapshotTests: FBSnapshotTestCase {
+class RendererSnapshotTests: XCTestCase {
+    var recordMode = false
+
     override func setUp() {
         super.setUp()
 
-        recordMode = false
+//        recordMode = true
     }
 
     func testBasicRendering() {
@@ -39,7 +41,7 @@ class RendererSnapshotTests: FBSnapshotTestCase {
         renderer.attributedText = NSAttributedString(string: "Test string in renderer")
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testScrolledRendering() {
@@ -65,7 +67,7 @@ class RendererSnapshotTests: FBSnapshotTestCase {
         let findCommand = FindTextCommand(text: "pqr")
         findCommand.execute(on: renderer)
 
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersAttachmentFromEditor() {
@@ -93,7 +95,7 @@ class RendererSnapshotTests: FBSnapshotTestCase {
         renderer.attributedText = editor.attributedText
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testGetsRectsForGivenRangeSpanningAcrossMultipleLines() {
@@ -109,6 +111,6 @@ class RendererSnapshotTests: FBSnapshotTestCase {
             renderer.addSubview(view)
         }
         viewController.render(size: CGSize(width: 300, height: 130))
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 }
