@@ -4,6 +4,8 @@ on:
   push:    
     paths-ignore:
     - 'docs/**'
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build:
