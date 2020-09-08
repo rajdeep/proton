@@ -20,15 +20,17 @@
 
 import Foundation
 import XCTest
-import FBSnapshotTestCase
+import SnapshotTesting
 
 @testable import Proton
 
-class EditorSnapshotTests: FBSnapshotTestCase {
+class EditorSnapshotTests: XCTestCase {
+    var recordMode = false
+
     override func setUp() {
         super.setUp()
 
-        recordMode = false
+//        recordMode = true
     }
 
     func testRendersPlaceholder() {
@@ -44,7 +46,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
 
         editor.placeholderText = placeholderString
         viewController.render(size: CGSize(width: 300, height: 120))
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersMatchContentAttachment() {
@@ -69,7 +71,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersFullWidthAttachment() {
@@ -96,7 +98,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersFullWidthAttachmentWithParaIndent() {
@@ -124,7 +126,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersFixedWidthAttachment() {
@@ -149,7 +151,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersWidthRangeAttachment() {
@@ -176,7 +178,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "and then some more text after the attachment")
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersPercentWidthAttachment() {
@@ -201,7 +203,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testDeletesAttachments() {
@@ -229,7 +231,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         }
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testGetsRectsForGivenRangeSpanningAcrossMultipleLines() {
@@ -245,7 +247,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
             editor.addSubview(view)
         }
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testGetsRectsForGivenRangeSpanningAcrossSingleLine() {
@@ -261,7 +263,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
             editor.addSubview(view)
         }
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testGetsCaretRectForValidPosition() {
@@ -276,7 +278,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         editor.addSubview(view)
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testGetsCaretRectForPositionInEmptyEditor() {
@@ -289,7 +291,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         editor.addSubview(view)
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testGetsCaretRectForPositionOutsideBounds() {
@@ -304,7 +306,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         editor.addSubview(view)
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testGetsCaretRectForValidPositionWithScrollableContent() {
@@ -329,7 +331,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         editor.addSubview(view)
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testCursorCaretRect() {
@@ -360,7 +362,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         }
 
         viewController.render(size: .init(width: 300, height: 300))
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testSelectionRects() {
@@ -399,7 +401,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
 
         editor.clipsToBounds = true
         viewController.render(size: .init(width: 300, height: 300))
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
     
     func testGetsVisibleContentRange() {
@@ -414,7 +416,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         viewController.render()
         editor.scrollRangeToVisible(NSRange(location: 360, length: 1))
 
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
         let visibleRange = editor.visibleRange
         // refer to snapshot for visible text
@@ -442,7 +444,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         addCaretRect(at: line1Location, in: editor, color: .green)
         addCaretRect(at: line2Location, in: editor, color: .red)
 
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
         let currentLineText1 = editor.currentLayoutLine?.text.string
         // refer to snapshot for visible text - green marker
@@ -478,7 +480,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         addCaretRect(at: line2Location, in: editor, color: .red)
         addCaretRect(at: line3Location, in: editor, color: .blue)
 
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
         let firstLine = try XCTUnwrap(editor.firstLayoutLine)
         let nextLine = try XCTUnwrap(editor.layoutLineAfter(firstLine))
@@ -537,7 +539,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
 
         editor.attributedText = text
         viewController.render(size: CGSize(width: 300, height: 680))
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testDefaultBackground() {
@@ -555,7 +557,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         viewController.render()
         editor.addAttribute(.backgroundColor, value: UIColor.green, at: line2Range)
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testBackgroundStyleThreeLines() {
@@ -577,7 +579,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         ], at: rangeToUpdate)
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testBackgroundStyleTwoLinesOverlap() {
@@ -602,7 +604,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         ], at: rangeToUpdate)
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testBackgroundStyleTwoLinesNoOverlap() {
@@ -627,7 +629,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         ], at: rangeToUpdate)
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testBackgroundStyleTwoLinesMinorOverlap() {
@@ -649,7 +651,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         ], at: rangeToUpdate)
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testBackgroundStyleWithBorders() {
@@ -671,7 +673,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         ], at: rangeToUpdate)
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testBackgroundStyleWithIncreasedParagraphSpacing() {
@@ -697,7 +699,7 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         ], at: rangeToUpdate)
 
         viewController.render(size: CGSize(width: 300, height: 150))
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testBackgroundStyleWithIncreasedFontSize() {
@@ -723,7 +725,18 @@ class EditorSnapshotTests: FBSnapshotTestCase {
         ], at: rangeToUpdate)
 
         viewController.render(size: CGSize(width: 450, height: 150))
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testEditorWithArabicText() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let text = "حية طيبة"
+    
+        editor.appendCharacters(NSAttributedString(string: text))
+
+        viewController.render(size: CGSize(width: 450, height: 150))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     private func addCaretRect(at range: NSRange, in editor: EditorView, color: UIColor) {

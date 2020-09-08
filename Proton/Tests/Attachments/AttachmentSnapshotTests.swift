@@ -20,16 +20,17 @@
 
 import Foundation
 import XCTest
-import FBSnapshotTestCase
+import SnapshotTesting
 
 @testable import Proton
 
-class AttachmentSnapshotTests: FBSnapshotTestCase {
+class AttachmentSnapshotTests: XCTestCase {
 
+    var recordMode = false
     override func setUp() {
         super.setUp()
 
-        recordMode = false
+//        recordMode = true
     }
 
     func testMatchContentRendering() {
@@ -42,7 +43,7 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
         textView.insertAttachment(in: textView.textEndRange, attachment: attachment)
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testFallsToNextLineForLongContent() {
@@ -56,7 +57,7 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
         textView.replaceCharacters(in: textView.textEndRange, with: NSAttributedString(string: "after."))
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testMatchContainerRendering() {
@@ -69,7 +70,7 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
         textView.insertAttachment(in: textView.textEndRange, attachment: attachment)
 
         viewController.render()
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testFixedWidthRendering() {
@@ -83,7 +84,7 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
         textView.replaceCharacters(in: textView.textEndRange, with: "and some more text after it.")
 
         viewController.render(size: CGSize(width: 300, height: 120))
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testPercentBasedRendering() {
@@ -98,7 +99,7 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
         textView.insertAttachment(in: textView.textEndRange, attachment: attachment)
 
         viewController.render(size: CGSize(width: 300, height: 120))
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testWidthRangeRendering() {
@@ -114,7 +115,7 @@ class AttachmentSnapshotTests: FBSnapshotTestCase {
         textView.insertAttachment(in: textView.textEndRange, attachment: attachment2)
 
         viewController.render(size: CGSize(width: 300, height: 120))
-        FBSnapshotVerifyView(viewController.view)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     private func makeDummyAttachment(text: String, size: AttachmentSize) -> Attachment {

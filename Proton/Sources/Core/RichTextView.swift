@@ -408,6 +408,10 @@ class RichTextView: AutogrowingTextView {
         return attributes[attribute]
     }
 
+    func glyphRange(forCharacterRange range: NSRange) -> NSRange {
+        return layoutManager.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
+    }
+
     func boundingRect(forGlyphRange range: NSRange) -> CGRect {
         return layoutManager.boundingRect(forGlyphRange: range, in: textContainer)
     }

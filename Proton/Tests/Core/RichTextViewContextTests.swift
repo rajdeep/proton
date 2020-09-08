@@ -171,7 +171,8 @@ class RichTextViewContextTests: XCTestCase {
             testExpectation.fulfill()
         }
 
-        _ = context.textViewDidChange(textView)
+        context.textViewDidChange(textView)
+        
         waitForExpectations(timeout: 1.0)
     }
 

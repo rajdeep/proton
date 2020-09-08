@@ -973,7 +973,7 @@ extension EditorView: RichTextViewDelegate {
     }
 
     func richTextView(_ richTextView: RichTextView, selectedRangeChangedFrom oldRange: NSRange?, to newRange: NSRange?) {
-        textProcessor?.activeProcessors.forEach{ $0.selectedRangeChanged(editor: self, oldRange: oldRange, newRange: newRange) }
+        textProcessor?.activeProcessors.forEach { $0.selectedRangeChanged(editor: self, oldRange: oldRange, newRange: newRange) }
     }
 
     func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) { }
@@ -995,7 +995,8 @@ extension EditorView {
                 attachment.removeFromContainer()
             }
 
-            var frame = richTextView.boundingRect(forGlyphRange: range)
+            let glyphRange = richTextView.glyphRange(forCharacterRange: range)
+            var frame = richTextView.boundingRect(forGlyphRange: glyphRange)
             frame.origin.y += self.textContainerInset.top
 
             var size = attachment.frame.size
