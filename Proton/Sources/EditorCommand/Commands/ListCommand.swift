@@ -88,11 +88,14 @@ public class ListCommand: EditorCommand {
         }
 
         guard let attrValue = attributeValue else {
-            let paragraphStyle = editor.paragraphStyle
+            let paragraphStyle = editor.paragraphStyle.mutableParagraphStyle
+            paragraphStyle.firstLineHeadIndent = 0
             editor.addAttributes([
                 .paragraphStyle: paragraphStyle
             ], at: selectedRange)
+            editor.typingAttributes[.paragraphStyle] = paragraphStyle
             editor.removeAttribute(.listItem, at: selectedRange)
+            editor.typingAttributes[.listItem] = nil
             return
         }
 
@@ -107,8 +110,10 @@ public class ListCommand: EditorCommand {
             let paraStyle = value as? NSParagraphStyle
             let mutableStyle = ListTextProcessor().updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: .indent)
             editor.addAttribute(.paragraphStyle, value: mutableStyle ?? editor.paragraphStyle, at: range)
+            editor.typingAttributes[.paragraphStyle] = mutableStyle ?? editor.paragraphStyle
         }
         editor.addAttribute(.listItem, value: attrValue, at: selectedRange)
+        editor.typingAttributes[.listItem] = attrValue
         attributeValue = nil
     }
 
