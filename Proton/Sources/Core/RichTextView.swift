@@ -352,6 +352,12 @@ class RichTextView: AutogrowingTextView {
         let attributeExists = (attributedText.attribute(.textBlock, at: proposedRange.location, effectiveRange: nil) as? Bool) == true
 
         guard attributeExists, let textRange = adjustedTextBlockRangeOnSelectionChange(oldRange: selectedRange, newRange: proposedRange) else {
+
+            // if the character getting deleted is a list item spacer, do a double delete
+            let textToBeDeleted = attributedText.attributedSubstring(from: NSRange(location: proposedRange.location, length: 1)).string
+            if textToBeDeleted == ListTextProcessor.blankLineFiller {
+                super.deleteBackward()
+            }
             super.deleteBackward()
             return
         }
