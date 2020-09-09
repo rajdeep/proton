@@ -67,7 +67,7 @@ class AutogrowingTextViewTests: XCTestCase {
 
     func testSizesCorrectlyForText() {
 
-        let textView = AutogrowingTextView()
+        let textView = AutogrowingTextView(frame: .zero, textContainer: nil)
 
         let text = """
         Sample Text Sample Text Sample Text Sample Text Sample Text

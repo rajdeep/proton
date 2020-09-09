@@ -40,7 +40,7 @@ class AutogrowingTextView: UITextView {
     weak var boundsObserver: BoundsObserving?
     private var maxHeightConstraint: NSLayoutConstraint!
 
-    init(frame: CGRect, textContainer: NSTextContainer?, allowAutogrowing: Bool) {
+    init(frame: CGRect, textContainer: NSTextContainer?, allowAutogrowing: Bool = false) {
         self.allowAutogrowing = allowAutogrowing
         super.init(frame: frame, textContainer: textContainer)
         isScrollEnabled = false

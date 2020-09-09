@@ -51,4 +51,11 @@ class ListCommandTests: XCTestCase {
         XCTAssertNil(lines[0].text.attribute(.listItem, at: 0, effectiveRange: nil))
         XCTAssertNil(lines[1].text.attribute(.listItem, at: 0, effectiveRange: nil))
     }
+
+    func testListIndentingWithNoContent() {
+        let editor = EditorView()
+        let command = ListIndentCommand(indentMode: .outdent)
+
+        XCTAssertFalse(command.canExecute(on: editor))
+    }
 }

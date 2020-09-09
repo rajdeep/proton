@@ -258,7 +258,7 @@ public class ListIndentCommand: EditorCommand {
     }
     
     public func canExecute(on editor: EditorView) -> Bool {
-        attributeValue = editor.contentLinesInRange(editor.selectedRange).first?.text.attribute(.listItem, at: 0, effectiveRange: nil)
+        attributeValue = listAttributeValue(in: editor)
         return attributeValue != nil
     }
     
@@ -270,7 +270,17 @@ public class ListIndentCommand: EditorCommand {
             attributeValue: attributeValue
         )
     }
-    
+
+    private func listAttributeValue(in editor: EditorView) -> Any? {
+        guard
+            let lineText = editor.contentLinesInRange(editor.selectedRange).first?.text,
+            lineText.length > 0
+        else {
+            return nil
+        }
+
+        return lineText.attribute(.listItem, at: 0, effectiveRange: nil)
+    }
 }
 
 // Zero width space - used for laying out the list bullet/number in an empty line.
