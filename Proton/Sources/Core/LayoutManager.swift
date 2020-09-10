@@ -159,18 +159,19 @@ class LayoutManager: NSLayoutManager {
             textStorage.attributedSubstring(from: NSRange(location: listRange.endLocation - 1, length: 1)).string == "\n",
             let paraStyle = lastLayoutParaStyle  else { return }
 
-        var para: NSParagraphStyle?
-        if textStorage.length > listRange.endLocation {
-            para = textStorage.attribute(.paragraphStyle, at: listRange.endLocation, effectiveRange: nil) as? NSParagraphStyle
-            // don't draw last rect if there's a following list item (in another indent level)
-            if para != nil {
-                return
-            }
-        }
-
         let level = Int(paraStyle.firstLineHeadIndent/listIndent)
         var index = (counters[level] ?? 0)
         let origin = CGPoint(x: lastRect.minX, y: lastRect.maxY)
+
+        var para: NSParagraphStyle?
+        if textStorage.length > listRange.endLocation {
+            para = textStorage.attribute(.paragraphStyle, at: listRange.endLocation, effectiveRange: nil) as? NSParagraphStyle
+            let paraLevel = Int((para?.firstLineHeadIndent ?? 0)/listIndent)
+            // don't draw last rect if there's a following list item (in another indent level)
+            if para != nil, paraLevel != level {
+                return
+            }
+        }
 
         let newLineRect = CGRect(origin: origin, size: lastRect.size)
 
