@@ -969,4 +969,22 @@ class EditorListsSnapshotTests: XCTestCase {
         viewController.render(size: CGSize(width: 300, height: 200))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+    func testCreatesListBetweenTwoParagraphs() {
+        let editorSize = CGSize(width: 300, height: 125)
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.listFormattingProvider = listFormattingProvider
+        editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Text\n\nText"))
+        editor.selectedRange = NSRange(location: 5, length: 0)
+        listCommand.execute(on: editor)
+        viewController.render(size: editorSize)
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        editor.replaceCharacters(in: editor.selectedRange, with: NSAttributedString(string: "New line"))
+        viewController.render(size: editorSize)
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 }
