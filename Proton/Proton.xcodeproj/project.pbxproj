@@ -100,6 +100,9 @@
 		1BD993B823C9AE4200563ACB /* NSAttributedString+Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993B723C9AE4200563ACB /* NSAttributedString+Content.swift */; };
 		1BD993C023C9EAA900563ACB /* TextTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993BF23C9EAA900563ACB /* TextTransformer.swift */; };
 		1BD993C423CACCE100563ACB /* MockAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993C323CACCE100563ACB /* MockAttachment.swift */; };
+		1BE8825F250DD7B600E2CC1B /* PRTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE8825E250DD7B600E2CC1B /* PRTextStorage.m */; };
+		1BE88262250E3ABB00E2CC1B /* EditorContentName.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BE88261250E3ABB00E2CC1B /* EditorContentName.h */; };
+		1BE88264250E3ADB00E2CC1B /* EditorContentName.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE88263250E3ADB00E2CC1B /* EditorContentName.m */; };
 		1BF90FB4245E503E00A411A3 /* TextBlockAttributeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90FB3245E503E00A411A3 /* TextBlockAttributeTests.swift */; };
 		1BFFEF0523C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF0423C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift */; };
 		1BFFEF0C23C30D5200D2BA35 /* EditorContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF0B23C30D5200D2BA35 /* EditorContentView.swift */; };
@@ -253,6 +256,11 @@
 		1BD993B723C9AE4200563ACB /* NSAttributedString+Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Content.swift"; sourceTree = "<group>"; };
 		1BD993BF23C9EAA900563ACB /* TextTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransformer.swift; sourceTree = "<group>"; };
 		1BD993C323CACCE100563ACB /* MockAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAttachment.swift; sourceTree = "<group>"; };
+		1BE8825D250DD79E00E2CC1B /* PRTextStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PRTextStorage.h; sourceTree = "<group>"; };
+		1BE8825E250DD7B600E2CC1B /* PRTextStorage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PRTextStorage.m; sourceTree = "<group>"; };
+		1BE88260250DD81500E2CC1B /* Proton-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Proton-Bridging-Header.h"; sourceTree = "<group>"; };
+		1BE88261250E3ABB00E2CC1B /* EditorContentName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorContentName.h; sourceTree = "<group>"; };
+		1BE88263250E3ADB00E2CC1B /* EditorContentName.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditorContentName.m; sourceTree = "<group>"; };
 		1BF90FB3245E503E00A411A3 /* TextBlockAttributeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBlockAttributeTests.swift; sourceTree = "<group>"; };
 		1BFFEF0423C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAutogrowingTextViewDelegate.swift; sourceTree = "<group>"; };
 		1BFFEF0B23C30D5200D2BA35 /* EditorContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentView.swift; sourceTree = "<group>"; };
@@ -436,6 +444,10 @@
 				1BD9323D243CA506005E4136 /* CommandName.swift */,
 				1B45014E247E5AD9007B3EE9 /* SequenceGenerator.swift */,
 				1B30A35F2489CE3E00FA1D48 /* ListFormattingProvider.swift */,
+				1BE8825D250DD79E00E2CC1B /* PRTextStorage.h */,
+				1BE8825E250DD7B600E2CC1B /* PRTextStorage.m */,
+				1BE88261250E3ABB00E2CC1B /* EditorContentName.h */,
+				1BE88263250E3ADB00E2CC1B /* EditorContentName.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -640,6 +652,7 @@
 				1B45CDC323BF13B8001EB196 /* Helpers */,
 				1B91F4AF23C72D66003F9B55 /* TextProcessors */,
 				1BB214CA23BB2778008B84A0 /* Info.plist */,
+				1BE88260250DD81500E2CC1B /* Proton-Bridging-Header.h */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -814,6 +827,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BE88262250E3ABB00E2CC1B /* EditorContentName.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -872,7 +886,7 @@
 				TargetAttributes = {
 					1BB214C523BB2778008B84A0 = {
 						CreatedOnToolsVersion = 11.3;
-						LastSwiftMigration = 1130;
+						LastSwiftMigration = 1160;
 					};
 					1BB214CE23BB2778008B84A0 = {
 						CreatedOnToolsVersion = 11.3;
@@ -929,6 +943,7 @@
 				1B7A985923C484BC00C34B14 /* RichTextViewDelegate.swift in Sources */,
 				1B45CDE123C05476001EB196 /* UIColor+Image.swift in Sources */,
 				1B45CD9123BDD7E6001EB196 /* AutogrowingTextView.swift in Sources */,
+				1BE88264250E3ADB00E2CC1B /* EditorContentName.m in Sources */,
 				1B45CDE623C05942001EB196 /* AttachmentSize.swift in Sources */,
 				1B975AFB23CD3E9B00EC410C /* RendererView.swift in Sources */,
 				1B164F1023D1BE9900A0869A /* AttributesDecoding.swift in Sources */,
@@ -951,6 +966,7 @@
 				1B2BC0DD23CF18C700407DEE /* EditorContentDecoding.swift in Sources */,
 				1B45CDC523BF13D4001EB196 /* NSRangeExtensions.swift in Sources */,
 				1BBAC3E023CE81F40088A1C8 /* RendererCommandExecutor.swift in Sources */,
+				1BE8825F250DD7B600E2CC1B /* PRTextStorage.m in Sources */,
 				1B45014F247E5AD9007B3EE9 /* SequenceGenerator.swift in Sources */,
 				1BD993B823C9AE4200563ACB /* NSAttributedString+Content.swift in Sources */,
 				1B975B0123CD45DC00EC410C /* RendererViewContext.swift in Sources */,
@@ -1176,6 +1192,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1187,6 +1204,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rajdeep.Proton;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Sources/Proton-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1205,6 +1223,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1216,6 +1235,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rajdeep.Proton;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Sources/Proton-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 12.0;
@@ -1238,6 +1258,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rajdeep.ProtonTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1258,6 +1279,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rajdeep.ProtonTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -21,14 +21,16 @@
 import Foundation
 import UIKit
 
+@objc
 protocol DefaultTextFormattingProviding: AnyObject {
     var font: UIFont { get }
     var paragraphStyle: NSMutableParagraphStyle { get }
     var textColor: UIColor { get }
 }
 
+@objc
 protocol TextStorageDelegate: AnyObject {
-    func textStorage(_ textStorage: TextStorage, willDeleteText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange)
+    func textStorage(_ textStorage: PRTextStorage, willDeleteText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange)
 }
 
 class TextStorage: NSTextStorage {
@@ -97,7 +99,7 @@ class TextStorage: NSTextStorage {
         }
 
         let deletedText = storage.attributedSubstring(from: range)
-        textStorageDelegate?.textStorage(self, willDeleteText: deletedText, insertedText: replacementString, range: range)
+//        textStorageDelegate?.textStorage(self, willDeleteText: deletedText, insertedText: replacementString, range: range)
         super.replaceCharacters(in: range, with: replacementString)
     }
 
