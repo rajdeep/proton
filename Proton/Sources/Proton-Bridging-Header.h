@@ -9,8 +9,7 @@
 #ifndef Proton_Bridging_Header_h
 #define Proton_Bridging_Header_h
 
+#import "Core/PRTextStorage.h"
+#import "Core/EditorContentName.h"
 
 #endif /* Proton_Bridging_Header_h */
-
-#import "PRTextStorage.h"
-#import "EditorContentName.h"
