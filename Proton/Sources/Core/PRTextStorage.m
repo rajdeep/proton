@@ -53,7 +53,15 @@
     return NSMakeRange(self.length, 0);
 }
 
+- (id)attribute:(NSAttributedStringKey)attrName atIndex:(NSUInteger)location effectiveRange:(NSRangePointer)range {
+    return [self.storage attribute:attrName atIndex:location effectiveRange:range];
+}
+
 - (NSDictionary<NSString *,id> *)attributesAtIndex:(NSUInteger)location effectiveRange:(NSRangePointer)effectiveRange {
+//    if (location <= self.storage.length) {
+//        return [[NSDictionary alloc] init];
+//    }
+    
     return [self.storage attributesAtIndex:location effectiveRange:effectiveRange];
 }
 
@@ -66,12 +74,10 @@
         id outgoingAttrs = [_storage attributesAtIndex:(range.location + range.length - 1) effectiveRange:nil];
         id incomingAttrs = [attrString attributesAtIndex:0 effectiveRange:nil];
 
-        // We do not want to fix the underline since it can be added by the input method for
-        // characters accepting diacritical marks (eg. in Vietnamese or Spanish) and should be transient.
-
         NSMutableDictionary<NSAttributedStringKey,id> *diff = [[NSMutableDictionary alloc] init];
-
         for (id outgoingKey in outgoingAttrs) {
+            // We do not want to fix the underline since it can be added by the input method for
+            // characters accepting diacritical marks (eg. in Vietnamese or Spanish) and should be transient.
             if (![incomingAttrs valueForKey:outgoingKey] && outgoingKey != NSUnderlineStyleAttributeName) {
                 [diff setObject:outgoingAttrs[outgoingKey] forKey:outgoingKey];
             }
@@ -88,20 +94,21 @@
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)str {
     [self beginEditing];
     unsigned long delta = str.length - range.length;
-    NSArray *attachmentsToDelete = [self getAttachments:range];
+    
+    NSArray<Attachment *> *attachmentsToDelete = [self getAttachments:range];
     for (id attachment in attachmentsToDelete) {
         [attachment removeFromSuperview];
     }
 
     [_storage replaceCharactersInRange:range withString:str];
     [_storage fixAttributesInRange:NSMakeRange(0, _storage.length)];
-    [self edited:NSTextStorageEditedAttributes & NSTextStorageEditedCharacters range:range changeInLength:delta];
+    [self edited:NSTextStorageEditedCharacters & NSTextStorageEditedAttributes range:range changeInLength:delta];
 
     [self endEditing];
 }
 
-- (NSArray *)getAttachments:(NSRange) range {
-    NSMutableArray *attachments = [NSMutableArray array];
+- (NSArray<Attachment *> *)getAttachments:(NSRange) range {
+    NSMutableArray<Attachment *> *attachments = [NSMutableArray array];
     [_storage enumerateAttribute:NSAttachmentAttributeName inRange:range options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
         if ([value isKindOfClass: [Attachment class]]) {
             [attachments addObject: value];
@@ -134,7 +141,7 @@
 - (NSDictionary<NSAttributedStringKey,id> *)applyingDefaultFormattingIfRequiredToAttributes:(NSDictionary<NSAttributedStringKey,id> *)attributes {
     NSMutableDictionary<NSAttributedStringKey,id> * updatedAttributes = attributes.mutableCopy;
     if (!updatedAttributes) {
-        updatedAttributes = [NSMutableDictionary init];
+        updatedAttributes = [[NSMutableDictionary alloc] init];
     }
 
     if (![attributes objectForKey:NSParagraphStyleAttributeName]) {
