@@ -19,6 +19,19 @@
     return self;
 }
 
+- (BOOL)isEqual:(id)other {
+    EditorContentName *otherName = (EditorContentName *)other;
+    return otherName.rawValue == self.rawValue;
+}
+
+- (NSUInteger)hash {
+    return _rawValue.hash;
+}
+
+- (NSString *)debugDescription {
+    return [NSString stringWithFormat:@"EditorContent.Name.%@", [self rawValue]];
+}
+
 + (EditorContentName *)paragraphName { return [[EditorContentName alloc] initWithRawValue:@"_paragraph"]; }
 + (EditorContentName *)viewOnlyName { return [[EditorContentName alloc] initWithRawValue:@"_viewOnly"]; }
 + (EditorContentName *)newlineName { return [[EditorContentName alloc] initWithRawValue:@"_newline"]; }

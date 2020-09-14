@@ -29,6 +29,6 @@
 @property(nonatomic, readonly) NSRange textEndRange;
 
 - (void)removeAttributes:(NSArray<NSAttributedStringKey> *_Nonnull)attrs range:(NSRange)range;
-- (void) insertAttachmentInRange:(NSRange)range attachment:(Attachment *_Nonnull)attachment;
+- (void)insertAttachmentInRange:(NSRange)range attachment:(Attachment *_Nonnull)attachment;
 
 @end

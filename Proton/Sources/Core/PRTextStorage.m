@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "PRTextStorage.h"
 #import "EditorContentName.h"
 
@@ -68,11 +69,11 @@
         // We do not want to fix the underline since it can be added by the input method for
         // characters accepting diacritical marks (eg. in Vietnamese or Spanish) and should be transient.
 
-        NSDictionary<NSAttributedStringKey,id> *diff = [NSDictionary init];
+        NSMutableDictionary<NSAttributedStringKey,id> *diff = [[NSMutableDictionary alloc] init];
 
         for (id outgoingKey in outgoingAttrs) {
-            if ([incomingAttrs containsValueForKey:outgoingKey] && outgoingKey != NSUnderlineStyleAttributeName) {
-                [diff setValue:outgoingAttrs[outgoingKey] forKey:outgoingKey];
+            if (![incomingAttrs valueForKey:outgoingKey] && outgoingKey != NSUnderlineStyleAttributeName) {
+                [diff setObject:outgoingAttrs[outgoingKey] forKey:outgoingKey];
             }
         }
 
@@ -99,9 +100,9 @@
     [self endEditing];
 }
 
-- (NSArray *) getAttachments:(NSRange) range {
+- (NSArray *)getAttachments:(NSRange) range {
     NSMutableArray *attachments = [NSMutableArray array];
-    [_storage enumerateAttribute:@"attachment" inRange:range options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+    [_storage enumerateAttribute:NSAttachmentAttributeName inRange:range options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
         if ([value isKindOfClass: [Attachment class]]) {
             [attachments addObject: value];
         }
@@ -116,11 +117,13 @@
     [_storage setAttributes:updatedAttributes range:range];
 
     NSRange newlineRange = [_storage.string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]];
-    while(newlineRange .location != NSNotFound) {
-        [_storage addAttribute:@"blockContentType" value:[EditorContentName newlineName] range:newlineRange];
+    while(newlineRange.location != NSNotFound) {
+        [_storage addAttribute:@"_blockContentType" value:[EditorContentName newlineName] range:newlineRange];
+        NSUInteger remainingLocation = newlineRange.location + newlineRange.length;
+        NSUInteger remainingLength = _storage.length - remainingLocation;
         newlineRange = [_storage.string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]
                                                         options:0
-                                                          range:NSMakeRange(newlineRange.location + newlineRange.length, _storage.length)];
+                                                          range:NSMakeRange(remainingLocation, remainingLength)];
     }
 
     [_storage fixAttributesInRange:NSMakeRange(0, _storage.length)];
@@ -136,17 +139,26 @@
 
     if (![attributes objectForKey:NSParagraphStyleAttributeName]) {
         id value = _defaultTextFormattingProvider.paragraphStyle;
-        [updatedAttributes setValue:value forKey:NSParagraphStyleAttributeName];
+        if (!value) {
+            value = [self defaultParagraphStyle];
+        }
+        [updatedAttributes setObject:value forKey:NSParagraphStyleAttributeName];
     }
 
     if (![attributes objectForKey:NSFontAttributeName]) {
         id value = _defaultTextFormattingProvider.font;
-        [updatedAttributes setValue:value forKey:NSFontAttributeName];
+        if (!value) {
+            value = [self defaultFont];
+        }
+        [updatedAttributes setObject:value forKey:NSFontAttributeName];
     }
 
     if (![attributes objectForKey:NSForegroundColorAttributeName]) {
         id value = _defaultTextFormattingProvider.textColor;
-        [updatedAttributes setValue:value forKey:NSForegroundColorAttributeName];
+        if (!value) {
+            value = [self defaultTextColor];
+        }
+        [updatedAttributes setObject:value forKey:NSForegroundColorAttributeName];
     }
 
     return updatedAttributes;
@@ -166,7 +178,7 @@
     }
 }
 
-- (void) insertAttachmentInRange:(NSRange)range attachment:(Attachment *_Nonnull)attachment {
+- (void)insertAttachmentInRange:(NSRange)range attachment:(Attachment *_Nonnull)attachment {
     id spacer = attachment.spacer.string;
     bool hasPrevSpacer = false;
     if (range.length + range.location > 0) {

@@ -258,7 +258,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     }
 
     @objc
-    func removeFromSuperView() {
+    func removeFromSuperview() {
         view.removeFromSuperview()
     }
 

@@ -30,7 +30,7 @@
 		1B45CD9D23BEDA8F001EB196 /* UIView+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD9C23BEDA8F001EB196 /* UIView+Render.swift */; };
 		1B45CD9F23BEE997001EB196 /* SnapshotTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD9E23BEE997001EB196 /* SnapshotTestViewController.swift */; };
 		1B45CDA923BEED0E001EB196 /* AutogrowingTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDA823BEED0E001EB196 /* AutogrowingTextViewTests.swift */; };
-		1B45CDBA23BF10DF001EB196 /* TextStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDB923BF10DF001EB196 /* TextStorage.swift */; };
+		1B45CDBA23BF10DF001EB196 /* TextStorageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDB923BF10DF001EB196 /* TextStorageDelegate.swift */; };
 		1B45CDBC23BF1174001EB196 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDBB23BF1174001EB196 /* Types.swift */; };
 		1B45CDBE23BF125D001EB196 /* NSAttributedString+ContentTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDBD23BF125D001EB196 /* NSAttributedString+ContentTypes.swift */; };
 		1B45CDC223BF131E001EB196 /* TextStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDC023BF131B001EB196 /* TextStorageTests.swift */; };
@@ -112,6 +112,7 @@
 		1BFFEF1C23C334D200D2BA35 /* InlineEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF1B23C334D200D2BA35 /* InlineEditorView.swift */; };
 		1BFFEF1F23C3366200D2BA35 /* MockAttachmentOffsetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF1E23C3366200D2BA35 /* MockAttachmentOffsetProvider.swift */; };
 		1BFFEF2123C33EA900D2BA35 /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF2023C33EA900D2BA35 /* PanelView.swift */; };
+		3F79CCB2250EF065008C53C4 /* DefaultTextFormattingProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F79CCB1250EF065008C53C4 /* DefaultTextFormattingProviding.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,7 +168,7 @@
 		1B45CDA323BEEC3D001EB196 /* testRendersTextViewBasedOnContent@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersTextViewBasedOnContent@3x.png"; sourceTree = "<group>"; };
 		1B45CDA423BEEC3D001EB196 /* testRendersMultilineTextViewBasedOnContent@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersMultilineTextViewBasedOnContent@3x.png"; sourceTree = "<group>"; };
 		1B45CDA823BEED0E001EB196 /* AutogrowingTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingTextViewTests.swift; sourceTree = "<group>"; };
-		1B45CDB923BF10DF001EB196 /* TextStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStorage.swift; sourceTree = "<group>"; };
+		1B45CDB923BF10DF001EB196 /* TextStorageDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStorageDelegate.swift; sourceTree = "<group>"; };
 		1B45CDBB23BF1174001EB196 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		1B45CDBD23BF125D001EB196 /* NSAttributedString+ContentTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+ContentTypes.swift"; sourceTree = "<group>"; };
 		1B45CDC023BF131B001EB196 /* TextStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStorageTests.swift; sourceTree = "<group>"; };
@@ -281,6 +282,7 @@
 		1BFFEF3123C342D800D2BA35 /* testWidthRangeRendering@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testWidthRangeRendering@3x.png"; sourceTree = "<group>"; };
 		1BFFEF3223C342D800D2BA35 /* testMatchContainerRendering@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testMatchContainerRendering@3x.png"; sourceTree = "<group>"; };
 		1BFFEF3323C342D800D2BA35 /* testFixedWidthRendering@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testFixedWidthRendering@3x.png"; sourceTree = "<group>"; };
+		3F79CCB1250EF065008C53C4 /* DefaultTextFormattingProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextFormattingProviding.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -432,7 +434,8 @@
 		1B45CDB823BF10C1001EB196 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				1B45CDB923BF10DF001EB196 /* TextStorage.swift */,
+				1B45CDB923BF10DF001EB196 /* TextStorageDelegate.swift */,
+				3F79CCB1250EF065008C53C4 /* DefaultTextFormattingProviding.swift */,
 				1B45CDCF23C007AF001EB196 /* RichTextView.swift */,
 				1BD21553246951090000BCE2 /* LayoutManager.swift */,
 				1B45CDD123C00856001EB196 /* TextContainer.swift */,
@@ -974,7 +977,7 @@
 				1BFFEF0C23C30D5200D2BA35 /* EditorContentView.swift in Sources */,
 				1B82570923C5674E0033A0A9 /* EditorCommand.swift in Sources */,
 				1B82570D23C5686F0033A0A9 /* EditorViewContext.swift in Sources */,
-				1B45CDBA23BF10DF001EB196 /* TextStorage.swift in Sources */,
+				1B45CDBA23BF10DF001EB196 /* TextStorageDelegate.swift in Sources */,
 				1B975AFF23CD454700EC410C /* RichTextViewContext.swift in Sources */,
 				1B45CDE823C05C0C001EB196 /* Focusable.swift in Sources */,
 				1B164F4123D2A4AB00A0869A /* String+NSRange.swift in Sources */,
@@ -986,6 +989,7 @@
 				1B45CDE423C05916001EB196 /* SelectionView.swift in Sources */,
 				1B30A3602489CE3E00FA1D48 /* ListFormattingProvider.swift in Sources */,
 				1BD9323E243CA506005E4136 /* CommandName.swift in Sources */,
+				3F79CCB2250EF065008C53C4 /* DefaultTextFormattingProviding.swift in Sources */,
 				1B82570B23C567B90033A0A9 /* EditorCommandExecutor.swift in Sources */,
 				1B183D8C23CEA90400AE83E5 /* EditorContentEncoding.swift in Sources */,
 			);
