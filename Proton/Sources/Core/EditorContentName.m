@@ -21,15 +21,15 @@
 
 - (BOOL)isEqual:(id)other {
     EditorContentName *otherName = (EditorContentName *)other;
-    return otherName.rawValue == self.rawValue;
+    return otherName.hash == self.hash;
 }
 
 - (NSUInteger)hash {
     return _rawValue.hash;
 }
 
-- (NSString *)debugDescription {
-    return [NSString stringWithFormat:@"EditorContent.Name.%@", [self rawValue]];
+- (NSString *)description {
+    return [NSString stringWithFormat:@"EditorContent.Name(rawValue: \"%@\")", [self rawValue]];
 }
 
 + (EditorContentName *)paragraphName { return [[EditorContentName alloc] initWithRawValue:@"_paragraph"]; }

@@ -182,11 +182,13 @@
     id spacer = attachment.spacer.string;
     bool hasPrevSpacer = false;
     if (range.length + range.location > 0) {
-        hasPrevSpacer = [self attributedSubstringFromRange: NSMakeRange(MAX(range.location - 1, 0), 1)].string == spacer;
+        NSRange subrange = NSMakeRange(range.location == 0 ? 0 : range.location - 1, 1);
+        hasPrevSpacer = [self attributedSubstringFromRange: subrange].string == spacer;
     }
     bool hasNextSpacer = false;
     if ((range.location + range.length + 1) <= self.length) {
-        hasNextSpacer = [self attributedSubstringFromRange: NSMakeRange(range.location, 1)].string == spacer;
+        NSRange subrange = NSMakeRange(range.location, 1);
+        hasNextSpacer = [self attributedSubstringFromRange: subrange].string == spacer;
     }
 
     NSAttributedString *attachmentString = [attachment stringWithSpacersWithAppendPrev:!hasNextSpacer appendNext:!hasNextSpacer];
