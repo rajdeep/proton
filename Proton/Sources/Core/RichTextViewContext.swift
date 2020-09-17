@@ -38,6 +38,9 @@ class RichTextViewContext: NSObject, UITextViewDelegate {
 
         resetAttachmentSelection(textView)
         guard range.length > 0 else {
+            if textView.attributedText.length == 0 {
+                richTextView.resetTypingAttributes()
+            }
             var attributes = richTextView.typingAttributes
             let contentType = attributes[.blockContentType] as? EditorContent.Name ?? .unknown
             attributes[.blockContentType] = nil

@@ -338,10 +338,14 @@ class RichTextView: AutogrowingTextView {
         layoutManager.invalidateDisplay(forCharacterRange: range)
     }
 
+    func resetTypingAttributes() {
+        self.typingAttributes = defaultTypingAttributes
+    }
+
     override func deleteBackward() {
         defer {
             if contentLength == 0 {
-                self.typingAttributes = defaultTypingAttributes
+                resetTypingAttributes()
             }
             richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: selectedRange)
         }
