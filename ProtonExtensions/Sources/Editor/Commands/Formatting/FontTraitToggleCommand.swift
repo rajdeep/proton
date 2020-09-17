@@ -43,7 +43,7 @@ public class FontTraitToggleCommand: EditorCommand {
         }
 
         if selectedText.length == 0 {
-            guard let font = editor.attributedText.attribute(.font, at: editor.selectedRange.location - 1, effectiveRange: nil) as? UIFont else { return }
+            guard let font = editor.typingAttributes[.font] as? UIFont else { return }
             editor.typingAttributes[.font] = font.toggled(trait: trait)
             return
         }
