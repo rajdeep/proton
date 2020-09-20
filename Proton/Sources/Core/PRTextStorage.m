@@ -94,13 +94,16 @@
                 [diff setObject:outgoingAttrs[outgoingKey] forKey:outgoingKey];
             }
         }
-
         [replacementString addAttributes:diff range:NSMakeRange(0, replacementString.length)];
     }
 
-    id deletedText = [_storage attributedSubstringFromRange:range];
-    [_textStorageDelegate textStorage:self willDeleteText: deletedText insertedText: replacementString range: range];
-    [super replaceCharactersInRange:range withAttributedString:replacementString];
+    // Handles the crash when nested list receives enter key in quick succession that unindents the list item.
+    // Check only required with Obj-C based TextStorage
+    if(range.location + range.length <= _storage.length) {
+        id deletedText = [_storage attributedSubstringFromRange:range];
+        [_textStorageDelegate textStorage:self willDeleteText: deletedText insertedText: replacementString range: range];
+        [super replaceCharactersInRange:range withAttributedString:replacementString];
+    }
 }
 
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)str {

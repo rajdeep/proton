@@ -47,7 +47,7 @@ public class ListTextProcessor: TextProcessing {
     var executeOnDidProcess: ((EditorView) -> Void)?
 
     public func shouldProcess(_ editorView: EditorView, shouldProcessTextIn range: NSRange, replacementText text: String) -> Bool {
-        let rangeToCheck = max(0, range.endLocation - 1)
+        let rangeToCheck = max(0, min(range.endLocation, editorView.contentLength) - 1)
         if editorView.contentLength > 0,
             let value = editorView.attributedText.attribute(.listItem, at: rangeToCheck, effectiveRange: nil),
             (editorView.attributedText.attribute(.paragraphStyle, at: rangeToCheck, effectiveRange: nil) as? NSParagraphStyle)?.firstLineHeadIndent ?? 0 > 0 {
