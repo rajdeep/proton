@@ -1,5 +1,5 @@
 //
-//  TextStorage.swift
+//  DefaultTextFormattingProviding.swift
 //  Proton
 //
 //  Created by Rajdeep Kwatra on 3/1/20.
