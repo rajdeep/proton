@@ -38,7 +38,7 @@
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Base/BackgroundStyle.swift",
       "line": 80,
-      "symbol": "BackgroundStyle.init(color:cornerRadius:borderStyle:shadow:)",
+      "symbol": "BackgroundStyle.init(color:cornerRadius:border:shadow:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
