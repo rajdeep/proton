@@ -22,7 +22,7 @@ import Foundation
 import UIKit
 
 class RichTextView: AutogrowingTextView {
-    private let storage = TextStorage()
+    private let storage = PRTextStorage()
     static let defaultListLineFormatting = LineFormatting(indentation: 25, spacingBefore: 0)
 
     weak var richTextViewDelegate: RichTextViewDelegate?
@@ -177,7 +177,7 @@ class RichTextView: AutogrowingTextView {
         setupPlaceholder()
     }
 
-    var richTextStorage: TextStorage {
+    var richTextStorage: PRTextStorage {
         return storage
     }
 
@@ -564,7 +564,7 @@ extension RichTextView: NSLayoutManagerDelegate {
 }
 
 extension RichTextView: TextStorageDelegate {
-    func textStorage(_ textStorage: TextStorage, willDeleteText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) {
+    func textStorage(_ textStorage: PRTextStorage, willDeleteText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) {
         textProcessor?.textStorage(textStorage, willProcessDeletedText: deletedText, insertedText: insertedText)
     }
 }

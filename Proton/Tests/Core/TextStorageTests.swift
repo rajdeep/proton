@@ -25,7 +25,7 @@ import XCTest
 
 class TextStorageTests: XCTestCase {
     func testAddsDefaultTextFormatting() {
-        let textStorage = TextStorage()
+        let textStorage = PRTextStorage()
         let string = "This is a test string"
         textStorage.replaceCharacters(in: .zero, with: NSAttributedString(string: string))
         var effectiveRange = NSRange.zero
@@ -38,7 +38,7 @@ class TextStorageTests: XCTestCase {
     }
 
     func testAddTextFormattingUsingProvider() throws{
-        let textStorage = TextStorage()
+        let textStorage = PRTextStorage()
         let font = try XCTUnwrap(UIFont(name: "Arial", size: 30))
 
         let paragraphStyle = NSMutableParagraphStyle()
@@ -60,7 +60,7 @@ class TextStorageTests: XCTestCase {
     }
 
     func testAddsAttribute() {
-        let textStorage = TextStorage()
+        let textStorage = PRTextStorage()
         let key = NSAttributedString.Key("custom_attr")
         let customAttribute = [key: true]
         let range = NSRange(location: 0, length: 4)
@@ -76,7 +76,7 @@ class TextStorageTests: XCTestCase {
     }
 
     func testRemoveAttributes() {
-        let textStorage = TextStorage()
+        let textStorage = PRTextStorage()
         let testString = "test string"
         let key = NSAttributedString.Key("custom_attr")
         let customAttribute = [key: true]
@@ -99,7 +99,7 @@ class TextStorageTests: XCTestCase {
     }
 
     func testFixesMissingDefaultAttributesWhenRemoved() {
-        let textStorage = TextStorage()
+        let textStorage = PRTextStorage()
         let testString = NSAttributedString(string: "test string")
         textStorage.replaceCharacters(in: .zero, with: testString)
 
@@ -117,7 +117,7 @@ class TextStorageTests: XCTestCase {
     }
 
     func testAddsMissingAttributesInTextBeingReplaced() {
-        let textStorage = TextStorage()
+        let textStorage = PRTextStorage()
         let testString = NSAttributedString(string: "test string", attributes: [NSAttributedString.Key("attr1"): 1, NSAttributedString.Key("attr2"): 2])
         textStorage.replaceCharacters(in: .zero, with: testString)
 

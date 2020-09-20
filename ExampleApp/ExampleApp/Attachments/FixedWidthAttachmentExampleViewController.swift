@@ -40,6 +40,8 @@ class FixedWidthAttachmentExampleViewController: ExamplesBaseViewController {
         editor.layer.borderColor = UIColor.systemBlue.cgColor
         editor.layer.borderWidth = 1.0
 
+        editor.maxHeight = .infinite
+
         let button = UIButton(type: .system)
         button.setTitle("Insert attachment", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
