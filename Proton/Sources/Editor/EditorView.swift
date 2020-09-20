@@ -48,6 +48,18 @@ public protocol BoundsObserving: AnyObject {
     func didChangeBounds(_ bounds: CGRect)
 }
 
+
+/// Defines the height for the Editor
+public enum EditorHeight {
+    /// Default controlled via autolayout.
+    case `default`
+    /// Maximum height editor is allowed to grow to before it starts scrolling
+    case max(_ height: CGFloat)
+    /// Boundless height.
+    /// - Important: Editor must not have auto-layout constraints on height failing which the editor will stop growing per height
+    ///  constraints and will not scroll beyond that point i.e. scrollbars would not be visible.
+    case infinite
+}
 /// Representation of a line of text in `EditorView`. A line is defined as a single fragment starting from the beginning of
 /// bounds of `EditorView` to the end. A line may have any number of characters based on the contents in the `EditorView`.
 /// - Note:
@@ -298,9 +310,29 @@ open class EditorView: UIView {
     /// Maximum height that the `EditorView` can expand to. After reaching the maximum specified height, the editor becomes scrollable.
     /// - Note:
     /// If both auto-layout constraints and `maxHeight` are used, the lower of the two height would be used as maximum allowed height.
-    public var maxHeight: CGFloat {
-        get { richTextView.maxHeight }
-        set { richTextView.maxHeight = newValue }
+    public var maxHeight: EditorHeight {
+        get {
+            let height = richTextView.maxHeight
+            switch height {
+            case 0:
+                return .default
+            case .greatestFiniteMagnitude:
+                return .infinite
+            default:
+                return .max(height)
+            }
+
+        }
+        set {
+            switch newValue {
+            case let .max(height):
+                richTextView.maxHeight = height
+            case .default:
+                richTextView.maxHeight = 0
+            case .infinite:
+                richTextView.maxHeight = .greatestFiniteMagnitude
+            }
+        }
     }
 
     /// Text to be set in the `EditorView`
@@ -430,6 +462,7 @@ open class EditorView: UIView {
     }
 
     private func setup() {
+        maxHeight = .default
         richTextView.autocorrectionType = .default
 
         richTextView.translatesAutoresizingMaskIntoConstraints = false

@@ -28,7 +28,7 @@ public protocol EditorContentView: Focusable {
     var editor: EditorView { get }
 
     var attributedText: NSAttributedString { get set }
-    var maxHeight: CGFloat { get set }
+    var maxHeight: EditorHeight { get set }
     var boundsObserver: BoundsObserving? { get set }
     var delegate: EditorViewDelegate? { get set }
 
@@ -45,7 +45,7 @@ public extension EditorContentView {
         return editor.becomeFirstResponder()
     }
 
-    var maxHeight: CGFloat {
+    var maxHeight: EditorHeight {
         get { editor.maxHeight }
         set { editor.maxHeight = newValue }
     }

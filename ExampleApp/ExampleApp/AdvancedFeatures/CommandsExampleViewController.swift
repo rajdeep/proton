@@ -129,7 +129,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
             editor.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             editor.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
-            editor.heightAnchor.constraint(lessThanOrEqualToConstant: 30000),
+            editor.heightAnchor.constraint(lessThanOrEqualToConstant: 300),
         ])
     }
 
