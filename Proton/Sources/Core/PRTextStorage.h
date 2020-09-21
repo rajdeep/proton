@@ -21,10 +21,10 @@
 #ifndef PRTextStorage_h
 #define PRTextStorage_h
 
-
-#endif /* PRTextStorage_h */
-
 #import <UIKit/UIKit.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol DefaultTextFormattingProviding;
 @protocol TextStorageDelegate;
 @class Attachment;
@@ -34,13 +34,16 @@
 @property (weak, nullable) id<DefaultTextFormattingProviding> defaultTextFormattingProvider;
 @property (weak, nullable) id<TextStorageDelegate> textStorageDelegate;
 
+@property (nonatomic, readonly) UIFont *defaultFont;
+@property (nonatomic, readonly) NSParagraphStyle *defaultParagraphStyle;
+@property (nonatomic, readonly) UIColor *defaultTextColor;
+@property (nonatomic, readonly) NSRange textEndRange;
 
-@property(nonatomic, readonly, nonnull) UIFont *defaultFont;
-@property(nonatomic, readonly, nonnull) NSParagraphStyle *defaultParagraphStyle;
-@property(nonatomic, readonly, nonnull) UIColor *defaultTextColor;
-@property(nonatomic, readonly) NSRange textEndRange;
-
-- (void)removeAttributes:(NSArray<NSAttributedStringKey> *_Nonnull)attrs range:(NSRange)range;
-- (void)insertAttachmentInRange:(NSRange)range attachment:(Attachment *_Nonnull)attachment;
+- (void)removeAttributes:(NSArray<NSAttributedStringKey> *)attrs range:(NSRange)range;
+- (void)insertAttachmentInRange:(NSRange)range attachment:(Attachment *)attachment;
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#endif /* PRTextStorage_h */
