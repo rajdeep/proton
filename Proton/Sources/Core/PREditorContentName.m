@@ -1,5 +1,5 @@
 //
-//  EditorContentName.m
+//  PREditorContentName.m
 //  Proton
 //
 //  Created by Rajdeep Kwatra on 13/9/20.
@@ -19,9 +19,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "EditorContentName.h"
+#import "PREditorContentName.h"
 
-@implementation EditorContentName
+@implementation PREditorContentName
 
 - (instancetype)initWithRawValue:(NSString *)rawValue {
     self = [super init];
@@ -32,8 +32,15 @@
 }
 
 - (BOOL)isEqual:(id)other {
-    EditorContentName *otherName = (EditorContentName *)other;
-    return otherName.hash == self.hash;
+    if (self == other) {
+        return YES;
+    }
+    
+    if (![other isKindOfClass:PREditorContentName.class]) {
+        return NO;
+    }
+    
+    return [self.rawValue isEqualToString:((PREditorContentName *)other).rawValue];
 }
 
 - (NSUInteger)hash {
@@ -44,10 +51,10 @@
     return [NSString stringWithFormat:@"EditorContent.Name(rawValue: \"%@\")", [self rawValue]];
 }
 
-+ (EditorContentName *)paragraphName { return [[EditorContentName alloc] initWithRawValue:@"_paragraph"]; }
-+ (EditorContentName *)viewOnlyName { return [[EditorContentName alloc] initWithRawValue:@"_viewOnly"]; }
-+ (EditorContentName *)newlineName { return [[EditorContentName alloc] initWithRawValue:@"_newline"]; }
-+ (EditorContentName *)textName { return [[EditorContentName alloc] initWithRawValue:@"_text"]; }
-+ (EditorContentName *)unknownName { return [[EditorContentName alloc] initWithRawValue:@"_unknown"]; }
++ (PREditorContentName *)paragraphName { return [[PREditorContentName alloc] initWithRawValue:@"_paragraph"]; }
++ (PREditorContentName *)viewOnlyName { return [[PREditorContentName alloc] initWithRawValue:@"_viewOnly"]; }
++ (PREditorContentName *)newlineName { return [[PREditorContentName alloc] initWithRawValue:@"_newline"]; }
++ (PREditorContentName *)textName { return [[PREditorContentName alloc] initWithRawValue:@"_text"]; }
++ (PREditorContentName *)unknownName { return [[PREditorContentName alloc] initWithRawValue:@"_unknown"]; }
 
 @end

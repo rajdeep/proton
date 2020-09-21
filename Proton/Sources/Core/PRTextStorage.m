@@ -18,35 +18,29 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 #import "PRTextStorage.h"
-#import "EditorContentName.h"
-
+#import "PREditorContentName.h"
 #import <Proton/Proton-Swift.h>
 
 @interface PRTextStorage ()
 @property (nonatomic) NSTextStorage *storage;
-
 @end
 
 @implementation PRTextStorage
 
-@synthesize storage = _storage;
-
 - (instancetype)init {
     if (self = [super init]) {
-        self.storage = [[NSTextStorage alloc] init];
+        _storage = [[NSTextStorage alloc] init];
     }
     return self;
 }
 
 - (NSString *)string {
-    return self.storage.string;
+    return _storage.string;
 }
 
 - (UIFont *)defaultFont {
-    return [UIFont preferredFontForTextStyle: UIFontTextStyleBody];
+    return [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 }
 
 - (NSParagraphStyle *)defaultParagraphStyle {
@@ -55,9 +49,9 @@
 
 - (UIColor *)defaultTextColor {
     if (@available(iOS 13, *)) {
-        return [UIColor labelColor];
+        return UIColor.labelColor;
     } else {
-        return [UIColor blackColor];
+        return UIColor.blackColor;
     }
 }
 
@@ -69,29 +63,25 @@
     return [self.storage attribute:attrName atIndex:location effectiveRange:range];
 }
 
-- (NSDictionary<NSString *,id> *)attributesAtIndex:(NSUInteger)location effectiveRange:(NSRangePointer)effectiveRange {
-//    if (location <= self.storage.length) {
-//        return [[NSDictionary alloc] init];
-//    }
-    
+- (NSDictionary<NSString *, id> *)attributesAtIndex:(NSUInteger)location effectiveRange:(NSRangePointer)effectiveRange {
     return [self.storage attributesAtIndex:location effectiveRange:effectiveRange];
 }
 
 - (void)replaceCharactersInRange:(NSRange)range withAttributedString:(NSAttributedString *)attrString {
-      // TODO: Add undo behaviour
-   NSMutableAttributedString *replacementString = [attrString mutableCopy];
+    // TODO: Add undo behaviour
+    NSMutableAttributedString *replacementString = [attrString mutableCopy];
     // Fix any missing attribute that is in the location being replaced, but not in the text that
     // is coming in.
     if (range.length > 0 && attrString.length > 0) {
-        id outgoingAttrs = [_storage attributesAtIndex:(range.location + range.length - 1) effectiveRange:nil];
-        id incomingAttrs = [attrString attributesAtIndex:0 effectiveRange:nil];
+        NSDictionary<NSAttributedStringKey, id> *outgoingAttrs = [_storage attributesAtIndex:(range.location + range.length - 1) effectiveRange:nil];
+        NSDictionary<NSAttributedStringKey, id> *incomingAttrs = [attrString attributesAtIndex:0 effectiveRange:nil];
 
-        NSMutableDictionary<NSAttributedStringKey,id> *diff = [[NSMutableDictionary alloc] init];
-        for (id outgoingKey in outgoingAttrs) {
+        NSMutableDictionary<NSAttributedStringKey, id> *diff = [[NSMutableDictionary alloc] init];
+        for (NSAttributedStringKey outgoingKey in outgoingAttrs) {
             // We do not want to fix the underline since it can be added by the input method for
             // characters accepting diacritical marks (eg. in Vietnamese or Spanish) and should be transient.
-            if (![incomingAttrs valueForKey:outgoingKey] && outgoingKey != NSUnderlineStyleAttributeName) {
-                [diff setObject:outgoingAttrs[outgoingKey] forKey:outgoingKey];
+            if (incomingAttrs[outgoingKey] == nil && outgoingKey != NSUnderlineStyleAttributeName) {
+                diff[outgoingKey] = outgoingAttrs[outgoingKey];
             }
         }
         [replacementString addAttributes:diff range:NSMakeRange(0, replacementString.length)];
@@ -99,18 +89,18 @@
 
     // Handles the crash when nested list receives enter key in quick succession that unindents the list item.
     // Check only required with Obj-C based TextStorage
-    if(range.location + range.length <= _storage.length) {
-        id deletedText = [_storage attributedSubstringFromRange:range];
-        [_textStorageDelegate textStorage:self willDeleteText: deletedText insertedText: replacementString range: range];
+    if (range.location + range.length <= _storage.length) {
+        NSAttributedString *deletedText = [_storage attributedSubstringFromRange:range];
+        [_textStorageDelegate textStorage:self willDeleteText:deletedText insertedText:replacementString range:range];
         [super replaceCharactersInRange:range withAttributedString:replacementString];
     }
 }
 
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)str {
     [self beginEditing];
-    unsigned long delta = str.length - range.length;
-    
-    NSArray<Attachment *> *attachmentsToDelete = [self getAttachments:range];
+    NSInteger delta = str.length - range.length;
+
+    NSArray<Attachment *> *attachmentsToDelete = [self attachmentsForRange:range];
     for (id attachment in attachmentsToDelete) {
         [attachment removeFromSuperview];
     }
@@ -122,28 +112,18 @@
     [self endEditing];
 }
 
-- (NSArray<Attachment *> *)getAttachments:(NSRange) range {
-    NSMutableArray<Attachment *> *attachments = [NSMutableArray array];
-    [_storage enumerateAttribute:NSAttachmentAttributeName inRange:range options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
-        if ([value isKindOfClass: [Attachment class]]) {
-            [attachments addObject: value];
-        }
-    }];
-    return attachments;
-}
-
-- (void)setAttributes:(NSDictionary<NSString *,id> *)attrs range:(NSRange)range {
+- (void)setAttributes:(NSDictionary<NSString *, id> *)attrs range:(NSRange)range {
     [self beginEditing];
 
-    id updatedAttributes = [self applyingDefaultFormattingIfRequiredToAttributes:attrs];
+    NSDictionary<NSAttributedStringKey, id> *updatedAttributes = [self applyingDefaultFormattingIfRequiredToAttributes:attrs];
     [_storage setAttributes:updatedAttributes range:range];
 
-    NSRange newlineRange = [_storage.string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]];
-    while(newlineRange.location != NSNotFound) {
-        [_storage addAttribute:@"_blockContentType" value:[EditorContentName newlineName] range:newlineRange];
+    NSRange newlineRange = [_storage.string rangeOfCharacterFromSet:NSCharacterSet.newlineCharacterSet];
+    while (newlineRange.location != NSNotFound) {
+        [_storage addAttribute:@"_blockContentType" value:PREditorContentName.newlineName range:newlineRange];
         NSUInteger remainingLocation = newlineRange.location + newlineRange.length;
         NSUInteger remainingLength = _storage.length - remainingLocation;
-        newlineRange = [_storage.string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]
+        newlineRange = [_storage.string rangeOfCharacterFromSet:NSCharacterSet.newlineCharacterSet
                                                         options:0
                                                           range:NSMakeRange(remainingLocation, remainingLength)];
     }
@@ -153,71 +133,24 @@
     [self endEditing];
 }
 
-- (NSDictionary<NSAttributedStringKey,id> *)applyingDefaultFormattingIfRequiredToAttributes:(NSDictionary<NSAttributedStringKey,id> *)attributes {
-    NSMutableDictionary<NSAttributedStringKey,id> * updatedAttributes = attributes.mutableCopy;
-    if (!updatedAttributes) {
-        updatedAttributes = [[NSMutableDictionary alloc] init];
-    }
-
-    if (![attributes objectForKey:NSParagraphStyleAttributeName]) {
-        id value = _defaultTextFormattingProvider.paragraphStyle;
-        if (!value) {
-            value = [self defaultParagraphStyle];
-        }
-        [updatedAttributes setObject:value forKey:NSParagraphStyleAttributeName];
-    }
-
-    if (![attributes objectForKey:NSFontAttributeName]) {
-        id value = _defaultTextFormattingProvider.font;
-        if (!value) {
-            value = [self defaultFont];
-        }
-        [updatedAttributes setObject:value forKey:NSFontAttributeName];
-    }
-
-    if (![attributes objectForKey:NSForegroundColorAttributeName]) {
-        id value = _defaultTextFormattingProvider.textColor;
-        if (!value) {
-            value = [self defaultTextColor];
-        }
-        [updatedAttributes setObject:value forKey:NSForegroundColorAttributeName];
-    }
-
-    return updatedAttributes;
-}
-
-- (void)fixMissingAttributesForDeletedAttributes:(NSArray<NSAttributedStringKey> *)attrs range:(NSRange)range {
-    if ([attrs containsObject:NSForegroundColorAttributeName]) {
-        [_storage addAttribute:NSForegroundColorAttributeName value:[self defaultTextColor] range:range];
-    }
-
-    if ([attrs containsObject:NSParagraphStyleAttributeName]) {
-        [_storage addAttribute:NSParagraphStyleAttributeName value:[self defaultParagraphStyle] range:range];
-    }
-
-    if ([attrs containsObject:NSFontAttributeName]) {
-        [_storage addAttribute:NSFontAttributeName value:[self defaultFont] range:range];
-    }
-}
-
 - (void)insertAttachmentInRange:(NSRange)range attachment:(Attachment *_Nonnull)attachment {
-    id spacer = attachment.spacer.string;
-    bool hasPrevSpacer = false;
+    NSString *spacer = attachment.spacer.string;
+    BOOL hasPrevSpacer = NO;
     if (range.length + range.location > 0) {
         NSRange subrange = NSMakeRange(range.location == 0 ? 0 : range.location - 1, 1);
-        hasPrevSpacer = [self attributedSubstringFromRange: subrange].string == spacer;
+        hasPrevSpacer = [self attributedSubstringFromRange:subrange].string == spacer;
     }
-    bool hasNextSpacer = false;
+    BOOL hasNextSpacer = NO;
     if ((range.location + range.length + 1) <= self.length) {
         NSRange subrange = NSMakeRange(range.location, 1);
-        hasNextSpacer = [self attributedSubstringFromRange: subrange].string == spacer;
+        hasNextSpacer = [self attributedSubstringFromRange:subrange].string == spacer;
     }
 
-    NSAttributedString *attachmentString = [attachment stringWithSpacersWithAppendPrev:!hasNextSpacer appendNext:!hasNextSpacer];
-    [self replaceCharactersInRange:range withAttributedString: attachmentString];
+    NSAttributedString *attachmentString = [attachment stringWithSpacersWithAppendPrev:!hasPrevSpacer appendNext:!hasNextSpacer];
+    [self replaceCharactersInRange:range withAttributedString:attachmentString];
 }
 
-- (void)addAttributes:(NSDictionary<NSAttributedStringKey,id> *)attrs range:(NSRange)range {
+- (void)addAttributes:(NSDictionary<NSAttributedStringKey, id> *)attrs range:(NSRange)range {
     [self beginEditing];
     [_storage addAttributes:attrs range:range];
     [_storage fixAttributesInRange:NSMakeRange(0, _storage.length)];
@@ -227,10 +160,10 @@
 
 - (void)removeAttributes:(NSArray<NSAttributedStringKey> *_Nonnull)attrs range:(NSRange)range {
     [self beginEditing];
-    for (id attr in attrs) {
+    for (NSAttributedStringKey attr in attrs) {
         [_storage removeAttribute:attr range:range];
     }
-    [self fixMissingAttributesForDeletedAttributes: attrs range: range];
+    [self fixMissingAttributesForDeletedAttributes:attrs range:range];
     [_storage fixAttributesInRange:NSMakeRange(0, _storage.length)];
     [self edited:NSTextStorageEditedAttributes range:range changeInLength:0];
     [self endEditing];
@@ -238,6 +171,50 @@
 
 - (void)removeAttribute:(NSAttributedStringKey)name range:(NSRange)range {
     [_storage removeAttribute:name range:range];
+}
+
+#pragma mark - Private
+
+- (void)fixMissingAttributesForDeletedAttributes:(NSArray<NSAttributedStringKey> *)attrs range:(NSRange)range {
+    if ([attrs containsObject:NSForegroundColorAttributeName]) {
+        [_storage addAttribute:NSForegroundColorAttributeName value:self.defaultTextColor range:range];
+    }
+
+    if ([attrs containsObject:NSParagraphStyleAttributeName]) {
+        [_storage addAttribute:NSParagraphStyleAttributeName value:self.defaultParagraphStyle range:range];
+    }
+
+    if ([attrs containsObject:NSFontAttributeName]) {
+        [_storage addAttribute:NSFontAttributeName value:self.defaultFont range:range];
+    }
+}
+
+- (NSDictionary<NSAttributedStringKey, id> *)applyingDefaultFormattingIfRequiredToAttributes:(NSDictionary<NSAttributedStringKey, id> *)attributes {
+    NSMutableDictionary<NSAttributedStringKey, id> *updatedAttributes = attributes.mutableCopy ?: [[NSMutableDictionary alloc] init];
+
+    if (!attributes[NSParagraphStyleAttributeName]) {
+        updatedAttributes[NSParagraphStyleAttributeName] = _defaultTextFormattingProvider.paragraphStyle.copy ?: self.defaultParagraphStyle;
+    }
+
+    if (!attributes[NSFontAttributeName]) {
+        updatedAttributes[NSFontAttributeName] = _defaultTextFormattingProvider.font ?: self.defaultFont;
+    }
+
+    if (!attributes[NSForegroundColorAttributeName]) {
+        updatedAttributes[NSForegroundColorAttributeName] = _defaultTextFormattingProvider.textColor ?: self.defaultTextColor;
+    }
+
+    return updatedAttributes;
+}
+
+- (NSArray<Attachment *> *)attachmentsForRange:(NSRange)range {
+    NSMutableArray<Attachment *> *attachments = [NSMutableArray array];
+    [_storage enumerateAttribute:NSAttachmentAttributeName inRange:range options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id _Nullable value, NSRange range, BOOL *_Nonnull stop) {
+        if ([value isKindOfClass:[Attachment class]]) {
+            [attachments addObject:value];
+        }
+    }];
+    return attachments;
 }
 
 @end

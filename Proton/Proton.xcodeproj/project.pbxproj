@@ -101,8 +101,8 @@
 		1BD993C023C9EAA900563ACB /* TextTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993BF23C9EAA900563ACB /* TextTransformer.swift */; };
 		1BD993C423CACCE100563ACB /* MockAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993C323CACCE100563ACB /* MockAttachment.swift */; };
 		1BE8825F250DD7B600E2CC1B /* PRTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE8825E250DD7B600E2CC1B /* PRTextStorage.m */; };
-		1BE88262250E3ABB00E2CC1B /* EditorContentName.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BE88261250E3ABB00E2CC1B /* EditorContentName.h */; };
-		1BE88264250E3ADB00E2CC1B /* EditorContentName.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE88263250E3ADB00E2CC1B /* EditorContentName.m */; };
+		1BE88262250E3ABB00E2CC1B /* PREditorContentName.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BE88261250E3ABB00E2CC1B /* PREditorContentName.h */; };
+		1BE88264250E3ADB00E2CC1B /* PREditorContentName.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE88263250E3ADB00E2CC1B /* PREditorContentName.m */; };
 		1BF90FB4245E503E00A411A3 /* TextBlockAttributeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90FB3245E503E00A411A3 /* TextBlockAttributeTests.swift */; };
 		1BFFEF0523C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF0423C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift */; };
 		1BFFEF0C23C30D5200D2BA35 /* EditorContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF0B23C30D5200D2BA35 /* EditorContentView.swift */; };
@@ -260,8 +260,8 @@
 		1BE8825D250DD79E00E2CC1B /* PRTextStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PRTextStorage.h; sourceTree = "<group>"; };
 		1BE8825E250DD7B600E2CC1B /* PRTextStorage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PRTextStorage.m; sourceTree = "<group>"; };
 		1BE88260250DD81500E2CC1B /* Proton-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Proton-Bridging-Header.h"; sourceTree = "<group>"; };
-		1BE88261250E3ABB00E2CC1B /* EditorContentName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorContentName.h; sourceTree = "<group>"; };
-		1BE88263250E3ADB00E2CC1B /* EditorContentName.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditorContentName.m; sourceTree = "<group>"; };
+		1BE88261250E3ABB00E2CC1B /* PREditorContentName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PREditorContentName.h; sourceTree = "<group>"; };
+		1BE88263250E3ADB00E2CC1B /* PREditorContentName.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PREditorContentName.m; sourceTree = "<group>"; };
 		1BF90FB3245E503E00A411A3 /* TextBlockAttributeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBlockAttributeTests.swift; sourceTree = "<group>"; };
 		1BFFEF0423C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAutogrowingTextViewDelegate.swift; sourceTree = "<group>"; };
 		1BFFEF0B23C30D5200D2BA35 /* EditorContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentView.swift; sourceTree = "<group>"; };
@@ -449,8 +449,8 @@
 				1B30A35F2489CE3E00FA1D48 /* ListFormattingProvider.swift */,
 				1BE8825D250DD79E00E2CC1B /* PRTextStorage.h */,
 				1BE8825E250DD7B600E2CC1B /* PRTextStorage.m */,
-				1BE88261250E3ABB00E2CC1B /* EditorContentName.h */,
-				1BE88263250E3ADB00E2CC1B /* EditorContentName.m */,
+				1BE88261250E3ABB00E2CC1B /* PREditorContentName.h */,
+				1BE88263250E3ADB00E2CC1B /* PREditorContentName.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -830,7 +830,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BE88262250E3ABB00E2CC1B /* EditorContentName.h in Headers */,
+				1BE88262250E3ABB00E2CC1B /* PREditorContentName.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -946,7 +946,7 @@
 				1B7A985923C484BC00C34B14 /* RichTextViewDelegate.swift in Sources */,
 				1B45CDE123C05476001EB196 /* UIColor+Image.swift in Sources */,
 				1B45CD9123BDD7E6001EB196 /* AutogrowingTextView.swift in Sources */,
-				1BE88264250E3ADB00E2CC1B /* EditorContentName.m in Sources */,
+				1BE88264250E3ADB00E2CC1B /* PREditorContentName.m in Sources */,
 				1B45CDE623C05942001EB196 /* AttachmentSize.swift in Sources */,
 				1B975AFB23CD3E9B00EC410C /* RendererView.swift in Sources */,
 				1B164F1023D1BE9900A0869A /* AttributesDecoding.swift in Sources */,
