@@ -25,7 +25,7 @@ class AutogrowingTextView: UITextView {
 
     var maxHeight: CGFloat = 0 {
         didSet {
-            guard maxHeight > 0 else {
+            guard maxHeight > 0, maxHeight < .greatestFiniteMagnitude else {
                 maxHeightConstraint.isActive = false
                 return
             }
