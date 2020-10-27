@@ -346,6 +346,7 @@ class RichTextView: AutogrowingTextView {
         defer {
             if contentLength == 0 {
                 resetTypingAttributes()
+                updatePlaceholderVisibility()
             }
             richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: selectedRange)
         }

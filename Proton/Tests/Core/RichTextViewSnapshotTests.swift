@@ -52,6 +52,30 @@ class RichTextViewSnapshotTests: XCTestCase {
         assertSnapshot(matching: view, as: .image, record: recordMode)
     }
 
+    func testRendersPlaceholderInTextView() {
+        let viewController = SnapshotTestViewController()
+        let textView = RichTextView(frame: .zero, context: RichTextViewContext())
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.placeholderText = NSAttributedString(string: "Placeholder text", attributes: [.foregroundColor: UIColor.gray])
+        textView.addBorder()
+
+        let view = viewController.view!
+        view.addSubview(textView)
+        NSLayoutConstraint.activate([
+            textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            textView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+        ])
+
+        textView.attributedText = NSAttributedString(string: "A")
+        viewController.render()
+        assertSnapshot(matching: view, as: .image, record: recordMode)
+
+        textView.deleteBackward()
+        viewController.render()
+        assertSnapshot(matching: view, as: .image, record: recordMode)
+    }
+
     func testRendersMultilineTextViewBasedOnContent() {
         let viewController = SnapshotTestViewController()
         let textView = RichTextView(frame: .zero, context: RichTextViewContext())
