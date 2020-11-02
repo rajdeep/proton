@@ -74,6 +74,14 @@ class RichTextViewSnapshotTests: XCTestCase {
         textView.deleteBackward()
         viewController.render()
         assertSnapshot(matching: view, as: .image, record: recordMode)
+
+        textView.attributedText = NSAttributedString(string: "B")
+        viewController.render()
+        assertSnapshot(matching: view, as: .image, record: recordMode)
+
+        textView.attributedText = NSAttributedString();
+        viewController.render()
+        assertSnapshot(matching: view, as: .image, record: recordMode)
     }
 
     func testRendersMultilineTextViewBasedOnContent() {

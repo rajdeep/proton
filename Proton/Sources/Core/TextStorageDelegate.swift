@@ -24,4 +24,5 @@ import UIKit
 @objc
 protocol TextStorageDelegate: AnyObject {
     func textStorage(_ textStorage: PRTextStorage, willDeleteText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange)
+    func textStorage(_ textStorage: PRTextStorage, edited: NSTextStorage.EditActions, range editedRange:NSRange, changeInLength delta: NSInteger)
 }
