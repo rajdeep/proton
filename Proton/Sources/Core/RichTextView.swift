@@ -346,7 +346,6 @@ class RichTextView: AutogrowingTextView {
         defer {
             if contentLength == 0 {
                 resetTypingAttributes()
-                updatePlaceholderVisibility()
             }
             richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: selectedRange)
         }
@@ -392,7 +391,6 @@ class RichTextView: AutogrowingTextView {
 
     func replaceCharacters(in range: NSRange, with attrString: NSAttributedString) {
         richTextStorage.replaceCharacters(in: range, with: attrString)
-        updatePlaceholderVisibility()
     }
 
     func replaceCharacters(in range: NSRange, with string: String) {
@@ -559,12 +557,15 @@ class RichTextView: AutogrowingTextView {
 
 extension RichTextView: NSLayoutManagerDelegate {
     func layoutManager(_ layoutManager: NSLayoutManager, didCompleteLayoutFor textContainer: NSTextContainer?, atEnd layoutFinishedFlag: Bool) {
-        updatePlaceholderVisibility()
         richTextViewDelegate?.richTextView(self, didFinishLayout: layoutFinishedFlag)
     }
 }
 
 extension RichTextView: TextStorageDelegate {
+    func textStorage(_ textStorage: PRTextStorage, edited: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: NSInteger) {
+        updatePlaceholderVisibility()
+    }
+    
     func textStorage(_ textStorage: PRTextStorage, willDeleteText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) {
         textProcessor?.textStorage(textStorage, willProcessDeletedText: deletedText, insertedText: insertedText)
     }

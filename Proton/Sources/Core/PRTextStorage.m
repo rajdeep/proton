@@ -67,6 +67,11 @@
     return [_storage attributesAtIndex:location effectiveRange:effectiveRange];
 }
 
+- (void)edited:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta {
+    [super edited:editedMask range:editedRange changeInLength:delta];
+    [self.textStorageDelegate textStorage:self edited:editedMask range:editedRange changeInLength:delta];
+}
+
 - (void)replaceCharactersInRange:(NSRange)range withAttributedString:(NSAttributedString *)attrString {
     // TODO: Add undo behaviour
     NSMutableAttributedString *replacementString = [attrString mutableCopy];
