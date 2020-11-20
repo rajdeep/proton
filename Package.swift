@@ -23,7 +23,8 @@ let package = Package(
         .iOS(.v11),
     ],
     products: [
-        .library(name: "Proton", targets: ["Proton"])
+        .library(name: "Proton", targets: ["Proton"]),
+        .library(name: "ProtonExtensions", targets: ["ProtonExtensions"])
     ],
     dependencies: [
         .package(name: "SnapshotTesting", url: "https://github.com/pointfreeco/swift-snapshot-testing.git", .branch("master"))
@@ -33,6 +34,11 @@ let package = Package(
             name: "Proton",
             dependencies: [],
             path: "Proton/Sources"
+        ),
+        .target(
+            name: "ProtonExtensions",
+            dependencies: ["Proton"],
+            path: "ProtonExtensions/Sources"
         ),
         .testTarget(
             name: "ProtonTests",
