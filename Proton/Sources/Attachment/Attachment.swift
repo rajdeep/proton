@@ -370,10 +370,6 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 extension Attachment {
     /// Invalidates the current layout and triggers a layout update.
     public func invalidateLayout() {
-        guard let editor = containerEditorView,
-            let range = editor.attributedText.rangeFor(attachment: self) else { return }
-
-        editor.invalidateLayout(for: range)
-        editor.relayoutAttachments(in: range)
+        containerEditorView?.relayoutAttachment(self)
     }
 }

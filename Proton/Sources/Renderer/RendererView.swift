@@ -197,7 +197,8 @@ extension RendererView: RichTextViewDelegate {
     func richTextView(_ richTextView: RichTextView, shouldHandle key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange, handled: inout Bool) { }
 
     func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool) {
-        readOnlyEditorView.relayoutAttachments()
+        guard finished else { return }
+        readOnlyEditorView.relayoutAllAttachments()
     }
 
     func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {

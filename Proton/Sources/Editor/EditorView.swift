@@ -134,6 +134,9 @@ open class EditorView: UIView {
     /// * To prevent any command to be executed, set value to be an empty array.
     public var registeredCommands: [EditorCommand]?
 
+    /// Low-tech lock mechanism for avoiding relayout an attachment during a layout of all attachments
+    private var isInRelayoutAllAttachmentsLoop = false
+
     // Making this a convenience init fails the test `testRendersWidthRangeAttachment` as the init of a class subclassed from
     // `EditorView` is returned as type `EditorView` and not the class itself, causing the test to fail.
     /// Initializes the EditorView
@@ -866,7 +869,7 @@ extension EditorView: RichTextViewDelegate {
 
     func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool) {
         guard finished else { return }
-        relayoutAttachments()
+        relayoutAllAttachments()
     }
 
     func richTextView(_ richTextView: RichTextView, selectedRangeChangedFrom oldRange: NSRange?, to newRange: NSRange?) {
@@ -877,41 +880,59 @@ extension EditorView: RichTextViewDelegate {
 }
 
 extension EditorView {
-    func invalidateLayout(for range: NSRange) {
-        richTextView.invalidateLayout(for: range)
-    }
-
-    func relayoutAttachments(in range: NSRange? = nil) {
-        let rangeToUse = range ?? richTextView.attributedText.fullRange
+    
+    func relayoutAllAttachments() {
+        guard !isInRelayoutAllAttachmentsLoop else {
+            return
+        }
+        isInRelayoutAllAttachmentsLoop = true
+        let rangeToUse = richTextView.attributedText.fullRange
         richTextView.enumerateAttribute(.attachment, in: rangeToUse, options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
             guard let attachment = attach as? Attachment else { return }
-
-            // Remove attachment from container if it is already added to another Editor
-            // for e.g. when moving text with attachment into another attachment
-            if attachment.containerEditorView != self {
-                attachment.removeFromContainer()
-            }
-
-            let glyphRange = richTextView.glyphRange(forCharacterRange: range)
-            var frame = richTextView.boundingRect(forGlyphRange: glyphRange)
-            frame.origin.y += self.textContainerInset.top
-
-            var size = attachment.frame.size
-            if size == .zero,
-                let contentSize = attachment.contentView?.systemLayoutSizeFitting(bounds.size) {
-                size = contentSize
-            }
-
-            frame = CGRect(origin: frame.origin, size: size)
-
-            if attachment.isRendered == false {
-                attachment.render(in: self)
-                if let focusable = attachment.contentView as? Focusable {
-                    focusable.setFocus()
-                }
-            }
-            attachment.frame = frame
+            relayout(attachment: attachment, range: range)
         }
+        isInRelayoutAllAttachmentsLoop = false
+    }
+    
+    func relayoutAttachment(_ attachment: Attachment) {
+        guard
+            !isInRelayoutAllAttachmentsLoop,
+            let editor = attachment.containerEditorView,
+            let range = editor.attributedText.rangeFor(attachment: attachment)
+        else {
+            return
+        }
+        
+        richTextView.invalidateLayout(for: range)
+        relayout(attachment: attachment, range: range)
+    }
+    
+    private func relayout(attachment: Attachment, range: NSRange) {
+        // Remove attachment from container if it is already added to another Editor
+        // for e.g. when moving text with attachment into another attachment
+        if attachment.containerEditorView != self {
+            attachment.removeFromContainer()
+        }
+
+        let glyphRange = richTextView.glyphRange(forCharacterRange: range)
+        var frame = richTextView.boundingRect(forGlyphRange: glyphRange)
+        frame.origin.y += self.textContainerInset.top
+
+        var size = attachment.frame.size
+        if size == .zero,
+            let contentSize = attachment.contentView?.systemLayoutSizeFitting(bounds.size) {
+            size = contentSize
+        }
+
+        frame = CGRect(origin: frame.origin, size: size)
+
+        if attachment.isRendered == false {
+            attachment.render(in: self)
+            if let focusable = attachment.contentView as? Focusable {
+                focusable.setFocus()
+            }
+        }
+        attachment.frame = frame
     }
 }
 
