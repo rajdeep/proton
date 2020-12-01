@@ -36,14 +36,8 @@ public class FontTraitToggleCommand: EditorCommand {
 
     public func execute(on editor: EditorView) {
         let selectedText = editor.selectedText
-        if editor.isEmpty || editor.selectedRange == .zero {
+        if editor.isEmpty || editor.selectedRange == .zero || selectedText.length == 0 {
             guard let font = editor.typingAttributes[.font] as? UIFont else { return }
-            editor.typingAttributes[.font] = font.toggled(trait: trait)
-            return
-        }
-
-        if selectedText.length == 0 {
-            guard let font = editor.attributedText.attribute(.font, at: editor.selectedRange.location - 1, effectiveRange: nil) as? UIFont else { return }
             editor.typingAttributes[.font] = font.toggled(trait: trait)
             return
         }

@@ -728,6 +728,17 @@ class EditorSnapshotTests: XCTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testEditorWithArabicText() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let text = "حية طيبة"
+    
+        editor.appendCharacters(NSAttributedString(string: text))
+
+        viewController.render(size: CGSize(width: 450, height: 150))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     private func addCaretRect(at range: NSRange, in editor: EditorView, color: UIColor) {
         let rect = editor.caretRect(for: range.location)
         let view = UIView(frame: rect)

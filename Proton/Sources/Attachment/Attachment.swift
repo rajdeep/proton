@@ -38,6 +38,7 @@ public protocol AttachmentOffsetProviding: AnyObject {
     func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint
 }
 
+@objc
 class AttachmentContentView: UIView {
     let name: EditorContent.Name
     weak var attachment: Attachment?
@@ -91,11 +92,13 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         }
     }
 
+    @objc
     var spacer: NSAttributedString {
         let spacer = isBlockAttachment == true ? "\n" : " "
         return NSAttributedString(string: spacer)
     }
 
+    @objc
     func stringWithSpacers(appendPrev: Bool, appendNext: Bool) -> NSAttributedString {
         let updatedString = NSMutableAttributedString()
 //        if appendPrev {
@@ -254,7 +257,8 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         }
     }
 
-    func removeFromSuperView() {
+    @objc
+    func removeFromSuperview() {
         view.removeFromSuperview()
     }
 

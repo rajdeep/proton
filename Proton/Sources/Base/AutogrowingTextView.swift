@@ -25,7 +25,7 @@ class AutogrowingTextView: UITextView {
 
     var maxHeight: CGFloat = 0 {
         didSet {
-            guard maxHeight > 0 else {
+            guard maxHeight > 0, maxHeight < .greatestFiniteMagnitude else {
                 maxHeightConstraint.isActive = false
                 return
             }
@@ -63,6 +63,7 @@ class AutogrowingTextView: UITextView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        guard maxHeight != .greatestFiniteMagnitude else { return }
         let bounds = self.bounds.integral
         let fittingSize = self.calculatedSize(attributedText: attributedText, frame: frame, textContainerInset: textContainerInset)
         self.isScrollEnabled = (fittingSize.height > bounds.height) || (self.maxHeight > 0 && self.maxHeight < fittingSize.height)

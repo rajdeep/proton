@@ -22,7 +22,7 @@ import Foundation
 import UIKit
 
 class RichTextView: AutogrowingTextView {
-    private let storage = TextStorage()
+    private let storage = PRTextStorage()
     static let defaultListLineFormatting = LineFormatting(indentation: 25, spacingBefore: 0)
 
     weak var richTextViewDelegate: RichTextViewDelegate?
@@ -177,7 +177,7 @@ class RichTextView: AutogrowingTextView {
         setupPlaceholder()
     }
 
-    var richTextStorage: TextStorage {
+    var richTextStorage: PRTextStorage {
         return storage
     }
 
@@ -338,10 +338,14 @@ class RichTextView: AutogrowingTextView {
         layoutManager.invalidateDisplay(forCharacterRange: range)
     }
 
+    func resetTypingAttributes() {
+        self.typingAttributes = defaultTypingAttributes
+    }
+
     override func deleteBackward() {
         defer {
             if contentLength == 0 {
-                self.typingAttributes = defaultTypingAttributes
+                resetTypingAttributes()
             }
             richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: selectedRange)
         }
@@ -352,6 +356,12 @@ class RichTextView: AutogrowingTextView {
         let attributeExists = (attributedText.attribute(.textBlock, at: proposedRange.location, effectiveRange: nil) as? Bool) == true
 
         guard attributeExists, let textRange = adjustedTextBlockRangeOnSelectionChange(oldRange: selectedRange, newRange: proposedRange) else {
+
+            // if the character getting deleted is a list item spacer, do a double delete
+            let textToBeDeleted = attributedText.attributedSubstring(from: NSRange(location: proposedRange.location, length: 1)).string
+            if textToBeDeleted == ListTextProcessor.blankLineFiller {
+                super.deleteBackward()
+            }
             super.deleteBackward()
             return
         }
@@ -381,7 +391,6 @@ class RichTextView: AutogrowingTextView {
 
     func replaceCharacters(in range: NSRange, with attrString: NSAttributedString) {
         richTextStorage.replaceCharacters(in: range, with: attrString)
-        updatePlaceholderVisibility()
     }
 
     func replaceCharacters(in range: NSRange, with string: String) {
@@ -406,6 +415,10 @@ class RichTextView: AutogrowingTextView {
 
         let attributes = textStorage.attributes(at: characterIndex, longestEffectiveRange: nil, in: textStorage.fullRange)
         return attributes[attribute]
+    }
+
+    func glyphRange(forCharacterRange range: NSRange) -> NSRange {
+        return layoutManager.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
     }
 
     func boundingRect(forGlyphRange range: NSRange) -> CGRect {
@@ -544,13 +557,16 @@ class RichTextView: AutogrowingTextView {
 
 extension RichTextView: NSLayoutManagerDelegate {
     func layoutManager(_ layoutManager: NSLayoutManager, didCompleteLayoutFor textContainer: NSTextContainer?, atEnd layoutFinishedFlag: Bool) {
-        updatePlaceholderVisibility()
         richTextViewDelegate?.richTextView(self, didFinishLayout: layoutFinishedFlag)
     }
 }
 
 extension RichTextView: TextStorageDelegate {
-    func textStorage(_ textStorage: TextStorage, willDeleteText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) {
+    func textStorage(_ textStorage: PRTextStorage, edited: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: NSInteger) {
+        updatePlaceholderVisibility()
+    }
+    
+    func textStorage(_ textStorage: PRTextStorage, willDeleteText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) {
         textProcessor?.textStorage(textStorage, willProcessDeletedText: deletedText, insertedText: insertedText)
     }
 }

@@ -97,13 +97,14 @@ class LayoutManager: NSLayoutManager {
             }
         }
 
-
-        enumerateLineFragments(forGlyphRange: listRange) { [weak self] (rect, usedRect, textContainer, glyphRange, stop) in
+        let listGlyphRange = glyphRange(forCharacterRange: listRange, actualCharacterRange: nil)
+        enumerateLineFragments(forGlyphRange: listGlyphRange) { [weak self] (rect, usedRect, textContainer, glyphRange, stop) in
             guard let self = self else { return }
+            let characterRange = self.characterRange(forGlyphRange: glyphRange, actualGlyphRange: nil)
 
             var newLineRange = NSRange.zero
-            if glyphRange.location > 0 {
-                newLineRange.location = glyphRange.location - 1
+            if characterRange.location > 0 {
+                newLineRange.location = characterRange.location - 1
                 newLineRange.length = 1
             }
 
@@ -118,8 +119,8 @@ class LayoutManager: NSLayoutManager {
                 skipMarker = newLineString.attribute(.skipNextListMarker, at: 0, effectiveRange: nil) != nil
             }
 
-            let font = textStorage.attribute(.font, at: glyphRange.location, effectiveRange: nil) as? UIFont ?? defaultFont
-            let paraStyle = textStorage.attribute(.paragraphStyle, at: glyphRange.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
+            let font = textStorage.attribute(.font, at: characterRange.location, effectiveRange: nil) as? UIFont ?? defaultFont
+            let paraStyle = textStorage.attribute(.paragraphStyle, at: characterRange.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
 
             if isPreviousLineComplete && skipMarker == false {
 
@@ -158,18 +159,19 @@ class LayoutManager: NSLayoutManager {
             textStorage.attributedSubstring(from: NSRange(location: listRange.endLocation - 1, length: 1)).string == "\n",
             let paraStyle = lastLayoutParaStyle  else { return }
 
-        var para: NSParagraphStyle?
-        if textStorage.length > listRange.endLocation {
-            para = textStorage.attribute(.paragraphStyle, at: listRange.endLocation, effectiveRange: nil) as? NSParagraphStyle
-            // don't draw last rect if there's a following list item (in another indent level)
-            if para != nil {
-                return
-            }
-        }
-
         let level = Int(paraStyle.firstLineHeadIndent/listIndent)
         var index = (counters[level] ?? 0)
         let origin = CGPoint(x: lastRect.minX, y: lastRect.maxY)
+
+        var para: NSParagraphStyle?
+        if textStorage.length > listRange.endLocation {
+            para = textStorage.attribute(.paragraphStyle, at: listRange.endLocation, effectiveRange: nil) as? NSParagraphStyle
+            let paraLevel = Int((para?.firstLineHeadIndent ?? 0)/listIndent)
+            // don't draw last rect if there's a following list item (in another indent level)
+            if para != nil, paraLevel != level {
+                return
+            }
+        }
 
         let newLineRect = CGRect(origin: origin, size: lastRect.size)
 
@@ -229,12 +231,18 @@ class LayoutManager: NSLayoutManager {
                 return
         }
 
-        textStorage.enumerateAttribute(.backgroundStyle, in: glyphsToShow, options: []) { attr, bgStyleRange, _ in
+        let characterRange = self.characterRange(forGlyphRange: glyphsToShow, actualGlyphRange: nil)
+        textStorage.enumerateAttribute(.backgroundStyle, in: characterRange) { attr, bgStyleRange, _ in
             var rects = [CGRect]()
             if let backgroundStyle = attr as? BackgroundStyle {
-                enumerateLineFragments(forGlyphRange: bgStyleRange) { _, _, textContainer, lineRange, _ in
-                    let rangeIntersection = NSIntersectionRange(bgStyleRange, lineRange)
-                    let rect = self.boundingRect(forGlyphRange: rangeIntersection, in: textContainer)
+                let bgStyleGlyphRange = self.glyphRange(forCharacterRange: bgStyleRange, actualCharacterRange: nil)
+                enumerateLineFragments(forGlyphRange: bgStyleGlyphRange) { _, usedRect, textContainer, lineRange, _ in
+                    let rangeIntersection = NSIntersectionRange(bgStyleGlyphRange, lineRange)
+                    var rect = self.boundingRect(forGlyphRange: rangeIntersection, in: textContainer)
+                    // Glyphs can take space outside of the line fragment, and we cannot draw outside of it.
+                    // So it is best to restrict the height just to the line fragment.
+                    rect.origin.y = usedRect.origin.y
+                    rect.size.height = usedRect.height
                     let insetTop = self.layoutManagerDelegate?.textContainerInset.top ?? 0
                     rects.append(rect.offsetBy(dx: 0, dy: insetTop))
                 }
@@ -251,7 +259,7 @@ class LayoutManager: NSLayoutManager {
         let cornerRadius = backgroundStyle.cornerRadius
         let color = backgroundStyle.color
 
-        for i in 0..<rectCount  {
+        for i in 0..<rectCount {
             var previousRect = CGRect.zero
             var nextRect = CGRect.zero
 
