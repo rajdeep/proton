@@ -882,6 +882,17 @@ extension EditorView {
     }
 
     func relayoutAttachments(in range: NSRange? = nil) {
+        guard
+            richTextView.textContainer.size.height > 0,
+            richTextView.textContainer.size.height < CGFloat(Float.greatestFiniteMagnitude)
+        else {
+            /// AutoLayout may resize the TextContainer twice while calculating `intrinsicContentSize` (zero height & max height).
+            /// By this point, the LayoutManager has laid out the `NSAttachment`s as needed, which is enough for `intrinsicContentSize`.
+            /// There is no need to relayout Attachment's Views if the frame size or textContainer size isn't final.
+            /// By guarding here, we avoid unnecessary calculations & possible re-layouts of subviews & superviews.
+            return
+        }
+        
         let rangeToUse = range ?? richTextView.attributedText.fullRange
         richTextView.enumerateAttribute(.attachment, in: rangeToUse, options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
             guard let attachment = attach as? Attachment else { return }
