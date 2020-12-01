@@ -34,8 +34,7 @@ let package = Package(
             name: "ProtonCore",
             dependencies: [],
             path: "Proton/Sources/ProtonCore",
-            publicHeadersPath: ".",
-            cSettings: [.unsafeFlags(["-Wl", "-flat_namespace"])]
+            publicHeadersPath: "."
         ),
         .target(
             name: "Proton",
