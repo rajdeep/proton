@@ -19,6 +19,7 @@
 //
 
 import Foundation
+import ProtonCore
 import UIKit
 
 class RichTextView: AutogrowingTextView {
@@ -29,8 +30,12 @@ class RichTextView: AutogrowingTextView {
     weak var richTextViewListDelegate: RichTextViewListDelegate?
 
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding? {
-        get { storage.defaultTextFormattingProvider }
-        set { storage.defaultTextFormattingProvider = newValue }
+        get {
+            storage.defaultTextFormattingProvider.map({ unsafeBitCast($0, to: DefaultTextFormattingProviding.self) })
+        }
+        set {
+            storage.defaultTextFormattingProvider = newValue
+        }
     }
 
     private let placeholderLabel = UILabel()
@@ -169,7 +174,7 @@ class RichTextView: AutogrowingTextView {
         layoutManager.layoutManagerDelegate = self
         textContainer.textView = self
         self.delegate = context
-        storage.textStorageDelegate = self
+        storage.textStorageDelegate = unsafeBitCast(self, to: ProtonCore.TextStorageDelegate.self)
 
         self.backgroundColor = defaultBackgroundColor
         self.textColor = defaultTextColor

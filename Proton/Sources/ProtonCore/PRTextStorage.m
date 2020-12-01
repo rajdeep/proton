@@ -1,6 +1,6 @@
 //
 //  PRTextStorage.m
-//  Proton
+//  ProtonCore
 //
 //  Created by Rajdeep Kwatra on 13/9/20.
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
@@ -20,7 +20,18 @@
 
 #import "PRTextStorage.h"
 #import "PREditorContentName.h"
-#import <Proton/Proton-Swift.h>
+
+@interface _Attachment: NSTextAttachment
+- (NSAttributedString *)spacer;
+- (void)removeFromSuperview;
+- (NSAttributedString *)stringWithSpacersWithAppendPrev:(BOOL)appendPrev appendNext:(BOOL)appendNext;
+@end
+
+@interface DefaultTextFormattingProviding
+- (UIFont *)font;
+- (NSMutableParagraphStyle *)paragraphStyle;
+- (UIColor *)textColor;
+@end
 
 @interface PRTextStorage ()
 @property (nonatomic) NSTextStorage *storage;
@@ -105,8 +116,8 @@
     [self beginEditing];
     NSInteger delta = str.length - range.length;
 
-    NSArray<Attachment *> *attachmentsToDelete = [self attachmentsForRange:range];
-    for (Attachment *attachment in attachmentsToDelete) {
+    NSArray<_Attachment *> *attachmentsToDelete = (NSArray<_Attachment *> *)[self attachmentsForRange:range];
+    for (_Attachment *attachment in attachmentsToDelete) {
         [attachment removeFromSuperview];
     }
 
@@ -139,7 +150,7 @@
 }
 
 - (void)insertAttachmentInRange:(NSRange)range attachment:(Attachment *_Nonnull)attachment {
-    NSString *spacer = attachment.spacer.string;
+    NSString *spacer = ((_Attachment *) attachment).spacer.string;
     BOOL hasPrevSpacer = NO;
     if (range.length + range.location > 0) {
         NSRange subrange = NSMakeRange(range.location == 0 ? 0 : range.location - 1, 1);
@@ -151,7 +162,7 @@
         hasNextSpacer = [self attributedSubstringFromRange:subrange].string == spacer;
     }
 
-    NSAttributedString *attachmentString = [attachment stringWithSpacersWithAppendPrev:!hasPrevSpacer appendNext:!hasNextSpacer];
+    NSAttributedString *attachmentString = [(_Attachment *)attachment stringWithSpacersWithAppendPrev:!hasPrevSpacer appendNext:!hasNextSpacer];
     [self replaceCharactersInRange:range withAttributedString:attachmentString];
 }
 
@@ -198,15 +209,15 @@
     NSMutableDictionary<NSAttributedStringKey, id> *updatedAttributes = attributes.mutableCopy ?: [NSMutableDictionary dictionary];
 
     if (!attributes[NSParagraphStyleAttributeName]) {
-        updatedAttributes[NSParagraphStyleAttributeName] = _defaultTextFormattingProvider.paragraphStyle.copy ?: self.defaultParagraphStyle;
+        updatedAttributes[NSParagraphStyleAttributeName] = ((DefaultTextFormattingProviding *)(_defaultTextFormattingProvider)).paragraphStyle.copy ?: self.defaultParagraphStyle;
     }
 
     if (!attributes[NSFontAttributeName]) {
-        updatedAttributes[NSFontAttributeName] = _defaultTextFormattingProvider.font ?: self.defaultFont;
+        updatedAttributes[NSFontAttributeName] = ((DefaultTextFormattingProviding *)(_defaultTextFormattingProvider)).font ?: self.defaultFont;
     }
 
     if (!attributes[NSForegroundColorAttributeName]) {
-        updatedAttributes[NSForegroundColorAttributeName] = _defaultTextFormattingProvider.textColor ?: self.defaultTextColor;
+        updatedAttributes[NSForegroundColorAttributeName] = ((DefaultTextFormattingProviding *)(_defaultTextFormattingProvider)).textColor ?: self.defaultTextColor;
     }
 
     return updatedAttributes;
@@ -218,7 +229,7 @@
                          inRange:range
                          options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
                       usingBlock:^(id _Nullable value, NSRange range, BOOL *_Nonnull stop) {
-        if ([value isKindOfClass:[Attachment class]]) {
+        if ([value isKindOfClass:NSClassFromString(@"Proton_Attachment")]) {
             [attachments addObject:value];
         }
     }];

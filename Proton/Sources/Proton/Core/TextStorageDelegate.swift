@@ -1,8 +1,8 @@
 //
-//  Proton-Bridging-Header.h
+//  TextStorageDelegate.swift
 //  Proton
 //
-//  Created by Rajdeep Kwatra on 13/9/20.
+//  Created by Rajdeep Kwatra on 3/1/20.
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,11 +18,12 @@
 //  limitations under the License.
 //
 
+import Foundation
+import ProtonCore
+import UIKit
 
-#ifndef Proton_Bridging_Header_h
-#define Proton_Bridging_Header_h
-
-#import "Core/PRTextStorage.h"
-#import "Core/PREditorContentName.h"
-
-#endif /* Proton_Bridging_Header_h */
+@objc
+protocol TextStorageDelegate: AnyObject {
+    func textStorage(_ textStorage: PRTextStorage, willDeleteText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange)
+    func textStorage(_ textStorage: PRTextStorage, edited: NSTextStorage.EditActions, range editedRange:NSRange, changeInLength delta: NSInteger)
+}

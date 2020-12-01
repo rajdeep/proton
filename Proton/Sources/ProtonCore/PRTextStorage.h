@@ -1,6 +1,6 @@
 //
 //  PRTextStorage.h
-//  Proton
+//  ProtonCore
 //
 //  Created by Rajdeep Kwatra on 13/9/20.
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
@@ -25,13 +25,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol DefaultTextFormattingProviding;
-@protocol TextStorageDelegate;
+@class PRTextStorage;
+
+@protocol TextStorageDelegate
+- (void)textStorage:(PRTextStorage *)textStorage willDeleteText:(NSAttributedString *)deletedText insertedText: (NSAttributedString *)insertedText range: (NSRange)range;
+- (void)textStorage:(PRTextStorage *)textStorage edited:(NSTextStorageEditActions *)edited range: (NSRange)editedRange changeInLength: (NSInteger)delta;
+@end
+
 @class Attachment;
 
 @interface PRTextStorage : NSTextStorage
 
-@property (weak, nullable) id<DefaultTextFormattingProviding> defaultTextFormattingProvider;
+@property (weak, nullable) id defaultTextFormattingProvider;
 @property (weak, nullable) id<TextStorageDelegate> textStorageDelegate;
 
 @property (nonatomic, readonly) UIFont *defaultFont;
@@ -40,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSRange textEndRange;
 
 - (void)removeAttributes:(NSArray<NSAttributedStringKey> *)attrs range:(NSRange)range;
-- (void)insertAttachmentInRange:(NSRange)range attachment:(Attachment *)attachment;
+- (void)insertAttachmentInRange:(NSRange)range attachment:(id)attachment;
 
 @end
 

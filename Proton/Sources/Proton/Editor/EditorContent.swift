@@ -19,6 +19,7 @@
 //
 
 import Foundation
+import ProtonCore
 import UIKit
 
 /// Type of attachment

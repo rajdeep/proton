@@ -55,6 +55,7 @@ class AttachmentContentView: UIView {
 
 /// An attachment can be used as a container for any view object. Based on the `AttachmentSize` provided, the attachment automatically renders itself alongside the text in `EditorView`.
 /// `Attachment` also provides helper functions like `deleteFromContainer` and `rangeInContainer`
+@objc(Proton_Attachment)
 open class Attachment: NSTextAttachment, BoundsObserving {
 
     private let view: AttachmentContentView

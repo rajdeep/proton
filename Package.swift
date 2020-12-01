@@ -23,6 +23,7 @@ let package = Package(
         .iOS(.v11),
     ],
     products: [
+        .library(name: "ProtonCore", type: .static, targets: ["ProtonCore"]),
         .library(name: "Proton", targets: ["Proton"])
     ],
     dependencies: [
@@ -30,9 +31,16 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Proton",
+            name: "ProtonCore",
             dependencies: [],
-            path: "Proton/Sources"
+            path: "Proton/Sources/ProtonCore",
+            publicHeadersPath: ".",
+            cSettings: [.unsafeFlags(["-Wl", "-flat_namespace"])]
+        ),
+        .target(
+            name: "Proton",
+            dependencies: ["ProtonCore"],
+            path: "Proton/Sources/Proton"
         ),
         .testTarget(
             name: "ProtonTests",
