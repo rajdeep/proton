@@ -74,6 +74,14 @@
 
 - (void)replaceCharactersInRange:(NSRange)range withAttributedString:(NSAttributedString *)attrString {
     // TODO: Add undo behaviour
+    
+    // Handles the crash when nested list receives enter key in quick succession that unindents the list item.
+    // Check only required with Obj-C based TextStorage
+    if ((range.location + range.length) > _storage.length) {
+        // Out of bounds
+        return;
+    }
+    
     NSMutableAttributedString *replacementString = [attrString mutableCopy];
     // Fix any missing attribute that is in the location being replaced, but not in the text that
     // is coming in.
@@ -92,13 +100,9 @@
         [replacementString addAttributes:diff range:NSMakeRange(0, replacementString.length)];
     }
 
-    // Handles the crash when nested list receives enter key in quick succession that unindents the list item.
-    // Check only required with Obj-C based TextStorage
-    if (range.location + range.length <= _storage.length) {
-        NSAttributedString *deletedText = [_storage attributedSubstringFromRange:range];
-        [_textStorageDelegate textStorage:self willDeleteText:deletedText insertedText:replacementString range:range];
-        [super replaceCharactersInRange:range withAttributedString:replacementString];
-    }
+    NSAttributedString *deletedText = [_storage attributedSubstringFromRange:range];
+    [_textStorageDelegate textStorage:self willDeleteText:deletedText insertedText:replacementString range:range];
+    [super replaceCharactersInRange:range withAttributedString:replacementString];
 }
 
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)str {
