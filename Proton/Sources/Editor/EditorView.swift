@@ -135,7 +135,7 @@ open class EditorView: UIView {
     public var registeredCommands: [EditorCommand]?
 
     /// Low-tech lock mechanism for avoiding relayout an attachment during a layout of all attachments
-    private var isInRelayoutAllAttachmentsLoop = false
+    private var relayoutAllAttachmentsLoopDepth = 0
 
     // Making this a convenience init fails the test `testRendersWidthRangeAttachment` as the init of a class subclassed from
     // `EditorView` is returned as type `EditorView` and not the class itself, causing the test to fail.
@@ -881,22 +881,28 @@ extension EditorView: RichTextViewDelegate {
 
 extension EditorView {
     
+    /// `relayoutAllAttachments()` has been seen to be called recursively until stack overflow. As a workaround, we will guard if the recursion is too deep.
+    /// Note: Initial implementation completely disabled nested layouts, however, tests cases prove that the Editor depends on this and will layout incorrectly in some cases.
+    private var shouldRelayoutAllAttachments: Bool {
+        return relayoutAllAttachmentsLoopDepth <= 2
+    }
+
     func relayoutAllAttachments() {
-        guard !isInRelayoutAllAttachmentsLoop else {
+        guard shouldRelayoutAllAttachments else {
             return
         }
-        isInRelayoutAllAttachmentsLoop = true
+        relayoutAllAttachmentsLoopDepth += 1
         let rangeToUse = richTextView.attributedText.fullRange
         richTextView.enumerateAttribute(.attachment, in: rangeToUse, options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
             guard let attachment = attach as? Attachment else { return }
             relayout(attachment: attachment, range: range)
         }
-        isInRelayoutAllAttachmentsLoop = false
+        relayoutAllAttachmentsLoopDepth -= 1
     }
     
     func relayoutAttachment(_ attachment: Attachment) {
         guard
-            !isInRelayoutAllAttachmentsLoop,
+            shouldRelayoutAllAttachments,
             let editor = attachment.containerEditorView,
             let range = editor.attributedText.rangeFor(attachment: attachment)
         else {
@@ -910,7 +916,7 @@ extension EditorView {
     private func relayout(attachment: Attachment, range: NSRange) {
         // Remove attachment from container if it is already added to another Editor
         // for e.g. when moving text with attachment into another attachment
-        if attachment.containerEditorView != self {
+        if let container = attachment.containerEditorView, container != self {
             attachment.removeFromContainer()
         }
 

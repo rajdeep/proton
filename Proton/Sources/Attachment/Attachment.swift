@@ -356,9 +356,9 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
     func render(in editorView: EditorView) {
         self.containerEditorView = editorView
-        guard view.superview == nil else { return }
+        guard !isRendered else { return }
         editorView.richTextView.addSubview(self.view)
-        self.view.layoutIfNeeded()
+        self.view.layoutIfNeeded() // this triggers re-layout of all attachments, and some times the whole UITableView
 
         if var editorContentView = contentView as? EditorContentView,
             editorContentView.delegate == nil {
