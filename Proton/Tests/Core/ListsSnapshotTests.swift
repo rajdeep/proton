@@ -153,4 +153,11 @@ extension NSMutableParagraphStyle {
         paraStyle.headIndent = paraStyle.firstLineHeadIndent
         return paraStyle
     }
+
+    static func withIndent(_ indent: CGFloat) -> NSMutableParagraphStyle {
+        let paraStyle = NSMutableParagraphStyle()
+        paraStyle.firstLineHeadIndent = indent
+        paraStyle.headIndent = paraStyle.firstLineHeadIndent
+        return paraStyle
+    }
 }
