@@ -885,6 +885,7 @@ extension EditorView {
     /// Note: Initial implementation completely disabled nested layouts, however, tests cases prove that the Editor depends on this and will layout incorrectly in some cases.
     private var shouldRelayoutAllAttachments: Bool {
         return relayoutAllAttachmentsLoopDepth <= 2
+            && richTextView.textContainer.size.height > 0
     }
 
     func relayoutAllAttachments() {
