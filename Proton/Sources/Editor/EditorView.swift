@@ -884,7 +884,7 @@ extension EditorView {
     /// `relayoutAllAttachments()` has been seen to be called recursively until stack overflow. As a workaround, we will guard if the recursion is too deep.
     /// Note: Initial implementation completely disabled nested layouts, however, tests cases prove that the Editor depends on this and will layout incorrectly in some cases.
     private var shouldRelayoutAllAttachments: Bool {
-        return relayoutAllAttachmentsLoopDepth <= 2
+        return relayoutAllAttachmentsLoopDepth < 2
             && richTextView.textContainer.size.height > 0
     }
 
