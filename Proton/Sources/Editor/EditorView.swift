@@ -134,7 +134,7 @@ open class EditorView: UIView {
     /// * To prevent any command to be executed, set value to be an empty array.
     public var registeredCommands: [EditorCommand]?
 
-    /// Low-tech lock mechanism for avoiding relayout an attachment during a layout of all attachments
+    /// Low-tech lock mechanism for avoiding infinite relayout a all attachments
     private var relayoutAllAttachmentsLoopDepth = 0
 
     // Making this a convenience init fails the test `testRendersWidthRangeAttachment` as the init of a class subclassed from

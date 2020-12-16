@@ -372,13 +372,17 @@ class RichTextView: AutogrowingTextView {
     }
 
     func insertAttachment(in range: NSRange, attachment: Attachment) {
-        richTextStorage.beginEditing()
         richTextStorage.insertAttachment(in: range, attachment: attachment)
         if let rangeInContainer = attachment.rangeInContainer() {
-            richTextStorage.edited([.editedCharacters, .editedAttributes], range: rangeInContainer, changeInLength: 0)
+            edited(range: rangeInContainer)
         }
-        richTextStorage.endEditing()
         scrollRangeToVisible(NSRange(location: range.location, length: 1))
+    }
+
+    func edited(range: NSRange) {
+        richTextStorage.beginEditing()
+        richTextStorage.edited([.editedCharacters, .editedAttributes], range: range, changeInLength: 0)
+        richTextStorage.endEditing()
     }
 
     func transformContents<T: EditorContentEncoding>(in range: NSRange? = nil, using transformer: T) -> [T.EncodedType] {
