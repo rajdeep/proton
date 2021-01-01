@@ -19,6 +19,7 @@
 //
 
 import Foundation
+import ProtonCore
 
 /// Represents an item in the list. This structure may be used to create `NSAttributedString` from items in an array of `ListItem`. Alternatively, `NSAttributedString` may also be parsed to get an array of `ListItem`s.
 public struct ListItem {
