@@ -220,43 +220,43 @@
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
       "line": 64,
-      "symbol": "EditorContent.Name.paragraph",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
-      "line": 65,
-      "symbol": "EditorContent.Name.viewOnly",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
-      "line": 66,
-      "symbol": "EditorContent.Name.newline",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
-      "line": 67,
-      "symbol": "EditorContent.Name.text",
-      "symbol_kind": "source.lang.swift.decl.var.static",
+      "symbol": "EditorContentName.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
       "line": 68,
-      "symbol": "EditorContent.Name.unknown",
+      "symbol": "EditorContentName.paragraph",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
-      "line": 74,
-      "symbol": "EditorContent.Name.init(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "line": 69,
+      "symbol": "EditorContentName.viewOnly",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
+      "line": 70,
+      "symbol": "EditorContentName.newline",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
+      "line": 71,
+      "symbol": "EditorContentName.text",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
+      "line": 72,
+      "symbol": "EditorContentName.unknown",
+      "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
@@ -352,35 +352,35 @@
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 106,
+      "line": 118,
       "symbol": "EditorView.bounds",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 168,
+      "line": 180,
       "symbol": "EditorView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 187,
+      "line": 199,
       "symbol": "EditorView.selectedTextRange",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 558,
+      "line": 592,
       "symbol": "EditorView.deleteBackward()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 719,
+      "line": 753,
       "symbol": "EditorView.canPerformAction(_:withSender:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

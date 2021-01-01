@@ -104,6 +104,8 @@
 		1BE88262250E3ABB00E2CC1B /* PREditorContentName.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BE88261250E3ABB00E2CC1B /* PREditorContentName.h */; };
 		1BE88264250E3ADB00E2CC1B /* PREditorContentName.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE88263250E3ADB00E2CC1B /* PREditorContentName.m */; };
 		1BF90FB4245E503E00A411A3 /* TextBlockAttributeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90FB3245E503E00A411A3 /* TextBlockAttributeTests.swift */; };
+		1BFDC80F254A9BFC00BD83BD /* ListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFDC80E254A9BFC00BD83BD /* ListParser.swift */; };
+		1BFDC811254AA11F00BD83BD /* ListParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFDC810254AA11F00BD83BD /* ListParserTests.swift */; };
 		1BFFEF0523C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF0423C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift */; };
 		1BFFEF0C23C30D5200D2BA35 /* EditorContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF0B23C30D5200D2BA35 /* EditorContentView.swift */; };
 		1BFFEF1523C332A100D2BA35 /* EditorSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF1423C332A100D2BA35 /* EditorSnapshotTests.swift */; };
@@ -263,6 +265,8 @@
 		1BE88261250E3ABB00E2CC1B /* PREditorContentName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PREditorContentName.h; sourceTree = "<group>"; };
 		1BE88263250E3ADB00E2CC1B /* PREditorContentName.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PREditorContentName.m; sourceTree = "<group>"; };
 		1BF90FB3245E503E00A411A3 /* TextBlockAttributeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBlockAttributeTests.swift; sourceTree = "<group>"; };
+		1BFDC80E254A9BFC00BD83BD /* ListParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListParser.swift; sourceTree = "<group>"; };
+		1BFDC810254AA11F00BD83BD /* ListParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListParserTests.swift; sourceTree = "<group>"; };
 		1BFFEF0423C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAutogrowingTextViewDelegate.swift; sourceTree = "<group>"; };
 		1BFFEF0B23C30D5200D2BA35 /* EditorContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentView.swift; sourceTree = "<group>"; };
 		1BFFEF1423C332A100D2BA35 /* EditorSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorSnapshotTests.swift; sourceTree = "<group>"; };
@@ -451,6 +455,7 @@
 				1BE8825E250DD7B600E2CC1B /* PRTextStorage.m */,
 				1BE88261250E3ABB00E2CC1B /* PREditorContentName.h */,
 				1BE88263250E3ADB00E2CC1B /* PREditorContentName.m */,
+				1BFDC80E254A9BFC00BD83BD /* ListParser.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -465,6 +470,7 @@
 				1B82570523C48FEC0033A0A9 /* RichTextViewContextTests.swift */,
 				1B45CDDA23C04BE3001EB196 /* RichTextViewSnapshotTests.swift */,
 				1B4B60C5247F692D002B63CF /* ListsSnapshotTests.swift */,
+				1BFDC810254AA11F00BD83BD /* ListParserTests.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -954,6 +960,7 @@
 				1B45CDD223C00856001EB196 /* TextContainer.swift in Sources */,
 				1B4B60CA247FC51E002B63CF /* ListCommand.swift in Sources */,
 				1BBAC3CF23CD5A1B0088A1C8 /* UITextRangeExtensions.swift in Sources */,
+				1BFDC80F254A9BFC00BD83BD /* ListParser.swift in Sources */,
 				1B183D8E23CEE9BA00AE83E5 /* AttributesEncoding.swift in Sources */,
 				1BD21554246951090000BCE2 /* LayoutManager.swift in Sources */,
 				1BBAC3CC23CD571D0088A1C8 /* RendererViewDelegate.swift in Sources */,
@@ -1029,6 +1036,7 @@
 				1BC25B542448768200FF88AC /* EditorContextDelegateTests.swift in Sources */,
 				1BBAC3E323CE85660088A1C8 /* RendererCommandExecutorTests.swift in Sources */,
 				1B8D8208243F3386009AD38A /* MockRendererCommand.swift in Sources */,
+				1BFDC811254AA11F00BD83BD /* ListParserTests.swift in Sources */,
 				1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */,
 				1B82570423C48C350033A0A9 /* MockRichTextViewDelegate.swift in Sources */,
 				1BBE4EFC248CB15E00D1C788 /* ListCommandTests.swift in Sources */,

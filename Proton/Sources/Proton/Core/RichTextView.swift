@@ -405,7 +405,9 @@ class RichTextView: AutogrowingTextView {
 
     private func updatePlaceholderVisibility() {
         guard self.attributedText.length == 0 else {
-            placeholderLabel.removeFromSuperview()
+            if placeholderLabel.superview != nil {
+                placeholderLabel.removeFromSuperview()
+            }
             return
         }
         setupPlaceholder()
