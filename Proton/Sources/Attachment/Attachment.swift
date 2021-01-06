@@ -304,18 +304,32 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     ///   - position: Position in the text container.
     ///   - charIndex: Character index
     public override func attachmentBounds(for textContainer: NSTextContainer?, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGRect {
-         guard let textContainer = textContainer, textContainer.size.height > 0 && textContainer.size.width > 0 else { return .zero }
+        guard let textContainer = textContainer, textContainer.size.height > 0 && textContainer.size.width > 0 else { return .zero }
+
+        let indent: CGFloat
+        if charIndex < self.containerEditorView?.contentLength ?? 0 {
+            let paraStyle = self.containerEditorView?.attributedText.attribute(.paragraphStyle, at: charIndex, effectiveRange: nil) as? NSParagraphStyle
+            indent = paraStyle?.firstLineHeadIndent ?? 0
+        } else {
+            indent = 0
+        }
+        // Account for text leading and trailing margins within the textContainer
+        var adjustedContainerSize = textContainer.size
+        adjustedContainerSize.width -= textContainer.lineFragmentPadding * 2
+        adjustedContainerSize.width -= indent
+        var adjustedLineFrag = lineFrag
+        adjustedLineFrag.size.width = min(lineFrag.size.width, adjustedContainerSize.width)
 
         var size: CGSize
 
         if let boundsProviding = contentView as? DynamicBoundsProviding {
-            size = boundsProviding.sizeFor(containerSize: textContainer.size, lineRect: lineFrag)
+            size = boundsProviding.sizeFor(containerSize: adjustedContainerSize, lineRect: adjustedLineFrag)
         } else {
             size = contentView?.bounds.integral.size ?? view.bounds.integral.size
         }
 
-        if size == .zero,
-            let fittingSize = contentView?.systemLayoutSizeFitting(textContainer.size) {
+        if (size.width == 0 || size.height == 0),
+            let fittingSize = contentView?.systemLayoutSizeFitting(adjustedContainerSize) {
             size = fittingSize
         }
 
@@ -323,32 +337,16 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         case .matchContent:
             size = contentView?.bounds.integral.size ?? view.bounds.integral.size
         case let .fixed(width):
-            size = CGSize(width: min(size.width, width), height: size.height)
+            size.width = min(size.width, width)
         case .fullWidth:
-            let containerWidth = textContainer.size.width
-            // Account for text leading and trailing margins within the textContainer
-            var indent: CGFloat = 0
-            if charIndex < self.containerEditorView?.contentLength ?? 0 {
-                let paraStyle = self.containerEditorView?.attributedText.attribute(.paragraphStyle, at: charIndex, effectiveRange: nil) as? NSParagraphStyle
-                indent = paraStyle?.firstLineHeadIndent ?? 0
-            }
-
-            let adjustedContainerWidth = containerWidth - (textContainer.lineFragmentPadding * 2) - indent
-            size = CGSize(width: adjustedContainerWidth, height: size.height)
+            size.width = adjustedContainerSize.width
         case let .range(minWidth, maxWidth):
-            if size.width < minWidth {
-                size = CGSize(width: minWidth, height: size.height)
-            } else if size.width > maxWidth {
-                size = CGSize(width: maxWidth, height: size.height)
-            }
+            size.width = max(minWidth, min(maxWidth, size.width))
         case let .percent(value):
-            let containerWidth = textContainer.size.width
-            let adjustedContainerWidth = containerWidth - (textContainer.lineFragmentPadding * 2)
-            let percentWidth = adjustedContainerWidth * (value / 100.0)
-            size = CGSize(width: percentWidth, height: size.height)
+            size.width = adjustedContainerSize.width * (value / 100.0)
         }
 
-        let offset = offsetProvider?.offset(for: self, in: textContainer, proposedLineFragment: lineFrag, glyphPosition: position, characterIndex: charIndex) ?? .zero
+        let offset = offsetProvider?.offset(for: self, in: textContainer, proposedLineFragment: adjustedLineFrag, glyphPosition: position, characterIndex: charIndex) ?? .zero
 
         self.bounds = CGRect(origin: offset, size: size)
         return self.bounds
