@@ -33,7 +33,6 @@ public typealias Processed = Bool
 
 /// An object capable of intercepting and modifying the text and attributes in an `EditorView` when registered with the `EditorView`.
 public protocol TextProcessing {
-
     /// Name of the TextProcessor
     var name: String { get }
 

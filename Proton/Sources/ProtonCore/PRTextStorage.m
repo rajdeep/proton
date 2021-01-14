@@ -233,7 +233,7 @@
                          inRange:range
                          options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
                       usingBlock:^(id _Nullable value, NSRange range, BOOL *_Nonnull stop) {
-        if ([value isKindOfClass:NSClassFromString(@"Proton_Attachment")]) {
+        if ([value isKindOfClass:NSClassFromString(@"PRAttachment")]) {
             [attachments addObject:value];
         }
     }];
