@@ -55,10 +55,6 @@
     }
 }
 
-- (NSRange)textEndRange {
-    return NSMakeRange(self.length, 0);
-}
-
 - (id)attribute:(NSAttributedStringKey)attrName atIndex:(NSUInteger)location effectiveRange:(NSRangePointer)range {
     return [_storage attribute:attrName atIndex:location effectiveRange:range];
 }
