@@ -663,8 +663,9 @@ open class EditorView: UIView {
 
     private func editorLayoutLineFrom(range: NSRange?) -> EditorLine? {
         guard let range = range,
-            let lineRange = richTextView.lineRange(from: range.location),
-            contentLength >= lineRange.endLocation else { return nil }
+              let lineRange = richTextView.lineRange(from: range.location),
+              contentLength >= lineRange.endLocation
+        else { return nil }
 
         let text = attributedText.attributedSubstring(from: lineRange)
         return EditorLine(text: text, range: lineRange)
@@ -846,7 +847,7 @@ open class EditorView: UIView {
         registeredCommands?.removeAll { c in
             commands.contains { $0.name == c.name }
         }
-        if registeredCommands?.count == 0 {
+        if registeredCommands?.isEmpty == true {
             registeredCommands = nil
         }
     }
@@ -1011,7 +1012,7 @@ extension EditorView {
 
             var size = attachment.frame.size
             if size == .zero,
-                let contentSize = attachment.contentView?.systemLayoutSizeFitting(bounds.size) {
+               let contentSize = attachment.contentView?.systemLayoutSizeFitting(bounds.size) {
                 size = contentSize
             }
 

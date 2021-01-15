@@ -34,7 +34,6 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         self.editor = editor
     }
 
-
     func register(_ processor: TextProcessing) {
         register([processor])
     }

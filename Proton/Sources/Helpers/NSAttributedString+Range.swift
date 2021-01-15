@@ -57,9 +57,10 @@ public extension NSAttributedString {
     /// - Parameter range: Range for substring. Substring starts from location in range to number of characters towards beginning per length
     /// specified in range.
     func reverseAttributedSubstring(from range: NSRange) -> NSAttributedString? {
-        guard length > 0 && range.location + range.length < length else {
-            return nil
-        }
+        guard length > 0,
+              range.location + range.length < length
+        else { return nil }
+        
         return attributedSubstring(from: NSRange(location: range.location - range.length, length: range.length))
     }
 
@@ -90,7 +91,8 @@ public extension NSAttributedString {
     ///   - location: Location to inspect
     func rangeOf(attribute: NSAttributedString.Key, at location: Int) -> NSRange? {
         guard location < length,
-            self.attribute(attribute, at: location, effectiveRange: nil) != nil else { return nil }
+              self.attribute(attribute, at: location, effectiveRange: nil) != nil
+        else { return nil }
 
         var forwardRange = rangeOf(attribute: attribute, startingLocation: location, reverseLookup: false)
         var reverseRange = rangeOf(attribute: attribute, startingLocation: location, reverseLookup: true)
@@ -100,7 +102,7 @@ public extension NSAttributedString {
         }
 
         if let r = reverseRange,
-            r.endLocation < location {
+           r.endLocation < location {
             reverseRange = nil
         }
 

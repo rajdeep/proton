@@ -64,7 +64,6 @@ public class ListCommand: EditorCommand {
     /// When set to nil before running `execute`, it removes list formatting from the selected range of text.
     public var attributeValue: Any?
 
-
     /// Executes the command with value of `attributeValue` for `.listItem` attribute. If the `attributeValue` is nil, executing
     /// removed list formatting from the selected range of text.
     /// - Parameter editor: Editor to execute the command on.
@@ -72,12 +71,12 @@ public class ListCommand: EditorCommand {
         var selectedRange = editor.selectedRange
         // Adjust to span entire line range if the selection starts in the middle of the line
         if let currentLine = editor.contentLinesInRange(NSRange(location: selectedRange.location, length: 0)).first,
-            currentLine.range.length > 0 {
+           currentLine.range.length > 0 {
             let location = currentLine.range.location
             var length = max(currentLine.range.length, selectedRange.length + (selectedRange.location - currentLine.range.location))
             let range = NSRange(location: location, length: length)
             if editor.contentLength > range.endLocation,
-                editor.attributedText.substring(from: NSRange(location: range.endLocation, length: 1)) == "\n" {
+               editor.attributedText.substring(from: NSRange(location: range.endLocation, length: 1)) == "\n" {
                 length += 1
             }
             selectedRange = NSRange(location: location, length: length)
@@ -99,8 +98,8 @@ public class ListCommand: EditorCommand {
 
         // Fix the list attribute on the trailing `\n` in previous line, if previous line has a listItem attribute applied
         if let previousLine = editor.previousContentLine(from: selectedRange.location),
-            let listValue = editor.attributedText.attribute(.listItem, at: previousLine.range.endLocation - 1, effectiveRange: nil),
-            editor.attributedText.attribute(.listItem, at: previousLine.range.endLocation, effectiveRange: nil) == nil {
+           let listValue = editor.attributedText.attribute(.listItem, at: previousLine.range.endLocation - 1, effectiveRange: nil),
+           editor.attributedText.attribute(.listItem, at: previousLine.range.endLocation, effectiveRange: nil) == nil {
             editor.addAttribute(.listItem, value: listValue, at: NSRange(location: previousLine.range.endLocation, length: 1))
         }
 

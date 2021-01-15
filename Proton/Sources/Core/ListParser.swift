@@ -68,7 +68,7 @@ public struct ListParser {
                                                     NSAttributedString.Key.paragraphStyle: paraStyle
                                                    ]))
             }
-                attributedString.append(listText)
+            attributedString.append(listText)
         }
         return attributedString
     }
