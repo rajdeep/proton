@@ -67,11 +67,11 @@ class RichTextEditorContext: RichTextViewContext {
                 return false
             }
 
-            guard range.endLocation <= textView.attributedText.length else { return false }
+            let attributedText: NSAttributedString = textView.attributedText // single allocation
+            guard range.endLocation <= attributedText.length else { return false }
 
-            let substring = textView.attributedText.attributedSubstring(from: range)
-            guard substring.length > 0,
-                let attachment = substring.attribute(.attachment, at: 0, effectiveRange: nil) as? Attachment,
+            guard range.length > 0,
+                let attachment = attributedText.attribute(.attachment, at: range.location, effectiveRange: nil) as? Attachment,
                 attachment.selectBeforeDelete else {
                     return true
             }
