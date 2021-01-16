@@ -459,6 +459,15 @@ class RichTextView: AutogrowingTextView {
         }
     }
 
+    // When a user enables `Use keyboard navigation to move focus between controls` it enables the focus system in the app.
+    // It means focused item also becomes the first responder. UITextView is focusable by default, but if isEditable is set to false, it cannot be focussed anymore.
+    // This leads to an issue where if a user selects text in non-editable text view and right clicks the text view loses the first responder to the focused menu, and therefore no actions are provided, and it is not possible to copy.
+    // Returning true will make it focusable regardless if it is editable, and it will not be losing responder because it will stay focused.
+    // It is not perfect, as a user can focus this view with Tab and make no actions on it.
+    override var canBecomeFocused: Bool {
+        return true
+    }
+
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         guard editorView?.canPerformMenuAction(action, withSender: sender) == true else {
             return false
