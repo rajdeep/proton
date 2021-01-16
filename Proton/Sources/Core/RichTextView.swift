@@ -24,7 +24,7 @@ import UIKit
 class RichTextView: AutogrowingTextView {
     
     /// Equivilant, strongly-typed alternative to `textStorage`
-    let richTextStorage = PRTextStorage()
+    private let richTextStorage = PRTextStorage()
     static let defaultListLineFormatting = LineFormatting(indentation: 25, spacingBefore: 0)
 
     weak var richTextViewDelegate: RichTextViewDelegate?
@@ -54,6 +54,7 @@ class RichTextView: AutogrowingTextView {
             .foregroundColor: defaultTextFormattingProvider?.textColor ?? richTextStorage.defaultTextColor
         ]
     }
+    var defaultFont: UIFont { richTextStorage.defaultFont }
     var defaultTextColor: UIColor { richTextStorage.defaultTextColor }
     var defaultBackgroundColor: UIColor {
         if #available(iOS 13.0, *) {
