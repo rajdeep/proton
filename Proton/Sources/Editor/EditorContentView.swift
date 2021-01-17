@@ -61,7 +61,10 @@ public extension EditorContentView {
     }
 
     func setFocus() {
-        guard editor.isEditable, editor.frame.size != .zero else { return }
+        guard editor.isEditable,
+              editor.frame.size != .zero
+        else { return }
+        
         editor.becomeFirstResponder()
     }
 }

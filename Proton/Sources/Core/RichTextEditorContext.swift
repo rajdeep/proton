@@ -30,9 +30,9 @@ class RichTextEditorContext: RichTextViewContext {
 
         activeTextView = textView as? RichTextView
         guard let richTextView = activeTextView else { return }
-        activeTextView?.richTextViewDelegate?.richTextView(richTextView, didReceiveFocusAt: textView.selectedRange)
-
-        let range = textView.selectedRange
+        
+        let range = richTextView.selectedRange
+        richTextView.richTextViewDelegate?.richTextView(richTextView, didReceiveFocusAt: range)
         var attributes = richTextView.typingAttributes
         let contentType = attributes[.blockContentType] as? EditorContent.Name ?? .unknown
         attributes[.blockContentType] = nil
@@ -46,13 +46,13 @@ class RichTextEditorContext: RichTextViewContext {
             activeTextView = nil
         }
         guard let richTextView = activeTextView else { return }
-        activeTextView?.richTextViewDelegate?.richTextView(richTextView, didLoseFocusFrom: textView.selectedRange)
+        richTextView.richTextViewDelegate?.richTextView(richTextView, didLoseFocusFrom: textView.selectedRange)
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        guard textView.delegate === self else { return true }
-
-        guard let richTextView = activeTextView else { return true }
+        guard textView.delegate === self,
+              let richTextView = activeTextView
+        else { return true }
 
         if shouldChangeText(richTextView, range: range, replacementText: text) == false {
             return false
@@ -119,7 +119,9 @@ class RichTextEditorContext: RichTextViewContext {
     }
 
     private func updateTypingAttributes(editor: EditorView, editedRange: NSRange) {
-        guard editedRange.location > 0, editedRange.location <= editor.contentLength else { return }
+        guard editedRange.location > 0,
+              editedRange.location <= editor.contentLength
+        else { return }
 
         // custom attributes to carry over
         let customAttributesToApply: [NSAttributedString.Key] = [.backgroundStyle]
@@ -136,9 +138,9 @@ class RichTextEditorContext: RichTextViewContext {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        guard textView.delegate === self else { return }
-
-        guard let richTextView = activeTextView else { return }
+        guard textView.delegate === self,
+              let richTextView = activeTextView
+        else { return }
 
         applyFontFixForEmojiIfRequired(in: richTextView, at: textView.selectedRange)
         invokeDidProcessIfRequired(richTextView)
@@ -159,9 +161,9 @@ class RichTextEditorContext: RichTextViewContext {
     // character. The code looks for existing font information before emoji char and resets that in the typing attributes.
     private func applyFontFixForEmojiIfRequired(in textView: RichTextView, at range: NSRange) {
         guard let font = textView.typingAttributes[.font] as? UIFont,
-            font.isAppleEmoji else {
-                return
-        }
+              font.isAppleEmoji
+        else { return }
+        
         textView.typingAttributes[.font] = getDefaultFont(textView: textView, before: range)
     }
 
@@ -170,7 +172,7 @@ class RichTextEditorContext: RichTextViewContext {
         let traversalRange = NSRange(location: 0, length: range.location)
         textView.enumerateAttribute(.font, in: traversalRange, options: [.longestEffectiveRangeNotRequired, .reverse]) { font, fontRange, stop in
             if let font = font as? UIFont,
-                font.isAppleEmoji == false {
+               font.isAppleEmoji == false {
                 fontToApply = font
                 stop.pointee = true
             }

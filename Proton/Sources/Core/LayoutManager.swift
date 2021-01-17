@@ -69,7 +69,7 @@ class LayoutManager: NSLayoutManager {
         var prevStyle: NSParagraphStyle?
 
         if listRange.location > 0,
-            textStorage.attribute(.listItem, at: listRange.location - 1, effectiveRange: nil) != nil {
+           textStorage.attribute(.listItem, at: listRange.location - 1, effectiveRange: nil) != nil {
             prevStyle = textStorage.attribute(.paragraphStyle, at: listRange.location - 1, effectiveRange: nil) as? NSParagraphStyle
         }
 
@@ -122,7 +122,7 @@ class LayoutManager: NSLayoutManager {
             let font = textStorage.attribute(.font, at: characterRange.location, effectiveRange: nil) as? UIFont ?? defaultFont
             let paraStyle = textStorage.attribute(.paragraphStyle, at: characterRange.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
 
-            if isPreviousLineComplete && skipMarker == false {
+            if isPreviousLineComplete, skipMarker == false {
 
                 let level = Int(paraStyle.firstLineHeadIndent/listIndent)
                 var index = (self.counters[level] ?? 0)
@@ -155,10 +155,11 @@ class LayoutManager: NSLayoutManager {
         }
 
         guard skipMarker == false,
-            let lastRect = lastLayoutRect,
-            textStorage.length > 1,
-            textStorage.substring(from: NSRange(location: listRange.endLocation - 1, length: 1)) == "\n",
-            let paraStyle = lastLayoutParaStyle  else { return }
+              let lastRect = lastLayoutRect,
+              textStorage.length > 1,
+              textStorage.substring(from: NSRange(location: listRange.endLocation - 1, length: 1)) == "\n",
+              let paraStyle = lastLayoutParaStyle
+        else { return }
 
         let level = Int(paraStyle.firstLineHeadIndent/listIndent)
         var index = (counters[level] ?? 0)
@@ -187,7 +188,7 @@ class LayoutManager: NSLayoutManager {
     }
 
     private func drawListItem(level: Int, previousLevel: Int, index: Int, rect: CGRect, paraStyle: NSParagraphStyle, font: UIFont, attributeValue: Any?) {
-        guard  level > 0 else {  return }
+        guard level > 0 else { return }
 
         let color = layoutManagerDelegate?.textColor ?? self.defaultBulletColor
         color.set()
@@ -228,9 +229,8 @@ class LayoutManager: NSLayoutManager {
     override func drawBackground(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
         super.drawBackground(forGlyphRange: glyphsToShow, at: origin)
         guard let textStorage = textStorage,
-            let currentCGContext = UIGraphicsGetCurrentContext() else {
-                return
-        }
+              let currentCGContext = UIGraphicsGetCurrentContext()
+        else { return }
 
         let characterRange = self.characterRange(forGlyphRange: glyphsToShow, actualGlyphRange: nil)
         textStorage.enumerateAttribute(.backgroundStyle, in: characterRange) { attr, bgStyleRange, _ in

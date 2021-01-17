@@ -49,8 +49,8 @@ public class ListTextProcessor: TextProcessing {
     public func shouldProcess(_ editorView: EditorView, shouldProcessTextIn range: NSRange, replacementText text: String) -> Bool {
         let rangeToCheck = max(0, min(range.endLocation, editorView.contentLength) - 1)
         if editorView.contentLength > 0,
-            let value = editorView.attributedText.attribute(.listItem, at: rangeToCheck, effectiveRange: nil),
-            (editorView.attributedText.attribute(.paragraphStyle, at: rangeToCheck, effectiveRange: nil) as? NSParagraphStyle)?.firstLineHeadIndent ?? 0 > 0 {
+           let value = editorView.attributedText.attribute(.listItem, at: rangeToCheck, effectiveRange: nil),
+           (editorView.attributedText.attribute(.paragraphStyle, at: rangeToCheck, effectiveRange: nil) as? NSParagraphStyle)?.firstLineHeadIndent ?? 0 > 0 {
             editorView.typingAttributes[.listItem] = value
         }
         return true
@@ -68,14 +68,17 @@ public class ListTextProcessor: TextProcessing {
         case .tab:
             // Indent only if previous character is a listItem
             guard editedRange.location > 0,
-                let attributeValue = editor.attributedText.attribute(.listItem, at: editedRange.location - 1, effectiveRange: nil) else {
-                    return
-            }
+                  let attributeValue = editor.attributedText.attribute(.listItem, at: editedRange.location - 1, effectiveRange: nil)
+            else { return }
+            
             let indentMode: Indentation  = (modifierFlags == .shift) ? .outdent : .indent
             updateListItemIfRequired(editor: editor, editedRange: editedRange, indentMode: indentMode, attributeValue: attributeValue)
         case .enter:
             let location = min(editedRange.location, editor.contentLength - 1)
-            guard location >= 0, editor.contentLength > 0 else { return }
+            guard location >= 0,
+                  editor.contentLength > 0
+            else { return }
+            
             let attrs = editor.attributedText.attributes(at: location, effectiveRange: nil)
             if attrs[.listItem] != nil {
                 if modifierFlags == .shift {
@@ -88,11 +91,11 @@ public class ListTextProcessor: TextProcessing {
         case .backspace:
             let attributedText = editor.attributedText
             guard editedRange.location > 0,
-                attributedText.substring(from: editedRange) == ListTextProcessor.blankLineFiller,
-                attributedText.attribute(.listItem, at: editedRange.location, effectiveRange: nil) != nil,
-                attributedText.substring(from: NSRange(location: editedRange.location - 1, length: 1)) == "\n" else {
-                return
-            }
+                  attributedText.substring(from: editedRange) == ListTextProcessor.blankLineFiller,
+                  attributedText.attribute(.listItem, at: editedRange.location, effectiveRange: nil) != nil,
+                  attributedText.substring(from: NSRange(location: editedRange.location - 1, length: 1)) == "\n"
+            else { return }
+            
             editor.deleteBackward()
         }
     }
@@ -108,18 +111,20 @@ public class ListTextProcessor: TextProcessing {
 
     private func exitListsIfRequired(editor: EditorView, editedRange: NSRange) {
         guard let currentLine = editor.contentLinesInRange(editedRange).first,
-            let previousLine = editor.previousContentLine(from: currentLine.range.location) else { return }
+              let previousLine = editor.previousContentLine(from: currentLine.range.location)
+        else { return }
 
         if let nextLine = editor.nextContentLine(from: currentLine.range.location),
-            nextLine.range.endLocation < editor.contentLength - 1 {
+           nextLine.range.endLocation < editor.contentLength - 1 {
             let attributedText = editor.attributedText
             var isNotNewLineCharacter: Bool {
                 let nextLineText = attributedText.substring(from: NSRange(location: nextLine.range.location, length: 1))
                 return nextLineText != "\n"
             }
             var isFirstLevelListItem: Bool {
-                guard let paraStyle = attributedText.attribute(.paragraphStyle, at: nextLine.range.location, effectiveRange: nil) as? NSParagraphStyle
-                else { return false }
+                guard let paraStyle = attributedText.attribute(.paragraphStyle, at: nextLine.range.location, effectiveRange: nil) as? NSParagraphStyle else {
+                    return false
+                }
                 return paraStyle.firstLineHeadIndent / editor.listLineFormatting.indentation == 1
             }
             let hasListItemAttribute = attributedText.attribute(.listItem, at: nextLine.range.location, effectiveRange: nil) != nil
@@ -134,7 +139,7 @@ public class ListTextProcessor: TextProcessing {
         }
 
         if (currentLine.text.length == 0 || currentLine.text.string == ListTextProcessor.blankLineFiller),
-            attributeValue != nil {
+           attributeValue != nil {
             executeOnDidProcess = { [weak self] editor in
                 self?.updateListItemIfRequired(editor: editor, editedRange: currentLine.range, indentMode: .outdent, attributeValue: attributeValue)
                 editor.replaceCharacters(in: NSRange(location: currentLine.range.location + 1, length: 1), with: "")
@@ -167,7 +172,7 @@ public class ListTextProcessor: TextProcessing {
 
             let previousLine = editor.previousContentLine(from: line.range.location)
             if let previousLine = previousLine,
-                previousLine.text.length > 0 {
+               previousLine.text.length > 0 {
                 let previousStyle = previousLine.text.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle
                 guard mutableStyle?.firstLineHeadIndent ?? 0 <= (previousStyle?.firstLineHeadIndent ?? 0) + editor.listLineFormatting.indentation else {
                     return
@@ -195,8 +200,9 @@ public class ListTextProcessor: TextProcessing {
     private func indentChildLists(editor: EditorView, editedRange: NSRange, originalParaStyle: NSParagraphStyle?, indentMode: Indentation) {
         var subListRange = NSRange.zero
         guard let nextLine = editor.nextContentLine(from: editedRange.location),
-            let originalParaStyle = originalParaStyle,
-            editor.attributedText.attribute(.listItem, at: nextLine.range.location, longestEffectiveRange: &subListRange, in: NSRange(location: nextLine.range.location, length: editor.contentLength - nextLine.range.location)) != nil  else { return }
+              let originalParaStyle = originalParaStyle,
+              editor.attributedText.attribute(.listItem, at: nextLine.range.location, longestEffectiveRange: &subListRange, in: NSRange(location: nextLine.range.location, length: editor.contentLength - nextLine.range.location)) != nil
+        else { return }
 
         editor.attributedText.enumerateAttribute(.paragraphStyle, in: subListRange, options: []) { value, range, stop in
             if let style = value as? NSParagraphStyle {

@@ -25,7 +25,9 @@ class AutogrowingTextView: UITextView {
 
     var maxHeight: CGFloat = 0 {
         didSet {
-            guard maxHeight > 0, maxHeight < .greatestFiniteMagnitude else {
+            guard maxHeight > 0,
+                  maxHeight < .greatestFiniteMagnitude
+            else {
                 maxHeightConstraint.isActive = false
                 return
             }
@@ -56,7 +58,10 @@ class AutogrowingTextView: UITextView {
             // Invalidate intrinsic content size when scrolling is disabled again as a result of text
             // getting cleared/removed. In absence of the following code, the textview does not
             // resize when cleared until a character is typed in.
-            guard isScrollEnabled == false, oldValue == true else { return }
+            guard isScrollEnabled == false,
+                  oldValue == true
+            else { return }
+            
             invalidateIntrinsicContentSize()
         }
     }

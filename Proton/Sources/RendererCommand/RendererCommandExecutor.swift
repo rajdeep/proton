@@ -38,9 +38,11 @@ public class RendererCommandExecutor {
     /// - Parameter command: Command to execute
     public func execute(_ command: RendererCommand) {
         guard let activeRenderer = context.activeTextView,
-            let editor = activeRenderer.superview as? EditorView,
-            let renderer = editor.superview as? RendererView,
-            command.canExecute(on: renderer) else { return }
+              let editor = activeRenderer.superview as? EditorView,
+              let renderer = editor.superview as? RendererView,
+              command.canExecute(on: renderer)
+        else { return }
+        
         command.execute(on: renderer)
     }
 }

@@ -38,8 +38,10 @@ public class EditorCommandExecutor {
     /// - Parameter command: Command to execute
     public func execute(_ command: EditorCommand) {
         guard let editor = context.activeTextView?.editorView,
-            editor.isCommandRegistered(command.name),
-            command.canExecute(on: editor) else { return }
+              editor.isCommandRegistered(command.name),
+              command.canExecute(on: editor)
+        else { return }
+        
         command.execute(on: editor)
     }
 }

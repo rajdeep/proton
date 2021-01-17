@@ -28,8 +28,9 @@ public extension String {
         let range = range.lowerBound ..< min(range.upperBound, endIndex)
 
         guard let from = range.lowerBound.samePosition(in: utf16),
-            let to = range.upperBound.samePosition(in: utf16) else {
-                return NSRange(location: NSNotFound, length: 0)
+              let to = range.upperBound.samePosition(in: utf16)
+        else {
+            return NSRange(location: NSNotFound, length: 0)
         }
 
         return NSRange(location: utf16.distance(from: utf16.startIndex, to: from),
@@ -39,12 +40,12 @@ public extension String {
     /// Created String Range from given NSRange. Returns nil if range cannot be converted.
     /// - Parameter range: Range to convert.
     func rangeFromNSRange(range: NSRange) -> Range<String.Index>? {
-        guard
-            let from16 = utf16.index(utf16.startIndex, offsetBy: range.location, limitedBy: utf16.endIndex),
-            let to16 = utf16.index(utf16.startIndex, offsetBy: range.location + range.length, limitedBy: utf16.endIndex),
-            let from = from16.samePosition(in: self),
-            let to = to16.samePosition(in: self)
-            else { return nil }
+        guard let from16 = utf16.index(utf16.startIndex, offsetBy: range.location, limitedBy: utf16.endIndex),
+              let to16 = utf16.index(utf16.startIndex, offsetBy: range.location + range.length, limitedBy: utf16.endIndex),
+              let from = from16.samePosition(in: self),
+              let to = to16.samePosition(in: self)
+        else { return nil }
+        
         return from ..< to
     }
 
@@ -53,8 +54,7 @@ public extension String {
     func rangesOf(characterSet: CharacterSet) -> [Range<String.Index>] {
         var ranges = [Range<String.Index>]()
         var newlineRange = rangeOfCharacter(from: characterSet, options: [], range: nil)
-        while newlineRange != nil {
-            guard let range = newlineRange else { break }
+        while let range = newlineRange {
             ranges.append(range)
             newlineRange = rangeOfCharacter(from: characterSet, options: [], range: range.upperBound ..< endIndex)
         }

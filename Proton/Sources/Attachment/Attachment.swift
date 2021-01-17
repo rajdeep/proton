@@ -265,9 +265,9 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     /// Removes this attachment from the `EditorView` it is contained in.
     public func removeFromContainer() {
         guard let containerTextView = containerTextView,
-        let range = containerTextView.attributedText.rangeFor(attachment: self) else {
-            return
-        }
+              let range = containerTextView.attributedText.rangeFor(attachment: self)
+        else { return }
+        
         containerTextView.textStorage.replaceCharacters(in: range, with: "")
     }
 
@@ -304,7 +304,10 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     ///   - position: Position in the text container.
     ///   - charIndex: Character index
     public override func attachmentBounds(for textContainer: NSTextContainer?, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGRect {
-        guard let textContainer = textContainer, textContainer.size.height > 0 && textContainer.size.width > 0 else { return .zero }
+        guard let textContainer = textContainer,
+              textContainer.size.height > 0,
+              textContainer.size.width > 0
+        else { return .zero }
 
         let indent: CGFloat
         if charIndex < containerEditorView?.contentLength ?? 0 {
@@ -334,7 +337,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         }
 
         if (size.width == 0 || size.height == 0),
-            let fittingSize = contentView?.systemLayoutSizeFitting(adjustedContainerSize) {
+           let fittingSize = contentView?.systemLayoutSizeFitting(adjustedContainerSize) {
             size = fittingSize
         }
 
@@ -364,7 +367,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         self.view.layoutIfNeeded()
 
         if var editorContentView = contentView as? EditorContentView,
-            editorContentView.delegate == nil {
+           editorContentView.delegate == nil {
             editorContentView.delegate = editorView.delegate
         }
     }
@@ -374,7 +377,8 @@ extension Attachment {
     /// Invalidates the current layout and triggers a layout update.
     public func invalidateLayout() {
         guard let editor = containerEditorView,
-            let range = editor.attributedText.rangeFor(attachment: self) else { return }
+              let range = editor.attributedText.rangeFor(attachment: self)
+        else { return }
 
         editor.invalidateLayout(for: range)
         editor.relayoutAttachments(in: range)
