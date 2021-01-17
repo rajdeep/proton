@@ -175,6 +175,6 @@ class RichTextEditorContext: RichTextViewContext {
                 stop.pointee = true
             }
         }
-        return fontToApply ?? textView.richTextStorage.defaultFont
+        return fontToApply ?? textView.defaultFont
     }
 }

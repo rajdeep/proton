@@ -22,15 +22,17 @@ import Foundation
 import UIKit
 
 class RichTextView: AutogrowingTextView {
-    private let storage = PRTextStorage()
+    
+    /// Equivilant, strongly-typed alternative to `textStorage`
+    private let richTextStorage = PRTextStorage()
     static let defaultListLineFormatting = LineFormatting(indentation: 25, spacingBefore: 0)
 
     weak var richTextViewDelegate: RichTextViewDelegate?
     weak var richTextViewListDelegate: RichTextViewListDelegate?
 
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding? {
-        get { storage.defaultTextFormattingProvider }
-        set { storage.defaultTextFormattingProvider = newValue }
+        get { richTextStorage.defaultTextFormattingProvider }
+        set { richTextStorage.defaultTextFormattingProvider = newValue }
     }
 
     private let placeholderLabel = UILabel()
@@ -47,12 +49,13 @@ class RichTextView: AutogrowingTextView {
 
     var defaultTypingAttributes: RichTextAttributes {
         return [
-            .font: defaultTextFormattingProvider?.font ?? storage.defaultFont,
-            .paragraphStyle: defaultTextFormattingProvider?.paragraphStyle ?? storage.defaultParagraphStyle,
-            .foregroundColor: defaultTextFormattingProvider?.textColor ?? storage.defaultTextColor
+            .font: defaultTextFormattingProvider?.font ?? richTextStorage.defaultFont,
+            .paragraphStyle: defaultTextFormattingProvider?.paragraphStyle ?? richTextStorage.defaultParagraphStyle,
+            .foregroundColor: defaultTextFormattingProvider?.textColor ?? richTextStorage.defaultTextColor
         ]
     }
-    var defaultTextColor: UIColor { storage.defaultTextColor }
+    var defaultFont: UIFont { richTextStorage.defaultFont }
+    var defaultTextColor: UIColor { richTextStorage.defaultTextColor }
     var defaultBackgroundColor: UIColor {
         if #available(iOS 13.0, *) {
             return .systemBackground
@@ -162,14 +165,14 @@ class RichTextView: AutogrowingTextView {
         let layoutManager = LayoutManager()
 
         layoutManager.addTextContainer(textContainer)
-        storage.addLayoutManager(layoutManager)
+        richTextStorage.addLayoutManager(layoutManager)
 
         super.init(frame: frame, textContainer: textContainer)
         layoutManager.delegate = self
         layoutManager.layoutManagerDelegate = self
         textContainer.textView = self
         self.delegate = context
-        storage.textStorageDelegate = self
+        richTextStorage.textStorageDelegate = self
 
         self.backgroundColor = defaultBackgroundColor
         self.textColor = defaultTextColor
@@ -177,22 +180,18 @@ class RichTextView: AutogrowingTextView {
         setupPlaceholder()
     }
 
-    var richTextStorage: PRTextStorage {
-        return storage
-    }
-
     var contentLength: Int {
-        return storage.length
+        return textStorage.length
     }
 
     weak var textProcessor: TextProcessor? {
         didSet {
-            storage.delegate = textProcessor
+            richTextStorage.delegate = textProcessor
         }
     }
 
     var textEndRange: NSRange {
-        return storage.textEndRange
+        return NSRange(location: contentLength, length: 0)
     }
 
     var currentLineRange: NSRange? {
@@ -327,7 +326,7 @@ class RichTextView: AutogrowingTextView {
         // As mentioned above, in case of this getting called before layout is completed,
         // we need to account for the range that has been changed. storage.changeInLength provides
         // the change that might not have been laid already
-        return NSRange(location: range.location, length: range.length + storage.changeInLength)
+        return NSRange(location: range.location, length: range.length + textStorage.changeInLength)
     }
 
     func invalidateLayout(for range: NSRange) {
@@ -381,9 +380,9 @@ class RichTextView: AutogrowingTextView {
     }
 
     func edited(range: NSRange) {
-        richTextStorage.beginEditing()
-        richTextStorage.edited([.editedCharacters, .editedAttributes], range: range, changeInLength: 0)
-        richTextStorage.endEditing()
+        textStorage.beginEditing()
+        textStorage.edited([.editedCharacters, .editedAttributes], range: range, changeInLength: 0)
+        textStorage.endEditing()
     }
 
     func transformContents<T: EditorContentEncoding>(in range: NSRange? = nil, using transformer: T) -> [T.EncodedType] {
@@ -391,12 +390,12 @@ class RichTextView: AutogrowingTextView {
     }
 
     func replaceCharacters(in range: NSRange, with attrString: NSAttributedString) {
-        richTextStorage.replaceCharacters(in: range, with: attrString)
+        textStorage.replaceCharacters(in: range, with: attrString)
     }
 
     func replaceCharacters(in range: NSRange, with string: String) {
         // Delegate to function with attrString so that default attributes are automatically applied
-        richTextStorage.replaceCharacters(in: range, with: NSAttributedString(string: string))
+        textStorage.replaceCharacters(in: range, with: NSAttributedString(string: string))
     }
 
     private func updatePlaceholderVisibility() {
@@ -433,15 +432,15 @@ class RichTextView: AutogrowingTextView {
     }
 
     func addAttributes(_ attrs: [NSAttributedString.Key: Any], range: NSRange) {
-        storage.addAttributes(attrs, range: range)
+        textStorage.addAttributes(attrs, range: range)
     }
 
     func removeAttributes(_ attrs: [NSAttributedString.Key], range: NSRange) {
-        storage.removeAttributes(attrs, range: range)
+        richTextStorage.removeAttributes(attrs, range: range)
     }
 
     func enumerateAttribute(_ attrName: NSAttributedString.Key, in enumerationRange: NSRange, options opts: NSAttributedString.EnumerationOptions = [], using block: (Any?, NSRange, UnsafeMutablePointer<ObjCBool>) -> Void) {
-        storage.enumerateAttribute(attrName, in: enumerationRange, options: opts, using: block)
+        textStorage.enumerateAttribute(attrName, in: enumerationRange, options: opts, using: block)
     }
 
     func rangeOfCharacter(at point: CGPoint) -> NSRange? {
