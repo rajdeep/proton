@@ -37,7 +37,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) UIFont *defaultFont;
 @property (nonatomic, readonly) NSParagraphStyle *defaultParagraphStyle;
 @property (nonatomic, readonly) UIColor *defaultTextColor;
-@property (nonatomic, readonly) NSRange textEndRange;
 
 - (void)removeAttributes:(NSArray<NSAttributedStringKey> *)attrs range:(NSRange)range;
 - (void)insertAttachmentInRange:(NSRange)range attachment:(Attachment *)attachment;

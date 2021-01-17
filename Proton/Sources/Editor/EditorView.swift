@@ -115,6 +115,22 @@ open class EditorView: UIView {
 
     var textProcessor: TextProcessor?
 
+    @available(iOS 13.0, *)
+    public var textInteractions: [UITextInteraction] {
+        richTextView.interactions.compactMap({ $0 as? UITextInteraction })
+    }
+
+    @available(iOS, deprecated: 13.0, message: "Use textInteractions")
+    public var textViewGestures: [UIGestureRecognizer] {
+        richTextView.gestureRecognizers ?? []
+    }
+
+    @available(iOS 11.0, *)
+    public var textDragInteractionEnabled: Bool {
+        get { richTextView.textDragInteraction?.isEnabled ?? false }
+        set { richTextView.textDragInteraction?.isEnabled = newValue }
+    }
+
     public override var bounds: CGRect {
         didSet {
             guard oldValue != bounds else { return }
@@ -214,6 +230,22 @@ open class EditorView: UIView {
         set { richTextView.contentInset = newValue }
     }
 
+    @available(iOSApplicationExtension 11.1, *)
+    public var verticalScrollIndicatorInsets: UIEdgeInsets {
+        get { richTextView.verticalScrollIndicatorInsets }
+        set { richTextView.verticalScrollIndicatorInsets = newValue }
+    }
+    
+    public var keyboardDismissMode: UIScrollView.KeyboardDismissMode {
+        get { richTextView.keyboardDismissMode }
+        set { richTextView.keyboardDismissMode = newValue }
+    }
+    
+    public var isScrollEnabled: Bool {
+        get { richTextView.isScrollEnabled }
+        set { richTextView.isScrollEnabled = newValue }
+    }
+    
     /// Gets or sets the insets for the text container's layout area within the editor's content area
     public var textContainerInset: UIEdgeInsets {
         get { richTextView.textContainerInset }
@@ -231,7 +263,7 @@ open class EditorView: UIView {
     /// An attachment is only counted as a single character. Content length does not include
     /// length of content within the Attachment that is hosting another `EditorView`.
     public var contentLength: Int {
-        return attributedText.length
+        return richTextView.contentLength
     }
 
     /// Determines if the `EditorView` is editable or not.
@@ -426,17 +458,98 @@ open class EditorView: UIView {
         self.attributedText = NSAttributedString()
     }
 
+    /// The auto-capitalization style for the text object.
+    /// default is `UITextAutocapitalizationTypeSentences`
+    public var autocapitalizationType: UITextAutocapitalizationType {
+        get { richTextView.autocapitalizationType }
+        set { richTextView.autocapitalizationType = newValue }
+    }
+
     /// The autocorrection style for the text object.
-    /// The default value for this property is `UITextAutocorrectionType.no`.
+    /// default is `UITextAutocorrectionTypeDefault`
     public var autocorrectionType: UITextAutocorrectionType {
         get { richTextView.autocorrectionType }
         set { richTextView.autocorrectionType = newValue }
     }
-    
+
+    /// The spell-checking style for the text object.
+    public var spellCheckingType: UITextSpellCheckingType {
+        get { richTextView.spellCheckingType }
+        set { richTextView.spellCheckingType = newValue }
+    }
+
+    /// The configuration state for smart quotes.
+    @available(iOS 11.0, *)
+    public var smartQuotesType: UITextSmartQuotesType {
+        get { richTextView.smartQuotesType }
+        set { richTextView.smartQuotesType = newValue }
+    }
+
+    /// The configuration state for smart dashes.
+    @available(iOS 11.0, *)
+    public var smartDashesType: UITextSmartDashesType {
+        get { richTextView.smartDashesType }
+        set { richTextView.smartDashesType = newValue }
+    }
+
+    /// The configuration state for the smart insertion and deletion of space characters.
+    @available(iOS 11.0, *)
+    public var smartInsertDeleteType: UITextSmartInsertDeleteType {
+        get { richTextView.smartInsertDeleteType }
+        set { richTextView.smartInsertDeleteType = newValue }
+    }
+
+    /// The keyboard style associated with the text object.
+    public var keyboardType: UIKeyboardType {
+        get { richTextView.keyboardType }
+        set { richTextView.keyboardType = newValue }
+    }
+
+    /// The appearance style of the keyboard that is associated with the text object
+    public var keyboardAppearance: UIKeyboardAppearance {
+        get { richTextView.keyboardAppearance }
+        set { richTextView.keyboardAppearance = newValue }
+    }
+
+    /// The visible title of the Return key.
+    public var returnKeyType: UIReturnKeyType {
+        get { richTextView.returnKeyType }
+        set { richTextView.returnKeyType = newValue }
+    }
+
+    /// A Boolean value indicating whether the Return key is automatically enabled when the user is entering text.
+    /// default is `NO` (when `YES`, will automatically disable return key when text widget has zero-length contents, and will automatically enable when text widget has non-zero-length contents)
+    public var enablesReturnKeyAutomatically: Bool {
+        get { richTextView.enablesReturnKeyAutomatically }
+        set { richTextView.enablesReturnKeyAutomatically = newValue }
+    }
+
+    /// Identifies whether the text object should disable text copying and in some cases hide the text being entered.
+    /// default is `NO`
+    public var isSecureTextEntry: Bool {
+        get { richTextView.isSecureTextEntry }
+        set { richTextView.isSecureTextEntry = newValue }
+    }
+
+    /// The semantic meaning expected by a text input area.
+    /// The textContentType property is to provide the keyboard with extra information about the semantic intent of the text document.
+    /// default is `nil`
+    public var textContentType: UITextContentType! {
+        get { richTextView.textContentType }
+        set { richTextView.textContentType = newValue }
+    }
+
     /// A Boolean value indicating whether the text view allows the user to edit style information.
     public var allowsEditingTextAttributes: Bool {
         get { richTextView.allowsEditingTextAttributes }
         set { richTextView.allowsEditingTextAttributes = newValue }
+    }
+
+    /// A Boolean value indicating whether the receiver is selectable.
+    /// This property controls the ability of the user to select content and interact with URLs and text attachments. The default value is true.
+    public var isSelectable: Bool {
+        get { richTextView.isSelectable }
+        set { richTextView.isSelectable = newValue }
     }
 
     /// A text drag delegate object for customizing the drag source behavior of a text view.
@@ -882,7 +995,7 @@ extension EditorView {
     }
 
     func relayoutAttachments(in range: NSRange? = nil) {
-        let rangeToUse = range ?? richTextView.attributedText.fullRange
+        let rangeToUse = range ?? NSRange(location: 0, length: contentLength)
         richTextView.enumerateAttribute(.attachment, in: rangeToUse, options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
             guard let attachment = attach as? Attachment else { return }
 

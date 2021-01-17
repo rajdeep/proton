@@ -126,4 +126,14 @@ public extension NSAttributedString {
         guard location < length else { return nil }
         return attribute(attributeKey, at: location, effectiveRange: nil) as? T
     }
+    
+    /// Alternative to `attributedSubstring(from:_).string`
+    /// Avoids allocating `NSAttributedString` and all the attributes for that range, only to ignore the range.
+    func substring(from range: NSRange) -> String {
+        guard range.upperBound <= length else {
+            assertionFailure("Substring is out of bounds")
+            return ""
+        }
+        return (string as NSString).substring(with: range)
+    }
 }

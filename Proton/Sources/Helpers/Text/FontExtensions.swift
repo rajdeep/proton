@@ -36,7 +36,8 @@ public extension UIFont {
     }
 
     var isMonoSpaced: Bool {
-        return traits.contains(.traitMonoSpace)
+        return traits.contains(.traitMonoSpace) // iOS 14 mono font does not contain
+            || fontName.contains("Monospaced") // eg. ".AppleSystemUIFontMonospaced-Regular"
     }
 
     var isAppleEmoji: Bool {
