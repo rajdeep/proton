@@ -77,7 +77,7 @@ public class ListCommand: EditorCommand {
             var length = max(currentLine.range.length, selectedRange.length + (selectedRange.location - currentLine.range.location))
             let range = NSRange(location: location, length: length)
             if editor.contentLength > range.endLocation,
-                editor.attributedText.attributedSubstring(from: NSRange(location: range.endLocation, length: 1)).string == "\n" {
+                editor.attributedText.substring(from: NSRange(location: range.endLocation, length: 1)) == "\n" {
                 length += 1
             }
             selectedRange = NSRange(location: location, length: length)

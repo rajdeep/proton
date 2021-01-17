@@ -263,7 +263,7 @@ open class EditorView: UIView {
     /// An attachment is only counted as a single character. Content length does not include
     /// length of content within the Attachment that is hosting another `EditorView`.
     public var contentLength: Int {
-        return attributedText.length
+        return richTextView.contentLength
     }
 
     /// Determines if the `EditorView` is editable or not.
@@ -995,7 +995,7 @@ extension EditorView {
     }
 
     func relayoutAttachments(in range: NSRange? = nil) {
-        let rangeToUse = range ?? richTextView.attributedText.fullRange
+        let rangeToUse = range ?? NSRange(location: 0, length: contentLength)
         richTextView.enumerateAttribute(.attachment, in: rangeToUse, options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
             guard let attachment = attach as? Attachment else { return }
 

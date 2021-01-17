@@ -147,12 +147,12 @@
     BOOL hasPrevSpacer = NO;
     if (range.length + range.location > 0) {
         NSRange subrange = NSMakeRange(range.location == 0 ? 0 : range.location - 1, 1);
-        hasPrevSpacer = [self attributedSubstringFromRange:subrange].string == spacer;
+        hasPrevSpacer = [self.string substringWithRange:subrange] == spacer;
     }
     BOOL hasNextSpacer = NO;
     if ((range.location + range.length + 1) <= self.length) {
         NSRange subrange = NSMakeRange(range.location, 1);
-        hasNextSpacer = [self attributedSubstringFromRange:subrange].string == spacer;
+        hasNextSpacer = [self.string substringWithRange:subrange] == spacer;
     }
 
     NSAttributedString *attachmentString = [attachment stringWithSpacersWithAppendPrev:!hasPrevSpacer appendNext:!hasNextSpacer];

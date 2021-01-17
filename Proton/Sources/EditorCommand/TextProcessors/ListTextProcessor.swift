@@ -86,11 +86,11 @@ public class ListTextProcessor: TextProcessing {
             }
 
         case .backspace:
-            let text = editor.attributedText.attributedSubstring(from: editedRange)
+            let attributedText = editor.attributedText
             guard editedRange.location > 0,
-                text.string == ListTextProcessor.blankLineFiller,
-                text.attribute(.listItem, at: 0, effectiveRange: nil) != nil,
-                editor.attributedText.attributedSubstring(from: NSRange(location: editedRange.location - 1, length: 1)).string == "\n" else {
+                attributedText.substring(from: editedRange) == ListTextProcessor.blankLineFiller,
+                attributedText.attribute(.listItem, at: editedRange.location, effectiveRange: nil) != nil,
+                attributedText.substring(from: NSRange(location: editedRange.location - 1, length: 1)) == "\n" else {
                 return
             }
             editor.deleteBackward()
@@ -112,11 +112,18 @@ public class ListTextProcessor: TextProcessing {
 
         if let nextLine = editor.nextContentLine(from: currentLine.range.location),
             nextLine.range.endLocation < editor.contentLength - 1 {
-            let nextLineText = editor.attributedText.attributedSubstring(from: NSRange(location: nextLine.range.location, length: 1))
-            let paraStyle = nextLineText.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle
-            let isFirstLevelListItem = (paraStyle?.firstLineHeadIndent ?? 0) / editor.listLineFormatting.indentation == 1
-            if nextLineText.attribute(.listItem, at: 0, effectiveRange: nil) != nil,
-                (nextLineText.string != "\n" || isFirstLevelListItem == false) {
+            let attributedText = editor.attributedText
+            var isNotNewLineCharacter: Bool {
+                let nextLineText = attributedText.substring(from: NSRange(location: nextLine.range.location, length: 1))
+                return nextLineText != "\n"
+            }
+            var isFirstLevelListItem: Bool {
+                guard let paraStyle = attributedText.attribute(.paragraphStyle, at: nextLine.range.location, effectiveRange: nil) as? NSParagraphStyle
+                else { return false }
+                return paraStyle.firstLineHeadIndent / editor.listLineFormatting.indentation == 1
+            }
+            let hasListItemAttribute = attributedText.attribute(.listItem, at: nextLine.range.location, effectiveRange: nil) != nil
+            if hasListItemAttribute, (isNotNewLineCharacter || !isFirstLevelListItem) {
                 return
             }
         }
@@ -139,8 +146,8 @@ public class ListTextProcessor: TextProcessing {
         executeOnDidProcess?(editor)
         executeOnDidProcess = nil
         guard editor.selectedRange.endLocation < editor.contentLength else { return }
-        let lastChar = editor.attributedText.attributedSubstring(from: NSRange(location: editor.selectedRange.location, length: 1))
-        if lastChar.string == ListTextProcessor.blankLineFiller {
+        let lastChar = editor.attributedText.substring(from: NSRange(location: editor.selectedRange.location, length: 1))
+        if lastChar == ListTextProcessor.blankLineFiller {
             editor.selectedRange = editor.selectedRange.nextPosition
         }
         editor.typingAttributes[.skipNextListMarker] = nil

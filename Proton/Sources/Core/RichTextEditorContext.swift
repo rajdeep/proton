@@ -67,21 +67,21 @@ class RichTextEditorContext: RichTextViewContext {
                 return false
             }
 
-            guard range.endLocation <= textView.attributedText.length else { return false }
-
-            let substring = textView.attributedText.attributedSubstring(from: range)
-            guard substring.length > 0,
-                let attachment = substring.attribute(.attachment, at: 0, effectiveRange: nil) as? Attachment,
-                attachment.selectBeforeDelete else {
-                    return true
+            // User tapped backspace with nothing selected, selected or remove Attachment
+            let attributedText: NSAttributedString = textView.attributedText // single allocation
+            if
+                range.length == 1, // Hit backspace with nothing selected
+                range.location <= attributedText.length, // ... within bounds
+                let attachment = attributedText.attribute(.attachment, at: range.location, effectiveRange: nil) as? Attachment,
+                attachment.selectBeforeDelete, // ...should be selected
+                !attachment.isSelected // ... but isn't.
+            {
+                attachment.isSelected = true // Select it
+                return false // don't delete anything
             }
 
-            if attachment.isSelected {
-                return true
-            } else {
-                attachment.isSelected = true
-                return false
-            }
+            // Else, handle backspace normally
+            return true
         }
 
         if text == "\n" {

@@ -132,7 +132,7 @@ public struct ListParser {
         var startIndex = 0
 
         for newlineRange in newlineRanges {
-            let isNewlineSkipMarker = text.attributedSubstring(from: newlineRange).attribute(.skipNextListMarker, at: 0, effectiveRange: nil) != nil
+            let isNewlineSkipMarker = text.attribute(.skipNextListMarker, at: newlineRange.location, effectiveRange: nil) != nil
 
             if isNewlineSkipMarker {
                 continue

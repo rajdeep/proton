@@ -114,9 +114,9 @@ class LayoutManager: NSLayoutManager {
             var skipMarker = false
 
             if newLineRange.length > 0 {
-                let newLineString = textStorage.attributedSubstring(from: newLineRange)
-                isPreviousLineComplete = newLineString.string == "\n"
-                skipMarker = newLineString.attribute(.skipNextListMarker, at: 0, effectiveRange: nil) != nil
+                let newLineString = textStorage.substring(from: newLineRange)
+                isPreviousLineComplete = newLineString == "\n"
+                skipMarker = textStorage.attribute(.skipNextListMarker, at: newLineRange.location, effectiveRange: nil) != nil
             }
 
             let font = textStorage.attribute(.font, at: characterRange.location, effectiveRange: nil) as? UIFont ?? defaultFont
@@ -149,14 +149,15 @@ class LayoutManager: NSLayoutManager {
         var skipMarker = false
 
         if textStorage.length > 0 {
-            let lastChar = textStorage.attributedSubstring(from: NSRange(location: textStorage.length - 1, length: 1))
-            skipMarker = lastChar.string == "\n" && lastChar.attribute(.skipNextListMarker, at: 0, effectiveRange: nil) != nil
+            let range = NSRange(location: textStorage.length - 1, length: 1)
+            let lastChar = textStorage.substring(from: range)
+            skipMarker = lastChar == "\n" && textStorage.attribute(.skipNextListMarker, at: range.location, effectiveRange: nil) != nil
         }
 
         guard skipMarker == false,
             let lastRect = lastLayoutRect,
             textStorage.length > 1,
-            textStorage.attributedSubstring(from: NSRange(location: listRange.endLocation - 1, length: 1)).string == "\n",
+            textStorage.substring(from: NSRange(location: listRange.endLocation - 1, length: 1)) == "\n",
             let paraStyle = lastLayoutParaStyle  else { return }
 
         let level = Int(paraStyle.firstLineHeadIndent/listIndent)
