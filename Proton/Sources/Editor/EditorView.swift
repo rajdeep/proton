@@ -150,6 +150,9 @@ open class EditorView: UIView {
     /// * To prevent any command to be executed, set value to be an empty array.
     public var registeredCommands: [EditorCommand]?
 
+    /// Low-tech lock mechanism to know when `attributedText` is being set
+    private var isSettingAttributedText = false
+
     // Making this a convenience init fails the test `testRendersWidthRangeAttachment` as the init of a class subclassed from
     // `EditorView` is returned as type `EditorView` and not the class itself, causing the test to fail.
     /// Initializes the EditorView
@@ -370,7 +373,11 @@ open class EditorView: UIView {
     /// Text to be set in the `EditorView`
     public var attributedText: NSAttributedString {
         get { richTextView.attributedText }
-        set { richTextView.attributedText = newValue }
+        set {
+            isSettingAttributedText = true
+            richTextView.attributedText = newValue
+            isSettingAttributedText = false
+        }
     }
 
     /// Determines if the selection handles should be shown when `selectedRange` is set programatically. Defaults is `true`.
@@ -1020,7 +1027,7 @@ extension EditorView {
 
             if attachment.isRendered == false {
                 attachment.render(in: self)
-                if let focusable = attachment.contentView as? Focusable {
+                if !isSettingAttributedText, let focusable = attachment.contentView as? Focusable {
                     focusable.setFocus()
                 }
             }

@@ -961,6 +961,13 @@ class EditorListsSnapshotTests: XCTestCase {
         let lines = editor.contentLinesInRange(editor.attributedText.fullRange)
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: lines[2].range)
 
+        /// This `setFocus()` isn't strictly needed for this use case, but it helps the tests work.
+        ///
+        /// If we don't call `setFocus()`, the selectionView is still visible in the snapshot.
+        /// When an attachment is first responder, when `assertSnapshot(...)` presents the ViewController,
+        /// the `UITextView` takes first responder, which removes the selectionView.
+        panel2.setFocus()
+
         viewController.render(size: CGSize(width: 300, height: 200))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
