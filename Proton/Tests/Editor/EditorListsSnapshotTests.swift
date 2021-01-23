@@ -952,8 +952,6 @@ class EditorListsSnapshotTests: XCTestCase {
         attributedText.append(attachment2.string)
 
         editor.attributedText = attributedText
-
-        editor.enableSelectionHandles = false
         editor.selectedRange = editor.attributedText.fullRange
 
         listCommand.execute(on: editor)

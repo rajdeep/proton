@@ -76,13 +76,6 @@ open class RendererView: UIView {
         set { readOnlyEditorView.attributedText = newValue }
     }
 
-    /// Determines if the selection handles should be shown when selecting a range
-    /// programatically by using `selectedRange` property. Defaults to `true`
-    public var enableSelectionHandles: Bool {
-        get { readOnlyEditorView.enableSelectionHandles }
-        set { readOnlyEditorView.enableSelectionHandles = false }
-    }
-
     /// Gets or sets the selected range.
     public var selectedRange: NSRange {
         get { readOnlyEditorView.selectedRange }

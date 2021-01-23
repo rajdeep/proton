@@ -380,18 +380,10 @@ open class EditorView: UIView {
         }
     }
 
-    /// Determines if the selection handles should be shown when `selectedRange` is set programatically. Defaults is `true`.
-    public var enableSelectionHandles = true
-
     /// Gets or sets the selected range in the `EditorView`.
     public var selectedRange: NSRange {
         get { richTextView.selectedRange }
-        set {
-            if enableSelectionHandles {
-                richTextView.select(self)
-            }
-            richTextView.selectedRange = newValue
-        }
+        set { richTextView.selectedRange = newValue }
     }
 
     /// Typing attributes to be used. Automatically resets when the selection changes.

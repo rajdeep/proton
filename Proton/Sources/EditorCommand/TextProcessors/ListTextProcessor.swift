@@ -230,11 +230,7 @@ public class ListTextProcessor: TextProcessing {
         attrs[.listItem] = updatedStyle?.firstLineHeadIndent ?? 0 > 0.0 ? listAttributeValue : nil
         let marker = NSAttributedString(string: ListTextProcessor.blankLineFiller, attributes: attrs)
         editor.replaceCharacters(in: editedRange, with: marker)
-        // Disable selection handles otherwise the selection handles are displayed momentarily
-        // and then edit menu is shown - due to change in selection
-        editor.enableSelectionHandles = false
         editor.selectedRange = editedRange.nextPosition
-        editor.enableSelectionHandles = true
     }
 
     func updatedParagraphStyle(paraStyle: NSParagraphStyle?, listLineFormatting: LineFormatting, indentMode: Indentation) -> NSParagraphStyle? {
