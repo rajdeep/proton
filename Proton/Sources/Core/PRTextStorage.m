@@ -139,16 +139,16 @@
 }
 
 - (void)insertAttachmentInRange:(NSRange)range attachment:(Attachment *_Nonnull)attachment {
-    NSString *spacer = attachment.spacer.string;
+    NSCharacterSet *spacerCharacterSet = attachment.spacerCharacterSet;
     BOOL hasPrevSpacer = NO;
     if (range.length + range.location > 0) {
-        NSRange subrange = NSMakeRange(range.location == 0 ? 0 : range.location - 1, 1);
-        hasPrevSpacer = [self.string substringWithRange:subrange] == spacer;
+        NSUInteger characterIndex = range.location == 0 ? 0 : range.location - 1;
+        hasPrevSpacer = [spacerCharacterSet characterIsMember:[self.string characterAtIndex:characterIndex]];
     }
     BOOL hasNextSpacer = NO;
-    if ((range.location + range.length + 1) <= self.length) {
-        NSRange subrange = NSMakeRange(range.location, 1);
-        hasNextSpacer = [self.string substringWithRange:subrange] == spacer;
+    if (range.location + 1 < self.length) {
+        NSUInteger characterIndex = range.location + 1;
+        hasNextSpacer = [spacerCharacterSet characterIsMember:[self.string characterAtIndex:characterIndex]];
     }
 
     NSAttributedString *attachmentString = [attachment stringWithSpacersWithAppendPrev:!hasPrevSpacer appendNext:!hasNextSpacer];
