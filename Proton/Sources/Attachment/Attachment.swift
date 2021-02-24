@@ -97,6 +97,11 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         let spacer = isBlockAttachment == true ? "\n" : " "
         return NSAttributedString(string: spacer)
     }
+    
+    @objc
+    var spacerCharacterSet: CharacterSet {
+        return isBlockAttachment == true ? .newlines : .whitespaces
+    }
 
     @objc
     func stringWithSpacers(appendPrev: Bool, appendNext: Bool) -> NSAttributedString {
