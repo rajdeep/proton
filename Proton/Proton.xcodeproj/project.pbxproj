@@ -141,19 +141,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1B004EC023C17DCE007893AA /* testRendersTextInTextView@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersTextInTextView@3x.png"; sourceTree = "<group>"; };
-		1B004EC123C17DCE007893AA /* testRendersMultilineTextViewBasedOnContent@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersMultilineTextViewBasedOnContent@3x.png"; sourceTree = "<group>"; };
 		1B004EC623C1C287007893AA /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
 		1B164F0F23D1BE9900A0869A /* AttributesDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesDecoding.swift; sourceTree = "<group>"; };
 		1B164F4023D2A4AB00A0869A /* String+NSRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+NSRange.swift"; sourceTree = "<group>"; };
 		1B164F4723D2AC6D00A0869A /* FindTextCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindTextCommand.swift; sourceTree = "<group>"; };
-		1B164F4A23D2B77600A0869A /* testScrolledRendering@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testScrolledRendering@3x.png"; sourceTree = "<group>"; };
-		1B164F4B23D2B77600A0869A /* testBasicRendering@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testBasicRendering@3x.png"; sourceTree = "<group>"; };
 		1B164F5123D2B9D400A0869A /* TestTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTextProcessor.swift; sourceTree = "<group>"; };
 		1B183D8B23CEA90400AE83E5 /* EditorContentEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentEncoding.swift; sourceTree = "<group>"; };
 		1B183D8D23CEE9BA00AE83E5 /* AttributesEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesEncoding.swift; sourceTree = "<group>"; };
 		1B183D9023CEEEC400AE83E5 /* EditorContentEncoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentEncoderTests.swift; sourceTree = "<group>"; };
-		1B19149C24D02C1000A4CBCA /* testGetsCaretRectForValidPositionWithScrollableContent@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsCaretRectForValidPositionWithScrollableContent@3x.png"; sourceTree = "<group>"; };
 		1B1C3726244BE0D60028E1ED /* EditorViewContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewContextTests.swift; sourceTree = "<group>"; };
 		1B238D6D2456A40200BF49D5 /* NullRichTextEditorContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NullRichTextEditorContext.swift; sourceTree = "<group>"; };
 		1B2BC0D723CF17E300407DEE /* EditorContentTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentTransformerTests.swift; sourceTree = "<group>"; };
@@ -167,8 +162,6 @@
 		1B45CD9323BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingTextViewSnapshotTests.swift; sourceTree = "<group>"; };
 		1B45CD9C23BEDA8F001EB196 /* UIView+Render.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Render.swift"; sourceTree = "<group>"; };
 		1B45CD9E23BEE997001EB196 /* SnapshotTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTestViewController.swift; sourceTree = "<group>"; };
-		1B45CDA323BEEC3D001EB196 /* testRendersTextViewBasedOnContent@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersTextViewBasedOnContent@3x.png"; sourceTree = "<group>"; };
-		1B45CDA423BEEC3D001EB196 /* testRendersMultilineTextViewBasedOnContent@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersMultilineTextViewBasedOnContent@3x.png"; sourceTree = "<group>"; };
 		1B45CDA823BEED0E001EB196 /* AutogrowingTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingTextViewTests.swift; sourceTree = "<group>"; };
 		1B45CDB923BF10DF001EB196 /* TextStorageDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStorageDelegate.swift; sourceTree = "<group>"; };
 		1B45CDBB23BF1174001EB196 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
@@ -198,15 +191,9 @@
 		1B4B60CE247FC86A002B63CF /* NSParagraphStyleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSParagraphStyleExtensions.swift; sourceTree = "<group>"; };
 		1B576088245ADDDA00D92AE8 /* EditorViewMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewMenuTests.swift; sourceTree = "<group>"; };
 		1B5E2582240F5B0C00163E74 /* NSAttributedStringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedStringExtensionTests.swift; sourceTree = "<group>"; };
-		1B5F8393241B920400CAD5F4 /* testParagraphStyling@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testParagraphStyling@3x.png"; sourceTree = "<group>"; };
 		1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommandSnapshotTests.swift; sourceTree = "<group>"; };
-		1B6DE9DB23C59889007F9859 /* testExecutesCommandOnNestedEditors@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testExecutesCommandOnNestedEditors@3x.png"; sourceTree = "<group>"; };
-		1B770C962409EEE400455425 /* testGetsVisibleContentRange@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsVisibleContentRange@3x.png"; sourceTree = "<group>"; };
-		1B770C97240CDB2A00455425 /* testGetsCurrentLineRange@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsCurrentLineRange@3x.png"; sourceTree = "<group>"; };
-		1B7A985523C4811C00C34B14 /* testDeletesAttachments@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testDeletesAttachments@3x.png"; sourceTree = "<group>"; };
 		1B7A985623C4828A00C34B14 /* RichTextEditorContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextEditorContext.swift; sourceTree = "<group>"; };
 		1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewDelegate.swift; sourceTree = "<group>"; };
-		1B80A31024136C94001E3A5E /* testLineRangesAndReturnError_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testLineRangesAndReturnError_@3x.png"; sourceTree = "<group>"; };
 		1B82570323C48C350033A0A9 /* MockRichTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRichTextViewDelegate.swift; sourceTree = "<group>"; };
 		1B82570523C48FEC0033A0A9 /* RichTextViewContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewContextTests.swift; sourceTree = "<group>"; };
 		1B82570823C5674E0033A0A9 /* EditorCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommand.swift; sourceTree = "<group>"; };
@@ -214,19 +201,12 @@
 		1B82570C23C5686F0033A0A9 /* EditorViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewContext.swift; sourceTree = "<group>"; };
 		1B82571123C5799C0033A0A9 /* FontExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtensions.swift; sourceTree = "<group>"; };
 		1B840F602401E63100D5E8F7 /* MockEditorCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEditorCommand.swift; sourceTree = "<group>"; };
-		1B872B9523EE48490070A92A /* testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png"; sourceTree = "<group>"; };
-		1B872B9623EE486E0070A92A /* testGetsRectsForGivenRangeSpanningAcrossSingleLine@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsRectsForGivenRangeSpanningAcrossSingleLine@3x.png"; sourceTree = "<group>"; };
-		1B872B9723EE486E0070A92A /* testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png"; sourceTree = "<group>"; };
-		1B872B9823EE4BB40070A92A /* testGetsCaretRectForPositionOutsideBounds@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsCaretRectForPositionOutsideBounds@3x.png"; sourceTree = "<group>"; };
-		1B872B9923EE4BB40070A92A /* testGetsCaretRectForPositionInEmptyEditor@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsCaretRectForPositionInEmptyEditor@3x.png"; sourceTree = "<group>"; };
-		1B872B9A23EE4BB40070A92A /* testGetsCaretRectForValidPosition@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testGetsCaretRectForValidPosition@3x.png"; sourceTree = "<group>"; };
 		1B8BE91A23C71CEA00353B17 /* EditorViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewDelegate.swift; sourceTree = "<group>"; };
 		1B8BE91C23C71E4B00353B17 /* EditorViewDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewDelegateTests.swift; sourceTree = "<group>"; };
 		1B8BE91E23C71E8A00353B17 /* MockEditorViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEditorViewDelegate.swift; sourceTree = "<group>"; };
 		1B8D8207243F3386009AD38A /* MockRendererCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRendererCommand.swift; sourceTree = "<group>"; };
 		1B91F4B023C72D87003F9B55 /* TextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessor.swift; sourceTree = "<group>"; };
 		1B91F4B223C72DC3003F9B55 /* TextProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessing.swift; sourceTree = "<group>"; };
-		1B975AF323CC627500EC410C /* testRendersPlaceholder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersPlaceholder@3x.png"; sourceTree = "<group>"; };
 		1B975AFA23CD3E9B00EC410C /* RendererView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererView.swift; sourceTree = "<group>"; };
 		1B975AFC23CD40D200EC410C /* RichTextRendererContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextRendererContext.swift; sourceTree = "<group>"; };
 		1B975AFE23CD454700EC410C /* RichTextViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewContext.swift; sourceTree = "<group>"; };
@@ -239,7 +219,6 @@
 		1BBAC3CE23CD5A1B0088A1C8 /* UITextRangeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextRangeExtensions.swift; sourceTree = "<group>"; };
 		1BBAC3D123CD69250088A1C8 /* RendererSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererSnapshotTests.swift; sourceTree = "<group>"; };
 		1BBAC3D323CD696F0088A1C8 /* RendererTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererTestViewController.swift; sourceTree = "<group>"; };
-		1BBAC3D623CD74450088A1C8 /* testRendersAttachmentFromEditor@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersAttachmentFromEditor@3x.png"; sourceTree = "<group>"; };
 		1BBAC3D723CD79EA0088A1C8 /* RendererViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererViewTests.swift; sourceTree = "<group>"; };
 		1BBAC3D923CD7A8B0088A1C8 /* MockRendererViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRendererViewDelegate.swift; sourceTree = "<group>"; };
 		1BBAC3DC23CDB8C10088A1C8 /* RendererCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommand.swift; sourceTree = "<group>"; };
@@ -250,8 +229,6 @@
 		1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommandExecutorTests.swift; sourceTree = "<group>"; };
 		1BD21553246951090000BCE2 /* LayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManager.swift; sourceTree = "<group>"; };
 		1BD21555246952370000BCE2 /* BackgroundStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundStyle.swift; sourceTree = "<group>"; };
-		1BD21557246961320000BCE2 /* testDefaultBackground@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testDefaultBackground@3x.png"; sourceTree = "<group>"; };
-		1BD21558246961320000BCE2 /* testBackgroundStyle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testBackgroundStyle@3x.png"; sourceTree = "<group>"; };
 		1BD9323D243CA506005E4136 /* CommandName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandName.swift; sourceTree = "<group>"; };
 		1BD993B023C995B000563ACB /* TextProcessorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessorTests.swift; sourceTree = "<group>"; };
 		1BD993B323C9966A00563ACB /* MockTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTextProcessor.swift; sourceTree = "<group>"; };
@@ -275,17 +252,6 @@
 		1BFFEF1B23C334D200D2BA35 /* InlineEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineEditorView.swift; sourceTree = "<group>"; };
 		1BFFEF1E23C3366200D2BA35 /* MockAttachmentOffsetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAttachmentOffsetProvider.swift; sourceTree = "<group>"; };
 		1BFFEF2023C33EA900D2BA35 /* PanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
-		1BFFEF2323C3423800D2BA35 /* testRendersFixedWidthAttachment@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersFixedWidthAttachment@3x.png"; sourceTree = "<group>"; };
-		1BFFEF2423C3423800D2BA35 /* testRendersMatchContentAttachment@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersMatchContentAttachment@3x.png"; sourceTree = "<group>"; };
-		1BFFEF2523C3423800D2BA35 /* testRendersPercentWidthAttachment@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersPercentWidthAttachment@3x.png"; sourceTree = "<group>"; };
-		1BFFEF2623C3423800D2BA35 /* testRendersWidthRangeAttachment@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersWidthRangeAttachment@3x.png"; sourceTree = "<group>"; };
-		1BFFEF2723C3423800D2BA35 /* testRendersFullWidthAttachment@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testRendersFullWidthAttachment@3x.png"; sourceTree = "<group>"; };
-		1BFFEF2E23C342D800D2BA35 /* testFallsToNextLineForLongContent@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testFallsToNextLineForLongContent@3x.png"; sourceTree = "<group>"; };
-		1BFFEF2F23C342D800D2BA35 /* testMatchContentRendering@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testMatchContentRendering@3x.png"; sourceTree = "<group>"; };
-		1BFFEF3023C342D800D2BA35 /* testPercentBasedRendering@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testPercentBasedRendering@3x.png"; sourceTree = "<group>"; };
-		1BFFEF3123C342D800D2BA35 /* testWidthRangeRendering@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testWidthRangeRendering@3x.png"; sourceTree = "<group>"; };
-		1BFFEF3223C342D800D2BA35 /* testMatchContainerRendering@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testMatchContainerRendering@3x.png"; sourceTree = "<group>"; };
-		1BFFEF3323C342D800D2BA35 /* testFixedWidthRendering@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testFixedWidthRendering@3x.png"; sourceTree = "<group>"; };
 		3F79CCB1250EF065008C53C4 /* DefaultTextFormattingProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextFormattingProviding.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -309,28 +275,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1B004EBF23C17DCE007893AA /* ProtonTests.RichTextViewSnapshotTests */ = {
-			isa = PBXGroup;
-			children = (
-				1B004EC023C17DCE007893AA /* testRendersTextInTextView@3x.png */,
-				1B004EC123C17DCE007893AA /* testRendersMultilineTextViewBasedOnContent@3x.png */,
-			);
-			path = ProtonTests.RichTextViewSnapshotTests;
-			sourceTree = "<group>";
-		};
-		1B004EC223C18544007893AA /* ProtonTests.AttachmentSnapshotTests */ = {
-			isa = PBXGroup;
-			children = (
-				1BFFEF2E23C342D800D2BA35 /* testFallsToNextLineForLongContent@3x.png */,
-				1BFFEF3323C342D800D2BA35 /* testFixedWidthRendering@3x.png */,
-				1BFFEF3223C342D800D2BA35 /* testMatchContainerRendering@3x.png */,
-				1BFFEF2F23C342D800D2BA35 /* testMatchContentRendering@3x.png */,
-				1BFFEF3023C342D800D2BA35 /* testPercentBasedRendering@3x.png */,
-				1BFFEF3123C342D800D2BA35 /* testWidthRangeRendering@3x.png */,
-			);
-			path = ProtonTests.AttachmentSnapshotTests;
-			sourceTree = "<group>";
-		};
 		1B164F5023D2B99900A0869A /* Processors */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,36 +339,6 @@
 				1BBAC3D323CD696F0088A1C8 /* RendererTestViewController.swift */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		1B45CDA023BEEC3D001EB196 /* Snapshots */ = {
-			isa = PBXGroup;
-			children = (
-				1B45CDA123BEEC3D001EB196 /* ReferenceImages_64 */,
-			);
-			path = Snapshots;
-			sourceTree = "<group>";
-		};
-		1B45CDA123BEEC3D001EB196 /* ReferenceImages_64 */ = {
-			isa = PBXGroup;
-			children = (
-				1BBAC3D523CD74450088A1C8 /* ProtonTests.RendererSnapshotTests */,
-				1B6DE9DA23C59889007F9859 /* ProtonTests.EditorCommandSnapshotTests */,
-				1BFFEF2223C3423800D2BA35 /* ProtonTests.EditorSnapshotTests */,
-				1B004EC223C18544007893AA /* ProtonTests.AttachmentSnapshotTests */,
-				1B004EBF23C17DCE007893AA /* ProtonTests.RichTextViewSnapshotTests */,
-				1B45CDA223BEEC3D001EB196 /* ProtonTests.AutogrowingTextViewSnapshotTests */,
-			);
-			path = ReferenceImages_64;
-			sourceTree = "<group>";
-		};
-		1B45CDA223BEEC3D001EB196 /* ProtonTests.AutogrowingTextViewSnapshotTests */ = {
-			isa = PBXGroup;
-			children = (
-				1B45CDA323BEEC3D001EB196 /* testRendersTextViewBasedOnContent@3x.png */,
-				1B45CDA423BEEC3D001EB196 /* testRendersMultilineTextViewBasedOnContent@3x.png */,
-			);
-			path = ProtonTests.AutogrowingTextViewSnapshotTests;
 			sourceTree = "<group>";
 		};
 		1B45CDAA23BEEDA6001EB196 /* Mocks */ = {
@@ -565,14 +479,6 @@
 			path = ExtensionTests;
 			sourceTree = "<group>";
 		};
-		1B6DE9DA23C59889007F9859 /* ProtonTests.EditorCommandSnapshotTests */ = {
-			isa = PBXGroup;
-			children = (
-				1B6DE9DB23C59889007F9859 /* testExecutesCommandOnNestedEditors@3x.png */,
-			);
-			path = ProtonTests.EditorCommandSnapshotTests;
-			sourceTree = "<group>";
-		};
 		1B82570723C567370033A0A9 /* EditorCommand */ = {
 			isa = PBXGroup;
 			children = (
@@ -680,7 +586,6 @@
 				1BBAC3D023CD68EE0088A1C8 /* Renderer */,
 				1BBAC3E123CE850E0088A1C8 /* RendererCommands */,
 				1BD993AE23C9955800563ACB /* TextProcessors */,
-				1B45CDA023BEEC3D001EB196 /* Snapshots */,
 				1BB214D623BB2778008B84A0 /* Info.plist */,
 			);
 			path = Tests;
@@ -706,17 +611,6 @@
 				1BBAC3D923CD7A8B0088A1C8 /* MockRendererViewDelegate.swift */,
 			);
 			path = Renderer;
-			sourceTree = "<group>";
-		};
-		1BBAC3D523CD74450088A1C8 /* ProtonTests.RendererSnapshotTests */ = {
-			isa = PBXGroup;
-			children = (
-				1BBAC3D623CD74450088A1C8 /* testRendersAttachmentFromEditor@3x.png */,
-				1B872B9523EE48490070A92A /* testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png */,
-				1B164F4B23D2B77600A0869A /* testBasicRendering@3x.png */,
-				1B164F4A23D2B77600A0869A /* testScrolledRendering@3x.png */,
-			);
-			path = ProtonTests.RendererSnapshotTests;
 			sourceTree = "<group>";
 		};
 		1BBAC3DB23CDB89A0088A1C8 /* RendererCommand */ = {
@@ -801,32 +695,6 @@
 				1BD993C323CACCE100563ACB /* MockAttachment.swift */,
 			);
 			path = Mocks;
-			sourceTree = "<group>";
-		};
-		1BFFEF2223C3423800D2BA35 /* ProtonTests.EditorSnapshotTests */ = {
-			isa = PBXGroup;
-			children = (
-				1BD21558246961320000BCE2 /* testBackgroundStyle@3x.png */,
-				1BD21557246961320000BCE2 /* testDefaultBackground@3x.png */,
-				1B5F8393241B920400CAD5F4 /* testParagraphStyling@3x.png */,
-				1B872B9923EE4BB40070A92A /* testGetsCaretRectForPositionInEmptyEditor@3x.png */,
-				1B872B9823EE4BB40070A92A /* testGetsCaretRectForPositionOutsideBounds@3x.png */,
-				1B770C97240CDB2A00455425 /* testGetsCurrentLineRange@3x.png */,
-				1B80A31024136C94001E3A5E /* testLineRangesAndReturnError_@3x.png */,
-				1B872B9A23EE4BB40070A92A /* testGetsCaretRectForValidPosition@3x.png */,
-				1B975AF323CC627500EC410C /* testRendersPlaceholder@3x.png */,
-				1B7A985523C4811C00C34B14 /* testDeletesAttachments@3x.png */,
-				1BFFEF2323C3423800D2BA35 /* testRendersFixedWidthAttachment@3x.png */,
-				1B770C962409EEE400455425 /* testGetsVisibleContentRange@3x.png */,
-				1BFFEF2423C3423800D2BA35 /* testRendersMatchContentAttachment@3x.png */,
-				1BFFEF2523C3423800D2BA35 /* testRendersPercentWidthAttachment@3x.png */,
-				1BFFEF2623C3423800D2BA35 /* testRendersWidthRangeAttachment@3x.png */,
-				1BFFEF2723C3423800D2BA35 /* testRendersFullWidthAttachment@3x.png */,
-				1B872B9723EE486E0070A92A /* testGetsRectsForGivenRangeSpanningAcrossMultipleLines@3x.png */,
-				1B872B9623EE486E0070A92A /* testGetsRectsForGivenRangeSpanningAcrossSingleLine@3x.png */,
-				1B19149C24D02C1000A4CBCA /* testGetsCaretRectForValidPositionWithScrollableContent@3x.png */,
-			);
-			path = ProtonTests.EditorSnapshotTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
