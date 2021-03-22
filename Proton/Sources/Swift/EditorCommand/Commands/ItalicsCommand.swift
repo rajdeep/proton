@@ -1,5 +1,5 @@
 //
-//  BoldCommand.swift
+//  ItalicsCommand.swift
 //  Proton
 //
 //  Created by Rajdeep Kwatra on 8/1/20.
@@ -21,11 +21,9 @@
 import Foundation
 import UIKit
 
-import Proton
-
-/// Editor command that toggles Bold attribute to the selected range in the Editor.
-public class BoldCommand: FontTraitToggleCommand {
+/// Editor command that toggles Italics attribute to the selected range in the Editor.
+public class ItalicsCommand: FontTraitToggleCommand {
     public init() {
-        super.init(name: CommandName("_BoldCommand"), trait: .traitBold)
+        super.init(name: CommandName("_ItalicsCommand"), trait: .traitItalic)
     }
 }

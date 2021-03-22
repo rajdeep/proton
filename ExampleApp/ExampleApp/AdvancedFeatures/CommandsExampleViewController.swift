@@ -22,7 +22,6 @@ import Foundation
 import UIKit
 
 import Proton
-import ProtonExtensions
 
 class EditorCommandButton: UIButton {
     let command: EditorCommand

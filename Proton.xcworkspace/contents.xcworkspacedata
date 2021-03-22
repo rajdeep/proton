@@ -7,7 +7,4 @@
    <FileRef
       location = "group:Proton/Proton.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:ProtonExtensions/ProtonExtensions.xcodeproj">
-   </FileRef>
 </Workspace>

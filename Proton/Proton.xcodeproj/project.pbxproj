@@ -61,6 +61,12 @@
 		1B6DE9D923C5940B007F9859 /* EditorCommandSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */; };
 		1B7A985723C4828A00C34B14 /* RichTextEditorContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A985623C4828A00C34B14 /* RichTextEditorContext.swift */; };
 		1B7A985923C484BC00C34B14 /* RichTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */; };
+		1B7C76AA2608A489006618AC /* FontTraitToggleCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76A92608A489006618AC /* FontTraitToggleCommand.swift */; };
+		1B7C76AB2608A489006618AC /* BoldCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76A72608A489006618AC /* BoldCommand.swift */; };
+		1B7C76AC2608A489006618AC /* ItalicsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76A82608A489006618AC /* ItalicsCommand.swift */; };
+		1B7C76B32608A4FF006618AC /* FontTraitToggleCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76B22608A4FF006618AC /* FontTraitToggleCommandTests.swift */; };
+		1B7C76BA2608A508006618AC /* HighlightTextCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76B92608A508006618AC /* HighlightTextCommandTests.swift */; };
+		1B7C76C0260931F8006618AC /* HighlightTextCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76B02608A4D8006618AC /* HighlightTextCommand.swift */; };
 		1B82570423C48C350033A0A9 /* MockRichTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B82570323C48C350033A0A9 /* MockRichTextViewDelegate.swift */; };
 		1B82570623C48FEC0033A0A9 /* RichTextViewContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B82570523C48FEC0033A0A9 /* RichTextViewContextTests.swift */; };
 		1B82570923C5674E0033A0A9 /* EditorCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B82570823C5674E0033A0A9 /* EditorCommand.swift */; };
@@ -205,6 +211,12 @@
 		1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommandSnapshotTests.swift; sourceTree = "<group>"; };
 		1B7A985623C4828A00C34B14 /* RichTextEditorContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextEditorContext.swift; sourceTree = "<group>"; };
 		1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewDelegate.swift; sourceTree = "<group>"; };
+		1B7C76A72608A489006618AC /* BoldCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoldCommand.swift; sourceTree = "<group>"; };
+		1B7C76A82608A489006618AC /* ItalicsCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItalicsCommand.swift; sourceTree = "<group>"; };
+		1B7C76A92608A489006618AC /* FontTraitToggleCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTraitToggleCommand.swift; sourceTree = "<group>"; };
+		1B7C76B02608A4D8006618AC /* HighlightTextCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightTextCommand.swift; sourceTree = "<group>"; };
+		1B7C76B22608A4FF006618AC /* FontTraitToggleCommandTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontTraitToggleCommandTests.swift; sourceTree = "<group>"; };
+		1B7C76B92608A508006618AC /* HighlightTextCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightTextCommandTests.swift; sourceTree = "<group>"; };
 		1B82570323C48C350033A0A9 /* MockRichTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRichTextViewDelegate.swift; sourceTree = "<group>"; };
 		1B82570523C48FEC0033A0A9 /* RichTextViewContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewContextTests.swift; sourceTree = "<group>"; };
 		1B82570823C5674E0033A0A9 /* EditorCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommand.swift; sourceTree = "<group>"; };
@@ -478,6 +490,9 @@
 			isa = PBXGroup;
 			children = (
 				1B4B60C9247FC51E002B63CF /* ListCommand.swift */,
+				1B7C76A92608A489006618AC /* FontTraitToggleCommand.swift */,
+				1B7C76A72608A489006618AC /* BoldCommand.swift */,
+				1B7C76A82608A489006618AC /* ItalicsCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -496,6 +511,14 @@
 				1B5E2582240F5B0C00163E74 /* NSAttributedStringExtensionTests.swift */,
 			);
 			path = ExtensionTests;
+			sourceTree = "<group>";
+		};
+		1B7C76B12608A4D8006618AC /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				1B7C76B02608A4D8006618AC /* HighlightTextCommand.swift */,
+			);
+			path = Commands;
 			sourceTree = "<group>";
 		};
 		1B82570723C567370033A0A9 /* EditorCommand */ = {
@@ -545,6 +568,7 @@
 		1B975AF923CD3E5A00EC410C /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
+				1B7C76B12608A4D8006618AC /* Commands */,
 				1B975AFA23CD3E9B00EC410C /* RendererView.swift */,
 				1BBAC3CB23CD571D0088A1C8 /* RendererViewDelegate.swift */,
 				1B975B0023CD45DC00EC410C /* RendererViewContext.swift */,
@@ -659,6 +683,7 @@
 				1B8D8206243F336F009AD38A /* Mocks */,
 				1BBAC3E223CE85660088A1C8 /* RendererCommandExecutorTests.swift */,
 				1B164F4723D2AC6D00A0869A /* FindTextCommand.swift */,
+				1B7C76B92608A508006618AC /* HighlightTextCommandTests.swift */,
 			);
 			path = RendererCommands;
 			sourceTree = "<group>";
@@ -670,6 +695,7 @@
 				1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */,
 				1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */,
 				1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */,
+				1B7C76B22608A4FF006618AC /* FontTraitToggleCommandTests.swift */,
 			);
 			path = EditorCommands;
 			sourceTree = "<group>";
@@ -914,6 +940,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B238D6E2456A40200BF49D5 /* NullRichTextEditorContext.swift in Sources */,
+				1B7C76C0260931F8006618AC /* HighlightTextCommand.swift in Sources */,
 				1B45CDBE23BF125D001EB196 /* NSAttributedString+ContentTypes.swift in Sources */,
 				1B7A985723C4828A00C34B14 /* RichTextEditorContext.swift in Sources */,
 				1B7A985923C484BC00C34B14 /* RichTextViewDelegate.swift in Sources */,
@@ -925,8 +952,10 @@
 				1B45CDC723BF14DF001EB196 /* NSAttributedString+Range.swift in Sources */,
 				1B45CDD223C00856001EB196 /* TextContainer.swift in Sources */,
 				1B4B60CA247FC51E002B63CF /* ListCommand.swift in Sources */,
+				1B7C76AB2608A489006618AC /* BoldCommand.swift in Sources */,
 				1BBAC3CF23CD5A1B0088A1C8 /* UITextRangeExtensions.swift in Sources */,
 				1BFDC80F254A9BFC00BD83BD /* ListParser.swift in Sources */,
+				1B7C76AC2608A489006618AC /* ItalicsCommand.swift in Sources */,
 				1B183D8E23CEE9BA00AE83E5 /* AttributesEncoding.swift in Sources */,
 				1BD21554246951090000BCE2 /* LayoutManager.swift in Sources */,
 				1BBAC3CC23CD571D0088A1C8 /* RendererViewDelegate.swift in Sources */,
@@ -952,6 +981,7 @@
 				1B45CDBA23BF10DF001EB196 /* TextStorageDelegate.swift in Sources */,
 				1B975AFF23CD454700EC410C /* RichTextViewContext.swift in Sources */,
 				1B45CDE823C05C0C001EB196 /* Focusable.swift in Sources */,
+				1B7C76AA2608A489006618AC /* FontTraitToggleCommand.swift in Sources */,
 				1B164F4123D2A4AB00A0869A /* String+NSRange.swift in Sources */,
 				1B45CDDF23C053FB001EB196 /* EditorContentIdentifying.swift in Sources */,
 				1B45CDD523C00927001EB196 /* EditorContent.swift in Sources */,
@@ -984,6 +1014,7 @@
 				1B30A3642489E11F00FA1D48 /* MockRichTextViewListDelegate.swift in Sources */,
 				1BF90FB4245E503E00A411A3 /* TextBlockAttributeTests.swift in Sources */,
 				1BBAC3DA23CD7A8B0088A1C8 /* MockRendererViewDelegate.swift in Sources */,
+				1B7C76B32608A4FF006618AC /* FontTraitToggleCommandTests.swift in Sources */,
 				1BFFEF1523C332A100D2BA35 /* EditorSnapshotTests.swift in Sources */,
 				1B4B60C6247F692D002B63CF /* ListsSnapshotTests.swift in Sources */,
 				1BD993C023C9EAA900563ACB /* TextTransformer.swift in Sources */,
@@ -1001,6 +1032,7 @@
 				1BC25B542448768200FF88AC /* EditorContextDelegateTests.swift in Sources */,
 				1BBAC3E323CE85660088A1C8 /* RendererCommandExecutorTests.swift in Sources */,
 				1B8D8208243F3386009AD38A /* MockRendererCommand.swift in Sources */,
+				1B7C76BA2608A508006618AC /* HighlightTextCommandTests.swift in Sources */,
 				1BFDC811254AA11F00BD83BD /* ListParserTests.swift in Sources */,
 				1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */,
 				1B82570423C48C350033A0A9 /* MockRichTextViewDelegate.swift in Sources */,

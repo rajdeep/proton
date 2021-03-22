@@ -1,6 +1,6 @@
 //
 //  HighlightTextCommandTests.swift
-//  ProtonExtensionsTests
+//  ProtonTests
 //
 //  Created by Rajdeep Kwatra on 18/4/20.
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
@@ -21,8 +21,7 @@
 import Foundation
 import XCTest
 
-import Proton
-@testable import ProtonExtensions
+@testable import Proton
 
 class HighlightTextCommandTests: XCTestCase {
     func testHighlightsText() {
