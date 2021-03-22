@@ -22,7 +22,7 @@
 #ifndef Proton_Bridging_Header_h
 #define Proton_Bridging_Header_h
 
-#import "Core/PRTextStorage.h"
-#import "Core/PREditorContentName.h"
+#import "ObjC/include/PRTextStorage.h"
+#import "ObjC/include/PREditorContentName.h"
 
 #endif /* Proton_Bridging_Header_h */

@@ -128,14 +128,20 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         guard let isBlockAttachment = isBlockAttachment else { return NSAttributedString(string: "<UNKNOWN CONTENT TYPE>") }
 //        let key = isBlockAttachment == true ? NSAttributedString.Key.contentType: NSAttributedString.Key.inlineContentType
         let string = NSMutableAttributedString(attachment: self)
+        
+        string.addAttributes(attributes, range: string.fullRange)
+        return string
+    }
+    
+    var attributes: [NSAttributedString.Key: Any] {
         let value = name ?? EditorContent.Name.unknown
+        let isBlockAttachment = self.isBlockAttachment == true
         let contentKey: NSAttributedString.Key = isBlockAttachment ? .blockContentType : .inlineContentType
-        string.addAttributes([
+        return [
             contentKey: value,
             .isBlockAttachment: isBlockAttachment,
             .isInlineAttachment: !isBlockAttachment
-        ], range: string.fullRange)
-        return string
+        ]
     }
 
     final var frame: CGRect {

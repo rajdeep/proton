@@ -20,7 +20,6 @@
 
 #import "PRTextStorage.h"
 #import "PREditorContentName.h"
-#import <Proton/Proton-Swift.h>
 
 @interface PRTextStorage ()
 @property (nonatomic) NSTextStorage *storage;
@@ -65,7 +64,8 @@
 
 - (void)edited:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta {
     [super edited:editedMask range:editedRange changeInLength:delta];
-    [self.textStorageDelegate textStorage:self edited:editedMask range:editedRange changeInLength:delta];
+//    [self.textStorageDelegate textStorage:self edited:editedMask range:editedRange changeInLength:delta];
+    [self.textStorageDelegate textStorage:self edited:editedMask in:editedRange changeInLength:delta];
 }
 
 - (void)replaceCharactersInRange:(NSRange)range withAttributedString:(NSAttributedString *)attrString {
@@ -97,7 +97,7 @@
     }
 
     NSAttributedString *deletedText = [_storage attributedSubstringFromRange:range];
-    [_textStorageDelegate textStorage:self willDeleteText:deletedText insertedText:replacementString range:range];
+    [_textStorageDelegate textStorage:self will:deletedText insertText:replacementString in:range];
     [super replaceCharactersInRange:range withAttributedString:replacementString];
 }
 
@@ -105,9 +105,9 @@
     [self beginEditing];
     NSInteger delta = str.length - range.length;
 
-    NSArray<Attachment *> *attachmentsToDelete = [self attachmentsForRange:range];
-    for (Attachment *attachment in attachmentsToDelete) {
-        [attachment removeFromSuperview];
+    NSArray<NSTextAttachment *> *attachmentsToDelete = [self attachmentsForRange:range];
+    for (NSTextAttachment *attachment in attachmentsToDelete) {
+        [_textStorageDelegate textStorage:self didDelete:attachment];
     }
 
     [_storage replaceCharactersInRange:range withString:str];
@@ -138,20 +138,20 @@
     [self endEditing];
 }
 
-- (void)insertAttachmentInRange:(NSRange)range attachment:(Attachment *_Nonnull)attachment {
-    NSCharacterSet *spacerCharacterSet = attachment.spacerCharacterSet;
-    BOOL hasPrevSpacer = NO;
-    if (range.length + range.location > 0) {
-        NSUInteger characterIndex = range.location == 0 ? 0 : range.location - 1;
-        hasPrevSpacer = [spacerCharacterSet characterIsMember:[self.string characterAtIndex:characterIndex]];
-    }
+- (void)insertAttachmentInRange:(NSRange)range attachment:(NSTextAttachment *_Nonnull)attachment withSpacer: (NSAttributedString *) spacer {
+    NSCharacterSet *spacerCharacterSet = [NSCharacterSet whitespaceCharacterSet];  //attachment.spacerCharacterSet;
     BOOL hasNextSpacer = NO;
     if (range.location + 1 < self.length) {
         NSUInteger characterIndex = range.location + 1;
         hasNextSpacer = [spacerCharacterSet characterIsMember:[self.string characterAtIndex:characterIndex]];
     }
 
-    NSAttributedString *attachmentString = [attachment stringWithSpacersWithAppendPrev:!hasPrevSpacer appendNext:!hasNextSpacer];
+    NSMutableAttributedString *attachmentString = [[NSMutableAttributedString attributedStringWithAttachment:attachment] mutableCopy];
+
+    if (hasNextSpacer == NO) {
+        [attachmentString appendAttributedString: spacer];
+    }
+
     [self replaceCharactersInRange:range withAttributedString:attachmentString];
 }
 
@@ -212,13 +212,13 @@
     return updatedAttributes;
 }
 
-- (NSArray<Attachment *> *)attachmentsForRange:(NSRange)range {
-    NSMutableArray<Attachment *> *attachments = [NSMutableArray array];
+- (NSArray<NSTextAttachment *> *)attachmentsForRange:(NSRange)range {
+    NSMutableArray<NSTextAttachment *> *attachments = [NSMutableArray array];
     [_storage enumerateAttribute:NSAttachmentAttributeName
                          inRange:range
                          options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
                       usingBlock:^(id _Nullable value, NSRange range, BOOL *_Nonnull stop) {
-        if ([value isKindOfClass:[Attachment class]]) {
+        if ([value isKindOfClass:[NSTextAttachment class]]) {
             [attachments addObject:value];
         }
     }];

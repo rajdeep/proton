@@ -20,6 +20,7 @@
 
 import Foundation
 import UIKit
+import ProtonCore
 
 /// Describes an object interested in observing the bounds of a view. `Attachment` is `BoundsObserving` and reacts to
 /// changes in the bounds of views hosted within the `Attachment`. Any view contained in the `Attachment` that is capable of
@@ -101,7 +102,7 @@ public struct EditorLine {
 /// A scrollable, multiline text region capable of resizing itself based of the height of the content. Maximum height of `EditorView`
 /// may be restricted using an absolute value or by using auto-layout constraints. Instantiation of `EditorView` is simple and straightforward
 /// and can be used to host simple formatted text or complex layout containing multiple nested `EditorView` via use of `Attachment`.
-open class EditorView: UIView {
+open class EditorView: UIView, DefaultTextFormattingProviding {
     let richTextView: RichTextView
 
     let context: RichTextViewContext
@@ -233,6 +234,7 @@ open class EditorView: UIView {
         set { richTextView.contentInset = newValue }
     }
 
+    @available(iOS 11.1, *)
     @available(iOSApplicationExtension 11.1, *)
     public var verticalScrollIndicatorInsets: UIEdgeInsets {
         get { richTextView.verticalScrollIndicatorInsets }
@@ -927,7 +929,7 @@ extension EditorView {
     }
 }
 
-extension EditorView: DefaultTextFormattingProviding { }
+//extension EditorView: DefaultTextFormattingProviding { }
 
 extension EditorView: RichTextViewListDelegate {
     var listLineFormatting: LineFormatting {

@@ -20,6 +20,7 @@
 
 import Foundation
 import UIKit
+import ProtonCore
 
 class RichTextView: AutogrowingTextView {
     
@@ -30,7 +31,8 @@ class RichTextView: AutogrowingTextView {
     weak var richTextViewDelegate: RichTextViewDelegate?
     weak var richTextViewListDelegate: RichTextViewListDelegate?
 
-    weak var defaultTextFormattingProvider: DefaultTextFormattingProviding? {
+    weak var defaultTextFormattingProvider: DefaultTextFormattingProviding?
+    {
         get { richTextStorage.defaultTextFormattingProvider }
         set { richTextStorage.defaultTextFormattingProvider = newValue }
     }
@@ -376,7 +378,11 @@ class RichTextView: AutogrowingTextView {
     }
 
     func insertAttachment(in range: NSRange, attachment: Attachment) {
-        richTextStorage.insertAttachment(in: range, attachment: attachment)
+        richTextStorage.insertAttachment(in: range, attachment: attachment, withSpacer: attachment.spacer)
+        // TODO: Temporary workaround to get around the issue of adding content type to attachments
+        // This needs to be done outside PRTextStorage from ProtonCore as it can no longer depend on Proton framework
+        // Ideally, attachment.string should be used - possibly consider using richTextStorage.replaceCharacters
+        richTextStorage.addAttributes(attachment.attributes, range: NSRange(location: range.location, length: 1))
         if let rangeInContainer = attachment.rangeInContainer() {
             edited(range: rangeInContainer)
         }
@@ -577,12 +583,19 @@ extension RichTextView: NSLayoutManagerDelegate {
 }
 
 extension RichTextView: TextStorageDelegate {
-    func textStorage(_ textStorage: PRTextStorage, edited: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: NSInteger) {
-        updatePlaceholderVisibility()
+    func textStorage(_ textStorage: PRTextStorage, didDelete attachment: NSTextAttachment) {
+        guard let attachment = attachment as? Attachment else {
+            return
+        }
+        attachment.removeFromSuperview()
     }
     
-    func textStorage(_ textStorage: PRTextStorage, willDeleteText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) {
-        textProcessor?.textStorage(textStorage, willProcessDeletedText: deletedText, insertedText: insertedText)
+    func textStorage(_ textStorage: PRTextStorage, will deleteText: NSAttributedString, insertText insertedText: NSAttributedString, in range: NSRange) {
+        textProcessor?.textStorage(textStorage, willProcessDeletedText: deleteText, insertedText: insertedText)
+    }
+    
+    func textStorage(_ textStorage: PRTextStorage, edited actions: NSTextStorage.EditActions, in editedRange: NSRange, changeInLength delta: Int) {
+        updatePlaceholderVisibility()
     }
 }
 

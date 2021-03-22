@@ -21,6 +21,7 @@
 import Foundation
 import XCTest
 import SnapshotTesting
+import ProtonCore
 
 @testable import Proton
 

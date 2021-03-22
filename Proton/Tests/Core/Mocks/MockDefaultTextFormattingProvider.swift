@@ -20,13 +20,13 @@
 
 import Foundation
 import UIKit
-
+import ProtonCore
 @testable import Proton
 
-class MockDefaultTextFormattingProvider: DefaultTextFormattingProviding {
+class MockDefaultTextFormattingProvider: NSObject, DefaultTextFormattingProviding {
     var textColor: UIColor
-    let font: UIFont
-    let paragraphStyle: NSMutableParagraphStyle
+    var font: UIFont
+    var paragraphStyle: NSMutableParagraphStyle
 
     init(font: UIFont, textColor: UIColor = .black, paragraphStyle: NSMutableParagraphStyle) {
         self.font = font

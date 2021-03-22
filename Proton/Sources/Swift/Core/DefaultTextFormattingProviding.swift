@@ -1,5 +1,5 @@
 //
-//  TextStorageDelegate.swift
+//  DefaultTextFormattingProviding.swift
 //  Proton
 //
 //  Created by Rajdeep Kwatra on 3/1/20.
@@ -18,11 +18,11 @@
 //  limitations under the License.
 //
 
-import Foundation
 import UIKit
 
-@objc
-protocol TextStorageDelegate: AnyObject {
-    func textStorage(_ textStorage: PRTextStorage, willDeleteText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange)
-    func textStorage(_ textStorage: PRTextStorage, edited: NSTextStorage.EditActions, range editedRange:NSRange, changeInLength delta: NSInteger)
-}
+//@objc
+//protocol DefaultTextFormattingProviding: AnyObject {
+//    var font: UIFont { get }
+//    var paragraphStyle: NSMutableParagraphStyle { get }
+//    var textColor: UIColor { get }
+//}

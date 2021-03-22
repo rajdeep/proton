@@ -30,7 +30,7 @@ class AttachmentSnapshotTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-//        recordMode = true
+        recordMode = false
     }
 
     func testMatchContentRendering() {
