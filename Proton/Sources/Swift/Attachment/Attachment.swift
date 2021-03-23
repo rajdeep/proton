@@ -125,7 +125,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     /// editor.attributedText = attrString
     /// ```
     public var string: NSAttributedString {
-        guard let isBlockAttachment = isBlockAttachment else { return NSAttributedString(string: "<UNKNOWN CONTENT TYPE>") }
+        guard isBlockAttachment != nil else { return NSAttributedString(string: "<UNKNOWN CONTENT TYPE>") }
         let string = NSMutableAttributedString(attachment: self)
         
         string.addAttributes(attributes, range: string.fullRange)
