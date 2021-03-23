@@ -14,6 +14,6 @@ FOUNDATION_EXPORT double ProtonCoreVersionNumber;
 //! Project version string for ProtonCore.
 FOUNDATION_EXPORT const unsigned char ProtonCoreVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <ProtonCore/PublicHeader.h>
-
+#import <ProtonCore/PRTextStorage.h>
+#import <ProtonCore/PREditorContentName.h>
 
