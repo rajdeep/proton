@@ -102,7 +102,7 @@ public struct EditorLine {
 /// A scrollable, multiline text region capable of resizing itself based of the height of the content. Maximum height of `EditorView`
 /// may be restricted using an absolute value or by using auto-layout constraints. Instantiation of `EditorView` is simple and straightforward
 /// and can be used to host simple formatted text or complex layout containing multiple nested `EditorView` via use of `Attachment`.
-open class EditorView: UIView, DefaultTextFormattingProviding {
+open class EditorView: UIView {
     let richTextView: RichTextView
 
     let context: RichTextViewContext
@@ -929,7 +929,7 @@ extension EditorView {
     }
 }
 
-//extension EditorView: DefaultTextFormattingProviding { }
+extension EditorView: DefaultTextFormattingProviding { }
 
 extension EditorView: RichTextViewListDelegate {
     var listLineFormatting: LineFormatting {

@@ -64,7 +64,6 @@
 
 - (void)edited:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta {
     [super edited:editedMask range:editedRange changeInLength:delta];
-//    [self.textStorageDelegate textStorage:self edited:editedMask range:editedRange changeInLength:delta];
     [self.textStorageDelegate textStorage:self edited:editedMask in:editedRange changeInLength:delta];
 }
 
