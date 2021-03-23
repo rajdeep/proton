@@ -20,6 +20,7 @@
 
 import Foundation
 import XCTest
+import ProtonCore
 
 @testable import Proton
 

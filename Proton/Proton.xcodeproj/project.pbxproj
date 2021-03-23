@@ -30,7 +30,6 @@
 		1B45CD9D23BEDA8F001EB196 /* UIView+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD9C23BEDA8F001EB196 /* UIView+Render.swift */; };
 		1B45CD9F23BEE997001EB196 /* SnapshotTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD9E23BEE997001EB196 /* SnapshotTestViewController.swift */; };
 		1B45CDA923BEED0E001EB196 /* AutogrowingTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDA823BEED0E001EB196 /* AutogrowingTextViewTests.swift */; };
-		1B45CDBA23BF10DF001EB196 /* TextStorageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDB923BF10DF001EB196 /* TextStorageDelegate.swift */; };
 		1B45CDBC23BF1174001EB196 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDBB23BF1174001EB196 /* Types.swift */; };
 		1B45CDBE23BF125D001EB196 /* NSAttributedString+ContentTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDBD23BF125D001EB196 /* NSAttributedString+ContentTypes.swift */; };
 		1B45CDC223BF131E001EB196 /* TextStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CDC023BF131B001EB196 /* TextStorageTests.swift */; };
@@ -61,6 +60,12 @@
 		1B6DE9D923C5940B007F9859 /* EditorCommandSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */; };
 		1B7A985723C4828A00C34B14 /* RichTextEditorContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A985623C4828A00C34B14 /* RichTextEditorContext.swift */; };
 		1B7A985923C484BC00C34B14 /* RichTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */; };
+		1B7C76AA2608A489006618AC /* FontTraitToggleCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76A92608A489006618AC /* FontTraitToggleCommand.swift */; };
+		1B7C76AB2608A489006618AC /* BoldCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76A72608A489006618AC /* BoldCommand.swift */; };
+		1B7C76AC2608A489006618AC /* ItalicsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76A82608A489006618AC /* ItalicsCommand.swift */; };
+		1B7C76B32608A4FF006618AC /* FontTraitToggleCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76B22608A4FF006618AC /* FontTraitToggleCommandTests.swift */; };
+		1B7C76BA2608A508006618AC /* HighlightTextCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76B92608A508006618AC /* HighlightTextCommandTests.swift */; };
+		1B7C76C0260931F8006618AC /* HighlightTextCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76B02608A4D8006618AC /* HighlightTextCommand.swift */; };
 		1B82570423C48C350033A0A9 /* MockRichTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B82570323C48C350033A0A9 /* MockRichTextViewDelegate.swift */; };
 		1B82570623C48FEC0033A0A9 /* RichTextViewContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B82570523C48FEC0033A0A9 /* RichTextViewContextTests.swift */; };
 		1B82570923C5674E0033A0A9 /* EditorCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B82570823C5674E0033A0A9 /* EditorCommand.swift */; };
@@ -79,6 +84,11 @@
 		1B975AFF23CD454700EC410C /* RichTextViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975AFE23CD454700EC410C /* RichTextViewContext.swift */; };
 		1B975B0123CD45DC00EC410C /* RendererViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975B0023CD45DC00EC410C /* RendererViewContext.swift */; };
 		1BB214D023BB2778008B84A0 /* Proton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB214C623BB2778008B84A0 /* Proton.framework */; };
+		1BB4AAEB2606DA2D000D7584 /* ProtonCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BB4AAE92606DA2D000D7584 /* ProtonCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1BB4AAF42606DA37000D7584 /* PREditorContentName.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B9AED8B26059D1A00660B99 /* PREditorContentName.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1BB4AAF52606DA37000D7584 /* PRTextStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B9AED8A26059D1A00660B99 /* PRTextStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1BB4AAFA2606DA3E000D7584 /* PRTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE8825E250DD7B600E2CC1B /* PRTextStorage.m */; };
+		1BB4AAFB2606DA3E000D7584 /* PREditorContentName.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE88263250E3ADB00E2CC1B /* PREditorContentName.m */; };
 		1BBAC3CC23CD571D0088A1C8 /* RendererViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3CB23CD571D0088A1C8 /* RendererViewDelegate.swift */; };
 		1BBAC3CF23CD5A1B0088A1C8 /* UITextRangeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3CE23CD5A1B0088A1C8 /* UITextRangeExtensions.swift */; };
 		1BBAC3D223CD69250088A1C8 /* RendererSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3D123CD69250088A1C8 /* RendererSnapshotTests.swift */; };
@@ -88,6 +98,7 @@
 		1BBAC3DD23CDB8C10088A1C8 /* RendererCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3DC23CDB8C10088A1C8 /* RendererCommand.swift */; };
 		1BBAC3E023CE81F40088A1C8 /* RendererCommandExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3DF23CE81F40088A1C8 /* RendererCommandExecutor.swift */; };
 		1BBAC3E323CE85660088A1C8 /* RendererCommandExecutorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3E223CE85660088A1C8 /* RendererCommandExecutorTests.swift */; };
+		1BBD529F2608713C00EB5DA8 /* ProtonCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB4AAE72606DA2D000D7584 /* ProtonCore.framework */; };
 		1BBE4EFC248CB15E00D1C788 /* ListCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */; };
 		1BC25B542448768200FF88AC /* EditorContextDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC25B532448768200FF88AC /* EditorContextDelegateTests.swift */; };
 		1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */; };
@@ -100,9 +111,6 @@
 		1BD993B823C9AE4200563ACB /* NSAttributedString+Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993B723C9AE4200563ACB /* NSAttributedString+Content.swift */; };
 		1BD993C023C9EAA900563ACB /* TextTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993BF23C9EAA900563ACB /* TextTransformer.swift */; };
 		1BD993C423CACCE100563ACB /* MockAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993C323CACCE100563ACB /* MockAttachment.swift */; };
-		1BE8825F250DD7B600E2CC1B /* PRTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE8825E250DD7B600E2CC1B /* PRTextStorage.m */; };
-		1BE88262250E3ABB00E2CC1B /* PREditorContentName.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BE88261250E3ABB00E2CC1B /* PREditorContentName.h */; };
-		1BE88264250E3ADB00E2CC1B /* PREditorContentName.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE88263250E3ADB00E2CC1B /* PREditorContentName.m */; };
 		1BF90FB4245E503E00A411A3 /* TextBlockAttributeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90FB3245E503E00A411A3 /* TextBlockAttributeTests.swift */; };
 		1BFDC80F254A9BFC00BD83BD /* ListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFDC80E254A9BFC00BD83BD /* ListParser.swift */; };
 		1BFDC811254AA11F00BD83BD /* ListParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFDC810254AA11F00BD83BD /* ListParserTests.swift */; };
@@ -114,10 +122,16 @@
 		1BFFEF1C23C334D200D2BA35 /* InlineEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF1B23C334D200D2BA35 /* InlineEditorView.swift */; };
 		1BFFEF1F23C3366200D2BA35 /* MockAttachmentOffsetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF1E23C3366200D2BA35 /* MockAttachmentOffsetProvider.swift */; };
 		1BFFEF2123C33EA900D2BA35 /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF2023C33EA900D2BA35 /* PanelView.swift */; };
-		3F79CCB2250EF065008C53C4 /* DefaultTextFormattingProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F79CCB1250EF065008C53C4 /* DefaultTextFormattingProviding.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1B17FF83260865A800416D19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1BB214BD23BB2778008B84A0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1BB4AAE62606DA2D000D7584;
+			remoteInfo = ProtonCore;
+		};
 		1BB214D123BB2778008B84A0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1BB214BD23BB2778008B84A0 /* Project object */;
@@ -163,7 +177,6 @@
 		1B45CD9C23BEDA8F001EB196 /* UIView+Render.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Render.swift"; sourceTree = "<group>"; };
 		1B45CD9E23BEE997001EB196 /* SnapshotTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTestViewController.swift; sourceTree = "<group>"; };
 		1B45CDA823BEED0E001EB196 /* AutogrowingTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingTextViewTests.swift; sourceTree = "<group>"; };
-		1B45CDB923BF10DF001EB196 /* TextStorageDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStorageDelegate.swift; sourceTree = "<group>"; };
 		1B45CDBB23BF1174001EB196 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		1B45CDBD23BF125D001EB196 /* NSAttributedString+ContentTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+ContentTypes.swift"; sourceTree = "<group>"; };
 		1B45CDC023BF131B001EB196 /* TextStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStorageTests.swift; sourceTree = "<group>"; };
@@ -194,6 +207,12 @@
 		1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommandSnapshotTests.swift; sourceTree = "<group>"; };
 		1B7A985623C4828A00C34B14 /* RichTextEditorContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextEditorContext.swift; sourceTree = "<group>"; };
 		1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewDelegate.swift; sourceTree = "<group>"; };
+		1B7C76A72608A489006618AC /* BoldCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoldCommand.swift; sourceTree = "<group>"; };
+		1B7C76A82608A489006618AC /* ItalicsCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItalicsCommand.swift; sourceTree = "<group>"; };
+		1B7C76A92608A489006618AC /* FontTraitToggleCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTraitToggleCommand.swift; sourceTree = "<group>"; };
+		1B7C76B02608A4D8006618AC /* HighlightTextCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightTextCommand.swift; sourceTree = "<group>"; };
+		1B7C76B22608A4FF006618AC /* FontTraitToggleCommandTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontTraitToggleCommandTests.swift; sourceTree = "<group>"; };
+		1B7C76B92608A508006618AC /* HighlightTextCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightTextCommandTests.swift; sourceTree = "<group>"; };
 		1B82570323C48C350033A0A9 /* MockRichTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRichTextViewDelegate.swift; sourceTree = "<group>"; };
 		1B82570523C48FEC0033A0A9 /* RichTextViewContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewContextTests.swift; sourceTree = "<group>"; };
 		1B82570823C5674E0033A0A9 /* EditorCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommand.swift; sourceTree = "<group>"; };
@@ -211,10 +230,15 @@
 		1B975AFC23CD40D200EC410C /* RichTextRendererContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextRendererContext.swift; sourceTree = "<group>"; };
 		1B975AFE23CD454700EC410C /* RichTextViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewContext.swift; sourceTree = "<group>"; };
 		1B975B0023CD45DC00EC410C /* RendererViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererViewContext.swift; sourceTree = "<group>"; };
+		1B9AED8A26059D1A00660B99 /* PRTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRTextStorage.h; sourceTree = "<group>"; };
+		1B9AED8B26059D1A00660B99 /* PREditorContentName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PREditorContentName.h; sourceTree = "<group>"; };
 		1BB214C623BB2778008B84A0 /* Proton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Proton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BB214CA23BB2778008B84A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BB214CF23BB2778008B84A0 /* ProtonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BB214D623BB2778008B84A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1BB4AAE72606DA2D000D7584 /* ProtonCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ProtonCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1BB4AAE92606DA2D000D7584 /* ProtonCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProtonCore.h; sourceTree = "<group>"; };
+		1BB4AAEA2606DA2D000D7584 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BBAC3CB23CD571D0088A1C8 /* RendererViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererViewDelegate.swift; sourceTree = "<group>"; };
 		1BBAC3CE23CD5A1B0088A1C8 /* UITextRangeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextRangeExtensions.swift; sourceTree = "<group>"; };
 		1BBAC3D123CD69250088A1C8 /* RendererSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererSnapshotTests.swift; sourceTree = "<group>"; };
@@ -236,10 +260,8 @@
 		1BD993B723C9AE4200563ACB /* NSAttributedString+Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Content.swift"; sourceTree = "<group>"; };
 		1BD993BF23C9EAA900563ACB /* TextTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransformer.swift; sourceTree = "<group>"; };
 		1BD993C323CACCE100563ACB /* MockAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAttachment.swift; sourceTree = "<group>"; };
-		1BE8825D250DD79E00E2CC1B /* PRTextStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PRTextStorage.h; sourceTree = "<group>"; };
 		1BE8825E250DD7B600E2CC1B /* PRTextStorage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PRTextStorage.m; sourceTree = "<group>"; };
 		1BE88260250DD81500E2CC1B /* Proton-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Proton-Bridging-Header.h"; sourceTree = "<group>"; };
-		1BE88261250E3ABB00E2CC1B /* PREditorContentName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PREditorContentName.h; sourceTree = "<group>"; };
 		1BE88263250E3ADB00E2CC1B /* PREditorContentName.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PREditorContentName.m; sourceTree = "<group>"; };
 		1BF90FB3245E503E00A411A3 /* TextBlockAttributeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBlockAttributeTests.swift; sourceTree = "<group>"; };
 		1BFDC80E254A9BFC00BD83BD /* ListParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListParser.swift; sourceTree = "<group>"; };
@@ -252,7 +274,6 @@
 		1BFFEF1B23C334D200D2BA35 /* InlineEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineEditorView.swift; sourceTree = "<group>"; };
 		1BFFEF1E23C3366200D2BA35 /* MockAttachmentOffsetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAttachmentOffsetProvider.swift; sourceTree = "<group>"; };
 		1BFFEF2023C33EA900D2BA35 /* PanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
-		3F79CCB1250EF065008C53C4 /* DefaultTextFormattingProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextFormattingProviding.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +281,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BBD529F2608713C00EB5DA8 /* ProtonCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +291,13 @@
 			files = (
 				1BB214D023BB2778008B84A0 /* Proton.framework in Frameworks */,
 				1B3D19C8248346FF00B3AB59 /* SnapshotTesting in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1BB4AAE42606DA2D000D7584 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,8 +381,6 @@
 		1B45CDB823BF10C1001EB196 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				1B45CDB923BF10DF001EB196 /* TextStorageDelegate.swift */,
-				3F79CCB1250EF065008C53C4 /* DefaultTextFormattingProviding.swift */,
 				1B45CDCF23C007AF001EB196 /* RichTextView.swift */,
 				1BD21553246951090000BCE2 /* LayoutManager.swift */,
 				1B45CDD123C00856001EB196 /* TextContainer.swift */,
@@ -365,10 +392,6 @@
 				1BD9323D243CA506005E4136 /* CommandName.swift */,
 				1B45014E247E5AD9007B3EE9 /* SequenceGenerator.swift */,
 				1B30A35F2489CE3E00FA1D48 /* ListFormattingProvider.swift */,
-				1BE8825D250DD79E00E2CC1B /* PRTextStorage.h */,
-				1BE8825E250DD7B600E2CC1B /* PRTextStorage.m */,
-				1BE88261250E3ABB00E2CC1B /* PREditorContentName.h */,
-				1BE88263250E3ADB00E2CC1B /* PREditorContentName.m */,
 				1BFDC80E254A9BFC00BD83BD /* ListParser.swift */,
 			);
 			path = Core;
@@ -459,6 +482,9 @@
 			isa = PBXGroup;
 			children = (
 				1B4B60C9247FC51E002B63CF /* ListCommand.swift */,
+				1B7C76A92608A489006618AC /* FontTraitToggleCommand.swift */,
+				1B7C76A72608A489006618AC /* BoldCommand.swift */,
+				1B7C76A82608A489006618AC /* ItalicsCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -477,6 +503,14 @@
 				1B5E2582240F5B0C00163E74 /* NSAttributedStringExtensionTests.swift */,
 			);
 			path = ExtensionTests;
+			sourceTree = "<group>";
+		};
+		1B7C76B12608A4D8006618AC /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				1B7C76B02608A4D8006618AC /* HighlightTextCommand.swift */,
+			);
+			path = Commands;
 			sourceTree = "<group>";
 		};
 		1B82570723C567370033A0A9 /* EditorCommand */ = {
@@ -526,6 +560,7 @@
 		1B975AF923CD3E5A00EC410C /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
+				1B7C76B12608A4D8006618AC /* Commands */,
 				1B975AFA23CD3E9B00EC410C /* RendererView.swift */,
 				1BBAC3CB23CD571D0088A1C8 /* RendererViewDelegate.swift */,
 				1B975B0023CD45DC00EC410C /* RendererViewContext.swift */,
@@ -533,11 +568,21 @@
 			path = Renderer;
 			sourceTree = "<group>";
 		};
+		1B9AED8926059D1A00660B99 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				1B9AED8A26059D1A00660B99 /* PRTextStorage.h */,
+				1B9AED8B26059D1A00660B99 /* PREditorContentName.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
 		1BB214BC23BB2778008B84A0 = {
 			isa = PBXGroup;
 			children = (
 				1BB214C823BB2778008B84A0 /* Sources */,
 				1BB214D323BB2778008B84A0 /* Tests */,
+				1BB4AAE82606DA2D000D7584 /* ProtonCore */,
 				1BB214C723BB2778008B84A0 /* Products */,
 				1B45CD9523BED059001EB196 /* Frameworks */,
 			);
@@ -548,6 +593,7 @@
 			children = (
 				1BB214C623BB2778008B84A0 /* Proton.framework */,
 				1BB214CF23BB2778008B84A0 /* ProtonTests.xctest */,
+				1BB4AAE72606DA2D000D7584 /* ProtonCore.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -555,17 +601,8 @@
 		1BB214C823BB2778008B84A0 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				1B2BC0DA23CF18A900407DEE /* Decoding */,
-				1B183D8A23CEA8F000AE83E5 /* Encoding */,
-				1B45CDE223C05901001EB196 /* Attachment */,
-				1BB2152E23BB2B83008B84A0 /* Base */,
-				1B45CDB823BF10C1001EB196 /* Core */,
-				1B45CDD323C00915001EB196 /* Editor */,
-				1B82570723C567370033A0A9 /* EditorCommand */,
-				1B975AF923CD3E5A00EC410C /* Renderer */,
-				1BBAC3DB23CDB89A0088A1C8 /* RendererCommand */,
-				1B45CDC323BF13B8001EB196 /* Helpers */,
-				1B91F4AF23C72D66003F9B55 /* TextProcessors */,
+				1BE3305826057DA100B15E67 /* ObjC */,
+				1BE3305B26057E1100B15E67 /* Swift */,
 				1BB214CA23BB2778008B84A0 /* Info.plist */,
 				1BE88260250DD81500E2CC1B /* Proton-Bridging-Header.h */,
 			);
@@ -603,6 +640,15 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		1BB4AAE82606DA2D000D7584 /* ProtonCore */ = {
+			isa = PBXGroup;
+			children = (
+				1BB4AAE92606DA2D000D7584 /* ProtonCore.h */,
+				1BB4AAEA2606DA2D000D7584 /* Info.plist */,
+			);
+			path = ProtonCore;
+			sourceTree = "<group>";
+		};
 		1BBAC3D023CD68EE0088A1C8 /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
@@ -628,6 +674,7 @@
 				1B8D8206243F336F009AD38A /* Mocks */,
 				1BBAC3E223CE85660088A1C8 /* RendererCommandExecutorTests.swift */,
 				1B164F4723D2AC6D00A0869A /* FindTextCommand.swift */,
+				1B7C76B92608A508006618AC /* HighlightTextCommandTests.swift */,
 			);
 			path = RendererCommands;
 			sourceTree = "<group>";
@@ -639,6 +686,7 @@
 				1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */,
 				1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */,
 				1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */,
+				1B7C76B22608A4FF006618AC /* FontTraitToggleCommandTests.swift */,
 			);
 			path = EditorCommands;
 			sourceTree = "<group>";
@@ -659,6 +707,34 @@
 				1BD993B323C9966A00563ACB /* MockTextProcessor.swift */,
 			);
 			path = Mocks;
+			sourceTree = "<group>";
+		};
+		1BE3305826057DA100B15E67 /* ObjC */ = {
+			isa = PBXGroup;
+			children = (
+				1B9AED8926059D1A00660B99 /* include */,
+				1BE8825E250DD7B600E2CC1B /* PRTextStorage.m */,
+				1BE88263250E3ADB00E2CC1B /* PREditorContentName.m */,
+			);
+			path = ObjC;
+			sourceTree = "<group>";
+		};
+		1BE3305B26057E1100B15E67 /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				1B2BC0DA23CF18A900407DEE /* Decoding */,
+				1B183D8A23CEA8F000AE83E5 /* Encoding */,
+				1B45CDE223C05901001EB196 /* Attachment */,
+				1BB2152E23BB2B83008B84A0 /* Base */,
+				1B45CDB823BF10C1001EB196 /* Core */,
+				1B45CDD323C00915001EB196 /* Editor */,
+				1B82570723C567370033A0A9 /* EditorCommand */,
+				1B975AF923CD3E5A00EC410C /* Renderer */,
+				1BBAC3DB23CDB89A0088A1C8 /* RendererCommand */,
+				1B45CDC323BF13B8001EB196 /* Helpers */,
+				1B91F4AF23C72D66003F9B55 /* TextProcessors */,
+			);
+			path = Swift;
 			sourceTree = "<group>";
 		};
 		1BFFEF1323C3328600D2BA35 /* Editor */ = {
@@ -704,7 +780,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BE88262250E3ABB00E2CC1B /* PREditorContentName.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1BB4AAE22606DA2D000D7584 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1BB4AAEB2606DA2D000D7584 /* ProtonCore.h in Headers */,
+				1BB4AAF52606DA37000D7584 /* PRTextStorage.h in Headers */,
+				1BB4AAF42606DA37000D7584 /* PREditorContentName.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,6 +808,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				1B17FF84260865A800416D19 /* PBXTargetDependency */,
 			);
 			name = Proton;
 			productName = Proton;
@@ -751,6 +837,24 @@
 			productReference = 1BB214CF23BB2778008B84A0 /* ProtonTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		1BB4AAE62606DA2D000D7584 /* ProtonCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1BB4AAEC2606DA2D000D7584 /* Build configuration list for PBXNativeTarget "ProtonCore" */;
+			buildPhases = (
+				1BB4AAE22606DA2D000D7584 /* Headers */,
+				1BB4AAE32606DA2D000D7584 /* Sources */,
+				1BB4AAE42606DA2D000D7584 /* Frameworks */,
+				1BB4AAE52606DA2D000D7584 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ProtonCore;
+			productName = ProtonCore;
+			productReference = 1BB4AAE72606DA2D000D7584 /* ProtonCore.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -767,6 +871,9 @@
 					};
 					1BB214CE23BB2778008B84A0 = {
 						CreatedOnToolsVersion = 11.3;
+					};
+					1BB4AAE62606DA2D000D7584 = {
+						CreatedOnToolsVersion = 12.4;
 					};
 				};
 			};
@@ -788,6 +895,7 @@
 			targets = (
 				1BB214C523BB2778008B84A0 /* Proton */,
 				1BB214CE23BB2778008B84A0 /* ProtonTests */,
+				1BB4AAE62606DA2D000D7584 /* ProtonCore */,
 			);
 		};
 /* End PBXProject section */
@@ -807,6 +915,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1BB4AAE52606DA2D000D7584 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -815,20 +930,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B238D6E2456A40200BF49D5 /* NullRichTextEditorContext.swift in Sources */,
+				1B7C76C0260931F8006618AC /* HighlightTextCommand.swift in Sources */,
 				1B45CDBE23BF125D001EB196 /* NSAttributedString+ContentTypes.swift in Sources */,
 				1B7A985723C4828A00C34B14 /* RichTextEditorContext.swift in Sources */,
 				1B7A985923C484BC00C34B14 /* RichTextViewDelegate.swift in Sources */,
 				1B45CDE123C05476001EB196 /* UIColor+Image.swift in Sources */,
 				1B45CD9123BDD7E6001EB196 /* AutogrowingTextView.swift in Sources */,
-				1BE88264250E3ADB00E2CC1B /* PREditorContentName.m in Sources */,
 				1B45CDE623C05942001EB196 /* AttachmentSize.swift in Sources */,
 				1B975AFB23CD3E9B00EC410C /* RendererView.swift in Sources */,
 				1B164F1023D1BE9900A0869A /* AttributesDecoding.swift in Sources */,
 				1B45CDC723BF14DF001EB196 /* NSAttributedString+Range.swift in Sources */,
 				1B45CDD223C00856001EB196 /* TextContainer.swift in Sources */,
 				1B4B60CA247FC51E002B63CF /* ListCommand.swift in Sources */,
+				1B7C76AB2608A489006618AC /* BoldCommand.swift in Sources */,
 				1BBAC3CF23CD5A1B0088A1C8 /* UITextRangeExtensions.swift in Sources */,
 				1BFDC80F254A9BFC00BD83BD /* ListParser.swift in Sources */,
+				1B7C76AC2608A489006618AC /* ItalicsCommand.swift in Sources */,
 				1B183D8E23CEE9BA00AE83E5 /* AttributesEncoding.swift in Sources */,
 				1BD21554246951090000BCE2 /* LayoutManager.swift in Sources */,
 				1BBAC3CC23CD571D0088A1C8 /* RendererViewDelegate.swift in Sources */,
@@ -844,7 +961,6 @@
 				1B2BC0DD23CF18C700407DEE /* EditorContentDecoding.swift in Sources */,
 				1B45CDC523BF13D4001EB196 /* NSRangeExtensions.swift in Sources */,
 				1BBAC3E023CE81F40088A1C8 /* RendererCommandExecutor.swift in Sources */,
-				1BE8825F250DD7B600E2CC1B /* PRTextStorage.m in Sources */,
 				1B45014F247E5AD9007B3EE9 /* SequenceGenerator.swift in Sources */,
 				1BD993B823C9AE4200563ACB /* NSAttributedString+Content.swift in Sources */,
 				1B975B0123CD45DC00EC410C /* RendererViewContext.swift in Sources */,
@@ -852,9 +968,9 @@
 				1BFFEF0C23C30D5200D2BA35 /* EditorContentView.swift in Sources */,
 				1B82570923C5674E0033A0A9 /* EditorCommand.swift in Sources */,
 				1B82570D23C5686F0033A0A9 /* EditorViewContext.swift in Sources */,
-				1B45CDBA23BF10DF001EB196 /* TextStorageDelegate.swift in Sources */,
 				1B975AFF23CD454700EC410C /* RichTextViewContext.swift in Sources */,
 				1B45CDE823C05C0C001EB196 /* Focusable.swift in Sources */,
+				1B7C76AA2608A489006618AC /* FontTraitToggleCommand.swift in Sources */,
 				1B164F4123D2A4AB00A0869A /* String+NSRange.swift in Sources */,
 				1B45CDDF23C053FB001EB196 /* EditorContentIdentifying.swift in Sources */,
 				1B45CDD523C00927001EB196 /* EditorContent.swift in Sources */,
@@ -864,7 +980,6 @@
 				1B45CDE423C05916001EB196 /* SelectionView.swift in Sources */,
 				1B30A3602489CE3E00FA1D48 /* ListFormattingProvider.swift in Sources */,
 				1BD9323E243CA506005E4136 /* CommandName.swift in Sources */,
-				3F79CCB2250EF065008C53C4 /* DefaultTextFormattingProviding.swift in Sources */,
 				1B82570B23C567B90033A0A9 /* EditorCommandExecutor.swift in Sources */,
 				1B183D8C23CEA90400AE83E5 /* EditorContentEncoding.swift in Sources */,
 			);
@@ -887,6 +1002,7 @@
 				1B30A3642489E11F00FA1D48 /* MockRichTextViewListDelegate.swift in Sources */,
 				1BF90FB4245E503E00A411A3 /* TextBlockAttributeTests.swift in Sources */,
 				1BBAC3DA23CD7A8B0088A1C8 /* MockRendererViewDelegate.swift in Sources */,
+				1B7C76B32608A4FF006618AC /* FontTraitToggleCommandTests.swift in Sources */,
 				1BFFEF1523C332A100D2BA35 /* EditorSnapshotTests.swift in Sources */,
 				1B4B60C6247F692D002B63CF /* ListsSnapshotTests.swift in Sources */,
 				1BD993C023C9EAA900563ACB /* TextTransformer.swift in Sources */,
@@ -904,6 +1020,7 @@
 				1BC25B542448768200FF88AC /* EditorContextDelegateTests.swift in Sources */,
 				1BBAC3E323CE85660088A1C8 /* RendererCommandExecutorTests.swift in Sources */,
 				1B8D8208243F3386009AD38A /* MockRendererCommand.swift in Sources */,
+				1B7C76BA2608A508006618AC /* HighlightTextCommandTests.swift in Sources */,
 				1BFDC811254AA11F00BD83BD /* ListParserTests.swift in Sources */,
 				1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */,
 				1B82570423C48C350033A0A9 /* MockRichTextViewDelegate.swift in Sources */,
@@ -929,9 +1046,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1BB4AAE32606DA2D000D7584 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1BB4AAFA2606DA3E000D7584 /* PRTextStorage.m in Sources */,
+				1BB4AAFB2606DA3E000D7584 /* PREditorContentName.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1B17FF84260865A800416D19 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1BB4AAE62606DA2D000D7584 /* ProtonCore */;
+			targetProxy = 1B17FF83260865A800416D19 /* PBXContainerItemProxy */;
+		};
 		1BB214D223BB2778008B84A0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 1BB214C523BB2778008B84A0 /* Proton */;
@@ -1165,6 +1296,56 @@
 			};
 			name = Release;
 		};
+		1BB4AAED2606DA2D000D7584 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ProtonCore/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.rajdeep.Proton.ProtonCore;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1BB4AAEE2606DA2D000D7584 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ProtonCore/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.rajdeep.Proton.ProtonCore;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1191,6 +1372,15 @@
 			buildConfigurations = (
 				1BB214DE23BB2778008B84A0 /* Debug */,
 				1BB214DF23BB2778008B84A0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1BB4AAEC2606DA2D000D7584 /* Build configuration list for PBXNativeTarget "ProtonCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1BB4AAED2606DA2D000D7584 /* Debug */,
+				1BB4AAEE2606DA2D000D7584 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

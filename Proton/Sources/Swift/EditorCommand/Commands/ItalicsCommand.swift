@@ -1,8 +1,8 @@
 //
-//  MockDefaultTextFormattingProvider.swift
+//  ItalicsCommand.swift
 //  Proton
 //
-//  Created by Rajdeep Kwatra on 3/1/20.
+//  Created by Rajdeep Kwatra on 8/1/20.
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,17 +20,10 @@
 
 import Foundation
 import UIKit
-import ProtonCore
-@testable import Proton
 
-class MockDefaultTextFormattingProvider: NSObject, DefaultTextFormattingProviding {
-    var textColor: UIColor
-    var font: UIFont
-    var paragraphStyle: NSMutableParagraphStyle
-
-    init(font: UIFont, textColor: UIColor = .black, paragraphStyle: NSMutableParagraphStyle) {
-        self.font = font
-        self.textColor = textColor
-        self.paragraphStyle = paragraphStyle
+/// Editor command that toggles Italics attribute to the selected range in the Editor.
+public class ItalicsCommand: FontTraitToggleCommand {
+    public init() {
+        super.init(name: CommandName("_ItalicsCommand"), trait: .traitItalic)
     }
 }

@@ -30,9 +30,14 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Proton",
+            name: "ProtonCore",
             dependencies: [],
-            path: "Proton/Sources"
+            path: "Proton/Sources/ObjC"         
+        ),
+        .target(
+            name: "Proton",
+            dependencies: ["ProtonCore"],
+            path: "Proton/Sources/Swift"
         ),
         .testTarget(
             name: "ProtonTests",

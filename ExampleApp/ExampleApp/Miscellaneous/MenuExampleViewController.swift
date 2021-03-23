@@ -23,7 +23,6 @@ import Foundation
 import UIKit
 
 import Proton
-import ProtonExtensions
 
 class MenuExampleViewController: ExamplesBaseViewController {
 
