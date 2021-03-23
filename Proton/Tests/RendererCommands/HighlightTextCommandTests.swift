@@ -23,7 +23,9 @@ import XCTest
 
 @testable import Proton
 
+@available(iOS 13.0, *)
 class HighlightTextCommandTests: XCTestCase {
+
     func testHighlightsText() {
         let renderer = RendererView()
         let rangeToHighlight = NSRange(location: 0, length: 4)

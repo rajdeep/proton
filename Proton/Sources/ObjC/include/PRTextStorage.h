@@ -27,26 +27,25 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_SWIFT_NAME(DefaultTextFormattingProviding)
 @protocol PRDefaultTextFormattingProviding<NSObject>
-@optional
-@property UIFont *font;
-@property NSMutableParagraphStyle *paragraphStyle;
-@property UIColor *textColor;
+@property (nonatomic, readonly) UIFont *font;
+@property (nonatomic, readonly) NSMutableParagraphStyle *paragraphStyle;
+@property (nonatomic, readonly) UIColor *textColor;
 @end
 
 @class PRTextStorage;
 
-@protocol TextStorageDelegate<NSObject>
+NS_SWIFT_NAME(TextStorageDelegate)
+@protocol PRTextStorageDelegate<NSObject>
 @required
 - (void) textStorage:(PRTextStorage *) textStorage didDelete: (NSTextAttachment *) attachment;
-@optional
-- (void)textStorage:(PRTextStorage *) textStorage will:(NSAttributedString *) deleteText insertText: (NSAttributedString *) insertedText in: (NSRange) range;
-- (void)textStorage:(PRTextStorage *) textStorage edited:(NSTextStorageEditActions) actions in: (NSRange) editedRange changeInLength: (NSInteger) delta;
+- (void) textStorage:(PRTextStorage *) textStorage will:(NSAttributedString *) deleteText insertText: (NSAttributedString *) insertedText in: (NSRange) range;
+- (void) textStorage:(PRTextStorage *) textStorage edited:(NSTextStorageEditActions) actions in: (NSRange) editedRange changeInLength: (NSInteger) delta;
 @end
 
 @interface PRTextStorage : NSTextStorage
 
 @property (weak, nullable) id<PRDefaultTextFormattingProviding> defaultTextFormattingProvider;
-@property (weak, nullable) id<TextStorageDelegate> textStorageDelegate;
+@property (weak, nullable) id<PRTextStorageDelegate> textStorageDelegate;
 
 @property (nonatomic, readonly) UIFont *defaultFont;
 @property (nonatomic, readonly) NSParagraphStyle *defaultParagraphStyle;
