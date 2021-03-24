@@ -37,9 +37,9 @@ NS_SWIFT_NAME(DefaultTextFormattingProviding)
 NS_SWIFT_NAME(TextStorageDelegate)
 @protocol PRTextStorageDelegate<NSObject>
 @required
-- (void) textStorage:(PRTextStorage *) textStorage didDelete: (NSTextAttachment *) attachment;
-- (void) textStorage:(PRTextStorage *) textStorage will:(NSAttributedString *) deleteText insertText: (NSAttributedString *) insertedText in: (NSRange) range;
-- (void) textStorage:(PRTextStorage *) textStorage edited:(NSTextStorageEditActions) actions in: (NSRange) editedRange changeInLength: (NSInteger) delta;
+- (void)textStorage:(PRTextStorage *)textStorage didDelete:(NSTextAttachment *)attachment;
+- (void)textStorage:(PRTextStorage *)textStorage will:(NSAttributedString *)deleteText insertText:(NSAttributedString *)insertedText in:(NSRange)range;
+- (void)textStorage:(PRTextStorage *)textStorage edited:(NSTextStorageEditActions)actions in:(NSRange)editedRange changeInLength:(NSInteger)delta;
 @end
 
 @interface PRTextStorage : NSTextStorage
@@ -52,7 +52,7 @@ NS_SWIFT_NAME(TextStorageDelegate)
 @property (nonatomic, readonly) UIColor *defaultTextColor;
 
 - (void)removeAttributes:(NSArray<NSAttributedStringKey> *)attrs range:(NSRange)range;
-- (void)insertAttachmentInRange:(NSRange)range attachment:(NSTextAttachment *)attachment withSpacer: (NSAttributedString *) spacer;
+- (void)insertAttachmentInRange:(NSRange)range attachment:(NSTextAttachment *)attachment withSpacer:(NSAttributedString *)spacer;
 
 @end
 
