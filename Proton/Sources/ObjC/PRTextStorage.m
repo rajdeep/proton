@@ -137,7 +137,7 @@
     [self endEditing];
 }
 
-- (void)insertAttachmentInRange:(NSRange)range attachment:(NSTextAttachment *_Nonnull)attachment withSpacer: (NSAttributedString *) spacer {
+- (void)insertAttachmentInRange:(NSRange)range attachment:(NSTextAttachment *_Nonnull)attachment withSpacer:(NSAttributedString *)spacer {
     NSCharacterSet *spacerCharacterSet = [NSCharacterSet whitespaceCharacterSet];  //attachment.spacerCharacterSet;
     BOOL hasNextSpacer = NO;
     if (range.location + 1 < self.length) {
@@ -148,7 +148,7 @@
     NSMutableAttributedString *attachmentString = [[NSMutableAttributedString attributedStringWithAttachment:attachment] mutableCopy];
 
     if (hasNextSpacer == NO) {
-        [attachmentString appendAttributedString: spacer];
+        [attachmentString appendAttributedString:spacer];
     }
 
     [self replaceCharactersInRange:range withAttributedString:attachmentString];

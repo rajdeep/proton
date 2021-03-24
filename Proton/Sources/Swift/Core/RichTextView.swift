@@ -24,7 +24,7 @@ import ProtonCore
 
 class RichTextView: AutogrowingTextView {
     
-    /// Equivilant, strongly-typed alternative to `textStorage`
+    /// Equivalent, strongly-typed alternative to `textStorage`
     private let richTextStorage = PRTextStorage()
     static let defaultListLineFormatting = LineFormatting(indentation: 25, spacingBefore: 0)
 
