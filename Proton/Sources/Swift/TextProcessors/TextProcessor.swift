@@ -67,9 +67,10 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
                 processor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: editedRange)
             } else if changedText == "\t" {
                 processor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: editedRange)
-            } else {
-                processed = processor.process(editor: editor, range: editedRange, changeInLength: delta)
             }
+
+            processed = processor.process(editor: editor, range: editedRange, changeInLength: delta)
+
             if processed { executedProcessors.append(processor) }
             if processor.priority == .exclusive, processed == true {
                 notifyInterruption(by: processor, editor: editor, at: editedRange)
