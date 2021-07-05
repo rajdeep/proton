@@ -279,6 +279,9 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         else { return }
         
         containerTextView.textStorage.replaceCharacters(in: range, with: "")
+        // Set the selected range in container to show the cursor at deleted location
+        // after attachment is removed.
+        containerTextView.selectedRange = NSRange(location: range.location, length: 0)
     }
 
     /// Range of this attachment in it's container
