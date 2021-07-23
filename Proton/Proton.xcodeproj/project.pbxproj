@@ -77,6 +77,10 @@
 		1B8BE91D23C71E4B00353B17 /* EditorViewDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8BE91C23C71E4B00353B17 /* EditorViewDelegateTests.swift */; };
 		1B8BE91F23C71E8A00353B17 /* MockEditorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8BE91E23C71E8A00353B17 /* MockEditorViewDelegate.swift */; };
 		1B8D8208243F3386009AD38A /* MockRendererCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8D8207243F3386009AD38A /* MockRendererCommand.swift */; };
+		1B91E7B126AA685E0002DF45 /* AttributesToggleCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91E7B026AA685E0002DF45 /* AttributesToggleCommand.swift */; };
+		1B91E7B526AA697C0002DF45 /* UnderlineCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91E7B426AA697C0002DF45 /* UnderlineCommand.swift */; };
+		1B91E7B926AA698A0002DF45 /* StrikethroughCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91E7B826AA698A0002DF45 /* StrikethroughCommand.swift */; };
+		1B91E7BD26AA6AA30002DF45 /* AttributesCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91E7BC26AA6AA30002DF45 /* AttributesCommandTests.swift */; };
 		1B91F4B123C72D87003F9B55 /* TextProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91F4B023C72D87003F9B55 /* TextProcessor.swift */; };
 		1B91F4B323C72DC3003F9B55 /* TextProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91F4B223C72DC3003F9B55 /* TextProcessing.swift */; };
 		1B975AFB23CD3E9B00EC410C /* RendererView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975AFA23CD3E9B00EC410C /* RendererView.swift */; };
@@ -224,6 +228,10 @@
 		1B8BE91C23C71E4B00353B17 /* EditorViewDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewDelegateTests.swift; sourceTree = "<group>"; };
 		1B8BE91E23C71E8A00353B17 /* MockEditorViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEditorViewDelegate.swift; sourceTree = "<group>"; };
 		1B8D8207243F3386009AD38A /* MockRendererCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRendererCommand.swift; sourceTree = "<group>"; };
+		1B91E7B026AA685E0002DF45 /* AttributesToggleCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesToggleCommand.swift; sourceTree = "<group>"; };
+		1B91E7B426AA697C0002DF45 /* UnderlineCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineCommand.swift; sourceTree = "<group>"; };
+		1B91E7B826AA698A0002DF45 /* StrikethroughCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrikethroughCommand.swift; sourceTree = "<group>"; };
+		1B91E7BC26AA6AA30002DF45 /* AttributesCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesCommandTests.swift; sourceTree = "<group>"; };
 		1B91F4B023C72D87003F9B55 /* TextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessor.swift; sourceTree = "<group>"; };
 		1B91F4B223C72DC3003F9B55 /* TextProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessing.swift; sourceTree = "<group>"; };
 		1B975AFA23CD3E9B00EC410C /* RendererView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererView.swift; sourceTree = "<group>"; };
@@ -485,6 +493,9 @@
 				1B7C76A92608A489006618AC /* FontTraitToggleCommand.swift */,
 				1B7C76A72608A489006618AC /* BoldCommand.swift */,
 				1B7C76A82608A489006618AC /* ItalicsCommand.swift */,
+				1B91E7B026AA685E0002DF45 /* AttributesToggleCommand.swift */,
+				1B91E7B426AA697C0002DF45 /* UnderlineCommand.swift */,
+				1B91E7B826AA698A0002DF45 /* StrikethroughCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -687,6 +698,7 @@
 				1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */,
 				1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */,
 				1B7C76B22608A4FF006618AC /* FontTraitToggleCommandTests.swift */,
+				1B91E7BC26AA6AA30002DF45 /* AttributesCommandTests.swift */,
 			);
 			path = EditorCommands;
 			sourceTree = "<group>";
@@ -948,6 +960,7 @@
 				1B7C76AC2608A489006618AC /* ItalicsCommand.swift in Sources */,
 				1B183D8E23CEE9BA00AE83E5 /* AttributesEncoding.swift in Sources */,
 				1BD21554246951090000BCE2 /* LayoutManager.swift in Sources */,
+				1B91E7B526AA697C0002DF45 /* UnderlineCommand.swift in Sources */,
 				1BBAC3CC23CD571D0088A1C8 /* RendererViewDelegate.swift in Sources */,
 				1B91F4B323C72DC3003F9B55 /* TextProcessing.swift in Sources */,
 				1B45CDDD23C05340001EB196 /* Attachment.swift in Sources */,
@@ -967,6 +980,7 @@
 				1B4B60CD247FC6AF002B63CF /* ListTextProcessor.swift in Sources */,
 				1BFFEF0C23C30D5200D2BA35 /* EditorContentView.swift in Sources */,
 				1B82570923C5674E0033A0A9 /* EditorCommand.swift in Sources */,
+				1B91E7B926AA698A0002DF45 /* StrikethroughCommand.swift in Sources */,
 				1B82570D23C5686F0033A0A9 /* EditorViewContext.swift in Sources */,
 				1B975AFF23CD454700EC410C /* RichTextViewContext.swift in Sources */,
 				1B45CDE823C05C0C001EB196 /* Focusable.swift in Sources */,
@@ -975,6 +989,7 @@
 				1B45CDDF23C053FB001EB196 /* EditorContentIdentifying.swift in Sources */,
 				1B45CDD523C00927001EB196 /* EditorContent.swift in Sources */,
 				1B975AFD23CD40D200EC410C /* RichTextRendererContext.swift in Sources */,
+				1B91E7B126AA685E0002DF45 /* AttributesToggleCommand.swift in Sources */,
 				1B45CDBC23BF1174001EB196 /* Types.swift in Sources */,
 				1B82571223C5799C0033A0A9 /* FontExtensions.swift in Sources */,
 				1B45CDE423C05916001EB196 /* SelectionView.swift in Sources */,
@@ -1039,6 +1054,7 @@
 				1B45CD9423BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift in Sources */,
 				1B82570623C48FEC0033A0A9 /* RichTextViewContextTests.swift in Sources */,
 				1B45CDEC23C1682C001EB196 /* AttachmentSnapshotTests.swift in Sources */,
+				1B91E7BD26AA6AA30002DF45 /* AttributesCommandTests.swift in Sources */,
 				1B164F4923D2AC9B00A0869A /* FindTextCommand.swift in Sources */,
 				1BD993B623C999AF00563ACB /* EditorViewTests.swift in Sources */,
 				1B30A3622489DC7B00FA1D48 /* MockListFormattingProvider.swift in Sources */,
