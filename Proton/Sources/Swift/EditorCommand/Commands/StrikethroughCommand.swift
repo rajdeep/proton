@@ -19,6 +19,7 @@
 //
 
 import Foundation
+import UIKit
 
 public class StrikethroughCommand: AttributesToggleCommand {
     public init() {
