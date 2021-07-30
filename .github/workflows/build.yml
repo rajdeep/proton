@@ -1,11 +1,11 @@
 name: Build
 
 on: 
-  push:    
-    paths-ignore:
-    - 'docs/**'
+  push:
+  page_build:
   pull_request:
-    branches: [ master ]
+    branches:
+    - master
 
 jobs:
   build:
@@ -23,6 +23,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build and Test Proton
       run: xcodebuild build test -destination "name=iPhone 11 Pro" -scheme "Proton"
+    - name: Build and Test Proton as dependency in another package
+      run: xcodebuild build -destination "name=iPhone 11 Pro" -scheme "TestBuildPackage"
     - name: Capture Proton Code Coverage
       uses: codecov/codecov-action@v1.0.7
     - name: Build Example App
