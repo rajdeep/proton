@@ -17,7 +17,7 @@
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">Proton Docs</a> (78% documented)</p>
+        <p><a href="index.html">Proton Docs</a> (76% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="img/gh.png"/>View on GitHub</a></p>
         <p class="header-right">
           <form role="search" action="search.json">
@@ -43,7 +43,13 @@
                 <a href="Classes/Attachment.html">Attachment</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/AttributesToggleCommand.html">AttributesToggleCommand</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/BackgroundStyle.html">BackgroundStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/BoldCommand.html">BoldCommand</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/BorderStyle.html">BorderStyle</a>
@@ -56,6 +62,15 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/EditorViewContext.html">EditorViewContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/FontTraitToggleCommand.html">FontTraitToggleCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/HighlightTextCommand.html">HighlightTextCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/ItalicsCommand.html">ItalicsCommand</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/ListCommand.html">ListCommand</a>
@@ -74,6 +89,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/ShadowStyle.html">ShadowStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/StrikethroughCommand.html">StrikethroughCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/UnderlineCommand.html">UnderlineCommand</a>
               </li>
             </ul>
           </li>
@@ -422,6 +443,7 @@ and can be used to host simple formatted text or complex layout containing multi
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">EditorView</span> <span class="p">:</span> <span class="kt">UIView</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">EditorView</span><span class="p">:</span> <span class="kt">DefaultTextFormattingProviding</span></code></pre>
 
                         </div>
                       </div>
@@ -462,6 +484,118 @@ context as provided to the <code><a href="Classes/EditorCommandExecutor.html">Ed
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton23AttributesToggleCommandC"></a>
+                    <a name="//apple_ref/swift/Class/AttributesToggleCommand" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton23AttributesToggleCommandC">AttributesToggleCommand</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Editor command that toggles given attributes in selected range in the Editor.</p>
+
+                        <a href="Classes/AttributesToggleCommand.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">AttributesToggleCommand</span> <span class="p">:</span> <span class="kt"><a href="Protocols/EditorCommand.html">EditorCommand</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton11BoldCommandC"></a>
+                    <a name="//apple_ref/swift/Class/BoldCommand" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton11BoldCommandC">BoldCommand</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Editor command that toggles Bold attribute to the selected range in the Editor.</p>
+
+                        <a href="Classes/BoldCommand.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">BoldCommand</span> <span class="p">:</span> <span class="kt"><a href="Classes/FontTraitToggleCommand.html">FontTraitToggleCommand</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton22FontTraitToggleCommandC"></a>
+                    <a name="//apple_ref/swift/Class/FontTraitToggleCommand" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton22FontTraitToggleCommandC">FontTraitToggleCommand</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Editor command that toggles given font trait to the selected range in the Editor.</p>
+
+                        <a href="Classes/FontTraitToggleCommand.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">FontTraitToggleCommand</span> <span class="p">:</span> <span class="kt"><a href="Protocols/EditorCommand.html">EditorCommand</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton14ItalicsCommandC"></a>
+                    <a name="//apple_ref/swift/Class/ItalicsCommand" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton14ItalicsCommandC">ItalicsCommand</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Editor command that toggles Italics attribute to the selected range in the Editor.</p>
+
+                        <a href="Classes/ItalicsCommand.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ItalicsCommand</span> <span class="p">:</span> <span class="kt"><a href="Classes/FontTraitToggleCommand.html">FontTraitToggleCommand</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton11ListCommandC"></a>
                     <a name="//apple_ref/swift/Class/ListCommand" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton11ListCommandC">ListCommand</a>
@@ -482,6 +616,62 @@ If the length of selected range of text is 0, the attributes are applied on the 
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ListCommand</span> <span class="p">:</span> <span class="kt"><a href="Protocols/EditorCommand.html">EditorCommand</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton20StrikethroughCommandC"></a>
+                    <a name="//apple_ref/swift/Class/StrikethroughCommand" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton20StrikethroughCommandC">StrikethroughCommand</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/StrikethroughCommand.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">StrikethroughCommand</span> <span class="p">:</span> <span class="kt"><a href="Classes/AttributesToggleCommand.html">AttributesToggleCommand</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton16UnderlineCommandC"></a>
+                    <a name="//apple_ref/swift/Class/UnderlineCommand" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton16UnderlineCommandC">UnderlineCommand</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/UnderlineCommand.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">UnderlineCommand</span> <span class="p">:</span> <span class="kt"><a href="Classes/AttributesToggleCommand.html">AttributesToggleCommand</a></span></code></pre>
 
                         </div>
                       </div>
@@ -552,6 +742,34 @@ First level items cannot be indented.</li>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ListTextProcessor</span> <span class="p">:</span> <span class="kt"><a href="Protocols/TextProcessing.html">TextProcessing</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton20HighlightTextCommandC"></a>
+                    <a name="//apple_ref/swift/Class/HighlightTextCommand" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton20HighlightTextCommandC">HighlightTextCommand</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/HighlightTextCommand.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">HighlightTextCommand</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RendererCommand.html">RendererCommand</a></span></code></pre>
 
                         </div>
                       </div>
@@ -654,7 +872,7 @@ All the <code><a href="Classes/RendererView.html">RendererView</a></code>s in th
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2021 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2021-01-23)</p>
+          <p>&copy; 2021 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2021-07-31)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

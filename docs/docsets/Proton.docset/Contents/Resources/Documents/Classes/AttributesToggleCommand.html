@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>ShadowStyle Class Reference</title>
+    <title>AttributesToggleCommand Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -13,8 +13,8 @@
     <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/ShadowStyle" class="dashAnchor"></a>
-    <a title="ShadowStyle Class Reference"></a>
+    <a name="//apple_ref/swift/Class/AttributesToggleCommand" class="dashAnchor"></a>
+    <a title="AttributesToggleCommand Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">Proton Docs</a> (76% documented)</p>
@@ -30,7 +30,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">Proton Reference</a>
         <img id="carat" src="../img/carat.png" />
-        ShadowStyle Class Reference
+        AttributesToggleCommand Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -287,15 +287,15 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>ShadowStyle</h1>
+            <h1>AttributesToggleCommand</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ShadowStyle</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">AttributesToggleCommand</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/EditorCommand.html">EditorCommand</a></span></code></pre>
 
                 </div>
               </div>
-            <p>Shadow style for <code>backgroundStyle</code> attribute</p>
+            <p>Editor command that toggles given attributes in selected range in the Editor.</p>
 
           </section>
           <section class="section task-group-section">
@@ -304,90 +304,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton11ShadowStyleC5colorSo7UIColorCvp"></a>
-                    <a name="//apple_ref/swift/Property/color" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton11ShadowStyleC5colorSo7UIColorCvp">color</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Color of the shadow</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">color</span><span class="p">:</span> <span class="kt">UIColor</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:6Proton11ShadowStyleC6offsetSo6CGSizeVvp"></a>
-                    <a name="//apple_ref/swift/Property/offset" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton11ShadowStyleC6offsetSo6CGSizeVvp">offset</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Shadow offset</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">offset</span><span class="p">:</span> <span class="kt">CGSize</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:6Proton11ShadowStyleC4blur12CoreGraphics7CGFloatVvp"></a>
-                    <a name="//apple_ref/swift/Property/blur" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton11ShadowStyleC4blur12CoreGraphics7CGFloatVvp">blur</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Shadow blur</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">blur</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:6Proton11ShadowStyleC5color6offset4blurACSo7UIColorC_So6CGSizeV12CoreGraphics7CGFloatVtcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(color:offset:blur:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton11ShadowStyleC5color6offset4blurACSo7UIColorC_So6CGSizeV12CoreGraphics7CGFloatVtcfc">init(color:<wbr>offset:<wbr>blur:<wbr>)</a>
+                    <a name="/s:6Proton23AttributesToggleCommandC10attributesSDySo21NSAttributedStringKeyaypGvp"></a>
+                    <a name="//apple_ref/swift/Property/attributes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton23AttributesToggleCommandC10attributesSDySo21NSAttributedStringKeyaypGvp">attributes</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -402,7 +321,86 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">color</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">,</span> <span class="nv">offset</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">,</span> <span class="nv">blur</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">attributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">NSAttributedString</span><span class="o">.</span><span class="kt">Key</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton13EditorCommandP4nameAA0C4NameVvp"></a>
+                    <a name="//apple_ref/swift/Property/name" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton13EditorCommandP4nameAA0C4NameVvp">name</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">name</span><span class="p">:</span> <span class="kt"><a href="../Structs/CommandName.html">CommandName</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton23AttributesToggleCommandC4name10attributesAcA0D4NameV_SDySo21NSAttributedStringKeyaypGtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(name:attributes:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton23AttributesToggleCommandC4name10attributesAcA0D4NameV_SDySo21NSAttributedStringKeyaypGtcfc">init(name:<wbr>attributes:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt"><a href="../Structs/CommandName.html">CommandName</a></span><span class="p">,</span> <span class="nv">attributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">NSAttributedString</span><span class="o">.</span><span class="kt">Key</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton13EditorCommandP7execute2onyAA0B4ViewC_tF"></a>
+                    <a name="//apple_ref/swift/Method/execute(on:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton13EditorCommandP7execute2onyAA0B4ViewC_tF">execute(on:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">execute</span><span class="p">(</span><span class="n">on</span> <span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
