@@ -5,7 +5,7 @@ on:
   page_build:
   pull_request:
     branches:
-    - master
+    - main
 
 jobs:
   build:

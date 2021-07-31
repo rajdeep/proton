@@ -1,8 +1,8 @@
- <img src="https://github.com/rajdeep/proton/raw/master/logo.png" width="80%" alt="Proton logo"/>
+ <img src="https://github.com/rajdeep/proton/raw/main/logo.png" width="80%" alt="Proton logo"/>
 
 > **Note:** While Proton is already a very powerful and flexible framework, it is still in early stages of development. The APIs and public interfaces are still undergoing revisions and may introduce breaking changes with every version bump before reaching stable version 1.0.0. 
 
-![Build](https://github.com/rajdeep/proton/workflows/Build/badge.svg) [![codecov](https://codecov.io/gh/rajdeep/proton/branch/master/graph/badge.svg)](https://codecov.io/gh/rajdeep/proton) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+![Build](https://github.com/rajdeep/proton/workflows/Build/badge.svg) [![codecov](https://codecov.io/gh/rajdeep/proton/branch/main/graph/badge.svg)](https://codecov.io/gh/rajdeep/proton) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Proton is a simple library that allows you to extend the behavior of a textview to add rich content that you always wanted. It provides simple API that allows you to extend the textView to include complex content like nested textViews or for that matter, any other UIView. In the simplest terms - It's what you always wanted `UITextView` to be.
 
@@ -160,25 +160,25 @@ Let's take an example of a `Panel` and see how that can be created in the `Edito
 
 1. Changing text as it is typed using custom `TextProcessor`:
 
-    <img src="https://github.com/rajdeep/proton/raw/master/exampleImages/markup.gif" width="50%" alt="Markup text processor"/>
+    <img src="https://github.com/rajdeep/proton/raw/main/exampleImages/markup.gif" width="50%" alt="Markup text processor"/>
 2. Adding attributes as it is typed using custom `TextProcessor`:
 
-    <img src="https://github.com/rajdeep/proton/raw/master/exampleImages/mentions.gif" width="50%" alt="Mentions text processor"/>
+    <img src="https://github.com/rajdeep/proton/raw/main/exampleImages/mentions.gif" width="50%" alt="Mentions text processor"/>
 3. Nested editors
 
-    <img src="https://github.com/rajdeep/proton/raw/master/exampleImages/nested-panels.gif" width="50%" alt="Nested editors"/>
+    <img src="https://github.com/rajdeep/proton/raw/main/exampleImages/nested-panels.gif" width="50%" alt="Nested editors"/>
 4. Panel from existing text:
 
-    <img src="https://github.com/rajdeep/proton/raw/master/exampleImages/panel-from-text.gif" width="50%" alt="Panel from text"/>
+    <img src="https://github.com/rajdeep/proton/raw/main/exampleImages/panel-from-text.gif" width="50%" alt="Panel from text"/>
 5. Relaying attributes to editor contained in an attachment:
 
-    <img src="https://github.com/rajdeep/proton/raw/master/exampleImages/relay-attributes.gif" width="50%" alt="Relay attributes"/>
+    <img src="https://github.com/rajdeep/proton/raw/main/exampleImages/relay-attributes.gif" width="50%" alt="Relay attributes"/>
 6.  Highlighting using custom command in Renderer:
 
-    <img src="https://github.com/rajdeep/proton/raw/master/exampleImages/renderer-highlight.gif" width="50%" alt="Highlight in Renderer"/>
+    <img src="https://github.com/rajdeep/proton/raw/main/exampleImages/renderer-highlight.gif" width="50%" alt="Highlight in Renderer"/>
 7. Find text and scroll in Renderer:
 
-    <img src="https://github.com/rajdeep/proton/raw/master/exampleImages/renderer-find.gif" width="50%" alt="Find in Renderer"/>
+    <img src="https://github.com/rajdeep/proton/raw/main/exampleImages/renderer-find.gif" width="50%" alt="Find in Renderer"/>
 
 ## Learn more
 
