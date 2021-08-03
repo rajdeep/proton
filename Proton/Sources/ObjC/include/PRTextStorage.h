@@ -21,15 +21,22 @@
 #ifndef PRTextStorage_h
 #define PRTextStorage_h
 
+#import <Foundation/Foundation.h>
+#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
+#else
+#import <AppKit/AppKit.h>
+#endif
+
+#import "./PlatformTypes.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 NS_SWIFT_NAME(DefaultTextFormattingProviding)
 @protocol PRDefaultTextFormattingProviding<NSObject>
-@property (nonatomic, readonly) UIFont *font;
-@property (nonatomic, readonly) NSMutableParagraphStyle *paragraphStyle;
-@property (nonatomic, readonly) UIColor *textColor;
+@property (nonatomic, readonly) PlatformFont *font;
+@property (nonatomic, readonly) MutableParagraphStyle *paragraphStyle;
+@property (nonatomic, readonly) PlatformColor *textColor;
 @end
 
 @class PRTextStorage;
@@ -47,9 +54,9 @@ NS_SWIFT_NAME(TextStorageDelegate)
 @property (weak, nullable) id<PRDefaultTextFormattingProviding> defaultTextFormattingProvider;
 @property (weak, nullable) id<PRTextStorageDelegate> textStorageDelegate;
 
-@property (nonatomic, readonly) UIFont *defaultFont;
+@property (nonatomic, readonly) PlatformFont *defaultFont;
 @property (nonatomic, readonly) NSParagraphStyle *defaultParagraphStyle;
-@property (nonatomic, readonly) UIColor *defaultTextColor;
+@property (nonatomic, readonly) PlatformColor *defaultTextColor;
 
 - (void)removeAttributes:(NSArray<NSAttributedStringKey> *)attrs range:(NSRange)range;
 - (void)insertAttachmentInRange:(NSRange)range attachment:(NSTextAttachment *)attachment withSpacer:(NSAttributedString *)spacer;

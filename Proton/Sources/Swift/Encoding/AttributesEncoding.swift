@@ -19,7 +19,6 @@
 //
 
 import Foundation
-import UIKit
 
 /// Describes an encoder for a content type in Editor. This can be used in conjunction with `AnyEditorTextEncoding`
 /// to register various encoders for each of the supported content types.
@@ -79,13 +78,13 @@ public protocol AttachmentEncoding {
     /// - Parameters:
     ///   - name: Name of the content
     ///   - view: Attachment content view
-    func encode(name: EditorContent.Name, view: UIView) -> EncodedType
+    func encode(name: EditorContent.Name, view: NativeView) -> EncodedType
 }
 
 /// A type-erased implementation of `AttachmentEncoding`.
 public struct AnyEditorContentAttachmentEncoding<T>: AttachmentEncoding {
     public typealias EncodedType = T
-    let encoding: (_ name: EditorContent.Name, _ view: UIView) -> T
+    let encoding: (_ name: EditorContent.Name, _ view: NativeView) -> T
 
     /// Initializes the Encoder
     /// - Parameter encoder: Encoder implementation to use
@@ -97,7 +96,7 @@ public struct AnyEditorContentAttachmentEncoding<T>: AttachmentEncoding {
     /// - Parameters:
     ///   - name: Content name
     ///   - string: Attachment view to be encoded
-    public func encode(name: EditorContent.Name, view: UIView) -> T {
+    public func encode(name: EditorContent.Name, view: NativeView) -> T {
         return encoding(name, view)
     }
 }

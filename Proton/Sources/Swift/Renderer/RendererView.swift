@@ -24,7 +24,7 @@ import UIKit
 /// A scrollable, multiline text region capable of resizing itself based of the height of the content. Maximum height of `RendererView`
 /// may be restricted using an absolute value or by using auto-layout constraints. Instantiation of `RendererView` is simple and straightforward
 /// and can be used to host simple formatted text or complex layout containing multiple nested `RendererView` via use of `Attachment`.
-open class RendererView: UIView {
+open class RendererView: PlatformView {
     private let readOnlyEditorView: EditorView
 
     /// An object interested in intercepting and responding to user interaction like tap and selecting changes in the `RendererView`.
@@ -65,7 +65,7 @@ open class RendererView: UIView {
     /// This font is only applied in case where the `attributedText` does not have
     /// font information in the content. If the `attributedText` already has an attribute applied
     /// for font, this font will be ignored.
-    public var font: UIFont {
+    public var font: PlatformFont {
         get { readOnlyEditorView.font }
         set { readOnlyEditorView.font = newValue }
     }
@@ -177,7 +177,7 @@ extension RendererView: RichTextViewDelegate {
 
     func richTextView(_ richTextView: RichTextView, shouldHandle key: EditorKey, at range: NSRange, handled: inout Bool) { }
 
-    func richTextView(_ richTextView: RichTextView, didReceive key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange) { }
+    func richTextView(_ richTextView: RichTextView, didReceive key: EditorKey, modifierFlags: KeyModifierFlags, at range: NSRange) { }
 
     func richTextView(_ richTextView: RichTextView, didReceiveFocusAt range: NSRange) { }
 
@@ -187,7 +187,7 @@ extension RendererView: RichTextViewDelegate {
 
     func richTextView(_ richTextView: RichTextView, selectedRangeChangedFrom oldRange: NSRange?, to newRange: NSRange?) { }
 
-    func richTextView(_ richTextView: RichTextView, shouldHandle key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange, handled: inout Bool) { }
+    func richTextView(_ richTextView: RichTextView, shouldHandle key: EditorKey, modifierFlags: KeyModifierFlags, at range: NSRange, handled: inout Bool) { }
 
     func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool) {
         readOnlyEditorView.relayoutAttachments()
@@ -204,7 +204,7 @@ extension RendererView: RichTextViewListDelegate {
     }
 
     func richTextView(_ richTextView: RichTextView, listMarkerForItemAt index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
-        let font = UIFont.preferredFont(forTextStyle: .body)
+        let font = PlatformFont.preferredFont(forTextStyle: .body)
         let defaultValue = NSAttributedString(string: "*", attributes: [.font: font])
         return listFormattingProvider?.listLineMarkerFor(renderer: self, index: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? .string(defaultValue)
     }

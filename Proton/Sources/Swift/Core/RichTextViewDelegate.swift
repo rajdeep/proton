@@ -19,7 +19,7 @@
 //
 
 import Foundation
-import UIKit
+import CoreGraphics
 
 public enum EditorKey {
     case enter
@@ -40,8 +40,8 @@ public enum EditorKey {
 
 protocol RichTextViewDelegate: AnyObject {
     func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name)
-    func richTextView(_ richTextView: RichTextView, shouldHandle key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange, handled: inout Bool)
-    func richTextView(_ richTextView: RichTextView, didReceive key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange)
+    func richTextView(_ richTextView: RichTextView, shouldHandle key: EditorKey, modifierFlags: KeyModifierFlags, at range: NSRange, handled: inout Bool)
+    func richTextView(_ richTextView: RichTextView, didReceive key: EditorKey, modifierFlags: KeyModifierFlags, at range: NSRange)
     func richTextView(_ richTextView: RichTextView, didReceiveFocusAt range: NSRange)
     func richTextView(_ richTextView: RichTextView, didLoseFocusFrom range: NSRange)
     func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool)

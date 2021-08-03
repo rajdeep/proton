@@ -47,7 +47,7 @@ public struct ListParser {
         let attributedString = NSMutableAttributedString()
         for i in 0..<list.count {
             let item = list[i]
-            let paraStyle = NSMutableParagraphStyle()
+            let paraStyle = MutableParagraphStyle()
             paraStyle.firstLineHeadIndent = CGFloat(item.level) * indent
             paraStyle.headIndent = paraStyle.firstLineHeadIndent
             let listText = NSMutableAttributedString(attributedString: item.text)

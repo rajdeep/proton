@@ -19,7 +19,11 @@
 //
 
 import Foundation
+#if os(iOS)
 import UIKit
+#else
+import AppKit
+#endif
 
 /// Describes an object (typically attachment view) that may change size during the layout pass
 public protocol DynamicBoundsProviding: AnyObject {
@@ -35,11 +39,11 @@ public protocol DynamicBoundsProviding: AnyObject {
 /// While offset can be provided for any type of `Attachment` i.e. Inline or Block, it is recommended that offset be provided only for Inline. If an offset is provided for Block attachment,
 /// it is possible that the attachment starts overlapping the content in `Editor` in the following line since the offset does not affect the line height.
 public protocol AttachmentOffsetProviding: AnyObject {
-    func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint
+    func offset(for attachment: Attachment, in textContainer: PlatformTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint
 }
 
 @objc
-class AttachmentContentView: UIView {
+class AttachmentContentView: PlatformView {
     let name: EditorContent.Name
     weak var attachment: Attachment?
 
@@ -175,7 +179,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         invalidateLayout()
     }
 
-    var contentView: UIView? {
+    var contentView: NativeView? {
         get { view.subviews.first }
         set {
             view.subviews.forEach { $0.removeFromSuperview() }
@@ -200,7 +204,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     /// - Parameters:
     ///   - contentView: Content view to be hosted within the attachment
     ///   - size: Size rule for attachment
-    public init<AttachmentView: UIView & BlockContent>(_ contentView: AttachmentView, size: AttachmentSize) {
+    public init<AttachmentView: NativeView & BlockContent>(_ contentView: AttachmentView, size: AttachmentSize) {
         self.view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
         self.size = size
         super.init(data: nil, ofType: nil)
@@ -214,7 +218,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     /// - Parameters:
     ///   - contentView: Content view to be hosted within the attachment
     ///   - size: Size rule for attachment
-    public init<AttachmentView: UIView & InlineContent>(_ contentView: AttachmentView, size: AttachmentSize) {
+    public init<AttachmentView: NativeView & InlineContent>(_ contentView: AttachmentView, size: AttachmentSize) {
         self.view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
         self.size = size
         super.init(data: nil, ofType: nil)
@@ -229,7 +233,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         self.bounds = contentView.bounds
 
         // Required to disable rendering of default attachment image on iOS 13+
-        self.image = UIColor.clear.image()
+        self.image = PlatformColor.clear.image()
     }
 
     /// Offsets for the attachment. Can be used to align attachment with the text. Defaults to `.zero`
@@ -278,7 +282,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
               let range = containerTextView.attributedText.rangeFor(attachment: self)
         else { return }
         
-        containerTextView.textStorage.replaceCharacters(in: range, with: "")
+        containerTextView.nsTextStorage.replaceCharacters(in: range, with: "")
         // Set the selected range in container to show the cursor at deleted location
         // after attachment is removed.
         containerTextView.selectedRange = NSRange(location: range.location, length: 0)
@@ -316,7 +320,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     ///   - lineFrag: Line fragment containing the attachment
     ///   - position: Position in the text container.
     ///   - charIndex: Character index
-    public override func attachmentBounds(for textContainer: NSTextContainer?, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGRect {
+    public override func attachmentBounds(for textContainer: PlatformTextContainer?, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGRect {
         guard let textContainer = textContainer,
               textContainer.size.height > 0,
               textContainer.size.width > 0

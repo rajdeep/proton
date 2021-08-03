@@ -19,7 +19,6 @@
 //
 
 import Foundation
-import UIKit
 
 public typealias TextProcessingPriority = Int
 public extension TextProcessingPriority {
@@ -80,7 +79,7 @@ public protocol TextProcessing {
     ///   - key: `EditorKey` that is entered.
     ///   - modifierFlags: The bit mask of modifier flags that were pressed with the key.
     ///   - editedRange: Current range that is being modified.
-    func handleKeyWithModifiers(editor: EditorView, key: EditorKey, modifierFlags: UIKeyModifierFlags, range editedRange: NSRange)
+    func handleKeyWithModifiers(editor: EditorView, key: EditorKey, modifierFlags: KeyModifierFlags, range editedRange: NSRange)
 
     /// Fired when processing has been interrupted by another `TextProcessor` running in the same pass. This allows `TextProcessor` to revert
     /// any changes that may not have been committed.
@@ -107,7 +106,7 @@ public protocol TextProcessing {
 
 public extension TextProcessing {
     func willProcess(deletedText: NSAttributedString, insertedText: NSAttributedString) { }
-    func handleKeyWithModifiers(editor: EditorView, key: EditorKey, modifierFlags: UIKeyModifierFlags, range editedRange: NSRange) { }
+    func handleKeyWithModifiers(editor: EditorView, key: EditorKey, modifierFlags: KeyModifierFlags, range editedRange: NSRange) { }
     func selectedRangeChanged(editor: EditorView, oldRange: NSRange?, newRange: NSRange?) { }
     func didProcess(editor: EditorView) { }
     func shouldProcess(_ editorView: EditorView, shouldProcessTextIn range: NSRange, replacementText text: String) -> Bool { return true }

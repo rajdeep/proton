@@ -19,12 +19,10 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
 
 struct PanelEncoder: AttachmentEncoding {
-    func encode(name: EditorContent.Name, view: UIView) -> JSON {
+    func encode(name: EditorContent.Name, view: NativeView) -> JSON {
         guard let view = view as? PanelView else { return JSON() }
 
         var json = JSON()

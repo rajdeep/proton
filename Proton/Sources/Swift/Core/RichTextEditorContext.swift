@@ -19,13 +19,14 @@
 //
 
 import Foundation
-import UIKit
 import CoreServices
 
 class RichTextEditorContext: RichTextViewContext {
     static let `default` = RichTextEditorContext()
 
-    func textViewDidBeginEditing(_ textView: UITextView) {
+    // MARK: - TextViewDelegate
+    
+    func textViewDidBeginEditing(_ textView: PlatformTextView) {
         guard textView.delegate === self else { return }
 
         activeTextView = textView as? RichTextView
@@ -39,7 +40,7 @@ class RichTextEditorContext: RichTextViewContext {
         richTextView.richTextViewDelegate?.richTextView(richTextView, didChangeSelection: range, attributes: attributes, contentType: contentType)
     }
 
-    func textViewDidEndEditing(_ textView: UITextView) {
+    func textViewDidEndEditing(_ textView: PlatformTextView) {
         guard textView.delegate === self else { return }
 
         defer {
@@ -49,7 +50,7 @@ class RichTextEditorContext: RichTextViewContext {
         richTextView.richTextViewDelegate?.richTextView(richTextView, didLoseFocusFrom: textView.selectedRange)
     }
 
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: PlatformTextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         guard textView.delegate === self,
               let richTextView = activeTextView
         else { return true }
@@ -137,7 +138,7 @@ class RichTextEditorContext: RichTextViewContext {
 
     }
 
-    func textViewDidChange(_ textView: UITextView) {
+    func textViewDidChange(_ textView: PlatformTextView) {
         guard textView.delegate === self,
               let richTextView = activeTextView
         else { return }
@@ -160,18 +161,18 @@ class RichTextEditorContext: RichTextViewContext {
     // typing attributes are set to default Menlo font. This causes the editor to lose the applied font that exists before the emoji
     // character. The code looks for existing font information before emoji char and resets that in the typing attributes.
     private func applyFontFixForEmojiIfRequired(in textView: RichTextView, at range: NSRange) {
-        guard let font = textView.typingAttributes[.font] as? UIFont,
+        guard let font = textView.typingAttributes[.font] as? PlatformFont,
               font.isAppleEmoji
         else { return }
         
         textView.typingAttributes[.font] = getDefaultFont(textView: textView, before: range)
     }
 
-    private func getDefaultFont(textView: RichTextView, before range: NSRange) -> UIFont {
-        var fontToApply: UIFont?
+    private func getDefaultFont(textView: RichTextView, before range: NSRange) -> PlatformFont {
+        var fontToApply: PlatformFont?
         let traversalRange = NSRange(location: 0, length: range.location)
         textView.enumerateAttribute(.font, in: traversalRange, options: [.longestEffectiveRangeNotRequired, .reverse]) { font, fontRange, stop in
-            if let font = font as? UIFont,
+            if let font = font as? PlatformFont,
                font.isAppleEmoji == false {
                 fontToApply = font
                 stop.pointee = true

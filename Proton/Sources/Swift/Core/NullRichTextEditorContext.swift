@@ -19,13 +19,12 @@
 //
 
 import Foundation
-import UIKit
 
 class NullRichTextEditorContext: RichTextEditorContext {
-    override func textViewDidBeginEditing(_ textView: UITextView) { }
-    override func textViewDidEndEditing(_ textView: UITextView) { }
-    override func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    override func textViewDidBeginEditing(_ textView: PlatformTextView) { }
+    override func textViewDidEndEditing(_ textView: PlatformTextView) { }
+    override func textView(_ textView: PlatformTextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         return true
     }
-    override func textViewDidChange(_ textView: UITextView) { }
+    override func textViewDidChange(_ textView: PlatformTextView) { }
 }

@@ -19,7 +19,6 @@
 //
 
 import Foundation
-import UIKit
 
 /// Identifies a content type within the `Editor`
 public protocol EditorContentIdentifying {
@@ -27,7 +26,7 @@ public protocol EditorContentIdentifying {
 }
 
 // Convenience type for a UIView that can be placed within the Editor as the content of an `Attachment`
-typealias AttachmentView = UIView & EditorContentIdentifying
+typealias AttachmentView = NativeView & EditorContentIdentifying
 
 /// Block type content hosted within the editor. Any attachment containing `BlockContent` will have a new line character appended
 /// after the attachment on insertion.

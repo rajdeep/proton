@@ -24,5 +24,6 @@
 
 #import "ObjC/include/PRTextStorage.h"
 #import "ObjC/include/PREditorContentName.h"
+#import "ObjC/include/PlatformTypes.h"
 
 #endif /* Proton_Bridging_Header_h */

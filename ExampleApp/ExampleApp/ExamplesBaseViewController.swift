@@ -19,11 +19,9 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
 
-class ExamplesBaseViewController: UIViewController {
+class ExamplesBaseViewController: PlatformViewController {
 
     let editor = EditorView()
 

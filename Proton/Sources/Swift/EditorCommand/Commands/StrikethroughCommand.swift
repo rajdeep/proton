@@ -19,11 +19,10 @@
 //
 
 import Foundation
-import UIKit
 
 public class StrikethroughCommand: AttributesToggleCommand {
     public init() {
         super.init(name: CommandName("_StrikethroughCommand"),
-                   attributes: [.strikethroughStyle: NSUnderlineStyle.single.rawValue])
+                   attributes: [.strikethroughStyle: UnderlineStyle.single.rawValue])
     }
 }

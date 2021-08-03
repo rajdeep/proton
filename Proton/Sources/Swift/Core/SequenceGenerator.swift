@@ -19,7 +19,6 @@
 //
 
 import Foundation
-import UIKit
 
 /// Represents a Sequence generator that can return a value based on given index.
 /// Besides other possible uses, this is used in Lists for generation of bullets/numbering.
@@ -33,7 +32,7 @@ public protocol SequenceGenerator {
 public struct NumericSequenceGenerator: SequenceGenerator {
     public init() { }
     public func value(at index: Int) -> ListLineMarker {
-        let font = UIFont.preferredFont(forTextStyle: .body)
+        let font = PlatformFont.preferredFont(forTextStyle: .body)
         let text = "\(index + 1)."
         return .string(NSAttributedString(string: text, attributes: [.font: font]))
     }
@@ -43,7 +42,7 @@ public struct NumericSequenceGenerator: SequenceGenerator {
 public struct DiamondBulletSequenceGenerator: SequenceGenerator {
     public init() { }
     public func value(at index: Int) -> ListLineMarker {
-        let font = UIFont.preferredFont(forTextStyle: .body)
+        let font = PlatformFont.preferredFont(forTextStyle: .body)
         let text = "◈"
         return .string(NSAttributedString(string: text, attributes: [.font: font]))
     }
@@ -53,7 +52,7 @@ public struct DiamondBulletSequenceGenerator: SequenceGenerator {
 public struct SquareBulletSequenceGenerator: SequenceGenerator {
     public init() { }
     public func value(at index: Int) -> ListLineMarker {
-        let font = UIFont.preferredFont(forTextStyle: .body)
+        let font = PlatformFont.preferredFont(forTextStyle: .body)
         let text = "▣"
         return .string(NSAttributedString(string: text, attributes: [.font: font]))
     }

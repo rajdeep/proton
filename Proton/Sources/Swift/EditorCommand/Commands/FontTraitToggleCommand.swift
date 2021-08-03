@@ -19,15 +19,14 @@
 //
 
 import Foundation
-import UIKit
 
 /// Editor command that toggles given font trait to the selected range in the Editor.
 public class FontTraitToggleCommand: EditorCommand {
-    public let trait: UIFontDescriptor.SymbolicTraits
+    public let trait: FontDescriptor.SymbolicTraits
 
     public let name: CommandName
 
-    public init(name: CommandName, trait: UIFontDescriptor.SymbolicTraits) {
+    public init(name: CommandName, trait: FontDescriptor.SymbolicTraits) {
         self.name = name
         self.trait = trait
     }
@@ -35,17 +34,17 @@ public class FontTraitToggleCommand: EditorCommand {
     public func execute(on editor: EditorView) {
         let selectedText = editor.selectedText
         if editor.isEmpty || editor.selectedRange == .zero || selectedText.length == 0 {
-            guard let font = editor.typingAttributes[.font] as? UIFont else { return }
+            guard let font = editor.typingAttributes[.font] as? PlatformFont else { return }
             editor.typingAttributes[.font] = font.toggled(trait: trait)
             return
         }
 
-        guard let initFont = selectedText.attribute(.font, at: 0, effectiveRange: nil) as? UIFont else {
+        guard let initFont = selectedText.attribute(.font, at: 0, effectiveRange: nil) as? PlatformFont else {
             return
         }
 
         editor.attributedText.enumerateAttribute(.font, in: editor.selectedRange, options: .longestEffectiveRangeNotRequired) { font, range, _ in
-            if let font = font as? UIFont {
+            if let font = font as? PlatformFont {
                 let fontToApply = initFont.contains(trait: trait) ? font.removing(trait: trait) : font.adding(trait: trait)
                 editor.addAttribute(.font, value: fontToApply, at: range)
             }

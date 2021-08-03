@@ -19,7 +19,7 @@
 //
 
 import Foundation
-import UIKit
+import CoreGraphics
 
 enum Indentation {
     case indent
@@ -104,7 +104,7 @@ public class ListCommand: EditorCommand {
         }
 
         editor.attributedText.enumerateAttribute(.paragraphStyle, in: selectedRange, options: []) { (value, range, _) in
-            let paraStyle = value as? NSParagraphStyle
+            let paraStyle = value as? ParagraphStyle
             let mutableStyle = ListTextProcessor().updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: .indent)
             editor.addAttribute(.paragraphStyle, value: mutableStyle ?? editor.paragraphStyle, at: range)
         }

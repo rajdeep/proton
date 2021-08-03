@@ -38,20 +38,28 @@
     return _storage.string;
 }
 
-- (UIFont *)defaultFont {
-    return [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+- (PlatformFont *)defaultFont {
+#if TARGET_OS_IPHONE
+    return [PlatformFont preferredFontForTextStyle:UIFontTextStyleBody];
+#else
+    return [PlatformFont preferredFontForTextStyle:NSFontTextStyleBody options:@{}];
+#endif
 }
 
 - (NSParagraphStyle *)defaultParagraphStyle {
     return [[NSParagraphStyle alloc] init];
 }
 
-- (UIColor *)defaultTextColor {
+- (PlatformColor *)defaultTextColor {
+#if !TARGET_OS_IPHONE
+    return [PlatformColor labelColor];
+#else
     if (@available(iOS 13, *)) {
-        return UIColor.labelColor;
+        return [PlatformColor labelColor];
     } else {
-        return UIColor.blackColor;
+        return [PlatformColor blackColor];
     }
+#endif
 }
 
 - (id)attribute:(NSAttributedStringKey)attrName atIndex:(NSUInteger)location effectiveRange:(NSRangePointer)range {

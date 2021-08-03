@@ -19,7 +19,6 @@
 //
 
 import Foundation
-import UIKit
 
 class RichTextRendererContext: RichTextViewContext {
     static let `default` = RichTextRendererContext()
@@ -27,5 +26,5 @@ class RichTextRendererContext: RichTextViewContext {
 }
 
 class NullRichTextRendererContext: RichTextRendererContext {
-    override func textViewDidChangeSelection(_ textView: UITextView) { }
+    override func textViewDidChangeSelection(_ textView: PlatformTextView) { }
 }

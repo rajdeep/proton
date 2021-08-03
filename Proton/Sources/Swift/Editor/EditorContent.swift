@@ -19,7 +19,6 @@
 //
 
 import Foundation
-import UIKit
 import ProtonCore
 
 /// Type of attachment
@@ -31,7 +30,7 @@ public enum AttachmentType {
 /// Type of `EditorContent`
 public enum EditorContentType {
     case text(name: EditorContent.Name, attributedString: NSAttributedString)
-    case attachment(name: EditorContent.Name, attachment: Attachment, contentView: UIView, type: AttachmentType)
+    case attachment(name: EditorContent.Name, attachment: Attachment, contentView: NativeView, type: AttachmentType)
     case viewOnly
 }
 

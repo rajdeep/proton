@@ -19,14 +19,13 @@
 //
 
 import Foundation
-import UIKit
 
-public extension NSParagraphStyle {
+public extension ParagraphStyle {
 
     /// Creates a mutable copy of current style
-    var mutableParagraphStyle: NSMutableParagraphStyle {
-        let copy = self.mutableCopy() as? NSMutableParagraphStyle
-        return copy ?? NSMutableParagraphStyle()
+    var mutableParagraphStyle: MutableParagraphStyle {
+        let copy = self.mutableCopy() as? MutableParagraphStyle
+        return copy ?? MutableParagraphStyle()
     }
 
     /// Returns `LineFormatting` based on current style

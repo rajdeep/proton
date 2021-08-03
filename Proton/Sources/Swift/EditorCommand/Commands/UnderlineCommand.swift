@@ -19,11 +19,10 @@
 //
 
 import Foundation
-import UIKit
 
 public class UnderlineCommand: AttributesToggleCommand {
     public init() {
         super.init(name: CommandName("_UnderlineCommand"),
-                   attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
+                   attributes: [.underlineStyle: UnderlineStyle.single.rawValue])
     }
 }

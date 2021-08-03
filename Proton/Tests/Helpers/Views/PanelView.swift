@@ -19,13 +19,11 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
 
-class PanelView: UIView, BlockContent, EditorContentView {
+class PanelView: PlatformView, BlockContent, EditorContentView {
     let editor: EditorView
-    let iconView = UIImageView()
+    let iconView = PlatformImageView()
 
     var name: EditorContent.Name {
         return EditorContent.Name("panel")

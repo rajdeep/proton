@@ -32,7 +32,7 @@ protocol PanelViewDelegate: AnyObject {
     func panel(_ panel: PanelView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name)
 }
 
-class PanelView: UIView, BlockContent, EditorContentView {
+class PanelView: PlatformView, BlockContent, EditorContentView {
     let container = UIView()
     let editor: EditorView
     let iconView = UIImageView()
