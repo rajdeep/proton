@@ -102,7 +102,7 @@ public struct EditorLine {
 /// A scrollable, multiline text region capable of resizing itself based of the height of the content. Maximum height of `EditorView`
 /// may be restricted using an absolute value or by using auto-layout constraints. Instantiation of `EditorView` is simple and straightforward
 /// and can be used to host simple formatted text or complex layout containing multiple nested `EditorView` via use of `Attachment`.
-open class EditorView: UIView {
+open class EditorView: PlatformView {
     let richTextView: RichTextView
 
     let context: RichTextViewContext
@@ -116,13 +116,14 @@ open class EditorView: UIView {
 
     var textProcessor: TextProcessor?
 
+    #if os(iOS)
     @available(iOS 13.0, *)
     public var textInteractions: [UITextInteraction] {
         richTextView.interactions.compactMap({ $0 as? UITextInteraction })
     }
 
     @available(iOS, deprecated: 13.0, message: "Use textInteractions")
-    public var textViewGestures: [UIGestureRecognizer] {
+    public var textViewGestures: [GestureRecognizer] {
         richTextView.gestureRecognizers ?? []
     }
 
@@ -131,6 +132,7 @@ open class EditorView: UIView {
         get { richTextView.textDragInteraction?.isEnabled ?? false }
         set { richTextView.textDragInteraction?.isEnabled = newValue }
     }
+    #endif
 
     public override var bounds: CGRect {
         didSet {
@@ -186,16 +188,18 @@ open class EditorView: UIView {
     }
 
     /// Input accessory view to be used
-    open var editorInputAccessoryView: UIView? {
+    #if os(iOS)
+    open var editorInputAccessoryView: PlatformView? {
         get { richTextView.inputAccessoryView }
         set { richTextView.inputAccessoryView = newValue }
     }
 
     /// Input view to be used
-    open var editorInputView: UIView? {
+    open var editorInputView: PlatformView? {
         get { richTextView.inputView }
         set { richTextView.inputView = newValue }
     }
+    #endif
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -216,10 +220,12 @@ open class EditorView: UIView {
         return textProcessor?.activeProcessors ?? []
     }
 
+    #if os(iOS)
     public var selectedTextRange: UITextRange? {
         get { richTextView.selectedTextRange }
         set { richTextView.selectedTextRange = newValue }
     }
+    #endif
 
     /// Placeholder text for the `EditorView`. The value can contain any attributes which is natively
     /// supported in the `NSAttributedString`.
@@ -257,11 +263,13 @@ open class EditorView: UIView {
         set { richTextView.textContainerInset = newValue }
     }
 
+    #if os(iOS)
     /// The types of data converted to tappable URLs in the editor view.
     public var dataDetectorTypes: UIDataDetectorTypes {
         get { richTextView.dataDetectorTypes }
         set { richTextView.dataDetectorTypes = newValue }
     }
+    #endif
 
     /// Length of content within the Editor.
     /// - Note:
@@ -461,6 +469,7 @@ open class EditorView: UIView {
 
     /// The auto-capitalization style for the text object.
     /// default is `UITextAutocapitalizationTypeSentences`
+    #if os(iOS)
     public var autocapitalizationType: UITextAutocapitalizationType {
         get { richTextView.autocapitalizationType }
         set { richTextView.autocapitalizationType = newValue }
@@ -531,11 +540,12 @@ open class EditorView: UIView {
         get { richTextView.isSecureTextEntry }
         set { richTextView.isSecureTextEntry = newValue }
     }
+    #endif
 
     /// The semantic meaning expected by a text input area.
     /// The textContentType property is to provide the keyboard with extra information about the semantic intent of the text document.
     /// default is `nil`
-    public var textContentType: UITextContentType! {
+    public var textContentType: TextContentType! {
         get { richTextView.textContentType }
         set { richTextView.textContentType = newValue }
     }

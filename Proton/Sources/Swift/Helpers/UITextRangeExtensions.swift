@@ -19,6 +19,7 @@
 //
 
 import Foundation
+#if os(iOS)
 import UIKit
 
 public extension UITextRange {
@@ -31,3 +32,5 @@ public extension UITextRange {
         return NSRange(location: location, length: length)
     }
 }
+
+#endif
