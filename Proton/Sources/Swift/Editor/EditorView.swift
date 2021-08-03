@@ -19,7 +19,6 @@
 //
 
 import Foundation
-import UIKit
 import ProtonCore
 
 /// Describes an object interested in observing the bounds of a view. `Attachment` is `BoundsObserving` and reacts to
@@ -105,6 +104,12 @@ public struct EditorLine {
 open class EditorView: PlatformView {
     let richTextView: RichTextView
 
+    #if os(macOS)
+    // On macOS, NSTextView does not inherit from NSScrollView.
+    // To mimick UITextView, we're adding `richTextView` as a subview of `scrollView` instead of `self`.
+    let scrollView = NSScrollView()
+    #endif
+    
     let context: RichTextViewContext
 
     var editorContextDelegate: EditorViewDelegate? {
@@ -240,9 +245,10 @@ open class EditorView: PlatformView {
         set { richTextView.contentInset = newValue }
     }
 
+    #if os(iOS)
     @available(iOS 11.1, *)
     @available(iOSApplicationExtension 11.1, *)
-    public var verticalScrollIndicatorInsets: UIEdgeInsets {
+    public var verticalScrollIndicatorInsets: EdgeInsets {
         get { richTextView.verticalScrollIndicatorInsets }
         set { richTextView.verticalScrollIndicatorInsets = newValue }
     }
@@ -251,6 +257,7 @@ open class EditorView: PlatformView {
         get { richTextView.keyboardDismissMode }
         set { richTextView.keyboardDismissMode = newValue }
     }
+    #endif
     
     public var isScrollEnabled: Bool {
         get { richTextView.isScrollEnabled }
@@ -258,10 +265,17 @@ open class EditorView: PlatformView {
     }
     
     /// Gets or sets the insets for the text container's layout area within the editor's content area
-    public var textContainerInset: UIEdgeInsets {
+    #if os(iOS)
+    public var textContainerInset: EdgeInsets {
         get { richTextView.textContainerInset }
         set { richTextView.textContainerInset = newValue }
     }
+    #else
+    public var textContainerInset: EdgeInsets {
+        get { richTextView.textContainerEdgeInset }
+        set { richTextView.textContainerEdgeInset = newValue }
+    }
+    #endif
 
     #if os(iOS)
     /// The types of data converted to tappable URLs in the editor view.
@@ -327,11 +341,18 @@ open class EditorView: PlatformView {
     }
 
     /// Background color for the editor.
-    public override var backgroundColor: UIColor? {
+    #if os(iOS)
+    public override var backgroundColor: PlatformColor? {
         didSet {
             richTextView.backgroundColor = backgroundColor
         }
     }
+    #else
+    var backgroundColor: PlatformColor? {
+        get { richTextView.backgroundColor }
+        set { richTextView.backgroundColor = newValue ?? .white }
+    }
+    #endif
 
     /// Default font to be used by the Editor. A font may be overridden on whole or part of content in `EditorView` by an `EditorCommand` or
     /// `TextProcessing` conformances.
@@ -551,10 +572,12 @@ open class EditorView: PlatformView {
     }
 
     /// A Boolean value indicating whether the text view allows the user to edit style information.
+    #if os(iOS)
     public var allowsEditingTextAttributes: Bool {
         get { richTextView.allowsEditingTextAttributes }
         set { richTextView.allowsEditingTextAttributes = newValue }
     }
+    #endif
 
     /// A Boolean value indicating whether the receiver is selectable.
     /// This property controls the ability of the user to select content and interact with URLs and text attachments. The default value is true.
@@ -563,6 +586,7 @@ open class EditorView: PlatformView {
         set { richTextView.isSelectable = newValue }
     }
 
+    #if os(iOS)
     /// A text drag delegate object for customizing the drag source behavior of a text view.
     @available(iOSApplicationExtension 11.0, *)
     public var textDragDelegate: UITextDragDelegate? {
@@ -576,8 +600,9 @@ open class EditorView: PlatformView {
         get { richTextView.textDropDelegate }
         set { richTextView.textDropDelegate = newValue }
     }
+    #endif
 
-    private func getAttachmentContentView(view: UIView?) -> AttachmentContentView? {
+    private func getAttachmentContentView(view: NativeView?) -> AttachmentContentView? {
         guard let view = view else { return nil }
         if let attachmentContentView = view.superview as? AttachmentContentView {
             return attachmentContentView
@@ -587,13 +612,20 @@ open class EditorView: PlatformView {
 
     private func setup() {
         maxHeight = .default
+        #if os(iOS)
         richTextView.autocorrectionType = .default
+        richTextView.adjustsFontForContentSizeCategory = true
+        #endif
 
-        richTextView.translatesAutoresizingMaskIntoConstraints = false
         richTextView.defaultTextFormattingProvider = self
         richTextView.richTextViewDelegate = self
         richTextView.richTextViewListDelegate = self
 
+        richTextView.translatesAutoresizingMaskIntoConstraints = false
+        richTextView.setContentHuggingPriority(.defaultLow, for: .vertical)
+        richTextView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        
+        #if os(iOS)
         addSubview(richTextView)
         NSLayoutConstraint.activate([
             richTextView.topAnchor.constraint(equalTo: topAnchor),
@@ -601,21 +633,43 @@ open class EditorView: PlatformView {
             richTextView.leadingAnchor.constraint(equalTo: leadingAnchor),
             richTextView.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
-
+        #else
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(scrollView)
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+        ])
+        
+        scrollView.documentView = richTextView
+        NSLayoutConstraint.activate([
+            richTextView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            richTextView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
+            richTextView.leadingAnchor.constraint(equalTo: richTextView.superview!.leadingAnchor),
+            richTextView.trailingAnchor.constraint(equalTo: richTextView.superview!.trailingAnchor),
+                        
+            richTextView.heightAnchor.constraint(greaterThanOrEqualTo: heightAnchor)
+        ])
+        #endif
+        
         typingAttributes = [
             .font: font,
             .paragraphStyle: paragraphStyle
         ]
-        richTextView.adjustsFontForContentSizeCategory = true
     }
 
     /// Asks the view to calculate and return the size that best fits the specified size.
     /// - Parameter size: The size for which the view should calculate its best-fitting size.
     /// - Returns:
     /// A new size that fits the receiver’s subviews.
+    #if os(iOS)
     override open func sizeThatFits(_ size: CGSize) -> CGSize {
         return richTextView.sizeThatFits(size)
     }
+    #endif
 
     /// Asks UIKit to make this object the first responder in its window.
     /// - Returns:
@@ -654,6 +708,7 @@ open class EditorView: PlatformView {
     /// - Parameter line: Reference line
     /// - Returns:
     /// `EditorLine` after the given line. Nil if the Editor is empty or given line is last line in the Editor.
+    #if os(iOS)
     public func layoutLineAfter(_ line: EditorLine) -> EditorLine? {
         let lineRange = line.range
         let nextLineStartRange = NSRange(location: lineRange.location + lineRange.length + 1, length: 0)
@@ -671,6 +726,9 @@ open class EditorView: PlatformView {
         guard previousLineStartRange.isValidIn(richTextView) else { return nil }
         return editorLayoutLineFrom(range: previousLineStartRange)
     }
+    #else
+    // TODO: Implement on macOS
+    #endif
 
     private func editorLayoutLineFrom(range: NSRange?) -> EditorLine? {
         guard let range = range,
@@ -687,6 +745,7 @@ open class EditorView: PlatformView {
     /// - Parameter range: Range to be queried.
     /// - Returns:
     /// Array of rectangles for the given range.
+    #if os(iOS)
     public func rects(for range: NSRange) -> [CGRect] {
         guard let textRange = range.toTextRange(textInput: richTextView) else { return [] }
         let rects = richTextView.selectionRects(for: textRange)
@@ -705,6 +764,9 @@ open class EditorView: PlatformView {
         let rect = richTextView.caretRect(for: textPosition)
         return convert(rect, from: richTextView)
     }
+    #else
+    // TODO: Implement on macOS
+    #endif
 
     /// Gets the word from text at given location in editor content
     /// - Parameter location: Location to be queried.
@@ -875,9 +937,11 @@ open class EditorView: PlatformView {
         unregisterCommands([command])
     }
 
+    #if os(iOS)
     public override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return richTextView.canPerformAction(action, withSender: sender)
     }
+    #endif
 
     /// Determines if the given menu action can be invoked.
     /// - Parameters:

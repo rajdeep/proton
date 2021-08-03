@@ -70,6 +70,7 @@ class RichTextView: AutogrowingTextView {
         #endif
     }
 
+    #if os(iOS)
     override var selectedTextRange: UITextRange? {
         didSet{
             let old = oldValue?.toNSRange(in: self)
@@ -81,6 +82,21 @@ class RichTextView: AutogrowingTextView {
             richTextViewDelegate?.richTextView(self, selectedRangeChangedFrom: old, to: selectedTextRange?.toNSRange(in: self))
         }
     }
+    #else
+    override func setSelectedRange(_ charRange: NSRange, affinity: NSSelectionAffinity, stillSelecting stillSelectingFlag: Bool) {
+        let old = selectedRange()
+        let new = charRange
+
+        var adjustedRange = new
+        if let range = adjustedTextBlockRangeOnSelectionChange(oldRange: old, newRange: new) {
+            adjustedRange = range
+        }
+        
+        super.setSelectedRange(adjustedRange, affinity: affinity, stillSelecting: stillSelectingFlag)
+        
+        richTextViewDelegate?.richTextView(self, selectedRangeChangedFrom: old, to: selectedRange())
+    }
+    #endif
 
     private func adjustedTextBlockRangeOnSelectionChange(oldRange: NSRange?, newRange: NSRange?) -> NSRange? {
         guard let old = oldRange,
@@ -138,6 +154,7 @@ class RichTextView: AutogrowingTextView {
         return range
     }
 
+    #if os(iOS)
     private func adjustRangeOnNonFocus(oldRange: UITextRange?) {
         guard let currentRange = selectedTextRange?.toNSRange(in: self),
               let previousRange = oldRange?.toNSRange(in: self)
@@ -166,6 +183,7 @@ class RichTextView: AutogrowingTextView {
 
         selectedTextRange = rangeToSet?.toTextRange(textInput: self) ?? oldRange
     }
+    #endif
 
     init(frame: CGRect = .zero, context: RichTextViewContext) {
         let textContainer = TextContainer()
@@ -177,8 +195,13 @@ class RichTextView: AutogrowingTextView {
         super.init(frame: frame, textContainer: textContainer)
         layoutManager.delegate = self
         layoutManager.layoutManagerDelegate = self
+        #if os(iOS)
         textContainer.textView = self
         self.delegate = context
+        #else
+        self.nsDelegateBridge = context
+        #endif
+        
         richTextStorage.textStorageDelegate = self
 
         self.backgroundColor = defaultBackgroundColor
@@ -228,6 +251,7 @@ class RichTextView: AutogrowingTextView {
     }
 
     func rangeOfParagraph(at location: Int) -> NSRange {
+        #if os(iOS)
         guard let position = self.position(from: beginningOfDocument, offset: location),
               let paraRange = tokenizer.rangeEnclosingPosition(position, with: .paragraph, inDirection: UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)),
               let range = paraRange.toNSRange(in: self)
@@ -235,9 +259,14 @@ class RichTextView: AutogrowingTextView {
             return NSRange(location: location, length: 0)
         }
         return range
+        #else
+        // TODO: Implement on macOS
+        fatalError()
+        #endif
     }
 
     func previousContentLine(from location: Int) -> EditorLine? {
+        #if os(iOS)
         let currentLineRange = rangeOfParagraph(at: location)
         guard let position = self.position(from: beginningOfDocument, offset: currentLineRange.location - 1),
               let paraRange = tokenizer.rangeEnclosingPosition(position, with: .paragraph, inDirection: UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)),
@@ -245,9 +274,14 @@ class RichTextView: AutogrowingTextView {
         else { return nil }
         
         return EditorLine(text: attributedText.attributedSubstring(from: range), range: range)
+        #else
+        // TODO: Implement on macOS
+        fatalError()
+        #endif
     }
 
     func nextContentLine(from location: Int) -> EditorLine? {
+        #if os(iOS)
         let currentLineRange = rangeOfParagraph(at: location)
         guard let position = self.position(from: beginningOfDocument, offset: currentLineRange.endLocation + 1),
               let paraRange = tokenizer.rangeEnclosingPosition(position, with: .paragraph, inDirection: UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)),
@@ -255,8 +289,13 @@ class RichTextView: AutogrowingTextView {
         else { return nil }
         
         return EditorLine(text: attributedText.attributedSubstring(from: range), range: range)
+        #else
+        // TODO: Implement on macOS
+        fatalError()
+        #endif
     }
 
+    #if os(iOS)
     override var keyCommands: [UIKeyCommand]? {
         let tab = "\t"
         let enter = "\r"
@@ -269,6 +308,7 @@ class RichTextView: AutogrowingTextView {
             UIKeyCommand(input: enter, modifierFlags: .alternate, action: #selector(handleKeyCommand(command:))),
         ]
     }
+    #endif
 
     @available(*, unavailable, message: "init(coder:) unavailable, use init")
     required init?(coder aDecoder: NSCoder) {
@@ -282,6 +322,7 @@ class RichTextView: AutogrowingTextView {
     }
     #endif
 
+    #if os(iOS)
     @objc
     func handleKeyCommand(command: UIKeyCommand) {
         guard let input = command.input,
@@ -292,6 +333,7 @@ class RichTextView: AutogrowingTextView {
 
         richTextViewDelegate?.richTextView(self, didReceive: key, modifierFlags: modifierFlags, at: selectedRange)
     }
+    #endif
 
     private func setupPlaceholder() {
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -301,21 +343,25 @@ class RichTextView: AutogrowingTextView {
         addSubview(placeholderLabel)
         placeholderLabel.attributedText = placeholderText
         NSLayoutConstraint.activate([
-            placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: textContainerInset.top),
-            placeholderLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -textContainerInset.bottom),
-            placeholderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: textContainer.lineFragmentPadding),
-            placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -textContainer.lineFragmentPadding),
-            placeholderLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -textContainer.lineFragmentPadding)
+            placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: textContainerEdgeInset.top),
+            placeholderLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -textContainerEdgeInset.bottom),
+            placeholderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: nsTextContainer.lineFragmentPadding),
+            placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -nsTextContainer.lineFragmentPadding),
         ])
     }
 
     func wordAt(_ location: Int) -> NSAttributedString? {
+        #if os(iOS)
         guard let position = self.position(from: beginningOfDocument, offset: location),
               let wordRange = tokenizer.rangeEnclosingPosition(position, with: .word, inDirection: UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)),
               let range = wordRange.toNSRange(in: self)
         else { return nil }
         
         return attributedText.attributedSubstring(from: range)
+        #else
+        // TODO: Implement on macOS
+        fatalError()
+        #endif
     }
 
     func lineRange(from location: Int) -> NSRange? {
@@ -493,10 +539,15 @@ class RichTextView: AutogrowingTextView {
     // This leads to an issue where if a user selects text in non-editable text view and right clicks the text view loses the first responder to the focused menu, and therefore no actions are provided, and it is not possible to copy.
     // Returning true will make it focusable regardless if it is editable, and it will not be losing responder because it will stay focused.
     // It is not perfect, as a user can focus this view with Tab and make no actions on it.
+    #if os(iOS)
     override var canBecomeFocused: Bool {
         return true
     }
-
+    #else
+    // TODO: macOS
+    #endif
+    
+    #if os(iOS)
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         guard editorView?.canPerformMenuAction(action, withSender: sender) == true else {
             return false
@@ -504,6 +555,9 @@ class RichTextView: AutogrowingTextView {
 
         return super.canPerformAction(action, withSender: sender)
     }
+    #else
+    // TODO: macOS?
+    #endif
 
     override func copy(_ sender: Any?) {
         if editorView?.responds(to: #selector(copy(_:))) ?? false {
@@ -569,6 +623,7 @@ class RichTextView: AutogrowingTextView {
         }
     }
 
+    #if os(iOS)
     override func caretRect(for position: UITextPosition) -> CGRect {
         let location = offset(from: beginningOfDocument, to: position)
         let lineRect = layoutManager.boundingRect(forGlyphRange: NSRange(location: location, length: 0), in: textContainer)
@@ -593,6 +648,9 @@ class RichTextView: AutogrowingTextView {
             }
         }
     }
+    #else
+    // TODO:
+    #endif
 }
 
 extension RichTextView: NSLayoutManagerDelegate {
@@ -634,6 +692,7 @@ extension RichTextView: LayoutManagerDelegate {
     }
 }
 
+#if os(iOS)
 private final class TextSelectionRect: UITextSelectionRect {
     override var rect: CGRect { _rect }
     override var writingDirection: NSWritingDirection { _writingDirection }
@@ -655,3 +714,4 @@ private final class TextSelectionRect: UITextSelectionRect {
         self._isVertical = selection.isVertical
     }
 }
+#else

@@ -19,8 +19,10 @@
 //
 
 import Foundation
-import UIKit
 
-class TextContainer: NSTextContainer {
+class TextContainer: PlatformTextContainer {
+    #if os(iOS)
     weak var textView: RichTextView?
+    // on macOS, `textView` it's already defined by NSTextContainer
+    #endif
 }

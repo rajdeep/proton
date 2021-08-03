@@ -28,7 +28,7 @@ extension NSTextViewDelegate_Bridge {
 }
 
 class PlatformTextView: NSTextView, NSTextViewDelegate {
-    weak var delegateBridge: NSTextViewDelegate_Bridge?
+    weak var nsDelegateBridge: NSTextViewDelegate_Bridge?
 
     var attributedText: NSAttributedString! {
         get { attributedString() }
@@ -101,23 +101,23 @@ class PlatformTextView: NSTextView, NSTextViewDelegate {
     // MARK: - NSTextViewDelegate
     
     func textViewDidChangeSelection(_ notification: Notification) {
-        delegateBridge?.textViewDidChangeSelection(self)
+        nsDelegateBridge?.textViewDidChangeSelection(self)
     }
     
     func textDidBeginEditing(_ notification: Notification) {
-        delegateBridge?.textViewDidBeginEditing(self)
+        nsDelegateBridge?.textViewDidBeginEditing(self)
     }
     
     func textDidEndEditing(_ notification: Notification) {
-        delegateBridge?.textViewDidEndEditing(self)
+        nsDelegateBridge?.textViewDidEndEditing(self)
     }
     
     func textView(_ textView: NSTextView, shouldChangeTextIn affectedCharRange: NSRange, replacementString: String?) -> Bool {
-        delegateBridge?.textView(self, shouldChangeTextIn: affectedCharRange, replacementText: replacementString ?? "") ?? true
+        nsDelegateBridge?.textView(self, shouldChangeTextIn: affectedCharRange, replacementText: replacementString ?? "") ?? true
     }
     
     func textDidChange(_ notification: Notification) {
-        delegateBridge?.textViewDidChange(self)
+        nsDelegateBridge?.textViewDidChange(self)
     }
     
     // MARK: - Responder commands
