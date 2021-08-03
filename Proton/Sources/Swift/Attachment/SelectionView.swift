@@ -35,6 +35,7 @@ class SelectionView: PlatformView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    #if os(iOS)
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         guard let originalResult = super.hitTest(point, with: event),
               event?.type == .touches
@@ -53,6 +54,23 @@ class SelectionView: PlatformView {
         }
         return nil
     }
+    #else
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        guard let originalResult = super.hitTest(point) else { return nil }
+        guard originalResult == self else {
+            return originalResult
+        }
+        removeFromSuperview()
+
+        for other in (superview?.subviews ?? []) where other != self {
+            let convertedPoint = convert(point, to: other)
+            if let hit = other.hitTest(convertedPoint) {
+                return hit
+            }
+        }
+        return nil
+    }
+    #endif
     
     func addTo(parent: PlatformView) {
         applyTintColor()
@@ -69,6 +87,10 @@ class SelectionView: PlatformView {
     private func applyTintColor() {
         // TintColor needs to be picked up from UIButton as it is the only control that
         // provides correct color for macOS accents.
+        #if os(iOS)
         self.backgroundColor = UIButton().tintColor
+        #else
+        self.layer?.backgroundColor = PlatformColor.controlAccentColor.cgColor
+        #endif
     }
 }
