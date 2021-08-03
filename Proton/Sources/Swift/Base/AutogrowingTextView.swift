@@ -57,6 +57,7 @@ class AutogrowingTextView: PlatformTextView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    #if os(iOS)
     override var isScrollEnabled: Bool {
         didSet {
             // Invalidate intrinsic content size when scrolling is disabled again as a result of text
@@ -69,6 +70,13 @@ class AutogrowingTextView: PlatformTextView {
             invalidateIntrinsicContentSize()
         }
     }
+    #else
+    var isScrollEnabled: Bool {
+        get { true }
+        // TODO: Implement on macOS
+        set { print("TODO: Enabling/disabling scrolling is not yet implemented on macOS.") }
+    }
+    #endif
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -93,9 +101,11 @@ class AutogrowingTextView: PlatformTextView {
         }
     }
 
+    #if os(iOS)
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.becomeFirstResponder()
     }
+    #endif
 
     private func calculatedSize(attributedText: NSAttributedString, frame: CGRect, textContainerInset: EdgeInsets) -> CGSize {
         // Adjust for horizontal paddings in textview to exclude from overall available width for attachment
