@@ -31,9 +31,13 @@ typealias TextDelegate = NSTextViewDelegate_Bridge
 class RichTextViewContext: NSObject, TextDelegate {
     weak var activeTextView: RichTextView?
 
+    // MARK: - TextDelegate
+
+    #if os(iOS)
     func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         return interaction != .presentActions
     }
+    #endif
 
     func textViewDidChangeSelection(_ textView: PlatformTextView) {
         guard textView.delegate === self else { return }
