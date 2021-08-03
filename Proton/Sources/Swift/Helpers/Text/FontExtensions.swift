@@ -19,11 +19,9 @@
 //
 
 import Foundation
-import UIKit
 
-public extension UIFont {
-
-    var traits: UIFontDescriptor.SymbolicTraits {
+public extension PlatformFont {
+    var traits: FontDescriptor.SymbolicTraits {
         return fontDescriptor.symbolicTraits
     }
 
@@ -45,23 +43,28 @@ public extension UIFont {
             || fontName == "LastResort" // interesting font available since Mac OS 8.5 to render unsupported emoji
     }
 
-    var textStyle: UIFont.TextStyle {
+    var textStyle: PlatformFont.TextStyle {
+        #if os(iOS)
         guard let style = fontDescriptor.object(forKey: .textStyle) as? String else {
             return .body
         }
-        return UIFont.TextStyle(rawValue: style)
+        return PlatformFont.TextStyle(rawValue: style)
+        #else
+        // TODO: Implement on macOS
+        fatalError()
+        #endif
     }
 
     var isNonDynamicTextStyle: Bool {
         return textStyle.rawValue == "CTFontRegularUsage"
     }
 
-    func contains(trait: UIFontDescriptor.SymbolicTraits) -> Bool {
+    func contains(trait: FontDescriptor.SymbolicTraits) -> Bool {
         return traits.contains(trait)
     }
 
-    func toggled(trait: UIFontDescriptor.SymbolicTraits) -> UIFont {
-        let updatedFont: UIFont
+    func toggled(trait: FontDescriptor.SymbolicTraits) -> PlatformFont {
+        let updatedFont: PlatformFont
         if self.contains(trait: trait) {
             updatedFont = removing(trait: trait)
         } else {
@@ -71,23 +74,31 @@ public extension UIFont {
         return updatedFont
     }
 
-    func adding(trait: UIFontDescriptor.SymbolicTraits) -> UIFont {
+    func adding(trait: FontDescriptor.SymbolicTraits) -> PlatformFont {
         var traits = self.traits
         traits.formUnion(trait)
+        #if os(iOS)
         guard let updatedFontDescriptor = fontDescriptor.withSymbolicTraits(traits) else {
             return self
         }
-
-        return UIFont(descriptor: updatedFontDescriptor, size: 0.0)
+        return PlatformFont(descriptor: updatedFontDescriptor, size: 0.0)
+        #else
+        let updatedFontDescriptor = fontDescriptor.withSymbolicTraits(traits)
+        return PlatformFont(descriptor: updatedFontDescriptor, size: 0.0) ?? self
+        #endif
     }
 
-    func removing(trait: UIFontDescriptor.SymbolicTraits) -> UIFont {
+    func removing(trait: FontDescriptor.SymbolicTraits) -> PlatformFont {
         var traits = self.traits
         traits.subtract(trait)
+        #if os(iOS)
         guard let updatedFontDescriptor = fontDescriptor.withSymbolicTraits(traits) else {
             return self
         }
-
-        return UIFont(descriptor: updatedFontDescriptor, size: 0.0)
+        return PlatformFont(descriptor: updatedFontDescriptor, size: 0.0)
+        #else
+        let updatedFontDescriptor = fontDescriptor.withSymbolicTraits(traits)
+        return PlatformFont(descriptor: updatedFontDescriptor, size: 0.0) ?? self
+        #endif
     }
 }

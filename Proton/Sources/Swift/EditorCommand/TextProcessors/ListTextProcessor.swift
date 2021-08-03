@@ -166,7 +166,7 @@ public class ListTextProcessor: TextProcessing {
                 continue
             }
 
-            let paraSttryle = line.text.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? ParagraphStyle
+            let paraStyle = line.text.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? ParagraphStyle
             let mutableStyle = updatedParagraphStyle(paraStyle: paraStyle,  listLineFormatting: editor.listLineFormatting, indentMode: indentMode)
 
             let previousLine = editor.previousContentLine(from: line.range.location)

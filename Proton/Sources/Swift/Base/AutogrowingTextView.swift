@@ -19,9 +19,13 @@
 //
 
 import Foundation
+#if os(iOS)
 import UIKit
+#else
+import AppKit
+#endif
 
-class AutogrowingTextView: UITextView {
+class AutogrowingTextView: PlatformTextView {
 
     var maxHeight: CGFloat = 0 {
         didSet {
@@ -70,12 +74,12 @@ class AutogrowingTextView: UITextView {
         super.layoutSubviews()
         guard maxHeight != .greatestFiniteMagnitude else { return }
         let bounds = self.bounds.integral
-        let fittingSize = self.calculatedSize(attributedText: attributedText, frame: frame, textContainerInset: textContainerInset)
+        let fittingSize = self.calculatedSize(attributedText: attributedText, frame: frame, textContainerInset: textContainerEdgeInset)
         self.isScrollEnabled = (fittingSize.height > bounds.height) || (self.maxHeight > 0 && self.maxHeight < fittingSize.height)
     }
 
     override open func sizeThatFits(_ size: CGSize) -> CGSize {
-        var fittingSize = calculatedSize(attributedText: attributedText, frame: frame, textContainerInset: textContainerInset)
+        var fittingSize = calculatedSize(attributedText: attributedText, frame: frame, textContainerInset: textContainerEdgeInset)
         if maxHeight > 0 {
             fittingSize.height = min(maxHeight, fittingSize.height)
         }
@@ -93,13 +97,13 @@ class AutogrowingTextView: UITextView {
         self.becomeFirstResponder()
     }
 
-    private func calculatedSize(attributedText: NSAttributedString, frame: CGRect, textContainerInset: UIEdgeInsets) -> CGSize {
+    private func calculatedSize(attributedText: NSAttributedString, frame: CGRect, textContainerInset: EdgeInsets) -> CGSize {
         // Adjust for horizontal paddings in textview to exclude from overall available width for attachment
-        let horizontalAdjustments = (textContainer.lineFragmentPadding * 2) + (textContainerInset.left + textContainerInset.right)
+        let horizontalAdjustments = (nsTextContainer.lineFragmentPadding * 2) + (textContainerInset.left + textContainerInset.right)
         let boundingRect = attributedText.boundingRect(with: CGSize(width: frame.width - horizontalAdjustments, height: .greatestFiniteMagnitude), options: [.usesLineFragmentOrigin], context: nil).integral
 
-        let insets = UIEdgeInsets(top: -textContainerInset.top, left: -textContainerInset.left, bottom: -textContainerInset.bottom, right: -textContainerInset.right)
-
+        let insets = EdgeInsets(top: -textContainerInset.top, left: -textContainerInset.left, bottom: -textContainerInset.bottom, right: -textContainerInset.right)
+        
         return boundingRect.inset(by: insets).size
     }
 

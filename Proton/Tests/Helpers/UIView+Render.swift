@@ -19,16 +19,16 @@
 //
 
 import Foundation
-import UIKit
+import Proton
 
-extension UIView {
+extension NativeView {
     func render() {
         setNeedsLayout()
         layoutIfNeeded()
     }
 
-    func addBorder(_ color: UIColor = .black) {
-        layer.borderColor = color.cgColor
-        layer.borderWidth = 1.0
+    func addBorder(_ color: PlatformColor = .black) {
+        caLayer.borderColor = color.cgColor
+        caLayer.borderWidth = 1.0
     }
 }

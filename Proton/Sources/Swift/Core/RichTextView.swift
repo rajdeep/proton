@@ -19,8 +19,8 @@
 //
 
 import Foundation
-import UIKit
 import ProtonCore
+import CoreGraphics
 
 class RichTextView: AutogrowingTextView {
     
@@ -37,7 +37,7 @@ class RichTextView: AutogrowingTextView {
         set { richTextStorage.defaultTextFormattingProvider = newValue }
     }
 
-    private let placeholderLabel = UILabel()
+    private let placeholderLabel = PlatformLabel()
 
     var placeholderText: NSAttributedString? {
         didSet {
@@ -56,14 +56,18 @@ class RichTextView: AutogrowingTextView {
             .foregroundColor: defaultTextFormattingProvider?.textColor ?? richTextStorage.defaultTextColor
         ]
     }
-    var defaultFont: UIFont { richTextStorage.defaultFont }
-    var defaultTextColor: UIColor { richTextStorage.defaultTextColor }
-    var defaultBackgroundColor: UIColor {
+    var defaultFont: PlatformFont { richTextStorage.defaultFont }
+    var defaultTextColor: PlatformColor { richTextStorage.defaultTextColor }
+    var defaultBackgroundColor: PlatformColor {
+        #if os(iOS)
         if #available(iOS 13.0, *) {
             return .systemBackground
         } else {
             return .white
         }
+        #else
+        return .systemBackground
+        #endif
     }
 
     override var selectedTextRange: UITextRange? {
@@ -184,7 +188,7 @@ class RichTextView: AutogrowingTextView {
     }
 
     var contentLength: Int {
-        return textStorage.length
+        return nsTextStorage.length
     }
 
     weak var textProcessor: TextProcessor? {
@@ -202,8 +206,8 @@ class RichTextView: AutogrowingTextView {
     }
 
     var visibleRange: NSRange {
-        let textBounds = bounds.inset(by: textContainerInset)
-        return layoutManager.glyphRange(forBoundingRect: textBounds, in: textContainer)
+        let textBounds = bounds.inset(by: textContainerEdgeInset)
+        return nsLayoutManager.glyphRange(forBoundingRect: textBounds, in: nsTextContainer)
     }
 
     func contentLinesInRange(_ range: NSRange) -> [EditorLine] {
@@ -322,24 +326,24 @@ class RichTextView: AutogrowingTextView {
         // will not have been laid out by layoutManager but would be present in TextStorage. It can also happen
         // when deleting multiple characters where layout is pending in the same case. Following logic finds the
         // last valid glyph that is already laid out.
-        while currentLocation > 0 && layoutManager.isValidGlyphIndex(currentLocation) == false {
+        while currentLocation > 0 && nsLayoutManager.isValidGlyphIndex(currentLocation) == false {
             currentLocation -= 1
         }
-        guard layoutManager.isValidGlyphIndex(currentLocation) else { return NSRange(location: 0, length: 1) }
-        layoutManager.lineFragmentUsedRect(forGlyphAt: currentLocation, effectiveRange: &range)
+        guard nsLayoutManager.isValidGlyphIndex(currentLocation) else { return NSRange(location: 0, length: 1) }
+        nsLayoutManager.lineFragmentUsedRect(forGlyphAt: currentLocation, effectiveRange: &range)
         guard range.location != NSNotFound else { return nil }
         // As mentioned above, in case of this getting called before layout is completed,
         // we need to account for the range that has been changed. storage.changeInLength provides
         // the change that might not have been laid already
-        return NSRange(location: range.location, length: range.length + textStorage.changeInLength)
+        return NSRange(location: range.location, length: range.length + nsTextStorage.changeInLength)
     }
 
     func invalidateLayout(for range: NSRange) {
-        layoutManager.invalidateLayout(forCharacterRange: range, actualCharacterRange: nil)
+        nsLayoutManager.invalidateLayout(forCharacterRange: range, actualCharacterRange: nil)
     }
 
     func invalidateDisplay(for range: NSRange) {
-        layoutManager.invalidateDisplay(forCharacterRange: range)
+        nsLayoutManager.invalidateDisplay(forCharacterRange: range)
     }
 
     func resetTypingAttributes() {
@@ -390,9 +394,9 @@ class RichTextView: AutogrowingTextView {
     }
 
     func edited(range: NSRange) {
-        textStorage.beginEditing()
-        textStorage.edited([.editedCharacters, .editedAttributes], range: range, changeInLength: 0)
-        textStorage.endEditing()
+        nsTextStorage.beginEditing()
+        nsTextStorage.edited([.editedCharacters, .editedAttributes], range: range, changeInLength: 0)
+        nsTextStorage.endEditing()
     }
 
     func transformContents<T: EditorContentEncoding>(in range: NSRange? = nil, using transformer: T) -> [T.EncodedType] {
@@ -400,13 +404,20 @@ class RichTextView: AutogrowingTextView {
     }
 
     func replaceCharacters(in range: NSRange, with attrString: NSAttributedString) {
-        textStorage.replaceCharacters(in: range, with: attrString)
+        nsTextStorage.replaceCharacters(in: range, with: attrString)
     }
 
+    #if os(iOS)
     func replaceCharacters(in range: NSRange, with string: String) {
         // Delegate to function with attrString so that default attributes are automatically applied
-        textStorage.replaceCharacters(in: range, with: NSAttributedString(string: string))
+        nsTextStorage.replaceCharacters(in: range, with: NSAttributedString(string: string))
     }
+    #else
+    override func replaceCharacters(in range: NSRange, with string: String) {
+        // Delegate to function with attrString so that default attributes are automatically applied
+        nsTextStorage.replaceCharacters(in: range, with: NSAttributedString(string: string))
+    }
+    #endif
 
     private func updatePlaceholderVisibility() {
         guard self.attributedText.length == 0 else {
@@ -419,22 +430,22 @@ class RichTextView: AutogrowingTextView {
     }
 
     func attributeValue(at location: CGPoint, for attribute: NSAttributedString.Key) -> Any? {
-        let characterIndex = layoutManager.characterIndex(for: location, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        let characterIndex = nsLayoutManager.characterIndex(for: location, in: nsTextContainer, fractionOfDistanceBetweenInsertionPoints: nil)
 
-        guard characterIndex < textStorage.length else {
+        guard characterIndex < nsTextStorage.length else {
             return nil
         }
 
-        let attributes = textStorage.attributes(at: characterIndex, longestEffectiveRange: nil, in: textStorage.fullRange)
+        let attributes = nsTextStorage.attributes(at: characterIndex, longestEffectiveRange: nil, in: nsTextStorage.fullRange)
         return attributes[attribute]
     }
 
     func glyphRange(forCharacterRange range: NSRange) -> NSRange {
-        return layoutManager.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
+        return nsLayoutManager.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
     }
 
     func boundingRect(forGlyphRange range: NSRange) -> CGRect {
-        return layoutManager.boundingRect(forGlyphRange: range, in: textContainer)
+        return nsLayoutManager.boundingRect(forGlyphRange: range, in: nsTextContainer)
     }
 
     func contents(in range: NSRange? = nil) -> AnySequence<EditorContent> {
@@ -442,7 +453,7 @@ class RichTextView: AutogrowingTextView {
     }
 
     func addAttributes(_ attrs: [NSAttributedString.Key: Any], range: NSRange) {
-        textStorage.addAttributes(attrs, range: range)
+        nsTextStorage.addAttributes(attrs, range: range)
     }
 
     func removeAttributes(_ attrs: [NSAttributedString.Key], range: NSRange) {
@@ -450,16 +461,12 @@ class RichTextView: AutogrowingTextView {
     }
 
     func enumerateAttribute(_ attrName: NSAttributedString.Key, in enumerationRange: NSRange, options opts: NSAttributedString.EnumerationOptions = [], using block: (Any?, NSRange, UnsafeMutablePointer<ObjCBool>) -> Void) {
-        textStorage.enumerateAttribute(attrName, in: enumerationRange, options: opts, using: block)
+        nsTextStorage.enumerateAttribute(attrName, in: enumerationRange, options: opts, using: block)
     }
 
+    #if os(iOS)
     func rangeOfCharacter(at point: CGPoint) -> NSRange? {
         return characterRange(at: point)?.toNSRange(in: self)
-    }
-
-    func didTap(at location: CGPoint) {
-        let characterRange = rangeOfCharacter(at: location)
-        richTextViewDelegate?.richTextView(self, didTapAtLocation: location, characterRange: characterRange)
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -467,6 +474,18 @@ class RichTextView: AutogrowingTextView {
             let position = touch.location(in: self)
             didTap(at: position)
         }
+    }
+    #else
+    // TODO: Bridge to macOS
+    #endif
+    
+    func didTap(at location: CGPoint) {
+        #if os(iOS)
+        let characterRange = rangeOfCharacter(at: location)
+        richTextViewDelegate?.richTextView(self, didTapAtLocation: location, characterRange: characterRange)
+        #else
+        // TODO: Bridge to macOS
+        #endif
     }
 
     // When a user enables `Use keyboard navigation to move focus between controls` it enables the focus system in the app.
@@ -488,7 +507,7 @@ class RichTextView: AutogrowingTextView {
 
     override func copy(_ sender: Any?) {
         if editorView?.responds(to: #selector(copy(_:))) ?? false {
-            editorView?.copy(sender)
+            editorView?.perform(#selector(copy(_:)), with: sender)
         } else {
             super.copy(sender)
         }
@@ -496,15 +515,15 @@ class RichTextView: AutogrowingTextView {
 
     override func paste(_ sender: Any?) {
         if editorView?.responds(to: #selector(paste(_:))) ?? false {
-            editorView?.paste(sender)
+            editorView?.perform(#selector(paste(_:)), with: sender)
         } else {
             super.paste(sender)
         }
     }
 
     override func cut(_ sender: Any?) {
-        if editorView?.responds(to: #selector(cut)) ?? false {
-            editorView?.cut(sender)
+        if editorView?.responds(to: #selector(cut(_:))) ?? false {
+            editorView?.perform(#selector(cut(_:)))
         } else {
             super.cut(sender)
         }
@@ -512,7 +531,7 @@ class RichTextView: AutogrowingTextView {
 
     override func select(_ sender: Any?) {
         if editorView?.responds(to: #selector(select)) ?? false {
-            editorView?.select(sender)
+            editorView?.perform(#selector(select), with: sender)
         } else {
             super.select(sender)
         }
@@ -528,7 +547,7 @@ class RichTextView: AutogrowingTextView {
 
     override func toggleUnderline(_ sender: Any?) {
         if editorView?.responds(to: #selector(toggleUnderline)) ?? false {
-            editorView?.toggleUnderline(sender)
+            editorView?.perform(#selector(toggleUnderline), with: sender)
         } else {
             super.toggleUnderline(sender)
         }
@@ -536,7 +555,7 @@ class RichTextView: AutogrowingTextView {
 
     override func toggleItalics(_ sender: Any?) {
         if editorView?.responds(to: #selector(toggleItalics)) ?? false {
-            editorView?.toggleItalics(sender)
+            editorView?.perform(#selector(toggleItalics), with: sender)
         } else {
             super.toggleItalics(sender)
         }
@@ -544,7 +563,7 @@ class RichTextView: AutogrowingTextView {
 
     override func toggleBoldface(_ sender: Any?) {
         if editorView?.responds(to: #selector(toggleBoldface)) ?? false {
-            editorView?.toggleBoldface(sender)
+            editorView?.perform(#selector(toggleBoldface), with: sender)
         } else {
             super.toggleBoldface(sender)
         }
@@ -577,7 +596,7 @@ class RichTextView: AutogrowingTextView {
 }
 
 extension RichTextView: NSLayoutManagerDelegate {
-    func layoutManager(_ layoutManager: NSLayoutManager, didCompleteLayoutFor textContainer: NSTextContainer?, atEnd layoutFinishedFlag: Bool) {
+    func layoutManager(_ layoutManager: NSLayoutManager, didCompleteLayoutFor textContainer: PlatformTextContainer?, atEnd layoutFinishedFlag: Bool) {
         richTextViewDelegate?.richTextView(self, didFinishLayout: layoutFinishedFlag)
     }
 }
@@ -594,7 +613,7 @@ extension RichTextView: TextStorageDelegate {
         textProcessor?.textStorage(textStorage, willProcessDeletedText: deleteText, insertedText: insertedText)
     }
     
-    func textStorage(_ textStorage: PRTextStorage, edited actions: NSTextStorage.EditActions, in editedRange: NSRange, changeInLength delta: Int) {
+    func textStorage(_ textStorage: PRTextStorage, edited actions: TextStorageEditAcitons, in editedRange: NSRange, changeInLength delta: Int) {
         updatePlaceholderVisibility()
     }
 }
@@ -604,12 +623,12 @@ extension RichTextView: LayoutManagerDelegate {
         return richTextViewListDelegate?.listLineFormatting ?? RichTextView.defaultListLineFormatting
     }
 
-    var paragraphStyle: NSMutableParagraphStyle? {
+    var paragraphStyle: MutableParagraphStyle? {
         return defaultTextFormattingProvider?.paragraphStyle
     }
 
     func listMarkerForItem(at index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
-        let font = UIFont.preferredFont(forTextStyle: .body)
+        let font = PlatformFont.preferredFont(forTextStyle: .body)
         let defaultValue = NSAttributedString(string: "*", attributes: [.font: font])
         return richTextViewListDelegate?.richTextView(self, listMarkerForItemAt: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? .string(defaultValue)
     }

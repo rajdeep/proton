@@ -19,7 +19,11 @@
 //
 
 import Foundation
+#if os(iOS)
 import UIKit
+#else
+import AppKit
+#endif
 
 class TextProcessor: NSObject, NSTextStorageDelegate {
     private(set) var activeProcessors = [TextProcessing]() {
@@ -52,7 +56,9 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         }
     }
 
-    func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int) {
+    // MARK: - NSTextStorageDelegate
+    
+    func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: TextStorageEditAcitons, range editedRange: NSRange, changeInLength delta: Int) {
         guard let editor = editor else { return }
         var executedProcessors = [TextProcessing]()
         var processed = false

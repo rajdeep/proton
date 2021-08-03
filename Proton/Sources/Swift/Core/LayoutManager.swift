@@ -19,15 +19,19 @@
 //
 
 import Foundation
+#if os(iOS)
 import UIKit
+#else
+import AppKit
+#endif
 
 protocol LayoutManagerDelegate: AnyObject {
     var typingAttributes: [NSAttributedString.Key: Any] { get }
     var selectedRange: NSRange { get }
-    var paragraphStyle: NSMutableParagraphStyle? { get }
-    var font: UIFont? { get }
-    var textColor: UIColor? { get }
-    var textContainerInset: UIEdgeInsets { get }
+    var paragraphStyle: MutableParagraphStyle? { get }
+    var font: PlatformFont? { get }
+    var textColor: PlatformColor? { get }
+    var textContainerEdgeInset: EdgeInsets { get }
 
     var listLineFormatting: LineFormatting { get }
 
@@ -36,7 +40,7 @@ protocol LayoutManagerDelegate: AnyObject {
 
 class LayoutManager: NSLayoutManager {
 
-    private let defaultBulletColor = UIColor.black
+    private let defaultBulletColor = PlatformColor.black
     private var counters = [Int: Int]()
 
     weak var layoutManagerDelegate: LayoutManagerDelegate?
@@ -59,11 +63,11 @@ class LayoutManager: NSLayoutManager {
     private func drawListMarkers(textStorage: NSTextStorage, listRange: NSRange, attributeValue: Any?) {
         var lastLayoutRect: CGRect?
         var lastLayoutParaStyle: NSParagraphStyle?
-        var lastLayoutFont: UIFont?
+        var lastLayoutFont: PlatformFont?
 
         var previousLevel = 0
 
-        let defaultFont = self.layoutManagerDelegate?.font ?? UIFont.preferredFont(forTextStyle: .body)
+        let defaultFont = self.layoutManagerDelegate?.font ?? PlatformFont.preferredFont(forTextStyle: .body)
         let listIndent = layoutManagerDelegate?.listLineFormatting.indentation ?? 25.0
 
         var prevStyle: NSParagraphStyle?
@@ -119,7 +123,7 @@ class LayoutManager: NSLayoutManager {
                 skipMarker = textStorage.attribute(.skipNextListMarker, at: newLineRange.location, effectiveRange: nil) != nil
             }
 
-            let font = textStorage.attribute(.font, at: characterRange.location, effectiveRange: nil) as? UIFont ?? defaultFont
+            let font = textStorage.attribute(.font, at: characterRange.location, effectiveRange: nil) as? PlatformFont ?? defaultFont
             let paraStyle = textStorage.attribute(.paragraphStyle, at: characterRange.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
 
             if isPreviousLineComplete, skipMarker == false {
@@ -187,7 +191,7 @@ class LayoutManager: NSLayoutManager {
         drawListItem(level: level, previousLevel: previousLevel, index: index, rect: newLineRect, paraStyle: paraStyle, font: font, attributeValue: attributeValue)
     }
 
-    private func drawListItem(level: Int, previousLevel: Int, index: Int, rect: CGRect, paraStyle: NSParagraphStyle, font: UIFont, attributeValue: Any?) {
+    private func drawListItem(level: Int, previousLevel: Int, index: Int, rect: CGRect, paraStyle: NSParagraphStyle, font: PlatformFont, attributeValue: Any?) {
         guard level > 0 else { return }
 
         let color = layoutManagerDelegate?.textColor ?? self.defaultBulletColor
@@ -195,7 +199,7 @@ class LayoutManager: NSLayoutManager {
 
         let marker = layoutManagerDelegate?.listMarkerForItem(at: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? .string(NSAttributedString(string: "*"))
 
-        let listMarkerImage: UIImage
+        let listMarkerImage: PlatformImage
         let markerRect: CGRect
 
         switch marker {
@@ -207,20 +211,25 @@ class LayoutManager: NSLayoutManager {
             markerRect = rectForBullet(markerSize: image.size, rect: rect, indent: paraStyle.firstLineHeadIndent, yOffset: paraStyle.paragraphSpacingBefore)
             listMarkerImage = image
         }
-
+        
         listMarkerImage.draw(at: markerRect.origin)
     }
 
-    private func generateBitmap(string: NSAttributedString, rect: CGRect) -> UIImage {
+    private func generateBitmap(string: NSAttributedString, rect: CGRect) -> PlatformImage {
+        #if os(iOS)
         let renderer = UIGraphicsImageRenderer(size: rect.size)
         let image = renderer.image { context in
             string.draw(at: .zero)
         }
         return image
+        #else
+        // TODO: Implement on macOS
+        fatalError()
+        #endif
     }
 
     private func rectForBullet(markerSize: CGSize, rect: CGRect, indent: CGFloat, yOffset: CGFloat) -> CGRect {
-        let topInset = layoutManagerDelegate?.textContainerInset.top ?? 0
+        let topInset = layoutManagerDelegate?.textContainerEdgeInset.top ?? 0
         let spacerRect = CGRect(origin: CGPoint(x: rect.minX, y: rect.minY + topInset), size: CGSize(width: indent, height: rect.height))
         let stringRect = CGRect(origin: CGPoint(x: spacerRect.maxX - markerSize.width, y: spacerRect.minY + yOffset), size: markerSize)
         return stringRect
@@ -229,7 +238,7 @@ class LayoutManager: NSLayoutManager {
     override func drawBackground(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
         super.drawBackground(forGlyphRange: glyphsToShow, at: origin)
         guard let textStorage = textStorage,
-              let currentCGContext = UIGraphicsGetCurrentContext()
+              let currentCGContext = GetCurrentGraphicsContext()
         else { return }
 
         let characterRange = self.characterRange(forGlyphRange: glyphsToShow, actualGlyphRange: nil)
@@ -244,7 +253,7 @@ class LayoutManager: NSLayoutManager {
                     // So it is best to restrict the height just to the line fragment.
                     rect.origin.y = usedRect.origin.y
                     rect.size.height = usedRect.height
-                    let insetTop = self.layoutManagerDelegate?.textContainerInset.top ?? 0
+                    let insetTop = self.layoutManagerDelegate?.textContainerEdgeInset.top ?? 0
                     rects.append(rect.offsetBy(dx: 0, dy: insetTop))
                 }
                 drawBackground(backgroundStyle: backgroundStyle, rects: rects, currentCGContext: currentCGContext)
@@ -275,8 +284,8 @@ class LayoutManager: NSLayoutManager {
             }
 
             let corners = calculateCornersForBackground(previousRect: previousRect, currentRect: currentRect, nextRect: nextRect, cornerRadius: cornerRadius)
-
-            let rectanglePath = UIBezierPath(roundedRect: currentRect, byRoundingCorners: corners, cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+            
+            let rectanglePath = BezierPath(roundedRect: currentRect, byRoundingCorners: corners, cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
             color.set()
 
             currentCGContext.setAllowsAntialiasing(true)
@@ -291,15 +300,15 @@ class LayoutManager: NSLayoutManager {
             currentCGContext.drawPath(using: .fill)
 
             let lineWidth = backgroundStyle.border?.lineWidth ?? 0
-            let overlappingLine = UIBezierPath()
+            let overlappingLine = BezierPath()
 
             // TODO: Revisit shadow drawing logic to simplify a bit
 
-            let leftVerticalJoiningLine = UIBezierPath()
-            let rightVerticalJoiningLine = UIBezierPath()
+            let leftVerticalJoiningLine = BezierPath()
+            let rightVerticalJoiningLine = BezierPath()
             // Shadow for vertical lines need to be drawn separately to get the perfect alignment with shadow on rectangles.
-            let leftVerticalJoiningLineShadow = UIBezierPath()
-            let rightVerticalJoiningLineShadow = UIBezierPath()
+            let leftVerticalJoiningLineShadow = BezierPath()
+            let rightVerticalJoiningLineShadow = BezierPath()
 
             if previousRect != .zero, (currentRect.maxX - previousRect.minX) > cornerRadius {
                 let yDiff = currentRect.minY - previousRect.maxY
@@ -336,7 +345,7 @@ class LayoutManager: NSLayoutManager {
                 currentCGContext.drawPath(using: .stroke)
             }
 
-            currentCGContext.setShadow(offset: .zero, blur:0, color: UIColor.clear.cgColor)
+            currentCGContext.setShadow(offset: .zero, blur:0, color: PlatformColor.clear.cgColor)
 
             if let borderColor = backgroundStyle.border?.color {
                 currentCGContext.setLineWidth(lineWidth)
@@ -362,8 +371,8 @@ class LayoutManager: NSLayoutManager {
         currentCGContext.restoreGState()
     }
 
-    private func calculateCornersForBackground(previousRect: CGRect, currentRect: CGRect, nextRect: CGRect, cornerRadius: CGFloat) -> UIRectCorner {
-        var corners = UIRectCorner()
+    private func calculateCornersForBackground(previousRect: CGRect, currentRect: CGRect, nextRect: CGRect, cornerRadius: CGFloat) -> RectCorner {
+        var corners = RectCorner()
 
         if previousRect.minX > currentRect.minX {
             corners.formUnion(.topLeft)
@@ -394,14 +403,14 @@ class LayoutManager: NSLayoutManager {
         return corners
     }
 
-    private func getCornersForBackground(textStorage: NSTextStorage, for charRange: NSRange) -> UIRectCorner {
+    private func getCornersForBackground(textStorage: NSTextStorage, for charRange: NSRange) -> RectCorner {
         let isFirst = (charRange.location == 0)
             || (textStorage.attribute(.backgroundStyle, at: charRange.location - 1, effectiveRange: nil) == nil)
 
         let isLast = (charRange.endLocation == textStorage.length) ||
             (textStorage.attribute(.backgroundStyle, at: charRange.location + charRange.length, effectiveRange: nil) == nil)
 
-        var corners = UIRectCorner()
+        var corners = RectCorner()
         if isFirst {
             corners.formUnion(.topLeft)
             corners.formUnion(.bottomLeft)

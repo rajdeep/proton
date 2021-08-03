@@ -19,13 +19,17 @@
 //
 
 import Foundation
+#if os(iOS)
 import UIKit
+#else
+import AppKit
+#endif
 
 /// Shadow style for `backgroundStyle` attribute
 public class ShadowStyle {
 
     /// Color of the shadow
-    public let color: UIColor
+    public let color: PlatformColor
 
     /// Shadow offset
     public let offset: CGSize
@@ -33,7 +37,7 @@ public class ShadowStyle {
     /// Shadow blur
     public let blur: CGFloat
 
-    public init(color: UIColor, offset: CGSize, blur: CGFloat) {
+    public init(color: PlatformColor, offset: CGSize, blur: CGFloat) {
         self.color = color
         self.offset = offset
         self.blur = blur
@@ -44,12 +48,12 @@ public class ShadowStyle {
 public class BorderStyle {
 
     /// Color of border
-    public let color: UIColor
+    public let color: PlatformColor
 
     /// Width of the border
     public let lineWidth: CGFloat
 
-    public init(lineWidth: CGFloat, color: UIColor) {
+    public init(lineWidth: CGFloat, color: PlatformColor) {
         self.lineWidth = lineWidth
         self.color = color
     }
@@ -66,7 +70,7 @@ public class BorderStyle {
 public class BackgroundStyle {
 
     /// Background color
-    public let color: UIColor
+    public let color: PlatformColor
 
     /// Corner radius of the background
     public let cornerRadius: CGFloat
@@ -77,7 +81,7 @@ public class BackgroundStyle {
     /// Optional shadow style for the background
     public let shadow: ShadowStyle?
 
-    public init(color: UIColor, cornerRadius: CGFloat = 0, border: BorderStyle? = nil, shadow: ShadowStyle? = nil) {
+    public init(color: PlatformColor, cornerRadius: CGFloat = 0, border: BorderStyle? = nil, shadow: ShadowStyle? = nil) {
         self.color = color
         self.cornerRadius = cornerRadius
         self.border = border

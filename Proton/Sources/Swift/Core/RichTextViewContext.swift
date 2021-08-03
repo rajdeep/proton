@@ -19,16 +19,23 @@
 //
 
 import Foundation
-import UIKit
 
-class RichTextViewContext: NSObject, UITextViewDelegate {
+#if os(iOS)
+import UIKit
+typealias TextDelegate = UITextViewDelegate
+#else
+import AppKit
+typealias TextDelegate = NSTextViewDelegate_Bridge
+#endif
+
+class RichTextViewContext: NSObject, TextDelegate {
     weak var activeTextView: RichTextView?
 
     func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         return interaction != .presentActions
     }
 
-    func textViewDidChangeSelection(_ textView: UITextView) {
+    func textViewDidChangeSelection(_ textView: PlatformTextView) {
         guard textView.delegate === self else { return }
 
         activeTextView = textView as? RichTextView
@@ -63,9 +70,11 @@ class RichTextViewContext: NSObject, UITextViewDelegate {
         richTextView.richTextViewDelegate?.richTextView(richTextView, didChangeSelection: range, attributes: attributes, contentType: contentType)
     }
 
-    func resetAttachmentSelection(_ textView: UITextView) {
+    // MARK: - Private
+    
+    private func resetAttachmentSelection(_ textView: PlatformTextView) {
         guard textView.delegate === self else { return }
-
+        
         guard let attributedText = textView.attributedText else { return }
         attributedText.enumerateAttribute(.attachment, in: attributedText.fullRange, options: .longestEffectiveRangeNotRequired) { attachment, _, _ in
             if let attachment = attachment as? Attachment {

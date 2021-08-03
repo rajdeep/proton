@@ -229,7 +229,7 @@ open class EditorView: UIView {
     }
 
     /// Gets or sets insets for additional scroll area around the content. Default value is UIEdgeInsetsZero.
-    public var contentInset: UIEdgeInsets {
+    public var contentInset: EdgeInsets {
         get { richTextView.contentInset }
         set { richTextView.contentInset = newValue }
     }
@@ -327,19 +327,19 @@ open class EditorView: UIView {
 
     /// Default font to be used by the Editor. A font may be overridden on whole or part of content in `EditorView` by an `EditorCommand` or
     /// `TextProcessing` conformances.
-    public var font: UIFont = UIFont.preferredFont(forTextStyle: .body) {
+    public var font: PlatformFont = PlatformFont.preferredFont(forTextStyle: .body) {
         didSet { richTextView.typingAttributes[.font] = font }
     }
 
     /// Default paragraph style to be used by the Editor. The style may be overridden on whole or part of content in
     /// `EditorView` by an `EditorCommand` or `TextProcessing` conformances.
-    public var paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle() {
+    public var paragraphStyle: MutableParagraphStyle = MutableParagraphStyle() {
         didSet { richTextView.typingAttributes[.paragraphStyle] = paragraphStyle }
     }
 
     /// Default text color to be used by the Editor. The color may be overridden on whole or part of content in
     /// `EditorView` by an `EditorCommand` or `TextProcessing` conformances.
-    public var textColor: UIColor {
+    public var textColor: PlatformColor {
         get { richTextView.textColor ?? richTextView.defaultTextColor }
         set { richTextView.textColor = newValue }
     }
@@ -937,7 +937,7 @@ extension EditorView: RichTextViewListDelegate {
     }
 
     func richTextView(_ richTextView: RichTextView, listMarkerForItemAt index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
-        let font = UIFont.preferredFont(forTextStyle: .body)
+        let font = PlatformFont.preferredFont(forTextStyle: .body)
         let defaultValue = NSAttributedString(string: "*", attributes: [.font: font])
 
         return listFormattingProvider?.listLineMarkerFor(editor: self, index: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? .string(defaultValue)
@@ -951,12 +951,12 @@ extension EditorView: RichTextViewDelegate {
         editorContextDelegate?.editor(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
     }
 
-    func richTextView(_ richTextView: RichTextView, shouldHandle key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange, handled: inout Bool) {
+    func richTextView(_ richTextView: RichTextView, shouldHandle key: EditorKey, modifierFlags: KeyModifierFlags, at range: NSRange, handled: inout Bool) {
         delegate?.editor(self, shouldHandle: key, at: range, handled: &handled)
         editorContextDelegate?.editor(self, shouldHandle: key, at: range, handled: &handled)
     }
 
-    func richTextView(_ richTextView: RichTextView, didReceive key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange) {
+    func richTextView(_ richTextView: RichTextView, didReceive key: EditorKey, modifierFlags: KeyModifierFlags, at range: NSRange) {
         textProcessor?.activeProcessors.forEach { processor in
             processor.handleKeyWithModifiers(editor: self, key: key, modifierFlags: modifierFlags, range: range)
         }

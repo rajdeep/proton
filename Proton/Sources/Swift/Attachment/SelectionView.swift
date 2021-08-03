@@ -19,9 +19,13 @@
 //
 
 import Foundation
+#if os(iOS)
 import UIKit
+#else
+import AppKit
+#endif
 
-class SelectionView: UIView {
+class SelectionView: PlatformView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.alpha = 0.5
@@ -50,7 +54,7 @@ class SelectionView: UIView {
         return nil
     }
     
-    func addTo(parent: UIView) {
+    func addTo(parent: PlatformView) {
         applyTintColor()
         self.translatesAutoresizingMaskIntoConstraints = false
         parent.addSubview(self)

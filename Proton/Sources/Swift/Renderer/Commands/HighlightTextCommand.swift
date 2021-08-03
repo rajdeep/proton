@@ -19,7 +19,10 @@
 //
 
 import Foundation
-import UIKit
+#if os(iOS)
+#else
+import AppKit
+#endif
 
 public extension NSAttributedString.Key {
     static let isHighlighted = NSAttributedString.Key("_IsHighlighted")
@@ -30,17 +33,32 @@ public extension NSAttributedString.Key {
 public class HighlightTextCommand: RendererCommand {
 
     public let name = CommandName("_highlightCommand")
-
-    let defaultColor = UIColor(dynamicProvider: { traitCollection -> UIColor in
-        switch traitCollection.userInterfaceStyle {
-        case .dark:
-            return UIColor.systemYellow.withAlphaComponent(0.2)
-        default:
-            return UIColor(red: 1.0, green: 0.98, blue: 0.80, alpha: 1.0)
+    
+    lazy var defaultColor: PlatformColor = {
+        let lightYellow = PlatformColor.systemYellow.withAlphaComponent(0.2)
+        let darkYellow = PlatformColor(red: 1.0, green: 0.98, blue: 0.80, alpha: 1.0)
+        #if os(iOS)
+        return PlatformColor(dynamicProvider: { traitCollection -> PlatformColor in
+            switch traitCollection.userInterfaceStyle {
+            case .dark:
+                return lightYellow
+            default:
+                return darkYellow
+            }
+        })
+        #else
+        return PlatformColor(name: nil) { appearance in
+            if appearance.isDarkMode {
+                return darkYellow
+                
+            } else {
+                return lightYellow
+            }
         }
-    })
-
-    public var color: UIColor?
+        #endif
+    }()
+    
+    public var color: PlatformColor?
 
     public init() { }
 
@@ -50,7 +68,7 @@ public class HighlightTextCommand: RendererCommand {
         guard renderer.selectedText.length > 0 else { return }
 
         let color = self.color ?? defaultColor
-        let highlightedColor = renderer.selectedText.attribute(.backgroundColor, at: 0, effectiveRange: nil) as? UIColor
+        let highlightedColor = renderer.selectedText.attribute(.backgroundColor, at: 0, effectiveRange: nil) as? PlatformColor
 
         guard highlightedColor != color else {
             renderer.removeAttributes([.backgroundColor, .isHighlighted], at: renderer.selectedRange)

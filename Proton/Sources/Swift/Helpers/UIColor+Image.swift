@@ -19,13 +19,28 @@
 //
 
 import Foundation
+#if os(iOS)
 import UIKit
+#else
+import AppKit
+#endif
 
-extension UIColor {
-    func image(_ size: CGSize = CGSize(width: 1, height: 1)) -> UIImage {
+extension PlatformColor {
+    func image(_ size: CGSize = CGSize(width: 1, height: 1)) -> PlatformImage {
+        #if os(iOS)
         return UIGraphicsImageRenderer(size: size).image { rendererContext in
             self.setFill()
             rendererContext.fill(CGRect(origin: .zero, size: size))
         }
+        #else
+        let img = PlatformImage(size: size)
+        img.lockFocus()
+        
+        self.set()
+        let rect = NSRect(origin: .zero, size: size)
+        rect.fill(using: .sourceAtop)
+        img.unlockFocus()
+        return img
+        #endif
     }
 }
