@@ -19,7 +19,6 @@
 //
 
 import Foundation
-import UIKit
 
 public class UnderlineCommand: AttributesToggleCommand {
     public init() {
