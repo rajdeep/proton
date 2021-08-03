@@ -8,14 +8,22 @@
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a name="//apple_ref/swift/Class/FontTraitToggleCommand" class="dashAnchor"></a>
     <a title="FontTraitToggleCommand Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Proton Docs</a> (75% documented)</p>
+        <p><a href="../index.html">Proton Docs</a> (76% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -35,7 +43,16 @@
                 <a href="../Classes/Attachment.html">Attachment</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/AttributesToggleCommand.html">AttributesToggleCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BackgroundStyle.html">BackgroundStyle</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/BoldCommand.html">BoldCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BorderStyle.html">BorderStyle</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/EditorCommandExecutor.html">EditorCommandExecutor</a>
@@ -56,6 +73,12 @@
                 <a href="../Classes/ItalicsCommand.html">ItalicsCommand</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/ListCommand.html">ListCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ListTextProcessor.html">ListTextProcessor</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RendererCommandExecutor.html">RendererCommandExecutor</a>
               </li>
               <li class="nav-group-task">
@@ -63,6 +86,15 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RendererViewContext.html">RendererViewContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ShadowStyle.html">ShadowStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/StrikethroughCommand.html">StrikethroughCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/UnderlineCommand.html">UnderlineCommand</a>
               </li>
             </ul>
           </li>
@@ -82,7 +114,13 @@
                 <a href="../Enums/EditorContentType.html">EditorContentType</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/EditorHeight.html">EditorHeight</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/EditorKey.html">EditorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ListLineMarker.html">ListLineMarker</a>
               </li>
             </ul>
           </li>
@@ -94,6 +132,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/NSAttributedString/Key.html">– Key</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSParagraphStyle.html">NSParagraphStyle</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/NSRange.html">NSRange</a>
@@ -152,6 +193,9 @@
                 <a href="../Protocols/EditorContentView.html">EditorContentView</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/EditorListFormattingProvider.html">EditorListFormattingProvider</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/EditorTextEncoding.html">EditorTextEncoding</a>
               </li>
               <li class="nav-group-task">
@@ -167,7 +211,13 @@
                 <a href="../Protocols/RendererCommand.html">RendererCommand</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/RendererListFormattingProvider.html">RendererListFormattingProvider</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/RendererViewDelegate.html">RendererViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SequenceGenerator.html">SequenceGenerator</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/TextProcessing.html">TextProcessing</a>
@@ -193,13 +243,28 @@
                 <a href="../Structs/CommandName.html">CommandName</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/DiamondBulletSequenceGenerator.html">DiamondBulletSequenceGenerator</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/EditorContent.html">EditorContent</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/EditorContent/Name.html">– Name</a>
+                <a href="../Structs/EditorLine.html">EditorLine</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/EditorLine.html">EditorLine</a>
+                <a href="../Structs/LineFormatting.html">LineFormatting</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ListItem.html">ListItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ListParser.html">ListParser</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/NumericSequenceGenerator.html">NumericSequenceGenerator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SquareBulletSequenceGenerator.html">SquareBulletSequenceGenerator</a>
               </li>
             </ul>
           </li>
@@ -225,6 +290,7 @@
             <h1>FontTraitToggleCommand</h1>
               <div class="declaration">
                 <div class="language">
+                  
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">FontTraitToggleCommand</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/EditorCommand.html">EditorCommand</a></span></code></pre>
 
                 </div>
@@ -293,7 +359,7 @@
                     <code>
                     <a name="/s:6Proton22FontTraitToggleCommandC4name5traitAcA0E4NameV_So30UIFontDescriptorSymbolicTraitsVtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(name:trait:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton22FontTraitToggleCommandC4name5traitAcA0E4NameV_So30UIFontDescriptorSymbolicTraitsVtcfc">init(name:trait:)</a>
+                    <a class="token" href="#/s:6Proton22FontTraitToggleCommandC4name5traitAcA0E4NameV_So30UIFontDescriptorSymbolicTraitsVtcfc">init(name:<wbr>trait:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -320,7 +386,7 @@
                     <code>
                     <a name="/s:6Proton13EditorCommandP7execute2onyAA0B4ViewC_tF"></a>
                     <a name="//apple_ref/swift/Method/execute(on:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton13EditorCommandP7execute2onyAA0B4ViewC_tF">execute(on:)</a>
+                    <a class="token" href="#/s:6Proton13EditorCommandP7execute2onyAA0B4ViewC_tF">execute(on:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -346,8 +412,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2020-04-08)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2021 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2021-07-31)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
