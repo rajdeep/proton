@@ -19,7 +19,6 @@
 //
 
 import Foundation
-import UIKit
 import CoreServices
 
 /// An object capable of encoding `EditorContent` to given type.

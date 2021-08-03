@@ -19,9 +19,12 @@
 //
 
 import Foundation
-import UIKit
-
 @testable import Proton
+#if os(iOS)
+import UIKit
+#else
+import AppKit
+#endif
 
 class RichTextViewTestViewController: SnapshotTestViewController {
     let textView: RichTextView

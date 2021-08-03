@@ -19,8 +19,6 @@
 //
 
 import Foundation
-import UIKit
-
 @testable import Proton
 
 class MockEditorViewDelegate: EditorViewDelegate {

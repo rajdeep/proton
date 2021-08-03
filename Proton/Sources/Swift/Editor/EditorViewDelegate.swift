@@ -19,7 +19,7 @@
 //
 
 import Foundation
-import UIKit
+import CoreGraphics
 
 /// Describes an object interested in listening to events raised from EditorView
 public protocol EditorViewDelegate: AnyObject {

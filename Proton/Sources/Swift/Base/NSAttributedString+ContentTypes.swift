@@ -19,7 +19,6 @@
 //
 
 import Foundation
-import UIKit
 
 extension NSAttributedString.Key {
     static let viewOnly = NSAttributedString.Key("_viewOnly")

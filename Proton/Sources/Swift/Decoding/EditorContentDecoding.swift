@@ -19,8 +19,7 @@
 //
 
 import Foundation
-import UIKit
-import CoreServices
+import CoreGraphics
 
 /// Content mode for `Editor`. This may be used while decoding the content for the Editor/Renderer to let the Decoder know
 /// which mode the content is being decoded for. For e.g. you may  want to have different decoded value based on whether the

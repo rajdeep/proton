@@ -19,7 +19,6 @@
 //
 
 import Foundation
-import UIKit
 
 @testable import Proton
 

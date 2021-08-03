@@ -19,8 +19,6 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
 
 struct TextEncoder: EditorContentEncoder {

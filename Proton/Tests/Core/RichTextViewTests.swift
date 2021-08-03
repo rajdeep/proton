@@ -20,7 +20,6 @@
 
 import Foundation
 import XCTest
-import UIKit
 
 @testable import Proton
 

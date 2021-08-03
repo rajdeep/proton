@@ -19,7 +19,6 @@
 //
 
 import Foundation
-import UIKit
 
 typealias RichTextAttributes = [NSAttributedString.Key: Any]
 public typealias Attributes = [NSAttributedString.Key: Any]

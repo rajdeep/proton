@@ -19,10 +19,12 @@
 //
 
 import Foundation
-import UIKit
-
 import Proton
-
+#if os(iOS)
+import UIKit
+#else
+import AppKit
+#endif
 class EditorTestViewController: SnapshotTestViewController {
     let editor: EditorView
     let height: CGFloat?
