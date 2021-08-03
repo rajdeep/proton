@@ -26,7 +26,8 @@ public typealias TextStorageEditAcitons = NSTextStorage.EditActions
 public typealias TextAttachment = NSTextAttachment
 public typealias TextContentType = UITextContentType
 public typealias RectCorner = UIRectCorner
-public typealias PlatformViewController = UIViewController
+public typealias NativeViewController = UIViewController
+public typealias TextField = UITextField
 #else
 
 import AppKit
@@ -44,7 +45,8 @@ public typealias TextStorageEditAcitons = NSTextStorageEditActions
 public typealias TextAttachment = NSTextAttachment
 public typealias TextContentType = NSTextContentType
 public typealias RectCorner = NSRectCorner
-public typealias PlatformViewController = NSViewController
+public typealias NativeViewController = NSViewController
+public typealias TextField = NSTextField
 #endif
 
 public typealias ParagraphStyle = NSParagraphStyle

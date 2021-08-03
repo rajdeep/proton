@@ -11,7 +11,7 @@ import AppKit
 
 /// NSTextViewDelegate_Bridge is a bridge between NSTextViewDelegate and UITextViewDelegate
 /// It transforms NSTextViewDelegate callbacks to the format of UITextViewDelegate.
-protocol NSTextViewDelegate_Bridge: AnyObject {
+public protocol NSTextViewDelegate_Bridge: AnyObject {
     func textViewDidChangeSelection(_ textView: PlatformTextView)
     func textViewDidBeginEditing(_ textView: PlatformTextView)
     func textViewDidEndEditing(_ textView: PlatformTextView)
@@ -19,7 +19,7 @@ protocol NSTextViewDelegate_Bridge: AnyObject {
     func textViewDidChange(_ textView: PlatformTextView)
 }
 
-extension NSTextViewDelegate_Bridge {
+public extension NSTextViewDelegate_Bridge {
     func textViewDidChangeSelection(_ textView: PlatformTextView) { }
     func textViewDidBeginEditing(_ textView: PlatformTextView) { }
     func textViewDidEndEditing(_ textView: PlatformTextView) { }
@@ -27,13 +27,31 @@ extension NSTextViewDelegate_Bridge {
     func textViewDidChange(_ textView: PlatformTextView) { }
 }
 
-class PlatformTextView: NSTextView, NSTextViewDelegate {
-    weak var nsDelegateBridge: NSTextViewDelegate_Bridge?
-
+extension NSTextView {
+    var selectedTextRange: NSRange? {
+        get { selectedRange() }
+        set {
+            if let val = newValue {
+                setSelectedRange(val)
+            } else {
+                setSelectedRange(.zero)
+            }
+        }
+    }
+    
     var attributedText: NSAttributedString! {
         get { attributedString() }
         set { textStorage?.setAttributedString(newValue) }
     }
+    
+    var text: String {
+        get { string }
+        set { string = newValue }
+    }
+}
+
+public class PlatformTextView: NSTextView, NSTextViewDelegate {
+    weak var nsDelegateBridge: NSTextViewDelegate_Bridge?
     
     var textContentType: NSTextContentType {
         get { contentType! }
@@ -79,7 +97,7 @@ class PlatformTextView: NSTextView, NSTextViewDelegate {
     
     // MARK: - UIView Bridge
     
-    override func layout() {
+    public override func layout() {
         layoutSubviews()
         super.layout()
     }
@@ -100,23 +118,23 @@ class PlatformTextView: NSTextView, NSTextViewDelegate {
     
     // MARK: - NSTextViewDelegate
     
-    func textViewDidChangeSelection(_ notification: Notification) {
+    public func textViewDidChangeSelection(_ notification: Notification) {
         nsDelegateBridge?.textViewDidChangeSelection(self)
     }
     
-    func textDidBeginEditing(_ notification: Notification) {
+    public func textDidBeginEditing(_ notification: Notification) {
         nsDelegateBridge?.textViewDidBeginEditing(self)
     }
     
-    func textDidEndEditing(_ notification: Notification) {
+    public func textDidEndEditing(_ notification: Notification) {
         nsDelegateBridge?.textViewDidEndEditing(self)
     }
     
-    func textView(_ textView: NSTextView, shouldChangeTextIn affectedCharRange: NSRange, replacementString: String?) -> Bool {
+    public func textView(_ textView: NSTextView, shouldChangeTextIn affectedCharRange: NSRange, replacementString: String?) -> Bool {
         nsDelegateBridge?.textView(self, shouldChangeTextIn: affectedCharRange, replacementText: replacementString ?? "") ?? true
     }
     
-    func textDidChange(_ notification: Notification) {
+    public func textDidChange(_ notification: Notification) {
         nsDelegateBridge?.textViewDidChange(self)
     }
     
@@ -144,10 +162,23 @@ class PlatformTextView: NSTextView, NSTextViewDelegate {
         fatalError()
     }
     
-    override func deleteBackward(_ sender: Any?) {
+    public override func deleteBackward(_ sender: Any?) {
         deleteBackward()
     }
     
 }
 
 #endif
+
+#if os(iOS)
+import UIKit
+#endif
+public extension PlatformTextView {
+    var uiKitFormatDelegate: TextViewDelegate? {
+        #if os(iOS)
+        delegate
+        #else
+        nsDelegateBridge
+        #endif
+    }
+}

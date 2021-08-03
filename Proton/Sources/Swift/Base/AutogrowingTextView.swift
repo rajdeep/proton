@@ -44,6 +44,10 @@ class AutogrowingTextView: PlatformTextView {
     weak var boundsObserver: BoundsObserving?
     var maxHeightConstraint: NSLayoutConstraint!
 
+    convenience init() {
+        self.init(frame: .zero, textContainer: nil)
+    }
+    
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         maxHeightConstraint = heightAnchor.constraint(lessThanOrEqualToConstant: frame.height)

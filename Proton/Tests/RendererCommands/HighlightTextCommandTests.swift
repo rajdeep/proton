@@ -32,14 +32,14 @@ class HighlightTextCommandTests: XCTestCase {
         renderer.attributedText = NSAttributedString(string: "This is some text")
         renderer.selectedRange = rangeToHighlight
 
-        let highlightBefore = renderer.attributedText.attribute(.backgroundColor, at: 0, effectiveRange: nil) as? UIColor
+        let highlightBefore = renderer.attributedText.attribute(.backgroundColor, at: 0, effectiveRange: nil) as? PlatformColor
         XCTAssertNil(highlightBefore)
 
         let command = HighlightTextCommand()
         command.execute(on: renderer)
         var effectiveRange = NSRange()
 
-        let highlightAfter = renderer.attributedText.attribute(.backgroundColor, at: 0, effectiveRange: &effectiveRange) as? UIColor
+        let highlightAfter = renderer.attributedText.attribute(.backgroundColor, at: 0, effectiveRange: &effectiveRange) as? PlatformColor
         XCTAssertEqual(highlightAfter, command.defaultColor)
         XCTAssertEqual(effectiveRange, rangeToHighlight)
     }
@@ -55,7 +55,7 @@ class HighlightTextCommandTests: XCTestCase {
 
         command.execute(on: renderer) // removes
 
-        let highlightColor = renderer.attributedText.attribute(.backgroundColor, at: 0, effectiveRange: nil) as? UIColor
+        let highlightColor = renderer.attributedText.attribute(.backgroundColor, at: 0, effectiveRange: nil) as? PlatformColor
         XCTAssertNil(highlightColor)
     }
 
@@ -72,7 +72,7 @@ class HighlightTextCommandTests: XCTestCase {
         command.execute(on: renderer) // applies red
 
         var effectiveRange = NSRange()
-        let highlightColor = renderer.attributedText.attribute(.backgroundColor, at: 0, effectiveRange: &effectiveRange) as? UIColor
+        let highlightColor = renderer.attributedText.attribute(.backgroundColor, at: 0, effectiveRange: &effectiveRange) as? PlatformColor
         XCTAssertEqual(highlightColor, .red)
         XCTAssertEqual(effectiveRange, rangeToHighlight)
     }

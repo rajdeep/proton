@@ -224,9 +224,14 @@ open class EditorView: PlatformView {
     public var registeredProcessors: [TextProcessing] {
         return textProcessor?.activeProcessors ?? []
     }
-
+    
     #if os(iOS)
     public var selectedTextRange: UITextRange? {
+        get { richTextView.selectedTextRange }
+        set { richTextView.selectedTextRange = newValue }
+    }
+    #else
+    public var selectedTextRange: NSRange? {
         get { richTextView.selectedTextRange }
         set { richTextView.selectedTextRange = newValue }
     }
@@ -708,12 +713,16 @@ open class EditorView: PlatformView {
     /// - Parameter line: Reference line
     /// - Returns:
     /// `EditorLine` after the given line. Nil if the Editor is empty or given line is last line in the Editor.
-    #if os(iOS)
     public func layoutLineAfter(_ line: EditorLine) -> EditorLine? {
+        #if os(iOS)
         let lineRange = line.range
         let nextLineStartRange = NSRange(location: lineRange.location + lineRange.length + 1, length: 0)
         guard nextLineStartRange.isValidIn(richTextView) else { return nil }
         return editorLayoutLineFrom(range: nextLineStartRange)
+        #else
+        // TODO: Implement on macOS
+        fatalError()
+        #endif
     }
 
     /// Gets the line before the given line. Nil if the given line is invalid or is first line
@@ -721,14 +730,16 @@ open class EditorView: PlatformView {
     /// - Returns:
     /// `EditorLine` before the given line. Nil if the Editor is empty or given line is first line in the Editor.
     public func layoutLineBefore(_ line: EditorLine) -> EditorLine? {
+        #if os(iOS)
         let lineRange = line.range
         let previousLineStartRange = NSRange(location: lineRange.location - 1, length: 0)
         guard previousLineStartRange.isValidIn(richTextView) else { return nil }
         return editorLayoutLineFrom(range: previousLineStartRange)
+        #else
+        // TODO: Implement on macOS
+        fatalError()
+        #endif
     }
-    #else
-    // TODO: Implement on macOS
-    #endif
 
     private func editorLayoutLineFrom(range: NSRange?) -> EditorLine? {
         guard let range = range,
@@ -745,11 +756,16 @@ open class EditorView: PlatformView {
     /// - Parameter range: Range to be queried.
     /// - Returns:
     /// Array of rectangles for the given range.
-    #if os(iOS)
+    
     public func rects(for range: NSRange) -> [CGRect] {
+        #if os(iOS)
         guard let textRange = range.toTextRange(textInput: richTextView) else { return [] }
         let rects = richTextView.selectionRects(for: textRange)
         return rects.map { $0.rect }
+        #else
+        // TODO: Implement on macOS
+        fatalError()
+        #endif
     }
 
     /// Returns the caret rectangle for given position in the editor content.
@@ -760,13 +776,15 @@ open class EditorView: PlatformView {
     /// - Returns:
     /// Rectangle for caret based on the line height and given location.
     public func caretRect(for position: Int) -> CGRect {
+        #if os(iOS)
         let textPosition = richTextView.position(from: richTextView.beginningOfDocument, offset: position) ?? richTextView.endOfDocument
         let rect = richTextView.caretRect(for: textPosition)
         return convert(rect, from: richTextView)
+        #else
+        // TODO: Implement on macOS
+        fatalError()
+        #endif
     }
-    #else
-    // TODO: Implement on macOS
-    #endif
 
     /// Gets the word from text at given location in editor content
     /// - Parameter location: Location to be queried.

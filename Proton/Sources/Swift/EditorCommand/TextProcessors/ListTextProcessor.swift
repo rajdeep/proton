@@ -19,6 +19,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 /// Text process capable of processing keyboard inputs specific to lists. `ListTextProcessor` only works after a range of text
 /// has been converted to list using `ListCommand`.

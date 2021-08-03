@@ -28,11 +28,11 @@ class FontTraitToggleCommandTests: XCTestCase {
         let editor = EditorView()
         let command = BoldCommand()
 
-        let font: UIFont = try XCTUnwrap(editor.typingAttributes[.font] as? UIFont)
+        let font: PlatformFont = try XCTUnwrap(editor.typingAttributes[.font] as? PlatformFont)
         XCTAssertFalse(font.isBold)
         command.execute(on: editor)
 
-        let updatedFont = try XCTUnwrap(editor.typingAttributes[.font] as? UIFont)
+        let updatedFont = try XCTUnwrap(editor.typingAttributes[.font] as? PlatformFont)
         XCTAssertTrue(updatedFont.isBold)
     }
 
@@ -46,7 +46,7 @@ class FontTraitToggleCommandTests: XCTestCase {
         editor.selectedRange = NSRange(location: 4, length: 0)
         command.execute(on: editor)
 
-        let updatedFont = try XCTUnwrap(editor.typingAttributes[.font] as? UIFont)
+        let updatedFont = try XCTUnwrap(editor.typingAttributes[.font] as? PlatformFont)
         XCTAssertFalse(updatedFont.isItalics)
     }
 
@@ -76,7 +76,7 @@ class FontTraitToggleCommandTests: XCTestCase {
         var counter = 0
         editorText.enumerateAttribute(.font, in: editorText.fullRange, options: .longestEffectiveRangeNotRequired) { (font, range, _) in
             let text = editorText.attributedSubstring(from: range)
-            guard let font = try? XCTUnwrap(text.attribute(.font, at: 0, effectiveRange: nil) as? UIFont) else {
+            guard let font = try? XCTUnwrap(text.attribute(.font, at: 0, effectiveRange: nil) as? PlatformFont) else {
                 XCTFail("Unable to get font information")
                 return
             }

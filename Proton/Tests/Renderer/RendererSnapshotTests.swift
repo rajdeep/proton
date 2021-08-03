@@ -75,7 +75,7 @@ class RendererSnapshotTests: XCTestCase {
         let offsetProvider = MockAttachmentOffsetProvider()
         offsetProvider.offset = CGPoint(x: 0, y: -4)
 
-        editor.font = UIFont.systemFont(ofSize: 12)
+        editor.font = PlatformFont.systemFont(ofSize: 12)
 
         let textField = AutogrowingTextField()
         textField.backgroundColor = .cyan
@@ -105,8 +105,8 @@ class RendererSnapshotTests: XCTestCase {
         viewController.render(size: CGSize(width: 300, height: 130))
         let rects = renderer.rects(for: NSRange(location: 25, length: 10))
         for rect in rects {
-            let view = UIView(frame: rect)
-            view.backgroundColor = .clear
+            let view = PlatformView(frame: rect)
+            view.setBackgroundColor(PlatformColor.clear)
             view.addBorder(.red)
             renderer.addSubview(view)
         }

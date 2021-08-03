@@ -33,19 +33,19 @@ class RendererCommandExecutorTests: XCTestCase {
         renderer.attributedText = NSAttributedString(string: "This is some text")
         renderer.selectedRange = selectedRange
 
-        let color = renderer.selectedText.attribute(.backgroundColor, at: 0, effectiveRange: nil) as? UIColor
+        let color = renderer.selectedText.attribute(.backgroundColor, at: 0, effectiveRange: nil) as? PlatformColor
         XCTAssertNil(color)
 
         let command = MockRendererCommand { renderer in
-            renderer.addAttributes([.foregroundColor: UIColor.red], at: renderer.selectedRange)
+            renderer.addAttributes([.foregroundColor: PlatformColor.red], at: renderer.selectedRange)
         }
         commandExecutor.execute(command)
 
-        guard let newColor = renderer.selectedText.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor else {
+        guard let newColor = renderer.selectedText.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? PlatformColor else {
             XCTFail("Failed to get background color information")
             return
         }
 
-        XCTAssertEqual(newColor, UIColor.red)
+        XCTAssertEqual(newColor, PlatformColor.red)
     }
 }

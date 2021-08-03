@@ -27,7 +27,7 @@ class MockTextProcessor: TextProcessing {
 
     var onWillProcess: ((NSAttributedString, NSAttributedString) -> Void)?
     var onProcess: ((EditorView, NSRange, Int) -> Void)?
-    var onKeyWithModifier: ((EditorView, EditorKey, UIKeyModifierFlags, NSRange) -> Void)?
+    var onKeyWithModifier: ((EditorView, EditorKey, KeyModifierFlags, NSRange) -> Void)?
     var onProcessInterrupted: ((EditorView, NSRange) -> Void)?
     var onSelectedRangeChanged: ((EditorView, NSRange?, NSRange?) -> Void)?
     var onDidProcess: ((EditorView) -> Void)?
@@ -52,7 +52,7 @@ class MockTextProcessor: TextProcessing {
         return true
     }
 
-    func handleKeyWithModifiers(editor: EditorView, key: EditorKey, modifierFlags: UIKeyModifierFlags, range editedRange: NSRange) {
+    func handleKeyWithModifiers(editor: EditorView, key: EditorKey, modifierFlags: KeyModifierFlags, range editedRange: NSRange) {
         guard processorCondition(editor, editedRange) else { return }
 
         onKeyWithModifier?(editor, key, modifierFlags, editedRange)

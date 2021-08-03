@@ -40,7 +40,7 @@ class AutogrowingTextViewTests: XCTestCase {
         textView.boundsObserver = boundsObserver
         textView.text = "Sample with single line text"
 
-        let view = viewController.view!
+        let view = viewController.unwrappedView
         view.addSubview(textView)
         NSLayoutConstraint.activate([
             textView.widthAnchor.constraint(equalToConstant: 80),

@@ -54,10 +54,13 @@ public extension NSRange {
 
 #if os(iOS)
 import UIKit
-
+#else
+import AppKit
+#endif
 extension NSRange {
     /// Converts the range to `UITextRange` in given `UITextInput`. Returns nil if the range is invalid in the `UITextInput`.
     /// - Parameter textInput: UITextInput to convert the range in.
+    #if os(iOS)
     func toTextRange(textInput: UITextInput) -> UITextRange? {
         guard let rangeStart = textInput.position(from: textInput.beginningOfDocument, offset: location),
               let rangeEnd = textInput.position(from: rangeStart, offset: length)
@@ -65,14 +68,21 @@ extension NSRange {
         
         return textInput.textRange(from: rangeStart, to: rangeEnd)
     }
+    #else
+    func toTextRange(textInput: NSTextInputClient) -> NSRange? {
+        return self
+    }
+    #endif
 
     /// Checks if the range is valid in given `UITextInput`
     /// - Parameter textInput: UITextInput to validate the range in.
+    #if os(iOS)
     func isValidIn(_ textInput: UITextInput) -> Bool {
         guard location > 0 else { return false }
         let end = location + length
         let contentLength = textInput.offset(from: textInput.beginningOfDocument, to: textInput.endOfDocument)
         return end < contentLength
     }
+    #endif
 }
-#endif
+

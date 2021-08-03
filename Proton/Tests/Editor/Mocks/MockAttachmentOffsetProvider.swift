@@ -20,11 +20,12 @@
 
 import Foundation
 import Proton
+import CoreGraphics
 
 class MockAttachmentOffsetProvider: AttachmentOffsetProviding {
     var offset = CGPoint.zero
 
-    func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint {
+    func offset(for attachment: Attachment, in textContainer: PlatformTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint {
         return offset
     }
 }

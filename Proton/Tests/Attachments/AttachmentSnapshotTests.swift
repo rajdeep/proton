@@ -121,7 +121,9 @@ class AttachmentSnapshotTests: XCTestCase {
     private func makeDummyAttachment(text: String, size: AttachmentSize) -> Attachment {
         let textView = RichTextAttachmentView(context: RichTextViewContext())
         textView.textContainerInset = .zero
+        #if os(iOS)
         textView.layoutMargins = .zero
+        #endif
         textView.text = text
         textView.backgroundColor = .yellow
         let attachment = Attachment(textView, size: size)

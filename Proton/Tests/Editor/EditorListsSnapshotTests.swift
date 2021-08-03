@@ -917,15 +917,16 @@ class EditorListsSnapshotTests: XCTestCase {
 
         let viewController = EditorTestViewController()
         let editor = viewController.editor
+        editor.setBackgroundColor(PlatformColor.blue)
         let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
         editor.listFormattingProvider = listFormattingProvider
         let attributedText = NSMutableAttributedString(string: text)
 
         var panel1 = PanelView()
-        panel1.backgroundColor = .cyan
-        panel1.layer.borderWidth = 1.0
-        panel1.layer.cornerRadius = 4.0
-        panel1.layer.borderColor = UIColor.black.cgColor
+        panel1.setBackgroundColor(PlatformColor.cyan)
+        panel1.caLayer.borderWidth = 1.0
+        panel1.caLayer.cornerRadius = 4.0
+        panel1.caLayer.borderColor = PlatformColor.black.cgColor
 
         let attachment1 = Attachment(panel1, size: .fullWidth)
         panel1.boundsObserver = attachment1
@@ -938,10 +939,10 @@ class EditorListsSnapshotTests: XCTestCase {
         attributedText.append(NSAttributedString(string: "\nTest line 2\n"))
 
         var panel2 = PanelView()
-        panel2.backgroundColor = .green
-        panel2.layer.borderWidth = 1.0
-        panel2.layer.cornerRadius = 4.0
-        panel2.layer.borderColor = UIColor.black.cgColor
+        panel2.setBackgroundColor(PlatformColor.green)
+        panel2.caLayer.borderWidth = 1.0
+        panel2.caLayer.cornerRadius = 4.0
+        panel2.caLayer.borderColor = PlatformColor.black.cgColor
 
         let attachment2 = Attachment(panel2, size: .fullWidth)
         panel2.boundsObserver = attachment2

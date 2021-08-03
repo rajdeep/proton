@@ -35,7 +35,7 @@ class RichTextViewTests: XCTestCase {
 
         textView.attributedText = attributedText
 
-        let view = viewController.view!
+        let view = viewController.unwrappedView
         view.addSubview(textView)
         NSLayoutConstraint.activate([
             textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
@@ -57,14 +57,14 @@ class RichTextViewTests: XCTestCase {
     }
 
     func testResetsTypingAttributesOnDeleteBackwards() throws {
-        let text = NSAttributedString(string: "a", attributes: [.foregroundColor: UIColor.blue])
+        let text = NSAttributedString(string: "a", attributes: [.foregroundColor: PlatformColor.blue])
         let textView = RichTextView(context: RichTextViewContext())
         textView.attributedText = text
-        let preColor = try XCTUnwrap(textView.typingAttributes[.foregroundColor] as? UIColor)
-        XCTAssertEqual(preColor, UIColor.blue)
+        let preColor = try XCTUnwrap(textView.typingAttributes[.foregroundColor] as? PlatformColor)
+        XCTAssertEqual(preColor, PlatformColor.blue)
         textView.deleteBackward()
-        let postColor = try XCTUnwrap(textView.typingAttributes[.foregroundColor] as? UIColor)
-        let typingAttributeColor = try XCTUnwrap(textView.defaultTypingAttributes[.foregroundColor] as? UIColor)
+        let postColor = try XCTUnwrap(textView.typingAttributes[.foregroundColor] as? PlatformColor)
+        let typingAttributeColor = try XCTUnwrap(textView.defaultTypingAttributes[.foregroundColor] as? PlatformColor)
         XCTAssertEqual(postColor, typingAttributeColor)
     }
 
@@ -86,7 +86,7 @@ class RichTextViewTests: XCTestCase {
     }
 
     func testInvokesDelegateOnShiftTab() {
-        let assertions: ((EditorKey, UIKeyModifierFlags) -> Void) = { key, flags in
+        let assertions: ((EditorKey, KeyModifierFlags) -> Void) = { key, flags in
             XCTAssertEqual(key, .tab)
             XCTAssertEqual(flags, .shift)
         }
@@ -94,7 +94,7 @@ class RichTextViewTests: XCTestCase {
     }
 
     func testInvokesDelegateOnShiftEnter() {
-        let assertions: ((EditorKey, UIKeyModifierFlags) -> Void) = { key, flags in
+        let assertions: ((EditorKey, KeyModifierFlags) -> Void) = { key, flags in
             XCTAssertEqual(key, .enter)
             XCTAssertEqual(flags, .shift)
         }
@@ -102,7 +102,7 @@ class RichTextViewTests: XCTestCase {
     }
 
     func testInvokesDelegateOnAltEnter() {
-        let assertions: ((EditorKey, UIKeyModifierFlags) -> Void) = { key, flags in
+        let assertions: ((EditorKey, KeyModifierFlags) -> Void) = { key, flags in
             XCTAssertEqual(key, .enter)
             XCTAssertEqual(flags, .alternate)
         }
@@ -110,7 +110,7 @@ class RichTextViewTests: XCTestCase {
     }
 
     func testInvokesDelegateOnControlEnter() {
-        let assertions: ((EditorKey, UIKeyModifierFlags) -> Void) = { key, flags in
+        let assertions: ((EditorKey, KeyModifierFlags) -> Void) = { key, flags in
             XCTAssertEqual(key, .enter)
             XCTAssertEqual(flags, .control)
         }
@@ -146,7 +146,7 @@ class RichTextViewTests: XCTestCase {
         XCTAssertEqual(textView.attributedText.string, "")
     }
 
-    private func assertKeyCommand(input: String, modifierFlags: UIKeyModifierFlags, assertions: @escaping ((EditorKey, UIKeyModifierFlags) -> Void), file: StaticString = #file, line: UInt = #line) {
+    private func assertKeyCommand(input: String, modifierFlags: KeyModifierFlags, assertions: @escaping ((EditorKey, KeyModifierFlags) -> Void), file: StaticString = #file, line: UInt = #line) {
         let funcExpectation = functionExpectation()
         let textView = RichTextView(context: RichTextViewContext())
         let richTextViewDelegate = MockRichTextViewDelegate()
@@ -156,10 +156,13 @@ class RichTextViewTests: XCTestCase {
             assertions(key, flags)
             funcExpectation.fulfill()
         }
-
+        #if os(iOS)
         let command = UIKeyCommand(input: input, modifierFlags: modifierFlags, action: #selector(dummySelector))
         textView.handleKeyCommand(command: command)
-
+        #else
+        // TODO: Implement on macOS
+        fatalError()
+        #endif
         waitForExpectations(timeout: 1.0)
     }
 

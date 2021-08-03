@@ -40,7 +40,7 @@ class TextStorageTests: XCTestCase {
 
     func testAddTextFormattingUsingProvider() throws{
         let textStorage = PRTextStorage()
-        let font = try XCTUnwrap(UIFont(name: "Arial", size: 30))
+        let font = try XCTUnwrap(PlatformFont(name: "Arial", size: 30))
 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 10
@@ -56,7 +56,7 @@ class TextStorageTests: XCTestCase {
         let attributes = textStorage.attributes(at: 0, effectiveRange: &effectiveRange)
 
         XCTAssertEqual(attributes[.paragraphStyle] as? NSParagraphStyle, paragraphStyle)
-        XCTAssertEqual(attributes[.font] as? UIFont, font)
+        XCTAssertEqual(attributes[.font] as? PlatformFont, font)
         XCTAssertEqual(effectiveRange, textStorage.fullRange)
     }
 

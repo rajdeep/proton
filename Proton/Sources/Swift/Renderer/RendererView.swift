@@ -151,13 +151,9 @@ open class RendererView: PlatformView {
     /// Gets the bounding rectangles for the given range. If the range spans across multiple lines,
     /// in the `RendererView`, a rectangle is returned for each of the line.
     /// - Parameter range: Range to get bounding rectangles for.
-    #if os(iOS)
     public func rects(for range: NSRange) -> [CGRect] {
         return readOnlyEditorView.rects(for: range)
     }
-    #else
-    // TODO: Bridge to macOS
-    #endif
 
     func didTap(at location: CGPoint) {
         readOnlyEditorView.richTextView.didTap(at: location)

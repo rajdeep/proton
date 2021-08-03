@@ -347,6 +347,7 @@ class RichTextView: AutogrowingTextView {
             placeholderLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -textContainerEdgeInset.bottom),
             placeholderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: nsTextContainer.lineFragmentPadding),
             placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -nsTextContainer.lineFragmentPadding),
+            placeholderLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -nsTextContainer.lineFragmentPadding)
         ])
     }
 
@@ -577,7 +578,7 @@ class RichTextView: AutogrowingTextView {
 
     override func cut(_ sender: Any?) {
         if editorView?.responds(to: #selector(cut(_:))) ?? false {
-            editorView?.perform(#selector(cut(_:)))
+            editorView?.perform(#selector(cut(_:)), with: sender)
         } else {
             super.cut(sender)
         }
@@ -714,4 +715,4 @@ private final class TextSelectionRect: UITextSelectionRect {
         self._isVertical = selection.isVertical
     }
 }
-#else
+#endif

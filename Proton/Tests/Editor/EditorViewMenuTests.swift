@@ -31,7 +31,7 @@ class EditorViewMenuTests: XCTestCase {
             ex.fulfill()
         }
 
-        editor.richTextView.copy(UIMenuController())
+        editor.richTextView.copy(nil)
         waitForExpectations(timeout: 1.0)
     }
 
@@ -42,7 +42,7 @@ class EditorViewMenuTests: XCTestCase {
             ex.fulfill()
         }
 
-        editor.richTextView.cut(UIMenuController())
+        editor.richTextView.cut(nil)
         waitForExpectations(timeout: 1.0)
     }
 
@@ -53,7 +53,7 @@ class EditorViewMenuTests: XCTestCase {
             ex.fulfill()
         }
 
-        editor.richTextView.paste(UIMenuController())
+        editor.richTextView.paste(nil)
         waitForExpectations(timeout: 1.0)
     }
 
@@ -64,7 +64,7 @@ class EditorViewMenuTests: XCTestCase {
             ex.fulfill()
         }
 
-        editor.richTextView.select(UIMenuController())
+        editor.richTextView.select(nil)
         waitForExpectations(timeout: 1.0)
     }
 
@@ -75,7 +75,7 @@ class EditorViewMenuTests: XCTestCase {
             ex.fulfill()
         }
 
-        editor.richTextView.toggleBoldface(UIMenuController())
+        editor.richTextView.toggleBoldface(nil)
         waitForExpectations(timeout: 1.0)
     }
 
@@ -86,7 +86,7 @@ class EditorViewMenuTests: XCTestCase {
             ex.fulfill()
         }
 
-        editor.richTextView.toggleItalics(UIMenuController())
+        editor.richTextView.toggleItalics(nil)
         waitForExpectations(timeout: 1.0)
     }
 
@@ -97,7 +97,7 @@ class EditorViewMenuTests: XCTestCase {
             ex.fulfill()
         }
 
-        editor.richTextView.toggleUnderline(UIMenuController())
+        editor.richTextView.toggleUnderline(nil)
         waitForExpectations(timeout: 1.0)
     }
 
@@ -110,7 +110,7 @@ class EditorViewMenuTests: XCTestCase {
             ex.fulfill()
         }
 
-        editor.richTextView.selectAll(UIMenuController())
+        editor.richTextView.selectAll(nil)
         XCTAssertEqual(editor.selectedRange, editor.attributedText.fullRange)
         waitForExpectations(timeout: 1.0)
     }
@@ -125,6 +125,7 @@ class TestEditorView: EditorView {
     var onToggleUnderline: (()->Void)?
     var onToggleItalics: (()->Void)?
 
+    #if os(iOS)
     override func copy(_ sender: Any?) {
         onCopy?()
     }
@@ -152,4 +153,7 @@ class TestEditorView: EditorView {
     override func toggleItalics(_ sender: Any?) {
         onToggleItalics?()
     }
+    #else
+    // TODO: Implement on macOS
+    #endif
 }

@@ -115,7 +115,7 @@ class ListsSnapshotTests: XCTestCase {
         assertSnapshot(matching: view, as: .image, record: recordMode)
     }
 
-    func renderList(text: NSAttributedString, viewSize: CGSize, sequenceGenerators: [SequenceGenerator] = []) -> UIView {
+    func renderList(text: NSAttributedString, viewSize: CGSize, sequenceGenerators: [SequenceGenerator] = []) -> NativeView {
         let viewController = SnapshotTestViewController()
         let textView = RichTextView(frame: .zero, context: RichTextViewContext())
         let listStyleProvider = MockListFormattingProvider(sequenceGenerators: sequenceGenerators)
@@ -127,7 +127,7 @@ class ListsSnapshotTests: XCTestCase {
         textView.attributedText = text
         textView.addBorder()
 
-        let view = viewController.view!
+        let view = viewController.unwrappedView
         view.addSubview(textView)
         NSLayoutConstraint.activate([
             textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),

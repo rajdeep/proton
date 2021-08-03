@@ -40,7 +40,7 @@ class AutogrowingTextViewSnapshotTests: XCTestCase {
         textView.text = "Sample with single line text"
         textView.addBorder()
 
-        let view = viewController.view!
+        let view = viewController.unwrappedView
         view.addSubview(textView)
         NSLayoutConstraint.activate([
             textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
@@ -59,7 +59,7 @@ class AutogrowingTextViewSnapshotTests: XCTestCase {
         textView.text = "Sample with multiple lines of text. This text flows into the second line because of width constraint on textview"
         textView.addBorder()
 
-        let view = viewController.view!
+        let view = viewController.unwrappedView
         view.addSubview(textView)
         NSLayoutConstraint.activate([
             textView.widthAnchor.constraint(equalToConstant: 280),

@@ -324,14 +324,19 @@ class TextProcessorTests: XCTestCase {
 
 extension EditorView {
     func appendCharactersForTest(_ text: NSAttributedString) {
+        #if os(iOS)
         guard let textViewDelegate = richTextView.delegate else { return }
         textViewDelegate.textViewDidBeginEditing?(richTextView)
-
+        
         if textViewDelegate.textView?(richTextView, shouldChangeTextIn: richTextView.textEndRange, replacementText: text.string) == false {
             return
         }
-
+        
         appendCharacters(text)
         textViewDelegate.textViewDidChange?(richTextView)
+        #else
+        // TODO: Implement on macOS
+        fatalError()
+        #endif
     }
 }

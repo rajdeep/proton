@@ -144,9 +144,14 @@ class EditorViewDelegateTests: XCTestCase {
         let editor = EditorView()
         editor.delegate = delegate
 
-        let context = try XCTUnwrap(editor.richTextView.delegate)
+        #if os(iOS)
+        let context = try XCTUnwrap(editor.richTextView.uiKitFormatDelegate)
         context.textViewDidBeginEditing?(editor.richTextView)
         _ = context.textView?(editor.richTextView, shouldChangeTextIn: editor.selectedRange, replacementText: replacementText)
+        #else
+        // TODO: Implement on macOS
+        fatalError()
+        #endif
 
         waitForExpectations(timeout: 1.0)
     }

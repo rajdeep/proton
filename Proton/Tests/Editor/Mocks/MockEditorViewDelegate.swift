@@ -20,6 +20,7 @@
 
 import Foundation
 @testable import Proton
+import CoreGraphics
 
 class MockEditorViewDelegate: EditorViewDelegate {
     var onSelectionChanged: ((EditorView, NSRange, [NSAttributedString.Key: Any], EditorContent.Name) -> Void)?

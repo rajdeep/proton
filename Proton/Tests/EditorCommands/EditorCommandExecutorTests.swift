@@ -33,7 +33,7 @@ class EditorCommandExecutorTests: XCTestCase {
         editor.replaceCharacters(in: .zero, with: "This is some text")
         editor.selectedRange = selectedRange
 
-        guard let font = editor.selectedText.attribute(.font, at: 0, effectiveRange: nil) as? UIFont else {
+        guard let font = editor.selectedText.attribute(.font, at: 0, effectiveRange: nil) as? PlatformFont else {
             XCTFail("Failed to get font information")
             return
         }
@@ -41,17 +41,17 @@ class EditorCommandExecutorTests: XCTestCase {
         XCTAssertFalse(font.isBold)
 
         let colorCommand = MockEditorCommand { editor in
-            editor.addAttributes([.foregroundColor: UIColor.red], at: editor.selectedRange)
+            editor.addAttributes([.foregroundColor: PlatformColor.red], at: editor.selectedRange)
         }
 
         commandExecutor.execute(colorCommand)
 
-        guard let updatedColor = editor.selectedText.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor else {
+        guard let updatedColor = editor.selectedText.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? PlatformColor else {
             XCTFail("Failed to get font information")
             return
         }
 
-        XCTAssertEqual(updatedColor, UIColor.red)
+        XCTAssertEqual(updatedColor, PlatformColor.red)
     }
 
     func testExecuteAllCommandsByDefault() {

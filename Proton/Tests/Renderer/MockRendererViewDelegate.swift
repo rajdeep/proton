@@ -20,6 +20,7 @@
 
 import Foundation
 import Proton
+import CoreGraphics
 
 class MockRendererViewDelegate: RendererViewDelegate {
     var onDidTap: ((RendererView, CGPoint, NSRange?) -> Void)?

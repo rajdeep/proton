@@ -22,16 +22,16 @@ import Foundation
 
 #if os(iOS)
 import UIKit
-typealias TextDelegate = UITextViewDelegate
+public typealias TextViewDelegate = UITextViewDelegate
 #else
 import AppKit
-typealias TextDelegate = NSTextViewDelegate_Bridge
+public typealias TextViewDelegate = NSTextViewDelegate_Bridge
 #endif
 
-class RichTextViewContext: NSObject, TextDelegate {
+class RichTextViewContext: NSObject, TextViewDelegate {
     weak var activeTextView: RichTextView?
 
-    // MARK: - TextDelegate
+    // MARK: - TextViewDelegate
 
     #if os(iOS)
     func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {

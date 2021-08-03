@@ -20,12 +20,13 @@
 
 import Foundation
 import Proton
+import CoreGraphics
 
-class SnapshotTestViewController: PlatformViewController {
+class SnapshotTestViewController: NativeViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = PlatformColor.lightGray
+        self.view.setBackgroundColor(PlatformColor.lightGray)
     }
 
     func render(size: CGSize = CGSize(width: 300, height: 100)) {

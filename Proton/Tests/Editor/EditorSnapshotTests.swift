@@ -36,10 +36,10 @@ class EditorSnapshotTests: XCTestCase {
     func testRendersPlaceholder() {
         let viewController = EditorTestViewController(height: 80)
         let editor = viewController.editor
-        let font = UIFont(name: "Verdana", size: 17) ?? UIFont()
+        let font = PlatformFont(name: "Verdana", size: 17) ?? PlatformFont()
         let placeholderString = NSMutableAttributedString(string: "Placeholder text that is so long that it wraps into the next line", attributes: [
             NSAttributedString.Key.font: font,
-            NSAttributedString.Key.foregroundColor: UIColor.lightGray
+            NSAttributedString.Key.foregroundColor: PlatformColor.lightGray
         ])
 
         placeholderString.addAttribute(.font, value: font.adding(trait: .traitBold), range: NSRange(location: 12, length: 4))
@@ -55,7 +55,7 @@ class EditorSnapshotTests: XCTestCase {
         let offsetProvider = MockAttachmentOffsetProvider()
         offsetProvider.offset = CGPoint(x: 0, y: -4)
 
-        editor.font = UIFont.systemFont(ofSize: 12)
+        editor.font = PlatformFont.systemFont(ofSize: 12)
 
         let textField = AutogrowingTextField()
         textField.backgroundColor = .cyan
@@ -80,13 +80,13 @@ class EditorSnapshotTests: XCTestCase {
         let offsetProvider = MockAttachmentOffsetProvider()
         offsetProvider.offset = CGPoint(x: 0, y: -4)
 
-        editor.font = UIFont.systemFont(ofSize: 12)
+        editor.font = PlatformFont.systemFont(ofSize: 12)
 
         var panel = PanelView()
-        panel.backgroundColor = .cyan
-        panel.layer.borderWidth = 1.0
-        panel.layer.cornerRadius = 4.0
-        panel.layer.borderColor = UIColor.black.cgColor
+        panel.setBackgroundColor(PlatformColor.cyan)
+        panel.caLayer.borderWidth = 1.0
+        panel.caLayer.cornerRadius = 4.0
+        panel.caLayer.borderColor = PlatformColor.black.cgColor
 
         let attachment = Attachment(panel, size: .fullWidth)
         panel.boundsObserver = attachment
@@ -111,10 +111,10 @@ class EditorSnapshotTests: XCTestCase {
         editor.paragraphStyle.headIndent = 20
 
         var panel = PanelView()
-        panel.backgroundColor = .cyan
-        panel.layer.borderWidth = 1.0
-        panel.layer.cornerRadius = 4.0
-        panel.layer.borderColor = UIColor.black.cgColor
+        panel.setBackgroundColor(PlatformColor.cyan)
+        panel.caLayer.borderWidth = 1.0
+        panel.caLayer.cornerRadius = 4.0
+        panel.caLayer.borderColor = PlatformColor.black.cgColor
 
         let attachment = Attachment(panel, size: .fullWidth)
         panel.boundsObserver = attachment
@@ -135,7 +135,7 @@ class EditorSnapshotTests: XCTestCase {
         let offsetProvider = MockAttachmentOffsetProvider()
         offsetProvider.offset = CGPoint(x: 0, y: -4)
 
-        editor.font = UIFont.systemFont(ofSize: 12)
+        editor.font = PlatformFont.systemFont(ofSize: 12)
 
         let textField = AutogrowingTextField()
         textField.backgroundColor = .cyan
@@ -160,7 +160,7 @@ class EditorSnapshotTests: XCTestCase {
         let offsetProvider = MockAttachmentOffsetProvider()
         offsetProvider.offset = CGPoint(x: 0, y: -1)
 
-        editor.font = UIFont.systemFont(ofSize: 12)
+        editor.font = PlatformFont.systemFont(ofSize: 12)
 
         let inlineEditor = InlineEditorView()
         inlineEditor.textContainerInset = .zero
@@ -187,7 +187,7 @@ class EditorSnapshotTests: XCTestCase {
         let offsetProvider = MockAttachmentOffsetProvider()
         offsetProvider.offset = CGPoint(x: 0, y: -4)
 
-        editor.font = UIFont.systemFont(ofSize: 12)
+        editor.font = PlatformFont.systemFont(ofSize: 12)
 
         let textField = AutogrowingTextField()
         textField.backgroundColor = .cyan
@@ -210,7 +210,7 @@ class EditorSnapshotTests: XCTestCase {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
 
-        editor.font = UIFont.systemFont(ofSize: 12)
+        editor.font = PlatformFont.systemFont(ofSize: 12)
 
         let textField = AutogrowingTextField()
         textField.backgroundColor = .cyan
@@ -241,8 +241,8 @@ class EditorSnapshotTests: XCTestCase {
         viewController.render()
         let rects = editor.rects(for: NSRange(location: 25, length: 10))
         for rect in rects {
-            let view = UIView(frame: rect)
-            view.backgroundColor = .clear
+            let view = PlatformView(frame: rect)
+            view.setBackgroundColor(PlatformColor.clear)
             view.addBorder(.red)
             editor.addSubview(view)
         }
@@ -257,8 +257,8 @@ class EditorSnapshotTests: XCTestCase {
         viewController.render()
         let rects = editor.rects(for: NSRange(location: 10, length: 10))
         for rect in rects {
-            let view = UIView(frame: rect)
-            view.backgroundColor = .clear
+            let view = PlatformView(frame: rect)
+            view.setBackgroundColor(PlatformColor.clear)
             view.addBorder(.red)
             editor.addSubview(view)
         }
@@ -272,9 +272,9 @@ class EditorSnapshotTests: XCTestCase {
         editor.attributedText = NSAttributedString(string: "This is some long string that wraps into the next line.")
         viewController.render()
         let rect = editor.caretRect(for: 10)
-        let view = UIView(frame: rect)
-        view.backgroundColor = .clear
-        view.addBorder(.blue)
+        let view = PlatformView(frame: rect)
+        view.setBackgroundColor(PlatformColor.clear)
+        view.addBorder(PlatformColor.blue)
         editor.addSubview(view)
 
         viewController.render()
@@ -285,9 +285,9 @@ class EditorSnapshotTests: XCTestCase {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
         let rect = editor.caretRect(for: 10)
-        let view = UIView(frame: rect)
-        view.backgroundColor = .clear
-        view.addBorder(.green)
+        let view = PlatformView(frame: rect)
+        view.setBackgroundColor(PlatformColor.clear)
+        view.addBorder(PlatformColor.green)
         editor.addSubview(view)
 
         viewController.render()
@@ -300,9 +300,9 @@ class EditorSnapshotTests: XCTestCase {
         editor.attributedText = NSAttributedString(string: "some text")
         viewController.render()
         let rect = editor.caretRect(for: 20)
-        let view = UIView(frame: rect)
-        view.backgroundColor = .clear
-        view.addBorder(.red)
+        let view = PlatformView(frame: rect)
+        view.setBackgroundColor(PlatformColor.clear)
+        view.addBorder(PlatformColor.red)
         editor.addSubview(view)
 
         viewController.render()
@@ -325,9 +325,9 @@ class EditorSnapshotTests: XCTestCase {
         editor.scrollRangeToVisible(NSRange(location: 150, length: 1))
 
         let rect = editor.caretRect(for: 150)
-        let view = UIView(frame: rect)
-        view.backgroundColor = .clear
-        view.addBorder(.blue)
+        let view = PlatformView(frame: rect)
+        view.setBackgroundColor(PlatformColor.clear)
+        view.addBorder(PlatformColor.blue)
         editor.addSubview(view)
 
         viewController.render()
@@ -343,10 +343,10 @@ class EditorSnapshotTests: XCTestCase {
         editor.attributedText = NSAttributedString(string: "One\nTwo\nThree")
 
         var panel = PanelView()
-        panel.backgroundColor = .cyan
-        panel.layer.borderWidth = 1.0
-        panel.layer.cornerRadius = 4.0
-        panel.layer.borderColor = UIColor.black.cgColor
+        panel.setBackgroundColor(PlatformColor.cyan)
+        panel.caLayer.borderWidth = 1.0
+        panel.caLayer.cornerRadius = 4.0
+        panel.caLayer.borderColor = PlatformColor.black.cgColor
 
         let attachment = Attachment(panel, size: .fullWidth)
         panel.boundsObserver = attachment
@@ -375,10 +375,10 @@ class EditorSnapshotTests: XCTestCase {
         editor.attributedText = NSAttributedString(string: "One\nTwo\nThree")
 
         var panel = PanelView()
-        panel.backgroundColor = .cyan
-        panel.layer.borderWidth = 1.0
-        panel.layer.cornerRadius = 4.0
-        panel.layer.borderColor = UIColor.black.cgColor
+        panel.setBackgroundColor(PlatformColor.cyan)
+        panel.caLayer.borderWidth = 1.0
+        panel.caLayer.cornerRadius = 4.0
+        panel.caLayer.borderColor = PlatformColor.black.cgColor
 
         let attachment = Attachment(panel, size: .fullWidth)
         panel.boundsObserver = attachment
@@ -390,18 +390,23 @@ class EditorSnapshotTests: XCTestCase {
         editor.appendCharacters("Four")
         editor.layoutIfNeeded()
 
+        #if os(iOS)
         editor.selectedRange = NSRange(location: 6, length: 1)
-        addSelectionRects(at: editor.selectedTextRange!, in: editor, color: .blue)
+        addSelectionRects(at: editor.selectedTextRange!, in: editor, color: PlatformColor.blue)
 
         editor.selectedRange = NSRange(location: 1, length: 4)
-        addSelectionRects(at: editor.selectedTextRange!, in: editor, color: .magenta)
+        addSelectionRects(at: editor.selectedTextRange!, in: editor, color: PlatformColor.magenta)
 
         editor.selectedRange = NSRange(location: 12, length: 10)
-        addSelectionRects(at: editor.selectedTextRange!, in: editor, color: .green)
-
+        addSelectionRects(at: editor.selectedTextRange!, in: editor, color: PlatformColor.green)
+        
         editor.clipsToBounds = true
         viewController.render(size: .init(width: 300, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        
+        #else
+        fatalError()
+        #endif
     }
     
     func testGetsVisibleContentRange() {
@@ -503,7 +508,7 @@ class EditorSnapshotTests: XCTestCase {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
 
-        let styles: [(String, pointSize: CGFloat, UIFont.Weight, paragraphBefore: CGFloat, paragraphAfter: CGFloat)] = [
+        let styles: [(String, pointSize: CGFloat, PlatformFont.Weight, paragraphBefore: CGFloat, paragraphAfter: CGFloat)] = [
             ("Heading 1", 27, .medium, 50, 15),
             ("Heading 2", 23.5, .medium, 22, 15),
             ("Heading 3", 17, .semibold, 20, 16),
@@ -512,7 +517,7 @@ class EditorSnapshotTests: XCTestCase {
             ("Heading 6", 12, .semibold, 4, 15),
         ]
         let para = NSAttributedString(string: "para --\n", attributes: [
-            .font: UIFont.preferredFont(forTextStyle: .body),
+            .font: PlatformFont.preferredFont(forTextStyle: .body),
             .paragraphStyle: { () -> NSMutableParagraphStyle in
                 let s = NSMutableParagraphStyle()
                 s.paragraphSpacing = 20
@@ -531,7 +536,7 @@ class EditorSnapshotTests: XCTestCase {
                 NSTextTab(textAlignment: .natural, location: 60, options: [:]),
             ]
             text.append(NSAttributedString(string: "\(style.0)\n", attributes: [
-                .font: UIFont.systemFont(ofSize: style.pointSize, weight: style.2),
+                .font: PlatformFont.systemFont(ofSize: style.pointSize, weight: style.2),
                 .paragraphStyle: pstyle,
             ]))
             text.append(para)
@@ -555,7 +560,7 @@ class EditorSnapshotTests: XCTestCase {
 
         editor.appendCharacters(NSAttributedString(string: text))
         viewController.render()
-        editor.addAttribute(.backgroundColor, value: UIColor.green, at: line2Range)
+        editor.addAttribute(.backgroundColor, value: PlatformColor.green, at: line2Range)
         viewController.render()
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
@@ -705,7 +710,7 @@ class EditorSnapshotTests: XCTestCase {
     func testBackgroundStyleWithIncreasedFontSize() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-        editor.font = UIFont.preferredFont(forTextStyle: .title1)
+        editor.font = PlatformFont.preferredFont(forTextStyle: .title1)
 
         let text =
         """
@@ -739,17 +744,18 @@ class EditorSnapshotTests: XCTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
-    private func addCaretRect(at range: NSRange, in editor: EditorView, color: UIColor) {
+    private func addCaretRect(at range: NSRange, in editor: EditorView, color: PlatformColor) {
         let rect = editor.caretRect(for: range.location)
-        let view = UIView(frame: rect)
-        view.backgroundColor = .clear
+        let view = PlatformView(frame: rect)
+        view.setBackgroundColor(PlatformColor.clear)
         view.addBorder(color)
         editor.addSubview(view)
     }
 
-    private func addSelectionRects(at textRange: UITextRange, in editor: EditorView, color: UIColor) {
+    #if os(iOS)
+    private func addSelectionRects(at textRange: UITextRange, in editor: EditorView, color: PlatformColor) {
         editor.richTextView.selectionRects(for: textRange).forEach { selectionRect in
-            let view = UIView(frame: editor.convert(selectionRect.rect, from: editor.richTextView))
+            let view = PlatformView(frame: editor.convert(selectionRect.rect, from: editor.richTextView))
             if selectionRect.containsStart || selectionRect.containsEnd {
                 view.frame.origin.x -= 1
                 view.frame.size.width = 2
@@ -761,4 +767,7 @@ class EditorSnapshotTests: XCTestCase {
             editor.addSubview(view)
         }
     }
+    #else
+    // TODO: Implement on macOS
+    #endif
 }

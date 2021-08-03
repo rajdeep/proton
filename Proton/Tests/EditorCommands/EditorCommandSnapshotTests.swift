@@ -39,13 +39,13 @@ class EditorCommandSnapshotTests: XCTestCase {
         let offsetProvider = MockAttachmentOffsetProvider()
         offsetProvider.offset = CGPoint(x: 0, y: -4)
 
-        editor.font = UIFont.systemFont(ofSize: 12)
+        editor.font = PlatformFont.systemFont(ofSize: 12)
 
         var panel = PanelView()
-        panel.backgroundColor = .cyan
-        panel.layer.borderWidth = 1.0
-        panel.layer.cornerRadius = 4.0
-        panel.layer.borderColor = UIColor.black.cgColor
+        panel.setBackgroundColor(PlatformColor.cyan)
+        panel.caLayer.borderWidth = 1.0
+        panel.caLayer.cornerRadius = 4.0
+        panel.caLayer.borderColor = PlatformColor.black.cgColor
 
         let attachment = Attachment(panel, size: .fullWidth)
         panel.boundsObserver = attachment
@@ -60,11 +60,11 @@ class EditorCommandSnapshotTests: XCTestCase {
         let commandExecutor = EditorCommandExecutor(context: context)
 
         let redColorCommand = MockEditorCommand { editor in
-            editor.addAttributes([.foregroundColor: UIColor.red], at: editor.selectedRange)
+            editor.addAttributes([.foregroundColor: PlatformColor.red], at: editor.selectedRange)
         }
 
         let blueColorCommand = MockEditorCommand { editor in
-            editor.addAttributes([.foregroundColor: UIColor.blue], at: editor.selectedRange)
+            editor.addAttributes([.foregroundColor: PlatformColor.blue], at: editor.selectedRange)
         }
 
         editor.selectedRange = NSRange(location: 5, length: 4)

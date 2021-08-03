@@ -19,7 +19,7 @@
 //
 
 import Foundation
-
+import CoreGraphics
 @testable import Proton
 
 class MockBoundsObserver: BoundsObserving {

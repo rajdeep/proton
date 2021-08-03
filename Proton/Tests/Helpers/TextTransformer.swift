@@ -70,7 +70,7 @@ struct TextTransformer: EditorTextEncoding, AttachmentEncoding {
         return "Name: `\(name.rawValue)` Text: `\(string.string)`"
     }
 
-    func encode(name: EditorContent.Name, view: UIView) -> String {
+    func encode(name: EditorContent.Name, view: NativeView) -> String {
         let contentViewType = String(describing: type(of: view))
         return  "Name: `\(name.rawValue)` ContentView: `\(contentViewType)`"
         //Type: `\(attachmentType)`

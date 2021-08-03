@@ -22,14 +22,10 @@ public extension NSView {
         fatalError()
         return fittingSize
     }
-
-    var caLayer: CALayer {
-        #if os(iOS)
-        layer
-        #else
-        wantsLayer = true
-        return layer!
-        #endif
+    
+    var clipsToBounds: Bool {
+        get { layer?.masksToBounds ?? false }
+        set { layer?.masksToBounds = newValue }
     }
     
 }
@@ -46,4 +42,3 @@ public extension NSView {
 }
 
 #endif
-

@@ -11,15 +11,6 @@ import AppKit
 
 public class NSLabel: NSTextField {
     
-    var attributedText: NSAttributedString? {
-        get { attributedStringValue }
-        set { attributedStringValue = newValue ?? NSAttributedString(string: "") }
-    }
-    var numberOfLines: Int {
-        get { maximumNumberOfLines }
-        set { maximumNumberOfLines = newValue }
-    }
-    
     init() {
         super.init(frame: .zero)
         setup()

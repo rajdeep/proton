@@ -21,7 +21,15 @@
 import Foundation
 import Proton
 
-class AutogrowingTextField: UITextField, UITextFieldDelegate {
+#if os(iOS)
+import UIKit
+typealias TextFieldDelegate = UITextFieldDelegate
+#else
+import AppKit
+typealias TextFieldDelegate = NSTextFieldDelegate
+#endif
+
+class AutogrowingTextField: TextField, TextFieldDelegate {
     weak var boundsObserver: BoundsObserving?
 
     override var bounds: CGRect {
@@ -38,6 +46,7 @@ class AutogrowingTextField: UITextField, UITextFieldDelegate {
         return fittingSize
     }
 
+    #if os(iOS)
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.insetBy(dx: 4, dy: 4)
     }
@@ -45,6 +54,7 @@ class AutogrowingTextField: UITextField, UITextFieldDelegate {
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return textRect(forBounds: bounds)
     }
+    #endif
 }
 
 extension AutogrowingTextField: InlineContent {

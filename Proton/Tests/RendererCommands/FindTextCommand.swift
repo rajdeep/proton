@@ -35,7 +35,7 @@ class FindTextCommand: RendererCommand {
                 let enclosingRange = content.enclosingRange {
                 let contentRange = attributedString.string.makeNSRange(from: range)
                 let scrollRange = NSRange(location: enclosingRange.location + contentRange.location, length: contentRange.length)
-                renderer.addAttribute(.backgroundColor, value: UIColor.cyan, at: scrollRange)
+                renderer.addAttribute(.backgroundColor, value: PlatformColor.cyan, at: scrollRange)
                 renderer.scrollRangeToVisible(scrollRange)
                 break
             }

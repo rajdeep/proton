@@ -41,7 +41,7 @@ class RichTextViewSnapshotTests: XCTestCase {
         textView.text = "Sample with single line text"
         textView.addBorder()
 
-        let view = viewController.view!
+        let view = viewController.unwrappedView
         view.addSubview(textView)
         NSLayoutConstraint.activate([
             textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
@@ -57,10 +57,10 @@ class RichTextViewSnapshotTests: XCTestCase {
         let viewController = SnapshotTestViewController()
         let textView = RichTextView(frame: .zero, context: RichTextViewContext())
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.placeholderText = NSAttributedString(string: "Placeholder text", attributes: [.foregroundColor: UIColor.gray])
+        textView.placeholderText = NSAttributedString(string: "Placeholder text", attributes: [.foregroundColor: PlatformColor.gray])
         textView.addBorder()
 
-        let view = viewController.view!
+        let view = viewController.unwrappedView
         view.addSubview(textView)
         NSLayoutConstraint.activate([
             textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
@@ -89,7 +89,7 @@ class RichTextViewSnapshotTests: XCTestCase {
         let viewController = SnapshotTestViewController()
         let textView = RichTextView(frame: .zero, context: RichTextViewContext())
 
-        guard let font = try? XCTUnwrap(UIFont(name: "Papyrus", size: 12)) else {
+        guard let font = try? XCTUnwrap(PlatformFont(name: "Papyrus", size: 12)) else {
             XCTFail("Unable to get font information")
             return
         }
@@ -105,7 +105,7 @@ class RichTextViewSnapshotTests: XCTestCase {
         textView.text = "Sample with multiple lines of text. This text flows into the second line because of width constraint on textview"
         textView.addBorder()
 
-        let view = viewController.view!
+        let view = viewController.unwrappedView
         view.addSubview(textView)
         NSLayoutConstraint.activate([
             textView.widthAnchor.constraint(equalToConstant: 280),

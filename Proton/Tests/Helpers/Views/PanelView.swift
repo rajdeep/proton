@@ -20,6 +20,11 @@
 
 import Foundation
 import Proton
+#if os(iOS)
+import UIKit
+#else
+import AppKit
+#endif
 
 class PanelView: PlatformView, BlockContent, EditorContentView {
     let editor: EditorView
@@ -47,11 +52,13 @@ class PanelView: PlatformView, BlockContent, EditorContentView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    #if os(iOS)
     override var backgroundColor: UIColor? {
         didSet {
             editor.backgroundColor = backgroundColor
         }
     }
+    #endif
 
     private func setup() {
         iconView.translatesAutoresizingMaskIntoConstraints = false
@@ -72,12 +79,12 @@ class PanelView: PlatformView, BlockContent, EditorContentView {
             editor.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
             editor.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
         ])
+        
+        iconView.caLayer.borderColor = PlatformColor.black.cgColor
+        iconView.caLayer.borderWidth = 1.0
+        iconView.setBackgroundColor(PlatformColor.white)
 
-        iconView.layer.borderColor = UIColor.black.cgColor
-        iconView.layer.borderWidth = 1.0
-        iconView.backgroundColor = .white
-
-        layer.cornerRadius = 5.0
+        caLayer.cornerRadius = 5.0
         clipsToBounds = true
     }
 }

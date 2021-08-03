@@ -18,5 +18,9 @@ public struct KeyModifierFlags : OptionSet {
     }
     
     public static let shift: KeyModifierFlags     = .init(rawValue: 1 << 17)
+    public static let control: KeyModifierFlags   = .init(rawValue: 1 << 18)
+    public static let alternate: KeyModifierFlags = .init(rawValue: 1 << 19)
+    public static let command: KeyModifierFlags   = .init(rawValue: 1 << 20)
+
 }
 #endif
