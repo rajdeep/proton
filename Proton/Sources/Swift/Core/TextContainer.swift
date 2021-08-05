@@ -19,10 +19,21 @@
 //
 
 import Foundation
+import CoreGraphics
 
 class TextContainer: PlatformTextContainer {
     #if os(iOS)
     weak var textView: RichTextView?
     // on macOS, `textView` it's already defined by NSTextContainer
     #endif
+    
+    override init(size: CGSize) {
+        super.init(size: size)
+        widthTracksTextView = true
+        heightTracksTextView = true
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
