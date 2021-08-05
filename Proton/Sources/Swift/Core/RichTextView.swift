@@ -83,16 +83,17 @@ class RichTextView: AutogrowingTextView {
         }
     }
     #else
-    override func setSelectedRange(_ charRange: NSRange, affinity: NSSelectionAffinity, stillSelecting stillSelectingFlag: Bool) {
+    override func setSelectedRanges(_ ranges: [NSValue], affinity: NSSelectionAffinity, stillSelecting stillSelectingFlag: Bool) {
         let old = selectedRange()
-        let new = charRange
-
+        let new = ranges.first?.rangeValue ?? .zero
+        
         var adjustedRange = new
         if let range = adjustedTextBlockRangeOnSelectionChange(oldRange: old, newRange: new) {
             adjustedRange = range
         }
         
-        super.setSelectedRange(adjustedRange, affinity: affinity, stillSelecting: stillSelectingFlag)
+        let rangesArray = [NSValue(range: adjustedRange)]
+        super.setSelectedRanges(rangesArray, affinity: affinity, stillSelecting: stillSelectingFlag)
         
         richTextViewDelegate?.richTextView(self, selectedRangeChangedFrom: old, to: selectedRange())
     }
