@@ -27,7 +27,7 @@ class RichTextEditorContext: RichTextViewContext {
     // MARK: - TextViewDelegate
     
     func textViewDidBeginEditing(_ textView: PlatformTextView) {
-        guard textView.delegate === self else { return }
+        guard textView.uiKitFormatDelegate === self else { return }
 
         activeTextView = textView as? RichTextView
         guard let richTextView = activeTextView else { return }
@@ -41,7 +41,7 @@ class RichTextEditorContext: RichTextViewContext {
     }
 
     func textViewDidEndEditing(_ textView: PlatformTextView) {
-        guard textView.delegate === self else { return }
+        guard textView.uiKitFormatDelegate === self else { return }
 
         defer {
             activeTextView = nil
@@ -51,7 +51,7 @@ class RichTextEditorContext: RichTextViewContext {
     }
 
     func textView(_ textView: PlatformTextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        guard textView.delegate === self,
+        guard textView.uiKitFormatDelegate === self,
               let richTextView = activeTextView
         else { return true }
 
@@ -139,7 +139,7 @@ class RichTextEditorContext: RichTextViewContext {
     }
 
     func textViewDidChange(_ textView: PlatformTextView) {
-        guard textView.delegate === self,
+        guard textView.uiKitFormatDelegate === self,
               let richTextView = activeTextView
         else { return }
 
