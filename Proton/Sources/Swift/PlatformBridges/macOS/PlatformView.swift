@@ -13,6 +13,7 @@ open class PlatformView: NSView {
     
     public override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
+        wantsLayer = true
     }
     
     public required init?(coder: NSCoder) {
