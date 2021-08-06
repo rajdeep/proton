@@ -145,6 +145,16 @@ public class PlatformTextView: NSTextView, NSTextViewDelegate {
     
     public func textDidChange(_ notification: Notification) {
         nsDelegateBridge?.textViewDidChange(self)
+        invalidateIntrinsicContentSize()
+    }
+    
+    public override var intrinsicContentSize: NSSize {
+        guard let container = textContainer, let manager = container.layoutManager else {
+            return super.intrinsicContentSize
+        }
+        manager.ensureLayout(for: container)
+        let size = manager.usedRect(for: container).size
+        return size
     }
     
     // MARK: - Responder commands
