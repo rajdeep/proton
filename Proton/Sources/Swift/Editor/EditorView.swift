@@ -653,6 +653,8 @@ open class EditorView: PlatformView {
             richTextView.leadingAnchor.constraint(equalTo: leadingAnchor),
             richTextView.trailingAnchor.constraint(equalTo: trailingAnchor),
             
+            richTextView.topAnchor.constraint(equalTo: topAnchor),
+            
             richTextView.leadingAnchor.constraint(equalTo: richTextView.superview!.leadingAnchor),
             richTextView.trailingAnchor.constraint(equalTo: richTextView.superview!.trailingAnchor),
                         
