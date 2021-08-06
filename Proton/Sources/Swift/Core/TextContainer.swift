@@ -30,7 +30,6 @@ class TextContainer: PlatformTextContainer {
     override init(size: CGSize) {
         super.init(size: size)
         widthTracksTextView = true
-        heightTracksTextView = true
     }
     
     required init(coder: NSCoder) {
