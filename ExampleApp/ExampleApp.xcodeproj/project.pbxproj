@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B0EA92C270432C200328468 /* ProtonCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B0EA92B270432C200328468 /* ProtonCore.framework */; };
+		1B0EA92D270432CC00328468 /* ProtonCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1B0EA92B270432C200328468 /* ProtonCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1B164F2E23D282A500A0869A /* JSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F2923D282A500A0869A /* JSONDecoder.swift */; };
 		1B164F2F23D282A500A0869A /* PanelDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F2B23D282A500A0869A /* PanelDecoder.swift */; };
 		1B164F3023D282A500A0869A /* TextDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F2C23D282A500A0869A /* TextDecoder.swift */; };
@@ -79,6 +81,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				1B0EA92D270432CC00328468 /* ProtonCore.framework in Copy Frameworks */,
 				1BB8904223C5A74700F087AE /* Proton.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
@@ -87,6 +90,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B0EA92B270432C200328468 /* ProtonCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ProtonCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B164F2923D282A500A0869A /* JSONDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDecoder.swift; sourceTree = "<group>"; };
 		1B164F2B23D282A500A0869A /* PanelDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanelDecoder.swift; sourceTree = "<group>"; };
 		1B164F2C23D282A500A0869A /* TextDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextDecoder.swift; sourceTree = "<group>"; };
@@ -148,6 +152,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BFFEF0323C3048E00D2BA35 /* Proton.framework in Frameworks */,
+				1B0EA92C270432C200328468 /* ProtonCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,6 +368,7 @@
 		1BFFEF0123C3048E00D2BA35 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1B0EA92B270432C200328468 /* ProtonCore.framework */,
 				1B8D81FF243F3221009AD38A /* ProtonExtensions.framework */,
 				1BFFEF0223C3048E00D2BA35 /* Proton.framework */,
 			);
@@ -728,7 +734,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
 				CODE_SIGN_STYLE = Automatic;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
-				DEVELOPMENT_TEAM = 5ET5H5LLAF;
+				DEVELOPMENT_TEAM = FUJ76485CT;
 				INFOPLIST_FILE = ExampleApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -736,7 +742,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.proton.ExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.raj.proton.ExampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
