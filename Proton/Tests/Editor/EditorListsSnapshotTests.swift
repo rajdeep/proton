@@ -955,6 +955,7 @@ class EditorListsSnapshotTests: XCTestCase {
         editor.selectedRange = editor.attributedText.fullRange
 
         listCommand.execute(on: editor)
+        editor.selectedRange = .zero
 
         let lines = editor.contentLinesInRange(editor.attributedText.fullRange)
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: lines[2].range)

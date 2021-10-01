@@ -21,7 +21,7 @@
 import Foundation
 import UIKit
 
-@testable import Proton
+import Proton
 
 class RendererCommandButton: UIButton {
     var command: RendererCommand!
