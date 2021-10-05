@@ -551,6 +551,10 @@ class RichTextView: AutogrowingTextView {
     }
 
     override func caretRect(for position: UITextPosition) -> CGRect {
+        guard isEditable else {
+            return super.caretRect(for: position)
+        }
+
         let location = offset(from: beginningOfDocument, to: position)
         let lineRect = layoutManager.boundingRect(forGlyphRange: NSRange(location: location, length: 0), in: textContainer)
 

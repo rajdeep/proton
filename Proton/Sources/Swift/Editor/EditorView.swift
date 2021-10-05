@@ -272,6 +272,10 @@ open class EditorView: UIView {
     }
 
     /// Determines if the `EditorView` is editable or not.
+    /// - Note:
+    /// Setting `isEditable` to `false` before setting the `attributedText` will make `EditorView` skip certain layout paths
+    /// and calculations for attachments containing `UIView`s, This is done primarily to improve the rendering performance of the `EditorView`
+    /// in case of text with large number of attachments. 
     public var isEditable: Bool {
         get { richTextView.isEditable }
         set { richTextView.isEditable = newValue }

@@ -23,7 +23,7 @@ import UIKit
 
 /// Describes an object (typically attachment view) that may change size during the layout pass
 public protocol DynamicBoundsProviding: AnyObject {
-    func sizeFor(containerSize: CGSize, lineRect: CGRect) -> CGSize
+    func sizeFor(attachment: Attachment, containerSize: CGSize, lineRect: CGRect) -> CGSize
 }
 
 /// Describes an object capable of providing offsets for the `Attachment`. The value is used to offset the `Attachment` when rendered alongside the text. This may
@@ -172,6 +172,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     /// - SeeAlso:
     /// `BoundsObserving`
     public func didChangeBounds(_ bounds: CGRect) {
+        guard containerEditorView?.isEditable ?? false else { return }
         invalidateLayout()
     }
 
@@ -344,14 +345,14 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         var size: CGSize
 
         if let boundsProviding = contentView as? DynamicBoundsProviding {
-            size = boundsProviding.sizeFor(containerSize: adjustedContainerSize, lineRect: adjustedLineFrag)
+            size = boundsProviding.sizeFor(attachment: self, containerSize: adjustedContainerSize, lineRect: adjustedLineFrag)
         } else {
             size = contentView?.bounds.integral.size ?? view.bounds.integral.size
-        }
 
-        if (size.width == 0 || size.height == 0),
-           let fittingSize = contentView?.systemLayoutSizeFitting(adjustedContainerSize) {
-            size = fittingSize
+            if (size.width == 0 || size.height == 0),
+               let fittingSize = contentView?.systemLayoutSizeFitting(adjustedContainerSize) {
+                size = fittingSize
+            }
         }
 
         switch self.size {
@@ -377,7 +378,10 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         self.containerEditorView = editorView
         guard view.superview == nil else { return }
         editorView.richTextView.addSubview(self.view)
-        self.view.layoutIfNeeded()
+
+        if containerEditorView?.isEditable ?? false {
+            self.view.layoutIfNeeded()
+        }
 
         if var editorContentView = contentView as? EditorContentView,
            editorContentView.delegate == nil {

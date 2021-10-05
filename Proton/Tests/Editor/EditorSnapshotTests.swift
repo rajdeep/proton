@@ -400,6 +400,7 @@ class EditorSnapshotTests: XCTestCase {
         addSelectionRects(at: editor.selectedTextRange!, in: editor, color: .green)
 
         editor.clipsToBounds = true
+        editor.selectedRange = .zero
         viewController.render(size: .init(width: 300, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
