@@ -55,6 +55,15 @@ public class BorderStyle {
     }
 }
 
+/// Rounding style for  `backgroundStyle` attribute
+public enum RoundedCornerStyle {
+    /// Rounding based on an absolute value for corner radii
+    case absolute(value: CGFloat)
+    /// Rounding based on relative percent value of the content height. For e.g. 50% would provide a capsule appearance
+    /// for shorter content.
+    case relative(percent: CGFloat)
+}
+
 /// Style for background color attribute. Adding `backgroundStyle` attribute will add border, background and shadow
 /// as per the styles specified.
 /// - Important:
@@ -68,8 +77,8 @@ public class BackgroundStyle {
     /// Background color
     public let color: UIColor
 
-    /// Corner radius of the background
-    public let cornerRadius: CGFloat
+    /// Rounding style for the background
+    public let roundedCornerStyle: RoundedCornerStyle
 
     /// Optional border style for the background
     public let border: BorderStyle?
@@ -77,10 +86,19 @@ public class BackgroundStyle {
     /// Optional shadow style for the background
     public let shadow: ShadowStyle?
 
-    public init(color: UIColor, cornerRadius: CGFloat = 0, border: BorderStyle? = nil, shadow: ShadowStyle? = nil) {
+    /// Determines if the background has squared off joins at the point of wrapping of content.
+    /// When set to `true`, the background will be squared off at inner/wrapping edges
+    /// in case the background wraps across multiple lines. Defaults to `false`.
+    /// - Note: This may be desirable to use in cases of short length content that is ideal to be shown as a single continued entity.
+    /// When combined with `RoundedCornerStyle.relative` with a value of `50%`, it can help mimic appearance of a broken capsule
+    /// when content wraps to next line.
+    public let hasSquaredOffJoins: Bool
+
+    public init(color: UIColor, roundedCornerStyle: RoundedCornerStyle = .absolute(value: 0), border: BorderStyle? = nil, shadow: ShadowStyle? = nil, hasSquaredOffJoins: Bool = false) {
         self.color = color
-        self.cornerRadius = cornerRadius
+        self.roundedCornerStyle = roundedCornerStyle
         self.border = border
         self.shadow = shadow
+        self.hasSquaredOffJoins = hasSquaredOffJoins
     }
 }
