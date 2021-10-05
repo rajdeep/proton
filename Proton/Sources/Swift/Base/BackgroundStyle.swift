@@ -77,7 +77,7 @@ public class BackgroundStyle {
     /// Background color
     public let color: UIColor
 
-    /// Rounding stylye for the background
+    /// Rounding style for the background
     public let roundedCornerStyle: RoundedCornerStyle
 
     /// Optional border style for the background
@@ -94,11 +94,11 @@ public class BackgroundStyle {
     /// when content wraps to next line.
     public let hasSquaredOffJoins: Bool
 
-    public init(color: UIColor, roundedCornerStyle: RoundedCornerStyle = .absolute(value: 0), border: BorderStyle? = nil, shadow: ShadowStyle? = nil, isContinuous: Bool = false) {
+    public init(color: UIColor, roundedCornerStyle: RoundedCornerStyle = .absolute(value: 0), border: BorderStyle? = nil, shadow: ShadowStyle? = nil, hasSquaredOffJoins: Bool = false) {
         self.color = color
         self.roundedCornerStyle = roundedCornerStyle
         self.border = border
         self.shadow = shadow
-        self.hasSquaredOffJoins = isContinuous
+        self.hasSquaredOffJoins = hasSquaredOffJoins
     }
 }

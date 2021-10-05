@@ -715,7 +715,7 @@ class EditorSnapshotTests: XCTestCase {
         let backgroundStyle = BackgroundStyle(color: .cyan,
                                               roundedCornerStyle: .relative(percent: 25),
                                               shadow: ShadowStyle(color: .red, offset: CGSize(width: 1, height: 1), blur: 0),
-                                              isContinuous: true)
+                                              hasSquaredOffJoins: true)
         editor.addAttributes([
             .backgroundStyle: backgroundStyle
         ], at: rangeToUpdate)

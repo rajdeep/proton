@@ -286,7 +286,7 @@ class LayoutManager: NSLayoutManager {
 
             let corners: UIRectCorner
             if backgroundStyle.hasSquaredOffJoins {
-                corners = calculateCornersForContinuousBackground(previousRect: previousRect, currentRect: currentRect, nextRect: nextRect, cornerRadius: cornerRadius)
+                corners = calculateCornersForSquaredOffJoins(previousRect: previousRect, currentRect: currentRect, nextRect: nextRect, cornerRadius: cornerRadius)
             } else {
                corners = calculateCornersForBackground(previousRect: previousRect, currentRect: currentRect, nextRect: nextRect, cornerRadius: cornerRadius)
             }
@@ -377,7 +377,7 @@ class LayoutManager: NSLayoutManager {
         currentCGContext.restoreGState()
     }
 
-    private func calculateCornersForContinuousBackground(previousRect: CGRect, currentRect: CGRect, nextRect: CGRect, cornerRadius: CGFloat) -> UIRectCorner {
+    private func calculateCornersForSquaredOffJoins(previousRect: CGRect, currentRect: CGRect, nextRect: CGRect, cornerRadius: CGFloat) -> UIRectCorner {
         var corners = UIRectCorner()
 
         let isFirst = previousRect == .zero && currentRect != .zero

@@ -27,7 +27,7 @@ class TextBlockCommand: EditorCommand {
     let name: CommandName = CommandName("TextBlockCommand")
 
     func execute(on editor: EditorView) {
-        let style = BackgroundStyle(color: .green, roundedCornerStyle: .fixed(5), border: BorderStyle(lineWidth: 1, color: UIColor.blue),  shadow: ShadowStyle(color: .red, offset: CGSize(width: 2, height: 2), blur: 1))
+        let style = BackgroundStyle(color: .green, roundedCornerStyle: .absolute(value: 5), border: BorderStyle(lineWidth: 1, color: UIColor.blue),  shadow: ShadowStyle(color: .red, offset: CGSize(width: 2, height: 2), blur: 1))
         let attributes: [NSAttributedString.Key: Any] = [
             .textBlock: true,
             .backgroundStyle: style
