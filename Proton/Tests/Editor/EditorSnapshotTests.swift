@@ -573,7 +573,7 @@ class EditorSnapshotTests: XCTestCase {
 
         editor.appendCharacters(NSAttributedString(string: text))
         viewController.render()
-        let backgroundStyle = BackgroundStyle(color: .green, cornerRadius: 3, shadow: ShadowStyle(color: .gray, offset: CGSize(width: 2, height: 2), blur: 3))
+        let backgroundStyle = BackgroundStyle(color: .green, roundedCornerStyle: .absolute(value: 3), shadow: ShadowStyle(color: .gray, offset: CGSize(width: 2, height: 2), blur: 3))
         editor.addAttributes([
             .backgroundStyle: backgroundStyle
         ], at: rangeToUpdate)
@@ -596,7 +596,7 @@ class EditorSnapshotTests: XCTestCase {
         editor.appendCharacters(NSAttributedString(string: text))
         viewController.render()
         let backgroundStyle = BackgroundStyle(color: .cyan,
-                                              cornerRadius: 5,
+                                              roundedCornerStyle: .absolute(value: 5),
                                               border: BorderStyle(lineWidth: 2, color: .red),
                                               shadow: ShadowStyle(color: .gray, offset: CGSize(width: 2, height: 2), blur: 3))
         editor.addAttributes([
@@ -621,7 +621,7 @@ class EditorSnapshotTests: XCTestCase {
         editor.appendCharacters(NSAttributedString(string: text))
         viewController.render()
         let backgroundStyle = BackgroundStyle(color: .cyan,
-                                              cornerRadius: 4,
+                                              roundedCornerStyle: .absolute(value: 4),
                                               border: BorderStyle(lineWidth: 1, color: .blue),
                                               shadow: ShadowStyle(color: .gray, offset: CGSize(width: 2, height: 2), blur: 2))
         editor.addAttributes([
@@ -645,7 +645,7 @@ class EditorSnapshotTests: XCTestCase {
 
         editor.appendCharacters(NSAttributedString(string: text))
         viewController.render()
-        let backgroundStyle = BackgroundStyle(color: .cyan, cornerRadius: 4, shadow: ShadowStyle(color: .gray, offset: CGSize(width: 2, height: 2), blur: 2))
+        let backgroundStyle = BackgroundStyle(color: .cyan, roundedCornerStyle: .absolute(value: 4), shadow: ShadowStyle(color: .gray, offset: CGSize(width: 2, height: 2), blur: 2))
         editor.addAttributes([
             .backgroundStyle: backgroundStyle
         ], at: rangeToUpdate)
@@ -667,7 +667,55 @@ class EditorSnapshotTests: XCTestCase {
 
         editor.appendCharacters(NSAttributedString(string: text))
         viewController.render()
-        let backgroundStyle = BackgroundStyle(color: .white, cornerRadius: 0, border: BorderStyle(lineWidth: 1, color: .brown))
+        let backgroundStyle = BackgroundStyle(color: .white, roundedCornerStyle: .absolute(value: 0), border: BorderStyle(lineWidth: 1, color: .brown))
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render()
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testBackgroundStyleWithCapsuleStyle() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let text =
+        """
+        Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 2 text Line 3 text Line 3
+        """
+
+        let rangeToUpdate = NSRange(location: 19, length: 36)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render()
+        let backgroundStyle = BackgroundStyle(color: .cyan, roundedCornerStyle: .relative(percent: 50))
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render()
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testBackgroundStyleWithContinuity() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let text =
+        """
+        Line 1 text Line 1 text Line 2 text Line 2 text
+        """
+
+        let rangeToUpdate = NSRange(location: 12, length: 18)
+
+        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24)]
+        editor.appendCharacters(NSAttributedString(string: text, attributes: attributes))
+        viewController.render()
+        let backgroundStyle = BackgroundStyle(color: .cyan,
+                                              roundedCornerStyle: .relative(percent: 25),
+                                              shadow: ShadowStyle(color: .red, offset: CGSize(width: 1, height: 1), blur: 0),
+                                              isContinuous: true)
         editor.addAttributes([
             .backgroundStyle: backgroundStyle
         ], at: rangeToUpdate)
@@ -691,7 +739,7 @@ class EditorSnapshotTests: XCTestCase {
         editor.appendCharacters(NSAttributedString(string: text))
         viewController.render(size: CGSize(width: 300, height: 150))
         let backgroundStyle = BackgroundStyle(color: .cyan,
-                                              cornerRadius: 5,
+                                              roundedCornerStyle: .absolute(value: 5),
                                               border: BorderStyle(lineWidth: 1, color: .blue),
                                               shadow: ShadowStyle(color: .red, offset: CGSize(width: 2, height: 2), blur: 1))
         editor.addAttributes([
@@ -717,7 +765,7 @@ class EditorSnapshotTests: XCTestCase {
         editor.appendCharacters(NSAttributedString(string: text))
         viewController.render(size: CGSize(width: 450, height: 150))
         let backgroundStyle = BackgroundStyle(color: .green,
-                                              cornerRadius: 3,
+                                              roundedCornerStyle: .absolute(value: 3),
                                               border: BorderStyle(lineWidth: 1, color: .yellow),
                                               shadow: ShadowStyle(color: .red, offset: CGSize(width: 2, height: -2), blur: 3))
         editor.addAttributes([

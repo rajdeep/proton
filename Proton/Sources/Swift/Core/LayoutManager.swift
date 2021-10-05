@@ -257,7 +257,7 @@ class LayoutManager: NSLayoutManager {
 
         let rectCount = rects.count
         let rectArray = rects
-        let cornerRadius = backgroundStyle.cornerRadius
+
         let color = backgroundStyle.color
 
         for i in 0..<rectCount {
@@ -265,6 +265,16 @@ class LayoutManager: NSLayoutManager {
             var nextRect = CGRect.zero
 
             let currentRect = rectArray[i]
+
+
+            let cornerRadius: CGFloat
+
+            switch backgroundStyle.roundedCornerStyle {
+            case let .absolute(value):
+                cornerRadius = value
+            case let .relative(percent):
+                cornerRadius = currentRect.height * (percent/100.0)
+            }
 
             if i > 0 {
                 previousRect = rectArray[i - 1]
@@ -274,7 +284,12 @@ class LayoutManager: NSLayoutManager {
                 nextRect = rectArray[i + 1]
             }
 
-            let corners = calculateCornersForBackground(previousRect: previousRect, currentRect: currentRect, nextRect: nextRect, cornerRadius: cornerRadius)
+            let corners: UIRectCorner
+            if backgroundStyle.hasSquaredOffJoins {
+                corners = calculateCornersForContinuousBackground(previousRect: previousRect, currentRect: currentRect, nextRect: nextRect, cornerRadius: cornerRadius)
+            } else {
+               corners = calculateCornersForBackground(previousRect: previousRect, currentRect: currentRect, nextRect: nextRect, cornerRadius: cornerRadius)
+            }
 
             let rectanglePath = UIBezierPath(roundedRect: currentRect, byRoundingCorners: corners, cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
             color.set()
@@ -362,6 +377,25 @@ class LayoutManager: NSLayoutManager {
         currentCGContext.restoreGState()
     }
 
+    private func calculateCornersForContinuousBackground(previousRect: CGRect, currentRect: CGRect, nextRect: CGRect, cornerRadius: CGFloat) -> UIRectCorner {
+        var corners = UIRectCorner()
+
+        let isFirst = previousRect == .zero && currentRect != .zero
+        let isLast = nextRect == .zero && currentRect != .zero
+
+        if isFirst {
+            corners.formUnion(.topLeft)
+            corners.formUnion(.bottomLeft)
+        }
+
+        if isLast {
+            corners.formUnion(.topRight)
+            corners.formUnion(.bottomRight)
+        }
+
+        return corners
+    }
+
     private func calculateCornersForBackground(previousRect: CGRect, currentRect: CGRect, nextRect: CGRect, cornerRadius: CGFloat) -> UIRectCorner {
         var corners = UIRectCorner()
 
@@ -389,27 +423,6 @@ class LayoutManager: NSLayoutManager {
         if previousRect == .zero || (currentRect.maxX <= previousRect.minX + cornerRadius) {
             corners.formUnion(.topLeft)
             corners.formUnion(.topRight)
-        }
-
-        return corners
-    }
-
-    private func getCornersForBackground(textStorage: NSTextStorage, for charRange: NSRange) -> UIRectCorner {
-        let isFirst = (charRange.location == 0)
-            || (textStorage.attribute(.backgroundStyle, at: charRange.location - 1, effectiveRange: nil) == nil)
-
-        let isLast = (charRange.endLocation == textStorage.length) ||
-            (textStorage.attribute(.backgroundStyle, at: charRange.location + charRange.length, effectiveRange: nil) == nil)
-
-        var corners = UIRectCorner()
-        if isFirst {
-            corners.formUnion(.topLeft)
-            corners.formUnion(.bottomLeft)
-        }
-
-        if isLast {
-            corners.formUnion(.topRight)
-            corners.formUnion(.bottomRight)
         }
 
         return corners
