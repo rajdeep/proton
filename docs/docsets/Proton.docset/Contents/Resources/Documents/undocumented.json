@@ -1,651 +1,749 @@
 {
   "warnings": [
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Attachment/Attachment.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Attachment/Attachment.swift",
       "line": 26,
       "symbol": "DynamicBoundsProviding.sizeFor(containerSize:lineRect:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Attachment/Attachment.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Attachment/Attachment.swift",
       "line": 38,
       "symbol": "AttachmentOffsetProviding.offset(for:in:proposedLineFragment:glyphPosition:characterIndex:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Attachment/Focusable.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Attachment/Focusable.swift",
       "line": 28,
       "symbol": "Focusable.setFocus()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Base/BackgroundStyle.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Base/BackgroundStyle.swift",
       "line": 36,
       "symbol": "ShadowStyle.init(color:offset:blur:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Base/BackgroundStyle.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Base/BackgroundStyle.swift",
       "line": 52,
       "symbol": "BorderStyle.init(lineWidth:color:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Base/BackgroundStyle.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Base/BackgroundStyle.swift",
       "line": 80,
       "symbol": "BackgroundStyle.init(color:cornerRadius:border:shadow:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Base/Types.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Base/Types.swift",
       "line": 25,
       "symbol": "Attributes",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Core/CommandName.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Core/CommandName.swift",
       "line": 28,
       "symbol": "CommandName.init(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Core/ListFormattingProvider.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Core/ListFormattingProvider.swift",
       "line": 26,
       "symbol": "ListLineMarker.string(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Core/ListFormattingProvider.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Core/ListFormattingProvider.swift",
       "line": 27,
       "symbol": "ListLineMarker.image(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Core/RichTextViewDelegate.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Core/RichTextViewDelegate.swift",
       "line": 24,
       "symbol": "EditorKey",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Core/RichTextViewDelegate.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Core/RichTextViewDelegate.swift",
       "line": 25,
       "symbol": "EditorKey.enter",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Core/RichTextViewDelegate.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Core/RichTextViewDelegate.swift",
       "line": 26,
       "symbol": "EditorKey.backspace",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Core/RichTextViewDelegate.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Core/RichTextViewDelegate.swift",
       "line": 27,
       "symbol": "EditorKey.tab",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Core/SequenceGenerator.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Core/SequenceGenerator.swift",
       "line": 34,
       "symbol": "NumericSequenceGenerator.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Core/SequenceGenerator.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Core/SequenceGenerator.swift",
       "line": 44,
       "symbol": "DiamondBulletSequenceGenerator.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Core/SequenceGenerator.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Core/SequenceGenerator.swift",
       "line": 54,
       "symbol": "SquareBulletSequenceGenerator.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Decoding/AttributesDecoding.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Decoding/AttributesDecoding.swift",
       "line": 25,
       "symbol": "AttributesDecoding.TypeToDecode",
       "symbol_kind": "source.lang.swift.decl.associatedtype",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Decoding/AttributesDecoding.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Decoding/AttributesDecoding.swift",
       "line": 26,
       "symbol": "AttributesDecoding.name",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Decoding/AttributesDecoding.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Decoding/AttributesDecoding.swift",
       "line": 27,
       "symbol": "AttributesDecoding.decode(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Decoding/AttributesDecoding.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Decoding/AttributesDecoding.swift",
       "line": 32,
       "symbol": "AnyAttributeDecoding.name",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Decoding/AttributesDecoding.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Decoding/AttributesDecoding.swift",
       "line": 35,
       "symbol": "AnyAttributeDecoding.init(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Decoding/AttributesDecoding.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Decoding/AttributesDecoding.swift",
       "line": 40,
       "symbol": "AnyAttributeDecoding.decode(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Decoding/EditorContentDecoding.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Decoding/EditorContentDecoding.swift",
       "line": 31,
       "symbol": "EditorContentMode.editor",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Decoding/EditorContentDecoding.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Decoding/EditorContentDecoding.swift",
       "line": 32,
       "symbol": "EditorContentMode.renderer",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Decoding/EditorContentDecoding.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Decoding/EditorContentDecoding.swift",
       "line": 37,
       "symbol": "EditorContentDecoding.TypeToDecode",
       "symbol_kind": "source.lang.swift.decl.associatedtype",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
-      "line": 26,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContent.swift",
+      "line": 27,
       "symbol": "AttachmentType.block",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
-      "line": 27,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContent.swift",
+      "line": 28,
       "symbol": "AttachmentType.inline",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
-      "line": 32,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContent.swift",
+      "line": 33,
       "symbol": "EditorContentType.text(name:attributedString:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
-      "line": 33,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContent.swift",
+      "line": 34,
       "symbol": "EditorContentType.attachment(name:attachment:contentView:type:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
-      "line": 34,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContent.swift",
+      "line": 35,
       "symbol": "EditorContentType.viewOnly",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
-      "line": 64,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContent.swift",
+      "line": 65,
       "symbol": "EditorContentName.init(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
-      "line": 68,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContent.swift",
+      "line": 69,
       "symbol": "EditorContentName.paragraph",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
-      "line": 69,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContent.swift",
+      "line": 70,
       "symbol": "EditorContentName.viewOnly",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
-      "line": 70,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContent.swift",
+      "line": 71,
       "symbol": "EditorContentName.newline",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
-      "line": 71,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContent.swift",
+      "line": 72,
       "symbol": "EditorContentName.text",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContent.swift",
-      "line": 72,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContent.swift",
+      "line": 73,
       "symbol": "EditorContentName.unknown",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContentIdentifying.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContentIdentifying.swift",
       "line": 26,
       "symbol": "EditorContentIdentifying.name",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContentView.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContentView.swift",
       "line": 28,
       "symbol": "EditorContentView.editor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContentView.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContentView.swift",
       "line": 30,
       "symbol": "EditorContentView.attributedText",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContentView.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContentView.swift",
       "line": 31,
       "symbol": "EditorContentView.maxHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContentView.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContentView.swift",
       "line": 32,
       "symbol": "EditorContentView.boundsObserver",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContentView.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContentView.swift",
       "line": 33,
       "symbol": "EditorContentView.delegate",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContentView.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContentView.swift",
       "line": 35,
       "symbol": "EditorContentView.becomeFirstResponder()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContentView.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContentView.swift",
       "line": 39,
       "symbol": "EditorContentView.attributedText",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContentView.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContentView.swift",
       "line": 44,
       "symbol": "EditorContentView.becomeFirstResponder()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContentView.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContentView.swift",
       "line": 48,
       "symbol": "EditorContentView.maxHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContentView.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContentView.swift",
       "line": 53,
       "symbol": "EditorContentView.boundsObserver",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContentView.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContentView.swift",
       "line": 58,
       "symbol": "EditorContentView.delegate",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorContentView.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorContentView.swift",
       "line": 63,
       "symbol": "EditorContentView.setFocus()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 119,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
+      "line": 120,
       "symbol": "EditorView.textInteractions",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 124,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
+      "line": 125,
       "symbol": "EditorView.textViewGestures",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 129,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
+      "line": 130,
       "symbol": "EditorView.textDragInteractionEnabled",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 134,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
+      "line": 135,
       "symbol": "EditorView.bounds",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 199,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
+      "line": 200,
       "symbol": "EditorView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 218,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
+      "line": 219,
       "symbol": "EditorView.selectedTextRange",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 237,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
+      "line": 239,
       "symbol": "EditorView.verticalScrollIndicatorInsets",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 242,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
+      "line": 244,
       "symbol": "EditorView.keyboardDismissMode",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 247,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
+      "line": 249,
       "symbol": "EditorView.isScrollEnabled",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 705,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
+      "line": 707,
       "symbol": "EditorView.deleteBackward()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Editor/EditorView.swift",
-      "line": 866,
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
+      "line": 868,
       "symbol": "EditorView.canPerformAction(_:withSender:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/EditorCommand/Commands/ListCommand.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/EditorCommand/Commands/AttributesToggleCommand.swift",
+      "line": 25,
+      "symbol": "AttributesToggleCommand.attributes",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/EditorCommand/Commands/AttributesToggleCommand.swift",
+      "line": 29,
+      "symbol": "AttributesToggleCommand.init(name:attributes:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/EditorCommand/Commands/BoldCommand.swift",
+      "line": 26,
+      "symbol": "BoldCommand.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/EditorCommand/Commands/FontTraitToggleCommand.swift",
+      "line": 26,
+      "symbol": "FontTraitToggleCommand.trait",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/EditorCommand/Commands/FontTraitToggleCommand.swift",
+      "line": 30,
+      "symbol": "FontTraitToggleCommand.init(name:trait:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/EditorCommand/Commands/ItalicsCommand.swift",
+      "line": 26,
+      "symbol": "ItalicsCommand.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/EditorCommand/Commands/ListCommand.swift",
       "line": 52,
       "symbol": "ListCommand.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Encoding/AttributesEncoding.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/EditorCommand/Commands/StrikethroughCommand.swift",
+      "line": 24,
+      "symbol": "StrikethroughCommand",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/EditorCommand/Commands/StrikethroughCommand.swift",
+      "line": 25,
+      "symbol": "StrikethroughCommand.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/EditorCommand/Commands/UnderlineCommand.swift",
+      "line": 24,
+      "symbol": "UnderlineCommand",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/EditorCommand/Commands/UnderlineCommand.swift",
+      "line": 25,
+      "symbol": "UnderlineCommand.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Encoding/AttributesEncoding.swift",
       "line": 43,
       "symbol": "EditorTextEncoding.EncodedType",
       "symbol_kind": "source.lang.swift.decl.associatedtype",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Encoding/AttributesEncoding.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Encoding/AttributesEncoding.swift",
       "line": 56,
       "symbol": "AnyEditorTextEncoding.EncodedType",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Encoding/AttributesEncoding.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Encoding/AttributesEncoding.swift",
       "line": 76,
       "symbol": "AttachmentEncoding.EncodedType",
       "symbol_kind": "source.lang.swift.decl.associatedtype",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Encoding/AttributesEncoding.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Encoding/AttributesEncoding.swift",
       "line": 87,
       "symbol": "AnyEditorContentAttachmentEncoding.EncodedType",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Encoding/EditorContentEncoding.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Encoding/EditorContentEncoding.swift",
       "line": 27,
       "symbol": "EditorContentEncoding.EncodedType",
       "symbol_kind": "source.lang.swift.decl.associatedtype",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Encoding/EditorContentEncoding.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Encoding/EditorContentEncoding.swift",
       "line": 28,
       "symbol": "EditorContentEncoding.encode(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Encoding/EditorContentEncoding.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Encoding/EditorContentEncoding.swift",
       "line": 54,
       "symbol": "EditorContentEncoder.T",
       "symbol_kind": "source.lang.swift.decl.associatedtype",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/NSRangeExtensions.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/NSRangeExtensions.swift",
       "line": 31,
       "symbol": "NSRange.firstCharacterRange",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/NSRangeExtensions.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/NSRangeExtensions.swift",
       "line": 35,
       "symbol": "NSRange.lastCharacterRange",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/NSRangeExtensions.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/NSRangeExtensions.swift",
       "line": 39,
       "symbol": "NSRange.nextPosition",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/NSRangeExtensions.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/NSRangeExtensions.swift",
       "line": 43,
       "symbol": "NSRange.endLocation",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/Text/FontExtensions.swift",
       "line": 26,
       "symbol": "UIFont.traits",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/Text/FontExtensions.swift",
       "line": 30,
       "symbol": "UIFont.isBold",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/Text/FontExtensions.swift",
       "line": 34,
       "symbol": "UIFont.isItalics",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/Text/FontExtensions.swift",
       "line": 38,
       "symbol": "UIFont.isMonoSpaced",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/Text/FontExtensions.swift",
       "line": 43,
       "symbol": "UIFont.isAppleEmoji",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/Text/FontExtensions.swift",
       "line": 48,
       "symbol": "UIFont.textStyle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/Text/FontExtensions.swift",
       "line": 55,
       "symbol": "UIFont.isNonDynamicTextStyle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/Text/FontExtensions.swift",
       "line": 59,
       "symbol": "UIFont.contains(trait:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/Text/FontExtensions.swift",
       "line": 63,
       "symbol": "UIFont.toggled(trait:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/Text/FontExtensions.swift",
       "line": 74,
       "symbol": "UIFont.adding(trait:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Helpers/Text/FontExtensions.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/Text/FontExtensions.swift",
       "line": 84,
       "symbol": "UIFont.removing(trait:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Renderer/RendererView.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Renderer/Commands/HighlightTextCommand.swift",
+      "line": 25,
+      "symbol": "NSAttributedString.Key.isHighlighted",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Renderer/Commands/HighlightTextCommand.swift",
+      "line": 30,
+      "symbol": "HighlightTextCommand",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Renderer/Commands/HighlightTextCommand.swift",
+      "line": 43,
+      "symbol": "HighlightTextCommand.color",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Renderer/Commands/HighlightTextCommand.swift",
+      "line": 45,
+      "symbol": "HighlightTextCommand.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Renderer/RendererView.swift",
       "line": 33,
       "symbol": "RendererView.listFormattingProvider",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Renderer/RendererViewDelegate.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Renderer/RendererViewDelegate.swift",
       "line": 33,
       "symbol": "RendererViewDelegate.didChangeSelection(_:range:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/TextProcessors/TextProcessing.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/TextProcessors/TextProcessing.swift",
       "line": 24,
       "symbol": "TextProcessingPriority",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/TextProcessors/TextProcessing.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/TextProcessors/TextProcessing.swift",
       "line": 25,
       "symbol": "TextProcessingPriority",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/TextProcessors/TextProcessing.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/TextProcessors/TextProcessing.swift",
       "line": 26,
       "symbol": "TextProcessingPriority.exclusive",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/TextProcessors/TextProcessing.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/TextProcessors/TextProcessing.swift",
       "line": 27,
       "symbol": "TextProcessingPriority.high",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/TextProcessors/TextProcessing.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/TextProcessors/TextProcessing.swift",
       "line": 28,
       "symbol": "TextProcessingPriority.medium",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/TextProcessors/TextProcessing.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/TextProcessors/TextProcessing.swift",
       "line": 29,
       "symbol": "TextProcessingPriority.low",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/TextProcessors/TextProcessing.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/TextProcessors/TextProcessing.swift",
       "line": 32,
       "symbol": "Processed",
       "symbol_kind": "source.lang.swift.decl.typealias",

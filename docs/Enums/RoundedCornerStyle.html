@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>AttachmentType Enumeration Reference</title>
+    <title>RoundedCornerStyle Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -13,8 +13,8 @@
     <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/AttachmentType" class="dashAnchor"></a>
-    <a title="AttachmentType Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Enum/RoundedCornerStyle" class="dashAnchor"></a>
+    <a title="RoundedCornerStyle Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">Proton Docs</a> (76% documented)</p>
@@ -30,7 +30,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">Proton Reference</a>
         <img id="carat" src="../img/carat.png" />
-        AttachmentType Enumeration Reference
+        RoundedCornerStyle Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -290,15 +290,15 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>AttachmentType</h1>
+            <h1>RoundedCornerStyle</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">AttachmentType</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">RoundedCornerStyle</span></code></pre>
 
                 </div>
               </div>
-            <p>Type of attachment</p>
+            <p>Rounding style for  <code>backgroundStyle</code> attribute</p>
 
           </section>
           <section class="section task-group-section">
@@ -307,9 +307,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton14AttachmentTypeO5blockyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/block" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton14AttachmentTypeO5blockyA2CmF">block</a>
+                    <a name="/s:6Proton18RoundedCornerStyleO8absoluteyAC12CoreGraphics7CGFloatV_tcACmF"></a>
+                    <a name="//apple_ref/swift/Element/absolute(value:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton18RoundedCornerStyleO8absoluteyAC12CoreGraphics7CGFloatV_tcACmF">absolute(value:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -317,14 +317,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Rounding based on an absolute value for corner radii</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">block</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">absolute</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -334,9 +334,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton14AttachmentTypeO6inlineyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/inline" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton14AttachmentTypeO6inlineyA2CmF">inline</a>
+                    <a name="/s:6Proton18RoundedCornerStyleO8relativeyAC12CoreGraphics7CGFloatV_tcACmF"></a>
+                    <a name="//apple_ref/swift/Element/relative(percent:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton18RoundedCornerStyleO8relativeyAC12CoreGraphics7CGFloatV_tcACmF">relative(percent:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -344,14 +344,15 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Rounding based on relative percent value of the content height. For e.g. 50% would provide a capsule appearance
+for shorter content.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">inline</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">relative</span><span class="p">(</span><span class="nv">percent</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
