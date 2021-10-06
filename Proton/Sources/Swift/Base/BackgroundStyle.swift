@@ -94,11 +94,20 @@ public class BackgroundStyle {
     /// when content wraps to next line.
     public let hasSquaredOffJoins: Bool
 
-    public init(color: UIColor, roundedCornerStyle: RoundedCornerStyle = .absolute(value: 0), border: BorderStyle? = nil, shadow: ShadowStyle? = nil, hasSquaredOffJoins: Bool = false) {
+    /// Insets for drawn background. Defaults to `.zero`
+    public let insets: UIEdgeInsets
+
+    public init(color: UIColor,
+                roundedCornerStyle: RoundedCornerStyle = .absolute(value: 0),
+                border: BorderStyle? = nil,
+                shadow: ShadowStyle? = nil,
+                hasSquaredOffJoins: Bool = false,
+                insets: UIEdgeInsets = .zero) {
         self.color = color
         self.roundedCornerStyle = roundedCornerStyle
         self.border = border
         self.shadow = shadow
         self.hasSquaredOffJoins = hasSquaredOffJoins
+        self.insets = insets
     }
 }

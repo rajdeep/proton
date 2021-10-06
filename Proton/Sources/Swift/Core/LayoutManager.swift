@@ -264,8 +264,7 @@ class LayoutManager: NSLayoutManager {
             var previousRect = CGRect.zero
             var nextRect = CGRect.zero
 
-            let currentRect = rectArray[i]
-
+            let currentRect = rectArray[i].inset(by: backgroundStyle.insets)
 
             let cornerRadius: CGFloat
 
@@ -277,11 +276,11 @@ class LayoutManager: NSLayoutManager {
             }
 
             if i > 0 {
-                previousRect = rectArray[i - 1]
+                previousRect = rectArray[i - 1].inset(by: backgroundStyle.insets)
             }
 
             if i < rectCount - 1 {
-                nextRect = rectArray[i + 1]
+                nextRect = rectArray[i + 1].inset(by: backgroundStyle.insets)
             }
 
             let corners: UIRectCorner

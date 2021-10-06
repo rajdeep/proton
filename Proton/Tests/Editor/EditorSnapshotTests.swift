@@ -677,6 +677,28 @@ class EditorSnapshotTests: XCTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testBackgroundStyleWithInsets() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+
+
+        let backgroundStyle = BackgroundStyle(color: .green,
+                                              roundedCornerStyle: .relative(percent: 50),
+                                              shadow: ShadowStyle(color: .red, offset: CGSize(width: 1, height: 1), blur: 0),
+                                              insets: UIEdgeInsets(top: 1, left: -1, bottom: 1, right: -1)
+        )
+
+        let text = NSMutableAttributedString(string: " Test String 1 ", attributes: [.backgroundStyle: backgroundStyle])
+        text.append(NSAttributedString(string: "\n"))
+        text.append(NSMutableAttributedString(string: " Test String 2 ", attributes: [.backgroundStyle: backgroundStyle]))
+
+        editor.appendCharacters(text)
+        viewController.render()
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     func testBackgroundStyleWithCapsuleStyle() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
