@@ -78,6 +78,13 @@ public protocol EditorViewDelegate: AnyObject {
     ///   - currentSize: Current size of Editor after updates.
     ///   - previousSize: Size of Editor before the update.
     func editor(_ editor: EditorView, didChangeSize currentSize: CGSize, previousSize: CGSize)
+
+    /// Invoked when a location within the `EditorView` is tapped.
+    /// - Parameters:
+    ///   - editor:  Editor view receiving the event.
+    ///   - location: Location of the tap event
+    ///   - characterRange: Range of character at the tapped location, if available.
+    func editor(_ editor: EditorView, didTapAtLocation location: CGPoint, characterRange: NSRange?)
 }
 
 public extension EditorViewDelegate {
@@ -89,4 +96,5 @@ public extension EditorViewDelegate {
     func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) { }
     func editor(_ editor: EditorView, didExecuteProcessors processors: [TextProcessing], at range: NSRange) { }
     func editor(_ editor: EditorView, didChangeSize currentSize: CGSize, previousSize: CGSize) { }
+    func editor(_ editor: EditorView, didTapAtLocation location: CGPoint, characterRange: NSRange?) { }
 }

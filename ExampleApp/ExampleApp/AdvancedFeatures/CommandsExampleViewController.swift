@@ -243,6 +243,15 @@ extension CommandsExampleViewController: EditorViewDelegate {
     func editor(_ editor: EditorView, didChangeSize currentSize: CGSize, previousSize: CGSize) {
         print("Height changed from \(previousSize.height) to \(currentSize.height)")
     }
+
+    func editor(_ editor: EditorView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
+        guard let characterRange = characterRange else {
+            print("Tapped at \(location) with no available range")
+            return
+        }
+
+        print("Tapped at \(location) with text: \(editor.attributedText.attributedSubstring(from: characterRange))")
+    }
 }
 
 class ListFormattingProvider: EditorListFormattingProvider {

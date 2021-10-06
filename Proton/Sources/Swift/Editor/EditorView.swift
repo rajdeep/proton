@@ -992,7 +992,9 @@ extension EditorView: RichTextViewDelegate {
         textProcessor?.activeProcessors.forEach { $0.selectedRangeChanged(editor: self, oldRange: oldRange, newRange: newRange) }
     }
 
-    func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) { }
+    func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
+        delegate?.editor(self, didTapAtLocation: location, characterRange: characterRange)
+    }
 }
 
 extension EditorView {
