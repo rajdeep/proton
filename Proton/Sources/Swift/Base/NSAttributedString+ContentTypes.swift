@@ -29,9 +29,13 @@ extension NSAttributedString.Key {
 }
 
 public extension NSAttributedString.Key {
-    /// Applying this attribute with value of `true` to a range of text makes that text act as a single block/unit.
+    /// Applying this attribute makes the range of text act as a single block/unit.
     /// The content can still be deleted and selected but cursor cannot be moved into textBlock range
     /// using taps or mouse/keys (macOS Catalyst). Selection and delete on part of the range works atomically on the entire range.
+    /// - Note: In successive ranges, if the `textblock` is provided with a value type with same value e.g. `true`, the behaviour
+    /// will be combined for the ranges as one text block i.e. it will work as single textblock even though the attribute was added separately.
+    /// However, if the value provided is different in successive ranges, these will work independent of each other even if one range
+    /// immediately follows the other.
     static let textBlock = NSAttributedString.Key("_textBlock")
 
     /// Identifies block based attributes. A block acts as a container for other content types. For e.g. a Paragraph is a block content

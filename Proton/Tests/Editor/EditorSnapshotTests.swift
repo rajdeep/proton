@@ -677,6 +677,29 @@ class EditorSnapshotTests: XCTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testSuccessiveSimilarBackgroundStyles() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let text = "Some Text"
+
+
+        let backgroundStyle1 = BackgroundStyle(color: .yellow,
+                                              roundedCornerStyle: .relative(percent: 50),
+                                              border: BorderStyle(lineWidth: 1, color: .red))
+
+        let backgroundStyle2 = BackgroundStyle(color: .yellow,
+                                              roundedCornerStyle: .relative(percent: 50),
+                                              border: BorderStyle(lineWidth: 1, color: .red))
+
+        let editorText = NSMutableAttributedString(string: text, attributes: [.backgroundStyle: backgroundStyle1])
+        editorText.append(NSAttributedString(string: text, attributes: [.backgroundStyle: backgroundStyle2]))
+
+        editor.attributedText = editorText
+        viewController.render()
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     func testBackgroundStyleWithInsets() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor

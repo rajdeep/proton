@@ -262,6 +262,30 @@ class TextBlockAttributeTests: XCTestCase {
         XCTAssertEqual(textView.attributedText.string, "0123890")
     }
 
+    func testDeleteBackwardsOnTextBlockWithSameAttributeValues() {
+        let textView = RichTextView(context: RichTextViewContext())
+        let text = NSMutableAttributedString(string: "0123")
+        text.append(NSAttributedString(string: "4567", attributes: [.textBlock: true]))
+        text.append(NSAttributedString(string: "890", attributes: [.textBlock: true]))
+        textView.attributedText = text
+
+        textView.selectedRange = NSRange(location: 11, length: 0)
+        textView.deleteBackward()
+        XCTAssertEqual(textView.attributedText.string, "0123")
+    }
+
+    func testDeleteBackwardsOnTextBlockWithDifferentAttributeValues() {
+        let textView = RichTextView(context: RichTextViewContext())
+        let text = NSMutableAttributedString(string: "0123")
+        text.append(NSAttributedString(string: "4567", attributes: [.textBlock: UUID().uuidString]))
+        text.append(NSAttributedString(string: "890", attributes: [.textBlock: UUID().uuidString]))
+        textView.attributedText = text
+
+        textView.selectedRange = NSRange(location: 11, length: 0)
+        textView.deleteBackward()
+        XCTAssertEqual(textView.attributedText.string, "01234567")
+    }
+
     func testDeleteBackwardsOnTextBlockWithSelection() {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "0123")
