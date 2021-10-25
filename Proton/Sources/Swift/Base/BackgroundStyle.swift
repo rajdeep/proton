@@ -64,6 +64,17 @@ public enum RoundedCornerStyle {
     case relative(percent: CGFloat)
 }
 
+/// Defines the height used for the background for the text
+public enum BackgroundHeightMode {
+    /// Background matches the height of the text. If the text range contains varied font size,
+    /// the height of tallest font is used for entire continuous range of text. The height is not affected
+    /// by large/small text in the same line with no background or that not in continuous range.
+    case matchText
+    /// Background matches the height of tallest font/character in the laid out line fragment, irrespective of the fact if
+    /// the tallest character has background style applied to it or not. This is the default value for height calculations.
+    case matchLine
+}
+
 /// Style for background color attribute. Adding `backgroundStyle` attribute will add border, background and shadow
 /// as per the styles specified.
 /// - Important:
@@ -94,6 +105,10 @@ public class BackgroundStyle {
     /// when content wraps to next line.
     public let hasSquaredOffJoins: Bool
 
+    /// Defines if the background should be drawn based on height of text range with style, or that of the height of line fragment containing
+    /// styled text.
+    public let heightMode: BackgroundHeightMode
+
     /// Insets for drawn background. Defaults to `.zero`
     public let insets: UIEdgeInsets
 
@@ -102,12 +117,14 @@ public class BackgroundStyle {
                 border: BorderStyle? = nil,
                 shadow: ShadowStyle? = nil,
                 hasSquaredOffJoins: Bool = false,
+                heightMode: BackgroundHeightMode = .matchLine,
                 insets: UIEdgeInsets = .zero) {
         self.color = color
         self.roundedCornerStyle = roundedCornerStyle
         self.border = border
         self.shadow = shadow
         self.hasSquaredOffJoins = hasSquaredOffJoins
+        self.heightMode = heightMode
         self.insets = insets
     }
 }
