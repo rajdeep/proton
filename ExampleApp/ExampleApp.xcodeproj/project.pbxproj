@@ -32,6 +32,7 @@
 		1B2DA74D23F0C39B00F7EC52 /* DummyCollabCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2DA74C23F0C39B00F7EC52 /* DummyCollabCommand.swift */; };
 		1B45CD8B23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8A23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift */; };
 		1B45CD8D23BDD5FC001EB196 /* ExamplesBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8C23BDD5FC001EB196 /* ExamplesBaseViewController.swift */; };
+		1B65BE5727054BB800BF5C52 /* TableViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B65BE5627054BB800BF5C52 /* TableViewExampleViewController.swift */; };
 		1B6D2FD123BD46ED0019CE40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6D2FD023BD46ED0019CE40 /* AppDelegate.swift */; };
 		1B6D2FD323BD46ED0019CE40 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6D2FD223BD46ED0019CE40 /* MasterViewController.swift */; };
 		1B6D2FD823BD46ED0019CE40 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B6D2FD623BD46ED0019CE40 /* Main.storyboard */; };
@@ -115,6 +116,7 @@
 		1B45CD8A23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingEditorViewExampleViewController.swift; sourceTree = "<group>"; };
 		1B45CD8C23BDD5FC001EB196 /* ExamplesBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplesBaseViewController.swift; sourceTree = "<group>"; };
 		1B5B599423D30B260043ADEA /* ExampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ExampleApp.entitlements; sourceTree = "<group>"; };
+		1B65BE5627054BB800BF5C52 /* TableViewExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewExampleViewController.swift; sourceTree = "<group>"; };
 		1B6D2FCD23BD46ED0019CE40 /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B6D2FD023BD46ED0019CE40 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1B6D2FD223BD46ED0019CE40 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -361,6 +363,7 @@
 				1BFFEF0D23C3228900D2BA35 /* FixedWidthAttachmentExampleViewController.swift */,
 				1BFFEF0F23C32B5A00D2BA35 /* WidthRangeAttachmentExampleViewController.swift */,
 				1BFFEF1123C3310A00D2BA35 /* PercentWidthAttachmentExampleViewController.swift */,
+				1B65BE5627054BB800BF5C52 /* TableViewExampleViewController.swift */,
 			);
 			path = Attachments;
 			sourceTree = "<group>";
@@ -545,6 +548,7 @@
 				1B164F2F23D282A500A0869A /* PanelDecoder.swift in Sources */,
 				1B183D9E23CEF6F200AE83E5 /* ParagraphStyle+Codables.swift in Sources */,
 				1BFFEF1023C32B5A00D2BA35 /* WidthRangeAttachmentExampleViewController.swift in Sources */,
+				1B65BE5727054BB800BF5C52 /* TableViewExampleViewController.swift in Sources */,
 				1BFFEF0023C303F100D2BA35 /* AutogrowingTextField.swift in Sources */,
 				1BFFEF0A23C30C9900D2BA35 /* PanelView.swift in Sources */,
 				1B164F3023D282A500A0869A /* TextDecoder.swift in Sources */,

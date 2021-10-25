@@ -42,6 +42,7 @@ class MasterViewController: UITableViewController {
             NavigationItem(title: "Fixed Width", viewController: FixedWidthAttachmentExampleViewController()),
             NavigationItem(title: "Width Range", viewController: WidthRangeAttachmentExampleViewController()),
             NavigationItem(title: "Percent Width", viewController: PercentWidthAttachmentExampleViewController()),
+            NavigationItem(title: "TableView", viewController: TableViewExampleViewController()),
         ]),
         Navigation(title: "Advanced features", items: [
             NavigationItem(title: "Commands", viewController: CommandsExampleViewController()),
