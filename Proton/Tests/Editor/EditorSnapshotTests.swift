@@ -744,6 +744,40 @@ class EditorSnapshotTests: XCTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testBackgroundStyleWithVariedFontSizes() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let text =
+        """
+        Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 3 text Line 3 text Line 3 text Line 4
+        """
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render(size: CGSize(width: 300, height: 150))
+        let backgroundStyle = BackgroundStyle(color: .cyan, roundedCornerStyle: .relative(percent: 50), heightMode: .matchText)
+
+
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: NSRange(location: 7, length: 7))
+
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: NSRange(location: 36, length: 5))
+
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: NSRange(location: 45, length: 5))
+
+
+        editor.addAttributes([.font: UIFont.systemFont(ofSize: 24)], at: NSRange(location: 0, length: 5))
+        editor.addAttributes([.font: UIFont.systemFont(ofSize: 24)], at: NSRange(location: 35, length: 8))
+
+        viewController.render(size: CGSize(width: 300, height: 150))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     func testBackgroundStyleWithContinuity() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor

@@ -240,10 +240,22 @@ class LayoutManager: NSLayoutManager {
                 enumerateLineFragments(forGlyphRange: bgStyleGlyphRange) { _, usedRect, textContainer, lineRange, _ in
                     let rangeIntersection = NSIntersectionRange(bgStyleGlyphRange, lineRange)
                     var rect = self.boundingRect(forGlyphRange: rangeIntersection, in: textContainer)
-                    // Glyphs can take space outside of the line fragment, and we cannot draw outside of it.
-                    // So it is best to restrict the height just to the line fragment.
-                    rect.origin.y = usedRect.origin.y
-                    rect.size.height = usedRect.height
+
+                    switch backgroundStyle.heightMode {
+                    case .matchText:
+                        let styledText = textStorage.attributedSubstring(from: bgStyleGlyphRange)
+                        let textRect = styledText.boundingRect(with: rect.size, options: [.usesLineFragmentOrigin, .usesFontLeading, .usesDeviceMetrics], context: nil)
+
+                        rect.origin.y = usedRect.origin.y + (rect.size.height - textRect.height)
+                        rect.size.height = textRect.height
+                    case .matchLine:
+                        // Glyphs can take space outside of the line fragment, and we cannot draw outside of it.
+                        // So it is best to restrict the height just to the line fragment.
+                        rect.origin.y = usedRect.origin.y
+                        rect.size.height = usedRect.height
+
+                    }
+
                     let insetTop = self.layoutManagerDelegate?.textContainerInset.top ?? 0
                     rects.append(rect.offsetBy(dx: 0, dy: insetTop))
                 }
