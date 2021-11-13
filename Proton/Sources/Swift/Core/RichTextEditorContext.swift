@@ -33,7 +33,14 @@ class RichTextEditorContext: RichTextViewContext {
         
         let range = richTextView.selectedRange
         richTextView.richTextViewDelegate?.richTextView(richTextView, didReceiveFocusAt: range)
-        var attributes = richTextView.typingAttributes
+        var attributes = [NSAttributedString.Key:Any]()
+        if richTextView.selectedRange.endLocation < richTextView.contentLength {
+            attributes = richTextView.attributedText.attributes(at: range.endLocation, effectiveRange: nil)
+        } else {
+            attributes = richTextView.defaultTypingAttributes
+        }
+
+
         let contentType = attributes[.blockContentType] as? EditorContent.Name ?? .unknown
         attributes[.blockContentType] = nil
         richTextView.richTextViewDelegate?.richTextView(richTextView, didChangeSelection: range, attributes: attributes, contentType: contentType)
