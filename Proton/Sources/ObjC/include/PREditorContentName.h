@@ -25,7 +25,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 NS_SWIFT_NAME(EditorContentName)
-@interface PREditorContentName : NSObject
+@interface PREditorContentName : NSObject<NSCoding>
 
 @property (readonly, copy) NSString *rawValue;
 

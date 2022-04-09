@@ -23,6 +23,8 @@
 
 @implementation PREditorContentName
 
+#define kRawValueKey       @"RawValue"
+
 - (instancetype)initWithRawValue:(NSString *)rawValue {
     self = [super init];
     if (self) {
@@ -56,5 +58,16 @@
 + (PREditorContentName *)newlineName { return [[PREditorContentName alloc] initWithRawValue:@"_newline"]; }
 + (PREditorContentName *)textName { return [[PREditorContentName alloc] initWithRawValue:@"_text"]; }
 + (PREditorContentName *)unknownName { return [[PREditorContentName alloc] initWithRawValue:@"_unknown"]; }
+
+- (void)encodeWithCoder:(nonnull NSCoder *)coder {
+    [coder encodeObject:_rawValue forKey: kRawValueKey];
+}
+
+- (nullable instancetype)initWithCoder:(nonnull NSCoder *)coder {
+    if (self = [super init]) {
+       _rawValue = [coder decodeObjectForKey: kRawValueKey];
+    }
+    return self;
+}
 
 @end
