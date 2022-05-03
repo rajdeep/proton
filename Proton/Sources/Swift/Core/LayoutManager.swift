@@ -241,6 +241,11 @@ class LayoutManager: NSLayoutManager {
                     let rangeIntersection = NSIntersectionRange(bgStyleGlyphRange, lineRange)
                     var rect = self.boundingRect(forGlyphRange: rangeIntersection, in: textContainer)
 
+                    if backgroundStyle.widthMode == .matchText,
+                       rect.width > usedRect.width {
+                            rect.size.width = usedRect.width
+                    }
+
                     switch backgroundStyle.heightMode {
                     case .matchText:
                         let styledText = textStorage.attributedSubstring(from: bgStyleGlyphRange)

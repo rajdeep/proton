@@ -30,7 +30,7 @@ class EditorSnapshotTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-//        recordMode = true
+        recordMode = true
     }
 
     func testRendersPlaceholder() {
@@ -854,6 +854,32 @@ class EditorSnapshotTests: XCTestCase {
 
         viewController.render(size: CGSize(width: 450, height: 150))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testBackgroundStyleWithWidthModeAsText() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let text =
+        """
+        Line 1 text Line 1 text Line 1 text Line 2 text
+        Line 2 text Line 2 text Line 3 text Line 3
+        """
+
+        let rangeToUpdate = NSRange(location: 19, length: 36)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render()
+        let backgroundStyle = BackgroundStyle(color: .white,
+                                              roundedCornerStyle: .absolute(value: 0),
+                                              border: BorderStyle(lineWidth: 1, color: .brown),
+                                              widthMode: .matchText)
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render()
+        assertSnapshot(matching: viewController.view, as: .image, record: false)
     }
 
     func testEditorWithArabicText() {
