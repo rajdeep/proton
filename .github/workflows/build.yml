@@ -10,22 +10,22 @@ on:
 jobs:
   build:
 
-    runs-on: macos-10.15
+    runs-on: macos-12
     strategy:
       matrix: 
-        destination: ['platform=iOS Simulator,OS=14.0,name=iPhone 11 Pro']
+        destination: ['platform=iOS Simulator,OS=15.2,name=iPhone 13 Pro']
 
     steps:
     - name: Select Xcode
-      run: sudo xcode-select -switch /Applications/Xcode_12.4.app
+      run: sudo xcode-select -switch /Applications/Xcode_13.2.1.app
     - name: Xcode version
       run: /usr/bin/xcodebuild -version    
     - uses: actions/checkout@v2
     - name: Build and Test Proton
-      run: xcodebuild build test -destination "name=iPhone 11 Pro" -scheme "Proton"
+      run: xcodebuild build test -destination "name=iPhone 13 Pro" -scheme "Proton"
     - name: Build and Test Proton as dependency in another package
-      run: xcodebuild build -destination "name=iPhone 11 Pro" -scheme "TestBuildPackage"
+      run: xcodebuild build -destination "name=iPhone 13 Pro" -scheme "TestBuildPackage"
     - name: Capture Proton Code Coverage
       uses: codecov/codecov-action@v2.0.2
     - name: Build Example App
-      run: xcodebuild build -destination "name=iPhone 11 Pro" -scheme "ExampleApp"
+      run: xcodebuild build -destination "name=iPhone 13 Pro" -scheme "ExampleApp"
