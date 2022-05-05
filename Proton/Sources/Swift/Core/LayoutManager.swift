@@ -241,9 +241,11 @@ class LayoutManager: NSLayoutManager {
                     let rangeIntersection = NSIntersectionRange(bgStyleGlyphRange, lineRange)
                     var rect = self.boundingRect(forGlyphRange: rangeIntersection, in: textContainer)
 
-                    if backgroundStyle.widthMode == .matchText,
-                       rect.width > usedRect.width {
-                            rect.size.width = usedRect.width
+                    var contentSize: CGSize?
+                    if backgroundStyle.widthMode == .matchText {
+                        let content = textStorage.attributedSubstring(from: rangeIntersection)
+                        let contentWidth = content.boundingRect(with: rect.size, options: [.usesDeviceMetrics, .usesFontLeading], context: nil).width
+                            rect.size.width = contentWidth
                     }
 
                     switch backgroundStyle.heightMode {
@@ -282,6 +284,10 @@ class LayoutManager: NSLayoutManager {
             var nextRect = CGRect.zero
 
             let currentRect = rectArray[i].inset(by: backgroundStyle.insets)
+
+            if currentRect.isEmpty {
+                continue
+            }
 
             let cornerRadius: CGFloat
 
@@ -332,7 +338,7 @@ class LayoutManager: NSLayoutManager {
             let leftVerticalJoiningLineShadow = UIBezierPath()
             let rightVerticalJoiningLineShadow = UIBezierPath()
 
-            if previousRect != .zero, (currentRect.maxX - previousRect.minX) > cornerRadius {
+            if !previousRect.isEmpty, (currentRect.maxX - previousRect.minX) > cornerRadius {
                 let yDiff = currentRect.minY - previousRect.maxY
                 overlappingLine.move(to: CGPoint(x: max(previousRect.minX, currentRect.minX) + lineWidth/2, y: previousRect.maxY + yDiff/2))
                 overlappingLine.addLine(to: CGPoint(x: min(previousRect.maxX, currentRect.maxX) - lineWidth/2, y: previousRect.maxY + yDiff/2))

@@ -862,11 +862,13 @@ class EditorSnapshotTests: XCTestCase {
 
         let text =
         """
-        Line 1 text Line 1 text Line 1 text Line 2 text
-        Line 2 text Line 2 text Line 3 text Line 3
-        """
+        Line 1 text Line 1 text Line 1 text
 
-        let rangeToUpdate = NSRange(location: 19, length: 36)
+
+        Line 2 text Line 2 text Line 2 text
+
+        Line 3 text Line 3
+        """
 
         editor.appendCharacters(NSAttributedString(string: text))
         viewController.render()
@@ -876,9 +878,13 @@ class EditorSnapshotTests: XCTestCase {
                                               widthMode: .matchText)
         editor.addAttributes([
             .backgroundStyle: backgroundStyle
-        ], at: rangeToUpdate)
+        ], at: NSRange(location: 19, length: 36))
 
-        viewController.render()
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: NSRange(location: 70, length: 10))
+
+        viewController.render(size: CGSize(width: 300, height: 200))
         assertSnapshot(matching: viewController.view, as: .image, record: false)
     }
 
