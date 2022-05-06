@@ -283,7 +283,7 @@ class LayoutManager: NSLayoutManager {
             var previousRect = CGRect.zero
             var nextRect = CGRect.zero
 
-            let currentRect = rectArray[i].inset(by: backgroundStyle.insets)
+            let currentRect = rectArray[i].insetIfRequired(by: backgroundStyle.insets)
 
             if currentRect.isEmpty {
                 continue
@@ -299,11 +299,11 @@ class LayoutManager: NSLayoutManager {
             }
 
             if i > 0 {
-                previousRect = rectArray[i - 1].inset(by: backgroundStyle.insets)
+                previousRect = rectArray[i - 1].insetIfRequired(by: backgroundStyle.insets)
             }
 
             if i < rectCount - 1 {
-                nextRect = rectArray[i + 1].inset(by: backgroundStyle.insets)
+                nextRect = rectArray[i + 1].insetIfRequired(by: backgroundStyle.insets)
             }
 
             let corners: UIRectCorner
@@ -375,7 +375,8 @@ class LayoutManager: NSLayoutManager {
 
             currentCGContext.setShadow(offset: .zero, blur:0, color: UIColor.clear.cgColor)
 
-            if let borderColor = backgroundStyle.border?.color {
+            if !currentRect.isEmpty,
+                let borderColor = backgroundStyle.border?.color {
                 currentCGContext.setLineWidth(lineWidth)
                 currentCGContext.setStrokeColor(borderColor.cgColor)
                 currentCGContext.addPath(rectanglePath.cgPath)
@@ -402,8 +403,8 @@ class LayoutManager: NSLayoutManager {
     private func calculateCornersForSquaredOffJoins(previousRect: CGRect, currentRect: CGRect, nextRect: CGRect, cornerRadius: CGFloat) -> UIRectCorner {
         var corners = UIRectCorner()
 
-        let isFirst = previousRect == .zero && currentRect != .zero
-        let isLast = nextRect == .zero && currentRect != .zero
+        let isFirst = previousRect.isEmpty  && !currentRect.isEmpty
+        let isLast = nextRect.isEmpty && !currentRect.isEmpty
 
         if isFirst {
             corners.formUnion(.topLeft)
@@ -437,16 +438,22 @@ class LayoutManager: NSLayoutManager {
             corners.formUnion(.bottomLeft)
         }
 
-        if nextRect == .zero || nextRect.maxX <= currentRect.minX + cornerRadius {
+        if nextRect.isEmpty || nextRect.maxX <= currentRect.minX + cornerRadius {
             corners.formUnion(.bottomLeft)
             corners.formUnion(.bottomRight)
         }
 
-        if previousRect == .zero || (currentRect.maxX <= previousRect.minX + cornerRadius) {
+        if previousRect.isEmpty || (currentRect.maxX <= previousRect.minX + cornerRadius) {
             corners.formUnion(.topLeft)
             corners.formUnion(.topRight)
         }
 
         return corners
+    }
+}
+
+extension CGRect {
+    func insetIfRequired(by insets: UIEdgeInsets) -> CGRect {
+        return isEmpty ? self : inset(by: insets)
     }
 }

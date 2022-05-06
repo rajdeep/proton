@@ -872,10 +872,13 @@ class EditorSnapshotTests: XCTestCase {
 
         editor.appendCharacters(NSAttributedString(string: text))
         viewController.render()
-        let backgroundStyle = BackgroundStyle(color: .white,
-                                              roundedCornerStyle: .absolute(value: 0),
-                                              border: BorderStyle(lineWidth: 1, color: .brown),
-                                              widthMode: .matchText)
+        let backgroundStyle = BackgroundStyle(color: .red,
+                                              roundedCornerStyle: .absolute(value: 6),
+                                              border: BorderStyle(lineWidth: 1, color: .yellow),
+                                              shadow: ShadowStyle(color: .blue, offset: CGSize(width: 2, height: 2), blur: 2),
+                                              widthMode: .matchText,
+                                              insets: UIEdgeInsets(top: -4, left: -4, bottom: -4, right: -4)
+        )
         editor.addAttributes([
             .backgroundStyle: backgroundStyle
         ], at: NSRange(location: 19, length: 36))
