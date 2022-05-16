@@ -68,4 +68,15 @@ public extension NSAttributedString.Key {
 
     /// When applied to a new line char alongside `listItem` attribute, skips the rendering of list marker on subsequent line.
     static let skipNextListMarker = NSAttributedString.Key("_skipNextListMarker")
+
+    /// Array of `NSAttributedString.Key` that must be locked in the applied range.
+    /// - Note: This can be used to prevent atttributes from bleeding into the following text as content is typed in the editor. By default, any attribute from preceeding range
+    /// is automatically carried forward via typing attributes in the `EditorView`. One or more attributes may be marked as locked to prevent the bleeding.
+    /// - Example:  To prevent `.backgroundStyle` attribute, following may be used:
+    /// `let backgroundStyle = BackgroundStyle(color: .green)`
+    /// `editor.addAttributes([`
+    /// `.backgroundStyle: backgroundStyle,`
+    /// `.lockedAttributes: [NSAttributedString.Key.backgroundStyle]`
+    /// `], at: editor.selectedRange)`
+    static let lockedAttributes = NSAttributedString.Key("_lockedAttributes")
 }

@@ -142,6 +142,14 @@ class RichTextEditorContext: RichTextViewContext {
             editor.typingAttributes[attribute.key] = attribute.value
         }
 
+        // Drop locked attributes
+        guard let lockedAttributes = attributes.first(where: { $0.key == .lockedAttributes })?.value as? [NSAttributedString.Key] else {
+            return
+        }
+
+        for attribute in lockedAttributes {
+            editor.typingAttributes[attribute] = nil
+        }
     }
 
     func textViewDidChange(_ textView: UITextView) {

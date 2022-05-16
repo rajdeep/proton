@@ -76,4 +76,22 @@ class EditorViewContextTests: XCTestCase {
         // Validate that existing attributes are not removed
         XCTAssertTrue(context.activeEditorView?.typingAttributes.contains{ $0.key == .paragraphStyle } ?? false)
     }
+
+    func testLockedAttributes() {
+        let editor = EditorView()
+        let context = EditorViewContext.shared
+        context.richTextViewContext.textViewDidBeginEditing(editor.richTextView)
+
+        let backgroundStyle = BackgroundStyle(color: .red)
+        editor.attributedText = NSAttributedString(string: "abc", attributes: [
+            NSAttributedString.Key.backgroundStyle: backgroundStyle,
+            NSAttributedString.Key.foregroundColor: UIColor.red,
+            NSAttributedString.Key.lockedAttributes: [NSAttributedString.Key.backgroundStyle],
+        ])
+
+        _ = context.richTextViewContext.textView(editor.richTextView, shouldChangeTextIn: editor.textEndRange, replacementText: "test")
+        
+        XCTAssertTrue(context.activeEditorView?.typingAttributes.contains{ $0.key == .foregroundColor } ?? false)
+        XCTAssertFalse(context.activeEditorView?.typingAttributes.contains{ $0.key == .backgroundStyle } ?? true)
+    }
 }
