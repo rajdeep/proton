@@ -75,7 +75,7 @@ public enum BackgroundMode {
 /// Style for background color attribute. Adding `backgroundStyle` attribute will add border, background and shadow
 /// as per the styles specified.
 /// - Important:
-/// This attribute is separate from `backgroundColor` attribute. Applying `backgroundColor` takes precedence over backgroundStyle`
+/// This attribute is separate from `backgroundColor` attribute. Applying `backgroundColor` takes precedence over backgroundStyle
 /// i.e. the background color shows over color of `backgroundStyle` and will not show rounded corners.
 /// - Note:
 /// Ideally `backgroundStyle` may be used instead of `backgroundColor` as it can mimic standard background color as well as
