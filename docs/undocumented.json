@@ -37,8 +37,8 @@
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Base/BackgroundStyle.swift",
-      "line": 97,
-      "symbol": "BackgroundStyle.init(color:roundedCornerStyle:border:shadow:hasSquaredOffJoins:)",
+      "line": 116,
+      "symbol": "BackgroundStyle.init(color:roundedCornerStyle:border:shadow:hasSquaredOffJoins:heightMode:widthMode:insets:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },

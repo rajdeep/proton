@@ -3,7 +3,7 @@
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Attachment/Attachment.swift",
       "line": 26,
-      "symbol": "DynamicBoundsProviding.sizeFor(containerSize:lineRect:)",
+      "symbol": "DynamicBoundsProviding.sizeFor(attachment:containerSize:lineRect:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -37,8 +37,8 @@
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Base/BackgroundStyle.swift",
-      "line": 80,
-      "symbol": "BackgroundStyle.init(color:cornerRadius:border:shadow:)",
+      "line": 97,
+      "symbol": "BackgroundStyle.init(color:roundedCornerStyle:border:shadow:hasSquaredOffJoins:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -415,14 +415,14 @@
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 707,
+      "line": 711,
       "symbol": "EditorView.deleteBackward()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 868,
+      "line": 872,
       "symbol": "EditorView.canPerformAction(_:withSender:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

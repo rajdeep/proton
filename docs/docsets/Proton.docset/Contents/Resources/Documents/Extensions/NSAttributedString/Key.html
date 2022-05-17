@@ -17,19 +17,19 @@
     <a title="Key Extension Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../../index.html">Proton Docs</a> (76% documented)</p>
-        <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../../img/gh.png"/>View on GitHub</a></p>
-        <p class="header-right">
+        <p><a href="../../index.html">Proton Docs</a> (77% documented)</p>
+        <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <div class="header-right">
           <form role="search" action="../../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
           </form>
-        </p>
+        </div>
       </div>
     </header>
     <div class="content-wrapper">
       <p id="breadcrumbs">
         <a href="../../index.html">Proton Reference</a>
-        <img id="carat" src="../../img/carat.png" />
+        <img id="carat" src="../../img/carat.png" alt=""/>
         Key Extension Reference
       </p>
     </div>
@@ -106,6 +106,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../../Enums/AttachmentType.html">AttachmentType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/BackgroundMode.html">BackgroundMode</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../Enums/EditorContentMode.html">EditorContentMode</a>
@@ -316,9 +319,17 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Applying this attribute with value of <code>true</code> to a range of text makes that text act as a single block/unit.
+                        <p>Applying this attribute makes the range of text act as a single block/unit.
 The content can still be deleted and selected but cursor cannot be moved into textBlock range
 using taps or mouse/keys (macOS Catalyst). Selection and delete on part of the range works atomically on the entire range.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    In successive ranges, if the <code>textblock</code> is provided with a value type with same value e.g. <code>true</code>, the behaviour
+will be combined for the ranges as one text block i.e. it will work as single textblock even though the attribute was added separately.
+However, if the value provided is different in successive ranges, these will work independent of each other even if one range
+immediately follows the other.
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -495,6 +506,46 @@ using tab/shift-tab (macOS) as well as create a new list item on hitting enter k
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:So21NSAttributedStringKeya6ProtonE16lockedAttributesABvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/lockedAttributes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:So21NSAttributedStringKeya6ProtonE16lockedAttributesABvpZ">lockedAttributes</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Array of <code>NSAttributedString.Key</code> that must be locked in the applied range.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This can be used to prevent atttributes from bleeding into the following text as content is typed in the editor. By default, any attribute from preceeding range
+is automatically carried forward via typing attributes in the <code><a href="../../Classes/EditorView.html">EditorView</a></code>. One or more attributes may be marked as locked to prevent the bleeding.
+
+</div><ul>
+<li>Example:  To prevent <code><a href="../../Extensions/NSAttributedString/Key.html#/s:So21NSAttributedStringKeya6ProtonE15backgroundStyleABvpZ">.backgroundStyle</a></code> attribute, following may be used:
+<code>let backgroundStyle = BackgroundStyle(color: .green)</code>
+<code>editor.addAttributes([</code>
+<code>.backgroundStyle: backgroundStyle,</code>
+<code>.lockedAttributes: [NSAttributedString.Key.backgroundStyle]</code>
+<code>], at: editor.selectedRange)</code></li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">let</span> <span class="nv">lockedAttributes</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="o">.</span><span class="kt">Key</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:So21NSAttributedStringKeya6ProtonE13isHighlightedABvpZ"></a>
                     <a name="//apple_ref/swift/Variable/isHighlighted" class="dashAnchor"></a>
                     <a class="token" href="#/s:So21NSAttributedStringKeya6ProtonE13isHighlightedABvpZ">isHighlighted</a>
@@ -524,11 +575,10 @@ using tab/shift-tab (macOS) as well as create a new list item on hitting enter k
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2021 <a class="link" href="" target="_blank" rel="external">Rajdeep</a>. All rights reserved. (Last updated: 2021-10-06)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2022 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep</a>. All rights reserved. (Last updated: 2022-05-17)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>
   </body>
-</div>
 </html>
