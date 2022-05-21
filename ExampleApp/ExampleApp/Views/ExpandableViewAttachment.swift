@@ -1,9 +1,9 @@
 //
-//  PanelAttachment.swift
+//  ExpandableViewAttachment.swift
 //  ExampleApp
 //
-//  Created by Rajdeep Kwatra on 12/1/20.
-//  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
+//  Created by Rajdeep Kwatra on 21/5/2022.
+//  Copyright © 2022 Rajdeep Kwatra. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -23,13 +23,12 @@ import UIKit
 
 import Proton
 
-class PanelAttachment: Attachment {
-    var view: PanelView
+class ExpandableAttachment: Attachment {
+    var view: ExpandableView
 
     init(frame: CGRect) {
-        view = PanelView(frame: frame)
+        view = ExpandableView(frame: frame)
         super.init(view, size: .fullWidth)
-        view.delegate = self
         view.boundsObserver = self
     }
 
@@ -48,26 +47,5 @@ class PanelAttachment: Attachment {
 
     override func removedAttributesFromContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key]) {
         view.editor.removeAttributes(attributes, at: view.editor.attributedText.fullRange)
-    }
-}
-
-extension PanelAttachment: PanelViewDelegate {
-    func panel(_ panel: PanelView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
-        guard let containerEditor = self.containerEditorView else { return }
-        containerEditor.delegate?.editor(containerEditor, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
-    }
-
-    func panel(_ panel: PanelView, shouldHandle key: EditorKey, at range: NSRange, handled: inout Bool) {
-        if key == .backspace, range == .zero, panel.editor.attributedText.string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            removeFromContainer()
-            handled = true
-        }
-//        else if key == .enter,
-//            let range = rangeInContainer()?.nextPosition,
-//            let containerBounds = containerBounds {
-//            let newAttachment = PanelAttachment(frame: CGRect(origin: .zero, size: CGSize(width: containerBounds.width, height: 30)))
-//            self.containerEditorView?.insertAttachment(in: range, attachment: newAttachment)
-//            handled = true
-//        }
     }
 }
