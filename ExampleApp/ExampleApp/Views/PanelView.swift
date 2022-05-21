@@ -74,10 +74,10 @@ class PanelView: UIView, BlockContent, EditorContentView {
         editor.paragraphStyle.firstLineHeadIndent = 0
         editor.delegate = self
 
-        backgroundColor = .systemGray3
+        backgroundColor = UIColor(red: 0.99, green: 0.97, blue: 0.89, alpha: 1.00)
         container.layer.borderWidth = 1.0
         container.layer.cornerRadius = 4.0
-        container.layer.borderColor = UIColor.systemGray.cgColor
+        container.layer.borderColor = UIColor(red: 0.99, green: 0.95, blue: 0.84, alpha: 1.00).cgColor
 
         addSubview(container)
         container.addSubview(iconView)
@@ -89,21 +89,19 @@ class PanelView: UIView, BlockContent, EditorContentView {
             container.leadingAnchor.constraint(equalTo: leadingAnchor),
             container.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            iconView.heightAnchor.constraint(equalToConstant: 20),
-            iconView.widthAnchor.constraint(equalToConstant: 20),
+            iconView.heightAnchor.constraint(equalToConstant: 30),
+            iconView.widthAnchor.constraint(equalTo: iconView.heightAnchor),
             iconView.topAnchor.constraint(equalTo: container.topAnchor, constant: 10),
             iconView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 10),
 
             editor.topAnchor.constraint(equalTo: iconView.topAnchor, constant: -editor.textContainerInset.top),
             editor.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 5),
             editor.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -5),
-            editor.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+            editor.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -10),
         ])
 
-        iconView.layer.borderColor = UIColor.systemGray.cgColor
-        iconView.layer.borderWidth = 1.0
-        iconView.layer.cornerRadius = 3.0
-        iconView.backgroundColor = .white
+        iconView.image = UIImage(systemName: "exclamationmark.triangle")
+        iconView.tintColor = UIColor.orange
 
         container.layer.cornerRadius = 5.0
         container.clipsToBounds = true

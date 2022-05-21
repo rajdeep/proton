@@ -61,12 +61,13 @@ extension PanelAttachment: PanelViewDelegate {
         if key == .backspace, range == .zero, panel.editor.attributedText.string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             removeFromContainer()
             handled = true
-        } else if key == .enter,
-            let range = rangeInContainer()?.nextPosition,
-            let containerBounds = containerBounds {
-            let newAttachment = PanelAttachment(frame: CGRect(origin: .zero, size: CGSize(width: containerBounds.width, height: 30)))
-            self.containerEditorView?.insertAttachment(in: range, attachment: newAttachment)
-            handled = true
         }
+//        else if key == .enter,
+//            let range = rangeInContainer()?.nextPosition,
+//            let containerBounds = containerBounds {
+//            let newAttachment = PanelAttachment(frame: CGRect(origin: .zero, size: CGSize(width: containerBounds.width, height: 30)))
+//            self.containerEditorView?.insertAttachment(in: range, attachment: newAttachment)
+//            handled = true
+//        }
     }
 }

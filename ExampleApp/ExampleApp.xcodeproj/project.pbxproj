@@ -32,6 +32,9 @@
 		1B2DA74D23F0C39B00F7EC52 /* DummyCollabCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2DA74C23F0C39B00F7EC52 /* DummyCollabCommand.swift */; };
 		1B45CD8B23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8A23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift */; };
 		1B45CD8D23BDD5FC001EB196 /* ExamplesBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8C23BDD5FC001EB196 /* ExamplesBaseViewController.swift */; };
+		1B617A9C2838874F00095FEE /* ExpandableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B617A9B2838874F00095FEE /* ExpandableView.swift */; };
+		1B617A9E28388A1900095FEE /* ExpandableViewAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B617A9D28388A1900095FEE /* ExpandableViewAttachment.swift */; };
+		1B617AA028388AA700095FEE /* ExpandCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B617A9F28388AA700095FEE /* ExpandCommand.swift */; };
 		1B65BE5727054BB800BF5C52 /* TableViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B65BE5627054BB800BF5C52 /* TableViewExampleViewController.swift */; };
 		1B6D2FD123BD46ED0019CE40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6D2FD023BD46ED0019CE40 /* AppDelegate.swift */; };
 		1B6D2FD323BD46ED0019CE40 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6D2FD223BD46ED0019CE40 /* MasterViewController.swift */; };
@@ -116,6 +119,9 @@
 		1B45CD8A23BDD3E9001EB196 /* AutogrowingEditorViewExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingEditorViewExampleViewController.swift; sourceTree = "<group>"; };
 		1B45CD8C23BDD5FC001EB196 /* ExamplesBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplesBaseViewController.swift; sourceTree = "<group>"; };
 		1B5B599423D30B260043ADEA /* ExampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ExampleApp.entitlements; sourceTree = "<group>"; };
+		1B617A9B2838874F00095FEE /* ExpandableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableView.swift; sourceTree = "<group>"; };
+		1B617A9D28388A1900095FEE /* ExpandableViewAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableViewAttachment.swift; sourceTree = "<group>"; };
+		1B617A9F28388AA700095FEE /* ExpandCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandCommand.swift; sourceTree = "<group>"; };
 		1B65BE5627054BB800BF5C52 /* TableViewExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewExampleViewController.swift; sourceTree = "<group>"; };
 		1B6D2FCD23BD46ED0019CE40 /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B6D2FD023BD46ED0019CE40 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -329,6 +335,7 @@
 			isa = PBXGroup;
 			children = (
 				1B6DE9E023C59A16007F9859 /* PanelCommand.swift */,
+				1B617A9F28388AA700095FEE /* ExpandCommand.swift */,
 				1B183D9523CEF33600AE83E5 /* EncodeContentsCommand.swift */,
 				1B164F3E23D29BF200A0869A /* ScrollCommand.swift */,
 				1B164F4223D2A5A000A0869A /* ResetCommand.swift */,
@@ -384,6 +391,8 @@
 				1BFFEEFF23C303F100D2BA35 /* AutogrowingTextField.swift */,
 				1BFFEF0923C30C9900D2BA35 /* PanelView.swift */,
 				1BD993C123CA8FD200563ACB /* PanelAttachment.swift */,
+				1B617A9B2838874F00095FEE /* ExpandableView.swift */,
+				1B617A9D28388A1900095FEE /* ExpandableViewAttachment.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -523,8 +532,10 @@
 			files = (
 				1B183DA223CEF7D600AE83E5 /* PanelEncoder.swift in Sources */,
 				1B872B9F23EE73170070A92A /* UIViewExtensions.swift in Sources */,
+				1B617A9E28388A1900095FEE /* ExpandableViewAttachment.swift in Sources */,
 				1B164F3F23D29BF200A0869A /* ScrollCommand.swift in Sources */,
 				1BFFEF0E23C3228900D2BA35 /* FixedWidthAttachmentExampleViewController.swift in Sources */,
+				1B617AA028388AA700095FEE /* ExpandCommand.swift in Sources */,
 				1B164F3723D2854400A0869A /* ParagraphStyleDecoder.swift in Sources */,
 				1B91F4B623C73D01003F9B55 /* TypeaheadTextProcessor.swift in Sources */,
 				1B45CD8D23BDD5FC001EB196 /* ExamplesBaseViewController.swift in Sources */,
@@ -543,6 +554,7 @@
 				1B183D9623CEF33600AE83E5 /* EncodeContentsCommand.swift in Sources */,
 				1B183D9C23CEF65300AE83E5 /* ParagraphEncoder.swift in Sources */,
 				1BFFEF1223C3310A00D2BA35 /* PercentWidthAttachmentExampleViewController.swift in Sources */,
+				1B617A9C2838874F00095FEE /* ExpandableView.swift in Sources */,
 				1B164F3323D2849A00A0869A /* AttributesDecoding.swift in Sources */,
 				1B183D8423CE8C8500AE83E5 /* RendererCommandExampleViewController.swift in Sources */,
 				1B164F2F23D282A500A0869A /* PanelDecoder.swift in Sources */,
