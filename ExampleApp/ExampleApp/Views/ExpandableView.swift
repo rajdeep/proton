@@ -132,11 +132,3 @@ class ExpandableView: UIView, BlockContent, EditorContentView {
         }
     }
 }
-
-extension ExpandableView {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        container.layer.borderColor = UIColor.systemGray.cgColor
-        button.layer.borderColor = UIColor.systemGray.cgColor
-    }
-}

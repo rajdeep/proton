@@ -39,7 +39,7 @@ class ExpandableAttachment: Attachment {
 
     override func addedAttributesOnContainingRange(rangeInContainer range: NSRange, attributes: [NSAttributedString.Key: Any]) {
         var attributesWithoutParaStyle = attributes
-        // Do not carry over para/list styles to panel content as it may be inconsistent based on outer content
+        // Do not carry over para/list styles to Expand content as it may be inconsistent based on outer content
         attributesWithoutParaStyle[.paragraphStyle] = nil
         attributesWithoutParaStyle[.listItem] = nil
         view.editor.addAttributes(attributesWithoutParaStyle, at: view.editor.attributedText.fullRange)
