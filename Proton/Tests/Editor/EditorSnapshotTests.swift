@@ -910,7 +910,10 @@ class EditorSnapshotTests: XCTestCase {
         editor.addSubview(view)
     }
 
-    private func addSelectionRects(at textRange: UITextRange, in editor: EditorView, color: UIColor) {
+}
+
+extension XCTestCase {
+    func addSelectionRects(at textRange: UITextRange, in editor: EditorView, color: UIColor) {
         editor.richTextView.selectionRects(for: textRange).forEach { selectionRect in
             let view = UIView(frame: editor.convert(selectionRect.rect, from: editor.richTextView))
             if selectionRect.containsStart || selectionRect.containsEnd {

@@ -27,8 +27,8 @@ class EditorTestViewController: SnapshotTestViewController {
     let editor: EditorView
     let height: CGFloat?
 
-    init(height: CGFloat? = nil) {
-        editor = EditorView(frame: .zero)
+    init(height: CGFloat? = nil, context: EditorViewContext = EditorViewContext.shared) {
+        editor = EditorView(frame: .zero, context: context)
         self.height = height
         super.init(nibName: nil, bundle: nil)
         setup()

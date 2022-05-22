@@ -1,5 +1,5 @@
 //
-//  AttachmentSnapshotTests.swift
+//  ViewAttachmentSnapshotTests.swift
 //  Proton
 //
 //  Created by Rajdeep Kwatra on 5/1/20.
@@ -24,7 +24,7 @@ import SnapshotTesting
 
 @testable import Proton
 
-class AttachmentSnapshotTests: XCTestCase {
+class ViewAttachmentSnapshotTests: XCTestCase {
 
     var recordMode = false
     override func setUp() {
@@ -130,7 +130,7 @@ class AttachmentSnapshotTests: XCTestCase {
     }
 }
 
-extension AttachmentSnapshotTests: AttachmentOffsetProviding {
+extension ViewAttachmentSnapshotTests: AttachmentOffsetProviding {
     func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint {
         return CGPoint(x: 0, y: -3)
     }

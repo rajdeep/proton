@@ -38,38 +38,20 @@ public protocol AttachmentOffsetProviding: AnyObject {
     func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint
 }
 
-@objc
-class AttachmentContentView: UIView {
-    let name: EditorContent.Name
-    weak var attachment: Attachment?
-
-    init(name: EditorContent.Name, frame: CGRect) {
-        self.name = name
-        super.init(frame: frame)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 /// An attachment can be used as a container for any view object. Based on the `AttachmentSize` provided, the attachment automatically renders itself alongside the text in `EditorView`.
 /// `Attachment` also provides helper functions like `deleteFromContainer` and `rangeInContainer`
 open class Attachment: NSTextAttachment, BoundsObserving {
 
-    private let view: AttachmentContentView
-    private let size: AttachmentSize
+    private let view: AttachmentContentView?
+    private let content: AttachmentContent
 
     /// Governs if the attachment should be selected before being deleted. When `true`, tapping the backspace key the first time on range containing `Attachment` will only
     /// select the attachment i.e. show as highlighted. Tapping the backspace again will delete the attachment. If the value is `false`, the attachment will be deleted on the first backspace itself.
     public var selectBeforeDelete = false
 
-    var isBlockAttachment: Bool? {
-        switch contentView {
-        case is BlockContent: return true
-        case is InlineContent: return false
-        default: return nil
-        }
+    let isBlockAttachment: Bool
+    var isImageBasedAttachment: Bool {
+        self.view == nil
     }
 
     var name: EditorContent.Name? {
@@ -77,13 +59,14 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     }
 
     var isRendered: Bool {
-        return view.superview != nil
+        return view?.superview != nil
     }
 
     private let selectionView = SelectionView()
 
     var isSelected: Bool = false {
         didSet {
+            guard let view = self.view else { return }
             if isSelected {
                 selectionView.addTo(parent: view)
             } else {
@@ -125,7 +108,6 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     /// editor.attributedText = attrString
     /// ```
     public var string: NSAttributedString {
-        guard isBlockAttachment != nil else { return NSAttributedString(string: "<UNKNOWN CONTENT TYPE>") }
         let string = NSMutableAttributedString(attachment: self)
         
         string.addAttributes(attributes, range: string.fullRange)
@@ -143,12 +125,13 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         ]
     }
 
-    final var frame: CGRect {
-        get { view.frame }
+    final var frame: CGRect? {
+        get { view?.frame }
         set {
-            guard view.frame.equalTo(newValue) == false else { return }
+            guard let newValue = newValue,
+                view?.frame.equalTo(newValue) == false else { return }
 
-            view.frame = newValue
+            view?.frame = newValue
             containerTextView?.invalidateIntrinsicContentSize()
         }
     }
@@ -177,11 +160,11 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     }
 
     var contentView: UIView? {
-        get { view.subviews.first }
+        get { view?.subviews.first }
         set {
-            view.subviews.forEach { $0.removeFromSuperview() }
+            view?.subviews.forEach { $0.removeFromSuperview() }
             if let contentView = newValue {
-                view.addSubview(contentView)
+                view?.addSubview(contentView)
             }
         }
     }
@@ -193,7 +176,30 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
     /// The bounds rectangle, which describes the attachment's location and size in its own coordinate system.
     public override var bounds: CGRect {
-        didSet { view.bounds = bounds }
+        didSet { view?.bounds = bounds }
+    }
+
+    /// Initializes an attachment with the image provided.
+    /// - Note: Image and Size can be updated by invoking `updateImage(image: size:)` at any time
+    /// - Parameter image: Image to be used to display in the attachment. Image is rendered as Block content.
+    public convenience init(image: BlockAttachmentImage) {
+        self.init(image: image.image, size: image.size, isBlockContent: true)
+    }
+
+    /// Initializes an attachment with the image provided.
+    /// - Note: Image and Size can be updated by invoking `updateImage(image: size:)` at any time
+    /// - Parameter image: Image to be used to display in the attachment.  Image is rendered as Inline content.
+    public convenience init(image: InlineAttachmentImage) {
+        self.init(image: image.image, size: image.size, isBlockContent: false)
+    }
+
+    private init(image: UIImage, size: CGSize, isBlockContent: Bool) {
+        self.content = .image(image)
+        self.isBlockAttachment = isBlockContent
+        self.view = nil
+        super.init(data: nil, ofType: nil)
+        self.image = image
+        self.bounds = CGRect(origin: .zero, size: size)
     }
 
     // This cannot be made convenience init as it prevents this being called from a class that inherits from `Attachment`
@@ -202,11 +208,13 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     ///   - contentView: Content view to be hosted within the attachment
     ///   - size: Size rule for attachment
     public init<AttachmentView: UIView & BlockContent>(_ contentView: AttachmentView, size: AttachmentSize) {
-        self.view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
-        self.size = size
+        let view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
+        self.view = view
+        self.isBlockAttachment = true
+        self.content = .view(view, size: size)
         super.init(data: nil, ofType: nil)
         // TODO: revisit - can this be done differently i.e. not setting afterwards
-        self.view.attachment = self
+        self.view?.attachment = self
         initialize(contentView: contentView)
     }
 
@@ -216,11 +224,13 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     ///   - contentView: Content view to be hosted within the attachment
     ///   - size: Size rule for attachment
     public init<AttachmentView: UIView & InlineContent>(_ contentView: AttachmentView, size: AttachmentSize) {
-        self.view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
-        self.size = size
+        let view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
+        self.view = view
+        self.isBlockAttachment = false
+        self.content = .view(view, size: size)
         super.init(data: nil, ofType: nil)
         // TODO: revisit - can this be done differently i.e. not setting afterwards
-        self.view.attachment = self
+        self.view?.attachment = self
         initialize(contentView: contentView)
     }
 
@@ -239,6 +249,10 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     private func setup() {
         guard let contentView = contentView else {
             assertionFailure("ContentView not set")
+            return
+        }
+
+        guard case let AttachmentContent.view(view, size) = self.content else {
             return
         }
 
@@ -270,7 +284,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
     @objc
     func removeFromSuperview() {
-        view.removeFromSuperview()
+        view?.removeFromSuperview()
     }
 
     /// Removes this attachment from the `EditorView` it is contained in.
@@ -323,6 +337,10 @@ open class Attachment: NSTextAttachment, BoundsObserving {
               textContainer.size.width > 0
         else { return .zero }
 
+        guard case let AttachmentContent.view(view, attachmentSize) = self.content else {
+            return self.frame ?? bounds
+        }
+
         let indent: CGFloat
         if charIndex < containerEditorView?.contentLength ?? 0 {
             let paraStyle = containerEditorView?.attributedText.attribute(.paragraphStyle, at: charIndex, effectiveRange: nil) as? NSParagraphStyle
@@ -355,7 +373,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
             }
         }
 
-        switch self.size {
+        switch attachmentSize {
         case .matchContent:
             size = contentView?.bounds.integral.size ?? view.bounds.integral.size
         case let .fixed(width):
@@ -374,13 +392,32 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         return self.bounds
     }
 
+    /// Updated the image and/or size of the current attachment.
+    /// - Note: This is a no-op on View based Attachment created by providing an Inline or Block view.
+    /// - Parameters:
+    ///   - image: Image to update attachment with. Omit to use the existing image.
+    ///   - size: New size of the image attachment. Omit to use the existing size.
+    public func updateImage(_ image: UIImage? = nil, size: CGSize? = nil) {
+        guard isImageBasedAttachment else {
+            assertionFailure("Image/Size can only be updated for image based attachments")
+            return
+        }
+        if let image = image {
+            self.image = image
+        }
+        if let size = size {
+            self.bounds = CGRect(origin: bounds.origin, size: size)
+        }
+    }
+
     func render(in editorView: EditorView) {
         self.containerEditorView = editorView
-        guard view.superview == nil else { return }
-        editorView.richTextView.addSubview(self.view)
+        guard let view = view,
+            view.superview == nil else { return }
+        editorView.richTextView.addSubview(view)
 
         if containerEditorView?.isEditable ?? false {
-            self.view.layoutIfNeeded()
+            view.layoutIfNeeded()
         }
 
         if var editorContentView = contentView as? EditorContentView,
