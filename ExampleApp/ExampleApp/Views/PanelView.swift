@@ -97,7 +97,7 @@ class PanelView: UIView, BlockContent, EditorContentView {
             editor.topAnchor.constraint(equalTo: iconView.topAnchor, constant: -editor.textContainerInset.top),
             editor.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 5),
             editor.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -5),
-            editor.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -10),
+            editor.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -8),
         ])
 
         iconView.image = UIImage(systemName: "exclamationmark.triangle")
