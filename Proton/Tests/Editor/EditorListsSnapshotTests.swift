@@ -103,13 +103,11 @@ class EditorListsSnapshotTests: XCTestCase {
         let rangeToSet = NSRange(location: secondLine.range.endLocation, length: 0)
         editor.selectedRange = rangeToSet
 
-        // Indent second line
-            listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: editor.selectedRange)
+        ListIndentCommand().execute(on: editor)
         viewController.render(size: CGSize(width: 300, height: 175))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
-        // Outdent second line
-        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [.shift], range: editor.selectedRange)
+        ListOutdentCommand().execute(on: editor)
         viewController.render(size: CGSize(width: 300, height: 175))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }

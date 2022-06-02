@@ -109,6 +109,8 @@
 		1BBE4EFC248CB15E00D1C788 /* ListCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */; };
 		1BC25B542448768200FF88AC /* EditorContextDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC25B532448768200FF88AC /* EditorContextDelegateTests.swift */; };
 		1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */; };
+		1BD18581284861F7001F4FBC /* ListIndentCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD18580284861F7001F4FBC /* ListIndentCommand.swift */; };
+		1BD18583284863A6001F4FBC /* ListOutdentCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD18582284863A6001F4FBC /* ListOutdentCommand.swift */; };
 		1BD21554246951090000BCE2 /* LayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD21553246951090000BCE2 /* LayoutManager.swift */; };
 		1BD21556246952370000BCE2 /* BackgroundStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD21555246952370000BCE2 /* BackgroundStyle.swift */; };
 		1BD9323E243CA506005E4136 /* CommandName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD9323D243CA506005E4136 /* CommandName.swift */; };
@@ -265,6 +267,8 @@
 		1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCommandTests.swift; sourceTree = "<group>"; };
 		1BC25B532448768200FF88AC /* EditorContextDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContextDelegateTests.swift; sourceTree = "<group>"; };
 		1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommandExecutorTests.swift; sourceTree = "<group>"; };
+		1BD18580284861F7001F4FBC /* ListIndentCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIndentCommand.swift; sourceTree = "<group>"; };
+		1BD18582284863A6001F4FBC /* ListOutdentCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOutdentCommand.swift; sourceTree = "<group>"; };
 		1BD21553246951090000BCE2 /* LayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManager.swift; sourceTree = "<group>"; };
 		1BD21555246952370000BCE2 /* BackgroundStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundStyle.swift; sourceTree = "<group>"; };
 		1BD9323D243CA506005E4136 /* CommandName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandName.swift; sourceTree = "<group>"; };
@@ -497,7 +501,7 @@
 		1B4B60C8247FC502002B63CF /* Commands */ = {
 			isa = PBXGroup;
 			children = (
-				1B4B60C9247FC51E002B63CF /* ListCommand.swift */,
+				1BD1857F284861D0001F4FBC /* List */,
 				1B7C76A92608A489006618AC /* FontTraitToggleCommand.swift */,
 				1B7C76A72608A489006618AC /* BoldCommand.swift */,
 				1B7C76A82608A489006618AC /* ItalicsCommand.swift */,
@@ -709,6 +713,16 @@
 				1B91E7BC26AA6AA30002DF45 /* AttributesCommandTests.swift */,
 			);
 			path = EditorCommands;
+			sourceTree = "<group>";
+		};
+		1BD1857F284861D0001F4FBC /* List */ = {
+			isa = PBXGroup;
+			children = (
+				1B4B60C9247FC51E002B63CF /* ListCommand.swift */,
+				1BD18580284861F7001F4FBC /* ListIndentCommand.swift */,
+				1BD18582284863A6001F4FBC /* ListOutdentCommand.swift */,
+			);
+			path = List;
 			sourceTree = "<group>";
 		};
 		1BD993AE23C9955800563ACB /* TextProcessors */ = {
@@ -955,6 +969,7 @@
 				1B45CDBE23BF125D001EB196 /* NSAttributedString+ContentTypes.swift in Sources */,
 				1B7A985723C4828A00C34B14 /* RichTextEditorContext.swift in Sources */,
 				1B7A985923C484BC00C34B14 /* RichTextViewDelegate.swift in Sources */,
+				1BD18581284861F7001F4FBC /* ListIndentCommand.swift in Sources */,
 				1B45CDE123C05476001EB196 /* UIColor+Image.swift in Sources */,
 				1B45CD9123BDD7E6001EB196 /* AutogrowingTextView.swift in Sources */,
 				1B45CDE623C05942001EB196 /* AttachmentSize.swift in Sources */,
@@ -978,6 +993,7 @@
 				1B8BE91B23C71CEA00353B17 /* EditorViewDelegate.swift in Sources */,
 				1BBAC3DD23CDB8C10088A1C8 /* RendererCommand.swift in Sources */,
 				1B4B60CF247FC86A002B63CF /* NSParagraphStyleExtensions.swift in Sources */,
+				1BD18583284863A6001F4FBC /* ListOutdentCommand.swift in Sources */,
 				1BD21556246952370000BCE2 /* BackgroundStyle.swift in Sources */,
 				1B91F4B123C72D87003F9B55 /* TextProcessor.swift in Sources */,
 				1B2BC0DD23CF18C700407DEE /* EditorContentDecoding.swift in Sources */,
