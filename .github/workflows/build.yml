@@ -26,6 +26,6 @@ jobs:
     - name: Build and Test Proton as dependency in another package
       run: xcodebuild build -destination "name=iPhone 13 Pro" -scheme "TestBuildPackage"
     - name: Capture Proton Code Coverage
-      uses: codecov/codecov-action@v2.0.2
+      uses: codecov/codecov-action@v3.1.0
     - name: Build Example App
       run: xcodebuild build -destination "name=iPhone 13 Pro" -scheme "ExampleApp"
