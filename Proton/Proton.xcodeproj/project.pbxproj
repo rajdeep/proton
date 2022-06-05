@@ -111,6 +111,12 @@
 		1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */; };
 		1BD18581284861F7001F4FBC /* ListIndentCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD18580284861F7001F4FBC /* ListIndentCommand.swift */; };
 		1BD18583284863A6001F4FBC /* ListOutdentCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD18582284863A6001F4FBC /* ListOutdentCommand.swift */; };
+		1BD185BA284C29E6001F4FBC /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD185B9284C29E6001F4FBC /* Grid.swift */; };
+		1BD185BC284C29EF001F4FBC /* GridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD185BB284C29EF001F4FBC /* GridCell.swift */; };
+		1BD185BF284C2A66001F4FBC /* GridTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD185BE284C2A66001F4FBC /* GridTests.swift */; };
+		1BD185C2284C3082001F4FBC /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD185C0284C304A001F4FBC /* GridView.swift */; };
+		1BD185C4284C33B0001F4FBC /* GridViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD185C3284C33B0001F4FBC /* GridViewSnapshotTests.swift */; };
+		1BD185C6284C34CF001F4FBC /* GenericViewTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD185C5284C34CF001F4FBC /* GenericViewTestViewController.swift */; };
 		1BD21554246951090000BCE2 /* LayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD21553246951090000BCE2 /* LayoutManager.swift */; };
 		1BD21556246952370000BCE2 /* BackgroundStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD21555246952370000BCE2 /* BackgroundStyle.swift */; };
 		1BD9323E243CA506005E4136 /* CommandName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD9323D243CA506005E4136 /* CommandName.swift */; };
@@ -269,6 +275,12 @@
 		1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommandExecutorTests.swift; sourceTree = "<group>"; };
 		1BD18580284861F7001F4FBC /* ListIndentCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIndentCommand.swift; sourceTree = "<group>"; };
 		1BD18582284863A6001F4FBC /* ListOutdentCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOutdentCommand.swift; sourceTree = "<group>"; };
+		1BD185B9284C29E6001F4FBC /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		1BD185BB284C29EF001F4FBC /* GridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCell.swift; sourceTree = "<group>"; };
+		1BD185BE284C2A66001F4FBC /* GridTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridTests.swift; sourceTree = "<group>"; };
+		1BD185C0284C304A001F4FBC /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		1BD185C3284C33B0001F4FBC /* GridViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewSnapshotTests.swift; sourceTree = "<group>"; };
+		1BD185C5284C34CF001F4FBC /* GenericViewTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericViewTestViewController.swift; sourceTree = "<group>"; };
 		1BD21553246951090000BCE2 /* LayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManager.swift; sourceTree = "<group>"; };
 		1BD21555246952370000BCE2 /* BackgroundStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundStyle.swift; sourceTree = "<group>"; };
 		1BD9323D243CA506005E4136 /* CommandName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandName.swift; sourceTree = "<group>"; };
@@ -383,6 +395,7 @@
 				1B45CDCC23BF189F001EB196 /* XCTestHelpers.swift */,
 				1B45CDED23C1686F001EB196 /* RichTextViewTestViewController.swift */,
 				1BFFEF1623C333B400D2BA35 /* EditorTestViewController.swift */,
+				1BD185C5284C34CF001F4FBC /* GenericViewTestViewController.swift */,
 				1BBAC3D323CD696F0088A1C8 /* RendererTestViewController.swift */,
 			);
 			path = Helpers;
@@ -635,6 +648,7 @@
 		1BB214D323BB2778008B84A0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				1BD185BD284C2A51001F4FBC /* Grid */,
 				1B5E2581240F5AED00163E74 /* ExtensionTests */,
 				1B45CDE923C16816001EB196 /* Attachments */,
 				1B45CD9223BEBFE2001EB196 /* Base */,
@@ -725,6 +739,33 @@
 			path = List;
 			sourceTree = "<group>";
 		};
+		1BD185B8284C29DB001F4FBC /* Grid */ = {
+			isa = PBXGroup;
+			children = (
+				1BD185C7284D63F1001F4FBC /* View */,
+			);
+			path = Grid;
+			sourceTree = "<group>";
+		};
+		1BD185BD284C2A51001F4FBC /* Grid */ = {
+			isa = PBXGroup;
+			children = (
+				1BD185BE284C2A66001F4FBC /* GridTests.swift */,
+				1BD185C3284C33B0001F4FBC /* GridViewSnapshotTests.swift */,
+			);
+			path = Grid;
+			sourceTree = "<group>";
+		};
+		1BD185C7284D63F1001F4FBC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1BD185B9284C29E6001F4FBC /* Grid.swift */,
+				1BD185BB284C29EF001F4FBC /* GridCell.swift */,
+				1BD185C0284C304A001F4FBC /* GridView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		1BD993AE23C9955800563ACB /* TextProcessors */ = {
 			isa = PBXGroup;
 			children = (
@@ -756,6 +797,7 @@
 		1BE3305B26057E1100B15E67 /* Swift */ = {
 			isa = PBXGroup;
 			children = (
+				1BD185B8284C29DB001F4FBC /* Grid */,
 				1B2BC0DA23CF18A900407DEE /* Decoding */,
 				1B183D8A23CEA8F000AE83E5 /* Encoding */,
 				1B45CDE223C05901001EB196 /* Attachment */,
@@ -984,9 +1026,12 @@
 				1B7C76AC2608A489006618AC /* ItalicsCommand.swift in Sources */,
 				1B183D8E23CEE9BA00AE83E5 /* AttributesEncoding.swift in Sources */,
 				1BD21554246951090000BCE2 /* LayoutManager.swift in Sources */,
+				1BD185BC284C29EF001F4FBC /* GridCell.swift in Sources */,
 				1B91E7B526AA697C0002DF45 /* UnderlineCommand.swift in Sources */,
 				1BBAC3CC23CD571D0088A1C8 /* RendererViewDelegate.swift in Sources */,
 				1B91F4B323C72DC3003F9B55 /* TextProcessing.swift in Sources */,
+				1BD185C2284C3082001F4FBC /* GridView.swift in Sources */,
+				1BD185BA284C29E6001F4FBC /* Grid.swift in Sources */,
 				1B45CDDD23C05340001EB196 /* Attachment.swift in Sources */,
 				1B45CDD023C007AF001EB196 /* RichTextView.swift in Sources */,
 				1B004EC723C1C287007893AA /* EditorView.swift in Sources */,
@@ -1048,6 +1093,7 @@
 				1B4B60C6247F692D002B63CF /* ListsSnapshotTests.swift in Sources */,
 				1BD993C023C9EAA900563ACB /* TextTransformer.swift in Sources */,
 				1B8BE91D23C71E4B00353B17 /* EditorViewDelegateTests.swift in Sources */,
+				1BD185C6284C34CF001F4FBC /* GenericViewTestViewController.swift in Sources */,
 				1BFFEF2123C33EA900D2BA35 /* PanelView.swift in Sources */,
 				1B8BE91F23C71E8A00353B17 /* MockEditorViewDelegate.swift in Sources */,
 				1B45CDC223BF131E001EB196 /* TextStorageTests.swift in Sources */,
@@ -1069,6 +1115,7 @@
 				1B5E2583240F5B0C00163E74 /* NSAttributedStringExtensionTests.swift in Sources */,
 				1B45CDCB23BF1621001EB196 /* MockDefaultTextFormattingProvider.swift in Sources */,
 				1B45CDA923BEED0E001EB196 /* AutogrowingTextViewTests.swift in Sources */,
+				1BD185BF284C2A66001F4FBC /* GridTests.swift in Sources */,
 				1B3D19CA2483484A00B3AB59 /* EditorListsSnapshotTests.swift in Sources */,
 				1B183D9223CEEED900AE83E5 /* EditorContentEncoderTests.swift in Sources */,
 				1B617A9A283724C900095FEE /* EditorViewContextSnapshotTests.swift in Sources */,
@@ -1086,6 +1133,7 @@
 				1B164F4923D2AC9B00A0869A /* FindTextCommand.swift in Sources */,
 				1BD993B623C999AF00563ACB /* EditorViewTests.swift in Sources */,
 				1B30A3622489DC7B00FA1D48 /* MockListFormattingProvider.swift in Sources */,
+				1BD185C4284C33B0001F4FBC /* GridViewSnapshotTests.swift in Sources */,
 				1B6DE9D923C5940B007F9859 /* EditorCommandSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
