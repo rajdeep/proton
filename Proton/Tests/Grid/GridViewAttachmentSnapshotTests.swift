@@ -1,8 +1,8 @@
 //
-//  GridViewSnapshotTests.swift
-//  ProtonTests
+//  GridViewAttachmentTests.swift
+//  Proton
 //
-//  Created by Rajdeep Kwatra on 5/6/2022.
+//  Created by Rajdeep Kwatra on 6/6/2022.
 //  Copyright © 2022 Rajdeep Kwatra. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +24,7 @@ import SnapshotTesting
 
 @testable import Proton
 
-class GridViewSnapshotTests: XCTestCase {
+class GridViewAttachmentSnapshotTests: XCTestCase {
     var recordMode = false
 
     override func setUp() {
@@ -33,13 +33,16 @@ class GridViewSnapshotTests: XCTestCase {
         recordMode = false
     }
 
-    func testRendersGridView() {
-        let config = GridConfiguration(numberOfRows: 2, numberOfColumns: 3, minColumnWidth: 100, maxColumnWidth: 200, minRowHeight: 40, maxRowHeight: 300)
-        let gridView = GridView(config: config)
+    func testRendersGridViewAttachment() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let attachment = GridViewAttachment(config: .default)
 
-        let vc = GenericViewTestViewController(contentView: gridView)
-        vc.render(size: CGSize(width: 350, height: 120))
-        assertSnapshot(matching: vc.view, as: .image, record: recordMode)
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
-
 }

@@ -58,6 +58,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
     let commands: [(title: String, command: EditorCommand, highlightOnTouch: Bool)] = [
         (title: "Panel", command: PanelCommand(), highlightOnTouch: false),
         (title: "Expand", command: ExpandCommand(), highlightOnTouch: false),
+        (title: "Table", command: CreateGridViewCommand(), highlightOnTouch: false),
         (title: "List", command: ListCommand(), highlightOnTouch: false),
         (title: "Bold", command: BoldCommand(), highlightOnTouch: true),
         (title: "Italics", command: ItalicsCommand(), highlightOnTouch: true),

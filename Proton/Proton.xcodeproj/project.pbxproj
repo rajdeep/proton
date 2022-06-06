@@ -107,6 +107,7 @@
 		1BBAC3E323CE85660088A1C8 /* RendererCommandExecutorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3E223CE85660088A1C8 /* RendererCommandExecutorTests.swift */; };
 		1BBD529F2608713C00EB5DA8 /* ProtonCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB4AAE72606DA2D000D7584 /* ProtonCore.framework */; };
 		1BBE4EFC248CB15E00D1C788 /* ListCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */; };
+		1BC0AA60284D92B3004B8862 /* CreateGridViewCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC0AA5F284D92B3004B8862 /* CreateGridViewCommand.swift */; };
 		1BC25B542448768200FF88AC /* EditorContextDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC25B532448768200FF88AC /* EditorContextDelegateTests.swift */; };
 		1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */; };
 		1BD18581284861F7001F4FBC /* ListIndentCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD18580284861F7001F4FBC /* ListIndentCommand.swift */; };
@@ -117,6 +118,8 @@
 		1BD185C2284C3082001F4FBC /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD185C0284C304A001F4FBC /* GridView.swift */; };
 		1BD185C4284C33B0001F4FBC /* GridViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD185C3284C33B0001F4FBC /* GridViewSnapshotTests.swift */; };
 		1BD185C6284C34CF001F4FBC /* GenericViewTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD185C5284C34CF001F4FBC /* GenericViewTestViewController.swift */; };
+		1BD185CD284D6CB1001F4FBC /* GridViewAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD185CC284D6CB1001F4FBC /* GridViewAttachment.swift */; };
+		1BD185D0284D839C001F4FBC /* GridViewAttachmentSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD185CE284D8399001F4FBC /* GridViewAttachmentSnapshotTests.swift */; };
 		1BD21554246951090000BCE2 /* LayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD21553246951090000BCE2 /* LayoutManager.swift */; };
 		1BD21556246952370000BCE2 /* BackgroundStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD21555246952370000BCE2 /* BackgroundStyle.swift */; };
 		1BD9323E243CA506005E4136 /* CommandName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD9323D243CA506005E4136 /* CommandName.swift */; };
@@ -271,6 +274,7 @@
 		1BBAC3DF23CE81F40088A1C8 /* RendererCommandExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommandExecutor.swift; sourceTree = "<group>"; };
 		1BBAC3E223CE85660088A1C8 /* RendererCommandExecutorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommandExecutorTests.swift; sourceTree = "<group>"; };
 		1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCommandTests.swift; sourceTree = "<group>"; };
+		1BC0AA5F284D92B3004B8862 /* CreateGridViewCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGridViewCommand.swift; sourceTree = "<group>"; };
 		1BC25B532448768200FF88AC /* EditorContextDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContextDelegateTests.swift; sourceTree = "<group>"; };
 		1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommandExecutorTests.swift; sourceTree = "<group>"; };
 		1BD18580284861F7001F4FBC /* ListIndentCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIndentCommand.swift; sourceTree = "<group>"; };
@@ -281,6 +285,8 @@
 		1BD185C0284C304A001F4FBC /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		1BD185C3284C33B0001F4FBC /* GridViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewSnapshotTests.swift; sourceTree = "<group>"; };
 		1BD185C5284C34CF001F4FBC /* GenericViewTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericViewTestViewController.swift; sourceTree = "<group>"; };
+		1BD185CC284D6CB1001F4FBC /* GridViewAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewAttachment.swift; sourceTree = "<group>"; };
+		1BD185CE284D8399001F4FBC /* GridViewAttachmentSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewAttachmentSnapshotTests.swift; sourceTree = "<group>"; };
 		1BD21553246951090000BCE2 /* LayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManager.swift; sourceTree = "<group>"; };
 		1BD21555246952370000BCE2 /* BackgroundStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundStyle.swift; sourceTree = "<group>"; };
 		1BD9323D243CA506005E4136 /* CommandName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandName.swift; sourceTree = "<group>"; };
@@ -716,6 +722,14 @@
 			path = RendererCommands;
 			sourceTree = "<group>";
 		};
+		1BC0AA5E284D929E004B8862 /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				1BC0AA5F284D92B3004B8862 /* CreateGridViewCommand.swift */,
+			);
+			path = Commands;
+			sourceTree = "<group>";
+		};
 		1BD1791A23C588450066DC13 /* EditorCommands */ = {
 			isa = PBXGroup;
 			children = (
@@ -742,7 +756,9 @@
 		1BD185B8284C29DB001F4FBC /* Grid */ = {
 			isa = PBXGroup;
 			children = (
+				1BC0AA5E284D929E004B8862 /* Commands */,
 				1BD185C7284D63F1001F4FBC /* View */,
+				1BD185CC284D6CB1001F4FBC /* GridViewAttachment.swift */,
 			);
 			path = Grid;
 			sourceTree = "<group>";
@@ -752,6 +768,7 @@
 			children = (
 				1BD185BE284C2A66001F4FBC /* GridTests.swift */,
 				1BD185C3284C33B0001F4FBC /* GridViewSnapshotTests.swift */,
+				1BD185CE284D8399001F4FBC /* GridViewAttachmentSnapshotTests.swift */,
 			);
 			path = Grid;
 			sourceTree = "<group>";
@@ -1044,9 +1061,11 @@
 				1B2BC0DD23CF18C700407DEE /* EditorContentDecoding.swift in Sources */,
 				1B45CDC523BF13D4001EB196 /* NSRangeExtensions.swift in Sources */,
 				1BBAC3E023CE81F40088A1C8 /* RendererCommandExecutor.swift in Sources */,
+				1BD185CD284D6CB1001F4FBC /* GridViewAttachment.swift in Sources */,
 				1B45014F247E5AD9007B3EE9 /* SequenceGenerator.swift in Sources */,
 				1BD993B823C9AE4200563ACB /* NSAttributedString+Content.swift in Sources */,
 				1B975B0123CD45DC00EC410C /* RendererViewContext.swift in Sources */,
+				1BC0AA60284D92B3004B8862 /* CreateGridViewCommand.swift in Sources */,
 				1B4B60CD247FC6AF002B63CF /* ListTextProcessor.swift in Sources */,
 				1BFFEF0C23C30D5200D2BA35 /* EditorContentView.swift in Sources */,
 				1B82570923C5674E0033A0A9 /* EditorCommand.swift in Sources */,
@@ -1114,6 +1133,7 @@
 				1BBE4EFC248CB15E00D1C788 /* ListCommandTests.swift in Sources */,
 				1B5E2583240F5B0C00163E74 /* NSAttributedStringExtensionTests.swift in Sources */,
 				1B45CDCB23BF1621001EB196 /* MockDefaultTextFormattingProvider.swift in Sources */,
+				1BD185D0284D839C001F4FBC /* GridViewAttachmentSnapshotTests.swift in Sources */,
 				1B45CDA923BEED0E001EB196 /* AutogrowingTextViewTests.swift in Sources */,
 				1BD185BF284C2A66001F4FBC /* GridTests.swift in Sources */,
 				1B3D19CA2483484A00B3AB59 /* EditorListsSnapshotTests.swift in Sources */,

@@ -20,17 +20,27 @@
 
 import Foundation
 
-public struct GridCellStyle {
+public struct GridCellConfiguration {
     let borderColor: UIColor
     let borderWidth: CGFloat
 
     let cornerRadius: CGFloat
 
-    init(borderColor: UIColor = .gray, borderWidth: CGFloat = 0.5, cornerRadius: CGFloat = 2) {
+    let minRowHeight: CGFloat
+    let maxRowHeight: CGFloat
+
+
+    init(borderColor: UIColor = .gray, borderWidth: CGFloat = 0.5, cornerRadius: CGFloat = 2, minRowHeight: CGFloat = 40, maxRowHeight: CGFloat = 300) {
         self.borderColor = borderColor
         self.borderWidth = borderWidth
         self.cornerRadius = cornerRadius
+        self.minRowHeight = minRowHeight
+        self.maxRowHeight = maxRowHeight
     }
+}
+
+protocol GridCellDelegate: AnyObject {
+    func cell(_ cell: GridCell, didChangeBounds bounds: CGRect)
 }
 
 public class GridCell {
@@ -48,12 +58,9 @@ public class GridCell {
         columnSpan.count > 1
     }
 
-    var debugDescription: String {
-        id
-    }
-
     let contentView = UIView()
-    let style: GridCellStyle
+    let editor = EditorView()
+    let style: GridCellConfiguration
 
 
     let widthAnchorConstraint: NSLayoutConstraint
@@ -62,10 +69,13 @@ public class GridCell {
     var topAnchorConstraint: NSLayoutConstraint!
     var leadingAnchorConstraint: NSLayoutConstraint!
 
-    init(rowSpan: [Int], columnSpan: [Int], style: GridCellStyle = .init()) {
+    weak var delegate: GridCellDelegate?
+
+    init(rowSpan: [Int], columnSpan: [Int], style: GridCellConfiguration = .init()) {
         self.rowSpan = rowSpan
         self.columnSpan = columnSpan
         self.style = style
+        //TODO: Move to config
         self.contentView.layoutMargins = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
 
         widthAnchorConstraint = contentView.widthAnchor.constraint(equalToConstant: 0)
@@ -75,5 +85,35 @@ public class GridCell {
         contentView.layer.borderWidth = style.borderWidth
         contentView.layer.cornerRadius = style.cornerRadius
         contentView.clipsToBounds = true
+
+        setup()
+    }
+
+    private func setup() {
+        editor.translatesAutoresizingMaskIntoConstraints = false
+        editor.boundsObserver = self
+        contentView.addSubview(editor)
+
+        NSLayoutConstraint.activate([
+            editor.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
+            editor.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            editor.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
+            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: style.minRowHeight),
+            editor.heightAnchor.constraint(lessThanOrEqualToConstant: style.maxRowHeight)
+//                editor.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor),
+        ])
+
+        NSLayoutConstraint.activate([
+//            topAnchorConstraint,
+//            leadingAnchorConstraint,
+            widthAnchorConstraint,
+            heightAnchorConstraint
+        ])
+    }
+}
+
+extension GridCell: BoundsObserving {
+    public func didChangeBounds(_ bounds: CGRect) {
+        delegate?.cell(self, didChangeBounds: bounds)
     }
 }

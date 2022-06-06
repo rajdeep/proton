@@ -25,7 +25,8 @@ import XCTest
 
 class GridTests: XCTestCase {
     func testGeneratesGridCells() {
-        let grid = Grid(columnCount: 2, rowCount: 3, columnWidth: 100, rowHeight: 50)
+        let config = GridConfiguration(numberOfRows: 3, numberOfColumns: 2, minColumnWidth: 100, maxColumnWidth: 100, minRowHeight: 50, maxRowHeight: 50)
+        let grid = Grid(config: config, cells: generateCells(config: config))
         let cells = grid.cells
         XCTAssertEqual(cells.count, 6)
         XCTAssertEqual(grid.size, CGSize(width: 200, height: 150))
@@ -42,8 +43,10 @@ class GridTests: XCTestCase {
     }
 
     func testGetsFrameForCell() {
-        let grid = Grid(columnCount: 3, rowCount: 3, columnWidth: 100, rowHeight: 50)
+        let config = GridConfiguration(numberOfRows: 3, numberOfColumns: 3, minColumnWidth: 100, maxColumnWidth: 100, minRowHeight: 50, maxRowHeight: 50)
+        let grid = Grid(config: config, cells: generateCells(config: config))
         let cells = grid.cells
+
 
         let cellTopLeft = grid.frameForCell(cells[0])
         let cellMiddle = grid.frameForCell(cells[4])
@@ -52,5 +55,20 @@ class GridTests: XCTestCase {
         XCTAssertEqual(cellTopLeft, CGRect(x: 0.0, y: 0.0, width: 100.0, height: 50.0))
         XCTAssertEqual(cellMiddle, CGRect(x: 100.0, y: 50.0, width: 100.0, height: 50.0))
         XCTAssertEqual(cellBottomRight, CGRect(x: 200.0, y: 100.0, width: 100.0, height: 50.0))
+    }
+
+    private func generateCells(config: GridConfiguration) -> [GridCell] {
+        var cells = [GridCell]()
+        for row in 0..<config.numberOfRows {
+            for column in 0..<config.numberOfColumns {
+                let cell = GridCell(
+                    rowSpan: [row],
+                    columnSpan: [column],
+                    style: GridCellConfiguration(minRowHeight: config.minRowHeight, maxRowHeight: config.maxRowHeight)
+                )
+                cells.append(cell)
+            }
+        }
+        return cells
     }
 }

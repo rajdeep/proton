@@ -24,8 +24,10 @@ import UIKit
 
 class Grid {
     private(set) var cells = [GridCell]()
-    private(set) var rowHeights = [CGFloat]()
-    private(set) var columnWidths = [CGFloat]()
+    private let config: GridConfiguration
+
+    var rowHeights = [CGFloat]()
+    var columnWidths = [CGFloat]()
 
     private(set) var defaultRowHeight: CGFloat
     private(set) var defaultColumnWidth: CGFloat
@@ -36,27 +38,17 @@ class Grid {
         return CGSize(width: width, height: height)
     }
 
-    init(columnCount: Int = 2, rowCount: Int = 2, columnWidth: CGFloat = 100, rowHeight: CGFloat = 40) {
-        defaultColumnWidth = columnWidth
-        defaultRowHeight = rowHeight
+    init(config: GridConfiguration, cells: [GridCell]) {
+        self.config = config
+        defaultColumnWidth = config.minColumnWidth
+        defaultRowHeight = config.minRowHeight
 
-        for _ in 0..<columnCount {
+        for _ in 0..<config.numberOfColumns {
             self.columnWidths.append(defaultColumnWidth)
         }
 
-        for _ in 0..<rowCount {
+        for _ in 0..<config.numberOfRows {
             self.rowHeights.append(defaultRowHeight)
-        }
-        generate(rowCount: rowCount, columnCount: columnCount)
-    }
-
-    private func generate(rowCount: Int, columnCount: Int) {
-        var cells = [GridCell]()
-        for row in 0..<rowCount {
-            for column in 0..<columnCount {
-                let cell = GridCell(rowSpan: [row], columnSpan: [column])
-                cells.append(cell)
-            }
         }
         self.cells = cells
     }
