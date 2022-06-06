@@ -26,15 +26,15 @@ class Grid {
     private(set) var cells = [GridCell]()
     private let config: GridConfiguration
 
-    var rowHeights = [CGFloat]()
-    var columnWidths = [CGFloat]()
+    var rowHeights = [GridCellDimension]()
+    var columnWidths = [GridCellDimension]()
 
     private(set) var defaultRowHeight: CGFloat
     private(set) var defaultColumnWidth: CGFloat
 
-    var size: CGSize {
-        let width = columnWidths.reduce(0, +)
-        let height = rowHeights.reduce(0, +)
+    func sizeThatFits(size: CGSize) -> CGSize {
+        let width = columnWidths.reduce(0.0) { $0 + $1.value(basedOn: size.width)}
+        let height = rowHeights.reduce(0.0) { $0 + $1.value(basedOn: size.height)}
         return CGSize(width: width, height: height)
     }
 
@@ -44,16 +44,16 @@ class Grid {
         defaultRowHeight = config.minRowHeight
 
         for _ in 0..<config.numberOfColumns {
-            self.columnWidths.append(defaultColumnWidth)
+            self.columnWidths.append(.fractional(0.33))
         }
 
         for _ in 0..<config.numberOfRows {
-            self.rowHeights.append(defaultRowHeight)
+            self.rowHeights.append(.fractional(0.5))
         }
         self.cells = cells
     }
 
-    func frameForCell(_ cell: GridCell) -> CGRect {
+    func frameForCell(_ cell: GridCell, basedOn size: CGSize) -> CGRect {
         var x: CGFloat = 0
         var y: CGFloat = 0
 
@@ -63,21 +63,21 @@ class Grid {
         }
 
         if minColumnSpan > 0 {
-            x = columnWidths[0..<minColumnSpan].reduce(0.0, +)
+            x = columnWidths[0..<minColumnSpan].reduce(0.0) { $0 + $1.value(basedOn: size.width)}
         }
 
         if minRowSpan > 0 {
-            y = rowHeights[0..<minRowSpan].reduce(0.0, +)
+            y = rowHeights[0..<minRowSpan].reduce(0.0) { $0 + $1.value(basedOn: size.height)}
         }
 
         var width: CGFloat = 0
         for col in cell.columnSpan {
-            width += columnWidths[col]
+            width += columnWidths[col].value(basedOn: size.width)
         }
 
         var height: CGFloat = 0
         for row in cell.rowSpan {
-            height += rowHeights[row]
+            height += rowHeights[row].value(basedOn: size.height)
         }
 
         return CGRect(x: x, y: y, width: width, height: height)

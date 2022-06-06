@@ -21,6 +21,20 @@
 import Foundation
 import UIKit
 
+public enum GridCellDimension {
+    case fixed(CGFloat)
+    case fractional(CGFloat)
+
+    public func value(basedOn total: CGFloat) -> CGFloat {
+        switch self {
+        case .fixed(let value):
+            return value
+        case .fractional(let value):
+            return value * total
+        }
+    }
+}
+
 public struct GridConfiguration {
     public let numberOfRows: Int
     public let numberOfColumns: Int
@@ -53,7 +67,14 @@ public class GridView: UIView {
     }
 
     public override var intrinsicContentSize: CGSize {
-        grid.size
+        return grid.sizeThatFits(size: frame.size)
+    }
+
+    public override var bounds: CGRect {
+        didSet {
+            guard oldValue != bounds else { return }
+            recalculateCellBounds()
+        }
     }
 
     private func setup() {
@@ -61,7 +82,7 @@ public class GridView: UIView {
             cell.contentView.translatesAutoresizingMaskIntoConstraints = false
 
             addSubview(cell.contentView)
-            let frame = grid.frameForCell(cell)
+            let frame = grid.frameForCell(cell, basedOn: frame.size)
             let contentView = cell.contentView
 
             cell.widthAnchorConstraint.constant = frame.width
@@ -79,6 +100,21 @@ public class GridView: UIView {
 
             cell.delegate = self
         }
+    }
+
+    private func recalculateCellBounds() {
+        for c in grid.cells {
+            // TODO: Optimize to recalculate frames for affected cells only i.e. row>=current
+            let frame = grid.frameForCell(c, basedOn: bounds.size)
+            c.contentView.frame = frame
+            c.widthAnchorConstraint.constant = frame.width
+            c.heightAnchorConstraint.constant = frame.height
+            c.topAnchorConstraint.constant = frame.minY
+            c.leadingAnchorConstraint.constant = frame.minX
+        }
+
+        boundsObserver?.didChangeBounds(CGRect(origin: bounds.origin, size: frame.size))
+        invalidateIntrinsicContentSize()
     }
 
     private static func generateCells(config: GridConfiguration) -> [GridCell] {
@@ -101,26 +137,16 @@ extension GridView: GridCellDelegate {
     func cell(_ cell: GridCell, didChangeBounds bounds: CGRect) {
         if let row = cell.rowSpan.first,
            grid.rowHeights.count > row {
-            grid.rowHeights[row] = bounds.height
+            grid.rowHeights[row] = .fixed(bounds.height)
         }
 
-        for c in grid.cells {
-            // TODO: Optimize to recalculate frames for affected cells only i.e. row>=current
-            let frame = grid.frameForCell(c)
-            c.contentView.frame = frame
-            c.widthAnchorConstraint.constant = frame.width
-            c.heightAnchorConstraint.constant = frame.height
-            c.topAnchorConstraint.constant = frame.minY
-            c.leadingAnchorConstraint.constant = frame.minX
-        }
-        boundsObserver?.didChangeBounds(CGRect(origin: bounds.origin, size: grid.size))
-        invalidateIntrinsicContentSize()
+        recalculateCellBounds()
+
     }
 }
 
 extension GridView: DynamicBoundsProviding {
     public func sizeFor(attachment: Attachment, containerSize: CGSize, lineRect: CGRect) -> CGSize {
-        self.frame.size = grid.size
-        return grid.size
+        return grid.sizeThatFits(size: frame.size)
     }
 }

@@ -109,6 +109,14 @@ public class GridCell {
             widthAnchorConstraint,
             heightAnchorConstraint
         ])
+
+        editor.layer.borderWidth = 1
+        editor.layer.borderColor = UIColor.red.cgColor
+
+        contentView.layer.borderWidth = 1
+        contentView.layer.borderColor = UIColor.green.cgColor
+
+
     }
 }
 
