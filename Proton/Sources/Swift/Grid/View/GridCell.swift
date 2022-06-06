@@ -50,6 +50,8 @@ public class GridCell {
     var rowSpan: [Int]
     var columnSpan: [Int]
 
+    public let editor = EditorView()
+
     var isMergedRows: Bool {
         rowSpan.count > 1
     }
@@ -58,10 +60,13 @@ public class GridCell {
         columnSpan.count > 1
     }
 
-    let contentView = UIView()
-    let editor = EditorView()
-    let style: GridCellConfiguration
+    var contentSize: CGSize {
+        editor.frame.size
+    }
 
+    let contentView = UIView()
+
+    let style: GridCellConfiguration
 
     let widthAnchorConstraint: NSLayoutConstraint
     let heightAnchorConstraint: NSLayoutConstraint
@@ -110,11 +115,11 @@ public class GridCell {
             heightAnchorConstraint
         ])
 
-        editor.layer.borderWidth = 1
-        editor.layer.borderColor = UIColor.red.cgColor
-
-        contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.green.cgColor
+//        editor.layer.borderWidth = 1
+//        editor.layer.borderColor = UIColor.red.cgColor
+//
+//        contentView.layer.borderWidth = 1
+//        contentView.layer.borderColor = UIColor.green.cgColor
 
 
     }

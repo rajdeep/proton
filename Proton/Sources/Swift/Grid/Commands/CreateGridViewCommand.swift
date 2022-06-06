@@ -25,9 +25,22 @@ import UIKit
 public class CreateGridViewCommand: EditorCommand {
 
     public let name = CommandName("createGridViewCommand")
-    public init() {} 
+    public init() {}
     public func execute(on editor: EditorView) {
-        let attachment = GridViewAttachment(config: GridConfiguration.default)
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fractional(0.25)),
+                GridColumnConfiguration(dimension: .fractional(0.25)),
+                GridColumnConfiguration(dimension: .fractional(0.25)),
+                GridColumnConfiguration(dimension: .fractional(0.25)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 80, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 120, maxRowHeight: 400),
+            ])
+
+        let attachment = GridViewAttachment(config: config, initialSize: editor.frame.size)
         attachment.selectBeforeDelete = true
         editor.insertAttachment(in: editor.selectedRange, attachment: attachment)
 

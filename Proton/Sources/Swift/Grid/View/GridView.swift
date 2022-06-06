@@ -21,40 +21,15 @@
 import Foundation
 import UIKit
 
-public enum GridCellDimension {
-    case fixed(CGFloat)
-    case fractional(CGFloat)
-
-    public func value(basedOn total: CGFloat) -> CGFloat {
-        switch self {
-        case .fixed(let value):
-            return value
-        case .fractional(let value):
-            return value * total
-        }
-    }
-}
-
-public struct GridConfiguration {
-    public let numberOfRows: Int
-    public let numberOfColumns: Int
-
-    public let minColumnWidth: CGFloat
-    public let maxColumnWidth: CGFloat
-
-    public let minRowHeight: CGFloat
-    public let maxRowHeight: CGFloat
-
-    public static let `default` = GridConfiguration(numberOfRows: 2, numberOfColumns: 3, minColumnWidth: 100, maxColumnWidth: 200, minRowHeight: 40, maxRowHeight: 400)
-}
-
 public class GridView: UIView {
     let grid: Grid
     let config: GridConfiguration
+    let initialSize: CGSize
     weak var boundsObserver: BoundsObserving?
 
-    init(config: GridConfiguration = .default) {
+    init(config: GridConfiguration, initialSize: CGSize) {
         self.config = config
+        self.initialSize = initialSize
         let cells = Self.generateCells(config: config)
         grid = Grid(config: config, cells: cells)
         super.init(frame: .zero)
@@ -82,7 +57,11 @@ public class GridView: UIView {
             cell.contentView.translatesAutoresizingMaskIntoConstraints = false
 
             addSubview(cell.contentView)
-            let frame = grid.frameForCell(cell, basedOn: frame.size)
+            // Render with a high number for width/height to initialize
+            // since Editor may not be (and most likely not initialized at init of GridView, having actual value causes autolayout errors
+            // in combination with fractional widths
+            //TODO: revisit - likely issue with the layout margin guides ie non-zero padding
+            let frame = grid.frameForCell(cell, basedOn: initialSize)
             let contentView = cell.contentView
 
             cell.widthAnchorConstraint.constant = frame.width
@@ -121,10 +100,12 @@ public class GridView: UIView {
         var cells = [GridCell]()
         for row in 0..<config.numberOfRows {
             for column in 0..<config.numberOfColumns {
+                let minRowHeight = config.rowsConfiguration[row].minRowHeight
+                let maxRowHeight = config.rowsConfiguration[row].maxRowHeight
                 let cell = GridCell(
                     rowSpan: [row],
                     columnSpan: [column],
-                    style: GridCellConfiguration(minRowHeight: config.minRowHeight, maxRowHeight: config.maxRowHeight)
+                    style: GridCellConfiguration(minRowHeight: minRowHeight, maxRowHeight: maxRowHeight)
                 )
                 cells.append(cell)
             }
@@ -135,9 +116,12 @@ public class GridView: UIView {
 
 extension GridView: GridCellDelegate {
     func cell(_ cell: GridCell, didChangeBounds bounds: CGRect) {
-        if let row = cell.rowSpan.first,
-           grid.rowHeights.count > row {
-            grid.rowHeights[row] = .fixed(bounds.height)
+        guard  let row = cell.rowSpan.first else { return }
+        if grid.rowHeights.count > row,
+           grid.maxContentHeightCellForRow(at: row)?.id == cell.id {
+            grid.rowHeights[row] = bounds.height
+        } else {
+            grid.rowHeights[row] = grid.maxContentHeightCellForRow(at: row)?.contentSize.height ?? 0
         }
 
         recalculateCellBounds()
@@ -147,6 +131,7 @@ extension GridView: GridCellDelegate {
 
 extension GridView: DynamicBoundsProviding {
     public func sizeFor(attachment: Attachment, containerSize: CGSize, lineRect: CGRect) -> CGSize {
+        guard bounds.size != .zero else { return .zero }
         return grid.sizeThatFits(size: frame.size)
     }
 }

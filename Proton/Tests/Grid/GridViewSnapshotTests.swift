@@ -34,12 +34,41 @@ class GridViewSnapshotTests: XCTestCase {
     }
 
     func testRendersGridView() {
-        let config = GridConfiguration(numberOfRows: 2, numberOfColumns: 3, minColumnWidth: 100, maxColumnWidth: 200, minRowHeight: 40, maxRowHeight: 300)
-        let gridView = GridView(config: config)
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 30, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 80, maxRowHeight: 400),
+            ])
+        let gridView = GridView(config: config, initialSize: CGSize(width: 350, height: 200))
 
         let vc = GenericViewTestViewController(contentView: gridView)
-        vc.render(size: CGSize(width: 350, height: 120))
+        vc.render(size: CGSize(width: 350, height: 200))
         assertSnapshot(matching: vc.view, as: .image, record: recordMode)
     }
 
+//    func testRendersGridViewWithFractionalColumns() {
+//        let config = GridConfiguration(
+//            columnsConfiguration: [
+//                GridColumnConfiguration(dimension: .fractional(0.25)),
+//                GridColumnConfiguration(dimension: .fractional(0.25)),
+//                GridColumnConfiguration(dimension: .fractional(0.25)),
+//                GridColumnConfiguration(dimension: .fractional(0.25)),
+//            ],
+//            rowsConfiguration: [
+//                GridRowConfiguration(minRowHeight: 30, maxRowHeight: 400),
+//                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+//                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+//            ])
+//        let gridView = GridView(config: config, initialSize: CGSize(width: 400, height: 150))
+//
+//        let vc = GenericViewTestViewController(contentView: gridView)
+//        vc.render(size: CGSize(width: 400, height: 150))
+//        assertSnapshot(matching: vc.view, as: .image, record: recordMode)
+//    }
 }

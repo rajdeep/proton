@@ -26,29 +26,18 @@ class Grid {
     private(set) var cells = [GridCell]()
     private let config: GridConfiguration
 
-    var rowHeights = [GridCellDimension]()
-    var columnWidths = [GridCellDimension]()
-
-    private(set) var defaultRowHeight: CGFloat
-    private(set) var defaultColumnWidth: CGFloat
-
-    func sizeThatFits(size: CGSize) -> CGSize {
-        let width = columnWidths.reduce(0.0) { $0 + $1.value(basedOn: size.width)}
-        let height = rowHeights.reduce(0.0) { $0 + $1.value(basedOn: size.height)}
-        return CGSize(width: width, height: height)
-    }
+    var rowHeights = [CGFloat]()
+    var columnWidths = [GridColumnDimension]()
 
     init(config: GridConfiguration, cells: [GridCell]) {
         self.config = config
-        defaultColumnWidth = config.minColumnWidth
-        defaultRowHeight = config.minRowHeight
 
-        for _ in 0..<config.numberOfColumns {
-            self.columnWidths.append(.fractional(0.33))
+        for column in config.columnsConfiguration {
+            self.columnWidths.append(column.dimension)
         }
 
-        for _ in 0..<config.numberOfRows {
-            self.rowHeights.append(.fractional(0.5))
+        for row in config.rowsConfiguration {
+            self.rowHeights.append(row.minRowHeight)
         }
         self.cells = cells
     }
@@ -67,7 +56,7 @@ class Grid {
         }
 
         if minRowSpan > 0 {
-            y = rowHeights[0..<minRowSpan].reduce(0.0) { $0 + $1.value(basedOn: size.height)}
+            y = rowHeights[0..<minRowSpan].reduce(0.0, +)
         }
 
         var width: CGFloat = 0
@@ -77,9 +66,26 @@ class Grid {
 
         var height: CGFloat = 0
         for row in cell.rowSpan {
-            height += rowHeights[row].value(basedOn: size.height)
+            height += rowHeights[row]
         }
-
         return CGRect(x: x, y: y, width: width, height: height)
+    }
+
+    func sizeThatFits(size: CGSize) -> CGSize {
+        let width = columnWidths.reduce(0.0) { $0 + $1.value(basedOn: size.width)}
+        let height = rowHeights.reduce(0.0, +)
+        return CGSize(width: width, height: height)
+    }
+
+    func maxContentHeightCellForRow(at index: Int) -> GridCell? {
+        //TODO: account for merged rows
+        let cells = cells.filter { $0.rowSpan.contains(index) }
+        var maxHeightCell: GridCell?
+        for cell in cells {
+            if cell.contentSize.height > maxHeightCell?.contentSize.height ?? 0 {
+                maxHeightCell = cell
+            }
+        }
+        return maxHeightCell
     }
 }

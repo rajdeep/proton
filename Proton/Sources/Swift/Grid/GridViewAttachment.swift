@@ -13,10 +13,9 @@ extension EditorContent.Name {
 }
 
 public class GridViewAttachment: Attachment {
-    var view: GridView
-
-    public init(config: GridConfiguration) {
-        view = GridView(config: config)
+    public let view: GridView
+    public init(config: GridConfiguration, initialSize: CGSize) {
+        view = GridView(config: config, initialSize: initialSize)
         super.init(view, size: .fullWidth)
         view.boundsObserver = self
     }
