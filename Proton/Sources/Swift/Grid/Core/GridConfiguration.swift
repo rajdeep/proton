@@ -24,13 +24,24 @@ public enum GridColumnDimension {
 
 public struct GridColumnConfiguration {
     public let dimension: GridColumnDimension
-    public let backgroundColor: UIColor = .white
+    public let style: GridCellStyle
+
+    public init(dimension: GridColumnDimension, style: GridCellStyle = .init()) {
+        self.dimension = dimension
+        self.style = style
+    }
 }
 
 public struct GridRowConfiguration {
     public let minRowHeight: CGFloat
     public let maxRowHeight: CGFloat
-    public let backgroundColor: UIColor = .white
+    public let style: GridCellStyle
+
+    public init(minRowHeight: CGFloat, maxRowHeight: CGFloat, style: GridCellStyle = .init()) {
+        self.minRowHeight = minRowHeight
+        self.maxRowHeight = maxRowHeight
+        self.style = style
+    }
 }
 
 public struct GridConfiguration {

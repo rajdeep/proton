@@ -20,22 +20,38 @@
 
 import Foundation
 
-public struct GridCellConfiguration {
-    let borderColor: UIColor
-    let borderWidth: CGFloat
+public struct GridCellStyle {
+    public var borderColor: UIColor?
+    public var borderWidth: CGFloat?
+    public var cornerRadius: CGFloat?
+    public var backgroundColor: UIColor?
+    public var textColor: UIColor?
+    public var font: UIFont?
 
-    let cornerRadius: CGFloat
-
-    let minRowHeight: CGFloat
-    let maxRowHeight: CGFloat
-
-
-    init(borderColor: UIColor = .gray, borderWidth: CGFloat = 0.5, cornerRadius: CGFloat = 2, minRowHeight: CGFloat = 40, maxRowHeight: CGFloat = 300) {
+    public init(
+        borderColor: UIColor? = nil,
+        borderWidth: CGFloat? = nil,
+        cornerRadius: CGFloat? = nil,
+        backgroundColor: UIColor? = nil,
+        textColor: UIColor? = nil,
+        font: UIFont? = nil
+    ) {
         self.borderColor = borderColor
         self.borderWidth = borderWidth
         self.cornerRadius = cornerRadius
-        self.minRowHeight = minRowHeight
-        self.maxRowHeight = maxRowHeight
+        self.backgroundColor = backgroundColor
+        self.textColor = textColor
+        self.font = font
+    }
+
+    public static func merged(style: GridCellStyle, other: GridCellStyle) -> GridCellStyle {
+        GridCellStyle(
+            borderColor: style.borderColor ?? other.borderColor,
+            borderWidth: style.borderWidth ?? other.borderWidth,
+            cornerRadius: style.cornerRadius ?? other.cornerRadius,
+            backgroundColor: style.backgroundColor ?? other.backgroundColor,
+            textColor: style.textColor ?? other.textColor,
+            font: style.font ?? other.font)
     }
 }
 
@@ -66,7 +82,7 @@ public class GridCell {
 
     let contentView = UIView()
 
-    let style: GridCellConfiguration
+    let style: GridCellStyle
 
     let widthAnchorConstraint: NSLayoutConstraint
     let heightAnchorConstraint: NSLayoutConstraint
@@ -76,22 +92,51 @@ public class GridCell {
 
     weak var delegate: GridCellDelegate?
 
-    init(rowSpan: [Int], columnSpan: [Int], style: GridCellConfiguration = .init()) {
+    let minHeight: CGFloat
+    let maxHeight: CGFloat
+
+    init(rowSpan: [Int], columnSpan: [Int], minHeight: CGFloat, maxHeight: CGFloat, style: GridCellStyle = .init()) {
         self.rowSpan = rowSpan
         self.columnSpan = columnSpan
         self.style = style
+        self.minHeight = minHeight
+        self.maxHeight = maxHeight
         //TODO: Move to config
         self.contentView.layoutMargins = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
 
         widthAnchorConstraint = contentView.widthAnchor.constraint(equalToConstant: 0)
         heightAnchorConstraint = contentView.heightAnchor.constraint(equalToConstant: 0)
 
-        contentView.layer.borderColor = style.borderColor.cgColor
-        contentView.layer.borderWidth = style.borderWidth
-        contentView.layer.cornerRadius = style.cornerRadius
-        contentView.clipsToBounds = true
+        updateStyle(style: style)
 
         setup()
+    }
+
+    func updateStyle(style: GridCellStyle) {
+        contentView.layer.borderColor = UIColor.gray.cgColor
+        contentView.layer.borderWidth = 1
+        contentView.layer.cornerRadius = 2
+
+        if let borderColor = style.borderColor?.cgColor {
+            contentView.layer.borderColor = borderColor
+        }
+        if let borderWidth = style.borderWidth {
+            contentView.layer.borderWidth = borderWidth
+        }
+        if let cornerRadius = style.cornerRadius {
+            contentView.layer.cornerRadius = cornerRadius
+            contentView.clipsToBounds = true
+        }
+        if let font = style.font {
+            editor.font = font
+        }
+        if let textColor = style.textColor {
+            editor.textColor = textColor
+        }
+        if let backgroundColor = style.backgroundColor {
+            editor.backgroundColor = backgroundColor
+            contentView.backgroundColor = backgroundColor
+        }
     }
 
     private func setup() {
@@ -103,8 +148,8 @@ public class GridCell {
             editor.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
             editor.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
             editor.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
-            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: style.minRowHeight),
-            editor.heightAnchor.constraint(lessThanOrEqualToConstant: style.maxRowHeight)
+            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: minHeight),
+            editor.heightAnchor.constraint(lessThanOrEqualToConstant: maxHeight)
 //                editor.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor),
         ])
 

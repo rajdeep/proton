@@ -99,13 +99,19 @@ public class GridView: UIView {
     private static func generateCells(config: GridConfiguration) -> [GridCell] {
         var cells = [GridCell]()
         for row in 0..<config.numberOfRows {
+            let rowStyle = config.rowsConfiguration[row].style
+            let minRowHeight = config.rowsConfiguration[row].minRowHeight
+            let maxRowHeight = config.rowsConfiguration[row].maxRowHeight
+
             for column in 0..<config.numberOfColumns {
-                let minRowHeight = config.rowsConfiguration[row].minRowHeight
-                let maxRowHeight = config.rowsConfiguration[row].maxRowHeight
+                let columnStyle = config.columnsConfiguration[column].style
+                let mergedStyle = GridCellStyle.merged(style: rowStyle, other: columnStyle)
                 let cell = GridCell(
                     rowSpan: [row],
                     columnSpan: [column],
-                    style: GridCellConfiguration(minRowHeight: minRowHeight, maxRowHeight: maxRowHeight)
+                    minHeight: minRowHeight,
+                    maxHeight: maxRowHeight,
+                    style: mergedStyle
                 )
                 cells.append(cell)
             }

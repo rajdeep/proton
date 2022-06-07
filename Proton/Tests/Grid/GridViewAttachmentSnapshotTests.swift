@@ -152,4 +152,138 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         viewController.render(size: CGSize(width: 400, height: 350))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+    func testRendersGridViewAttachmentWithStyledRow() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let style = GridCellStyle(
+            borderColor: .blue,
+            borderWidth: 1,
+            cornerRadius: 3,
+            backgroundColor: .lightGray,
+            textColor: .darkGray,
+            font: UIFont.systemFont(ofSize: 14, weight: .bold))
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(30), style: style),
+                GridColumnConfiguration(dimension: .fractional(0.45)),
+                GridColumnConfiguration(dimension: .fractional(0.45)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+            ])
+        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let cell00Editor = attachment.view.grid.cells[0].editor
+        let cell10Editor = attachment.view.grid.cells[3].editor
+
+        cell00Editor.replaceCharacters(in: .zero, with: "1.")
+        cell10Editor.replaceCharacters(in: .zero, with: "2.")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testRendersGridViewAttachmentWithStyledColumn() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let style = GridCellStyle(
+            borderColor: .darkGray,
+            borderWidth: 1,
+            cornerRadius: 3,
+            backgroundColor: .red,
+            textColor: .white,
+            font: UIFont.systemFont(ofSize: 14, weight: .bold))
+
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fractional(0.33)),
+                GridColumnConfiguration(dimension: .fractional(0.33)),
+                GridColumnConfiguration(dimension: .fractional(0.33)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400, style: style),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+            ])
+
+        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let cell00Editor = attachment.view.grid.cells[0].editor
+        let cell01Editor = attachment.view.grid.cells[1].editor
+        let cell02Editor = attachment.view.grid.cells[2].editor
+
+        cell00Editor.replaceCharacters(in: .zero, with: "Col 1")
+        cell01Editor.replaceCharacters(in: .zero, with: "Col 2")
+        cell02Editor.replaceCharacters(in: .zero, with: "Col 3")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testRendersGridViewAttachmentWithMixedStyles() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let rowStyle = GridCellStyle(
+            borderColor: .darkGray,
+            borderWidth: 1,
+            cornerRadius: 3,
+            backgroundColor: .red,
+            textColor: .white,
+            font: UIFont.systemFont(ofSize: 14, weight: .bold))
+
+        let columnStyle = GridCellStyle(
+            borderColor: .red,
+            borderWidth: 2,
+            cornerRadius: 3,
+            backgroundColor: .blue,
+            textColor: .white,
+            font: UIFont.systemFont(ofSize: 14, weight: .bold))
+
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fractional(0.33)),
+                GridColumnConfiguration(dimension: .fractional(0.33), style: columnStyle),
+                GridColumnConfiguration(dimension: .fractional(0.33)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400, style: rowStyle),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+            ])
+
+        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let cell00Editor = attachment.view.grid.cells[0].editor
+        let cell01Editor = attachment.view.grid.cells[1].editor
+        let cell02Editor = attachment.view.grid.cells[2].editor
+
+        let cell10Editor = attachment.view.grid.cells[3].editor
+        let cell11Editor = attachment.view.grid.cells[4].editor
+        let cell12Editor = attachment.view.grid.cells[5].editor
+
+        cell00Editor.replaceCharacters(in: .zero, with: "Cell 1")
+        cell01Editor.replaceCharacters(in: .zero, with: "Cell 2")
+        cell02Editor.replaceCharacters(in: .zero, with: "Cell 3")
+
+        cell10Editor.replaceCharacters(in: .zero, with: "Cell 4")
+        cell11Editor.replaceCharacters(in: .zero, with: "Cell 5")
+        cell12Editor.replaceCharacters(in: .zero, with: "Cell 6")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 }

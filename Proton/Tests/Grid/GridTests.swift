@@ -86,7 +86,8 @@ class GridTests: XCTestCase {
                 let cell = GridCell(
                     rowSpan: [row],
                     columnSpan: [column],
-                    style: GridCellConfiguration(minRowHeight: rowConfig.minRowHeight, maxRowHeight: rowConfig.maxRowHeight)
+                    minHeight: rowConfig.minRowHeight,
+                    maxHeight: rowConfig.maxRowHeight
                 )
                 cells.append(cell)
             }
