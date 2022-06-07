@@ -29,7 +29,7 @@ public class CreateGridViewCommand: EditorCommand {
     public func execute(on editor: EditorView) {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fractional(0.25)),
+                GridColumnConfiguration(dimension: .fixed(150)),
                 GridColumnConfiguration(dimension: .fractional(0.25)),
                 GridColumnConfiguration(dimension: .fractional(0.25)),
                 GridColumnConfiguration(dimension: .fractional(0.25)),
@@ -43,6 +43,5 @@ public class CreateGridViewCommand: EditorCommand {
         let attachment = GridViewAttachment(config: config, initialSize: editor.frame.size)
         attachment.selectBeforeDelete = true
         editor.insertAttachment(in: editor.selectedRange, attachment: attachment)
-
     }
 }

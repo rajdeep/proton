@@ -45,7 +45,7 @@ class GridViewSnapshotTests: XCTestCase {
                 GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
                 GridRowConfiguration(minRowHeight: 80, maxRowHeight: 400),
             ])
-        let gridView = GridView(config: config, initialSize: CGSize(width: 350, height: 200))
+        let gridView = GridContentView(config: config, initialSize: CGSize(width: 350, height: 200))
 
         let vc = GenericViewTestViewController(contentView: gridView)
         vc.render(size: CGSize(width: 350, height: 200))

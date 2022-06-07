@@ -22,18 +22,20 @@ import Foundation
 import UIKit
 
 public class GridView: UIView {
-    let grid: Grid
-    let config: GridConfiguration
-    let initialSize: CGSize
-    weak var boundsObserver: BoundsObserving?
+    let gridView: GridContentView
+
+    public var boundsObserver: BoundsObserving? {
+        get { gridView.boundsObserver }
+        set { gridView.boundsObserver = newValue }
+    }
+
+    var grid: Grid {
+        gridView.grid
+    }
 
     init(config: GridConfiguration, initialSize: CGSize) {
-        self.config = config
-        self.initialSize = initialSize
-        let cells = Self.generateCells(config: config)
-        grid = Grid(config: config, cells: cells)
+        self.gridView = GridContentView(config: config, initialSize: initialSize)
         super.init(frame: .zero)
-
         setup()
     }
 
@@ -41,103 +43,14 @@ public class GridView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override var intrinsicContentSize: CGSize {
-        return grid.sizeThatFits(size: frame.size)
-    }
-
-    public override var bounds: CGRect {
-        didSet {
-            guard oldValue != bounds else { return }
-            recalculateCellBounds()
-        }
-    }
-
     private func setup() {
-        for cell in grid.cells {
-            cell.contentView.translatesAutoresizingMaskIntoConstraints = false
-
-            addSubview(cell.contentView)
-            // Render with a high number for width/height to initialize
-            // since Editor may not be (and most likely not initialized at init of GridView, having actual value causes autolayout errors
-            // in combination with fractional widths
-            //TODO: revisit - likely issue with the layout margin guides ie non-zero padding
-            let frame = grid.frameForCell(cell, basedOn: initialSize)
-            let contentView = cell.contentView
-
-            cell.widthAnchorConstraint.constant = frame.width
-            cell.heightAnchorConstraint.constant = frame.height
-
-            cell.topAnchorConstraint = contentView.topAnchor.constraint(equalTo: topAnchor, constant: frame.minY)
-            cell.leadingAnchorConstraint = contentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: frame.minX)
-
-            NSLayoutConstraint.activate([
-                cell.topAnchorConstraint,
-                cell.leadingAnchorConstraint,
-                cell.widthAnchorConstraint,
-                cell.heightAnchorConstraint
-            ])
-
-            cell.delegate = self
-        }
-    }
-
-    private func recalculateCellBounds() {
-        for c in grid.cells {
-            // TODO: Optimize to recalculate frames for affected cells only i.e. row>=current
-            let frame = grid.frameForCell(c, basedOn: bounds.size)
-            c.contentView.frame = frame
-            c.widthAnchorConstraint.constant = frame.width
-            c.heightAnchorConstraint.constant = frame.height
-            c.topAnchorConstraint.constant = frame.minY
-            c.leadingAnchorConstraint.constant = frame.minX
-        }
-
-        boundsObserver?.didChangeBounds(CGRect(origin: bounds.origin, size: frame.size))
-        invalidateIntrinsicContentSize()
-    }
-
-    private static func generateCells(config: GridConfiguration) -> [GridCell] {
-        var cells = [GridCell]()
-        for row in 0..<config.numberOfRows {
-            let rowStyle = config.rowsConfiguration[row].style
-            let minRowHeight = config.rowsConfiguration[row].minRowHeight
-            let maxRowHeight = config.rowsConfiguration[row].maxRowHeight
-
-            for column in 0..<config.numberOfColumns {
-                let columnStyle = config.columnsConfiguration[column].style
-                let mergedStyle = GridCellStyle.merged(style: rowStyle, other: columnStyle)
-                let cell = GridCell(
-                    rowSpan: [row],
-                    columnSpan: [column],
-                    minHeight: minRowHeight,
-                    maxHeight: maxRowHeight,
-                    style: mergedStyle
-                )
-                cells.append(cell)
-            }
-        }
-        return cells
-    }
-}
-
-extension GridView: GridCellDelegate {
-    func cell(_ cell: GridCell, didChangeBounds bounds: CGRect) {
-        guard  let row = cell.rowSpan.first else { return }
-        if grid.rowHeights.count > row,
-           grid.maxContentHeightCellForRow(at: row)?.id == cell.id {
-            grid.rowHeights[row] = bounds.height
-        } else {
-            grid.rowHeights[row] = grid.maxContentHeightCellForRow(at: row)?.contentSize.height ?? 0
-        }
-
-        recalculateCellBounds()
-
-    }
-}
-
-extension GridView: DynamicBoundsProviding {
-    public func sizeFor(attachment: Attachment, containerSize: CGSize, lineRect: CGRect) -> CGSize {
-        guard bounds.size != .zero else { return .zero }
-        return grid.sizeThatFits(size: frame.size)
+        gridView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(gridView)
+        NSLayoutConstraint.activate([
+            gridView.topAnchor.constraint(equalTo: topAnchor),
+            gridView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            gridView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            gridView.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
     }
 }
