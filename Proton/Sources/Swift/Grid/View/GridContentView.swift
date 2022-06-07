@@ -53,6 +53,11 @@ class GridContentView: UIScrollView {
         }
     }
 
+    func scrollTo(cell: GridCell, animated: Bool = true) {
+        let frame = grid.frameForCell(cell, basedOn: contentSize)
+        self.scrollRectToVisible(frame, animated: animated)
+    }
+
     private func setup() {
         for cell in grid.cells {
             cell.contentView.translatesAutoresizingMaskIntoConstraints = false

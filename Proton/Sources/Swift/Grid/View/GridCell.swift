@@ -59,7 +59,7 @@ protocol GridCellDelegate: AnyObject {
     func cell(_ cell: GridCell, didChangeBounds bounds: CGRect)
 }
 
-public class GridCell {
+class GridCell {
     var id: String {
         "{\(rowSpan),\(columnSpan)}"
     }
@@ -117,6 +117,9 @@ public class GridCell {
         contentView.layer.borderWidth = 1
         contentView.layer.cornerRadius = 2
 
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(contentViewTapped))
+        contentView.addGestureRecognizer(tapGestureRecognizer)
+
         if let borderColor = style.borderColor?.cgColor {
             contentView.layer.borderColor = borderColor
         }
@@ -137,6 +140,11 @@ public class GridCell {
             editor.backgroundColor = backgroundColor
             contentView.backgroundColor = backgroundColor
         }
+    }
+
+    @objc
+    private func contentViewTapped() {
+        editor.becomeFirstResponder()
     }
 
     private func setup() {

@@ -286,4 +286,34 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+    func testScrollsCellToVisible() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(150)),
+                GridColumnConfiguration(dimension: .fractional(0.50)),
+                GridColumnConfiguration(dimension: .fractional(0.40)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+            ])
+        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 300, height: 350))
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let cell05Editor = attachment.view.grid.cells[5].editor
+        cell05Editor.replaceCharacters(in: .zero, with: "Last cell")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: true)
+
+        attachment.view.scrollToCellAt(rowIndex: 1, columnIndex: 2, animated: false)
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: true)
+    }
 }

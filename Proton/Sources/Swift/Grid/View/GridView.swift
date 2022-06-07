@@ -33,7 +33,7 @@ public class GridView: UIView {
         gridView.grid
     }
 
-    init(config: GridConfiguration, initialSize: CGSize) {
+    public init(config: GridConfiguration, initialSize: CGSize) {
         self.gridView = GridContentView(config: config, initialSize: initialSize)
         super.init(frame: .zero)
         setup()
@@ -52,5 +52,11 @@ public class GridView: UIView {
             gridView.leadingAnchor.constraint(equalTo: leadingAnchor),
             gridView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
+    }
+
+    public func scrollToCellAt(rowIndex: Int, columnIndex: Int, animated: Bool = true) {
+        if let cell = grid.cells.first(where: { $0.rowSpan.contains( rowIndex) && $0.columnSpan.contains(columnIndex) }) {
+            gridView.scrollTo(cell: cell, animated: animated)
+        }
     }
 }
