@@ -22,12 +22,36 @@
 import Foundation
 import UIKit
 
-class Grid {
+class GridCellStore {
     private(set) var cells = [GridCell]()
+
+    init(cells: [GridCell]) {
+        self.cells = cells
+    }
+
+    func cellAt(rowIndex: Int, columnIndex: Int) -> GridCell? {
+        return cells.first(where: { $0.rowSpan.contains(rowIndex) && $0.columnSpan.contains(columnIndex) })
+    }
+
+    func deleteCellAt(index: Int) {
+        let cell = cells[index]
+        cell.contentView.removeFromSuperview()
+        cells.remove(at: index)
+
+    }
+}
+
+class Grid {
+
     private let config: GridConfiguration
+    private let cellStore: GridCellStore
 
     var rowHeights = [CGFloat]()
     var columnWidths = [GridColumnDimension]()
+
+    var cells: [GridCell] {
+        cellStore.cells
+    }
 
     init(config: GridConfiguration, cells: [GridCell]) {
         self.config = config
@@ -39,7 +63,11 @@ class Grid {
         for row in config.rowsConfiguration {
             self.rowHeights.append(row.minRowHeight)
         }
-        self.cells = cells
+        self.cellStore = GridCellStore(cells: cells)
+    }
+
+    func cellAt(rowIndex: Int, columnIndex: Int) -> GridCell? {
+        return cellStore.cellAt(rowIndex: rowIndex, columnIndex: columnIndex)
     }
 
     func frameForCell(_ cell: GridCell, basedOn size: CGSize) -> CGRect {
@@ -68,7 +96,9 @@ class Grid {
         for row in cell.rowSpan {
             height += rowHeights[row]
         }
-        return CGRect(x: x, y: y, width: width, height: height)
+        let frame = CGRect(x: x, y: y, width: width, height: height)
+        cell.cachedFrame = frame
+        return frame
     }
 
     func sizeThatFits(size: CGSize) -> CGSize {
@@ -79,7 +109,7 @@ class Grid {
 
     func maxContentHeightCellForRow(at index: Int) -> GridCell? {
         //TODO: account for merged rows
-        let cells = cells.filter { $0.rowSpan.contains(index) }
+        let cells = cellStore.cells.filter { $0.rowSpan.contains(index) }
         var maxHeightCell: GridCell?
         for cell in cells {
             if cell.contentSize.height > maxHeightCell?.contentSize.height ?? 0 {
@@ -87,5 +117,21 @@ class Grid {
             }
         }
         return maxHeightCell
+    }
+
+    func merge(cell: GridCell, other: GridCell) {
+        //TODO: Validate if columns can be merged i.e. side by side/up and down
+        guard let _ = cellStore.cells.firstIndex(where: { $0.id == cell.id }),
+              let otherIndex = cellStore.cells.firstIndex(where: { $0.id == other.id }) else {
+            return
+        }
+
+        cell.rowSpan = Array(Set(cell.rowSpan).union(other.rowSpan)).sorted()
+        cell.columnSpan = Array(Set(cell.columnSpan).union(other.columnSpan)).sorted()
+
+        cell.editor.replaceCharacters(in: cell.editor.textEndRange, with: " ")
+        cell.editor.replaceCharacters(in: cell.editor.textEndRange, with: other.editor.attributedText)
+
+        cellStore.deleteCellAt(index: otherIndex)
     }
 }

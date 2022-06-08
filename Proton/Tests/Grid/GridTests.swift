@@ -78,6 +78,106 @@ class GridTests: XCTestCase {
         XCTAssertEqual(cellBottomRight, CGRect(x: 200.0, y: 100.0, width: 100.0, height: 50.0))
     }
 
+    func testMergesRows() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+            ])
+
+        let grid = Grid(config: config, cells: generateCells(config: config))
+
+        let cell11 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell21 = try XCTUnwrap(grid.cellAt(rowIndex: 2, columnIndex: 1))
+
+        let size = CGSize(width: 300, height: 150)
+        grid.merge(cell: cell11, other: cell21)
+
+        let cellFrame = grid.frameForCell(cell11, basedOn: size)
+        XCTAssertEqual(cellFrame, CGRect(x: 100.0, y: 50.0, width: 100, height: 100))
+    }
+
+    func testMergesColumnsWithFixedDimensions() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+            ])
+
+        let grid = Grid(config: config, cells: generateCells(config: config))
+
+        let cell11 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 2))
+
+        let size = CGSize(width: 300, height: 150)
+        grid.merge(cell: cell11, other: cell12)
+
+        let cellFrame = grid.frameForCell(cell11, basedOn: size)
+        XCTAssertEqual(cellFrame, CGRect(x: 100.0, y: 50.0, width: 200, height: 50))
+    }
+
+    func testMergesColumnsWithFractionalDimensions() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fractional(0.25)),
+                GridColumnConfiguration(dimension: .fractional(0.25)),
+                GridColumnConfiguration(dimension: .fractional(0.50)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+            ])
+
+        let grid = Grid(config: config, cells: generateCells(config: config))
+
+        let cell00 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell10 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 2))
+
+        let size = CGSize(width: 300, height: 150)
+        grid.merge(cell: cell00, other: cell10)
+
+        let cellFrame = grid.frameForCell(cell00, basedOn: size)
+        XCTAssertEqual(cellFrame, CGRect(x: 75.0, y: 50.0, width: 225, height: 50))
+    }
+
+    func testMergesColumnsWithMixedDimensions() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fractional(0.25)),
+                GridColumnConfiguration(dimension: .fixed(100.0)),
+                GridColumnConfiguration(dimension: .fractional(0.50)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+            ])
+
+        let grid = Grid(config: config, cells: generateCells(config: config))
+
+        let cell00 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell10 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 2))
+
+        let size = CGSize(width: 300, height: 150)
+        grid.merge(cell: cell00, other: cell10)
+
+        let cellFrame = grid.frameForCell(cell00, basedOn: size)
+        XCTAssertEqual(cellFrame, CGRect(x: 75.0, y: 50.0, width: 250, height: 50))
+    }
+
     private func generateCells(config: GridConfiguration) -> [GridCell] {
         var cells = [GridCell]()
         for row in 0..<config.numberOfRows {

@@ -19,10 +19,14 @@
 //
 
 class GridContentView: UIScrollView {
-    let grid: Grid
+    private let grid: Grid
     let config: GridConfiguration
     let initialSize: CGSize
     weak var boundsObserver: BoundsObserving?
+
+    var cells: [GridCell] {
+        grid.cells
+    }
 
     init(config: GridConfiguration, initialSize: CGSize) {
         self.config = config
@@ -58,6 +62,14 @@ class GridContentView: UIScrollView {
         self.scrollRectToVisible(frame, animated: animated)
     }
 
+    func merge(cell: GridCell, other: GridCell) {
+        grid.merge(cell: cell, other: other)
+    }
+
+    func cellAt(rowIndex: Int, columnIndex: Int) -> GridCell? {
+        grid.cellAt(rowIndex: rowIndex, columnIndex: columnIndex)
+    }
+
     private func setup() {
         for cell in grid.cells {
             cell.contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -87,6 +99,10 @@ class GridContentView: UIScrollView {
         }
     }
 
+    func invalidateCellLayout() {
+        recalculateCellBounds()
+    }
+
     private func recalculateCellBounds() {
         for c in grid.cells {
             // TODO: Optimize to recalculate frames for affected cells only i.e. row>=current
@@ -96,6 +112,7 @@ class GridContentView: UIScrollView {
             c.heightAnchorConstraint.constant = frame.height
             c.topAnchorConstraint.constant = frame.minY
             c.leadingAnchorConstraint.constant = frame.minX
+            print("\(c.id): [\(frame)]")
         }
 
         boundsObserver?.didChangeBounds(CGRect(origin: bounds.origin, size: frame.size))

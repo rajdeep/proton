@@ -29,8 +29,8 @@ public class GridView: UIView {
         set { gridView.boundsObserver = newValue }
     }
 
-    var grid: Grid {
-        gridView.grid
+    var cells: [GridCell] {
+        gridView.cells
     }
 
     public init(config: GridConfiguration, initialSize: CGSize) {
@@ -54,8 +54,17 @@ public class GridView: UIView {
         ])
     }
 
+    public func merge(cell: GridCell, other: GridCell) {
+        gridView.merge(cell: cell, other: other)
+        gridView.invalidateCellLayout()
+    }
+
+    public func cellAt(rowIndex: Int, columnIndex: Int) -> GridCell? {
+        return gridView.cellAt(rowIndex: rowIndex, columnIndex: columnIndex)
+    }
+
     public func scrollToCellAt(rowIndex: Int, columnIndex: Int, animated: Bool = true) {
-        if let cell = grid.cells.first(where: { $0.rowSpan.contains( rowIndex) && $0.columnSpan.contains(columnIndex) }) {
+        if let cell = cells.first(where: { $0.rowSpan.contains( rowIndex) && $0.columnSpan.contains(columnIndex) }) {
             gridView.scrollTo(cell: cell, animated: animated)
         }
     }

@@ -59,12 +59,26 @@ protocol GridCellDelegate: AnyObject {
     func cell(_ cell: GridCell, didChangeBounds bounds: CGRect)
 }
 
-class GridCell {
+public class GridCell {
     var id: String {
         "{\(rowSpan),\(columnSpan)}"
     }
     var rowSpan: [Int]
     var columnSpan: [Int]
+    var cachedFrame: CGRect = .zero
+
+
+    private let selectionView = SelectionView()
+
+    var isSelected: Bool = false {
+        didSet {
+            if isSelected {
+                selectionView.addTo(parent: contentView)
+            } else {
+                selectionView.removeFromSuperview()
+            }
+        }
+    }
 
     public let editor = EditorView()
 
