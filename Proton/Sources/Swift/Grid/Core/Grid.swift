@@ -39,6 +39,10 @@ class GridCellStore {
         cells.remove(at: index)
 
     }
+
+    func addCells(_ newCells: [GridCell]) {
+        cells.append(contentsOf: newCells)
+    }
 }
 
 class Grid {
@@ -133,5 +137,29 @@ class Grid {
         cell.editor.replaceCharacters(in: cell.editor.textEndRange, with: other.editor.attributedText)
 
         cellStore.deleteCellAt(index: otherIndex)
+    }
+
+    func split(cell: GridCell) {
+        guard cell.isSplittable,
+              cells.contains(where: { $0.id == cell.id }) else { return }
+
+        guard let minRowIndex = cell.rowSpan.min(),
+              let maxRowIndex = cell.rowSpan.max(),
+              let minColumnIndex = cell.columnSpan.min(),
+              let maxColumnIndex = cell.columnSpan.max() else { return }
+
+        var newCells = [GridCell]()
+        for row in minRowIndex ... maxRowIndex {
+            for col in minColumnIndex ... maxColumnIndex {
+                let c = GridCell(rowSpan: [row], columnSpan: [col], minHeight: cell.minHeight, maxHeight: cell.maxHeight)
+                newCells.append(c)
+            }
+        }
+
+        let firstCell = newCells.remove(at: 0)
+        cell.rowSpan = firstCell.rowSpan
+        cell.columnSpan = firstCell.columnSpan
+
+        cellStore.addCells(newCells)
     }
 }

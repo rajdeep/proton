@@ -66,6 +66,10 @@ class GridContentView: UIScrollView {
         grid.merge(cell: cell, other: other)
     }
 
+    func split(cell: GridCell) {
+        grid.split(cell: cell)
+    }
+
     func cellAt(rowIndex: Int, columnIndex: Int) -> GridCell? {
         grid.cellAt(rowIndex: rowIndex, columnIndex: columnIndex)
     }
@@ -106,6 +110,16 @@ class GridContentView: UIScrollView {
     private func recalculateCellBounds() {
         for c in grid.cells {
             // TODO: Optimize to recalculate frames for affected cells only i.e. row>=current
+
+            // Add to grid if this is a newly inserted cell after initial setup.
+            // A new cell may exist as a result of inserting a new row/colum
+            // or splitting an existing merged cell
+            if c.contentView.superview == nil {
+                addSubview(c.contentView)
+                c.topAnchorConstraint = c.contentView.topAnchor.constraint(equalTo: topAnchor, constant: frame.minY)
+                c.leadingAnchorConstraint = c.contentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: frame.minX)
+            }
+
             let frame = grid.frameForCell(c, basedOn: bounds.size)
             c.contentView.frame = frame
             c.widthAnchorConstraint.constant = frame.width

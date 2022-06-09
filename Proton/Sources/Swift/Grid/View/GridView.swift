@@ -59,6 +59,11 @@ public class GridView: UIView {
         gridView.invalidateCellLayout()
     }
 
+    public func split(cell: GridCell) {
+        gridView.split(cell: cell)
+        gridView.invalidateCellLayout()
+    }
+
     public func cellAt(rowIndex: Int, columnIndex: Int) -> GridCell? {
         return gridView.cellAt(rowIndex: rowIndex, columnIndex: columnIndex)
     }

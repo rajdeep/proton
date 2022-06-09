@@ -82,12 +82,8 @@ public class GridCell {
 
     public let editor = EditorView()
 
-    var isMergedRows: Bool {
-        rowSpan.count > 1
-    }
-
-    var isMergedColumns: Bool {
-        columnSpan.count > 1
+    var isSplittable: Bool {
+        rowSpan.count > 1 || columnSpan.count > 1
     }
 
     var contentSize: CGSize {
