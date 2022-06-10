@@ -38,6 +38,20 @@ public class GridView: UIView {
         set { gridView.boundsObserver = newValue }
     }
 
+    private let selectionView = SelectionView()
+
+    public var selectionColor: UIColor?
+
+    public var isSelected: Bool = false {
+        didSet {
+            if isSelected {
+                selectionView.addTo(parent: self, selectionColor: selectionColor)
+            } else {
+                selectionView.removeFromSuperview()
+            }
+        }
+    }
+
     var cells: [GridCell] {
         gridView.cells
     }

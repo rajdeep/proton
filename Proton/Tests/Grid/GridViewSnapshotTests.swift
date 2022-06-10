@@ -45,8 +45,47 @@ class GridViewSnapshotTests: XCTestCase {
                 GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
                 GridRowConfiguration(minRowHeight: 80, maxRowHeight: 400),
             ])
-        let gridView = GridContentView(config: config, initialSize: CGSize(width: 350, height: 200))
+        let gridView = GridView(config: config, initialSize: CGSize(width: 350, height: 200))
 
+        let vc = GenericViewTestViewController(contentView: gridView)
+        vc.render(size: CGSize(width: 350, height: 200))
+        assertSnapshot(matching: vc.view, as: .image, record: recordMode)
+    }
+
+    func testRendersGridViewAsSelected() {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 30, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 80, maxRowHeight: 400),
+            ])
+        let gridView = GridView(config: config, initialSize: CGSize(width: 350, height: 200))
+        gridView.isSelected = true
+        let vc = GenericViewTestViewController(contentView: gridView)
+        vc.render(size: CGSize(width: 350, height: 200))
+        assertSnapshot(matching: vc.view, as: .image, record: recordMode)
+    }
+
+    func testRendersGridViewAsSelectedWithRedColor() {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 30, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 80, maxRowHeight: 400),
+            ])
+        let gridView = GridView(config: config, initialSize: CGSize(width: 350, height: 200))
+        gridView.selectionColor = UIColor.red
+        gridView.isSelected = true
         let vc = GenericViewTestViewController(contentView: gridView)
         vc.render(size: CGSize(width: 350, height: 200))
         assertSnapshot(matching: vc.view, as: .image, record: recordMode)
@@ -55,20 +94,19 @@ class GridViewSnapshotTests: XCTestCase {
 //    func testRendersGridViewWithFractionalColumns() {
 //        let config = GridConfiguration(
 //            columnsConfiguration: [
-//                GridColumnConfiguration(dimension: .fractional(0.25)),
-//                GridColumnConfiguration(dimension: .fractional(0.25)),
-//                GridColumnConfiguration(dimension: .fractional(0.25)),
-//                GridColumnConfiguration(dimension: .fractional(0.25)),
+//                GridColumnConfiguration(dimension: .fractional(0.33)),
+//                GridColumnConfiguration(dimension: .fractional(0.33)),
+//                GridColumnConfiguration(dimension: .fractional(0.33)),
 //            ],
 //            rowsConfiguration: [
-//                GridRowConfiguration(minRowHeight: 30, maxRowHeight: 400),
 //                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-//                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+//                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
 //            ])
-//        let gridView = GridView(config: config, initialSize: CGSize(width: 400, height: 150))
+//
+//        let gridView = GridView(config: config, initialSize: CGSize(width: 400, height: 350))
 //
 //        let vc = GenericViewTestViewController(contentView: gridView)
-//        vc.render(size: CGSize(width: 400, height: 150))
+//        vc.render(size: CGSize(width: 400, height: 300))
 //        assertSnapshot(matching: vc.view, as: .image, record: recordMode)
 //    }
 }

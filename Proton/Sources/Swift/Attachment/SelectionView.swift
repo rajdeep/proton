@@ -30,7 +30,7 @@ class SelectionView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         guard let originalResult = super.hitTest(point, with: event),
               event?.type == .touches
@@ -50,8 +50,8 @@ class SelectionView: UIView {
         return nil
     }
     
-    func addTo(parent: UIView) {
-        applyTintColor()
+    func addTo(parent: UIView, selectionColor: UIColor? = nil) {
+        applyTintColor(selectionColor)
         self.translatesAutoresizingMaskIntoConstraints = false
         parent.addSubview(self)
         NSLayoutConstraint.activate([
@@ -60,11 +60,12 @@ class SelectionView: UIView {
             self.leadingAnchor.constraint(equalTo: parent.leadingAnchor),
             self.trailingAnchor.constraint(equalTo: parent.trailingAnchor),
         ])
+        parent.bringSubviewToFront(self)
     }
-    
-    private func applyTintColor() {
+
+    private func applyTintColor(_ selectionColor: UIColor? = nil) {
         // TintColor needs to be picked up from UIButton as it is the only control that
         // provides correct color for macOS accents.
-        self.backgroundColor = UIButton().tintColor
+        self.backgroundColor = selectionColor ?? UIButton().tintColor
     }
 }
