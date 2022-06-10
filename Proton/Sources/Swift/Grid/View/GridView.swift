@@ -21,8 +21,17 @@
 import Foundation
 import UIKit
 
+public protocol GridViewDelegate: AnyObject {
+    func gridView(_ gridView: GridView, didReceiveFocusAt range: NSRange, in cell: GridCell)
+    func gridView(_ gridView: GridView, didLoseFocusFrom range: NSRange, in cell: GridCell)
+    func gridView(_ gridView: GridView, didTapAtLocation location: CGPoint, characterRange: NSRange?, in cell: GridCell)
+    func gridView(_ gridView: GridView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name, in cell: GridCell)
+    func gridView(_ gridView: GridView, didChangeBounds bounds: CGRect, in cell: GridCell)
+}
+
 public class GridView: UIView {
     let gridView: GridContentView
+    public var delegate: GridViewDelegate?
 
     public var boundsObserver: BoundsObserving? {
         get { gridView.boundsObserver }
@@ -45,6 +54,7 @@ public class GridView: UIView {
 
     private func setup() {
         gridView.translatesAutoresizingMaskIntoConstraints = false
+        gridView.gridContentViewDelegate = self
         addSubview(gridView)
         NSLayoutConstraint.activate([
             gridView.topAnchor.constraint(equalTo: topAnchor),
@@ -72,5 +82,27 @@ public class GridView: UIView {
         if let cell = cells.first(where: { $0.rowSpan.contains( rowIndex) && $0.columnSpan.contains(columnIndex) }) {
             gridView.scrollTo(cell: cell, animated: animated)
         }
+    }
+}
+
+extension GridView: GridContentViewDelegate {
+    func gridContentView(_ gridContentView: GridContentView, didReceiveFocusAt range: NSRange, in cell: GridCell) {
+        delegate?.gridView(self, didReceiveFocusAt: range, in: cell)
+    }
+
+    func gridContentView(_ gridContentView: GridContentView, didLoseFocusFrom range: NSRange, in cell: GridCell) {
+        delegate?.gridView(self, didLoseFocusFrom: range, in: cell)
+    }
+
+    func gridContentView(_ gridContentView: GridContentView, didTapAtLocation location: CGPoint, characterRange: NSRange?, in cell: GridCell) {
+        delegate?.gridView(self, didTapAtLocation: location, characterRange: characterRange, in: cell)
+    }
+
+    func gridContentView(_ gridContentView: GridContentView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name, in cell: GridCell) {
+        delegate?.gridView(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType, in: cell)
+    }
+
+    func gridContentView(_ gridContentView: GridContentView, didChangeBounds bounds: CGRect, in cell: GridCell) {
+        delegate?.gridView(self, didChangeBounds: bounds, in: cell)
     }
 }

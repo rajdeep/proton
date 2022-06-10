@@ -90,6 +90,8 @@
 		1B975AFD23CD40D200EC410C /* RichTextRendererContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975AFC23CD40D200EC410C /* RichTextRendererContext.swift */; };
 		1B975AFF23CD454700EC410C /* RichTextViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975AFE23CD454700EC410C /* RichTextViewContext.swift */; };
 		1B975B0123CD45DC00EC410C /* RendererViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975B0023CD45DC00EC410C /* RendererViewContext.swift */; };
+		1B9AF9E62851EC2500CD65C4 /* GridViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9AF9E52851EC2500CD65C4 /* GridViewTests.swift */; };
+		1B9AF9E92851ECC300CD65C4 /* MockGridViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9AF9E82851ECC300CD65C4 /* MockGridViewDelegate.swift */; };
 		1BB214D023BB2778008B84A0 /* Proton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB214C623BB2778008B84A0 /* Proton.framework */; };
 		1BB4AAEB2606DA2D000D7584 /* ProtonCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BB4AAE92606DA2D000D7584 /* ProtonCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1BB4AAF42606DA37000D7584 /* PREditorContentName.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B9AED8B26059D1A00660B99 /* PREditorContentName.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -259,6 +261,8 @@
 		1B975B0023CD45DC00EC410C /* RendererViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererViewContext.swift; sourceTree = "<group>"; };
 		1B9AED8A26059D1A00660B99 /* PRTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRTextStorage.h; sourceTree = "<group>"; };
 		1B9AED8B26059D1A00660B99 /* PREditorContentName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PREditorContentName.h; sourceTree = "<group>"; };
+		1B9AF9E52851EC2500CD65C4 /* GridViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewTests.swift; sourceTree = "<group>"; };
+		1B9AF9E82851ECC300CD65C4 /* MockGridViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGridViewDelegate.swift; sourceTree = "<group>"; };
 		1BB214C623BB2778008B84A0 /* Proton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Proton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BB214CA23BB2778008B84A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BB214CF23BB2778008B84A0 /* ProtonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -623,6 +627,14 @@
 			path = include;
 			sourceTree = "<group>";
 		};
+		1B9AF9E72851ECB600CD65C4 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				1B9AF9E82851ECC300CD65C4 /* MockGridViewDelegate.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		1BB214BC23BB2778008B84A0 = {
 			isa = PBXGroup;
 			children = (
@@ -780,9 +792,11 @@
 		1BD185BD284C2A51001F4FBC /* Grid */ = {
 			isa = PBXGroup;
 			children = (
+				1B9AF9E72851ECB600CD65C4 /* Mocks */,
 				1BD185BE284C2A66001F4FBC /* GridTests.swift */,
 				1BD185C3284C33B0001F4FBC /* GridViewSnapshotTests.swift */,
 				1BD185CE284D8399001F4FBC /* GridViewAttachmentSnapshotTests.swift */,
+				1B9AF9E52851EC2500CD65C4 /* GridViewTests.swift */,
 			);
 			path = Grid;
 			sourceTree = "<group>";
@@ -1125,6 +1139,7 @@
 				1BBAC3DA23CD7A8B0088A1C8 /* MockRendererViewDelegate.swift in Sources */,
 				1B7C76B32608A4FF006618AC /* FontTraitToggleCommandTests.swift in Sources */,
 				1BFFEF1523C332A100D2BA35 /* EditorSnapshotTests.swift in Sources */,
+				1B9AF9E92851ECC300CD65C4 /* MockGridViewDelegate.swift in Sources */,
 				1B4B60C6247F692D002B63CF /* ListsSnapshotTests.swift in Sources */,
 				1BD993C023C9EAA900563ACB /* TextTransformer.swift in Sources */,
 				1B8BE91D23C71E4B00353B17 /* EditorViewDelegateTests.swift in Sources */,
@@ -1140,6 +1155,7 @@
 				1B2BC0D823CF17E300407DEE /* EditorContentTransformerTests.swift in Sources */,
 				1B45CDD923C0484A001EB196 /* RichTextViewTests.swift in Sources */,
 				1BC25B542448768200FF88AC /* EditorContextDelegateTests.swift in Sources */,
+				1B9AF9E62851EC2500CD65C4 /* GridViewTests.swift in Sources */,
 				1BBAC3E323CE85660088A1C8 /* RendererCommandExecutorTests.swift in Sources */,
 				1B8D8208243F3386009AD38A /* MockRendererCommand.swift in Sources */,
 				1B7C76BA2608A508006618AC /* HighlightTextCommandTests.swift in Sources */,

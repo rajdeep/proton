@@ -48,6 +48,11 @@ public struct GridConfiguration {
     public let columnsConfiguration: [GridColumnConfiguration]
     public let rowsConfiguration: [GridRowConfiguration]
 
+    public init(columnsConfiguration: [GridColumnConfiguration], rowsConfiguration: [GridRowConfiguration]) {
+        self.columnsConfiguration = columnsConfiguration
+        self.rowsConfiguration = rowsConfiguration
+    }
+
     public var numberOfColumns: Int {
         columnsConfiguration.count
     }

@@ -57,6 +57,10 @@ public struct GridCellStyle {
 
 protocol GridCellDelegate: AnyObject {
     func cell(_ cell: GridCell, didChangeBounds bounds: CGRect)
+    func cell(_ cell: GridCell, didReceiveFocusAt range: NSRange)
+    func cell(_ cell: GridCell, didLoseFocusFrom range: NSRange)
+    func cell(_ cell: GridCell, didTapAtLocation location: CGPoint, characterRange: NSRange?)
+    func cell(_ cell: GridCell, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name)
 }
 
 public class GridCell {
@@ -160,6 +164,7 @@ public class GridCell {
     private func setup() {
         editor.translatesAutoresizingMaskIntoConstraints = false
         editor.boundsObserver = self
+        editor.delegate = self
         contentView.addSubview(editor)
 
         NSLayoutConstraint.activate([
@@ -191,5 +196,29 @@ public class GridCell {
 extension GridCell: BoundsObserving {
     public func didChangeBounds(_ bounds: CGRect) {
         delegate?.cell(self, didChangeBounds: bounds)
+    }
+}
+
+extension GridCell: EditorViewDelegate {
+    public func editor(_ editor: EditorView, didReceiveFocusAt range: NSRange) {
+        delegate?.cell(self, didReceiveFocusAt: range)
+    }
+
+    public func editor(_ editor: EditorView, didLoseFocusFrom range: NSRange) {
+        delegate?.cell(self, didLoseFocusFrom: range)
+    }
+
+    public func editor(_ editor: EditorView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
+        delegate?.cell(self, didTapAtLocation: location, characterRange: characterRange)
+    }
+
+    public func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name) {
+        delegate?.cell(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
+    }
+}
+
+extension GridCell: Equatable {
+    public static func ==(lhs: GridCell, rhs: GridCell) -> Bool {
+        return lhs.id == rhs.id
     }
 }

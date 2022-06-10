@@ -18,11 +18,20 @@
 //  limitations under the License.
 //
 
+protocol GridContentViewDelegate: AnyObject {
+    func gridContentView(_ gridContentView: GridContentView, didReceiveFocusAt range: NSRange, in cell: GridCell)
+    func gridContentView(_ gridContentView: GridContentView, didLoseFocusFrom range: NSRange, in cell: GridCell)
+    func gridContentView(_ gridContentView: GridContentView, didTapAtLocation location: CGPoint, characterRange: NSRange?, in cell: GridCell)
+    func gridContentView(_ gridContentView: GridContentView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name, in cell: GridCell)
+    func gridContentView(_ gridContentView: GridContentView, didChangeBounds bounds: CGRect, in cell: GridCell)
+}
+
 class GridContentView: UIScrollView {
     private let grid: Grid
     let config: GridConfiguration
     let initialSize: CGSize
     weak var boundsObserver: BoundsObserving?
+    weak var gridContentViewDelegate: GridContentViewDelegate?
 
     var cells: [GridCell] {
         grid.cells
@@ -126,7 +135,6 @@ class GridContentView: UIScrollView {
             c.heightAnchorConstraint.constant = frame.height
             c.topAnchorConstraint.constant = frame.minY
             c.leadingAnchorConstraint.constant = frame.minX
-            print("\(c.id): [\(frame)]")
         }
 
         boundsObserver?.didChangeBounds(CGRect(origin: bounds.origin, size: frame.size))
@@ -158,6 +166,22 @@ class GridContentView: UIScrollView {
 }
 
 extension GridContentView: GridCellDelegate {
+    func cell(_ cell: GridCell, didReceiveFocusAt range: NSRange) {
+        gridContentViewDelegate?.gridContentView(self, didReceiveFocusAt: range, in: cell)
+    }
+
+    func cell(_ cell: GridCell, didLoseFocusFrom range: NSRange) {
+        gridContentViewDelegate?.gridContentView(self, didLoseFocusFrom: range, in: cell)
+    }
+
+    func cell(_ cell: GridCell, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
+        gridContentViewDelegate?.gridContentView(self, didTapAtLocation: location, characterRange: characterRange, in: cell)
+    }
+
+    func cell(_ cell: GridCell, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name) {
+        gridContentViewDelegate?.gridContentView(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType, in: cell)
+    }
+
     func cell(_ cell: GridCell, didChangeBounds bounds: CGRect) {
         guard  let row = cell.rowSpan.first else { return }
         if grid.rowHeights.count > row,
@@ -168,7 +192,7 @@ extension GridContentView: GridCellDelegate {
         }
 
         recalculateCellBounds()
-
+        gridContentViewDelegate?.gridContentView(self, didChangeBounds: cell.cachedFrame, in: cell)
     }
 }
 
