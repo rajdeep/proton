@@ -56,7 +56,7 @@ class GridContentView: UIScrollView {
         self.contentSize = size
         self.isScrollEnabled = size.width > frame.width
         self.alwaysBounceHorizontal = isScrollEnabled
-        return grid.sizeThatFits(size: frame.size)
+        return size
     }
 
     override var bounds: CGRect {
