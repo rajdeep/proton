@@ -22,60 +22,13 @@
 import Foundation
 import UIKit
 
-class GridCellStore {
-    private(set) var cells = [GridCell]()
+class GridRowDimension {
+    var currentHeight: CGFloat
+    let rowConfiguration: GridRowConfiguration
 
-    init(cells: [GridCell]) {
-        self.cells = cells
-    }
-
-    var numberOfColumns: Int {
-        guard let columns = cells.flatMap({ $0.columnSpan }).max() else { return 0 }
-        return columns + 1
-    }
-
-    var numberOfRows: Int {
-        guard let rows = cells.flatMap({ $0.rowSpan }).max() else { return 0 }
-        return rows + 1
-    }
-
-    func cellAt(rowIndex: Int, columnIndex: Int) -> GridCell? {
-        return cells.first(where: { $0.rowSpan.contains(rowIndex) && $0.columnSpan.contains(columnIndex) })
-    }
-
-    func deleteCellAt(index: Int) {
-        let cell = cells[index]
-        cell.contentView.removeFromSuperview()
-        cells.remove(at: index)
-
-    }
-
-    func addCells(_ newCells: [GridCell]) {
-        cells.append(contentsOf: newCells)
-    }
-
-    func addCell(_ cell: GridCell) {
-        cells.append(cell)
-    }
-
-    func moveCellRowIndex(from index: Int, by step: Int) {
-        for cell in cells {
-            for i in 0..<cell.rowSpan.count {
-                if cell.rowSpan[i] >= index {
-                    cell.rowSpan[i] += step
-                }
-            }
-        }
-    }
-
-    func moveCellColumnIndex(from index: Int, by step: Int) {
-        for cell in cells {
-            for i in 0..<cell.columnSpan.count {
-                if cell.columnSpan[i] >= index {
-                    cell.columnSpan[i] += step
-                }
-            }
-        }
+    init(rowConfiguration: GridRowConfiguration) {
+        self.rowConfiguration = rowConfiguration
+        currentHeight = rowConfiguration.minRowHeight
     }
 }
 
@@ -84,8 +37,12 @@ class Grid {
     private let config: GridConfiguration
     private let cellStore: GridCellStore
 
-    var rowHeights = [CGFloat]()
+    var rowHeights = [GridRowDimension]()
     var columnWidths = [GridColumnDimension]()
+
+    var currentRowHeights: [CGFloat] {
+        rowHeights.map { $0.currentHeight }
+    }
 
     var cells: [GridCell] {
         cellStore.cells
@@ -107,7 +64,7 @@ class Grid {
         }
 
         for row in config.rowsConfiguration {
-            self.rowHeights.append(row.minRowHeight)
+            self.rowHeights.append(GridRowDimension(rowConfiguration: row))
         }
         self.cellStore = GridCellStore(cells: cells)
     }
@@ -130,7 +87,7 @@ class Grid {
         }
 
         if minRowSpan > 0 {
-            y = rowHeights[0..<minRowSpan].reduce(0.0, +)
+            y = currentRowHeights[0..<minRowSpan].reduce(0.0, +)
         }
 
         var width: CGFloat = 0
@@ -140,7 +97,7 @@ class Grid {
 
         var height: CGFloat = 0
         for row in cell.rowSpan {
-            height += rowHeights[row]
+            height += currentRowHeights[row]
         }
         let frame = CGRect(x: x, y: y, width: width, height: height)
         cell.cachedFrame = frame
@@ -149,7 +106,7 @@ class Grid {
 
     func sizeThatFits(size: CGSize) -> CGSize {
         let width = columnWidths.reduce(0.0) { $0 + $1.value(basedOn: size.width)}
-        let height = rowHeights.reduce(0.0, +)
+        let height = currentRowHeights.reduce(0.0, +)
         return CGSize(width: width, height: height)
     }
 
@@ -209,7 +166,7 @@ class Grid {
         if index < numberOfRows {
             cellStore.moveCellRowIndex(from: index, by: 1)
         }
-        rowHeights.insert(config.minRowHeight, at: index)
+        rowHeights.insert(GridRowDimension(rowConfiguration: config), at: index)
 
         for c in 0..<numberOfColumns {
             let cell = GridCell(
@@ -232,8 +189,8 @@ class Grid {
             let cell = GridCell(
                 rowSpan: [r],
                 columnSpan: [index],
-                minHeight: rowHeights[r],
-                maxHeight: rowHeights[r])
+                minHeight: rowHeights[r].rowConfiguration.minRowHeight,
+                maxHeight: rowHeights[r].rowConfiguration.maxRowHeight)
 
             cellStore.addCell(cell)
         }

@@ -109,6 +109,7 @@
 		1BBAC3E323CE85660088A1C8 /* RendererCommandExecutorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3E223CE85660088A1C8 /* RendererCommandExecutorTests.swift */; };
 		1BBD529F2608713C00EB5DA8 /* ProtonCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB4AAE72606DA2D000D7584 /* ProtonCore.framework */; };
 		1BBE4EFC248CB15E00D1C788 /* ListCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */; };
+		1BC021D628588DDD00796585 /* GridCellStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC021D528588DDD00796585 /* GridCellStore.swift */; };
 		1BC0AA60284D92B3004B8862 /* CreateGridViewCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC0AA5F284D92B3004B8862 /* CreateGridViewCommand.swift */; };
 		1BC0AA64284DF918004B8862 /* GridConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC0AA63284DF918004B8862 /* GridConfiguration.swift */; };
 		1BC0AA69284F59B8004B8862 /* GridContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC0AA68284F59B8004B8862 /* GridContentView.swift */; };
@@ -280,6 +281,7 @@
 		1BBAC3DF23CE81F40088A1C8 /* RendererCommandExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommandExecutor.swift; sourceTree = "<group>"; };
 		1BBAC3E223CE85660088A1C8 /* RendererCommandExecutorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommandExecutorTests.swift; sourceTree = "<group>"; };
 		1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCommandTests.swift; sourceTree = "<group>"; };
+		1BC021D528588DDD00796585 /* GridCellStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCellStore.swift; sourceTree = "<group>"; };
 		1BC0AA5F284D92B3004B8862 /* CreateGridViewCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGridViewCommand.swift; sourceTree = "<group>"; };
 		1BC0AA63284DF918004B8862 /* GridConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridConfiguration.swift; sourceTree = "<group>"; };
 		1BC0AA68284F59B8004B8862 /* GridContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridContentView.swift; sourceTree = "<group>"; };
@@ -750,6 +752,7 @@
 			isa = PBXGroup;
 			children = (
 				1BD185B9284C29E6001F4FBC /* Grid.swift */,
+				1BC021D528588DDD00796585 /* GridCellStore.swift */,
 				1BC0AA63284DF918004B8862 /* GridConfiguration.swift */,
 			);
 			path = Core;
@@ -1082,6 +1085,7 @@
 				1B45CDD023C007AF001EB196 /* RichTextView.swift in Sources */,
 				1B004EC723C1C287007893AA /* EditorView.swift in Sources */,
 				1B8BE91B23C71CEA00353B17 /* EditorViewDelegate.swift in Sources */,
+				1BC021D628588DDD00796585 /* GridCellStore.swift in Sources */,
 				1BBAC3DD23CDB8C10088A1C8 /* RendererCommand.swift in Sources */,
 				1B4B60CF247FC86A002B63CF /* NSParagraphStyleExtensions.swift in Sources */,
 				1BD18583284863A6001F4FBC /* ListOutdentCommand.swift in Sources */,

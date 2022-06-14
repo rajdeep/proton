@@ -186,9 +186,9 @@ extension GridContentView: GridCellDelegate {
         guard  let row = cell.rowSpan.first else { return }
         if grid.rowHeights.count > row,
            grid.maxContentHeightCellForRow(at: row)?.id == cell.id {
-            grid.rowHeights[row] = bounds.height
+            grid.rowHeights[row].currentHeight = bounds.height
         } else {
-            grid.rowHeights[row] = grid.maxContentHeightCellForRow(at: row)?.contentSize.height ?? 0
+            grid.rowHeights[row].currentHeight = grid.maxContentHeightCellForRow(at: row)?.contentSize.height ?? 0
         }
 
         recalculateCellBounds()
