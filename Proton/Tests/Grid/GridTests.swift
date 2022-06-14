@@ -178,6 +178,86 @@ class GridTests: XCTestCase {
         XCTAssertEqual(cellFrame, CGRect(x: 75.0, y: 50.0, width: 250, height: 50))
     }
 
+    func testInsertRow() {
+        let expectation = functionExpectation()
+        expectation.expectedFulfillmentCount = 3
+
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fractional(0.25)),
+                GridColumnConfiguration(dimension: .fixed(100.0)),
+                GridColumnConfiguration(dimension: .fractional(0.50)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+            ])
+
+        let grid = Grid(config: config, cells: generateCells(config: config))
+        grid.insertRow(at: 1, config: GridRowConfiguration(minRowHeight: 20, maxRowHeight: 100))
+        XCTAssertEqual(grid.numberOfRows, 4)
+        let newCells = grid.cells.filter { $0.rowSpan.contains(1) }
+        XCTAssertEqual(newCells.count, 3)
+
+        let expectedCellFrames = [
+            (id: "{[1],[0]}", frame: CGRect(x: 0.0, y: 50.0, width: 75.0, height: 20.0)),
+            (id: "{[1],[1]}", frame: CGRect(x: 75.0, y: 50.0, width: 100.0, height: 20.0)),
+            (id: "{[1],[2]}", frame: CGRect(x: 175.0, y: 50.0, width: 150.0, height: 20.0)),
+        ]
+
+        for i in 0..<newCells.count {
+            let cell = newCells[i]
+            let frame = grid.frameForCell(cell, basedOn: CGSize(width: 300, height: 400))
+            let expectedCellFrame = expectedCellFrames[i]
+            XCTAssertEqual(cell.id, expectedCellFrame.id)
+            XCTAssertEqual(frame, expectedCellFrame.frame)
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1.0)
+
+    }
+
+    func testInsertColumn() {
+        let expectation = functionExpectation()
+        expectation.expectedFulfillmentCount = 3
+
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fractional(0.25)),
+                GridColumnConfiguration(dimension: .fixed(100.0)),
+                GridColumnConfiguration(dimension: .fractional(0.50)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 30, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+            ])
+
+        let grid = Grid(config: config, cells: generateCells(config: config))
+        grid.insertColumn(at: 1, config: GridColumnConfiguration(dimension: .fractional(0.30)))
+        XCTAssertEqual(grid.numberOfColumns, 4)
+        let newCells = grid.cells.filter { $0.columnSpan.contains(1) }
+        XCTAssertEqual(newCells.count, 3)
+
+        let expectedCellFrames = [
+            (id: "{[0],[1]}", frame: CGRect(x: 75.0, y: 0.0, width: 90.0, height: 30.0)),
+            (id: "{[1],[1]}", frame: CGRect(x: 75.0, y: 30.0, width: 90.0, height: 40.0)),
+            (id: "{[2],[1]}", frame: CGRect(x: 75.0, y: 70.0, width: 90.0, height: 50.0)),
+        ]
+
+        for i in 0..<newCells.count {
+            let cell = newCells[i]
+            let frame = grid.frameForCell(cell, basedOn: CGSize(width: 300, height: 400))
+            let expectedCellFrame = expectedCellFrames[i]
+            XCTAssertEqual(cell.id, expectedCellFrame.id)
+            XCTAssertEqual(frame, expectedCellFrame.frame)
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1.0)
+
+    }
+
     private func generateCells(config: GridConfiguration) -> [GridCell] {
         var cells = [GridCell]()
         for row in 0..<config.numberOfRows {

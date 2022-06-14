@@ -29,6 +29,16 @@ class GridCellStore {
         self.cells = cells
     }
 
+    var numberOfColumns: Int {
+        guard let columns = cells.flatMap({ $0.columnSpan }).max() else { return 0 }
+        return columns + 1
+    }
+
+    var numberOfRows: Int {
+        guard let rows = cells.flatMap({ $0.rowSpan }).max() else { return 0 }
+        return rows + 1
+    }
+
     func cellAt(rowIndex: Int, columnIndex: Int) -> GridCell? {
         return cells.first(where: { $0.rowSpan.contains(rowIndex) && $0.columnSpan.contains(columnIndex) })
     }
@@ -43,6 +53,30 @@ class GridCellStore {
     func addCells(_ newCells: [GridCell]) {
         cells.append(contentsOf: newCells)
     }
+
+    func addCell(_ cell: GridCell) {
+        cells.append(cell)
+    }
+
+    func moveCellRowIndex(from index: Int, by step: Int) {
+        for cell in cells {
+            for i in 0..<cell.rowSpan.count {
+                if cell.rowSpan[i] >= index {
+                    cell.rowSpan[i] += step
+                }
+            }
+        }
+    }
+
+    func moveCellColumnIndex(from index: Int, by step: Int) {
+        for cell in cells {
+            for i in 0..<cell.columnSpan.count {
+                if cell.columnSpan[i] >= index {
+                    cell.columnSpan[i] += step
+                }
+            }
+        }
+    }
 }
 
 class Grid {
@@ -55,6 +89,14 @@ class Grid {
 
     var cells: [GridCell] {
         cellStore.cells
+    }
+
+    var numberOfColumns: Int {
+        columnWidths.count
+    }
+
+    var numberOfRows: Int {
+        rowHeights.count
     }
 
     init(config: GridConfiguration, cells: [GridCell]) {
@@ -161,5 +203,39 @@ class Grid {
         cell.columnSpan = firstCell.columnSpan
 
         cellStore.addCells(newCells)
+    }
+
+    func insertRow(at index: Int, config: GridRowConfiguration) {
+        if index < numberOfRows {
+            cellStore.moveCellRowIndex(from: index, by: 1)
+        }
+        rowHeights.insert(config.minRowHeight, at: index)
+
+        for c in 0..<numberOfColumns {
+            let cell = GridCell(
+                rowSpan: [index],
+                columnSpan: [c],
+                minHeight: config.minRowHeight,
+                maxHeight: config.maxRowHeight)
+
+            cellStore.addCell(cell)
+        }
+    }
+
+    func insertColumn(at index: Int, config: GridColumnConfiguration) {
+        if index < numberOfColumns {
+            cellStore.moveCellColumnIndex(from: index, by: 1)
+        }
+        columnWidths.insert(config.dimension, at: index)
+
+        for r in 0..<numberOfRows {
+            let cell = GridCell(
+                rowSpan: [r],
+                columnSpan: [index],
+                minHeight: rowHeights[r],
+                maxHeight: rowHeights[r])
+
+            cellStore.addCell(cell)
+        }
     }
 }
