@@ -215,7 +215,6 @@ class GridTests: XCTestCase {
             expectation.fulfill()
         }
         waitForExpectations(timeout: 1.0)
-
     }
 
     func testInsertColumn() {
@@ -248,6 +247,83 @@ class GridTests: XCTestCase {
 
         for i in 0..<newCells.count {
             let cell = newCells[i]
+            let frame = grid.frameForCell(cell, basedOn: CGSize(width: 300, height: 400))
+            let expectedCellFrame = expectedCellFrames[i]
+            XCTAssertEqual(cell.id, expectedCellFrame.id)
+            XCTAssertEqual(frame, expectedCellFrame.frame)
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testDeletesRow() {
+        let expectation = functionExpectation()
+        expectation.expectedFulfillmentCount = 3
+
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fractional(0.25)),
+                GridColumnConfiguration(dimension: .fixed(100.0)),
+                GridColumnConfiguration(dimension: .fractional(0.50)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 30, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+            ])
+
+        let grid = Grid(config: config, cells: generateCells(config: config))
+        grid.deleteRow(at: 1)
+        XCTAssertEqual(grid.numberOfRows, 2)
+        let movedCells = grid.cells.filter { $0.rowSpan.contains(1) }
+
+        let expectedCellFrames = [
+            (id: "{[1],[0]}", frame: CGRect(x: 0.0, y: 30.0, width: 75.0, height: 50.0)),
+            (id: "{[1],[1]}", frame: CGRect(x: 75.0, y: 30.0, width: 100.0, height: 50.0)),
+            (id: "{[1],[2]}", frame: CGRect(x: 175.0, y: 30.0, width: 150.0, height: 50.0)),
+        ]
+
+        for i in 0..<movedCells.count {
+            let cell = movedCells[i]
+            let frame = grid.frameForCell(cell, basedOn: CGSize(width: 300, height: 400))
+            let expectedCellFrame = expectedCellFrames[i]
+            XCTAssertEqual(cell.id, expectedCellFrame.id)
+            XCTAssertEqual(frame, expectedCellFrame.frame)
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testDeletesColumn() {
+        let expectation = functionExpectation()
+        expectation.expectedFulfillmentCount = 3
+
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fractional(0.25)),
+                GridColumnConfiguration(dimension: .fixed(100.0)),
+                GridColumnConfiguration(dimension: .fractional(0.50)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 30, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+            ])
+
+        let grid = Grid(config: config, cells: generateCells(config: config))
+        grid.deleteColumn(at: 1)
+        XCTAssertEqual(grid.numberOfColumns, 2)
+        let movedCells = grid.cells.filter { $0.columnSpan.contains(1) }
+        XCTAssertEqual(movedCells.count, 3)
+
+        let expectedCellFrames = [
+            (id: "{[0],[1]}", frame: CGRect(x: 75.0, y: 0.0, width: 150.0, height: 30.0)),
+            (id: "{[1],[1]}", frame: CGRect(x: 75.0, y: 30.0, width: 150.0, height: 40.0)),
+            (id: "{[2],[1]}", frame: CGRect(x: 75.0, y: 70.0, width: 150.0, height: 50.0)),
+        ]
+
+        for i in 0..<movedCells.count {
+            let cell = movedCells[i]
             let frame = grid.frameForCell(cell, basedOn: CGSize(width: 300, height: 400))
             let expectedCellFrame = expectedCellFrames[i]
             XCTAssertEqual(cell.id, expectedCellFrame.id)

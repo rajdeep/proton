@@ -195,4 +195,18 @@ class Grid {
             cellStore.addCell(cell)
         }
     }
+
+    func deleteRow(at index: Int) {
+        if index < numberOfRows {
+            cellStore.moveCellRowIndex(from: index, by: -1)
+            rowHeights.remove(at: index)
+        }
+    }
+
+    func deleteColumn(at index: Int) {
+        if index < numberOfColumns {
+            cellStore.moveCellColumnIndex(from: index, by: -1)
+            columnWidths.remove(at: index)
+        }
+    }
 }
