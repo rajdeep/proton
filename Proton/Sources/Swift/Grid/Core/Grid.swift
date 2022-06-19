@@ -175,6 +175,10 @@ class Grid {
                 minHeight: config.minRowHeight,
                 maxHeight: config.maxRowHeight)
 
+            if cellAt(rowIndex: index, columnIndex: c) != nil {
+                continue
+            }
+
             cellStore.addCell(cell)
         }
     }
@@ -192,6 +196,9 @@ class Grid {
                 minHeight: rowHeights[r].rowConfiguration.minRowHeight,
                 maxHeight: rowHeights[r].rowConfiguration.maxRowHeight)
 
+            if cellAt(rowIndex: r, columnIndex: index) != nil {
+                continue
+            }
             cellStore.addCell(cell)
         }
     }

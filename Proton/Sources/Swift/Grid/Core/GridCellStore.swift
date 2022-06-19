@@ -58,19 +58,31 @@ class GridCellStore {
 
     func moveCellRowIndex(from index: Int, by step: Int) {
         for cell in cells {
-            for i in 0..<cell.rowSpan.count {
-                if cell.rowSpan[i] >= index {
-                    cell.rowSpan[i] += step
+            if cell.isSplittable,
+               cell.rowSpan.contains(index),
+               let max = cell.rowSpan.max() {
+                cell.rowSpan.append(max + 1)
+            } else {
+                    for i in 0..<cell.rowSpan.count {
+                        if cell.rowSpan[i] >= index {
+                            cell.rowSpan[i] += step
+                        }
+                    }
                 }
             }
-        }
     }
 
     func moveCellColumnIndex(from index: Int, by step: Int) {
         for cell in cells {
-            for i in 0..<cell.columnSpan.count {
-                if cell.columnSpan[i] >= index {
-                    cell.columnSpan[i] += step
+            if cell.isSplittable,
+               cell.columnSpan.contains(index),
+               let max = cell.columnSpan.max() {
+                cell.columnSpan.append(max + 1)
+            } else {
+                for i in 0..<cell.columnSpan.count {
+                    if cell.columnSpan[i] >= index {
+                        cell.columnSpan[i] += step
+                    }
                 }
             }
         }

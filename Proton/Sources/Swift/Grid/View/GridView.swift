@@ -80,12 +80,18 @@ public class GridView: UIView {
 
     public func merge(cell: GridCell, other: GridCell) {
         gridView.merge(cell: cell, other: other)
-        gridView.invalidateCellLayout()
     }
 
     public func split(cell: GridCell) {
         gridView.split(cell: cell)
-        gridView.invalidateCellLayout()
+    }
+
+    public func insertRow(at index: Int, configuration: GridRowConfiguration) {
+        gridView.insertRow(at: index, configuration: configuration)
+    }
+
+    public func insertColumn(at index: Int, configuration: GridColumnConfiguration) {
+        gridView.insertColumn(at: index, configuration: configuration)
     }
 
     public func cellAt(rowIndex: Int, columnIndex: Int) -> GridCell? {

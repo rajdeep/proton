@@ -73,10 +73,22 @@ class GridContentView: UIScrollView {
 
     func merge(cell: GridCell, other: GridCell) {
         grid.merge(cell: cell, other: other)
+        invalidateCellLayout()
     }
 
     func split(cell: GridCell) {
         grid.split(cell: cell)
+        invalidateCellLayout()
+    }
+
+    func insertRow(at index: Int, configuration: GridRowConfiguration) {
+        grid.insertRow(at: index, config: configuration)
+        invalidateCellLayout()
+    }
+
+    func insertColumn(at index: Int, configuration: GridColumnConfiguration) {
+        grid.insertColumn(at: index, config: configuration)
+        invalidateCellLayout()
     }
 
     func cellAt(rowIndex: Int, columnIndex: Int) -> GridCell? {

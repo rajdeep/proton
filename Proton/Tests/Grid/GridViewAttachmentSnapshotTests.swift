@@ -479,4 +479,271 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testInsertsRowAtIndexInMiddle() throws {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(30)),
+                GridColumnConfiguration(dimension: .fractional(0.45)),
+                GridColumnConfiguration(dimension: .fractional(0.45)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+            ])
+        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let gridView = attachment.view
+        let cell11 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 2))
+
+        cell11.editor.replaceCharacters(in: .zero, with: "Test string 1")
+        cell12.editor.replaceCharacters(in: .zero, with: "Test string 2")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        gridView.insertRow(at: 1, configuration: GridRowConfiguration(minRowHeight: 60, maxRowHeight: 80))
+
+        let newCell11 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))
+        newCell11.editor.replaceCharacters(in: .zero, with: "New cell")
+
+        viewController.render(size: CGSize(width: 400, height: 400))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testInsertsColumnAtIndexInMiddle() throws {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(30)),
+                GridColumnConfiguration(dimension: .fractional(0.35)),
+                GridColumnConfiguration(dimension: .fractional(0.35)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+            ])
+        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let gridView = attachment.view
+        let cell11 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 2))
+
+        cell11.editor.replaceCharacters(in: .zero, with: "Test string 1")
+        cell12.editor.replaceCharacters(in: .zero, with: "Test string 2")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        gridView.insertColumn(at: 1, configuration: GridColumnConfiguration(dimension: .fractional(0.20)))
+
+        let newCell11 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))
+        newCell11.editor.replaceCharacters(in: .zero, with: "New cell")
+
+        viewController.render(size: CGSize(width: 500, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testInsertsRowAtTop() throws {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(30)),
+                GridColumnConfiguration(dimension: .fractional(0.45)),
+                GridColumnConfiguration(dimension: .fractional(0.45)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+            ])
+        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let gridView = attachment.view
+        gridView.insertRow(at: 0, configuration: GridRowConfiguration(minRowHeight: 60, maxRowHeight: 80))
+
+        let newCell01 = try XCTUnwrap(gridView.cellAt(rowIndex: 0, columnIndex: 1))
+        newCell01.editor.replaceCharacters(in: .zero, with: "New cell")
+
+        viewController.render(size: CGSize(width: 400, height: 400))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testInsertsRowAtBottom() throws {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(30)),
+                GridColumnConfiguration(dimension: .fractional(0.45)),
+                GridColumnConfiguration(dimension: .fractional(0.45)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+            ])
+        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let gridView = attachment.view
+        gridView.insertRow(at: 2, configuration: GridRowConfiguration(minRowHeight: 60, maxRowHeight: 80))
+
+        let newCell21 = try XCTUnwrap(gridView.cellAt(rowIndex: 2, columnIndex: 1))
+        newCell21.editor.replaceCharacters(in: .zero, with: "New cell")
+
+        viewController.render(size: CGSize(width: 400, height: 400))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testInsertsColumnAtBeginning() throws {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(30)),
+                GridColumnConfiguration(dimension: .fractional(0.35)),
+                GridColumnConfiguration(dimension: .fractional(0.35)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+            ])
+        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let gridView = attachment.view
+        gridView.insertColumn(at: 0, configuration: GridColumnConfiguration(dimension: .fractional(0.20)))
+
+        let newCell10 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 0))
+        newCell10.editor.replaceCharacters(in: .zero, with: "New cell")
+
+        viewController.render(size: CGSize(width: 500, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testInsertsColumnAtEnd() throws {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(30)),
+                GridColumnConfiguration(dimension: .fractional(0.35)),
+                GridColumnConfiguration(dimension: .fractional(0.35)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+            ])
+        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let gridView = attachment.view
+        gridView.insertColumn(at: 3, configuration: GridColumnConfiguration(dimension: .fractional(0.20)))
+
+        let newCell13 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 3))
+        newCell13.editor.replaceCharacters(in: .zero, with: "New cell")
+
+        viewController.render(size: CGSize(width: 500, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testInsertsRowInMixedMergedCells() throws {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+            ])
+        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+
+        let gridView = attachment.view
+        let cell11 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 2))
+
+        cell11.editor.replaceCharacters(in: .zero, with: "Test string 1")
+
+        let cell21 = try XCTUnwrap(gridView.cellAt(rowIndex: 2, columnIndex: 1))
+        let cell22 = try XCTUnwrap(gridView.cellAt(rowIndex: 2, columnIndex: 2))
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        gridView.merge(cell: cell11, other: cell12)
+        gridView.merge(cell: cell21, other: cell22)
+        gridView.merge(cell: cell11, other: cell21)
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        gridView.insertRow(at: 2, configuration: GridRowConfiguration(minRowHeight: 30, maxRowHeight: 30, style: GridCellStyle(borderColor: UIColor.red, borderWidth: 1)))
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testInsertsColumnInMixedMergedCells() throws {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+            ])
+        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+
+        let gridView = attachment.view
+        let cell11 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 2))
+
+        cell11.editor.replaceCharacters(in: .zero, with: "Test string 1")
+        cell12.editor.replaceCharacters(in: .zero, with: "Test string 2")
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        gridView.merge(cell: cell11, other: cell12)
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        gridView.insertColumn(at: 2, configuration: GridColumnConfiguration(dimension: .fixed(40)))
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 }

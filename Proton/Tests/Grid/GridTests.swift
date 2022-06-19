@@ -39,7 +39,6 @@ class GridTests: XCTestCase {
         let grid = Grid(config: config, cells: generateCells(config: config))
         let cells = grid.cells
         XCTAssertEqual(cells.count, 6)
-//        XCTAssertEqual(grid.size, CGSize(width: 200, height: 150))
         var counter = 0
 
         for i in 0..<3 {
@@ -332,6 +331,68 @@ class GridTests: XCTestCase {
         }
         waitForExpectations(timeout: 1.0)
 
+    }
+
+    func testInsertsRowInMixedMergeCells() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+            ])
+
+        let grid = Grid(config: config, cells: generateCells(config: config))
+
+        let cell11 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 2))
+        let cell21 = try XCTUnwrap(grid.cellAt(rowIndex: 2, columnIndex: 1))
+        let cell22 = try XCTUnwrap(grid.cellAt(rowIndex: 2, columnIndex: 2))
+
+        grid.merge(cell: cell11, other: cell12)
+        grid.merge(cell: cell21, other: cell22)
+        grid.merge(cell: cell11, other: cell21)
+
+        grid.insertRow(at: 2, config: GridRowConfiguration(minRowHeight: 20, maxRowHeight: 20))
+        let expectedCellIDs = Set(["{[0],[0]}", "{[0],[1]}", "{[0],[2]}", "{[1],[0]}", "{[1, 2, 3],[1, 2]}", "{[3],[0]}", "{[2],[0]}"])
+        let cells = Set(grid.cells.map { $0.id })
+
+        XCTAssertEqual(cells.count, expectedCellIDs.count)
+        XCTAssertEqual(expectedCellIDs.intersection(cells).count, cells.count)
+    }
+
+    func testInsertsColumnInMixedMergeCells() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+            ])
+
+        let grid = Grid(config: config, cells: generateCells(config: config))
+
+        let cell11 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 2))
+
+        grid.merge(cell: cell11, other: cell12)
+
+        grid.insertColumn(at: 2, config: GridColumnConfiguration(dimension: .fixed(100)))
+
+        print(grid.cells.map{ $0.id })
+        let expectedCellIDs = Set(["{[0],[0]}", "{[0],[1]}", "{[0],[3]}", "{[1],[0]}", "{[1],[1, 2, 3]}", "{[2],[0]}", "{[2],[1]}", "{[2],[3]}", "{[0],[2]}", "{[2],[2]}"])
+        let cells = Set(grid.cells.map { $0.id })
+
+        XCTAssertEqual(cells.count, expectedCellIDs.count)
+        XCTAssertEqual(expectedCellIDs.intersection(cells).count, cells.count)
     }
 
     private func generateCells(config: GridConfiguration) -> [GridCell] {
