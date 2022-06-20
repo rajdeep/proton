@@ -122,6 +122,14 @@ class Grid {
         return maxHeightCell
     }
 
+    func merge(cells: [GridCell]) {
+        guard cells.isEmpty == false else { return }
+        let firstCell = cells[0]
+        for i in 1..<cells.count {
+            merge(cell: firstCell, other: cells[i])
+        }
+    }
+
     func merge(cell: GridCell, other: GridCell) {
         //TODO: Validate if columns can be merged i.e. side by side/up and down
         guard let _ = cellStore.cells.firstIndex(where: { $0.id == cell.id }),

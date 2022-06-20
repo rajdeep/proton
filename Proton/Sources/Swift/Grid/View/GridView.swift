@@ -82,6 +82,10 @@ public class GridView: UIView {
         gridView.merge(cell: cell, other: other)
     }
 
+    public func merge(cells: [GridCell]) {
+        gridView.merge(cells: cells)
+    }
+
     public func split(cell: GridCell) {
         gridView.split(cell: cell)
     }

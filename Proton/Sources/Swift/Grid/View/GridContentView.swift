@@ -76,6 +76,11 @@ class GridContentView: UIScrollView {
         invalidateCellLayout()
     }
 
+    func merge(cells: [GridCell]) {
+        grid.merge(cells: cells)
+        invalidateCellLayout()
+    }
+
     func split(cell: GridCell) {
         grid.split(cell: cell)
         invalidateCellLayout()
