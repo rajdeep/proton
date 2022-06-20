@@ -94,6 +94,14 @@ public class GridView: UIView {
         gridView.insertColumn(at: index, configuration: configuration)
     }
 
+    public func deleteRow(at index: Int) {
+        gridView.deleteRow(at: index)
+    }
+
+    public func deleteColumn(at index: Int) {
+        gridView.deleteColumn(at: index)
+    }
+
     public func cellAt(rowIndex: Int, columnIndex: Int) -> GridCell? {
         return gridView.cellAt(rowIndex: rowIndex, columnIndex: columnIndex)
     }

@@ -204,6 +204,25 @@ class Grid {
     }
 
     func deleteRow(at index: Int) {
+        var cellsToRemove = [GridCell]()
+        var cellsToUpdate = [GridCell]()
+
+        for cell in cells {
+            if cell.rowSpan.contains(index) {
+                if cell.isSplittable {
+                    cellsToUpdate.append(cell)
+                } else {
+                    cellsToRemove.append(cell)
+                }
+            }
+        }
+
+        cellStore.deleteCells(cellsToRemove)
+        for cell in cellsToUpdate {
+            cell.columnSpan.removeAll{ $0 == index }
+            cell.columnSpan = cell.columnSpan.map { $0 < index ? $0 : $0 - 1 }
+        }
+
         if index < numberOfRows {
             cellStore.moveCellRowIndex(from: index, by: -1)
             rowHeights.remove(at: index)
@@ -211,6 +230,25 @@ class Grid {
     }
 
     func deleteColumn(at index: Int) {
+        var cellsToRemove = [GridCell]()
+        var cellsToUpdate = [GridCell]()
+
+        for cell in cells {
+            if cell.columnSpan.contains(index) {
+                if cell.isSplittable {
+                    cellsToUpdate.append(cell)
+                } else {
+                    cellsToRemove.append(cell)
+                }
+            }
+        }
+
+        cellStore.deleteCells(cellsToRemove)
+        for cell in cellsToUpdate {
+            cell.rowSpan.removeAll{ $0 == index }
+            cell.rowSpan = cell.rowSpan.map { $0 < index ? $0 : $0 - 1 }
+        }
+
         if index < numberOfColumns {
             cellStore.moveCellColumnIndex(from: index, by: -1)
             columnWidths.remove(at: index)

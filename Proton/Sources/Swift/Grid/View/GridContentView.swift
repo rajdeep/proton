@@ -91,6 +91,16 @@ class GridContentView: UIScrollView {
         invalidateCellLayout()
     }
 
+    func deleteRow(at index: Int) {
+        grid.deleteRow(at: index)
+        invalidateCellLayout()
+    }
+
+    func deleteColumn(at index: Int) {
+        grid.deleteColumn(at: index)
+        invalidateCellLayout()
+    }
+
     func cellAt(rowIndex: Int, columnIndex: Int) -> GridCell? {
         grid.cellAt(rowIndex: rowIndex, columnIndex: columnIndex)
     }

@@ -56,6 +56,10 @@ class GridCellStore {
         cells.append(cell)
     }
 
+    func deleteCells(_ cellsToDelete: [GridCell]) {
+        cells = cells.filter({ !cellsToDelete.contains($0) })
+    }
+
     func moveCellRowIndex(from index: Int, by step: Int) {
         for cell in cells {
             if cell.isSplittable,
