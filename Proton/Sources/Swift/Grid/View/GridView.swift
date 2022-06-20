@@ -78,10 +78,6 @@ public class GridView: UIView {
         ])
     }
 
-    public func merge(cell: GridCell, other: GridCell) {
-        gridView.merge(cell: cell, other: other)
-    }
-
     public func merge(cells: [GridCell]) {
         gridView.merge(cells: cells)
     }

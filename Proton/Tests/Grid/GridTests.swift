@@ -96,7 +96,7 @@ class GridTests: XCTestCase {
         let cell21 = try XCTUnwrap(grid.cellAt(rowIndex: 2, columnIndex: 1))
 
         let size = CGSize(width: 300, height: 150)
-        grid.merge(cell: cell11, other: cell21)
+        grid.merge(cells:[cell11, cell21])
 
         let cellFrame = grid.frameForCell(cell11, basedOn: size)
         XCTAssertEqual(cellFrame, CGRect(x: 100.0, y: 50.0, width: 100, height: 100))
@@ -121,7 +121,7 @@ class GridTests: XCTestCase {
         let cell12 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 2))
 
         let size = CGSize(width: 300, height: 150)
-        grid.merge(cell: cell11, other: cell12)
+        grid.merge(cells: [cell11, cell12])
 
         let cellFrame = grid.frameForCell(cell11, basedOn: size)
         XCTAssertEqual(cellFrame, CGRect(x: 100.0, y: 50.0, width: 200, height: 50))
@@ -146,7 +146,7 @@ class GridTests: XCTestCase {
         let cell10 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 2))
 
         let size = CGSize(width: 300, height: 150)
-        grid.merge(cell: cell00, other: cell10)
+        grid.merge(cells: [cell00, cell10])
 
         let cellFrame = grid.frameForCell(cell00, basedOn: size)
         XCTAssertEqual(cellFrame, CGRect(x: 75.0, y: 50.0, width: 225, height: 50))
@@ -171,7 +171,7 @@ class GridTests: XCTestCase {
         let cell10 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 2))
 
         let size = CGSize(width: 300, height: 150)
-        grid.merge(cell: cell00, other: cell10)
+        grid.merge(cells: [cell00, cell10])
 
         let cellFrame = grid.frameForCell(cell00, basedOn: size)
         XCTAssertEqual(cellFrame, CGRect(x: 75.0, y: 50.0, width: 250, height: 50))
@@ -353,9 +353,12 @@ class GridTests: XCTestCase {
         let cell21 = try XCTUnwrap(grid.cellAt(rowIndex: 2, columnIndex: 1))
         let cell22 = try XCTUnwrap(grid.cellAt(rowIndex: 2, columnIndex: 2))
 
-        grid.merge(cell: cell11, other: cell12)
-        grid.merge(cell: cell21, other: cell22)
-        grid.merge(cell: cell11, other: cell21)
+        grid.merge(cells: [
+            cell11,
+            cell12,
+            cell21,
+            cell22
+        ])
 
         grid.insertRow(at: 2, config: GridRowConfiguration(minRowHeight: 20, maxRowHeight: 20))
         let expectedCellIDs = Set(["{[0],[0]}", "{[0],[1]}", "{[0],[2]}", "{[1],[0]}", "{[1, 2, 3],[1, 2]}", "{[3],[0]}", "{[2],[0]}"])
@@ -383,7 +386,7 @@ class GridTests: XCTestCase {
         let cell11 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 1))
         let cell12 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 2))
 
-        grid.merge(cell: cell11, other: cell12)
+        grid.merge(cells: [cell11, cell12])
 
         grid.insertColumn(at: 2, config: GridColumnConfiguration(dimension: .fixed(100)))
 
@@ -393,6 +396,152 @@ class GridTests: XCTestCase {
 
         XCTAssertEqual(cells.count, expectedCellIDs.count)
         XCTAssertEqual(expectedCellIDs.intersection(cells).count, cells.count)
+    }
+
+    func testIsMergableValid() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+            ])
+
+        let grid = Grid(config: config, cells: generateCells(config: config))
+
+        let cell11 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 2))
+        let cell21 = try XCTUnwrap(grid.cellAt(rowIndex: 2, columnIndex: 1))
+        let cell22 = try XCTUnwrap(grid.cellAt(rowIndex: 2, columnIndex: 2))
+
+        let isMergeable = grid.isMergeable(cells: [
+            cell11,
+            cell12,
+            cell21,
+            cell22
+        ])
+
+        XCTAssertTrue(isMergeable)
+    }
+
+    func testIsMergableInvalid() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+            ])
+
+        let grid = Grid(config: config, cells: generateCells(config: config))
+
+        let cell00 = try XCTUnwrap(grid.cellAt(rowIndex: 0, columnIndex: 0))
+        let cell12 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 2))
+        let cell21 = try XCTUnwrap(grid.cellAt(rowIndex: 2, columnIndex: 1))
+        let cell22 = try XCTUnwrap(grid.cellAt(rowIndex: 2, columnIndex: 2))
+
+        let isMergeable = grid.isMergeable(cells: [
+            cell00,
+            cell12,
+            cell21,
+            cell22
+        ])
+
+        XCTAssertFalse(isMergeable)
+    }
+
+    func testIsMergableValidWithMergedCells() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+            ])
+
+        let grid = Grid(config: config, cells: generateCells(config: config))
+
+        let cell11 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 2))
+        let cell21 = try XCTUnwrap(grid.cellAt(rowIndex: 2, columnIndex: 1))
+        let cell22 = try XCTUnwrap(grid.cellAt(rowIndex: 2, columnIndex: 2))
+
+        grid.merge(cells: [
+            cell11,
+            cell12,
+            cell21,
+            cell22
+        ])
+
+
+        let cell01 = try XCTUnwrap(grid.cellAt(rowIndex: 0, columnIndex: 1))
+        let cell02 = try XCTUnwrap(grid.cellAt(rowIndex: 0, columnIndex: 2))
+        let mergedCell = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 1))
+
+        let isMergeable = grid.isMergeable(cells: [
+            cell01,
+            cell02,
+            mergedCell
+        ])
+
+        XCTAssertTrue(isMergeable)
+    }
+
+    func testIsMergableInvalidWithMergedCells() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+            ])
+
+        let grid = Grid(config: config, cells: generateCells(config: config))
+
+        let cell11 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 2))
+        let cell21 = try XCTUnwrap(grid.cellAt(rowIndex: 2, columnIndex: 1))
+        let cell22 = try XCTUnwrap(grid.cellAt(rowIndex: 2, columnIndex: 2))
+
+        grid.merge(cells: [
+            cell11,
+            cell12,
+            cell21,
+            cell22
+        ])
+
+
+        let cell00 = try XCTUnwrap(grid.cellAt(rowIndex: 0, columnIndex: 0))
+        let cell10 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 0))
+        let mergedCell = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 1))
+
+        let isMergeable = grid.isMergeable(cells: [
+            cell00,
+            cell10,
+            mergedCell
+        ])
+
+        XCTAssertFalse(isMergeable)
     }
 
     private func generateCells(config: GridConfiguration) -> [GridCell] {

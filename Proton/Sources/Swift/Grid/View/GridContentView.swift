@@ -71,11 +71,6 @@ class GridContentView: UIScrollView {
         self.scrollRectToVisible(frame, animated: animated)
     }
 
-    func merge(cell: GridCell, other: GridCell) {
-        grid.merge(cell: cell, other: other)
-        invalidateCellLayout()
-    }
-
     func merge(cells: [GridCell]) {
         grid.merge(cells: cells)
         invalidateCellLayout()

@@ -347,7 +347,7 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
-        gridView.merge(cell: cell01, other: cell11)
+        gridView.merge(cells: [cell01, cell11])
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
@@ -383,7 +383,7 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
-        gridView.merge(cell: cell11, other: cell12)
+        gridView.merge(cells: [cell11, cell12])
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
@@ -424,9 +424,13 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
-        gridView.merge(cell: cell11, other: cell12)
-        gridView.merge(cell: cell21, other: cell22)
-        gridView.merge(cell: cell11, other: cell21)
+        gridView.merge(cells: [
+            cell11,
+            cell12,
+            cell21,
+            cell22
+        ])
+
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
@@ -464,9 +468,13 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
-        gridView.merge(cell: cell11, other: cell12)
-        gridView.merge(cell: cell21, other: cell22)
-        gridView.merge(cell: cell11, other: cell21)
+        gridView.merge(cells: [
+            cell11,
+            cell12,
+            cell21,
+            cell22
+        ])
+
 
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
@@ -700,9 +708,13 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
-        gridView.merge(cell: cell11, other: cell12)
-        gridView.merge(cell: cell21, other: cell22)
-        gridView.merge(cell: cell11, other: cell21)
+        gridView.merge(cells: [
+            cell11,
+            cell12,
+            cell21,
+            cell22
+        ])
+
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
@@ -738,7 +750,7 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
-        gridView.merge(cell: cell11, other: cell12)
+        gridView.merge(cells: [cell11, cell12])
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 

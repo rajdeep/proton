@@ -122,16 +122,36 @@ class Grid {
         return maxHeightCell
     }
 
+    func isMergeable(cells: [GridCell]) -> Bool {
+        guard cells.count > 1 else { return false }
+
+        let rowSpans = cells.flatMap({ $0.rowSpan })
+        let columnSpans = cells.flatMap({ $0.columnSpan })
+
+        guard let minRow = rowSpans.min(),
+              let maxRow = rowSpans.max(),
+              let minColumn = columnSpans.min(),
+              let maxColumn = columnSpans.max() else {
+            return false
+        }
+
+        let topLeftExists = cells.contains { $0.rowSpan.contains (minRow) && $0.columnSpan.contains(minColumn) }
+        let topRightExists = cells.contains { $0.rowSpan.contains (minRow) && $0.columnSpan.contains(maxColumn) }
+        let bottomLeftExists = cells.contains { $0.rowSpan.contains (maxRow) && $0.columnSpan.contains(minColumn) }
+        let bottomRightExists = cells.contains { $0.rowSpan.contains (maxRow) && $0.columnSpan.contains(maxColumn) }
+
+        return topLeftExists && topRightExists && bottomLeftExists && bottomRightExists
+    }
+
     func merge(cells: [GridCell]) {
-        guard cells.isEmpty == false else { return }
+        guard isMergeable(cells: cells) else { return }
         let firstCell = cells[0]
         for i in 1..<cells.count {
             merge(cell: firstCell, other: cells[i])
         }
     }
 
-    func merge(cell: GridCell, other: GridCell) {
-        //TODO: Validate if columns can be merged i.e. side by side/up and down
+    private func merge(cell: GridCell, other: GridCell) {
         guard let _ = cellStore.cells.firstIndex(where: { $0.id == cell.id }),
               let otherIndex = cellStore.cells.firstIndex(where: { $0.id == other.id }) else {
             return
