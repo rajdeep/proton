@@ -53,7 +53,7 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(matching: viewController.view, as: .image, record: true)
     }
 
     func testRendersGridViewAttachmentWithFractionalWidth() {
@@ -159,7 +159,6 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         let style = GridCellStyle(
             borderColor: .blue,
             borderWidth: 1,
-            cornerRadius: 3,
             backgroundColor: .lightGray,
             textColor: .darkGray,
             font: UIFont.systemFont(ofSize: 14, weight: .bold))
@@ -195,7 +194,6 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         let style = GridCellStyle(
             borderColor: .darkGray,
             borderWidth: 1,
-            cornerRadius: 3,
             backgroundColor: .red,
             textColor: .white,
             font: UIFont.systemFont(ofSize: 14, weight: .bold))
@@ -236,7 +234,6 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         let rowStyle = GridCellStyle(
             borderColor: .darkGray,
             borderWidth: 1,
-            cornerRadius: 3,
             backgroundColor: .red,
             textColor: .white,
             font: UIFont.systemFont(ofSize: 14, weight: .bold))
@@ -244,7 +241,6 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         let columnStyle = GridCellStyle(
             borderColor: .red,
             borderWidth: 2,
-            cornerRadius: 3,
             backgroundColor: .blue,
             textColor: .white,
             font: UIFont.systemFont(ofSize: 14, weight: .bold))

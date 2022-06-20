@@ -23,7 +23,6 @@ import Foundation
 public struct GridCellStyle {
     public var borderColor: UIColor?
     public var borderWidth: CGFloat?
-    public var cornerRadius: CGFloat?
     public var backgroundColor: UIColor?
     public var textColor: UIColor?
     public var font: UIFont?
@@ -31,14 +30,12 @@ public struct GridCellStyle {
     public init(
         borderColor: UIColor? = nil,
         borderWidth: CGFloat? = nil,
-        cornerRadius: CGFloat? = nil,
         backgroundColor: UIColor? = nil,
         textColor: UIColor? = nil,
         font: UIFont? = nil
     ) {
         self.borderColor = borderColor
         self.borderWidth = borderWidth
-        self.cornerRadius = cornerRadius
         self.backgroundColor = backgroundColor
         self.textColor = textColor
         self.font = font
@@ -48,7 +45,6 @@ public struct GridCellStyle {
         GridCellStyle(
             borderColor: style.borderColor ?? other.borderColor,
             borderWidth: style.borderWidth ?? other.borderWidth,
-            cornerRadius: style.cornerRadius ?? other.cornerRadius,
             backgroundColor: style.backgroundColor ?? other.backgroundColor,
             textColor: style.textColor ?? other.textColor,
             font: style.font ?? other.font)
@@ -129,7 +125,6 @@ public class GridCell {
     func updateStyle(style: GridCellStyle) {
         contentView.layer.borderColor = UIColor.gray.cgColor
         contentView.layer.borderWidth = 1
-        contentView.layer.cornerRadius = 2
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(contentViewTapped))
         contentView.addGestureRecognizer(tapGestureRecognizer)
@@ -139,10 +134,6 @@ public class GridCell {
         }
         if let borderWidth = style.borderWidth {
             contentView.layer.borderWidth = borderWidth
-        }
-        if let cornerRadius = style.cornerRadius {
-            contentView.layer.cornerRadius = cornerRadius
-            contentView.clipsToBounds = true
         }
         if let font = style.font {
             editor.font = font
