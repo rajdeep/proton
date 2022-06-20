@@ -178,7 +178,8 @@ class GridContentView: UIScrollView {
                     columnSpan: [column],
                     minHeight: minRowHeight,
                     maxHeight: maxRowHeight,
-                    style: mergedStyle
+                    style: mergedStyle,
+                    gridStyle: config.style
                 )
                 cells.append(cell)
             }

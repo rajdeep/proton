@@ -20,22 +20,30 @@
 
 import Foundation
 
+public struct GridStyle {
+    public var borderColor: UIColor
+    public var borderWidth: CGFloat
+
+    public static var `default` = GridStyle(borderColor: .gray, borderWidth: 1)
+
+    public init(
+        borderColor: UIColor,
+        borderWidth: CGFloat) {
+            self.borderColor = borderColor
+            self.borderWidth = borderWidth
+        }
+}
+
 public struct GridCellStyle {
-    public var borderColor: UIColor?
-    public var borderWidth: CGFloat?
     public var backgroundColor: UIColor?
     public var textColor: UIColor?
     public var font: UIFont?
 
     public init(
-        borderColor: UIColor? = nil,
-        borderWidth: CGFloat? = nil,
         backgroundColor: UIColor? = nil,
         textColor: UIColor? = nil,
         font: UIFont? = nil
     ) {
-        self.borderColor = borderColor
-        self.borderWidth = borderWidth
         self.backgroundColor = backgroundColor
         self.textColor = textColor
         self.font = font
@@ -43,8 +51,6 @@ public struct GridCellStyle {
 
     public static func merged(style: GridCellStyle, other: GridCellStyle) -> GridCellStyle {
         GridCellStyle(
-            borderColor: style.borderColor ?? other.borderColor,
-            borderWidth: style.borderWidth ?? other.borderWidth,
             backgroundColor: style.backgroundColor ?? other.backgroundColor,
             textColor: style.textColor ?? other.textColor,
             font: style.font ?? other.font)
@@ -93,6 +99,7 @@ public class GridCell {
     let contentView = UIView()
 
     let style: GridCellStyle
+    let gridStyle: GridStyle
 
     let widthAnchorConstraint: NSLayoutConstraint
     let heightAnchorConstraint: NSLayoutConstraint
@@ -105,10 +112,11 @@ public class GridCell {
     let minHeight: CGFloat
     let maxHeight: CGFloat
 
-    init(rowSpan: [Int], columnSpan: [Int], minHeight: CGFloat, maxHeight: CGFloat, style: GridCellStyle = .init()) {
+    init(rowSpan: [Int], columnSpan: [Int], minHeight: CGFloat, maxHeight: CGFloat, style: GridCellStyle = .init(), gridStyle: GridStyle = .default) {
         self.rowSpan = rowSpan
         self.columnSpan = columnSpan
         self.style = style
+        self.gridStyle = gridStyle
         self.minHeight = minHeight
         self.maxHeight = maxHeight
         //TODO: Move to config
@@ -129,12 +137,9 @@ public class GridCell {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(contentViewTapped))
         contentView.addGestureRecognizer(tapGestureRecognizer)
 
-        if let borderColor = style.borderColor?.cgColor {
-            contentView.layer.borderColor = borderColor
-        }
-        if let borderWidth = style.borderWidth {
-            contentView.layer.borderWidth = borderWidth
-        }
+        contentView.layer.borderColor = gridStyle.borderColor.cgColor
+        contentView.layer.borderWidth = gridStyle.borderWidth
+
         if let font = style.font {
             editor.font = font
         }

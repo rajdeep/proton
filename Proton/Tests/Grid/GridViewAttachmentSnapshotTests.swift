@@ -53,7 +53,7 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: true)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewAttachmentWithFractionalWidth() {
@@ -157,8 +157,6 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
         let style = GridCellStyle(
-            borderColor: .blue,
-            borderWidth: 1,
             backgroundColor: .lightGray,
             textColor: .darkGray,
             font: UIFont.systemFont(ofSize: 14, weight: .bold))
@@ -192,8 +190,6 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
         let style = GridCellStyle(
-            borderColor: .darkGray,
-            borderWidth: 1,
             backgroundColor: .red,
             textColor: .white,
             font: UIFont.systemFont(ofSize: 14, weight: .bold))
@@ -232,15 +228,11 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         let editor = viewController.editor
 
         let rowStyle = GridCellStyle(
-            borderColor: .darkGray,
-            borderWidth: 1,
             backgroundColor: .red,
             textColor: .white,
             font: UIFont.systemFont(ofSize: 14, weight: .bold))
 
         let columnStyle = GridCellStyle(
-            borderColor: .red,
-            borderWidth: 2,
             backgroundColor: .blue,
             textColor: .white,
             font: UIFont.systemFont(ofSize: 14, weight: .bold))
@@ -688,7 +680,8 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
                 GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
                 GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
                 GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-            ])
+            ]
+        )
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
         let gridView = attachment.view
@@ -714,7 +707,7 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
-        gridView.insertRow(at: 2, configuration: GridRowConfiguration(minRowHeight: 30, maxRowHeight: 30, style: GridCellStyle(borderColor: UIColor.red, borderWidth: 1)))
+        gridView.insertRow(at: 2, configuration: GridRowConfiguration(minRowHeight: 30, maxRowHeight: 30))
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
