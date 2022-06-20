@@ -99,14 +99,20 @@ class Grid {
         for row in cell.rowSpan {
             height += currentRowHeights[row]
         }
-        let frame = CGRect(x: x, y: y, width: width, height: height)
+        // Inset is required to create overlapping borders for cells
+        // In absence of this code, the internal border appears twice as thick as outer as
+        // the layer borders do not perfectly overlap
+        let inset = -config.style.borderWidth
+        let frame = CGRect(x: x, y: y, width: width, height: height).inset(by: UIEdgeInsets(top: 0, left: 0, bottom: inset, right: inset))
+
         cell.cachedFrame = frame
         return frame
     }
 
     func sizeThatFits(size: CGSize) -> CGSize {
-        let width = columnWidths.reduce(0.0) { $0 + $1.value(basedOn: size.width)}
-        let height = currentRowHeights.reduce(0.0, +)
+        let width = columnWidths.reduce(0.0) { $0 + $1.value(basedOn: size.width)} + config.style.borderWidth
+        // Account for additional height equal to borders from inset created when calculating the fames for cells
+        let height = currentRowHeights.reduce(0.0, +) + config.style.borderWidth
         return CGSize(width: width, height: height)
     }
 

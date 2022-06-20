@@ -51,6 +51,26 @@ class GridTests: XCTestCase {
         }
     }
 
+    func testSome() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+            ])
+
+        let grid = Grid(config: config, cells: generateCells(config: config))
+        let cell00 = try XCTUnwrap(grid.cellAt(rowIndex: 0, columnIndex: 0))
+        let cell01 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 0))
+
+        print(grid.frameForCell(cell00, basedOn: CGSize(width: 300, height: 300)))
+        print(grid.frameForCell(cell01, basedOn: CGSize(width: 300, height: 300)))
+    }
+
     func testGetsFrameForCell() {
         let config = GridConfiguration(
             columnsConfiguration: [

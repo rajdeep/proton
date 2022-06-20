@@ -53,7 +53,7 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(matching: viewController.view, as: .image, record: true)
     }
 
     func testRendersGridViewAttachmentWithFractionalWidth() {
@@ -253,7 +253,7 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
-        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after sgrid")
 
         let cell00Editor = attachment.view.cells[0].editor
         let cell01Editor = attachment.view.cells[1].editor
@@ -272,7 +272,7 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         cell12Editor.replaceCharacters(in: .zero, with: "Cell 6")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(matching: viewController.view, as: .image, record: true)
     }
 
     func testScrollsCellToVisible() {
@@ -815,13 +815,13 @@ class GridViewAttachmentSnapshotTests: XCTestCase {
         cell10.editor.replaceCharacters(in: .zero, with: "R2")
         cell20.editor.replaceCharacters(in: .zero, with: "R3")
 
-        viewController.render(size: CGSize(width: 200, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        viewController.render(size: CGSize(width: 201, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: true)
 
         gridView.deleteRow(at: 1)
 
-        viewController.render(size: CGSize(width: 200, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        viewController.render(size: CGSize(width: 201, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: true)
     }
 
     func testMergesMultipleCells() throws {

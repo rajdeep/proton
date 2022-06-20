@@ -119,8 +119,7 @@ public class GridCell {
         self.gridStyle = gridStyle
         self.minHeight = minHeight
         self.maxHeight = maxHeight
-        //TODO: Move to config
-        self.contentView.layoutMargins = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+        self.contentView.layoutMargins = .zero
 
         widthAnchorConstraint = contentView.widthAnchor.constraint(equalToConstant: 0)
         heightAnchorConstraint = contentView.heightAnchor.constraint(equalToConstant: 0)
