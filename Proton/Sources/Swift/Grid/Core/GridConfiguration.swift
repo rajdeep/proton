@@ -19,6 +19,7 @@
 //
 
 import Foundation
+import UIKit
 
 public enum GridColumnDimension {
     case fixed(CGFloat)

@@ -18,6 +18,9 @@
 //  limitations under the License.
 //
 
+import Foundation
+import UIKit
+
 protocol GridContentViewDelegate: AnyObject {
     func gridContentView(_ gridContentView: GridContentView, didReceiveFocusAt range: NSRange, in cell: GridCell)
     func gridContentView(_ gridContentView: GridContentView, didLoseFocusFrom range: NSRange, in cell: GridCell)

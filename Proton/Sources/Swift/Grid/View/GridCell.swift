@@ -19,6 +19,7 @@
 //
 
 import Foundation
+import UIKit
 
 public struct GridStyle {
     public var borderColor: UIColor

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension EditorContent.Name {
     static let grid = EditorContent.Name("grid")
