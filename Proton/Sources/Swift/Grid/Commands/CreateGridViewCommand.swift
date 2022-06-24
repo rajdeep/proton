@@ -25,11 +25,18 @@ import UIKit
 public class CreateGridViewCommand: EditorCommand {
 
     public let name = CommandName("createGridViewCommand")
-    public init() {}
+    weak var delegate: GridViewDelegate?
+    public init(delegate: GridViewDelegate) {
+        self.delegate = delegate
+    }
     public func execute(on editor: EditorView) {
         let config = GridConfiguration(
             columnsConfiguration: [
                 GridColumnConfiguration(dimension: .fixed(150)),
+                GridColumnConfiguration(dimension: .fractional(0.25)),
+                GridColumnConfiguration(dimension: .fractional(0.25)),
+                GridColumnConfiguration(dimension: .fractional(0.25)),
+                GridColumnConfiguration(dimension: .fractional(0.25)),
                 GridColumnConfiguration(dimension: .fractional(0.25)),
                 GridColumnConfiguration(dimension: .fractional(0.25)),
                 GridColumnConfiguration(dimension: .fractional(0.25)),
@@ -42,6 +49,7 @@ public class CreateGridViewCommand: EditorCommand {
 
         let attachment = GridViewAttachment(config: config, initialSize: editor.frame.size)
         attachment.selectBeforeDelete = true
+        attachment.view.delegate = delegate
         editor.insertAttachment(in: editor.selectedRange, attachment: attachment)
     }
 }

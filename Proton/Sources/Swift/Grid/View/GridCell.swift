@@ -75,25 +75,26 @@ public class GridCell {
     var cachedFrame: CGRect = .zero
 
 
-    private let selectionView = SelectionView()
+    private var selectionView: SelectionView?
 
-    var isSelected: Bool = false {
-        didSet {
-            if isSelected {
-                selectionView.addTo(parent: contentView)
+    public var isSelected: Bool {
+        get { selectionView?.superview != nil }
+        set {
+            if newValue {
+                selectionView?.addTo(parent: contentView)
             } else {
-                selectionView.removeFromSuperview()
+                selectionView?.removeFromSuperview()
             }
         }
     }
 
     public let editor = EditorView()
 
-    var isSplittable: Bool {
+    public var isSplittable: Bool {
         rowSpan.count > 1 || columnSpan.count > 1
     }
 
-    var contentSize: CGSize {
+    public var contentSize: CGSize {
         editor.frame.size
     }
 
@@ -126,6 +127,10 @@ public class GridCell {
         heightAnchorConstraint = contentView.heightAnchor.constraint(equalToConstant: 0)
 
         updateStyle(style: style)
+
+        self.selectionView = SelectionView { [weak self] in
+            self?.isSelected = false
+        }
 
         setup()
     }

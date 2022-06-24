@@ -27,6 +27,8 @@ public protocol GridViewDelegate: AnyObject {
     func gridView(_ gridView: GridView, didTapAtLocation location: CGPoint, characterRange: NSRange?, in cell: GridCell)
     func gridView(_ gridView: GridView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name, in cell: GridCell)
     func gridView(_ gridView: GridView, didChangeBounds bounds: CGRect, in cell: GridCell)
+    func gridView(_ gridView: GridView, didSelectCells cells: [GridCell])
+    func gridView(_ gridView: GridView, didUnselectCells cells: [GridCell])
 }
 
 public class GridView: UIView {
@@ -52,8 +54,12 @@ public class GridView: UIView {
         }
     }
 
-    var cells: [GridCell] {
+    public var cells: [GridCell] {
         gridView.cells
+    }
+
+    public var selectedCells: [GridCell] {
+        gridView.selectedCells
     }
 
     public init(config: GridConfiguration, initialSize: CGSize) {
@@ -76,6 +82,10 @@ public class GridView: UIView {
             gridView.leadingAnchor.constraint(equalTo: leadingAnchor),
             gridView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
+    }
+
+    public func isCellSelectionMergeable(_ cells: [GridCell]) -> Bool {
+        gridView.isMergeable(cells: cells)
     }
 
     public func merge(cells: [GridCell]) {
@@ -114,6 +124,14 @@ public class GridView: UIView {
 }
 
 extension GridView: GridContentViewDelegate {
+    func gridContentView(_ gridContentView: GridContentView, didSelectCells cells: [GridCell]) {
+        delegate?.gridView(self, didSelectCells: cells)
+    }
+
+    func gridContentView(_ gridContentView: GridContentView, didUnselectCells cells: [GridCell]) {
+        delegate?.gridView(self, didUnselectCells: cells)
+    }
+
     func gridContentView(_ gridContentView: GridContentView, didReceiveFocusAt range: NSRange, in cell: GridCell) {
         delegate?.gridView(self, didReceiveFocusAt: range, in: cell)
     }

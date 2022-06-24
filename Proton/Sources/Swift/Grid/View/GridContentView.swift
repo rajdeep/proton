@@ -27,6 +27,9 @@ protocol GridContentViewDelegate: AnyObject {
     func gridContentView(_ gridContentView: GridContentView, didTapAtLocation location: CGPoint, characterRange: NSRange?, in cell: GridCell)
     func gridContentView(_ gridContentView: GridContentView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name, in cell: GridCell)
     func gridContentView(_ gridContentView: GridContentView, didChangeBounds bounds: CGRect, in cell: GridCell)
+
+    func gridContentView(_ gridContentView: GridContentView, didSelectCells cells: [GridCell])
+    func gridContentView(_ gridContentView: GridContentView, didUnselectCells cells: [GridCell])
 }
 
 class GridContentView: UIScrollView {
@@ -38,6 +41,10 @@ class GridContentView: UIScrollView {
 
     var cells: [GridCell] {
         grid.cells
+    }
+
+    var selectedCells: [GridCell] {
+        cells.filter { $0.isSelected }
     }
 
     init(config: GridConfiguration, initialSize: CGSize) {
@@ -58,7 +65,7 @@ class GridContentView: UIScrollView {
         let size = grid.sizeThatFits(size: frame.size)
         self.contentSize = size
         self.isScrollEnabled = size.width > frame.width
-        self.alwaysBounceHorizontal = isScrollEnabled
+        self.alwaysBounceHorizontal = false
         return size
     }
 
@@ -72,6 +79,10 @@ class GridContentView: UIScrollView {
     func scrollTo(cell: GridCell, animated: Bool = true) {
         let frame = grid.frameForCell(cell, basedOn: contentSize)
         self.scrollRectToVisible(frame, animated: animated)
+    }
+
+    func isMergeable(cells: [GridCell]) -> Bool {
+        return grid.isMergeable(cells: cells)
     }
 
     func merge(cells: [GridCell]) {
@@ -109,6 +120,11 @@ class GridContentView: UIScrollView {
     }
 
     private func setup() {
+        makeCells()
+        setupSelectionGesture()
+    }
+
+    private func makeCells() {
         for cell in grid.cells {
             cell.contentView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -135,6 +151,39 @@ class GridContentView: UIScrollView {
 
             cell.delegate = self
         }
+    }
+
+    private func setupSelectionGesture() {
+        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
+        gestureRecognizer.delegate = self
+        gestureRecognizer.minimumNumberOfTouches = 2
+        gestureRecognizer.maximumNumberOfTouches = 2
+        addGestureRecognizer(gestureRecognizer)
+    }
+
+    var isEditing = false
+
+    @objc
+    private func handleGesture(_ sender: UIPanGestureRecognizer) {
+        let location = sender.location(in: self)
+        print("State: \(sender.state) location: \(sender.location(in: self).x) velocity: \(sender.velocity(in: self).x)")
+        switch sender.state {
+        case .began, .changed:
+            isEditing = true
+            selectCellsInLocation(location)
+            let velocity = sender.velocity(in: self)
+                contentOffset.x += (velocity.x/100)
+        case .cancelled, .failed, .ended, .possible:
+            isEditing = false
+        @unknown default:
+            isEditing = false
+        }
+    }
+
+    func selectCellsInLocation(_ location: CGPoint) {
+        let cell = cells.first { $0.cachedFrame.contains(location) }
+        cell?.isSelected = true
+        gridContentViewDelegate?.gridContentView(self, didSelectCells: selectedCells)
     }
 
     func invalidateCellLayout() {
@@ -226,5 +275,12 @@ extension GridContentView: DynamicBoundsProviding {
     public func sizeFor(attachment: Attachment, containerSize: CGSize, lineRect: CGRect) -> CGSize {
         guard bounds.size != .zero else { return .zero }
         return grid.sizeThatFits(size: frame.size)
+    }
+}
+
+extension GridContentView: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+
+        return false
     }
 }

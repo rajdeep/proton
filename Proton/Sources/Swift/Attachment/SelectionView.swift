@@ -22,8 +22,10 @@ import Foundation
 import UIKit
 
 class SelectionView: UIView {
-    override init(frame: CGRect) {
+    var onRemoveFromSuperview: (() -> Void)?
+    init(frame: CGRect = .zero, onRemoveFromSuperview: (() -> Void)? = nil) {
         super.init(frame: frame)
+        self.onRemoveFromSuperview = onRemoveFromSuperview
         self.alpha = 0.5
     }
 
@@ -40,6 +42,7 @@ class SelectionView: UIView {
             return originalResult
         }
         removeFromSuperview()
+        onRemoveFromSuperview?()
 
         for other in (superview?.subviews ?? []) where other != self {
             let convertedPoint = convert(point, to: other)

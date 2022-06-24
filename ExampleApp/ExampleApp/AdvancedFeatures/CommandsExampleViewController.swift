@@ -52,13 +52,13 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
     let commandExecutor = EditorCommandExecutor()
     var buttons = [UIButton]()
+    let stackView = UIStackView()
 
     var encodedContents: JSON = ["contents": []]
 
-    let commands: [(title: String, command: EditorCommand, highlightOnTouch: Bool)] = [
+    var commands: [(title: String, command: EditorCommand, highlightOnTouch: Bool)] = [
         (title: "Panel", command: PanelCommand(), highlightOnTouch: false),
         (title: "Expand", command: ExpandCommand(), highlightOnTouch: false),
-        (title: "Table", command: CreateGridViewCommand(), highlightOnTouch: false),
         (title: "List", command: ListCommand(), highlightOnTouch: false),
         (title: "Bold", command: BoldCommand(), highlightOnTouch: true),
         (title: "Italics", command: ItalicsCommand(), highlightOnTouch: true),
@@ -66,6 +66,8 @@ class CommandsExampleViewController: ExamplesBaseViewController {
     ]
 
     let editorButtons: [(title: String, selector: Selector)] = [
+        (title: "Merge", selector: #selector(mergeCells(sender:))),
+        (title: "Split", selector: #selector(splitCells(sender:))),
         (title: "Encode", selector: #selector(encodeContents(sender:))),
         (title: "Decode", selector: #selector(decodeContents(sender:))),
         (title: "Sample", selector: #selector(loadSample(sender:))),
@@ -73,8 +75,24 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
     let listFormattingProvider = ListFormattingProvider()
 
+    var allButtons: [UIButton] {
+        stackView.subviews.compactMap({ $0 as? UIButton})
+    }
+
+    var mergeButton: UIButton? {
+        allButtons.first(where: { $0.titleLabel?.text == "Merge" })
+    }
+
+    var splitButton: UIButton? {
+        allButtons.first(where: { $0.titleLabel?.text == "Split" })
+    }
+
     override func setup() {
         super.setup()
+
+        commands.insert((title: "Table", command: CreateGridViewCommand(delegate: self), highlightOnTouch: false), at: 2)
+
+        buttons.first(where: { $0.titleLabel?.text == "Merge" })?.isSelected = false
 
         editor.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(editor)
@@ -87,7 +105,6 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
 
-        let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .equalCentering
         stackView.alignment = .center
@@ -132,6 +149,9 @@ class CommandsExampleViewController: ExamplesBaseViewController {
             editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
             editor.heightAnchor.constraint(lessThanOrEqualToConstant: 300),
         ])
+
+        mergeButton?.isEnabled = false
+        splitButton?.isEnabled = false
     }
 
     func makeCommandButtons() -> [UIButton] {
@@ -195,6 +215,29 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         commandExecutor.execute(sender.command)
     }
 
+    var selectedCells: [GridCell]? = nil
+    var selectedGrid: GridView? = nil
+
+    @objc
+    func mergeCells(sender: UIButton) {
+        if let cells = selectedCells {
+            selectedGrid?.merge(cells: cells)
+        }
+        selectedCells = nil
+        selectedGrid = nil
+    }
+
+    @objc
+    func splitCells(sender: UIButton) {
+        if selectedCells?.count == 1,
+           let cell = selectedCells?.first,
+           cell.isSplittable {
+            selectedGrid?.split(cell: cell)
+        }
+        selectedCells = nil
+        selectedGrid = nil
+    }
+
     @objc
     func encodeContents(sender: UIButton) {
         let value = editor.transformContents(using: JSONEncoder())
@@ -254,6 +297,46 @@ extension CommandsExampleViewController: EditorViewDelegate {
 
         print("Tapped at \(location) with text: \(editor.attributedText.attributedSubstring(from: characterRange))")
     }
+}
+
+extension CommandsExampleViewController: GridViewDelegate {
+    func gridView(_ gridView: GridView, didReceiveFocusAt range: NSRange, in cell: GridCell) {
+
+    }
+
+    func gridView(_ gridView: GridView, didLoseFocusFrom range: NSRange, in cell: GridCell) {
+
+    }
+
+    func gridView(_ gridView: GridView, didTapAtLocation location: CGPoint, characterRange: NSRange?, in cell: GridCell) {
+
+    }
+
+    func gridView(_ gridView: GridView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name, in cell: GridCell) {
+
+    }
+
+    func gridView(_ gridView: GridView, didChangeBounds bounds: CGRect, in cell: GridCell) {
+
+    }
+
+    func gridView(_ gridView: GridView, didSelectCells cells: [GridCell]) {
+        selectedGrid = gridView
+        selectedCells = cells
+        mergeButton?.isEnabled = gridView.isCellSelectionMergeable(cells)
+
+        if cells.count == 1, cells[0].isSplittable {
+            splitButton?.isEnabled = true
+        } else {
+            splitButton?.isEnabled = false
+        }
+    }
+
+    func gridView(_ gridView: GridView, didUnselectCells cells: [GridCell]) {
+
+    }
+
+
 }
 
 class ListFormattingProvider: EditorListFormattingProvider {
