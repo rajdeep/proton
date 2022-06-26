@@ -12,15 +12,13 @@ import SnapshotTesting
 
 import Proton
 
-class EditorListsSnapshotTests: XCTestCase {
+class EditorListsSnapshotTests: SnapshotTestCase {
     let listCommand = ListCommand()
     let listTextProcessor = ListTextProcessor()
-    var recordMode = false
     let listFormattingProvider = MockListFormattingProvider()
 
     override func setUp() {
         super.setUp()
-//        recordMode = true
         listCommand.attributeValue = true
     }
 

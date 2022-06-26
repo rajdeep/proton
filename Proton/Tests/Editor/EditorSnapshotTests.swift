@@ -24,15 +24,7 @@ import SnapshotTesting
 
 @testable import Proton
 
-class EditorSnapshotTests: XCTestCase {
-    var recordMode = false
-
-    override func setUp() {
-        super.setUp()
-
-        recordMode = false
-    }
-
+class EditorSnapshotTests: SnapshotTestCase {
     func testRendersPlaceholder() {
         let viewController = EditorTestViewController(height: 80)
         let editor = viewController.editor

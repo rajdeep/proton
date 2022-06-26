@@ -1039,13 +1039,6 @@ extension EditorView {
 }
 
 public extension EditorView {
-    /// Creates a `RendererView` from current `EditorView`
-    /// - Returns:
-    /// `RendererView` for the Editor
-    func convertToRenderer() -> RendererView {
-        return RendererView(editor: self)
-    }
-
     /// Determines if the given command can be executed on the current editor. The command is allowed to be executed if
     /// `requiresSupportedCommandsRegistration` is false or if the command has been registered with the editor.
     /// - Parameter command: Command to validate

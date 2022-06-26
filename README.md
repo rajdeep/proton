@@ -15,7 +15,6 @@ Proton is designed keeping the following requirements in mind:
 * Should allow for working on multiple editors through the same toolbar based on where the focus is, and yet not be aware of the toolbar itself.
 * Respect the bounds of the container i.e. resize to change bounds when the device orientation changes.
 * Support a default font and styling like alignment and head indentation.
-* Have a Native Renderer based on the Editor similar to analogy of `UITextView` and `UILabel`.
 * And of course, support all this on macOS Catalyst as well with almost no additional effort.
 
 ## Core Concepts
@@ -26,8 +25,6 @@ At it's core, Proton constitutes of following key components:
 * **TextProcessor:** Allows you to inject a behavior that is invoked as you type text in the EditorView. This can be used to change text, add/remove attributes like color or replace the added text with an entirely different text/view. For e.g. as you type markup syntax, you can convert the markup text into a formatted text by adding corresponding behavior to the `TextProcessor`.
 * **EditorCommand:** Allows you to add a behavior that can be invoked on demand on the given EditorView. For e.g. selecting some text and making it bold.
 * **Attachment:** A container capable of hosting a custom view including another `EditorView`. Attachment is a supercharged `NSTextAttachment` that can have automatic constraints applied on it to size it in various configurations like matching content, range of width, fixed width and so on. It also has helper functions to get it's range in it's container as well as to remove itself from the container.
-* **RendererView:** Composes `EditorView` to provide a read-only behavior with an API that is suited for rendering the content.
-* **RendererCommand:** Similar to `EditorCommand` but works on a `RendererView`.
 
 ## A practical use case
 
@@ -173,10 +170,10 @@ Let's take an example of a `Panel` and see how that can be created in the `Edito
 5. Relaying attributes to editor contained in an attachment:
 
     <img src="https://github.com/rajdeep/proton/raw/main/exampleImages/relay-attributes.gif" width="50%" alt="Relay attributes"/>
-6.  Highlighting using custom command in Renderer:
+6.  Highlighting using custom command in Editor:
 
     <img src="https://github.com/rajdeep/proton/raw/main/exampleImages/renderer-highlight.gif" width="50%" alt="Highlight in Renderer"/>
-7. Find text and scroll in Renderer:
+7. Find text and scroll in Editor:
 
     <img src="https://github.com/rajdeep/proton/raw/main/exampleImages/renderer-find.gif" width="50%" alt="Find in Renderer"/>
 

@@ -25,15 +25,7 @@ import ProtonCore
 
 @testable import Proton
 
-class RichTextViewSnapshotTests: XCTestCase {
-
-    var recordMode = false
-    override func setUp() {
-        super.setUp()
-
-//        recordMode = true
-    }
-
+class RichTextViewSnapshotTests: SnapshotTestCase {
     func testRendersTextInTextView() {
         let viewController = SnapshotTestViewController()
         let textView = RichTextView(frame: .zero, context: RichTextViewContext())

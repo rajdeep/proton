@@ -1,9 +1,9 @@
 //
-//  MockRendererViewDelegate.swift
+//  SnapshotTestCase.swift
 //  ProtonTests
 //
-//  Created by Rajdeep Kwatra on 14/1/20.
-//  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
+//  Created by Rajdeep Kwatra on 26/6/2022.
+//  Copyright © 2022 Rajdeep Kwatra. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -20,18 +20,14 @@
 
 import Foundation
 import UIKit
+import XCTest
+import SnapshotTesting
 
-import Proton
+class SnapshotTestCase: XCTestCase {
+    var recordMode = false
 
-class MockRendererViewDelegate: RendererViewDelegate {
-    var onDidTap: ((RendererView, CGPoint, NSRange?) -> Void)?
-    var onDidChangeSelection: ((RendererView, NSRange) -> Void)?
-
-    func didTap(_ renderer: RendererView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
-        onDidTap?(renderer, location, characterRange)
-    }
-
-    func didChangeSelection(_ renderer: RendererView, range: NSRange) {
-        onDidChangeSelection?(renderer, range)
+    class override func setUp() {
+        XCTestCase.setUp()
+        diffTool = "ksdiff"
     }
 }

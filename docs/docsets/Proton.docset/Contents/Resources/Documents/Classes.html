@@ -17,7 +17,7 @@
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">Proton Docs</a> (78% documented)</p>
+        <p><a href="index.html">Proton Docs</a> (76% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="search.json">
@@ -67,25 +67,19 @@
                 <a href="Classes/FontTraitToggleCommand.html">FontTraitToggleCommand</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/HighlightTextCommand.html">HighlightTextCommand</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Classes/ItalicsCommand.html">ItalicsCommand</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/ListCommand.html">ListCommand</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/ListIndentCommand.html">ListIndentCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/ListOutdentCommand.html">ListOutdentCommand</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/ListTextProcessor.html">ListTextProcessor</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/RendererCommandExecutor.html">RendererCommandExecutor</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/RendererView.html">RendererView</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/RendererViewContext.html">RendererViewContext</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/ShadowStyle.html">ShadowStyle</a>
@@ -212,15 +206,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols.html#/s:6Proton13InlineContentP">InlineContent</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/RendererCommand.html">RendererCommand</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/RendererListFormattingProvider.html">RendererListFormattingProvider</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/RendererViewDelegate.html">RendererViewDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SequenceGenerator.html">SequenceGenerator</a>
@@ -637,6 +622,62 @@ If the length of selected range of text is 0, the attributes are applied on the 
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton17ListIndentCommandC"></a>
+                    <a name="//apple_ref/swift/Class/ListIndentCommand" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton17ListIndentCommandC">ListIndentCommand</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Command that can be used to toggle list indentation of selected range of text.</p>
+
+                        <a href="Classes/ListIndentCommand.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ListIndentCommand</span> <span class="p">:</span> <span class="kt"><a href="Protocols/EditorCommand.html">EditorCommand</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton18ListOutdentCommandC"></a>
+                    <a name="//apple_ref/swift/Class/ListOutdentCommand" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton18ListOutdentCommandC">ListOutdentCommand</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Command that can be used to toggle list indentation of selected range of text.</p>
+
+                        <a href="Classes/ListOutdentCommand.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ListOutdentCommand</span> <span class="p">:</span> <span class="kt"><a href="Protocols/EditorCommand.html">EditorCommand</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton20StrikethroughCommandC"></a>
                     <a name="//apple_ref/swift/Class/StrikethroughCommand" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton20StrikethroughCommandC">StrikethroughCommand</a>
@@ -760,131 +801,12 @@ First level items cannot be indented.</li>
                     </section>
                   </div>
                 </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:6Proton20HighlightTextCommandC"></a>
-                    <a name="//apple_ref/swift/Class/HighlightTextCommand" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton20HighlightTextCommandC">HighlightTextCommand</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/HighlightTextCommand.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">HighlightTextCommand</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RendererCommand.html">RendererCommand</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@Proton@objc(cs)RendererView"></a>
-                    <a name="//apple_ref/swift/Class/RendererView" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@Proton@objc(cs)RendererView">RendererView</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A scrollable, multiline text region capable of resizing itself based of the height of the content. Maximum height of <code>RendererView</code>
-may be restricted using an absolute value or by using auto-layout constraints. Instantiation of <code>RendererView</code> is simple and straightforward
-and can be used to host simple formatted text or complex layout containing multiple nested <code>RendererView</code> via use of <code><a href="Classes/Attachment.html">Attachment</a></code>.</p>
-
-                        <a href="Classes/RendererView.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RendererView</span> <span class="p">:</span> <span class="kt">UIView</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:6Proton19RendererViewContextC"></a>
-                    <a name="//apple_ref/swift/Class/RendererViewContext" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton19RendererViewContextC">RendererViewContext</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Describes the context for the <code><a href="Classes/RendererView.html">RendererView</a></code>. A context is used to execute the commands using <code><a href="Classes/RendererCommandExecutor.html">RendererCommandExecutor</a></code>. In a typical scenario, where there are
-multiple levels of <code><a href="Classes/RendererView.html">RendererView</a></code>s that are contained in another <code><a href="Classes/RendererView.html">RendererView</a></code> by virtue of being in <code><a href="Classes/Attachment.html">Attachment</a></code>s, all the <code><a href="Classes/RendererView.html">RendererView</a></code>s sharing the same
-context automatically share the <code><a href="Classes/RendererCommandExecutor.html">RendererCommandExecutor</a></code>. i.e. the <code><a href="Classes/RendererCommandExecutor.html">RendererCommandExecutor</a></code> operates on only those <code><a href="Classes/RendererView.html">RendererView</a></code>s which have the same
-context as provided to the <code><a href="Classes/RendererCommandExecutor.html">RendererCommandExecutor</a></code>.</p>
-
-                        <a href="Classes/RendererViewContext.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">RendererViewContext</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:6Proton23RendererCommandExecutorC"></a>
-                    <a name="//apple_ref/swift/Class/RendererCommandExecutor" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton23RendererCommandExecutorC">RendererCommandExecutor</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RendererCommandExecutor</code> manages all the <code><a href="Classes/RendererView.html">RendererView</a></code> in the main <code><a href="Classes/RendererView.html">RendererView</a></code>. Sub renderers may have been added as <code><a href="Classes/Attachment.html">Attachment</a></code> in the <code><a href="Classes/RendererView.html">RendererView</a></code>.
-All the <code><a href="Classes/RendererView.html">RendererView</a></code>s in the hierarchy sharing the same <code>RendererContext</code> will automatically be handled by the <code>RendererCommandExecutor</code>.
-<code>RendererCommandExecutor</code> keeps the track of the <code><a href="Classes/RendererView.html">RendererView</a></code> that has been selected and executes the given command in the active <code><a href="Classes/RendererView.html">RendererView</a></code>.</p>
-
-                        <a href="Classes/RendererCommandExecutor.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">RendererCommandExecutor</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
               </ul>
             </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep</a>. All rights reserved. (Last updated: 2022-05-22)</p>
+          <p>&copy; 2022 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep</a>. All rights reserved. (Last updated: 2022-06-26)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

@@ -24,15 +24,7 @@ import SnapshotTesting
 
 @testable import Proton
 
-class GridViewAttachmentSnapshotTests: XCTestCase {
-    var recordMode = false
-
-    override func setUp() {
-        super.setUp()
-
-        recordMode = false
-    }
-
+class GridViewAttachmentSnapshotTests: SnapshotTestCase {
     func testRendersGridViewAttachment() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor

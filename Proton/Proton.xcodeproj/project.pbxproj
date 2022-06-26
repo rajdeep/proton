@@ -10,7 +10,6 @@
 		1B004EC723C1C287007893AA /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B004EC623C1C287007893AA /* EditorView.swift */; };
 		1B164F1023D1BE9900A0869A /* AttributesDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F0F23D1BE9900A0869A /* AttributesDecoding.swift */; };
 		1B164F4123D2A4AB00A0869A /* String+NSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F4023D2A4AB00A0869A /* String+NSRange.swift */; };
-		1B164F4923D2AC9B00A0869A /* FindTextCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F4723D2AC6D00A0869A /* FindTextCommand.swift */; };
 		1B164F5223D2B9D400A0869A /* TestTextProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F5123D2B9D400A0869A /* TestTextProcessor.swift */; };
 		1B183D8C23CEA90400AE83E5 /* EditorContentEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D8B23CEA90400AE83E5 /* EditorContentEncoding.swift */; };
 		1B183D8E23CEE9BA00AE83E5 /* AttributesEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D8D23CEE9BA00AE83E5 /* AttributesEncoding.swift */; };
@@ -67,8 +66,6 @@
 		1B7C76AB2608A489006618AC /* BoldCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76A72608A489006618AC /* BoldCommand.swift */; };
 		1B7C76AC2608A489006618AC /* ItalicsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76A82608A489006618AC /* ItalicsCommand.swift */; };
 		1B7C76B32608A4FF006618AC /* FontTraitToggleCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76B22608A4FF006618AC /* FontTraitToggleCommandTests.swift */; };
-		1B7C76BA2608A508006618AC /* HighlightTextCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76B92608A508006618AC /* HighlightTextCommandTests.swift */; };
-		1B7C76C0260931F8006618AC /* HighlightTextCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76B02608A4D8006618AC /* HighlightTextCommand.swift */; };
 		1B82570423C48C350033A0A9 /* MockRichTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B82570323C48C350033A0A9 /* MockRichTextViewDelegate.swift */; };
 		1B82570623C48FEC0033A0A9 /* RichTextViewContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B82570523C48FEC0033A0A9 /* RichTextViewContextTests.swift */; };
 		1B82570923C5674E0033A0A9 /* EditorCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B82570823C5674E0033A0A9 /* EditorCommand.swift */; };
@@ -79,34 +76,24 @@
 		1B8BE91B23C71CEA00353B17 /* EditorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8BE91A23C71CEA00353B17 /* EditorViewDelegate.swift */; };
 		1B8BE91D23C71E4B00353B17 /* EditorViewDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8BE91C23C71E4B00353B17 /* EditorViewDelegateTests.swift */; };
 		1B8BE91F23C71E8A00353B17 /* MockEditorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8BE91E23C71E8A00353B17 /* MockEditorViewDelegate.swift */; };
-		1B8D8208243F3386009AD38A /* MockRendererCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8D8207243F3386009AD38A /* MockRendererCommand.swift */; };
 		1B91E7B126AA685E0002DF45 /* AttributesToggleCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91E7B026AA685E0002DF45 /* AttributesToggleCommand.swift */; };
 		1B91E7B526AA697C0002DF45 /* UnderlineCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91E7B426AA697C0002DF45 /* UnderlineCommand.swift */; };
 		1B91E7B926AA698A0002DF45 /* StrikethroughCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91E7B826AA698A0002DF45 /* StrikethroughCommand.swift */; };
 		1B91E7BD26AA6AA30002DF45 /* AttributesCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91E7BC26AA6AA30002DF45 /* AttributesCommandTests.swift */; };
 		1B91F4B123C72D87003F9B55 /* TextProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91F4B023C72D87003F9B55 /* TextProcessor.swift */; };
 		1B91F4B323C72DC3003F9B55 /* TextProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91F4B223C72DC3003F9B55 /* TextProcessing.swift */; };
-		1B975AFB23CD3E9B00EC410C /* RendererView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975AFA23CD3E9B00EC410C /* RendererView.swift */; };
 		1B975AFD23CD40D200EC410C /* RichTextRendererContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975AFC23CD40D200EC410C /* RichTextRendererContext.swift */; };
 		1B975AFF23CD454700EC410C /* RichTextViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975AFE23CD454700EC410C /* RichTextViewContext.swift */; };
-		1B975B0123CD45DC00EC410C /* RendererViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975B0023CD45DC00EC410C /* RendererViewContext.swift */; };
 		1B9AF9E62851EC2500CD65C4 /* GridViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9AF9E52851EC2500CD65C4 /* GridViewTests.swift */; };
 		1B9AF9E92851ECC300CD65C4 /* MockGridViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9AF9E82851ECC300CD65C4 /* MockGridViewDelegate.swift */; };
+		1B98D5B0286828EC0091C927 /* SnapshotTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B98D5AF286828EC0091C927 /* SnapshotTestCase.swift */; };
 		1BB214D023BB2778008B84A0 /* Proton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB214C623BB2778008B84A0 /* Proton.framework */; };
 		1BB4AAEB2606DA2D000D7584 /* ProtonCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BB4AAE92606DA2D000D7584 /* ProtonCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1BB4AAF42606DA37000D7584 /* PREditorContentName.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B9AED8B26059D1A00660B99 /* PREditorContentName.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1BB4AAF52606DA37000D7584 /* PRTextStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B9AED8A26059D1A00660B99 /* PRTextStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1BB4AAFA2606DA3E000D7584 /* PRTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE8825E250DD7B600E2CC1B /* PRTextStorage.m */; };
 		1BB4AAFB2606DA3E000D7584 /* PREditorContentName.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE88263250E3ADB00E2CC1B /* PREditorContentName.m */; };
-		1BBAC3CC23CD571D0088A1C8 /* RendererViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3CB23CD571D0088A1C8 /* RendererViewDelegate.swift */; };
 		1BBAC3CF23CD5A1B0088A1C8 /* UITextRangeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3CE23CD5A1B0088A1C8 /* UITextRangeExtensions.swift */; };
-		1BBAC3D223CD69250088A1C8 /* RendererSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3D123CD69250088A1C8 /* RendererSnapshotTests.swift */; };
-		1BBAC3D423CD696F0088A1C8 /* RendererTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3D323CD696F0088A1C8 /* RendererTestViewController.swift */; };
-		1BBAC3D823CD79EA0088A1C8 /* RendererViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3D723CD79EA0088A1C8 /* RendererViewTests.swift */; };
-		1BBAC3DA23CD7A8B0088A1C8 /* MockRendererViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3D923CD7A8B0088A1C8 /* MockRendererViewDelegate.swift */; };
-		1BBAC3DD23CDB8C10088A1C8 /* RendererCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3DC23CDB8C10088A1C8 /* RendererCommand.swift */; };
-		1BBAC3E023CE81F40088A1C8 /* RendererCommandExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3DF23CE81F40088A1C8 /* RendererCommandExecutor.swift */; };
-		1BBAC3E323CE85660088A1C8 /* RendererCommandExecutorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3E223CE85660088A1C8 /* RendererCommandExecutorTests.swift */; };
 		1BBD529F2608713C00EB5DA8 /* ProtonCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB4AAE72606DA2D000D7584 /* ProtonCore.framework */; };
 		1BBE4EFC248CB15E00D1C788 /* ListCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */; };
 		1BC021D628588DDD00796585 /* GridCellStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC021D528588DDD00796585 /* GridCellStore.swift */; };
@@ -181,7 +168,6 @@
 		1B004EC623C1C287007893AA /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
 		1B164F0F23D1BE9900A0869A /* AttributesDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesDecoding.swift; sourceTree = "<group>"; };
 		1B164F4023D2A4AB00A0869A /* String+NSRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+NSRange.swift"; sourceTree = "<group>"; };
-		1B164F4723D2AC6D00A0869A /* FindTextCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindTextCommand.swift; sourceTree = "<group>"; };
 		1B164F5123D2B9D400A0869A /* TestTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTextProcessor.swift; sourceTree = "<group>"; };
 		1B183D8B23CEA90400AE83E5 /* EditorContentEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentEncoding.swift; sourceTree = "<group>"; };
 		1B183D8D23CEE9BA00AE83E5 /* AttributesEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesEncoding.swift; sourceTree = "<group>"; };
@@ -236,9 +222,7 @@
 		1B7C76A72608A489006618AC /* BoldCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoldCommand.swift; sourceTree = "<group>"; };
 		1B7C76A82608A489006618AC /* ItalicsCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItalicsCommand.swift; sourceTree = "<group>"; };
 		1B7C76A92608A489006618AC /* FontTraitToggleCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTraitToggleCommand.swift; sourceTree = "<group>"; };
-		1B7C76B02608A4D8006618AC /* HighlightTextCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightTextCommand.swift; sourceTree = "<group>"; };
 		1B7C76B22608A4FF006618AC /* FontTraitToggleCommandTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontTraitToggleCommandTests.swift; sourceTree = "<group>"; };
-		1B7C76B92608A508006618AC /* HighlightTextCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightTextCommandTests.swift; sourceTree = "<group>"; };
 		1B82570323C48C350033A0A9 /* MockRichTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRichTextViewDelegate.swift; sourceTree = "<group>"; };
 		1B82570523C48FEC0033A0A9 /* RichTextViewContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewContextTests.swift; sourceTree = "<group>"; };
 		1B82570823C5674E0033A0A9 /* EditorCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommand.swift; sourceTree = "<group>"; };
@@ -249,17 +233,15 @@
 		1B8BE91A23C71CEA00353B17 /* EditorViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewDelegate.swift; sourceTree = "<group>"; };
 		1B8BE91C23C71E4B00353B17 /* EditorViewDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewDelegateTests.swift; sourceTree = "<group>"; };
 		1B8BE91E23C71E8A00353B17 /* MockEditorViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEditorViewDelegate.swift; sourceTree = "<group>"; };
-		1B8D8207243F3386009AD38A /* MockRendererCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRendererCommand.swift; sourceTree = "<group>"; };
 		1B91E7B026AA685E0002DF45 /* AttributesToggleCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesToggleCommand.swift; sourceTree = "<group>"; };
 		1B91E7B426AA697C0002DF45 /* UnderlineCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineCommand.swift; sourceTree = "<group>"; };
 		1B91E7B826AA698A0002DF45 /* StrikethroughCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrikethroughCommand.swift; sourceTree = "<group>"; };
 		1B91E7BC26AA6AA30002DF45 /* AttributesCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesCommandTests.swift; sourceTree = "<group>"; };
 		1B91F4B023C72D87003F9B55 /* TextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessor.swift; sourceTree = "<group>"; };
 		1B91F4B223C72DC3003F9B55 /* TextProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessing.swift; sourceTree = "<group>"; };
-		1B975AFA23CD3E9B00EC410C /* RendererView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererView.swift; sourceTree = "<group>"; };
 		1B975AFC23CD40D200EC410C /* RichTextRendererContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextRendererContext.swift; sourceTree = "<group>"; };
 		1B975AFE23CD454700EC410C /* RichTextViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewContext.swift; sourceTree = "<group>"; };
-		1B975B0023CD45DC00EC410C /* RendererViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererViewContext.swift; sourceTree = "<group>"; };
+		1B98D5AF286828EC0091C927 /* SnapshotTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTestCase.swift; sourceTree = "<group>"; };
 		1B9AED8A26059D1A00660B99 /* PRTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRTextStorage.h; sourceTree = "<group>"; };
 		1B9AED8B26059D1A00660B99 /* PREditorContentName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PREditorContentName.h; sourceTree = "<group>"; };
 		1B9AF9E52851EC2500CD65C4 /* GridViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewTests.swift; sourceTree = "<group>"; };
@@ -271,15 +253,7 @@
 		1BB4AAE72606DA2D000D7584 /* ProtonCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ProtonCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BB4AAE92606DA2D000D7584 /* ProtonCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProtonCore.h; sourceTree = "<group>"; };
 		1BB4AAEA2606DA2D000D7584 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1BBAC3CB23CD571D0088A1C8 /* RendererViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererViewDelegate.swift; sourceTree = "<group>"; };
 		1BBAC3CE23CD5A1B0088A1C8 /* UITextRangeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextRangeExtensions.swift; sourceTree = "<group>"; };
-		1BBAC3D123CD69250088A1C8 /* RendererSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererSnapshotTests.swift; sourceTree = "<group>"; };
-		1BBAC3D323CD696F0088A1C8 /* RendererTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererTestViewController.swift; sourceTree = "<group>"; };
-		1BBAC3D723CD79EA0088A1C8 /* RendererViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererViewTests.swift; sourceTree = "<group>"; };
-		1BBAC3D923CD7A8B0088A1C8 /* MockRendererViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRendererViewDelegate.swift; sourceTree = "<group>"; };
-		1BBAC3DC23CDB8C10088A1C8 /* RendererCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommand.swift; sourceTree = "<group>"; };
-		1BBAC3DF23CE81F40088A1C8 /* RendererCommandExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommandExecutor.swift; sourceTree = "<group>"; };
-		1BBAC3E223CE85660088A1C8 /* RendererCommandExecutorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererCommandExecutorTests.swift; sourceTree = "<group>"; };
 		1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCommandTests.swift; sourceTree = "<group>"; };
 		1BC021D528588DDD00796585 /* GridCellStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCellStore.swift; sourceTree = "<group>"; };
 		1BC0AA5F284D92B3004B8862 /* CreateGridViewCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGridViewCommand.swift; sourceTree = "<group>"; };
@@ -412,7 +386,7 @@
 				1B45CDED23C1686F001EB196 /* RichTextViewTestViewController.swift */,
 				1BFFEF1623C333B400D2BA35 /* EditorTestViewController.swift */,
 				1BD185C5284C34CF001F4FBC /* GenericViewTestViewController.swift */,
-				1BBAC3D323CD696F0088A1C8 /* RendererTestViewController.swift */,
+				1B98D5AF286828EC0091C927 /* SnapshotTestCase.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -557,14 +531,6 @@
 			path = ExtensionTests;
 			sourceTree = "<group>";
 		};
-		1B7C76B12608A4D8006618AC /* Commands */ = {
-			isa = PBXGroup;
-			children = (
-				1B7C76B02608A4D8006618AC /* HighlightTextCommand.swift */,
-			);
-			path = Commands;
-			sourceTree = "<group>";
-		};
 		1B82570723C567370033A0A9 /* EditorCommand */ = {
 			isa = PBXGroup;
 			children = (
@@ -592,14 +558,6 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
-		1B8D8206243F336F009AD38A /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-				1B8D8207243F3386009AD38A /* MockRendererCommand.swift */,
-			);
-			path = Mocks;
-			sourceTree = "<group>";
-		};
 		1B91F4AF23C72D66003F9B55 /* TextProcessors */ = {
 			isa = PBXGroup;
 			children = (
@@ -607,17 +565,6 @@
 				1B91F4B223C72DC3003F9B55 /* TextProcessing.swift */,
 			);
 			path = TextProcessors;
-			sourceTree = "<group>";
-		};
-		1B975AF923CD3E5A00EC410C /* Renderer */ = {
-			isa = PBXGroup;
-			children = (
-				1B7C76B12608A4D8006618AC /* Commands */,
-				1B975AFA23CD3E9B00EC410C /* RendererView.swift */,
-				1BBAC3CB23CD571D0088A1C8 /* RendererViewDelegate.swift */,
-				1B975B0023CD45DC00EC410C /* RendererViewContext.swift */,
-			);
-			path = Renderer;
 			sourceTree = "<group>";
 		};
 		1B9AED8926059D1A00660B99 /* include */ = {
@@ -681,8 +628,6 @@
 				1BD1791A23C588450066DC13 /* EditorCommands */,
 				1B183D8F23CEEEA100AE83E5 /* Encoding */,
 				1B45CD9B23BEDA7F001EB196 /* Helpers */,
-				1BBAC3D023CD68EE0088A1C8 /* Renderer */,
-				1BBAC3E123CE850E0088A1C8 /* RendererCommands */,
 				1BD993AE23C9955800563ACB /* TextProcessors */,
 				1BB214D623BB2778008B84A0 /* Info.plist */,
 			);
@@ -708,36 +653,6 @@
 				1BB4AAEA2606DA2D000D7584 /* Info.plist */,
 			);
 			path = ProtonCore;
-			sourceTree = "<group>";
-		};
-		1BBAC3D023CD68EE0088A1C8 /* Renderer */ = {
-			isa = PBXGroup;
-			children = (
-				1BBAC3D123CD69250088A1C8 /* RendererSnapshotTests.swift */,
-				1BBAC3D723CD79EA0088A1C8 /* RendererViewTests.swift */,
-				1BBAC3D923CD7A8B0088A1C8 /* MockRendererViewDelegate.swift */,
-			);
-			path = Renderer;
-			sourceTree = "<group>";
-		};
-		1BBAC3DB23CDB89A0088A1C8 /* RendererCommand */ = {
-			isa = PBXGroup;
-			children = (
-				1BBAC3DC23CDB8C10088A1C8 /* RendererCommand.swift */,
-				1BBAC3DF23CE81F40088A1C8 /* RendererCommandExecutor.swift */,
-			);
-			path = RendererCommand;
-			sourceTree = "<group>";
-		};
-		1BBAC3E123CE850E0088A1C8 /* RendererCommands */ = {
-			isa = PBXGroup;
-			children = (
-				1B8D8206243F336F009AD38A /* Mocks */,
-				1BBAC3E223CE85660088A1C8 /* RendererCommandExecutorTests.swift */,
-				1B164F4723D2AC6D00A0869A /* FindTextCommand.swift */,
-				1B7C76B92608A508006618AC /* HighlightTextCommandTests.swift */,
-			);
-			path = RendererCommands;
 			sourceTree = "<group>";
 		};
 		1BC0AA5E284D929E004B8862 /* Commands */ = {
@@ -853,8 +768,6 @@
 				1B45CDB823BF10C1001EB196 /* Core */,
 				1B45CDD323C00915001EB196 /* Editor */,
 				1B82570723C567370033A0A9 /* EditorCommand */,
-				1B975AF923CD3E5A00EC410C /* Renderer */,
-				1BBAC3DB23CDB89A0088A1C8 /* RendererCommand */,
 				1B45CDC323BF13B8001EB196 /* Helpers */,
 				1B91F4AF23C72D66003F9B55 /* TextProcessors */,
 			);
@@ -1055,7 +968,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B238D6E2456A40200BF49D5 /* NullRichTextEditorContext.swift in Sources */,
-				1B7C76C0260931F8006618AC /* HighlightTextCommand.swift in Sources */,
 				1B45CDBE23BF125D001EB196 /* NSAttributedString+ContentTypes.swift in Sources */,
 				1B7A985723C4828A00C34B14 /* RichTextEditorContext.swift in Sources */,
 				1BC0AA64284DF918004B8862 /* GridConfiguration.swift in Sources */,
@@ -1064,7 +976,6 @@
 				1B45CDE123C05476001EB196 /* UIColor+Image.swift in Sources */,
 				1B45CD9123BDD7E6001EB196 /* AutogrowingTextView.swift in Sources */,
 				1B45CDE623C05942001EB196 /* AttachmentSize.swift in Sources */,
-				1B975AFB23CD3E9B00EC410C /* RendererView.swift in Sources */,
 				1B164F1023D1BE9900A0869A /* AttributesDecoding.swift in Sources */,
 				1B45CDC723BF14DF001EB196 /* NSAttributedString+Range.swift in Sources */,
 				1B45CDD223C00856001EB196 /* TextContainer.swift in Sources */,
@@ -1077,7 +988,6 @@
 				1BD21554246951090000BCE2 /* LayoutManager.swift in Sources */,
 				1BD185BC284C29EF001F4FBC /* GridCell.swift in Sources */,
 				1B91E7B526AA697C0002DF45 /* UnderlineCommand.swift in Sources */,
-				1BBAC3CC23CD571D0088A1C8 /* RendererViewDelegate.swift in Sources */,
 				1B91F4B323C72DC3003F9B55 /* TextProcessing.swift in Sources */,
 				1BD185C2284C3082001F4FBC /* GridView.swift in Sources */,
 				1BD185BA284C29E6001F4FBC /* Grid.swift in Sources */,
@@ -1086,20 +996,20 @@
 				1B004EC723C1C287007893AA /* EditorView.swift in Sources */,
 				1B8BE91B23C71CEA00353B17 /* EditorViewDelegate.swift in Sources */,
 				1BC021D628588DDD00796585 /* GridCellStore.swift in Sources */,
-				1BBAC3DD23CDB8C10088A1C8 /* RendererCommand.swift in Sources */,
 				1B4B60CF247FC86A002B63CF /* NSParagraphStyleExtensions.swift in Sources */,
 				1BD18583284863A6001F4FBC /* ListOutdentCommand.swift in Sources */,
 				1BD21556246952370000BCE2 /* BackgroundStyle.swift in Sources */,
 				1B91F4B123C72D87003F9B55 /* TextProcessor.swift in Sources */,
 				1B2BC0DD23CF18C700407DEE /* EditorContentDecoding.swift in Sources */,
 				1B45CDC523BF13D4001EB196 /* NSRangeExtensions.swift in Sources */,
-				1BBAC3E023CE81F40088A1C8 /* RendererCommandExecutor.swift in Sources */,
 				1BD185CD284D6CB1001F4FBC /* GridViewAttachment.swift in Sources */,
 				1BC0AA69284F59B8004B8862 /* GridContentView.swift in Sources */,
 				1B45014F247E5AD9007B3EE9 /* SequenceGenerator.swift in Sources */,
 				1BD993B823C9AE4200563ACB /* NSAttributedString+Content.swift in Sources */,
 				1B975B0123CD45DC00EC410C /* RendererViewContext.swift in Sources */,
 				1BC0AA60284D92B3004B8862 /* CreateGridViewCommand.swift in Sources */,
+				1B45014F247E5AD9007B3EE9 /* SequenceGenerator.swift in Sources */,
+				1BD993B823C9AE4200563ACB /* NSAttributedString+Content.swift in Sources */,
 				1B4B60CD247FC6AF002B63CF /* ListTextProcessor.swift in Sources */,
 				1BFFEF0C23C30D5200D2BA35 /* EditorContentView.swift in Sources */,
 				1B82570923C5674E0033A0A9 /* EditorCommand.swift in Sources */,
@@ -1132,7 +1042,6 @@
 				1BFFEF0523C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift in Sources */,
 				1B45CD9D23BEDA8F001EB196 /* UIView+Render.swift in Sources */,
 				1B840F612401E63100D5E8F7 /* MockEditorCommand.swift in Sources */,
-				1BBAC3D823CD79EA0088A1C8 /* RendererViewTests.swift in Sources */,
 				1B45CD9F23BEE997001EB196 /* SnapshotTestViewController.swift in Sources */,
 				1BFFEF1A23C3344A00D2BA35 /* AutogrowingTextField.swift in Sources */,
 				1BD993B423C9966A00563ACB /* MockTextProcessor.swift in Sources */,
@@ -1140,7 +1049,6 @@
 				1BD993B123C995B000563ACB /* TextProcessorTests.swift in Sources */,
 				1B30A3642489E11F00FA1D48 /* MockRichTextViewListDelegate.swift in Sources */,
 				1BF90FB4245E503E00A411A3 /* TextBlockAttributeTests.swift in Sources */,
-				1BBAC3DA23CD7A8B0088A1C8 /* MockRendererViewDelegate.swift in Sources */,
 				1B7C76B32608A4FF006618AC /* FontTraitToggleCommandTests.swift in Sources */,
 				1BFFEF1523C332A100D2BA35 /* EditorSnapshotTests.swift in Sources */,
 				1B9AF9E92851ECC300CD65C4 /* MockGridViewDelegate.swift in Sources */,
@@ -1154,15 +1062,14 @@
 				1B1C3727244BE0D60028E1ED /* EditorViewContextTests.swift in Sources */,
 				1BFFEF1723C333B400D2BA35 /* EditorTestViewController.swift in Sources */,
 				1B45CDCE23BF18A5001EB196 /* XCTestHelpers.swift in Sources */,
-				1BBAC3D223CD69250088A1C8 /* RendererSnapshotTests.swift in Sources */,
 				1B45CDDB23C04BE3001EB196 /* RichTextViewSnapshotTests.swift in Sources */,
 				1B2BC0D823CF17E300407DEE /* EditorContentTransformerTests.swift in Sources */,
 				1B45CDD923C0484A001EB196 /* RichTextViewTests.swift in Sources */,
 				1BC25B542448768200FF88AC /* EditorContextDelegateTests.swift in Sources */,
 				1B9AF9E62851EC2500CD65C4 /* GridViewTests.swift in Sources */,
-				1BBAC3E323CE85660088A1C8 /* RendererCommandExecutorTests.swift in Sources */,
 				1B8D8208243F3386009AD38A /* MockRendererCommand.swift in Sources */,
 				1B7C76BA2608A508006618AC /* HighlightTextCommandTests.swift in Sources */,
+				1B98D5B0286828EC0091C927 /* SnapshotTestCase.swift in Sources */,
 				1BFDC811254AA11F00BD83BD /* ListParserTests.swift in Sources */,
 				1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */,
 				1B82570423C48C350033A0A9 /* MockRichTextViewDelegate.swift in Sources */,
@@ -1175,7 +1082,6 @@
 				1B3D19CA2483484A00B3AB59 /* EditorListsSnapshotTests.swift in Sources */,
 				1B183D9223CEEED900AE83E5 /* EditorContentEncoderTests.swift in Sources */,
 				1B617A9A283724C900095FEE /* EditorViewContextSnapshotTests.swift in Sources */,
-				1BBAC3D423CD696F0088A1C8 /* RendererTestViewController.swift in Sources */,
 				1BD993C423CACCE100563ACB /* MockAttachment.swift in Sources */,
 				1B576089245ADDDA00D92AE8 /* EditorViewMenuTests.swift in Sources */,
 				1B617A98283711D700095FEE /* ImageAttachmentSnapshotTests.swift in Sources */,
@@ -1186,7 +1092,6 @@
 				1B82570623C48FEC0033A0A9 /* RichTextViewContextTests.swift in Sources */,
 				1B45CDEC23C1682C001EB196 /* ViewAttachmentSnapshotTests.swift in Sources */,
 				1B91E7BD26AA6AA30002DF45 /* AttributesCommandTests.swift in Sources */,
-				1B164F4923D2AC9B00A0869A /* FindTextCommand.swift in Sources */,
 				1BD993B623C999AF00563ACB /* EditorViewTests.swift in Sources */,
 				1B30A3622489DC7B00FA1D48 /* MockListFormattingProvider.swift in Sources */,
 				1BD185C4284C33B0001F4FBC /* GridViewSnapshotTests.swift in Sources */,

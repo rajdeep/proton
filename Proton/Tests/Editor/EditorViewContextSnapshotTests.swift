@@ -25,14 +25,7 @@ import SnapshotTesting
 
 @testable import Proton
 
-class EditorViewContextSnapshotTests: XCTestCase {
-
-    var recordMode = false
-    override func setUp() {
-        super.setUp()
-        recordMode = false
-    }
-
+class EditorViewContextSnapshotTests: SnapshotTestCase {
     func testSelectsBeforeDeletingImageBasedAttachment() {
         let context = EditorViewContext.shared
         let viewController = EditorTestViewController(context: context)

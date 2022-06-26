@@ -24,14 +24,7 @@ import SnapshotTesting
 
 @testable import Proton
 
-class ImageAttachmentSnapshotTests: XCTestCase {
-
-    var recordMode = false
-    override func setUp() {
-        super.setUp()
-        recordMode = false
-    }
-
+class ImageAttachmentSnapshotTests: SnapshotTestCase {
     func testRendersImageBasedInlineAttachment() {
         let viewController = EditorTestViewController()
         let textView = viewController.editor

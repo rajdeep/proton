@@ -24,15 +24,7 @@ import SnapshotTesting
 
 @testable import Proton
 
-class GridViewSnapshotTests: XCTestCase {
-    var recordMode = false
-
-    override func setUp() {
-        super.setUp()
-
-        recordMode = false
-    }
-
+class GridViewSnapshotTests: SnapshotTestCase {
     func testRendersGridView() {
         let config = GridConfiguration(
             columnsConfiguration: [

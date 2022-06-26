@@ -27,6 +27,8 @@ class MockGridViewDelegate: GridViewDelegate {
     var onDidTapAtLocation: ((_ gridView: GridView, _ location: CGPoint, _ characterRange: NSRange?, _ cell: GridCell) -> Void)?
     var onDidChangeSelection: ((_ gridView: GridView, _ range: NSRange, _ attributes: [NSAttributedString.Key : Any], _ contentType: EditorContent.Name, _ cell: GridCell) -> Void)?
     var onDidChangeBounds: ((_ gridView: GridView, _ bounds: CGRect, _ cell: GridCell) -> Void)?
+    var onDidSelectCells: ((_ gridView: GridView, _ cells: [GridCell]) -> Void)?
+    var onDidUnselectCells: ((_ gridView: GridView, _ cells: [GridCell]) -> Void)?
 
     func gridView(_ gridView: GridView, didReceiveFocusAt range: NSRange, in cell: GridCell) {
         onDidReceiveFocus?(gridView, range, cell)
@@ -46,5 +48,13 @@ class MockGridViewDelegate: GridViewDelegate {
 
     func gridView(_ gridView: GridView, didChangeBounds bounds: CGRect, in cell: GridCell) {
         onDidChangeBounds?(gridView, bounds, cell)
+    }
+
+    func gridView(_ gridView: GridView, didSelectCells cells: [GridCell]) {
+        onDidSelectCells?(gridView, cells)
+    }
+
+    func gridView(_ gridView: GridView, didUnselectCells cells: [GridCell]) {
+        onDidUnselectCells?(gridView, cells)
     }
 }

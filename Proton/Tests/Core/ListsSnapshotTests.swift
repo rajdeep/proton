@@ -24,16 +24,9 @@ import SnapshotTesting
 
 @testable import Proton
 
-class ListsSnapshotTests: XCTestCase {
+class ListsSnapshotTests: SnapshotTestCase {
 
     let mockRichTextViewListDelegate =  MockRichTextViewListDelegate()
-
-    var recordMode = false
-    override func setUp() {
-        super.setUp()
-
-//        recordMode = true
-    }
 
     func testSingleLevelList() {
         let text = """
