@@ -182,24 +182,25 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     /// Initializes an attachment with the image provided.
     /// - Note: Image and Size can be updated by invoking `updateImage(image: size:)` at any time
     /// - Parameter image: Image to be used to display in the attachment. Image is rendered as Block content.
-    public convenience init(image: BlockAttachmentImage) {
-        self.init(image: image.image, size: image.size, isBlockContent: true)
+    public init(image: BlockAttachmentImage) {
+        self.content = .image(image.image)
+        self.isBlockAttachment = true
+        self.view = nil
+        super.init(data: nil, ofType: nil)
+        self.image = image.image
+        self.bounds = CGRect(origin: .zero, size: image.size)
     }
 
     /// Initializes an attachment with the image provided.
     /// - Note: Image and Size can be updated by invoking `updateImage(image: size:)` at any time
     /// - Parameter image: Image to be used to display in the attachment.  Image is rendered as Inline content.
-    public convenience init(image: InlineAttachmentImage) {
-        self.init(image: image.image, size: image.size, isBlockContent: false)
-    }
-
-    private init(image: UIImage, size: CGSize, isBlockContent: Bool) {
-        self.content = .image(image)
-        self.isBlockAttachment = isBlockContent
+    public init(image: InlineAttachmentImage) {
+        self.content = .image(image.image)
+        self.isBlockAttachment = false
         self.view = nil
         super.init(data: nil, ofType: nil)
-        self.image = image
-        self.bounds = CGRect(origin: .zero, size: size)
+        self.image = image.image
+        self.bounds = CGRect(origin: .zero, size: image.size)
     }
 
     // This cannot be made convenience init as it prevents this being called from a class that inherits from `Attachment`
