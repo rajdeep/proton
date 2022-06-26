@@ -63,7 +63,7 @@ class RendererSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
-    func testRendersAttachmentFromEditor() {
+    func DISABLED_testRendersAttachmentFromEditor() {
         let editor = EditorView()
         let offsetProvider = MockAttachmentOffsetProvider()
         offsetProvider.offset = CGPoint(x: 0, y: -4)
