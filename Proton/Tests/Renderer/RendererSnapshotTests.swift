@@ -24,14 +24,7 @@ import XCTest
 
 import Proton
 
-class RendererSnapshotTests: XCTestCase {
-    var recordMode = false
-
-    override func setUp() {
-        super.setUp()
-
-//        recordMode = true
-    }
+class RendererSnapshotTests: SnapshotTestCase {
 
     func testBasicRendering() {
         let viewController = RendererTestViewController()

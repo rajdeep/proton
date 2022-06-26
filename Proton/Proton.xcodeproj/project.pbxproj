@@ -90,6 +90,7 @@
 		1B975AFD23CD40D200EC410C /* RichTextRendererContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975AFC23CD40D200EC410C /* RichTextRendererContext.swift */; };
 		1B975AFF23CD454700EC410C /* RichTextViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975AFE23CD454700EC410C /* RichTextViewContext.swift */; };
 		1B975B0123CD45DC00EC410C /* RendererViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B975B0023CD45DC00EC410C /* RendererViewContext.swift */; };
+		1B98D5B0286828EC0091C927 /* SnapshotTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B98D5AF286828EC0091C927 /* SnapshotTestCase.swift */; };
 		1BB214D023BB2778008B84A0 /* Proton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB214C623BB2778008B84A0 /* Proton.framework */; };
 		1BB4AAEB2606DA2D000D7584 /* ProtonCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BB4AAE92606DA2D000D7584 /* ProtonCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1BB4AAF42606DA37000D7584 /* PREditorContentName.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B9AED8B26059D1A00660B99 /* PREditorContentName.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -246,6 +247,7 @@
 		1B975AFC23CD40D200EC410C /* RichTextRendererContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextRendererContext.swift; sourceTree = "<group>"; };
 		1B975AFE23CD454700EC410C /* RichTextViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewContext.swift; sourceTree = "<group>"; };
 		1B975B0023CD45DC00EC410C /* RendererViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererViewContext.swift; sourceTree = "<group>"; };
+		1B98D5AF286828EC0091C927 /* SnapshotTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTestCase.swift; sourceTree = "<group>"; };
 		1B9AED8A26059D1A00660B99 /* PRTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRTextStorage.h; sourceTree = "<group>"; };
 		1B9AED8B26059D1A00660B99 /* PREditorContentName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PREditorContentName.h; sourceTree = "<group>"; };
 		1BB214C623BB2778008B84A0 /* Proton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Proton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -384,6 +386,7 @@
 				1B45CDED23C1686F001EB196 /* RichTextViewTestViewController.swift */,
 				1BFFEF1623C333B400D2BA35 /* EditorTestViewController.swift */,
 				1BBAC3D323CD696F0088A1C8 /* RendererTestViewController.swift */,
+				1B98D5AF286828EC0091C927 /* SnapshotTestCase.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1061,6 +1064,7 @@
 				1BC25B542448768200FF88AC /* EditorContextDelegateTests.swift in Sources */,
 				1BBAC3E323CE85660088A1C8 /* RendererCommandExecutorTests.swift in Sources */,
 				1B8D8208243F3386009AD38A /* MockRendererCommand.swift in Sources */,
+				1B98D5B0286828EC0091C927 /* SnapshotTestCase.swift in Sources */,
 				1B7C76BA2608A508006618AC /* HighlightTextCommandTests.swift in Sources */,
 				1BFDC811254AA11F00BD83BD /* ListParserTests.swift in Sources */,
 				1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */,

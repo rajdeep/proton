@@ -24,15 +24,7 @@ import SnapshotTesting
 
 @testable import Proton
 
-class AutogrowingTextViewSnapshotTests: XCTestCase {
-
-    var recordMode = false
-    override func setUp() {
-        super.setUp()
-
-//        recordMode = true
-    }
-
+class AutogrowingTextViewSnapshotTests: SnapshotTestCase {
     func testRendersTextViewBasedOnContent() {
         let viewController = SnapshotTestViewController()
         let textView = AutogrowingTextView()
