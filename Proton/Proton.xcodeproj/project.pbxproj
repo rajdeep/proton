@@ -92,7 +92,6 @@
 		1BB4AAFA2606DA3E000D7584 /* PRTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE8825E250DD7B600E2CC1B /* PRTextStorage.m */; };
 		1BB4AAFB2606DA3E000D7584 /* PREditorContentName.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE88263250E3ADB00E2CC1B /* PREditorContentName.m */; };
 		1BBAC3CF23CD5A1B0088A1C8 /* UITextRangeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3CE23CD5A1B0088A1C8 /* UITextRangeExtensions.swift */; };
-		1BBAC3D423CD696F0088A1C8 /* RendererTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3D323CD696F0088A1C8 /* RendererTestViewController.swift */; };
 		1BBD529F2608713C00EB5DA8 /* ProtonCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB4AAE72606DA2D000D7584 /* ProtonCore.framework */; };
 		1BBE4EFC248CB15E00D1C788 /* ListCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */; };
 		1BC25B542448768200FF88AC /* EditorContextDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC25B532448768200FF88AC /* EditorContextDelegateTests.swift */; };
@@ -239,7 +238,6 @@
 		1BB4AAE92606DA2D000D7584 /* ProtonCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProtonCore.h; sourceTree = "<group>"; };
 		1BB4AAEA2606DA2D000D7584 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BBAC3CE23CD5A1B0088A1C8 /* UITextRangeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextRangeExtensions.swift; sourceTree = "<group>"; };
-		1BBAC3D323CD696F0088A1C8 /* RendererTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererTestViewController.swift; sourceTree = "<group>"; };
 		1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCommandTests.swift; sourceTree = "<group>"; };
 		1BC25B532448768200FF88AC /* EditorContextDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContextDelegateTests.swift; sourceTree = "<group>"; };
 		1BD1791D23C589340066DC13 /* EditorCommandExecutorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommandExecutorTests.swift; sourceTree = "<group>"; };
@@ -359,7 +357,6 @@
 				1B45CDCC23BF189F001EB196 /* XCTestHelpers.swift */,
 				1B45CDED23C1686F001EB196 /* RichTextViewTestViewController.swift */,
 				1BFFEF1623C333B400D2BA35 /* EditorTestViewController.swift */,
-				1BBAC3D323CD696F0088A1C8 /* RendererTestViewController.swift */,
 				1B98D5AF286828EC0091C927 /* SnapshotTestCase.swift */,
 			);
 			path = Helpers;
@@ -977,7 +974,6 @@
 				1B3D19CA2483484A00B3AB59 /* EditorListsSnapshotTests.swift in Sources */,
 				1B183D9223CEEED900AE83E5 /* EditorContentEncoderTests.swift in Sources */,
 				1B617A9A283724C900095FEE /* EditorViewContextSnapshotTests.swift in Sources */,
-				1BBAC3D423CD696F0088A1C8 /* RendererTestViewController.swift in Sources */,
 				1BD993C423CACCE100563ACB /* MockAttachment.swift in Sources */,
 				1B576089245ADDDA00D92AE8 /* EditorViewMenuTests.swift in Sources */,
 				1B617A98283711D700095FEE /* ImageAttachmentSnapshotTests.swift in Sources */,
