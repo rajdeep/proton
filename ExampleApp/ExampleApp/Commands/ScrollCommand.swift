@@ -23,22 +23,22 @@ import UIKit
 
 import Proton
 
-class ScrollCommand: RendererCommand {
+class ScrollCommand: EditorCommand {
     var text = "Fusce"
 
     let name = CommandName("scrollCommand")
 
-    func execute(on renderer: RendererView) {
-        let location = renderer.selectedRange.location + renderer.selectedRange.length
-        let range = NSRange(location: location, length: renderer.attributedText.length - location)
-        for content in renderer.contents(in: range) {
+    func execute(on editor: EditorView) {
+        let location = editor.selectedRange.location + editor.selectedRange.length
+        let range = NSRange(location: location, length: editor.attributedText.length - location)
+        for content in editor.contents(in: range) {
             if case let .text(_, attributedString) = content.type,
                 let range = attributedString.string.range(of: text, options: .caseInsensitive),
                 let enclosingRange = content.enclosingRange {
                 let contentRange = attributedString.string.makeNSRange(from: range)
                 let scrollRange = NSRange(location: enclosingRange.location + contentRange.location + location, length: contentRange.length)
-                renderer.selectedRange = scrollRange
-                renderer.scrollRangeToVisible(scrollRange)
+                editor.selectedRange = scrollRange
+                editor.scrollRangeToVisible(scrollRange)
                 break
             }
         }

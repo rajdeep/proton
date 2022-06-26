@@ -24,9 +24,9 @@ import UIKit
 import Proton
 
 class RendererCommandButton: UIButton {
-    var command: RendererCommand!
+    var command: EditorCommand!
 
-    static func make(command: RendererCommand) -> RendererCommandButton {
+    static func make(command: EditorCommand) -> RendererCommandButton {
         let button = RendererCommandButton(type: .system)
         button.command = command
         button.tintColor = .systemBlue
@@ -36,12 +36,12 @@ class RendererCommandButton: UIButton {
 }
 
 class RendererCommandsExampleViewController: ExamplesBaseViewController {
-    let renderer = RendererView()
-    let commandExecutor = RendererCommandExecutor()
+    let renderer = EditorView()
+    let commandExecutor = EditorCommandExecutor()
     var buttons = [UIButton]()
     let searchText = UITextField()
 
-    let commands: [(title: String, command: RendererCommand)] = [
+    let commands: [(title: String, command: EditorCommand)] = [
         (title: "Reset", command: ResetCommand()),
         (title: "Highlight", command: HighlightTextCommand()),
         (title: "Scroll", command: ScrollCommand()),
@@ -49,6 +49,7 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
 
     override func setup() {
         super.setup()
+        renderer.isEditable = false
 
         renderer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(renderer)
@@ -130,13 +131,13 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
     }
 }
 
-extension RendererCommandsExampleViewController: RendererViewDelegate {
-    func didTap(_ renderer: RendererView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
+extension RendererCommandsExampleViewController: EditorViewDelegate {
+    func editor(_ editor: EditorView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
         guard let charRange = characterRange else { return }
-        print("Tapped: \(renderer.attributedText.attributedSubstring(from: charRange))")
+        print("Tapped: \(editor.attributedText.attributedSubstring(from: charRange))")
     }
 
-    func didChangeSelection(_ renderer: RendererView, range: NSRange) {
-        print("Selected: \(renderer.attributedText.attributedSubstring(from: range))")
+    func didChangeSelection(_ editor: EditorView, range: NSRange) {
+        print("Selected: \(editor.attributedText.attributedSubstring(from: range))")
     }
 }

@@ -20,6 +20,7 @@
 
 import Foundation
 import UIKit
+import Proton
 
 public extension NSAttributedString.Key {
     static let isHighlighted = NSAttributedString.Key("_IsHighlighted")
@@ -27,7 +28,7 @@ public extension NSAttributedString.Key {
 
 @available(iOS 13.0, *)
 /// Renderer command that toggles highlights in the selected range in Renderer.
-public class HighlightTextCommand: RendererCommand {
+public class HighlightTextCommand: EditorCommand {
 
     public let name = CommandName("_highlightCommand")
 
@@ -46,7 +47,7 @@ public class HighlightTextCommand: RendererCommand {
 
     /// Executes the command on Renderer in the selected range
     /// - Parameter renderer: Renderer to execute the command on.
-    public func execute(on renderer: RendererView) {
+    public func execute(on renderer: EditorView) {
         guard renderer.selectedText.length > 0 else { return }
 
         let color = self.color ?? defaultColor
