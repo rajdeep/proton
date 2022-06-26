@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>EditorContentIdentifying Protocol Reference</title>
+    <title>ListOutdentCommand Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -13,8 +13,8 @@
     <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
-    <a name="//apple_ref/swift/Protocol/EditorContentIdentifying" class="dashAnchor"></a>
-    <a title="EditorContentIdentifying Protocol Reference"></a>
+    <a name="//apple_ref/swift/Class/ListOutdentCommand" class="dashAnchor"></a>
+    <a title="ListOutdentCommand Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">Proton Docs</a> (76% documented)</p>
@@ -30,7 +30,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">Proton Reference</a>
         <img id="carat" src="../img/carat.png" alt=""/>
-        EditorContentIdentifying Protocol Reference
+        ListOutdentCommand Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -284,15 +284,15 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>EditorContentIdentifying</h1>
+            <h1>ListOutdentCommand</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">EditorContentIdentifying</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ListOutdentCommand</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/EditorCommand.html">EditorCommand</a></span></code></pre>
 
                 </div>
               </div>
-            <p>Identifies a content type within the <code>Editor</code></p>
+            <p>Command that can be used to toggle list indentation of selected range of text.</p>
 
           </section>
           <section class="section task-group-section">
@@ -301,9 +301,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton24EditorContentIdentifyingP4nameSo08PREditorC4NameCvp"></a>
-                    <a name="//apple_ref/swift/Property/name" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton24EditorContentIdentifyingP4nameSo08PREditorC4NameCvp">name</a>
+                    <a name="/s:6Proton18ListOutdentCommandCACycfc"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton18ListOutdentCommandCACycfc">init()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -318,7 +318,62 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">name</span><span class="p">:</span> <span class="kt"><a href="../Structs/EditorContent.html">EditorContent</a></span><span class="o">.</span><span class="kt">Name</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton18ListOutdentCommandC4nameAA0D4NameVvp"></a>
+                    <a name="//apple_ref/swift/Property/name" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton18ListOutdentCommandC4nameAA0D4NameVvp">name</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Name of the command</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">name</span><span class="p">:</span> <span class="kt"><a href="../Structs/CommandName.html">CommandName</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton18ListOutdentCommandC7execute2onyAA10EditorViewC_tF"></a>
+                    <a name="//apple_ref/swift/Method/execute(on:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton18ListOutdentCommandC7execute2onyAA10EditorViewC_tF">execute(on:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Outdents a list item if it supports reversing indentation. When applied on an item at first level, it will remove item from the list.
+If the command is executed on a text without <code><a href="../Extensions/NSAttributedString/Key.html#/s:So21NSAttributedStringKeya6ProtonE8listItemABvpZ">NSAttributedString.Key.listItem</a></code> attribute, the command is a no-op</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">execute</span><span class="p">(</span><span class="n">on</span> <span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>

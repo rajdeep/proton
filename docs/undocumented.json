@@ -470,9 +470,23 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/EditorCommand/Commands/ListCommand.swift",
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/EditorCommand/Commands/List/ListCommand.swift",
       "line": 52,
       "symbol": "ListCommand.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/EditorCommand/Commands/List/ListIndentCommand.swift",
+      "line": 27,
+      "symbol": "ListIndentCommand.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/EditorCommand/Commands/List/ListOutdentCommand.swift",
+      "line": 27,
+      "symbol": "ListOutdentCommand.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -655,48 +669,6 @@
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/Text/FontExtensions.swift",
       "line": 84,
       "symbol": "UIFont.removing(trait:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Renderer/Commands/HighlightTextCommand.swift",
-      "line": 25,
-      "symbol": "NSAttributedString.Key.isHighlighted",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Renderer/Commands/HighlightTextCommand.swift",
-      "line": 30,
-      "symbol": "HighlightTextCommand",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Renderer/Commands/HighlightTextCommand.swift",
-      "line": 43,
-      "symbol": "HighlightTextCommand.color",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Renderer/Commands/HighlightTextCommand.swift",
-      "line": 45,
-      "symbol": "HighlightTextCommand.init()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Renderer/RendererView.swift",
-      "line": 33,
-      "symbol": "RendererView.listFormattingProvider",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Renderer/RendererViewDelegate.swift",
-      "line": 33,
-      "symbol": "RendererViewDelegate.didChangeSelection(_:range:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },

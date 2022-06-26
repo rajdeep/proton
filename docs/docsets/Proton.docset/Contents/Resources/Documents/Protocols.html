@@ -17,7 +17,7 @@
     <a title="Protocols  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">Proton Docs</a> (78% documented)</p>
+        <p><a href="index.html">Proton Docs</a> (76% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="search.json">
@@ -67,25 +67,19 @@
                 <a href="Classes/FontTraitToggleCommand.html">FontTraitToggleCommand</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/HighlightTextCommand.html">HighlightTextCommand</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Classes/ItalicsCommand.html">ItalicsCommand</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/ListCommand.html">ListCommand</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/ListIndentCommand.html">ListIndentCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/ListOutdentCommand.html">ListOutdentCommand</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/ListTextProcessor.html">ListTextProcessor</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/RendererCommandExecutor.html">RendererCommandExecutor</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/RendererView.html">RendererView</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/RendererViewContext.html">RendererViewContext</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/ShadowStyle.html">ShadowStyle</a>
@@ -212,15 +206,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols.html#/s:6Proton13InlineContentP">InlineContent</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/RendererCommand.html">RendererCommand</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/RendererListFormattingProvider.html">RendererListFormattingProvider</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/RendererViewDelegate.html">RendererViewDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SequenceGenerator.html">SequenceGenerator</a>
@@ -439,34 +424,6 @@ attachment with a focusable view is added to the editor.
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton30RendererListFormattingProviderP"></a>
-                    <a name="//apple_ref/swift/Protocol/RendererListFormattingProvider" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton30RendererListFormattingProviderP">RendererListFormattingProvider</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Describes an object capable of providing style and formatting information for rendering lists in <code><a href="Classes/EditorView.html">EditorView</a></code>.</p>
-
-                        <a href="Protocols/RendererListFormattingProvider.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RendererListFormattingProvider</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:6Proton17SequenceGeneratorP"></a>
                     <a name="//apple_ref/swift/Protocol/SequenceGenerator" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton17SequenceGeneratorP">SequenceGenerator</a>
@@ -534,7 +491,7 @@ Besides other possible uses, this is used in Lists for generation of bullets/num
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>An object capable of decoding the given type of content into <code>NSAttributedString</code> for using in <code><a href="Classes/EditorView.html">EditorView</a></code> or the <code><a href="Classes/RendererView.html">RendererView</a></code>.</p>
+                        <p>An object capable of decoding the given type of content into <code>NSAttributedString</code> for using in <code><a href="Classes/EditorView.html">EditorView</a></code> or the <code>RendererView</code>.</p>
 
                         <a href="Protocols/EditorContentDecoding.html" class="slightly-smaller">See more</a>
                       </div>
@@ -918,64 +875,6 @@ use <code>EditorContentEncoder</code> to register and encode the all the content
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton20RendererViewDelegateP"></a>
-                    <a name="//apple_ref/swift/Protocol/RendererViewDelegate" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton20RendererViewDelegateP">RendererViewDelegate</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>An object that is interested in listening to events raised within the Renderer.</p>
-
-                        <a href="Protocols/RendererViewDelegate.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RendererViewDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:6Proton15RendererCommandP"></a>
-                    <a name="//apple_ref/swift/Protocol/RendererCommand" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton15RendererCommandP">RendererCommand</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Describes a command that can be executed on <code><a href="Classes/RendererView.html">RendererView</a></code>. A command may be invoked directly on the <code>renderer</code> by providing an instance.
-However, in a typical usage scenario, these should be invoked via <code><a href="Classes/RendererCommandExecutor.html">RendererCommandExecutor</a></code> which manages all the <code><a href="Classes/RendererView.html">RendererView</a></code>s in the
-view including the ones that are contained in the attachments.</p>
-
-                        <a href="Protocols/RendererCommand.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RendererCommand</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:6Proton14TextProcessingP"></a>
                     <a name="//apple_ref/swift/Protocol/TextProcessing" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton14TextProcessingP">TextProcessing</a>
@@ -1006,7 +905,7 @@ view including the ones that are contained in the attachments.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep</a>. All rights reserved. (Last updated: 2022-05-22)</p>
+          <p>&copy; 2022 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep</a>. All rights reserved. (Last updated: 2022-06-26)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
