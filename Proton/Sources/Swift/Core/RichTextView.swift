@@ -174,6 +174,8 @@ class RichTextView: AutogrowingTextView {
         layoutManager.delegate = self
         layoutManager.layoutManagerDelegate = self
         textContainer.textView = self
+        textContainer.heightTracksTextView = true
+        textContainer.widthTracksTextView = true
         self.delegate = context
         richTextStorage.textStorageDelegate = self
 

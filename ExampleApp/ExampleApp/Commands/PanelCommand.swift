@@ -33,7 +33,7 @@ class PanelCommand: EditorCommand {
         editor.insertAttachment(in: editor.selectedRange, attachment: attachment)
 
         let panel = attachment.view
-        panel.editor.maxHeight = .max(300)
+        panel.editor.maxHeight = .max(150)
         panel.editor.registerProcessors(editor.registeredProcessors)
         panel.editor.listFormattingProvider = editor.listFormattingProvider
         panel.editor.replaceCharacters(in: .zero, with: selectedText)

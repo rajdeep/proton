@@ -132,7 +132,6 @@ open class Attachment: NSTextAttachment, BoundsObserving {
                 view?.frame.equalTo(newValue) == false else { return }
 
             view?.frame = newValue
-            containerTextView?.invalidateIntrinsicContentSize()
         }
     }
 
@@ -155,7 +154,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     /// - SeeAlso:
     /// `BoundsObserving`
     public func didChangeBounds(_ bounds: CGRect) {
-        guard containerEditorView?.isEditable ?? false else { return }
+        containerTextView?.invalidateIntrinsicContentSize()
         invalidateLayout()
     }
 
@@ -186,6 +185,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         self.content = .image(image.image)
         self.isBlockAttachment = true
         self.view = nil
+        self.size = nil
         super.init(data: nil, ofType: nil)
         self.image = image.image
         self.bounds = CGRect(origin: .zero, size: image.size)
@@ -198,11 +198,13 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         self.content = .image(image.image)
         self.isBlockAttachment = false
         self.view = nil
+        self.size = nil
         super.init(data: nil, ofType: nil)
         self.image = image.image
         self.bounds = CGRect(origin: .zero, size: image.size)
     }
 
+    let size: AttachmentSize?
     // This cannot be made convenience init as it prevents this being called from a class that inherits from `Attachment`
     /// Initializes the attachment with the given content view
     /// - Parameters:
@@ -211,6 +213,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     public init<AttachmentView: UIView & BlockContent>(_ contentView: AttachmentView, size: AttachmentSize) {
         let view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
         self.view = view
+        self.size = size
         self.isBlockAttachment = true
         self.content = .view(view, size: size)
         super.init(data: nil, ofType: nil)
@@ -227,6 +230,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     public init<AttachmentView: UIView & InlineContent>(_ contentView: AttachmentView, size: AttachmentSize) {
         let view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
         self.view = view
+        self.size = size
         self.isBlockAttachment = false
         self.content = .view(view, size: size)
         super.init(data: nil, ofType: nil)
@@ -326,6 +330,18 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         fatalError("init(coder:) has not been implemented")
     }
 
+    var cachedBounds: CGRect?
+    var cachedContainerSize: CGSize?
+
+    var isContainerDependentSizing: Bool {
+        switch size {
+        case .fullWidth, .percent, .matchContent:
+            return true
+        default:
+            return false
+        }
+    }
+
     /// Returns the calculated bounds for the attachment based on size rule and content view provided during initialization.
     /// - Parameters:
     ///   - textContainer: Text container for attachment
@@ -338,21 +354,33 @@ open class Attachment: NSTextAttachment, BoundsObserving {
               textContainer.size.width > 0
         else { return .zero }
 
-        guard case let AttachmentContent.view(view, attachmentSize) = self.content else {
+        if isImageBasedAttachment {
+            return bounds
+        }
+
+        guard case let AttachmentContent.view(view, attachmentSize) = self.content,
+              let containerEditorView = containerEditorView,
+              containerEditorView.bounds.size != .zero else {
             return self.frame ?? bounds
         }
 
+        if let cachedBounds = cachedBounds,
+            (cachedContainerSize == containerEditorView.bounds.size) {
+            cachedContainerSize = containerEditorView.bounds.size
+            return cachedBounds
+        }
+
         let indent: CGFloat
-        if charIndex < containerEditorView?.contentLength ?? 0 {
-            let paraStyle = containerEditorView?.attributedText.attribute(.paragraphStyle, at: charIndex, effectiveRange: nil) as? NSParagraphStyle
+        if charIndex < containerEditorView.contentLength {
+            let paraStyle = containerEditorView.attributedText.attribute(.paragraphStyle, at: charIndex, effectiveRange: nil) as? NSParagraphStyle
             indent = paraStyle?.firstLineHeadIndent ?? 0
         } else {
             indent = 0
         }
         // Account for text leading and trailing margins within the textContainer
         let adjustedContainerSize = CGSize(
-            width: textContainer.size.width - textContainer.lineFragmentPadding * 2 - indent,
-            height: textContainer.size.height
+            width: containerEditorView.bounds.size.width - textContainer.lineFragmentPadding * 2 - indent,
+            height: containerEditorView.bounds.size.height
         )
         let adjustedLineFrag = CGRect(
             x: lineFrag.origin.x,
@@ -390,6 +418,8 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         let offset = offsetProvider?.offset(for: self, in: textContainer, proposedLineFragment: adjustedLineFrag, glyphPosition: position, characterIndex: charIndex) ?? .zero
 
         self.bounds = CGRect(origin: offset, size: size)
+        cachedBounds = self.bounds
+        cachedContainerSize = containerEditorView.bounds.size
         return self.bounds
     }
 
@@ -417,10 +447,6 @@ open class Attachment: NSTextAttachment, BoundsObserving {
             view.superview == nil else { return }
         editorView.richTextView.addSubview(view)
 
-        if containerEditorView?.isEditable ?? false {
-            view.layoutIfNeeded()
-        }
-
         if var editorContentView = contentView as? EditorContentView,
            editorContentView.delegate == nil {
             editorContentView.delegate = editorView.delegate
@@ -434,8 +460,8 @@ extension Attachment {
         guard let editor = containerEditorView,
               let range = editor.attributedText.rangeFor(attachment: self)
         else { return }
-
+        cachedBounds = nil
         editor.invalidateLayout(for: range)
-        editor.relayoutAttachments(in: range)
+//        editor.relayoutAttachments(in: range)
     }
 }

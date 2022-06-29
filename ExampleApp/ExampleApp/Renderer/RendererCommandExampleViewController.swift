@@ -43,7 +43,7 @@ class RendererCommandsExampleViewController: ExamplesBaseViewController {
 
     let commands: [(title: String, command: EditorCommand)] = [
         (title: "Reset", command: ResetCommand()),
-        (title: "Highlight", command: HighlightTextCommand()),
+//        (title: "Highlight", command: HighlightTextCommand()),
         (title: "Scroll", command: ScrollCommand()),
     ]
 

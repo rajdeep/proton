@@ -276,7 +276,6 @@ class ListParserTests: XCTestCase {
         XCTAssertEqual(parsedList.count, list.count)
 
         for i in 0..<list.count {
-            print("\(i): \(parsedList[i].listItem.attributeValue as? Int)  \(list[i].attributeValue as? Int)")
             XCTAssertEqual(parsedList[i].listItem.text.string, list[i].text.string)
             XCTAssertEqual(parsedList[i].listItem.level, list[i].level)
             XCTAssertEqual(parsedList[i].listItem.attributeValue as? Int, list[i].attributeValue as? Int)
