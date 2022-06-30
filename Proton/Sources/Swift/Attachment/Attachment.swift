@@ -411,8 +411,12 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         }
     }
 
+    func setContainerEditor(_ editor: EditorView) {
+        self.containerEditorView = editor
+    }
+
     func render(in editorView: EditorView) {
-        self.containerEditorView = editorView
+        setContainerEditor(editorView)
         guard let view = view,
             view.superview == nil else { return }
         editorView.richTextView.addSubview(view)
