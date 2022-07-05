@@ -573,4 +573,18 @@ class EditorViewTests: XCTestCase {
         let cursorRect = editor.caretRect(for: 0)
         XCTAssertEqual(cursorRect.origin.y, editor.textContainerInset.top - yOffset)
     }
+
+    func testRangeInContainerForImageBasedAttachment() throws {
+        let editor = EditorView()
+        let image = InlineAttachmentImage(name: EditorContentName("image"), image: UIImage(systemName: "car")!, size: CGSize(width: 40, height: 40))
+        let attachment = Attachment(image: image)
+
+        editor.replaceCharacters(in: .zero, with: "In textView ")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after attachment")
+
+        let range = try XCTUnwrap(attachment.rangeInContainer())
+        XCTAssertEqual(range, NSRange(location: 12, length: 1))
+
+    }
 }
