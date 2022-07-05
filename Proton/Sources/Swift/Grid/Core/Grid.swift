@@ -130,23 +130,18 @@ class Grid {
 
     func isMergeable(cells: [GridCell]) -> Bool {
         guard cells.count > 1 else { return false }
+        let columns = Set(cells.flatMap { $0.columnSpan })
+        let rows = Set(cells.flatMap { $0.rowSpan })
 
-        let rowSpans = cells.flatMap({ $0.rowSpan })
-        let columnSpans = cells.flatMap({ $0.columnSpan })
-
-        guard let minRow = rowSpans.min(),
-              let maxRow = rowSpans.max(),
-              let minColumn = columnSpans.min(),
-              let maxColumn = columnSpans.max() else {
-            return false
+        for r in rows {
+            for c in columns {
+                if cells.first(where: { $0.rowSpan.contains(r) && $0.columnSpan.contains(c)}) == nil {
+                    return false
+                }
+            }
         }
 
-        let topLeftExists = cells.contains { $0.rowSpan.contains (minRow) && $0.columnSpan.contains(minColumn) }
-        let topRightExists = cells.contains { $0.rowSpan.contains (minRow) && $0.columnSpan.contains(maxColumn) }
-        let bottomLeftExists = cells.contains { $0.rowSpan.contains (maxRow) && $0.columnSpan.contains(minColumn) }
-        let bottomRightExists = cells.contains { $0.rowSpan.contains (maxRow) && $0.columnSpan.contains(maxColumn) }
-
-        return topLeftExists && topRightExists && bottomLeftExists && bottomRightExists
+        return true
     }
 
     func merge(cells: [GridCell]) {
