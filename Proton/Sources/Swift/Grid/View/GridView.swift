@@ -75,13 +75,59 @@ public class GridView: UIView {
     private func setup() {
         gridView.translatesAutoresizingMaskIntoConstraints = false
         gridView.gridContentViewDelegate = self
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.red.cgColor
+
         addSubview(gridView)
         NSLayoutConstraint.activate([
-            gridView.topAnchor.constraint(equalTo: topAnchor),
-            gridView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            gridView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            gridView.trailingAnchor.constraint(equalTo: trailingAnchor)
+            gridView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            gridView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            gridView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            gridView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
         ])
+        addHandles()
+    }
+
+    private func addHandles() {
+        let topRow = cells.filter { $0.rowSpan.contains(0) }
+
+        for cell in topRow {
+            let button = makeButton()
+            button.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(button)
+            NSLayoutConstraint.activate([
+                button.widthAnchor.constraint(equalToConstant: 40),
+                button.heightAnchor.constraint(equalTo: button.widthAnchor),
+                button.topAnchor.constraint(equalTo: topAnchor),
+                button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: cell.cachedFrame.maxX)
+            ])
+        }
+    }
+
+    func makeButton() -> UIButton {
+        let button = UIButton()
+        button.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handler(gesture:))))
+        if #available(iOSApplicationExtension 13.0, *) {
+            let image = UIImage(systemName: "arrow.left.and.right.righttriangle.left.righttriangle.right.fill")
+            button.setImage(image, for: .normal)
+        } else {
+            button.setTitle("T", for: .normal)
+        }
+
+        return button
+    }
+
+    @objc func handler(gesture: UIPanGestureRecognizer){
+        let location = gesture.location(in: self)
+        let draggedView = gesture.view
+
+        draggedView?.center = CGPoint(x: location.x, y: draggedView!.center.y)
+        if gesture.velocity(in: self).x > 0 {
+            gridView.changeColumnWidth(index: 0, delta: 2)
+        } else {
+            gridView.changeColumnWidth(index: 0, delta: -2)
+        }
+
     }
 
     public func isCellSelectionMergeable(_ cells: [GridCell]) -> Bool {

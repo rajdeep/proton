@@ -119,6 +119,11 @@ class GridContentView: UIScrollView {
         grid.cellAt(rowIndex: rowIndex, columnIndex: columnIndex)
     }
 
+    func changeColumnWidth(index: Int, delta: CGFloat) {
+        grid.changeColumnWidth(index: index, totalWidth: contentSize.width, delta: delta)
+        invalidateCellLayout()
+    }
+
     private func setup() {
         makeCells()
         setupSelectionGesture()
