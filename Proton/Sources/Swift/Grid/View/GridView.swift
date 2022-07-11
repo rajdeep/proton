@@ -72,62 +72,71 @@ public class GridView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    let handleSize: CGFloat = 25
     private func setup() {
         gridView.translatesAutoresizingMaskIntoConstraints = false
         gridView.gridContentViewDelegate = self
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.red.cgColor
+//        layer.borderWidth = 1
+//        layer.borderColor = UIColor.red.cgColor
 
         addSubview(gridView)
         NSLayoutConstraint.activate([
-            gridView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            gridView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
-            gridView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            gridView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
+            gridView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+            gridView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -handleSize/2),
+            gridView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            gridView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -handleSize/2)
         ])
         addHandles()
     }
 
-    private func addHandles() {
-        let topRow = cells.filter { $0.rowSpan.contains(0) }
 
-        for cell in topRow {
-            let button = makeButton()
-            button.translatesAutoresizingMaskIntoConstraints = false
-            addSubview(button)
+    private var dragHandles = [CellDragHandleView]()
+    private func addHandles() {
+        for cell in cells {
+            let handleView = makeDragHandle(cell: cell, orientation: .horizontal)
+            dragHandles.append(handleView)
+            handleView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(handleView)
             NSLayoutConstraint.activate([
-                button.widthAnchor.constraint(equalToConstant: 40),
-                button.heightAnchor.constraint(equalTo: button.widthAnchor),
-                button.topAnchor.constraint(equalTo: topAnchor),
-                button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: cell.cachedFrame.maxX)
+                handleView.widthAnchor.constraint(equalToConstant: handleSize),
+                handleView.heightAnchor.constraint(equalTo: handleView.widthAnchor),
+                handleView.centerYAnchor.constraint(equalTo: cell.contentView.bottomAnchor),
+                handleView.centerXAnchor.constraint(equalTo: cell.contentView.trailingAnchor)
             ])
         }
     }
 
-    func makeButton() -> UIButton {
-        let button = UIButton()
-        button.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handler(gesture:))))
-        if #available(iOSApplicationExtension 13.0, *) {
-            let image = UIImage(systemName: "arrow.left.and.right.righttriangle.left.righttriangle.right.fill")
-            button.setImage(image, for: .normal)
-        } else {
-            button.setTitle("T", for: .normal)
-        }
-
-        return button
+    private func resetDragHandles() {
+        dragHandles.forEach { $0.removeFromSuperview() }
+        addHandles()
     }
 
-    @objc func handler(gesture: UIPanGestureRecognizer){
-        let location = gesture.location(in: self)
-        let draggedView = gesture.view
+    func makeDragHandle(cell: GridCell, orientation: CellDragHandleView.Orientation) -> CellDragHandleView {
+        let dragHandle = CellDragHandleView(cell: cell, orientation: orientation)
+        dragHandle.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handler(gesture:))))
+        return dragHandle
+    }
 
-        draggedView?.center = CGPoint(x: location.x, y: draggedView!.center.y)
-        if gesture.velocity(in: self).x > 0 {
-            gridView.changeColumnWidth(index: 0, delta: 2)
-        } else {
-            gridView.changeColumnWidth(index: 0, delta: -2)
+    private var lastLocation: CGPoint = .zero
+    @objc func handler(gesture: UIPanGestureRecognizer){
+        guard let draggedView = gesture.view,
+              let cell = (draggedView as? CellDragHandleView)?.cell
+        else { return }
+        let location = gesture.location(in: self)
+
+        if gesture.state == .began {
+            lastLocation = draggedView.center
         }
 
+        if gesture.state == .changed {
+            let deltaX = location.x - lastLocation.x
+            lastLocation = location
+            gridView.changeColumnWidth(index: cell.columnSpan.max() ?? 0, delta: deltaX)
+        }
+
+        if gesture.state == .ended {
+            lastLocation = draggedView.center
+        }
     }
 
     public func isCellSelectionMergeable(_ cells: [GridCell]) -> Bool {
@@ -136,10 +145,12 @@ public class GridView: UIView {
 
     public func merge(cells: [GridCell]) {
         gridView.merge(cells: cells)
+        resetDragHandles()
     }
 
     public func split(cell: GridCell) {
         gridView.split(cell: cell)
+        resetDragHandles()
     }
 
     public func insertRow(at index: Int, configuration: GridRowConfiguration) {
@@ -196,5 +207,46 @@ extension GridView: GridContentViewDelegate {
 
     func gridContentView(_ gridContentView: GridContentView, didChangeBounds bounds: CGRect, in cell: GridCell) {
         delegate?.gridView(self, didChangeBounds: bounds, in: cell)
+    }
+}
+
+class CellDragHandleView: UIView {
+    enum Orientation {
+        case horizontal
+        case vertical
+    }
+
+    let imageView = UIImageView()
+    let cell: GridCell
+    let orientation: Orientation
+    var leadingAnchorConstraint: NSLayoutConstraint!
+
+    init(cell: GridCell, orientation: Orientation) {
+        self.cell = cell
+        self.orientation = orientation
+        super.init(frame: .zero)
+        setup()
+    }
+
+    private func setup() {
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(imageView)
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: topAnchor),
+            imageView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+        ])
+
+        if #available(iOSApplicationExtension 13.0, *) {
+            self.imageView.image = UIImage(systemName: "arrow.left.and.right")
+        } else {
+            self.backgroundColor = tintColor
+        }
+
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

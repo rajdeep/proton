@@ -149,8 +149,20 @@ class Grid {
 
 
     func changeColumnWidth(index: Int, totalWidth: CGFloat, delta: CGFloat) {
-        guard index < columnWidths.count else { return }
+        guard index < columnWidths.count,
+              //TODO: Add min size logic max(40 or value from delegate)
+              columnWidths[index].value(basedOn: totalWidth) + delta > 40 else { return }
         columnWidths[index] = .fixed(columnWidths[index].value(basedOn: totalWidth) + delta)
+    }
+
+    func changeRowHeight(index: Int, delta: CGFloat) {
+        guard index < rowHeights.count else { return }
+
+        guard rowHeights[index].rowConfiguration.minRowHeight > rowHeights[index].currentHeight + delta else {
+            return
+        }
+
+        rowHeights[index].currentHeight = rowHeights[index].currentHeight + delta
     }
 
     func merge(cells: [GridCell]) {

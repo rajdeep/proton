@@ -124,6 +124,11 @@ class GridContentView: UIScrollView {
         invalidateCellLayout()
     }
 
+    func changeRowHeight(index: Int, delta: CGFloat) {
+        grid.changeRowHeight(index: index, delta: delta)
+        invalidateCellLayout()
+    }
+
     private func setup() {
         makeCells()
         setupSelectionGesture()
