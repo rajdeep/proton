@@ -33,6 +33,9 @@ public protocol GridViewDelegate: AnyObject {
 
 public class GridView: UIView {
     let gridView: GridContentView
+    private var dragHandles = [CellDragHandleView]()
+    private let handleSize: CGFloat = 25
+
     public var delegate: GridViewDelegate?
 
     public var boundsObserver: BoundsObserving? {
@@ -72,7 +75,14 @@ public class GridView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    let handleSize: CGFloat = 25
+    public func showCellResizingHandles() {
+        dragHandles.forEach { $0.isHidden = false }
+    }
+
+    public func hideCellResizingHandles() {
+        dragHandles.forEach { $0.isHidden = true }
+    }
+
     private func setup() {
         gridView.translatesAutoresizingMaskIntoConstraints = false
         gridView.gridContentViewDelegate = self
@@ -87,10 +97,9 @@ public class GridView: UIView {
             gridView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -handleSize/2)
         ])
         addHandles()
+        hideCellResizingHandles()
     }
 
-
-    private var dragHandles = [CellDragHandleView]()
     private func addHandles() {
         for cell in cells {
             let handleView = makeDragHandle(cell: cell, orientation: .horizontal)
@@ -120,10 +129,9 @@ public class GridView: UIView {
     private var lastLocation: CGPoint = .zero
     @objc func handler(gesture: UIPanGestureRecognizer){
         guard let draggedView = gesture.view,
-              let cell = (draggedView as? CellDragHandleView)?.cell
-        else { return }
-        let location = gesture.location(in: self)
+              let cell = (draggedView as? CellDragHandleView)?.cell else { return }
 
+        let location = gesture.translation(in: self)
         if gesture.state == .began {
             lastLocation = draggedView.center
         }
@@ -190,10 +198,12 @@ extension GridView: GridContentViewDelegate {
     }
 
     func gridContentView(_ gridContentView: GridContentView, didReceiveFocusAt range: NSRange, in cell: GridCell) {
+        showCellResizingHandles()
         delegate?.gridView(self, didReceiveFocusAt: range, in: cell)
     }
 
     func gridContentView(_ gridContentView: GridContentView, didLoseFocusFrom range: NSRange, in cell: GridCell) {
+        hideCellResizingHandles()
         delegate?.gridView(self, didLoseFocusFrom: range, in: cell)
     }
 
