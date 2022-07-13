@@ -64,6 +64,7 @@ protocol GridCellDelegate: AnyObject {
     func cell(_ cell: GridCell, didLoseFocusFrom range: NSRange)
     func cell(_ cell: GridCell, didTapAtLocation location: CGPoint, characterRange: NSRange?)
     func cell(_ cell: GridCell, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name)
+    func cell(_ cell: GridCell, didReceiveKey key: EditorKey, at range: NSRange)
 }
 
 public class GridCell {
@@ -133,6 +134,14 @@ public class GridCell {
         }
 
         setup()
+    }
+
+    public func setFocus() {
+        editor.setFocus()
+    }
+
+    public func removeFocus() {
+        editor.resignFocus()
     }
 
     func updateStyle(style: GridCellStyle) {
@@ -215,6 +224,10 @@ extension GridCell: EditorViewDelegate {
 
     public func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name) {
         delegate?.cell(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
+    }
+
+    public func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange) {
+        delegate?.cell(self, didReceiveKey: key, at: range)
     }
 }
 

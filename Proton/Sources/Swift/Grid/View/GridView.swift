@@ -29,6 +29,7 @@ public protocol GridViewDelegate: AnyObject {
     func gridView(_ gridView: GridView, didChangeBounds bounds: CGRect, in cell: GridCell)
     func gridView(_ gridView: GridView, didSelectCells cells: [GridCell])
     func gridView(_ gridView: GridView, didUnselectCells cells: [GridCell])
+    func gridView(_ gridView: GridView, didReceiveKey key: EditorKey, at range: NSRange, in cell: GridCell)
 }
 
 public class GridView: UIView {
@@ -131,7 +132,7 @@ public class GridView: UIView {
         guard let draggedView = gesture.view,
               let cell = (draggedView as? CellDragHandleView)?.cell else { return }
 
-        let location = gesture.translation(in: self)
+        let location = gesture.location(in: self)
         if gesture.state == .began {
             lastLocation = draggedView.center
         }
@@ -217,6 +218,34 @@ extension GridView: GridContentViewDelegate {
 
     func gridContentView(_ gridContentView: GridContentView, didChangeBounds bounds: CGRect, in cell: GridCell) {
         delegate?.gridView(self, didChangeBounds: bounds, in: cell)
+    }
+
+    func gridContentView(_ gridContentView: GridContentView, didReceiveKey key: EditorKey, at range: NSRange, in cell: GridCell) {
+        delegate?.gridView(self, didReceiveKey: key, at: range, in: cell)
+    }
+
+    func gridContentView(_ gridContentView: GridContentView, didAddNewRowAt index: Int) {
+        resetDragHandles()
+        if let cell = gridView.cellAt(rowIndex: index, columnIndex: 0) {
+            cell.setFocus()
+            gridView.scrollTo(cell: cell)
+        }
+    }
+
+    func gridContentView(_ gridContentView: GridContentView, didAddNewColumnAt index: Int) {
+        resetDragHandles()
+        if let cell = gridView.cellAt(rowIndex: 0, columnIndex: index) {
+            cell.setFocus()
+            gridView.scrollTo(cell: cell)
+        }
+    }
+
+    func gridContentView(_ gridContentView: GridContentView, didDeleteRowAt index: Int) {
+        resetDragHandles()
+    }
+
+    func gridContentView(_ gridContentView: GridContentView, didDeleteColumnAt index: Int) {
+        resetDragHandles()
     }
 }
 

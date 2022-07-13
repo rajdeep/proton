@@ -212,7 +212,7 @@ class Grid {
         cellStore.addCells(newCells)
     }
 
-    func insertRow(at index: Int, config: GridRowConfiguration) {
+    func insertRow(at index: Int, config: GridRowConfiguration, cellDelegate: GridCellDelegate?) {
         if index < numberOfRows {
             cellStore.moveCellRowIndex(from: index, by: 1)
         }
@@ -228,12 +228,12 @@ class Grid {
             if cellAt(rowIndex: index, columnIndex: c) != nil {
                 continue
             }
-
+            cell.delegate = cellDelegate
             cellStore.addCell(cell)
         }
     }
 
-    func insertColumn(at index: Int, config: GridColumnConfiguration) {
+    func insertColumn(at index: Int, config: GridColumnConfiguration, cellDelegate: GridCellDelegate?) {
         if index < numberOfColumns {
             cellStore.moveCellColumnIndex(from: index, by: 1)
         }
@@ -249,6 +249,7 @@ class Grid {
             if cellAt(rowIndex: r, columnIndex: index) != nil {
                 continue
             }
+            cell.delegate = cellDelegate
             cellStore.addCell(cell)
         }
     }

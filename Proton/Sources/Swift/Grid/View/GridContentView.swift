@@ -30,6 +30,14 @@ protocol GridContentViewDelegate: AnyObject {
 
     func gridContentView(_ gridContentView: GridContentView, didSelectCells cells: [GridCell])
     func gridContentView(_ gridContentView: GridContentView, didUnselectCells cells: [GridCell])
+
+    func gridContentView(_ gridContentView: GridContentView, didReceiveKey key: EditorKey, at range: NSRange, in cell: GridCell)
+
+    func gridContentView(_ gridContentView: GridContentView, didAddNewRowAt index: Int)
+    func gridContentView(_ gridContentView: GridContentView, didAddNewColumnAt index: Int)
+
+    func gridContentView(_ gridContentView: GridContentView, didDeleteRowAt index: Int)
+    func gridContentView(_ gridContentView: GridContentView, didDeleteColumnAt index: Int)
 }
 
 class GridContentView: UIScrollView {
@@ -96,23 +104,27 @@ class GridContentView: UIScrollView {
     }
 
     func insertRow(at index: Int, configuration: GridRowConfiguration) {
-        grid.insertRow(at: index, config: configuration)
+        grid.insertRow(at: index, config: configuration, cellDelegate: self)
         invalidateCellLayout()
+        gridContentViewDelegate?.gridContentView(self, didAddNewRowAt: index)
     }
 
     func insertColumn(at index: Int, configuration: GridColumnConfiguration) {
-        grid.insertColumn(at: index, config: configuration)
+        grid.insertColumn(at: index, config: configuration, cellDelegate: self)
         invalidateCellLayout()
+        gridContentViewDelegate?.gridContentView(self, didAddNewColumnAt: index)
     }
 
     func deleteRow(at index: Int) {
         grid.deleteRow(at: index)
         invalidateCellLayout()
+        gridContentViewDelegate?.gridContentView(self, didDeleteRowAt: index)
     }
 
     func deleteColumn(at index: Int) {
         grid.deleteColumn(at: index)
         invalidateCellLayout()
+        gridContentViewDelegate?.gridContentView(self, didAddNewColumnAt: index)
     }
 
     func cellAt(rowIndex: Int, columnIndex: Int) -> GridCell? {
@@ -204,21 +216,25 @@ class GridContentView: UIScrollView {
         for c in grid.cells {
             // TODO: Optimize to recalculate frames for affected cells only i.e. row>=current
 
+            // Set the frame of the cell before adding to superview
+            // This is required to avoid breaking layout constraints
+            // as default size is 0
+            let frame = grid.frameForCell(c, basedOn: bounds.size)
+            c.contentView.frame = frame
+            c.widthAnchorConstraint.constant = frame.width
+            c.heightAnchorConstraint.constant = frame.height
+
             // Add to grid if this is a newly inserted cell after initial setup.
-            // A new cell may exist as a result of inserting a new row/colum
+            // A new cell may exist as a result of inserting a new row/column
             // or splitting an existing merged cell
             if c.contentView.superview == nil {
                 addSubview(c.contentView)
                 c.topAnchorConstraint = c.contentView.topAnchor.constraint(equalTo: topAnchor, constant: frame.minY)
                 c.leadingAnchorConstraint = c.contentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: frame.minX)
+            } else {
+                c.topAnchorConstraint.constant = frame.minY
+                c.leadingAnchorConstraint.constant = frame.minX
             }
-
-            let frame = grid.frameForCell(c, basedOn: bounds.size)
-            c.contentView.frame = frame
-            c.widthAnchorConstraint.constant = frame.width
-            c.heightAnchorConstraint.constant = frame.height
-            c.topAnchorConstraint.constant = frame.minY
-            c.leadingAnchorConstraint.constant = frame.minX
         }
 
         boundsObserver?.didChangeBounds(CGRect(origin: bounds.origin, size: frame.size))
@@ -278,6 +294,17 @@ extension GridContentView: GridCellDelegate {
 
         recalculateCellBounds()
         gridContentViewDelegate?.gridContentView(self, didChangeBounds: cell.cachedFrame, in: cell)
+    }
+
+    func cell(_ cell: GridCell, didReceiveKey key: EditorKey, at range: NSRange) {
+        if isLastCell(cell) {
+            insertRow(at: grid.numberOfRows, configuration: GridRowConfiguration(minRowHeight: 60, maxRowHeight: 400))
+        }
+        gridContentViewDelegate?.gridContentView(self, didReceiveKey: key, at: range, in: cell)
+    }
+
+    private func isLastCell(_ cell: GridCell) -> Bool {
+        return cell.columnSpan.contains(grid.numberOfColumns - 1) && cell.rowSpan.contains(grid.numberOfRows - 1)
     }
 }
 
