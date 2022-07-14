@@ -59,14 +59,16 @@ public struct GridRowConfiguration {
 
 public struct GridConfiguration {
     public let style: GridStyle
+    public let accessory: GridAccessory
 
     public let columnsConfiguration: [GridColumnConfiguration]
     public let rowsConfiguration: [GridRowConfiguration]
 
-    public init(columnsConfiguration: [GridColumnConfiguration], rowsConfiguration: [GridRowConfiguration], style: GridStyle = .default) {
+    public init(columnsConfiguration: [GridColumnConfiguration], rowsConfiguration: [GridRowConfiguration], style: GridStyle = .default, accessory: GridAccessory = .init()) {
         self.columnsConfiguration = columnsConfiguration
         self.rowsConfiguration = rowsConfiguration
         self.style = style
+        self.accessory = accessory
     }
 
     public var numberOfColumns: Int {
@@ -75,5 +77,27 @@ public struct GridConfiguration {
 
     public var numberOfRows: Int {
         rowsConfiguration.count
+    }
+}
+
+public struct GridAccessory {
+    public let resizeColumnHandleImage: UIImage?
+    public let deleteColumnButtonImage: UIImage?
+    public let deleteRowButtonImage: UIImage?
+    public let addColumnButtonImage: UIImage?
+    public let addRowButtonImage: UIImage?
+
+    public init(
+        resizeColumnHandleImage: UIImage? = nil,
+        deleteColumnButtonImage: UIImage? = nil,
+        deleteRowButtonImage: UIImage? = nil,
+        addColumnButtonImage: UIImage? = nil,
+        addRowButtonImage: UIImage? = nil
+    ){
+        self.resizeColumnHandleImage = resizeColumnHandleImage
+        self.deleteColumnButtonImage = deleteColumnButtonImage
+        self.deleteRowButtonImage = deleteRowButtonImage
+        self.addColumnButtonImage = addColumnButtonImage
+        self.addRowButtonImage = addRowButtonImage
     }
 }

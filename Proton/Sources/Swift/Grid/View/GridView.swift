@@ -34,8 +34,9 @@ public protocol GridViewDelegate: AnyObject {
 
 public class GridView: UIView {
     let gridView: GridContentView
-    private var dragHandles = [CellDragHandleView]()
+    private var columnResizingHandles = [CellHandleView]()
     private let handleSize: CGFloat = 25
+    private let config: GridConfiguration
 
     public var delegate: GridViewDelegate?
 
@@ -68,6 +69,7 @@ public class GridView: UIView {
 
     public init(config: GridConfiguration, initialSize: CGSize) {
         self.gridView = GridContentView(config: config, initialSize: initialSize)
+        self.config = config
         super.init(frame: .zero)
         setup()
     }
@@ -77,11 +79,11 @@ public class GridView: UIView {
     }
 
     public func showCellResizingHandles() {
-        dragHandles.forEach { $0.isHidden = false }
+        columnResizingHandles.forEach { $0.isHidden = false }
     }
 
     public func hideCellResizingHandles() {
-        dragHandles.forEach { $0.isHidden = true }
+        columnResizingHandles.forEach { $0.isHidden = true }
     }
 
     private func setup() {
@@ -102,9 +104,10 @@ public class GridView: UIView {
     }
 
     private func addHandles() {
+        guard let image = config.accessory.resizeColumnHandleImage else { return }
         for cell in cells {
-            let handleView = makeDragHandle(cell: cell, orientation: .horizontal)
-            dragHandles.append(handleView)
+            let handleView = makeColumnResizingHandle(cell: cell, image: image)
+            columnResizingHandles.append(handleView)
             handleView.translatesAutoresizingMaskIntoConstraints = false
             addSubview(handleView)
             NSLayoutConstraint.activate([
@@ -116,13 +119,13 @@ public class GridView: UIView {
         }
     }
 
-    private func resetDragHandles() {
-        dragHandles.forEach { $0.removeFromSuperview() }
+    private func resetColumnResizingHandles() {
+        columnResizingHandles.forEach { $0.removeFromSuperview() }
         addHandles()
     }
 
-    func makeDragHandle(cell: GridCell, orientation: CellDragHandleView.Orientation) -> CellDragHandleView {
-        let dragHandle = CellDragHandleView(cell: cell, orientation: orientation)
+    func makeColumnResizingHandle(cell: GridCell, image: UIImage) -> CellHandleView {
+        let dragHandle = CellHandleView(cell: cell, image: image)
         dragHandle.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handler(gesture:))))
         return dragHandle
     }
@@ -130,7 +133,7 @@ public class GridView: UIView {
     private var lastLocation: CGPoint = .zero
     @objc func handler(gesture: UIPanGestureRecognizer){
         guard let draggedView = gesture.view,
-              let cell = (draggedView as? CellDragHandleView)?.cell else { return }
+              let cell = (draggedView as? CellHandleView)?.cell else { return }
 
         let location = gesture.location(in: self)
         if gesture.state == .began {
@@ -154,12 +157,12 @@ public class GridView: UIView {
 
     public func merge(cells: [GridCell]) {
         gridView.merge(cells: cells)
-        resetDragHandles()
+        resetColumnResizingHandles()
     }
 
     public func split(cell: GridCell) {
         gridView.split(cell: cell)
-        resetDragHandles()
+        resetColumnResizingHandles()
     }
 
     public func insertRow(at index: Int, configuration: GridRowConfiguration) {
@@ -225,7 +228,7 @@ extension GridView: GridContentViewDelegate {
     }
 
     func gridContentView(_ gridContentView: GridContentView, didAddNewRowAt index: Int) {
-        resetDragHandles()
+        resetColumnResizingHandles()
         if let cell = gridView.cellAt(rowIndex: index, columnIndex: 0) {
             cell.setFocus()
             gridView.scrollTo(cell: cell)
@@ -233,7 +236,7 @@ extension GridView: GridContentViewDelegate {
     }
 
     func gridContentView(_ gridContentView: GridContentView, didAddNewColumnAt index: Int) {
-        resetDragHandles()
+        resetColumnResizingHandles()
         if let cell = gridView.cellAt(rowIndex: 0, columnIndex: index) {
             cell.setFocus()
             gridView.scrollTo(cell: cell)
@@ -241,29 +244,23 @@ extension GridView: GridContentViewDelegate {
     }
 
     func gridContentView(_ gridContentView: GridContentView, didDeleteRowAt index: Int) {
-        resetDragHandles()
+        resetColumnResizingHandles()
     }
 
     func gridContentView(_ gridContentView: GridContentView, didDeleteColumnAt index: Int) {
-        resetDragHandles()
+        resetColumnResizingHandles()
     }
 }
 
-class CellDragHandleView: UIView {
-    enum Orientation {
-        case horizontal
-        case vertical
-    }
-
+class CellHandleView: UIView {
     let imageView = UIImageView()
     let cell: GridCell
-    let orientation: Orientation
     var leadingAnchorConstraint: NSLayoutConstraint!
 
-    init(cell: GridCell, orientation: Orientation) {
+    init(cell: GridCell, image: UIImage) {
         self.cell = cell
-        self.orientation = orientation
         super.init(frame: .zero)
+        imageView.image = image
         setup()
     }
 
@@ -276,13 +273,6 @@ class CellDragHandleView: UIView {
             imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
-
-        if #available(iOSApplicationExtension 13.0, *) {
-            self.imageView.image = UIImage(systemName: "arrow.left.and.right")
-        } else {
-            self.backgroundColor = tintColor
-        }
-
     }
 
     required init?(coder: NSCoder) {
