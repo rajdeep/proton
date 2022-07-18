@@ -34,7 +34,9 @@ public protocol GridViewDelegate: AnyObject {
 
 public class GridView: UIView {
     let gridView: GridContentView
-    private var columnResizingHandles = [CellHandleView]()
+    private var columnResizingHandles = [CellHandleButton]()
+    private var insertRowButtons = [CellHandleButton]()
+
     private let handleSize: CGFloat = 25
     private let config: GridConfiguration
 
@@ -86,24 +88,35 @@ public class GridView: UIView {
         columnResizingHandles.forEach { $0.isHidden = true }
     }
 
+    public func showAddRowButtons() {
+        insertRowButtons.forEach { $0.isHidden = false }
+    }
+
+    public func hideAddRowButtons() {
+        insertRowButtons.forEach { $0.isHidden = true }
+    }
+
     private func setup() {
         gridView.translatesAutoresizingMaskIntoConstraints = false
         gridView.gridContentViewDelegate = self
-//        layer.borderWidth = 1
-//        layer.borderColor = UIColor.red.cgColor
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.red.cgColor
 
         addSubview(gridView)
         NSLayoutConstraint.activate([
-            gridView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-            gridView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -handleSize/2),
-            gridView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            gridView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -handleSize/2)
+            gridView.topAnchor.constraint(equalTo: topAnchor, constant: handleSize),
+            gridView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -handleSize),
+            gridView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: handleSize),
+            gridView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -handleSize)
         ])
-        addHandles()
+        addColumnResizingHandles()
         hideCellResizingHandles()
+
+        addInsertRowButtons()
+        hideAddRowButtons()
     }
 
-    private func addHandles() {
+    private func addColumnResizingHandles() {
         guard let image = config.accessory.resizeColumnHandleImage else { return }
         for cell in cells {
             let handleView = makeColumnResizingHandle(cell: cell, image: image)
@@ -121,19 +134,73 @@ public class GridView: UIView {
 
     private func resetColumnResizingHandles() {
         columnResizingHandles.forEach { $0.removeFromSuperview() }
-        addHandles()
+        addColumnResizingHandles()
     }
 
-    func makeColumnResizingHandle(cell: GridCell, image: UIImage) -> CellHandleView {
-        let dragHandle = CellHandleView(cell: cell, image: image)
+    private func addInsertRowButtons() {
+        guard let image = config.accessory.addRowButtonImage else { return }
+        for cell in cells {
+            if cell.columnSpan.contains(0) {
+                let button = makeInsertRowButtons(cell: cell, image: image)
+                insertRowButtons.append(button)
+                button.translatesAutoresizingMaskIntoConstraints = false
+                addSubview(button)
+                NSLayoutConstraint.activate([
+                    button.widthAnchor.constraint(equalToConstant: handleSize),
+                    button.heightAnchor.constraint(equalTo: button.widthAnchor),
+                    button.trailingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: 5),
+                    button.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor)
+                ])
+            }
+        }
+    }
+
+    private func addInsertColumnButtons() {
+        guard let image = config.accessory.addColumnButtonImage else { return }
+        for cell in cells {
+            if cell.rowSpan.contains(0) {
+                let button = makeInsertRowButtons(cell: cell, image: image)
+                insertRowButtons.append(button)
+                button.translatesAutoresizingMaskIntoConstraints = false
+                addSubview(button)
+                NSLayoutConstraint.activate([
+                    button.widthAnchor.constraint(equalToConstant: handleSize),
+                    button.heightAnchor.constraint(equalTo: button.widthAnchor),
+                    button.bottomAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 5),
+                    button.centerXAnchor.constraint(equalTo: cell.contentView.centerXAnchor)
+                ])
+            }
+        }
+    }
+
+    private func resetInsertRowButtons() {
+        insertRowButtons.forEach { $0.removeFromSuperview() }
+        addInsertRowButtons()
+    }
+
+    private func makeColumnResizingHandle(cell: GridCell, image: UIImage) -> CellHandleButton {
+        let dragHandle = CellHandleButton(cell: cell, image: image)
         dragHandle.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handler(gesture:))))
         return dragHandle
     }
 
+    private func makeInsertRowButtons(cell: GridCell, image: UIImage) -> CellHandleButton {
+        let button = CellHandleButton(cell: cell, image: image)
+        button.addTarget(self, action: #selector(addRowButtonClicked(button:)), for: .touchUpInside)
+        return button
+    }
+
+    @objc
+    func addRowButtonClicked(button: CellHandleButton) {
+        guard let index = button.cell.rowSpan.max() else { return }
+        insertRow(at: index + 1, configuration: GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400))
+    }
+
     private var lastLocation: CGPoint = .zero
-    @objc func handler(gesture: UIPanGestureRecognizer){
+    @objc
+    func handler(gesture: UIPanGestureRecognizer){
         guard let draggedView = gesture.view,
-              let cell = (draggedView as? CellHandleView)?.cell else { return }
+              let cell = (draggedView as? CellHandleButton)?.cell else { return }
 
         let location = gesture.location(in: self)
         if gesture.state == .began {
@@ -203,11 +270,13 @@ extension GridView: GridContentViewDelegate {
 
     func gridContentView(_ gridContentView: GridContentView, didReceiveFocusAt range: NSRange, in cell: GridCell) {
         showCellResizingHandles()
+        showAddRowButtons()
         delegate?.gridView(self, didReceiveFocusAt: range, in: cell)
     }
 
     func gridContentView(_ gridContentView: GridContentView, didLoseFocusFrom range: NSRange, in cell: GridCell) {
         hideCellResizingHandles()
+        hideAddRowButtons()
         delegate?.gridView(self, didLoseFocusFrom: range, in: cell)
     }
 
@@ -229,6 +298,7 @@ extension GridView: GridContentViewDelegate {
 
     func gridContentView(_ gridContentView: GridContentView, didAddNewRowAt index: Int) {
         resetColumnResizingHandles()
+        resetInsertRowButtons()
         if let cell = gridView.cellAt(rowIndex: index, columnIndex: 0) {
             cell.setFocus()
             gridView.scrollTo(cell: cell)
@@ -237,6 +307,7 @@ extension GridView: GridContentViewDelegate {
 
     func gridContentView(_ gridContentView: GridContentView, didAddNewColumnAt index: Int) {
         resetColumnResizingHandles()
+        resetInsertRowButtons()
         if let cell = gridView.cellAt(rowIndex: 0, columnIndex: index) {
             cell.setFocus()
             gridView.scrollTo(cell: cell)
@@ -245,34 +316,22 @@ extension GridView: GridContentViewDelegate {
 
     func gridContentView(_ gridContentView: GridContentView, didDeleteRowAt index: Int) {
         resetColumnResizingHandles()
+        resetInsertRowButtons()
     }
 
     func gridContentView(_ gridContentView: GridContentView, didDeleteColumnAt index: Int) {
         resetColumnResizingHandles()
+        resetInsertRowButtons()
     }
 }
 
-class CellHandleView: UIView {
-    let imageView = UIImageView()
+class CellHandleButton: UIButton {
     let cell: GridCell
-    var leadingAnchorConstraint: NSLayoutConstraint!
 
     init(cell: GridCell, image: UIImage) {
         self.cell = cell
         super.init(frame: .zero)
-        imageView.image = image
-        setup()
-    }
-
-    private func setup() {
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(imageView)
-        NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: topAnchor),
-            imageView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-        ])
+        setImage(image, for: .normal)
     }
 
     required init?(coder: NSCoder) {

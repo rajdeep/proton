@@ -32,10 +32,14 @@ public class CreateGridViewCommand: EditorCommand {
 
     public func execute(on editor: EditorView) {
         let columnResizingImage: UIImage?
+        let addRowButtonImage: UIImage?
+
         if #available(iOSApplicationExtension 13.0, *) {
             columnResizingImage = UIImage(systemName: "arrow.left.and.right")
+            addRowButtonImage = UIImage(systemName: "plus.square")
         } else {
             columnResizingImage = nil
+            addRowButtonImage = nil
         }
 
         let config = GridConfiguration(
@@ -54,7 +58,10 @@ public class CreateGridViewCommand: EditorCommand {
                 GridRowConfiguration(minRowHeight: 80, maxRowHeight: 400),
                 GridRowConfiguration(minRowHeight: 120, maxRowHeight: 400),
             ],
-            accessory: GridAccessory(resizeColumnHandleImage: columnResizingImage))
+            accessory: GridAccessory(
+                resizeColumnHandleImage: columnResizingImage,
+                addRowButtonImage: addRowButtonImage
+            ))
 
         let attachment = GridViewAttachment(config: config, initialSize: editor.frame.size)
         attachment.selectBeforeDelete = true
