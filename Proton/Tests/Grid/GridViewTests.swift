@@ -107,7 +107,7 @@ class GridViewTests: XCTestCase {
                 expectation.fulfill()
             }
         }
-        XCTAssertEqual(focusedCell?.cachedFrame, CGRect(x: 100, y: 100, width: 100, height: 50))
+        XCTAssertEqual(focusedCell?.frame, CGRect(x: 100, y: 100, width: 100, height: 50))
         focusedCell?.editor.replaceCharacters(in: .zero, with: "This is a test string")
         gridView.render()
 

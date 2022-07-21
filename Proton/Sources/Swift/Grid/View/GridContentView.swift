@@ -156,6 +156,7 @@ class GridContentView: UIScrollView {
             // in combination with fractional widths
             //TODO: revisit - likely issue with the layout margin guides ie non-zero padding
             let frame = grid.frameForCell(cell, basedOn: initialSize)
+            cell.frame = frame
             let contentView = cell.contentView
 
             cell.widthAnchorConstraint.constant = frame.width
@@ -203,7 +204,7 @@ class GridContentView: UIScrollView {
     }
 
     func selectCellsInLocation(_ location: CGPoint) {
-        let cell = cells.first { $0.cachedFrame.contains(location) }
+        let cell = cells.first { $0.frame.contains(location) }
         cell?.isSelected = true
         gridContentViewDelegate?.gridContentView(self, didSelectCells: selectedCells)
     }
@@ -220,6 +221,7 @@ class GridContentView: UIScrollView {
             // This is required to avoid breaking layout constraints
             // as default size is 0
             let frame = grid.frameForCell(c, basedOn: bounds.size)
+            c.frame = frame
             c.contentView.frame = frame
             c.widthAnchorConstraint.constant = frame.width
             c.heightAnchorConstraint.constant = frame.height
@@ -293,7 +295,7 @@ extension GridContentView: GridCellDelegate {
         }
 
         recalculateCellBounds()
-        gridContentViewDelegate?.gridContentView(self, didChangeBounds: cell.cachedFrame, in: cell)
+        gridContentViewDelegate?.gridContentView(self, didChangeBounds: cell.frame, in: cell)
     }
 
     func cell(_ cell: GridCell, didReceiveKey key: EditorKey, at range: NSRange) {

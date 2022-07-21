@@ -73,8 +73,8 @@ public class GridCell {
     }
     var rowSpan: [Int]
     var columnSpan: [Int]
-    var cachedFrame: CGRect = .zero
 
+    public internal(set) var frame: CGRect = .zero
 
     private var selectionView: SelectionView?
 

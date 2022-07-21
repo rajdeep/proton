@@ -808,12 +808,12 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         cell20.editor.replaceCharacters(in: .zero, with: "R3")
 
         viewController.render(size: CGSize(width: 201, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: true)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
         gridView.deleteRow(at: 1)
 
         viewController.render(size: CGSize(width: 201, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: true)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testMergesMultipleCells() throws {

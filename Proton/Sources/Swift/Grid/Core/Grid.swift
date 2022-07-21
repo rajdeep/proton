@@ -104,8 +104,6 @@ class Grid {
         // the layer borders do not perfectly overlap
         let inset = -config.style.borderWidth
         let frame = CGRect(x: x, y: y, width: width, height: height).inset(by: UIEdgeInsets(top: 0, left: 0, bottom: inset, right: inset))
-
-        cell.cachedFrame = frame
         return frame
     }
 
