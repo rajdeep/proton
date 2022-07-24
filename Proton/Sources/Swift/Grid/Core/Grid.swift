@@ -253,6 +253,7 @@ class Grid {
     }
 
     func deleteRow(at index: Int) {
+        guard rowHeights.count > 1 else { return }
         var cellsToRemove = [GridCell]()
         var cellsToUpdate = [GridCell]()
 
@@ -266,6 +267,7 @@ class Grid {
             }
         }
 
+        cellsToRemove.forEach { $0.contentView.removeFromSuperview() }
         cellStore.deleteCells(cellsToRemove)
         for cell in cellsToUpdate {
             cell.columnSpan.removeAll{ $0 == index }
@@ -279,6 +281,7 @@ class Grid {
     }
 
     func deleteColumn(at index: Int) {
+        guard columnWidths.count > 1 else { return }
         var cellsToRemove = [GridCell]()
         var cellsToUpdate = [GridCell]()
 
@@ -292,15 +295,17 @@ class Grid {
             }
         }
 
+        cellsToRemove.forEach { $0.contentView.removeFromSuperview() }
         cellStore.deleteCells(cellsToRemove)
         for cell in cellsToUpdate {
             cell.rowSpan.removeAll{ $0 == index }
             cell.rowSpan = cell.rowSpan.map { $0 < index ? $0 : $0 - 1 }
         }
+        columnWidths.remove(at: index)
 
         if index < numberOfColumns {
             cellStore.moveCellColumnIndex(from: index, by: -1)
-            columnWidths.remove(at: index)
         }
+
     }
 }

@@ -300,6 +300,44 @@ extension CommandsExampleViewController: EditorViewDelegate {
 }
 
 extension CommandsExampleViewController: GridViewDelegate {
+    func gridView(_ gridView: GridView, configureColumnActionButtonMenuFor cell: GridCell) -> UIMenu? {
+        let columnCount = gridView.numberOfColumns
+        var menuItems: [UIAction] {
+            return [
+                UIAction(title: "Add Column", image: UIImage(systemName: "plus.circle"), handler: { (_) in
+                    gridView.insertColumn(at: cell.columnSpan.max()! + 1, configuration: GridColumnConfiguration(dimension: .fixed(150)))
+                }),
+                UIAction(title: "Delete Column", image: UIImage(systemName: "minus.circle"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
+                    gridView.deleteColumn(at: cell.columnSpan.max()!)
+                })
+            ]
+        }
+
+        var columnMenu: UIMenu {
+            return UIMenu(title: "Column Options", image:  UIImage(systemName: "rectangle.split.3x1"), identifier: nil, options: [], children: menuItems)
+        }
+        return columnMenu
+    }
+
+    func gridView(_ gridView: GridView, configureRowActionButtonMenuFor cell: GridCell) -> UIMenu? {
+        let rowCount = gridView.numberOfRows
+        var menuItems: [UIAction] {
+            return [
+                UIAction(title: "Add Row", image: UIImage(systemName: "plus.circle"), handler: { (_) in
+                    gridView.insertRow(at: cell.rowSpan.max()! + 1, configuration: GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400))
+                }),
+                UIAction(title: "Delete Row", image: UIImage(systemName: "minus.circle"), attributes: rowCount > 1 ? .destructive : .disabled, handler: { (_) in
+                    gridView.deleteRow(at: cell.rowSpan.max()!)
+                })
+            ]
+        }
+
+        var rowMenu: UIMenu {
+            return UIMenu(title: "Row Options", image:  UIImage(systemName: "rectangle.split.3x1"), identifier: nil, options: [], children: menuItems)
+        }
+        return rowMenu
+    }
+
     func gridView(_ gridView: GridView, didTapColumnActionButtonFor column: [Int], selectedCell cell: GridCell) {
         print("Column action button tapped: \(column)")
     }

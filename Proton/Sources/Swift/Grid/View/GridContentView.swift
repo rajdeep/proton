@@ -55,6 +55,14 @@ class GridContentView: UIScrollView {
         cells.filter { $0.isSelected }
     }
 
+    var numberOfColumns: Int {
+        grid.numberOfColumns
+    }
+
+    var numberOfRows: Int {
+        grid.numberOfRows
+    }
+
     init(config: GridConfiguration, initialSize: CGSize) {
         self.config = config
         self.initialSize = initialSize

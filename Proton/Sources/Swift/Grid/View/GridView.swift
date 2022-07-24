@@ -33,6 +33,11 @@ public protocol GridViewDelegate: AnyObject {
 
     func gridView(_ gridView: GridView, didTapColumnActionButtonFor column: [Int], selectedCell cell: GridCell)
     func gridView(_ gridView: GridView, didTapRowActionButtonFor row: [Int], selectedCell cell: GridCell)
+
+    @available(iOSApplicationExtension 14.0, *)
+    func gridView(_ gridView: GridView, configureColumnActionButtonMenuFor cell: GridCell) -> UIMenu?
+    @available(iOSApplicationExtension 14.0, *)
+    func gridView(_ gridView: GridView, configureRowActionButtonMenuFor cell: GridCell) -> UIMenu?
 }
 
 public class GridView: UIView {
@@ -70,6 +75,14 @@ public class GridView: UIView {
 
     public var selectedCells: [GridCell] {
         gridView.selectedCells
+    }
+
+    public var numberOfColumns: Int {
+        gridView.numberOfColumns
+    }
+
+    public var numberOfRows: Int {
+        gridView.numberOfRows
     }
 
     public init(config: GridConfiguration, initialSize: CGSize) {
@@ -135,6 +148,11 @@ public class GridView: UIView {
 
         columnActionButton.addTarget(self, action: #selector(didTapColumnActionButton(sender:)), for: .touchUpInside)
         rowActionButton.addTarget(self, action: #selector(didTapRowActionButton(sender:)), for: .touchUpInside)
+
+        if #available(iOSApplicationExtension 14.0, *) {
+            columnActionButton.menu = delegate?.gridView(self, configureColumnActionButtonMenuFor: cell)
+            rowActionButton.menu = delegate?.gridView(self, configureRowActionButtonMenuFor: cell)
+        }
 
         columnRightBorderView = makeColumnResizingHandle(cell: cell, image: image)
         columnRightBorderView.backgroundColor = cell.gridStyle.borderColor
@@ -368,15 +386,19 @@ extension GridView: GridContentViewDelegate {
     }
 
     func gridContentView(_ gridContentView: GridContentView, didLoseFocusFrom range: NSRange, in cell: GridCell) {
-//        hideCellResizingHandles()
-//        hideAddRowButtons()
+        removeColumnActionButton()
+        delegate?.gridView(self, didLoseFocusFrom: range, in: cell)
+    }
+
+    private func removeColumnActionButton() {
+        //        hideCellResizingHandles()
+        //        hideAddRowButtons()
         columnActionButton.removeFromSuperview()
         rowActionButton.removeFromSuperview()
         columnRightBorderView.removeFromSuperview()
         columnLeftBorderView.removeFromSuperview()
         columnTopBorderView.removeFromSuperview()
         columnBottomBorderView.removeFromSuperview()
-        delegate?.gridView(self, didLoseFocusFrom: range, in: cell)
     }
 
     func gridContentView(_ gridContentView: GridContentView, didTapAtLocation location: CGPoint, characterRange: NSRange?, in cell: GridCell) {

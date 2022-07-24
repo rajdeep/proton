@@ -71,8 +71,8 @@ public class GridCell {
     var id: String {
         "{\(rowSpan),\(columnSpan)}"
     }
-    var rowSpan: [Int]
-    var columnSpan: [Int]
+    public internal(set) var rowSpan: [Int]
+    public internal(set) var columnSpan: [Int]
 
     public internal(set) var frame: CGRect = .zero
 
