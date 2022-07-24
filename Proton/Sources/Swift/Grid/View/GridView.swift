@@ -198,7 +198,6 @@ public class GridView: UIView {
     @objc
     private func didTapColumnActionButton(sender: CellHandleButton) {
         delegate?.gridView(self, didTapColumnActionButtonFor: sender.cell.columnSpan, selectedCell: sender.cell)
-
     }
 
     @objc
@@ -289,25 +288,25 @@ public class GridView: UIView {
         insertRow(at: index + 1, configuration: GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400))
     }
 
-    private var lastLocation: CGPoint = .zero
+    private var lastLocation: CGPoint? = nil
     @objc
     func handler(gesture: UIPanGestureRecognizer){
         guard let draggedView = gesture.view,
               let cell = (draggedView as? CellHandleButton)?.cell else { return }
 
         let location = gesture.location(in: self)
-        if gesture.state == .began {
-            lastLocation = draggedView.center
-        }
-
         if gesture.state == .changed {
-            let deltaX = location.x - lastLocation.x
+            if let lastLocation = lastLocation {
+                let deltaX = location.x - lastLocation.x
+                gridView.changeColumnWidth(index: cell.columnSpan.max() ?? 0, delta: deltaX)
+            }
             lastLocation = location
-            gridView.changeColumnWidth(index: cell.columnSpan.max() ?? 0, delta: deltaX)
         }
 
-        if gesture.state == .ended {
-            lastLocation = draggedView.center
+        if gesture.state == .ended
+            || gesture.state == .cancelled
+            || gesture.state == .ended {
+            lastLocation = nil
         }
     }
 

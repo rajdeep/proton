@@ -85,7 +85,7 @@ class GridContentView: UIScrollView {
     }
 
     func scrollTo(cell: GridCell, animated: Bool = true) {
-        let frame = grid.frameForCell(cell, basedOn: contentSize)
+        let frame = grid.frameForCell(cell, basedOn: self.frame.size)
         self.scrollRectToVisible(frame, animated: animated)
     }
 
@@ -132,7 +132,7 @@ class GridContentView: UIScrollView {
     }
 
     func changeColumnWidth(index: Int, delta: CGFloat) {
-        grid.changeColumnWidth(index: index, totalWidth: contentSize.width, delta: delta)
+        grid.changeColumnWidth(index: index, totalWidth: frame.width, delta: delta)
         invalidateCellLayout()
     }
 
