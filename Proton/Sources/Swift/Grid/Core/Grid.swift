@@ -270,13 +270,13 @@ class Grid {
         cellsToRemove.forEach { $0.contentView.removeFromSuperview() }
         cellStore.deleteCells(cellsToRemove)
         for cell in cellsToUpdate {
-            cell.columnSpan.removeAll{ $0 == index }
-            cell.columnSpan = cell.columnSpan.map { $0 < index ? $0 : $0 - 1 }
+            cell.rowSpan.removeAll{ $0 == index }
+            cell.rowSpan = cell.rowSpan.map { $0 < index ? $0 : $0 - 1 }
         }
+        rowHeights.remove(at: index)
 
         if index < numberOfRows {
-            cellStore.moveCellRowIndex(from: index, by: -1)
-            rowHeights.remove(at: index)
+            cellStore.moveCellRowIndex(from: index + 1, by: -1)
         }
     }
 
@@ -298,13 +298,13 @@ class Grid {
         cellsToRemove.forEach { $0.contentView.removeFromSuperview() }
         cellStore.deleteCells(cellsToRemove)
         for cell in cellsToUpdate {
-            cell.rowSpan.removeAll{ $0 == index }
-            cell.rowSpan = cell.rowSpan.map { $0 < index ? $0 : $0 - 1 }
+            cell.columnSpan.removeAll{ $0 == index }
+            cell.columnSpan = cell.columnSpan.map { $0 < index ? $0 : $0 - 1 }
         }
         columnWidths.remove(at: index)
 
         if index < numberOfColumns {
-            cellStore.moveCellColumnIndex(from: index, by: -1)
+            cellStore.moveCellColumnIndex(from: index + 1, by: -1)
         }
 
     }

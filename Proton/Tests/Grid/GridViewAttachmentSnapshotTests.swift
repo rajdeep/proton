@@ -45,7 +45,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: true)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewAttachmentWithFractionalWidth() {
@@ -264,7 +264,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         cell12Editor.replaceCharacters(in: .zero, with: "Cell 6")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: true)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testScrollsCellToVisible() {
@@ -777,6 +777,47 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testDeletesMergedColumn() throws {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(30)),
+                GridColumnConfiguration(dimension: .fractional(0.35)),
+                GridColumnConfiguration(dimension: .fractional(0.35)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+            ])
+        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let gridView = attachment.view
+
+        let cell10 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 0))
+        let cell11 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 2))
+
+        cell10.editor.replaceCharacters(in: .zero, with: "C0")
+        cell11.editor.replaceCharacters(in: .zero, with: "C1")
+        cell12.editor.replaceCharacters(in: .zero, with: "C2")
+
+        gridView.merge(cells: [cell10, cell11])
+
+        viewController.render(size: CGSize(width: 200, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+
+        gridView.deleteColumn(at: 1)
+
+        viewController.render(size: CGSize(width: 200, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     func testDeletesRow() throws {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
@@ -807,6 +848,54 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         cell10.editor.replaceCharacters(in: .zero, with: "R2")
         cell20.editor.replaceCharacters(in: .zero, with: "R3")
 
+        viewController.render(size: CGSize(width: 201, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        gridView.deleteRow(at: 1)
+
+        viewController.render(size: CGSize(width: 201, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testDeletesMergedRow() throws {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(50)),
+                GridColumnConfiguration(dimension: .fixed(50)),
+                GridColumnConfiguration(dimension: .fixed(50)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+            ])
+        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let gridView = attachment.view
+
+        let cell00 = try XCTUnwrap(gridView.cellAt(rowIndex: 0, columnIndex: 0))
+        let cell10 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 0))
+        let cell20 = try XCTUnwrap(gridView.cellAt(rowIndex: 2, columnIndex: 0))
+
+        let cell01 = try XCTUnwrap(gridView.cellAt(rowIndex: 0, columnIndex: 1))
+        let cell11 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell21 = try XCTUnwrap(gridView.cellAt(rowIndex: 2, columnIndex: 1))
+
+        cell00.editor.replaceCharacters(in: .zero, with: "1")
+        cell10.editor.replaceCharacters(in: .zero, with: "2")
+        cell20.editor.replaceCharacters(in: .zero, with: "3")
+
+        cell01.editor.replaceCharacters(in: .zero, with: "4")
+        cell11.editor.replaceCharacters(in: .zero, with: "5")
+        cell21.editor.replaceCharacters(in: .zero, with: "6")
+
+        gridView.merge(cells: [cell00, cell10])
         viewController.render(size: CGSize(width: 201, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 

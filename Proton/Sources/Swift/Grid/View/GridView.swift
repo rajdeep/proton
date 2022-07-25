@@ -393,12 +393,12 @@ extension GridView: GridContentViewDelegate {
     private func removeColumnActionButton() {
         //        hideCellResizingHandles()
         //        hideAddRowButtons()
-        columnActionButton.removeFromSuperview()
-        rowActionButton.removeFromSuperview()
-        columnRightBorderView.removeFromSuperview()
-        columnLeftBorderView.removeFromSuperview()
-        columnTopBorderView.removeFromSuperview()
-        columnBottomBorderView.removeFromSuperview()
+        columnActionButton?.removeFromSuperview()
+        rowActionButton?.removeFromSuperview()
+        columnRightBorderView?.removeFromSuperview()
+        columnLeftBorderView?.removeFromSuperview()
+        columnTopBorderView?.removeFromSuperview()
+        columnBottomBorderView?.removeFromSuperview()
     }
 
     func gridContentView(_ gridContentView: GridContentView, didTapAtLocation location: CGPoint, characterRange: NSRange?, in cell: GridCell) {

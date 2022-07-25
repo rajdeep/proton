@@ -304,10 +304,15 @@ extension CommandsExampleViewController: GridViewDelegate {
         let columnCount = gridView.numberOfColumns
         var menuItems: [UIAction] {
             return [
-                UIAction(title: "Add Column", image: UIImage(systemName: "plus.circle"), handler: { (_) in
-                    gridView.insertColumn(at: cell.columnSpan.max()! + 1, configuration: GridColumnConfiguration(dimension: .fixed(150)))
+                UIAction(title: "Add right", image: UIImage(systemName: "arrow.right"),
+                         handler: { (_) in
+                    gridView.insertColumn(at: cell.columnSpan.max()! + 1, configuration: GridColumnConfiguration(dimension: .fixed(100)))
                 }),
-                UIAction(title: "Delete Column", image: UIImage(systemName: "minus.circle"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
+                UIAction(title: "Add left", image: UIImage(systemName: "arrow.left"),
+                         handler: { (_) in
+                    gridView.insertColumn(at: cell.columnSpan.max()!, configuration: GridColumnConfiguration(dimension: .fixed(100)))
+                }),
+                UIAction(title: "Delete Column", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
                     gridView.deleteColumn(at: cell.columnSpan.max()!)
                 })
             ]
