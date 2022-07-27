@@ -271,6 +271,19 @@ class CommandsExampleViewController: ExamplesBaseViewController {
             self.editor.attributedText = text
         }
     }
+
+    lazy var actionButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "chevron.down")!, for: .normal)
+
+        button.layer.cornerRadius = 4
+        button.layer.backgroundColor = UIColor.systemGray6.cgColor
+        button.layer.shadowColor = UIColor.systemGray2.cgColor
+        button.layer.shadowOffset = CGSize(width: -2, height: -2)
+        return button
+    }()
+    
 }
 
 extension CommandsExampleViewController: EditorViewDelegate {
@@ -300,49 +313,6 @@ extension CommandsExampleViewController: EditorViewDelegate {
 }
 
 extension CommandsExampleViewController: GridViewDelegate {
-    func gridView(_ gridView: GridView, configureColumnActionButtonMenuFor cell: GridCell) -> UIMenu? {
-        let columnCount = gridView.numberOfColumns
-        var menuItems: [UIAction] {
-            return [
-                UIAction(title: "Add right", image: UIImage(systemName: "arrow.right"),
-                         handler: { (_) in
-                    gridView.insertColumn(at: cell.columnSpan.max()! + 1, configuration: GridColumnConfiguration(dimension: .fixed(100)))
-                }),
-                UIAction(title: "Add left", image: UIImage(systemName: "arrow.left"),
-                         handler: { (_) in
-                    gridView.insertColumn(at: cell.columnSpan.max()!, configuration: GridColumnConfiguration(dimension: .fixed(100)))
-                }),
-                UIAction(title: "Delete Column", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
-                    gridView.deleteColumn(at: cell.columnSpan.max()!)
-                })
-            ]
-        }
-
-        var columnMenu: UIMenu {
-            return UIMenu(title: "Column Options", image:  UIImage(systemName: "rectangle.split.3x1"), identifier: nil, options: [], children: menuItems)
-        }
-        return columnMenu
-    }
-
-    func gridView(_ gridView: GridView, configureRowActionButtonMenuFor cell: GridCell) -> UIMenu? {
-        let rowCount = gridView.numberOfRows
-        var menuItems: [UIAction] {
-            return [
-                UIAction(title: "Add Row", image: UIImage(systemName: "plus.circle"), handler: { (_) in
-                    gridView.insertRow(at: cell.rowSpan.max()! + 1, configuration: GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400))
-                }),
-                UIAction(title: "Delete Row", image: UIImage(systemName: "minus.circle"), attributes: rowCount > 1 ? .destructive : .disabled, handler: { (_) in
-                    gridView.deleteRow(at: cell.rowSpan.max()!)
-                })
-            ]
-        }
-
-        var rowMenu: UIMenu {
-            return UIMenu(title: "Row Options", image:  UIImage(systemName: "rectangle.split.3x1"), identifier: nil, options: [], children: menuItems)
-        }
-        return rowMenu
-    }
-
     func gridView(_ gridView: GridView, didTapColumnActionButtonFor column: [Int], selectedCell cell: GridCell) {
         print("Column action button tapped: \(column)")
     }
@@ -356,11 +326,55 @@ extension CommandsExampleViewController: GridViewDelegate {
     }
 
     func gridView(_ gridView: GridView, didReceiveFocusAt range: NSRange, in cell: GridCell) {
+        let columnCount = gridView.numberOfColumns
+        let columnActions = [
+            UIAction(title: "Add column right", image: UIImage(systemName: "arrow.right"),
+                     handler: { (_) in
+                         gridView.insertColumn(at: cell.columnSpan.max()! + 1, configuration: GridColumnConfiguration(dimension: .fixed(100)))
+                     }),
+            UIAction(title: "Add column left", image: UIImage(systemName: "arrow.left"),
+                     handler: { (_) in
+                         gridView.insertColumn(at: cell.columnSpan.max()!, configuration: GridColumnConfiguration(dimension: .fixed(100)))
+                     }),
+            UIAction(title: "Delete Column", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
+                gridView.deleteColumn(at: cell.columnSpan.max()!)
+            }),
+        ]
 
+        let rowActions = [
+            UIAction(title: "Add row above", image: UIImage(systemName: "arrow.up"), handler: { (_) in
+                gridView.insertRow(at: cell.rowSpan.max()!, configuration: GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400))
+            }),
+            UIAction(title: "Add row below", image: UIImage(systemName: "arrow.down"), handler: { (_) in
+                gridView.insertRow(at: cell.rowSpan.max()! + 1, configuration: GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400))
+            }),
+            UIAction(title: "Delete Row", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
+                gridView.deleteRow(at: cell.rowSpan.max()!)
+            })
+        ]
+
+        let columnMenu = UIMenu(title: "Column Options", options: .displayInline, children: columnActions)
+        let rowMenu = UIMenu(title: "Row Options", options: .displayInline, children: rowActions)
+
+        let menu = UIMenu(title: "Cell Options", children: [columnMenu, rowMenu])
+
+        let button = actionButton
+        if #available(iOS 14.0, *) {
+            button.menu = menu
+            button.showsMenuAsPrimaryAction = true
+        }
+
+        cell.contentView.addSubview(button)
+        NSLayoutConstraint.activate([
+            button.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -5),
+            button.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 5),
+            button.widthAnchor.constraint(equalToConstant: 20),
+            button.heightAnchor.constraint(equalTo: button.widthAnchor),
+        ])
     }
 
     func gridView(_ gridView: GridView, didLoseFocusFrom range: NSRange, in cell: GridCell) {
-
+        actionButton.removeFromSuperview()
     }
 
     func gridView(_ gridView: GridView, didTapAtLocation location: CGPoint, characterRange: NSRange?, in cell: GridCell) {

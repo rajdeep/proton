@@ -99,7 +99,7 @@ public class GridCell {
         editor.frame.size
     }
 
-    let contentView = UIView()
+    public let contentView = UIView()
 
     let style: GridCellStyle
     let gridStyle: GridStyle

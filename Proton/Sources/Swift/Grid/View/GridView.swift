@@ -33,11 +33,6 @@ public protocol GridViewDelegate: AnyObject {
 
     func gridView(_ gridView: GridView, didTapColumnActionButtonFor column: [Int], selectedCell cell: GridCell)
     func gridView(_ gridView: GridView, didTapRowActionButtonFor row: [Int], selectedCell cell: GridCell)
-
-    @available(iOSApplicationExtension 14.0, *)
-    func gridView(_ gridView: GridView, configureColumnActionButtonMenuFor cell: GridCell) -> UIMenu?
-    @available(iOSApplicationExtension 14.0, *)
-    func gridView(_ gridView: GridView, configureRowActionButtonMenuFor cell: GridCell) -> UIMenu?
 }
 
 public class GridView: UIView {
@@ -149,25 +144,20 @@ public class GridView: UIView {
         columnActionButton.addTarget(self, action: #selector(didTapColumnActionButton(sender:)), for: .touchUpInside)
         rowActionButton.addTarget(self, action: #selector(didTapRowActionButton(sender:)), for: .touchUpInside)
 
-        if #available(iOSApplicationExtension 14.0, *) {
-            columnActionButton.menu = delegate?.gridView(self, configureColumnActionButtonMenuFor: cell)
-            rowActionButton.menu = delegate?.gridView(self, configureRowActionButtonMenuFor: cell)
-        }
-
         columnRightBorderView = makeColumnResizingHandle(cell: cell, image: image)
-        columnRightBorderView.backgroundColor = cell.gridStyle.borderColor
+        columnRightBorderView.backgroundColor = UIColor.systemBlue
 
         columnLeftBorderView = makeColumnResizingHandle(cell: cell, image: image)
-        columnLeftBorderView.backgroundColor = cell.gridStyle.borderColor
+        columnLeftBorderView.backgroundColor = UIColor.systemBlue
 
         columnTopBorderView = makeColumnResizingHandle(cell: cell, image: image)
-        columnTopBorderView.backgroundColor = cell.gridStyle.borderColor
+        columnTopBorderView.backgroundColor = UIColor.systemBlue
 
         columnBottomBorderView = makeColumnResizingHandle(cell: cell, image: image)
-        columnBottomBorderView.backgroundColor = cell.gridStyle.borderColor
+        columnBottomBorderView.backgroundColor = UIColor.systemBlue
 
         addSubview(columnActionButton)
-        addSubview(rowActionButton)
+//        addSubview(rowActionButton)
 
         addSubview(columnRightBorderView)
         addSubview(columnLeftBorderView)
@@ -185,10 +175,10 @@ public class GridView: UIView {
             columnActionButton.widthAnchor.constraint(equalTo: cell.contentView.widthAnchor),
             columnActionButton.heightAnchor.constraint(equalToConstant: 15),
 
-            rowActionButton.trailingAnchor.constraint(equalTo: gridView.leadingAnchor, constant: -2),
-            rowActionButton.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
-            rowActionButton.widthAnchor.constraint(equalToConstant: 15),
-            rowActionButton.heightAnchor.constraint(equalTo: cell.contentView.heightAnchor),
+//            rowActionButton.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -5),
+//            rowActionButton.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 5),
+//            rowActionButton.widthAnchor.constraint(equalToConstant: 20),
+//            rowActionButton.heightAnchor.constraint(equalTo: rowActionButton.widthAnchor),
 
             columnRightBorderView.centerXAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
             columnRightBorderView.widthAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
@@ -287,8 +277,8 @@ public class GridView: UIView {
 
     private func makeColumnResizingHandle(cell: GridCell, image: UIImage) -> CellHandleButton {
         let dragHandle = CellHandleButton(cell: cell, image: image)
-        dragHandle.layer.borderColor = UIColor.black.cgColor
-        dragHandle.layer.borderWidth = 1
+//        dragHandle.layer.borderColor = UIColor.black.cgColor
+//        dragHandle.layer.borderWidth = 1
         dragHandle.translatesAutoresizingMaskIntoConstraints = false
         dragHandle.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handler(gesture:))))
         return dragHandle
