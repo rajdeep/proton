@@ -293,7 +293,7 @@ public class GridView: UIView {
     @objc
     func addRowButtonClicked(button: CellHandleButton) {
         guard let index = button.cell.rowSpan.max() else { return }
-        insertRow(at: index + 1, configuration: GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400))
+        insertRow(at: index + 1, configuration: GridRowConfiguration(initialHeight: 40))
     }
 
     private var lastLocation: CGPoint? = nil

@@ -28,7 +28,7 @@ class GridRowDimension {
 
     init(rowConfiguration: GridRowConfiguration) {
         self.rowConfiguration = rowConfiguration
-        currentHeight = rowConfiguration.minRowHeight
+        currentHeight = rowConfiguration.initialHeight
     }
 }
 
@@ -156,7 +156,7 @@ class Grid {
     func changeRowHeight(index: Int, delta: CGFloat) {
         guard index < rowHeights.count else { return }
 
-        guard rowHeights[index].rowConfiguration.minRowHeight > rowHeights[index].currentHeight + delta else {
+        guard rowHeights[index].rowConfiguration.initialHeight > rowHeights[index].currentHeight + delta else {
             return
         }
 
@@ -198,7 +198,7 @@ class Grid {
         var newCells = [GridCell]()
         for row in minRowIndex ... maxRowIndex {
             for col in minColumnIndex ... maxColumnIndex {
-                let c = GridCell(rowSpan: [row], columnSpan: [col], minHeight: cell.minHeight, maxHeight: cell.maxHeight)
+                let c = GridCell(rowSpan: [row], columnSpan: [col], initialHeight: cell.initialHeight)
                 newCells.append(c)
             }
         }
@@ -220,8 +220,7 @@ class Grid {
             let cell = GridCell(
                 rowSpan: [index],
                 columnSpan: [c],
-                minHeight: config.minRowHeight,
-                maxHeight: config.maxRowHeight)
+                initialHeight: config.initialHeight)
 
             if cellAt(rowIndex: index, columnIndex: c) != nil {
                 continue
@@ -241,8 +240,7 @@ class Grid {
             let cell = GridCell(
                 rowSpan: [r],
                 columnSpan: [index],
-                minHeight: rowHeights[r].rowConfiguration.minRowHeight,
-                maxHeight: rowHeights[r].rowConfiguration.maxRowHeight)
+                initialHeight: rowHeights[r].rowConfiguration.initialHeight)
 
             if cellAt(rowIndex: r, columnIndex: index) != nil {
                 continue

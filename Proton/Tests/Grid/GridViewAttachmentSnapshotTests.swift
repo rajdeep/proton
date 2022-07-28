@@ -35,8 +35,8 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fractional(0.45)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -59,9 +59,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fractional(0.25)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 80, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 120, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 80),
+                GridRowConfiguration(initialHeight: 120),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -83,9 +83,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fractional(0.33)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -109,9 +109,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fractional(0.33)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -159,8 +159,8 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fractional(0.45)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -193,8 +193,8 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fractional(0.33)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400, style: style),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40, style: style),
+                GridRowConfiguration(initialHeight: 40),
             ])
 
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
@@ -236,9 +236,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fractional(0.33)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400, style: rowStyle),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40, style: rowStyle),
+                GridRowConfiguration(initialHeight: 40),
             ])
 
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
@@ -277,8 +277,8 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fractional(0.40)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 300, height: 350))
 
@@ -307,9 +307,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fixed(100)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -343,9 +343,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fixed(100)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -378,9 +378,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fixed(100)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -425,9 +425,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fixed(100)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -477,8 +477,8 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fractional(0.45)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -496,7 +496,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
-        gridView.insertRow(at: 1, configuration: GridRowConfiguration(minRowHeight: 60, maxRowHeight: 80))
+        gridView.insertRow(at: 1, configuration: GridRowConfiguration(initialHeight: 60))
 
         let newCell11 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))
         newCell11.editor.replaceCharacters(in: .zero, with: "New cell")
@@ -515,8 +515,8 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fractional(0.35)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -553,8 +553,8 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fractional(0.45)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -563,7 +563,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         let gridView = attachment.view
-        gridView.insertRow(at: 0, configuration: GridRowConfiguration(minRowHeight: 60, maxRowHeight: 80))
+        gridView.insertRow(at: 0, configuration: GridRowConfiguration(initialHeight: 60))
 
         let newCell01 = try XCTUnwrap(gridView.cellAt(rowIndex: 0, columnIndex: 1))
         newCell01.editor.replaceCharacters(in: .zero, with: "New cell")
@@ -582,8 +582,8 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fractional(0.45)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -592,7 +592,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         let gridView = attachment.view
-        gridView.insertRow(at: 2, configuration: GridRowConfiguration(minRowHeight: 60, maxRowHeight: 80))
+        gridView.insertRow(at: 2, configuration: GridRowConfiguration(initialHeight: 60))
 
         let newCell21 = try XCTUnwrap(gridView.cellAt(rowIndex: 2, columnIndex: 1))
         newCell21.editor.replaceCharacters(in: .zero, with: "New cell")
@@ -611,8 +611,8 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fractional(0.35)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -640,8 +640,8 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fractional(0.35)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -669,9 +669,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fixed(100)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ]
         )
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
@@ -699,7 +699,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
-        gridView.insertRow(at: 2, configuration: GridRowConfiguration(minRowHeight: 30, maxRowHeight: 30))
+        gridView.insertRow(at: 2, configuration: GridRowConfiguration(initialHeight: 30))
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
@@ -714,9 +714,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fixed(100)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -750,8 +750,8 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fractional(0.35)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -787,8 +787,8 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fractional(0.35)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -828,9 +828,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fixed(50)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -867,9 +867,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fixed(50)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 
@@ -915,9 +915,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fixed(100)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
             ])
         let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
 

@@ -255,8 +255,7 @@ class GridContentView: UIScrollView {
         var cells = [GridCell]()
         for row in 0..<config.numberOfRows {
             let rowStyle = config.rowsConfiguration[row].style
-            let minRowHeight = config.rowsConfiguration[row].minRowHeight
-            let maxRowHeight = config.rowsConfiguration[row].maxRowHeight
+            let initialHeight = config.rowsConfiguration[row].initialHeight
 
             for column in 0..<config.numberOfColumns {
                 let columnStyle = config.columnsConfiguration[column].style
@@ -264,8 +263,7 @@ class GridContentView: UIScrollView {
                 let cell = GridCell(
                     rowSpan: [row],
                     columnSpan: [column],
-                    minHeight: minRowHeight,
-                    maxHeight: maxRowHeight,
+                    initialHeight: initialHeight,
                     style: mergedStyle,
                     gridStyle: config.style
                 )
@@ -308,7 +306,7 @@ extension GridContentView: GridCellDelegate {
 
     func cell(_ cell: GridCell, didReceiveKey key: EditorKey, at range: NSRange) {
         if isLastCell(cell) {
-            insertRow(at: grid.numberOfRows, configuration: GridRowConfiguration(minRowHeight: 60, maxRowHeight: 400))
+            insertRow(at: grid.numberOfRows, configuration: GridRowConfiguration(initialHeight: 60))
         }
         gridContentViewDelegate?.gridContentView(self, didReceiveKey: key, at: range, in: cell)
     }

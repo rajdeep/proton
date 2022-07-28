@@ -46,13 +46,11 @@ public struct GridColumnConfiguration {
 }
 
 public struct GridRowConfiguration {
-    public let minRowHeight: CGFloat
-    public let maxRowHeight: CGFloat
+    public let initialHeight: CGFloat
     public let style: GridCellStyle
 
-    public init(minRowHeight: CGFloat, maxRowHeight: CGFloat, style: GridCellStyle = .init()) {
-        self.minRowHeight = minRowHeight
-        self.maxRowHeight = maxRowHeight
+    public init(initialHeight: CGFloat, style: GridCellStyle = .init()) {
+        self.initialHeight = initialHeight
         self.style = style
     }
 }

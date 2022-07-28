@@ -112,16 +112,14 @@ public class GridCell {
 
     weak var delegate: GridCellDelegate?
 
-    let minHeight: CGFloat
-    let maxHeight: CGFloat
+    let initialHeight: CGFloat
 
-    init(rowSpan: [Int], columnSpan: [Int], minHeight: CGFloat, maxHeight: CGFloat, style: GridCellStyle = .init(), gridStyle: GridStyle = .default) {
+    init(rowSpan: [Int], columnSpan: [Int], initialHeight: CGFloat, style: GridCellStyle = .init(), gridStyle: GridStyle = .default) {
         self.rowSpan = rowSpan
         self.columnSpan = columnSpan
         self.style = style
         self.gridStyle = gridStyle
-        self.minHeight = minHeight
-        self.maxHeight = maxHeight
+        self.initialHeight = initialHeight
         self.contentView.layoutMargins = .zero
 
         widthAnchorConstraint = contentView.widthAnchor.constraint(equalToConstant: 0)
@@ -181,8 +179,7 @@ public class GridCell {
             editor.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
             editor.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
             editor.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
-            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: minHeight),
-            editor.heightAnchor.constraint(lessThanOrEqualToConstant: maxHeight)
+            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: initialHeight)
 //                editor.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor),
         ])
 

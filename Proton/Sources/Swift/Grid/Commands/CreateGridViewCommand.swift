@@ -54,9 +54,9 @@ public class CreateGridViewCommand: EditorCommand {
 //                GridColumnConfiguration(dimension: .fractional(0.25)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 80, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 120, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 80),
+                GridRowConfiguration(initialHeight: 120),
             ],
             accessory: GridAccessory(
                 resizeColumnHandleImage: columnResizingImage,

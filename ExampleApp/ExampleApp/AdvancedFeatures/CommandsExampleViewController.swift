@@ -343,10 +343,10 @@ extension CommandsExampleViewController: GridViewDelegate {
 
         let rowActions = [
             UIAction(title: "Add row above", image: UIImage(systemName: "arrow.up"), handler: { (_) in
-                gridView.insertRow(at: cell.rowSpan.max()!, configuration: GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400))
+                gridView.insertRow(at: cell.rowSpan.max()!, configuration: GridRowConfiguration(initialHeight: 40))
             }),
             UIAction(title: "Add row below", image: UIImage(systemName: "arrow.down"), handler: { (_) in
-                gridView.insertRow(at: cell.rowSpan.max()! + 1, configuration: GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400))
+                gridView.insertRow(at: cell.rowSpan.max()! + 1, configuration: GridRowConfiguration(initialHeight: 40))
             }),
             UIAction(title: "Delete Row", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
                 gridView.deleteRow(at: cell.rowSpan.max()!)

@@ -33,9 +33,9 @@ class GridViewSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fixed(100)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 30, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 80, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 30),
+                GridRowConfiguration(initialHeight: 50),
+                GridRowConfiguration(initialHeight: 80),
             ])
         let gridView = GridView(config: config, initialSize: CGSize(width: 350, height: 200))
 
@@ -52,9 +52,9 @@ class GridViewSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fixed(100)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 30, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 80, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 30),
+                GridRowConfiguration(initialHeight: 50),
+                GridRowConfiguration(initialHeight: 80),
             ])
         let gridView = GridView(config: config, initialSize: CGSize(width: 350, height: 200))
         gridView.isSelected = true
@@ -71,9 +71,9 @@ class GridViewSnapshotTests: SnapshotTestCase {
                 GridColumnConfiguration(dimension: .fixed(100)),
             ],
             rowsConfiguration: [
-                GridRowConfiguration(minRowHeight: 30, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
-                GridRowConfiguration(minRowHeight: 80, maxRowHeight: 400),
+                GridRowConfiguration(initialHeight: 30),
+                GridRowConfiguration(initialHeight: 50),
+                GridRowConfiguration(initialHeight: 80),
             ])
         let gridView = GridView(config: config, initialSize: CGSize(width: 350, height: 200))
         gridView.selectionColor = UIColor.red
@@ -91,8 +91,8 @@ class GridViewSnapshotTests: SnapshotTestCase {
 //                GridColumnConfiguration(dimension: .fractional(0.33)),
 //            ],
 //            rowsConfiguration: [
-//                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
-//                GridRowConfiguration(minRowHeight: 40, maxRowHeight: 400),
+//                GridRowConfiguration(initialHeight: 40),
+//                GridRowConfiguration(initialHeight: 40),
 //            ])
 //
 //        let gridView = GridView(config: config, initialSize: CGSize(width: 400, height: 350))

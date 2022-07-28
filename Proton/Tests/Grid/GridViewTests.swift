@@ -30,9 +30,9 @@ class GridViewTests: XCTestCase {
             GridColumnConfiguration(dimension: .fixed(100)),
         ],
         rowsConfiguration: [
-            GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
-            GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
-            GridRowConfiguration(minRowHeight: 50, maxRowHeight: 400),
+            GridRowConfiguration(initialHeight: 50),
+            GridRowConfiguration(initialHeight: 50),
+            GridRowConfiguration(initialHeight: 50),
          ])
 
     func testFocusesCell() {
