@@ -163,12 +163,13 @@ class Grid {
         rowHeights[index].currentHeight = rowHeights[index].currentHeight + delta
     }
 
-    func merge(cells: [GridCell]) {
-        guard isMergeable(cells: cells) else { return }
+    func merge(cells: [GridCell]) -> GridCell? {
+        guard isMergeable(cells: cells) else { return nil }
         let firstCell = cells[0]
         for i in 1..<cells.count {
             merge(cell: firstCell, other: cells[i])
         }
+        return firstCell
     }
 
     private func merge(cell: GridCell, other: GridCell) {
@@ -186,19 +187,20 @@ class Grid {
         cellStore.deleteCellAt(index: otherIndex)
     }
 
-    func split(cell: GridCell) {
+    func split(cell: GridCell) -> [GridCell] {
         guard cell.isSplittable,
-              cells.contains(where: { $0.id == cell.id }) else { return }
+              cells.contains(where: { $0.id == cell.id }) else { return []}
 
         guard let minRowIndex = cell.rowSpan.min(),
               let maxRowIndex = cell.rowSpan.max(),
               let minColumnIndex = cell.columnSpan.min(),
-              let maxColumnIndex = cell.columnSpan.max() else { return }
+              let maxColumnIndex = cell.columnSpan.max() else { return []}
 
         var newCells = [GridCell]()
         for row in minRowIndex ... maxRowIndex {
             for col in minColumnIndex ... maxColumnIndex {
                 let c = GridCell(rowSpan: [row], columnSpan: [col], initialHeight: cell.initialHeight)
+                c.delegate = cell.delegate
                 newCells.append(c)
             }
         }
@@ -208,6 +210,7 @@ class Grid {
         cell.columnSpan = firstCell.columnSpan
 
         cellStore.addCells(newCells)
+        return newCells
     }
 
     func insertRow(at index: Int, config: GridRowConfiguration, cellDelegate: GridCellDelegate?) {

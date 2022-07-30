@@ -101,14 +101,16 @@ class GridContentView: UIScrollView {
         return grid.isMergeable(cells: cells)
     }
 
-    func merge(cells: [GridCell]) {
-        grid.merge(cells: cells)
+    func merge(cells: [GridCell]) -> GridCell? {
+        let mergedCell = grid.merge(cells: cells)
         invalidateCellLayout()
+        return mergedCell
     }
 
-    func split(cell: GridCell) {
-        grid.split(cell: cell)
+    func split(cell: GridCell) -> [GridCell] {
+        let cells = grid.split(cell: cell)
         invalidateCellLayout()
+        return cells
     }
 
     func insertRow(at index: Int, configuration: GridRowConfiguration) {

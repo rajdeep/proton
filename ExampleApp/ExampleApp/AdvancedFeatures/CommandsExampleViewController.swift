@@ -313,14 +313,6 @@ extension CommandsExampleViewController: EditorViewDelegate {
 }
 
 extension CommandsExampleViewController: GridViewDelegate {
-    func gridView(_ gridView: GridView, didTapColumnActionButtonFor column: [Int], selectedCell cell: GridCell) {
-        print("Column action button tapped: \(column)")
-    }
-
-    func gridView(_ gridView: GridView, didTapRowActionButtonFor row: [Int], selectedCell cell: GridCell) {
-        print("Row action button tapped: \(row)")
-    }
-
     func gridView(_ gridView: GridView, didReceiveKey key: EditorKey, at range: NSRange, in cell: GridCell) {
         
     }

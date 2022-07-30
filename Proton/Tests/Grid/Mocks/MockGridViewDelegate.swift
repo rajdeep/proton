@@ -61,22 +61,4 @@ class MockGridViewDelegate: GridViewDelegate {
     func gridView(_ gridView: GridView, didReceiveKey key: EditorKey, at range: NSRange, in cell: GridCell) {
         //TODO:
     }
-
-    func gridView(_ gridView: GridView, didTapColumnActionButtonFor column: [Int], selectedCell cell: GridCell) {
-        //TODO:
-    }
-
-    func gridView(_ gridView: GridView, didTapRowActionButtonFor row: [Int], selectedCell cell: GridCell) {
-        //TODO: 
-    }
-
-    func gridView(_ gridView: GridView, configureColumnActionButtonMenuFor cell: GridCell) -> UIMenu? {
-        //TODO:
-        return nil
-    }
-
-    func gridView(_ gridView: GridView, configureRowActionButtonMenuFor cell: GridCell) -> UIMenu? {
-        //TODO:
-        return nil
-    }
 }
