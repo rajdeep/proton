@@ -131,9 +131,6 @@ class Grid {
         let columns = Set(cells.flatMap { $0.columnSpan })
         let rows = Set(cells.flatMap { $0.rowSpan })
 
-//        cells.contains {
-//            $0.rowSpan.contains(<#T##element: Int##Int#>)
-//        }
         for r in rows {
             for c in columns {
                 if cells.first(where: { $0.rowSpan.contains(r) && $0.columnSpan.contains(c)}) == nil {

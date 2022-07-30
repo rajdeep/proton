@@ -125,7 +125,10 @@ public class GridCell {
         widthAnchorConstraint = contentView.widthAnchor.constraint(equalToConstant: 0)
         heightAnchorConstraint = contentView.heightAnchor.constraint(equalToConstant: 0)
 
-        updateStyle(style: style)
+        applyStyle(style)
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(contentViewTapped))
+        contentView.addGestureRecognizer(tapGestureRecognizer)
 
         self.selectionView = SelectionView { [weak self] in
             self?.isSelected = false
@@ -142,18 +145,13 @@ public class GridCell {
         editor.resignFocus()
     }
 
-    func updateStyle(style: GridCellStyle) {
-        contentView.layer.borderColor = UIColor.gray.cgColor
-        contentView.layer.borderWidth = 1
-
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(contentViewTapped))
-        contentView.addGestureRecognizer(tapGestureRecognizer)
-
+    public func applyStyle(_ style: GridCellStyle) {
         contentView.layer.borderColor = gridStyle.borderColor.cgColor
         contentView.layer.borderWidth = gridStyle.borderWidth
 
         if let font = style.font {
             editor.font = font
+            editor.addAttributes([.font: font], at: editor.attributedText.fullRange)
         }
         if let textColor = style.textColor {
             editor.textColor = textColor
@@ -180,23 +178,12 @@ public class GridCell {
             editor.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
             editor.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
             editor.heightAnchor.constraint(greaterThanOrEqualToConstant: initialHeight)
-//                editor.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor),
         ])
 
         NSLayoutConstraint.activate([
-//            topAnchorConstraint,
-//            leadingAnchorConstraint,
             widthAnchorConstraint,
             heightAnchorConstraint
         ])
-
-//        editor.layer.borderWidth = 1
-//        editor.layer.borderColor = UIColor.red.cgColor
-//
-//        contentView.layer.borderWidth = 1
-//        contentView.layer.borderColor = UIColor.green.cgColor
-
-
     }
 }
 

@@ -345,10 +345,18 @@ extension CommandsExampleViewController: GridViewDelegate {
             })
         ]
 
+        let cellActions = [
+            UIAction(title: "Color cell", image: UIImage(systemName: "paintpalette"), handler: { (_) in
+                let style = GridCellStyle(backgroundColor: .systemGray3, textColor: .red, font: UIFont.boldSystemFont(ofSize: 14))
+                cell.applyStyle(style)
+            }),
+        ]
+
         let columnMenu = UIMenu(title: "Column Options", options: .displayInline, children: columnActions)
         let rowMenu = UIMenu(title: "Row Options", options: .displayInline, children: rowActions)
+        let cellMenu = UIMenu(title: "Cell Options", options: .displayInline, children: cellActions)
 
-        let menu = UIMenu(title: "Cell Options", children: [columnMenu, rowMenu])
+        let menu = UIMenu(title: "Cell Options", children: [columnMenu, rowMenu, cellMenu])
 
         let button = actionButton
         if #available(iOS 14.0, *) {
