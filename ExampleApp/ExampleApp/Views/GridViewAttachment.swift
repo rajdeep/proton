@@ -16,8 +16,8 @@ extension EditorContent.Name {
 
 public class GridViewAttachment: Attachment {
     public let view: GridView
-    public init(config: GridConfiguration, initialSize: CGSize) {
-        view = GridView(config: config, initialSize: initialSize)
+    public init(config: GridConfiguration) {
+        view = GridView(config: config)
         super.init(view, size: .fullWidth)
         view.boundsObserver = self
         if config.enableColumnResizing {

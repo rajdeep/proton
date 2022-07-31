@@ -38,6 +38,7 @@ public class GridView: UIView {
     private let handleSize: CGFloat = 20
     private let config: GridConfiguration
     private let selectionView = SelectionView()
+    private var resizingDragHandleLastLocation: CGPoint? = nil
 
     private lazy var columnRightBorderView: UIView = {
         makeSelectionBorderView()
@@ -97,8 +98,8 @@ public class GridView: UIView {
         gridView.numberOfRows
     }
 
-    public init(config: GridConfiguration, initialSize: CGSize) {
-        self.gridView = GridContentView(config: config, initialSize: initialSize)
+    public init(config: GridConfiguration) {
+        self.gridView = GridContentView(config: config)
         self.config = config
         super.init(frame: .zero)
         setup()
@@ -202,7 +203,6 @@ public class GridView: UIView {
         return dragHandle
     }
 
-    private var lastLocation: CGPoint? = nil
     @objc
     func dragHandler(gesture: UIPanGestureRecognizer){
         guard let draggedView = gesture.view,
@@ -210,17 +210,17 @@ public class GridView: UIView {
 
         let location = gesture.location(in: self)
         if gesture.state == .changed {
-            if let lastLocation = lastLocation {
+            if let lastLocation = resizingDragHandleLastLocation {
                 let deltaX = location.x - lastLocation.x
                 gridView.changeColumnWidth(index: cell.columnSpan.max() ?? 0, delta: deltaX)
             }
-            lastLocation = location
+            resizingDragHandleLastLocation = location
         }
 
         if gesture.state == .ended
             || gesture.state == .cancelled
             || gesture.state == .ended {
-            lastLocation = nil
+            resizingDragHandleLastLocation = nil
         }
     }
 

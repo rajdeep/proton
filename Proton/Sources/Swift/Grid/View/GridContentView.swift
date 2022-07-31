@@ -43,7 +43,11 @@ protocol GridContentViewDelegate: AnyObject {
 class GridContentView: UIScrollView {
     private let grid: Grid
     private let config: GridConfiguration
-    private let initialSize: CGSize
+
+    // Render with a high number for width/height to initialize
+    // since Editor may not be (and most likely not initialized at init of GridView.
+    // Having actual value causes autolayout errors in combination with fractional widths.
+    private let initialSize = CGSize(width: 100, height: 100)
 
     weak var gridContentViewDelegate: GridContentViewDelegate?
     weak var boundsObserver: BoundsObserving?
@@ -64,9 +68,8 @@ class GridContentView: UIScrollView {
         grid.numberOfRows
     }
 
-    init(config: GridConfiguration, initialSize: CGSize) {
+    init(config: GridConfiguration) {
         self.config = config
-        self.initialSize = initialSize
         let cells = Self.generateCells(config: config)
         grid = Grid(config: config, cells: cells)
         super.init(frame: .zero)
@@ -103,9 +106,6 @@ class GridContentView: UIScrollView {
             cell.contentView.translatesAutoresizingMaskIntoConstraints = false
 
             addSubview(cell.contentView)
-            // Render with a high number for width/height to initialize
-            // since Editor may not be (and most likely not initialized at init of GridView, having actual value causes autolayout errors
-            // in combination with fractional widths
             //TODO: revisit - likely issue with the layout margin guides ie non-zero padding
             let frame = grid.frameForCell(cell, basedOn: initialSize)
             cell.frame = frame
