@@ -33,13 +33,30 @@ public protocol GridViewDelegate: AnyObject {
 }
 
 public class GridView: UIView {
-    let gridView: GridContentView
+    private let gridView: GridContentView
     private var columnResizingHandles = [CellHandleButton]()
-
     private let handleSize: CGFloat = 20
     private let config: GridConfiguration
+    private let selectionView = SelectionView()
+
+    private lazy var columnRightBorderView: UIView = {
+        makeSelectionBorderView()
+    }()
+
+    private lazy var columnLeftBorderView: UIView = {
+        makeSelectionBorderView()
+    }()
+
+    private lazy var columnTopBorderView: UIView = {
+        makeSelectionBorderView()
+    }()
+
+    private lazy var columnBottomBorderView: UIView = {
+        makeSelectionBorderView()
+    }()
 
     public var delegate: GridViewDelegate?
+
     public private(set) var isColumnResizingHandlesVisible = false {
         didSet {
             if isColumnResizingHandlesVisible == false {
@@ -53,11 +70,7 @@ public class GridView: UIView {
         set { gridView.boundsObserver = newValue }
     }
 
-    private let selectionView = SelectionView()
-
-
     public var selectionColor: UIColor?
-
     public var isSelected: Bool = false {
         didSet {
             if isSelected {
@@ -95,14 +108,6 @@ public class GridView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public func showsColumnResizingHandles() {
-        isColumnResizingHandlesVisible = true
-    }
-
-    public func hideCellResizingHandles() {
-        isColumnResizingHandlesVisible = false
-    }
-
     private func setup() {
         gridView.translatesAutoresizingMaskIntoConstraints = false
         gridView.gridContentViewDelegate = self
@@ -115,29 +120,13 @@ public class GridView: UIView {
         ])
     }
 
-    func makeSelectionBorderView() -> UIView {
+    private func makeSelectionBorderView() -> UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = tintColor
         view.alpha = 0.4
         return view
     }
-
-    lazy var columnRightBorderView: UIView = {
-        makeSelectionBorderView()
-    }()
-
-    lazy var columnLeftBorderView: UIView = {
-        makeSelectionBorderView()
-    }()
-
-    lazy var columnTopBorderView: UIView = {
-        makeSelectionBorderView()
-    }()
-
-    lazy var columnBottomBorderView: UIView = {
-        makeSelectionBorderView()
-    }()
 
     private func addColumnResizingHandles(selectedCell: GridCell) {
         guard isColumnResizingHandlesVisible else { return }
@@ -154,14 +143,51 @@ public class GridView: UIView {
                 handleView.centerXAnchor.constraint(equalTo: cell.contentView.trailingAnchor)
             ])
         }
-        
+
         addSelectionBorders(grid: self, cell: selectedCell)
+    }
+
+    private func addSelectionBorders(grid: GridView, cell: GridCell) {
+        addSubview(columnRightBorderView)
+        addSubview(columnLeftBorderView)
+        addSubview(columnTopBorderView)
+        addSubview(columnBottomBorderView)
+
+        NSLayoutConstraint.activate([
+            columnRightBorderView.centerXAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
+            columnRightBorderView.widthAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
+            columnRightBorderView.heightAnchor.constraint(equalTo: gridView.heightAnchor),
+            columnRightBorderView.topAnchor.constraint(equalTo: gridView.topAnchor),
+
+            columnLeftBorderView.centerXAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
+            columnLeftBorderView.widthAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
+            columnLeftBorderView.heightAnchor.constraint(equalTo: gridView.heightAnchor),
+            columnLeftBorderView.topAnchor.constraint(equalTo: gridView.topAnchor),
+
+            columnTopBorderView.centerYAnchor.constraint(equalTo: gridView.topAnchor),
+            columnTopBorderView.widthAnchor.constraint(equalTo: cell.contentView.widthAnchor),
+            columnTopBorderView.heightAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
+            columnTopBorderView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
+
+            columnBottomBorderView.centerYAnchor.constraint(equalTo: gridView.bottomAnchor),
+            columnBottomBorderView.widthAnchor.constraint(equalTo: cell.contentView.widthAnchor),
+            columnBottomBorderView.heightAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
+            columnBottomBorderView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
+
+        ])
     }
 
     private func removeColumnResizingHandles() {
         columnResizingHandles.forEach { $0.removeFromSuperview() }
         columnResizingHandles.removeAll()
         removeSelectionBorders()
+    }
+
+    private func removeSelectionBorders() {
+        columnRightBorderView.removeFromSuperview()
+        columnLeftBorderView.removeFromSuperview()
+        columnTopBorderView.removeFromSuperview()
+        columnBottomBorderView.removeFromSuperview()
     }
 
     private func resetColumnResizingHandles(selectedCell: GridCell) {
@@ -172,19 +198,13 @@ public class GridView: UIView {
     private func makeColumnResizingHandle(cell: GridCell) -> CellHandleButton {
         let dragHandle = CellHandleButton(cell: cell, cornerRadius: handleSize/2)
         dragHandle.translatesAutoresizingMaskIntoConstraints = false
-        dragHandle.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handler(gesture:))))
+        dragHandle.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragHandler(gesture:))))
         return dragHandle
-    }
-
-    @objc
-    func addRowButtonClicked(button: CellHandleButton) {
-        guard let index = button.cell.rowSpan.max() else { return }
-        insertRow(at: index + 1, configuration: GridRowConfiguration(initialHeight: 40))
     }
 
     private var lastLocation: CGPoint? = nil
     @objc
-    func handler(gesture: UIPanGestureRecognizer){
+    func dragHandler(gesture: UIPanGestureRecognizer){
         guard let draggedView = gesture.view,
               let cell = (draggedView as? CellHandleButton)?.cell else { return }
 
@@ -203,6 +223,15 @@ public class GridView: UIView {
             lastLocation = nil
         }
     }
+
+    public func showsColumnResizingHandles() {
+        isColumnResizingHandlesVisible = true
+    }
+
+    public func hideCellResizingHandles() {
+        isColumnResizingHandlesVisible = false
+    }
+
 
     public func isCellSelectionMergeable(_ cells: [GridCell]) -> Bool {
         gridView.isMergeable(cells: cells)
@@ -265,43 +294,6 @@ extension GridView: GridContentViewDelegate {
     func gridContentView(_ gridContentView: GridContentView, didLoseFocusFrom range: NSRange, in cell: GridCell) {
         removeSelectionBorders()
         delegate?.gridView(self, didLoseFocusFrom: range, in: cell)
-    }
-
-    private func addSelectionBorders(grid: GridView, cell: GridCell) {
-        addSubview(columnRightBorderView)
-        addSubview(columnLeftBorderView)
-        addSubview(columnTopBorderView)
-        addSubview(columnBottomBorderView)
-
-        NSLayoutConstraint.activate([
-            columnRightBorderView.centerXAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
-            columnRightBorderView.widthAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
-            columnRightBorderView.heightAnchor.constraint(equalTo: gridView.heightAnchor),
-            columnRightBorderView.topAnchor.constraint(equalTo: gridView.topAnchor),
-
-            columnLeftBorderView.centerXAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
-            columnLeftBorderView.widthAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
-            columnLeftBorderView.heightAnchor.constraint(equalTo: gridView.heightAnchor),
-            columnLeftBorderView.topAnchor.constraint(equalTo: gridView.topAnchor),
-
-            columnTopBorderView.centerYAnchor.constraint(equalTo: gridView.topAnchor),
-            columnTopBorderView.widthAnchor.constraint(equalTo: cell.contentView.widthAnchor),
-            columnTopBorderView.heightAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
-            columnTopBorderView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
-
-            columnBottomBorderView.centerYAnchor.constraint(equalTo: gridView.bottomAnchor),
-            columnBottomBorderView.widthAnchor.constraint(equalTo: cell.contentView.widthAnchor),
-            columnBottomBorderView.heightAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
-            columnBottomBorderView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
-
-        ])
-    }
-
-    private func removeSelectionBorders() {
-        columnRightBorderView.removeFromSuperview()
-        columnLeftBorderView.removeFromSuperview()
-        columnTopBorderView.removeFromSuperview()
-        columnBottomBorderView.removeFromSuperview()
     }
 
     func gridContentView(_ gridContentView: GridContentView, didTapAtLocation location: CGPoint, characterRange: NSRange?, in cell: GridCell) {

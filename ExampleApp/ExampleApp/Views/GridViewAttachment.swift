@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Proton
 
 extension EditorContent.Name {
     static let grid = EditorContent.Name("grid")
@@ -19,7 +20,9 @@ public class GridViewAttachment: Attachment {
         view = GridView(config: config, initialSize: initialSize)
         super.init(view, size: .fullWidth)
         view.boundsObserver = self
-        view.showsColumnResizingHandles()
+        if config.enableColumnResizing {
+            view.showsColumnResizingHandles()
+        }
     }
 }
 

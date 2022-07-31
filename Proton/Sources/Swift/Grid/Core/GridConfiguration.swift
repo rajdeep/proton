@@ -58,15 +58,17 @@ public struct GridRowConfiguration {
 public struct GridConfiguration {
     public let style: GridStyle
     public let accessory: GridAccessory
+    public let enableColumnResizing: Bool
 
     public let columnsConfiguration: [GridColumnConfiguration]
     public let rowsConfiguration: [GridRowConfiguration]
 
-    public init(columnsConfiguration: [GridColumnConfiguration], rowsConfiguration: [GridRowConfiguration], style: GridStyle = .default, accessory: GridAccessory = .init()) {
+    public init(columnsConfiguration: [GridColumnConfiguration], rowsConfiguration: [GridRowConfiguration], style: GridStyle = .default, accessory: GridAccessory = .init(), enableColumnResizing: Bool = false) {
         self.columnsConfiguration = columnsConfiguration
         self.rowsConfiguration = rowsConfiguration
         self.style = style
         self.accessory = accessory
+        self.enableColumnResizing = enableColumnResizing
     }
 
     public var numberOfColumns: Int {

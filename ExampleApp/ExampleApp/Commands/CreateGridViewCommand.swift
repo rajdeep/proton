@@ -20,6 +20,7 @@
 
 import Foundation
 import UIKit
+import Proton
 
 /// Editor command that inserts a GridView in the given range
 public class CreateGridViewCommand: EditorCommand {

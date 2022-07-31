@@ -51,6 +51,8 @@
 		1B91F4B823C73D3C003F9B55 /* MarkupTextProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91F4B723C73D3C003F9B55 /* MarkupTextProcessor.swift */; };
 		1B91F4BA23C73D96003F9B55 /* TextProcessorExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91F4B923C73D96003F9B55 /* TextProcessorExampleViewController.swift */; };
 		1BB8904223C5A74700F087AE /* Proton.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1BFFEF0223C3048E00D2BA35 /* Proton.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1BD1BE72289745D800FA8AE4 /* GridViewAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1BE71289745D800FA8AE4 /* GridViewAttachment.swift */; };
+		1BD1BE78289746C900FA8AE4 /* CreateGridViewCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1BE77289746C900FA8AE4 /* CreateGridViewCommand.swift */; };
 		1BD993C223CA8FD200563ACB /* PanelAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993C123CA8FD200563ACB /* PanelAttachment.swift */; };
 		1BFFEEFE23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEEFD23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift */; };
 		1BFFEF0023C303F100D2BA35 /* AutogrowingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEEFF23C303F100D2BA35 /* AutogrowingTextField.swift */; };
@@ -145,6 +147,8 @@
 		1B91F4B523C73D01003F9B55 /* TypeaheadTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeaheadTextProcessor.swift; sourceTree = "<group>"; };
 		1B91F4B723C73D3C003F9B55 /* MarkupTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkupTextProcessor.swift; sourceTree = "<group>"; };
 		1B91F4B923C73D96003F9B55 /* TextProcessorExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessorExampleViewController.swift; sourceTree = "<group>"; };
+		1BD1BE71289745D800FA8AE4 /* GridViewAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewAttachment.swift; sourceTree = "<group>"; };
+		1BD1BE77289746C900FA8AE4 /* CreateGridViewCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGridViewCommand.swift; sourceTree = "<group>"; };
 		1BD993C123CA8FD200563ACB /* PanelAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelAttachment.swift; sourceTree = "<group>"; };
 		1BFFEEFD23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchContentAttachmentExampleViewController.swift; sourceTree = "<group>"; };
 		1BFFEEFF23C303F100D2BA35 /* AutogrowingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingTextField.swift; sourceTree = "<group>"; };
@@ -336,6 +340,7 @@
 		1B6DE9DF23C599D8007F9859 /* Commands */ = {
 			isa = PBXGroup;
 			children = (
+				1BD1BE77289746C900FA8AE4 /* CreateGridViewCommand.swift */,
 				1B6DE9E023C59A16007F9859 /* PanelCommand.swift */,
 				1B617A9F28388AA700095FEE /* ExpandCommand.swift */,
 				1B183D9523CEF33600AE83E5 /* EncodeContentsCommand.swift */,
@@ -396,6 +401,7 @@
 				1BD993C123CA8FD200563ACB /* PanelAttachment.swift */,
 				1B617A9B2838874F00095FEE /* ExpandableView.swift */,
 				1B617A9D28388A1900095FEE /* ExpandableViewAttachment.swift */,
+				1BD1BE71289745D800FA8AE4 /* GridViewAttachment.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -537,6 +543,7 @@
 				1B872B9F23EE73170070A92A /* UIViewExtensions.swift in Sources */,
 				1B617A9E28388A1900095FEE /* ExpandableViewAttachment.swift in Sources */,
 				1B164F3F23D29BF200A0869A /* ScrollCommand.swift in Sources */,
+				1BD1BE78289746C900FA8AE4 /* CreateGridViewCommand.swift in Sources */,
 				1BFFEF0E23C3228900D2BA35 /* FixedWidthAttachmentExampleViewController.swift in Sources */,
 				1B617AA028388AA700095FEE /* ExpandCommand.swift in Sources */,
 				1B164F3723D2854400A0869A /* ParagraphStyleDecoder.swift in Sources */,
@@ -574,6 +581,7 @@
 				1B164F3123D282A500A0869A /* ParagraphDecoder.swift in Sources */,
 				1B164F3523D2850100A0869A /* UIFontDecoder.swift in Sources */,
 				1BD993C223CA8FD200563ACB /* PanelAttachment.swift in Sources */,
+				1BD1BE72289745D800FA8AE4 /* GridViewAttachment.swift in Sources */,
 				1BFFEF0723C30B8E00D2BA35 /* FullWidthAttachmentExampleViewController.swift in Sources */,
 				1B2DA74D23F0C39B00F7EC52 /* DummyCollabCommand.swift in Sources */,
 			);

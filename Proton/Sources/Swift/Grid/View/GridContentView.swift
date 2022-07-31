@@ -42,10 +42,11 @@ protocol GridContentViewDelegate: AnyObject {
 
 class GridContentView: UIScrollView {
     private let grid: Grid
-    let config: GridConfiguration
-    let initialSize: CGSize
-    weak var boundsObserver: BoundsObserving?
+    private let config: GridConfiguration
+    private let initialSize: CGSize
+
     weak var gridContentViewDelegate: GridContentViewDelegate?
+    weak var boundsObserver: BoundsObserving?
 
     var cells: [GridCell] {
         grid.cells
@@ -90,6 +91,49 @@ class GridContentView: UIScrollView {
             guard oldValue != bounds else { return }
             recalculateCellBounds()
         }
+    }
+
+    private func setup() {
+        makeCells()
+        setupSelectionGesture()
+    }
+
+    private func makeCells() {
+        for cell in grid.cells {
+            cell.contentView.translatesAutoresizingMaskIntoConstraints = false
+
+            addSubview(cell.contentView)
+            // Render with a high number for width/height to initialize
+            // since Editor may not be (and most likely not initialized at init of GridView, having actual value causes autolayout errors
+            // in combination with fractional widths
+            //TODO: revisit - likely issue with the layout margin guides ie non-zero padding
+            let frame = grid.frameForCell(cell, basedOn: initialSize)
+            cell.frame = frame
+            let contentView = cell.contentView
+
+            cell.widthAnchorConstraint.constant = frame.width
+            cell.heightAnchorConstraint.constant = frame.height
+
+            cell.topAnchorConstraint = contentView.topAnchor.constraint(equalTo: topAnchor, constant: frame.minY)
+            cell.leadingAnchorConstraint = contentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: frame.minX)
+
+            NSLayoutConstraint.activate([
+                cell.topAnchorConstraint,
+                cell.leadingAnchorConstraint,
+                cell.widthAnchorConstraint,
+                cell.heightAnchorConstraint
+            ])
+
+            cell.delegate = self
+        }
+    }
+
+    private func setupSelectionGesture() {
+        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSelection(_:)))
+        gestureRecognizer.delegate = self
+        gestureRecognizer.minimumNumberOfTouches = 2
+        gestureRecognizer.maximumNumberOfTouches = 2
+        addGestureRecognizer(gestureRecognizer)
     }
 
     func scrollTo(cell: GridCell, animated: Bool = true) {
@@ -151,65 +195,14 @@ class GridContentView: UIScrollView {
         invalidateCellLayout()
     }
 
-    private func setup() {
-        makeCells()
-        setupSelectionGesture()
-    }
-
-    private func makeCells() {
-        for cell in grid.cells {
-            cell.contentView.translatesAutoresizingMaskIntoConstraints = false
-
-            addSubview(cell.contentView)
-            // Render with a high number for width/height to initialize
-            // since Editor may not be (and most likely not initialized at init of GridView, having actual value causes autolayout errors
-            // in combination with fractional widths
-            //TODO: revisit - likely issue with the layout margin guides ie non-zero padding
-            let frame = grid.frameForCell(cell, basedOn: initialSize)
-            cell.frame = frame
-            let contentView = cell.contentView
-
-            cell.widthAnchorConstraint.constant = frame.width
-            cell.heightAnchorConstraint.constant = frame.height
-
-            cell.topAnchorConstraint = contentView.topAnchor.constraint(equalTo: topAnchor, constant: frame.minY)
-            cell.leadingAnchorConstraint = contentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: frame.minX)
-
-            NSLayoutConstraint.activate([
-                cell.topAnchorConstraint,
-                cell.leadingAnchorConstraint,
-                cell.widthAnchorConstraint,
-                cell.heightAnchorConstraint
-            ])
-
-            cell.delegate = self
-        }
-    }
-
-    private func setupSelectionGesture() {
-        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
-        gestureRecognizer.delegate = self
-        gestureRecognizer.minimumNumberOfTouches = 2
-        gestureRecognizer.maximumNumberOfTouches = 2
-        addGestureRecognizer(gestureRecognizer)
-    }
-
-    var isEditing = false
-
     @objc
-    private func handleGesture(_ sender: UIPanGestureRecognizer) {
+    private func handleSelection(_ sender: UIPanGestureRecognizer) {
         let location = sender.location(in: self)
-        print("State: \(sender.state) location: \(sender.location(in: self).x) velocity: \(sender.velocity(in: self).x)")
-        switch sender.state {
-        case .began, .changed:
-            isEditing = true
+        if sender.state == .began ||
+            sender.state == .changed {
             selectCellsInLocation(location)
             let velocity = sender.velocity(in: self)
-                contentOffset.x += (velocity.x/100)
-        case .cancelled, .failed, .ended, .possible:
-            isEditing = false
-        @unknown default:
-            isEditing = false
+            contentOffset.x += (velocity.x/100)
         }
     }
 
@@ -327,7 +320,6 @@ extension GridContentView: DynamicBoundsProviding {
 
 extension GridContentView: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-
         return false
     }
 }
