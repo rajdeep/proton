@@ -21,10 +21,16 @@
 import Foundation
 import UIKit
 
+/// Style configuration for the grid
 public struct GridStyle {
+
+    /// Border color for grid
     public var borderColor: UIColor
+
+    /// Border width for the grid
     public var borderWidth: CGFloat
 
+    /// Default style
     public static var `default` = GridStyle(borderColor: .gray, borderWidth: 1)
 
     public init(
@@ -35,9 +41,16 @@ public struct GridStyle {
         }
 }
 
+/// Style configuration for the `GridCell`
 public struct GridCellStyle {
+
+    /// Default background color for the cell.
     public var backgroundColor: UIColor?
+
+    /// Default text color for the cell
     public var textColor: UIColor?
+
+    /// Default font for the cell
     public var font: UIFont?
 
     public init(
@@ -50,6 +63,11 @@ public struct GridCellStyle {
         self.font = font
     }
 
+    /// Creates a merged styles from given styles with precedence to the first style and any missing values used from the second style
+    /// - Parameters:
+    ///   - style: Primary style
+    ///   - other: Secondary style
+    /// - Returns: Merged style
     public static func merged(style: GridCellStyle, other: GridCellStyle) -> GridCellStyle {
         GridCellStyle(
             backgroundColor: style.backgroundColor ?? other.backgroundColor,
@@ -67,17 +85,23 @@ protocol GridCellDelegate: AnyObject {
     func cell(_ cell: GridCell, didReceiveKey key: EditorKey, at range: NSRange)
 }
 
+/// Denotes a cell in the `GridView`
 public class GridCell {
     var id: String {
         "{\(rowSpan),\(columnSpan)}"
     }
+
+    /// Row indexes spanned by the cell. In case of a merged cell, this will contain all the rows= indexes which are merged.
     public internal(set) var rowSpan: [Int]
+    /// Column indexes spanned by the cell. In case of a merged cell, this will contain all the column indexes which are merged.
     public internal(set) var columnSpan: [Int]
 
+    /// Frame of the cell within `GridView`
     public internal(set) var frame: CGRect = .zero
 
     private var selectionView: SelectionView?
 
+    /// Sets the cell selected
     public var isSelected: Bool {
         get { selectionView?.superview != nil }
         set {
@@ -89,16 +113,20 @@ public class GridCell {
         }
     }
 
+    /// Editor within the cell
     public let editor = EditorView()
 
+    /// Denotes if the cell can be split i.e. is a merged cell.
     public var isSplittable: Bool {
         rowSpan.count > 1 || columnSpan.count > 1
     }
 
+    /// Content size of the cell
     public var contentSize: CGSize {
         editor.frame.size
     }
 
+    /// Content view for the cell
     public let contentView = UIView()
 
     let style: GridCellStyle
@@ -137,14 +165,18 @@ public class GridCell {
         setup()
     }
 
+    /// Sets the focus in the `Editor` within the cell.
     public func setFocus() {
         editor.setFocus()
     }
 
+    /// Removes the focus from the `Editor` within the cell.
     public func removeFocus() {
         editor.resignFocus()
     }
 
+    /// Applies the given style to the cell
+    /// - Parameter style: Style to apply
     public func applyStyle(_ style: GridCellStyle) {
         contentView.layer.borderColor = gridStyle.borderColor.cgColor
         contentView.layer.borderWidth = gridStyle.borderWidth

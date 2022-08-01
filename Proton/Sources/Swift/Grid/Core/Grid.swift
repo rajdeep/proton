@@ -211,18 +211,25 @@ class Grid {
     }
 
     func insertRow(at index: Int, config: GridRowConfiguration, cellDelegate: GridCellDelegate?) {
-        if index < numberOfRows {
-            cellStore.moveCellRowIndex(from: index, by: 1)
+        var sanitizedIndex = index
+        if sanitizedIndex < 0 {
+            sanitizedIndex = 0
+        } else if sanitizedIndex > numberOfRows {
+            sanitizedIndex = numberOfRows
         }
-        rowHeights.insert(GridRowDimension(rowConfiguration: config), at: index)
+
+        if sanitizedIndex < numberOfRows {
+            cellStore.moveCellRowIndex(from: sanitizedIndex, by: 1)
+        }
+        rowHeights.insert(GridRowDimension(rowConfiguration: config), at: sanitizedIndex)
 
         for c in 0..<numberOfColumns {
             let cell = GridCell(
-                rowSpan: [index],
+                rowSpan: [sanitizedIndex],
                 columnSpan: [c],
                 initialHeight: config.initialHeight)
 
-            if cellAt(rowIndex: index, columnIndex: c) != nil {
+            if cellAt(rowIndex: sanitizedIndex, columnIndex: c) != nil {
                 continue
             }
             cell.delegate = cellDelegate
@@ -231,18 +238,25 @@ class Grid {
     }
 
     func insertColumn(at index: Int, config: GridColumnConfiguration, cellDelegate: GridCellDelegate?) {
-        if index < numberOfColumns {
-            cellStore.moveCellColumnIndex(from: index, by: 1)
+        var sanitizedIndex = index
+        if sanitizedIndex < 0 {
+            sanitizedIndex = 0
+        } else if sanitizedIndex > numberOfColumns {
+            sanitizedIndex = numberOfColumns
         }
-        columnWidths.insert(config.dimension, at: index)
+
+        if sanitizedIndex < numberOfColumns {
+            cellStore.moveCellColumnIndex(from: sanitizedIndex, by: 1)
+        }
+        columnWidths.insert(config.dimension, at: sanitizedIndex)
 
         for r in 0..<numberOfRows {
             let cell = GridCell(
                 rowSpan: [r],
-                columnSpan: [index],
+                columnSpan: [sanitizedIndex],
                 initialHeight: rowHeights[r].rowConfiguration.initialHeight)
 
-            if cellAt(rowIndex: r, columnIndex: index) != nil {
+            if cellAt(rowIndex: r, columnIndex: sanitizedIndex) != nil {
                 continue
             }
             cell.delegate = cellDelegate

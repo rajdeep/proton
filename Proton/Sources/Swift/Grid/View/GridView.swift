@@ -21,6 +21,7 @@
 import Foundation
 import UIKit
 
+/// An object capable of handing `GridView` events
 public protocol GridViewDelegate: AnyObject {
     func gridView(_ gridView: GridView, didReceiveFocusAt range: NSRange, in cell: GridCell)
     func gridView(_ gridView: GridView, didLoseFocusFrom range: NSRange, in cell: GridCell)
@@ -32,6 +33,9 @@ public protocol GridViewDelegate: AnyObject {
     func gridView(_ gridView: GridView, didReceiveKey key: EditorKey, at range: NSRange, in cell: GridCell)
 }
 
+/// A view that provides a tabular structure where each cell is an `EditorView`.
+/// Since the cells contains an `EditorView` in itself, it is capable of hosting any attachment that `EditorView` can host
+/// including another `GridView` as an attachment.
 public class GridView: UIView {
     private let gridView: GridContentView
     private var columnResizingHandles = [CellHandleButton]()
@@ -56,8 +60,10 @@ public class GridView: UIView {
         makeSelectionBorderView()
     }()
 
-    public var delegate: GridViewDelegate?
+    /// Delegate for `GridView` which can be used to handle cell specific `EditorView` events
+    public weak var delegate: GridViewDelegate?
 
+    /// Determines if column resizing handles are visible or not.
     public private(set) var isColumnResizingHandlesVisible = false {
         didSet {
             if isColumnResizingHandlesVisible == false {
@@ -66,12 +72,18 @@ public class GridView: UIView {
         }
     }
 
+    /// Bounds observer for the `GridView`. Typically, this will be the `Attachment` that hosts the `GridView`.
+    /// - Note: In absence of a `boundObserver`, the `GridView` will not autoresize when the content in the cells
+    /// are changed.
     public var boundsObserver: BoundsObserving? {
         get { gridView.boundsObserver }
         set { gridView.boundsObserver = newValue }
     }
 
+    /// Selection color for the `GridView`. Defaults to `tintColor`
     public var selectionColor: UIColor?
+
+    /// Determines if `GridView` is selected or not.
     public var isSelected: Bool = false {
         didSet {
             if isSelected {
@@ -82,22 +94,29 @@ public class GridView: UIView {
         }
     }
 
+    /// Collection of cells contained in the `GridView`
     public var cells: [GridCell] {
         gridView.cells
     }
 
+    // Collection of cells currently selected in the `GridView`
     public var selectedCells: [GridCell] {
         gridView.selectedCells
     }
 
+    /// Number of columns in the `GridView`.
     public var numberOfColumns: Int {
         gridView.numberOfColumns
     }
 
+    /// Number of rows in the `GridView`
     public var numberOfRows: Int {
         gridView.numberOfRows
     }
 
+
+    /// Initializes `GridView` using the provided configuration.
+    /// - Parameter config: Configuration for `GridView`
     public init(config: GridConfiguration) {
         self.gridView = GridContentView(config: config)
         self.config = config
@@ -204,7 +223,7 @@ public class GridView: UIView {
     }
 
     @objc
-    func dragHandler(gesture: UIPanGestureRecognizer){
+    private func dragHandler(gesture: UIPanGestureRecognizer){
         guard let draggedView = gesture.view,
               let cell = (draggedView as? CellHandleButton)?.cell else { return }
 
@@ -224,25 +243,37 @@ public class GridView: UIView {
         }
     }
 
+    /// Enables display of resizing handle for columns
     public func showsColumnResizingHandles() {
         isColumnResizingHandlesVisible = true
     }
 
+    /// Disables display of resizing handles for columns
     public func hideCellResizingHandles() {
         isColumnResizingHandlesVisible = false
     }
 
 
+    /// Determines if the collection of cells can be merged. For cells to be mergable, they need to
+    /// be adjacent to each other, and the shape of selection needs to be rectangular.
+    /// - Parameter cells: Collection of cells to check if these can be merged.
+    /// - Returns: `true` is cells can be merged.
     public func isCellSelectionMergeable(_ cells: [GridCell]) -> Bool {
         gridView.isMergeable(cells: cells)
     }
 
+    /// Merges the cells if the collection is mergeable.
+    /// - Parameter cells: Cells to merge.
     public func merge(cells: [GridCell]) {
         if let mergedCell = gridView.merge(cells: cells) {
             resetColumnResizingHandles(selectedCell: mergedCell)
         }
     }
 
+    /// Splits the cell into original constituent cells from earlier Merge operation.
+    /// After split, the contents are held in the first original cell and all new split cells
+    /// are added as empty,
+    /// - Parameter cell: Cell to split.
     public func split(cell: GridCell) {
         let cells = gridView.split(cell: cell)
         if let cell = cells.last {
@@ -250,28 +281,52 @@ public class GridView: UIView {
         }
     }
 
+    /// Inserts a new row at given index.
+    /// - Parameters:
+    ///   - index: Index at which new row should be inserted.
+    ///     If the index is out of bounds, row will be inserted at the top or bottom of the grid based on index value
+    ///   - configuration: Configuration for the new row
     public func insertRow(at index: Int, configuration: GridRowConfiguration) {
         gridView.insertRow(at: index, configuration: configuration)
     }
 
+    /// Inserts a new column at given index.
+    /// - Parameters:
+    ///   - index: Index at which new column should be inserted.
+    ///   If the index is out of bounds, column will be inserted at the beginning or end of the grid based on index value
+    ///   - configuration: Configuration for the new column
     public func insertColumn(at index: Int, configuration: GridColumnConfiguration) {
         gridView.insertColumn(at: index, configuration: configuration)
     }
 
+    /// Deletes the row at given index
+    /// - Parameter index: Index to delete
     public func deleteRow(at index: Int) {
         gridView.deleteRow(at: index)
     }
 
+    /// Deletes the column at given index
+    /// - Parameter index: Index to delete
     public func deleteColumn(at index: Int) {
         gridView.deleteColumn(at: index)
     }
 
+    /// Gets the cell at given row and column index. Indexes may be contained in a merged cell.
+    /// - Parameters:
+    ///   - rowIndex: Row index for the cell
+    ///   - columnIndex: Column index for the cell
+    /// - Returns: Cell at given row and column, if exists`
     public func cellAt(rowIndex: Int, columnIndex: Int) -> GridCell? {
         return gridView.cellAt(rowIndex: rowIndex, columnIndex: columnIndex)
     }
 
+    /// Scrolls the cell at given index into viewable area. Indexes may be contained in a merged cell.
+    /// - Parameters:
+    ///   - rowIndex: Row index of the cell
+    ///   - columnIndex: Column index for the cell
+    ///   - animated: Animates scroll if `true`
     public func scrollToCellAt(rowIndex: Int, columnIndex: Int, animated: Bool = true) {
-        if let cell = cells.first(where: { $0.rowSpan.contains( rowIndex) && $0.columnSpan.contains(columnIndex) }) {
+        if let cell = cellAt(rowIndex: rowIndex, columnIndex: columnIndex) {
             gridView.scrollTo(cell: cell, animated: animated)
         }
     }
