@@ -38,7 +38,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -63,7 +63,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 80),
                 GridRowConfiguration(initialHeight: 120),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -87,7 +87,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -113,7 +113,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -162,7 +162,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -197,7 +197,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
             ])
 
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -241,7 +241,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
             ])
 
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -280,7 +280,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 300, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -311,7 +311,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         let gridView = attachment.view
         let cell01 = try XCTUnwrap(gridView.cellAt(rowIndex: 0, columnIndex: 1))
@@ -347,7 +347,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         let gridView = attachment.view
         let cell11 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))
@@ -382,7 +382,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         let gridView = attachment.view
         let cell11 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))
@@ -429,7 +429,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         let gridView = attachment.view
         let cell11 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))
@@ -480,7 +480,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -518,7 +518,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -556,7 +556,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -585,7 +585,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -614,7 +614,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -643,7 +643,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -674,7 +674,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
             ]
         )
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         let gridView = attachment.view
         let cell11 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))
@@ -718,7 +718,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         let gridView = attachment.view
         let cell11 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))
@@ -753,7 +753,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -790,7 +790,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -832,7 +832,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -871,7 +871,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -919,7 +919,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-        let attachment = GridViewAttachment(config: config, initialSize: CGSize(width: 400, height: 350))
+        let attachment = GridViewAttachment(config: config)
 
         let gridView = attachment.view
         let cell11 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))

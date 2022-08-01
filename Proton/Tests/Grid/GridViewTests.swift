@@ -38,7 +38,7 @@ class GridViewTests: XCTestCase {
     func testFocusesCell() {
         let expectation = functionExpectation()
         let context = EditorViewContext.shared
-        let gridView = GridView(config: config, initialSize: CGSize(width: 250, height: 200))
+        let gridView = GridView(config: config)
         let delegate = MockGridViewDelegate()
         gridView.delegate = delegate
 
@@ -61,7 +61,7 @@ class GridViewTests: XCTestCase {
     func testResignsFocusFromCell() {
         let expectation = functionExpectation()
         let context = EditorViewContext.shared
-        let gridView = GridView(config: config, initialSize: CGSize(width: 250, height: 200))
+        let gridView = GridView(config: config)
         let delegate = MockGridViewDelegate()
         gridView.delegate = delegate
 
@@ -86,7 +86,7 @@ class GridViewTests: XCTestCase {
         let expectation = functionExpectation()
         expectation.expectedFulfillmentCount = 2
 
-        let gridView = GridView(config: config, initialSize: CGSize(width: 250, height: 200))
+        let gridView = GridView(config: config)
         let delegate = MockGridViewDelegate()
         gridView.delegate = delegate
 
@@ -100,14 +100,14 @@ class GridViewTests: XCTestCase {
             if let affectedIndex = affectedCells.firstIndex(where: {c, _ in c == cell }) {
                 let (expectedCell, expectedFrame) = affectedCells.remove(at: affectedIndex)
                 XCTAssertEqual(grid, gridView)
-                XCTAssertEqual(bounds, expectedFrame)
+                XCTAssertEqual(bounds, expectedFrame.insetBy(borderWidth: self.config.style.borderWidth))
                 XCTAssertEqual(expectedCell, cell)
                 print(cell.id)
                 print(bounds)
                 expectation.fulfill()
             }
         }
-        XCTAssertEqual(focusedCell?.frame, CGRect(x: 100, y: 100, width: 100, height: 50))
+        XCTAssertEqual(focusedCell?.frame, CGRect(x: 100, y: 100, width: 100, height: 50).insetBy(borderWidth: config.style.borderWidth))
         focusedCell?.editor.replaceCharacters(in: .zero, with: "This is a test string")
         gridView.render()
 
@@ -117,7 +117,7 @@ class GridViewTests: XCTestCase {
     func testTapAtLocationInCell() {
         let expectation = functionExpectation()
 
-        let gridView = GridView(config: config, initialSize: CGSize(width: 250, height: 200))
+        let gridView = GridView(config: config)
         let delegate = MockGridViewDelegate()
         gridView.delegate = delegate
 
@@ -141,7 +141,7 @@ class GridViewTests: XCTestCase {
     func testChangeSelectionInCell() {
         let expectation = functionExpectation()
 
-        let gridView = GridView(config: config, initialSize: CGSize(width: 250, height: 200))
+        let gridView = GridView(config: config)
         let delegate = MockGridViewDelegate()
         gridView.delegate = delegate
 

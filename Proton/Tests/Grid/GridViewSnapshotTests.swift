@@ -37,7 +37,7 @@ class GridViewSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 50),
                 GridRowConfiguration(initialHeight: 80),
             ])
-        let gridView = GridView(config: config, initialSize: CGSize(width: 350, height: 200))
+        let gridView = GridView(config: config)
 
         let vc = GenericViewTestViewController(contentView: gridView)
         vc.render(size: CGSize(width: 350, height: 200))
@@ -56,7 +56,7 @@ class GridViewSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 50),
                 GridRowConfiguration(initialHeight: 80),
             ])
-        let gridView = GridView(config: config, initialSize: CGSize(width: 350, height: 200))
+        let gridView = GridView(config: config)
         gridView.isSelected = true
         let vc = GenericViewTestViewController(contentView: gridView)
         vc.render(size: CGSize(width: 350, height: 200))
@@ -75,7 +75,7 @@ class GridViewSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 50),
                 GridRowConfiguration(initialHeight: 80),
             ])
-        let gridView = GridView(config: config, initialSize: CGSize(width: 350, height: 200))
+        let gridView = GridView(config: config)
         gridView.selectionColor = UIColor.red
         gridView.isSelected = true
         let vc = GenericViewTestViewController(contentView: gridView)
