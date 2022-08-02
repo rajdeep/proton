@@ -243,16 +243,11 @@ public class GridView: UIView {
         }
     }
 
-    /// Enables display of resizing handle for columns
-    public func showsColumnResizingHandles() {
-        isColumnResizingHandlesVisible = true
+    /// Enables or disables column resizing
+    /// - Parameter enabled: `true` to enable resizing
+    public func setColumnResizing(_ enabled: Bool) {
+        isColumnResizingHandlesVisible = enabled
     }
-
-    /// Disables display of resizing handles for columns
-    public func hideCellResizingHandles() {
-        isColumnResizingHandlesVisible = false
-    }
-
 
     /// Determines if the collection of cells can be merged. For cells to be mergable, they need to
     /// be adjacent to each other, and the shape of selection needs to be rectangular.

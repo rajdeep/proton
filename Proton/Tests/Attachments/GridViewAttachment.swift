@@ -32,9 +32,6 @@ public class GridViewAttachment: Attachment {
         view = GridView(config: config)
         super.init(view, size: .fullWidth)
         view.boundsObserver = self
-        if config.enableColumnResizing {
-            view.showsColumnResizingHandles()
-        }
     }
 }
 
