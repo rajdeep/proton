@@ -59,6 +59,11 @@ class MockGridViewDelegate: GridViewDelegate {
     }
 
     func gridView(_ gridView: GridView, didReceiveKey key: EditorKey, at range: NSRange, in cell: GridCell) {
+        //TODO: 
+    }
+
+    func gridView(_ gridView: GridView, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool {
         //TODO:
+        return true
     }
 }
