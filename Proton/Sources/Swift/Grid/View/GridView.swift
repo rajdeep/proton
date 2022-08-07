@@ -23,14 +23,71 @@ import UIKit
 
 /// An object capable of handing `GridView` events
 public protocol GridViewDelegate: AnyObject {
+    /// Invoked when `EditorView` within the cell receives focus
+    /// - Parameters:
+    ///   - gridView: GridView containing cell
+    ///   - range: Range of content in the `EditorView` within the Cell
+    ///   - cell: Cell containing Editor
     func gridView(_ gridView: GridView, didReceiveFocusAt range: NSRange, in cell: GridCell)
+
+    /// Invoked when `EditorView` within the cell loses focus
+    /// - Parameters:
+    ///   - gridView: GridView containing cell
+    ///   - range: Range of content in the `EditorView` within the Cell
+    ///   - cell: Cell containing Editor
     func gridView(_ gridView: GridView, didLoseFocusFrom range: NSRange, in cell: GridCell)
+
+    /// Invoked when tap event occurs within the Editor contained in the cell.
+    /// - Parameters:
+    ///   - gridView: GridView containing cell
+    ///   - location: Tapped location
+    ///   - characterRange: Range of characters in the Editor at the tapped location
+    ///   - cell: Cell containing Editor
     func gridView(_ gridView: GridView, didTapAtLocation location: CGPoint, characterRange: NSRange?, in cell: GridCell)
+
+    /// Invoked on selection changes with in the Editor contained in the cell.
+    /// - Parameters:
+    ///   - gridView: GridView containing cell
+    ///   - range: Range of selection in the `EditorView` within the Cell
+    ///   - attributes: Attributes at selected range
+    ///   - contentType: `ContentType` at selected range
+    ///   - cell: Cell containing Editor
     func gridView(_ gridView: GridView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name, in cell: GridCell)
+
+    /// Invoked on change of bounds of the Editor within the cell
+    /// - Parameters:
+    ///   - gridView: GridView containing cell
+    ///   - bounds: Bounds of the EditorView within the cell. Height of EditorView may be less than that of the Cell.
+    ///   - cell: Cell containing Editor
     func gridView(_ gridView: GridView, didChangeBounds bounds: CGRect, in cell: GridCell)
+
+    /// Invoked when selection of cells is changed.
+    /// - Parameters:
+    ///   - gridView: GridView containing cell
+    ///   - cells: Selected cells
     func gridView(_ gridView: GridView, didSelectCells cells: [GridCell])
+
+
+    /// Invoked when selection of cells is changed.
+    /// - Parameters:
+    ///   - gridView: GridView containing cell
+    ///   - cells: Cells that are changed from selected to unselected.
     func gridView(_ gridView: GridView, didUnselectCells cells: [GridCell])
+
+    /// Invoked when special keys are intercepted in the Editor contained in the cell.
+    /// - Parameters:
+    ///   - gridView: GridView containing cell
+    ///   - key: Special key
+    ///   - range: Range at with the key is intercepted.
+    ///   - cell: Cell containing Editor
     func gridView(_ gridView: GridView, didReceiveKey key: EditorKey, at range: NSRange, in cell: GridCell)
+
+    /// Invoked when a column in `GridView` is resized.
+    /// - Parameters:
+    ///   - gridView: GridView containing column
+    ///   - proposedWidth: Proposed column width before the change
+    ///   - columnIndex: Index of column being resized
+    /// - Returns: `true` if column resizing should be allowed, else false.
     func gridView(_ gridView: GridView, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool
 }
 
