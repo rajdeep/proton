@@ -405,7 +405,9 @@ extension CommandsExampleViewController: GridViewDelegate {
 
     }
 
-
+    func gridView(_ gridView: GridView, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool {
+        return proposedWidth > 50
+    }
 }
 
 class ListFormattingProvider: EditorListFormattingProvider {

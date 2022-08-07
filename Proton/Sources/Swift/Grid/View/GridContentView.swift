@@ -38,6 +38,8 @@ protocol GridContentViewDelegate: AnyObject {
 
     func gridContentView(_ gridContentView: GridContentView, didDeleteRowAt index: Int)
     func gridContentView(_ gridContentView: GridContentView, didDeleteColumnAt index: Int)
+
+    func gridContentView(_ gridContentView: GridContentView, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool
 }
 
 class GridContentView: UIScrollView {
@@ -73,7 +75,7 @@ class GridContentView: UIScrollView {
         let cells = Self.generateCells(config: config)
         grid = Grid(config: config, cells: cells)
         super.init(frame: .zero)
-
+        grid.delegate = self
         setup()
     }
 
@@ -321,5 +323,11 @@ extension GridContentView: DynamicBoundsProviding {
 extension GridContentView: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return false
+    }
+}
+
+extension GridContentView: GridDelegate {
+    func grid(_ grid: Grid, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool {
+        gridContentViewDelegate?.gridContentView(self, shouldChangeColumnWidth: proposedWidth, for: columnIndex) ?? true
     }
 }

@@ -31,6 +31,7 @@ public protocol GridViewDelegate: AnyObject {
     func gridView(_ gridView: GridView, didSelectCells cells: [GridCell])
     func gridView(_ gridView: GridView, didUnselectCells cells: [GridCell])
     func gridView(_ gridView: GridView, didReceiveKey key: EditorKey, at range: NSRange, in cell: GridCell)
+    func gridView(_ gridView: GridView, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool
 }
 
 /// A view that provides a tabular structure where each cell is an `EditorView`.
@@ -380,6 +381,10 @@ extension GridView: GridContentViewDelegate {
     }
 
     func gridContentView(_ gridContentView: GridContentView, didDeleteColumnAt index: Int) {
+    }
+
+    func gridContentView(_ gridContentView: GridContentView, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool {
+        delegate?.gridView(self, shouldChangeColumnWidth: proposedWidth, for: columnIndex) ?? true
     }
 }
 

@@ -32,6 +32,10 @@ class GridRowDimension {
     }
 }
 
+protocol GridDelegate: AnyObject {
+    func grid(_ grid: Grid, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool
+}
+
 class Grid {
 
     private let config: GridConfiguration
@@ -39,6 +43,7 @@ class Grid {
 
     var rowHeights = [GridRowDimension]()
     var columnWidths = [GridColumnDimension]()
+    weak var delegate: GridDelegate?
 
     var currentRowHeights: [CGFloat] {
         rowHeights.map { $0.currentHeight }
@@ -144,9 +149,9 @@ class Grid {
 
 
     func changeColumnWidth(index: Int, totalWidth: CGFloat, delta: CGFloat) {
+        let proposedWidth = columnWidths[index].value(basedOn: totalWidth) + delta
         guard index < columnWidths.count,
-              //TODO: Add min size logic max(40 or value from delegate)
-              columnWidths[index].value(basedOn: totalWidth) + delta > 40 else { return }
+              delegate?.grid(self, shouldChangeColumnWidth: proposedWidth, for: index) ?? true else { return }
         columnWidths[index] = .fixed(columnWidths[index].value(basedOn: totalWidth) + delta)
     }
 
