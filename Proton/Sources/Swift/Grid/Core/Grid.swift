@@ -232,7 +232,8 @@ class Grid {
             let cell = GridCell(
                 rowSpan: [sanitizedIndex],
                 columnSpan: [c],
-                initialHeight: config.initialHeight)
+                initialHeight: config.initialHeight,
+                style: config.style)
 
             if cellAt(rowIndex: sanitizedIndex, columnIndex: c) != nil {
                 continue
@@ -259,7 +260,8 @@ class Grid {
             let cell = GridCell(
                 rowSpan: [r],
                 columnSpan: [sanitizedIndex],
-                initialHeight: rowHeights[r].rowConfiguration.initialHeight)
+                initialHeight: rowHeights[r].rowConfiguration.initialHeight,
+                style: config.style)
 
             if cellAt(rowIndex: r, columnIndex: sanitizedIndex) != nil {
                 continue
