@@ -326,7 +326,7 @@ extension CommandsExampleViewController: GridViewDelegate {
                      }),
             UIAction(title: "Add column left", image: UIImage(systemName: "arrow.left"),
                      handler: { (_) in
-                         gridView.insertColumn(at: cell.columnSpan.max()!, configuration: GridColumnConfiguration(dimension: .fixed(100)))
+                         gridView.insertColumn(at: cell.columnSpan.min()!, configuration: GridColumnConfiguration(dimension: .fixed(100)))
                      }),
             UIAction(title: "Delete Column", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
                 gridView.deleteColumn(at: cell.columnSpan.max()!)
@@ -335,7 +335,7 @@ extension CommandsExampleViewController: GridViewDelegate {
 
         let rowActions = [
             UIAction(title: "Add row above", image: UIImage(systemName: "arrow.up"), handler: { (_) in
-                gridView.insertRow(at: cell.rowSpan.max()!, configuration: GridRowConfiguration(initialHeight: 40))
+                gridView.insertRow(at: cell.rowSpan.min()!, configuration: GridRowConfiguration(initialHeight: 40))
             }),
             UIAction(title: "Add row below", image: UIImage(systemName: "arrow.down"), handler: { (_) in
                 gridView.insertRow(at: cell.rowSpan.max()! + 1, configuration: GridRowConfiguration(initialHeight: 40))
