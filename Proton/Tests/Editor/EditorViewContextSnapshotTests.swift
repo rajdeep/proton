@@ -22,8 +22,10 @@ import Foundation
 import UIKit
 import XCTest
 import SnapshotTesting
+import ProtonCore
 
 @testable import Proton
+
 
 class EditorViewContextSnapshotTests: SnapshotTestCase {
     func testSelectsBeforeDeletingImageBasedAttachment() {
