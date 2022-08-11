@@ -22,7 +22,7 @@ import Foundation
 import CoreGraphics
 
 /// Rendering size of the `Attachment`
-public enum AttachmentSize {
+public enum AttachmentSize: Equatable {
     /// Matches the size of the content view of attachment. Content view must provide size to `Attachment` using `didChangeBounds(:)`.
     case matchContent
     /// Takes up full width of the containing `EditorView`. Resizes automatically when size of the container changes for e.g. when device is rotated.  Height is dynamic based on content.

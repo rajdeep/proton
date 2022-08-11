@@ -135,6 +135,10 @@ open class EditorView: UIView {
     public override var bounds: CGRect {
         didSet {
             guard oldValue != bounds else { return }
+            for (attachment, _) in attributedText.attachmentRanges where attachment.isContainerDependentSizing {
+                attachment.invalidateLayout()
+            }
+
             delegate?.editor(self, didChangeSize: bounds.size, previousSize: oldValue.size)
         }
     }
@@ -894,6 +898,7 @@ extension EditorView {
     ///   - attributes: Attributes to be added.
     ///   - range: Range on which attributes should be applied to.
     public func addAttributes(_ attributes: [NSAttributedString.Key: Any], at range: NSRange) {
+        self.invalidateAttachmentSizeIfRequired(newAttributes: attributes, at: range)
         self.richTextView.addAttributes(attributes, range: range)
         self.richTextView.enumerateAttribute(.attachment, in: range, options: .longestEffectiveRangeNotRequired) { value, rangeInContainer, _ in
             if let attachment = value as? Attachment {
@@ -930,6 +935,18 @@ extension EditorView {
     ///   - range: Range from which attribute should be removed.
     public func removeAttribute(_ name: NSAttributedString.Key, at range: NSRange) {
         self.removeAttributes([name], at: range)
+    }
+
+    func invalidateAttachmentSizeIfRequired(newAttributes: [NSAttributedString.Key: Any], at range: NSRange) {
+        let attributedToCheck = [
+            NSAttributedString.Key.paragraphStyle
+        ]
+        guard attributedToCheck.contains(where: { newAttributes[$0] != nil }) else { return }
+        self.richTextView.enumerateAttribute(.attachment, in: range, options: .longestEffectiveRangeNotRequired) { value, rangeInContainer, _ in
+            if let attachment = value as? Attachment {
+                attachment.cachedBounds = nil
+            }
+        }
     }
 }
 

@@ -494,9 +494,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: NSRange(location: editor.textEndRange.location - 1, length: 1))
         listTextProcessor.didProcess(editor: editor)
 
-        print("Before: \(editor.contentLength)  \(editor.attributedText)")
         editor.deleteBackward()
-        print("After: \(editor.contentLength)  \(editor.attributedText)")
 
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .backspace, modifierFlags: [], range: NSRange(location: editor.textEndRange.location - 1, length: 1))
 

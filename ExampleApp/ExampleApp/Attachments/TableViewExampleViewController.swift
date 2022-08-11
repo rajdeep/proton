@@ -32,7 +32,7 @@ class TableViewExampleViewController: ExamplesBaseViewController {
     var counter = 1
 
     var numberOfRows: Int {
-        let width = Int(numberOfRowsTextField.text ?? "0") ?? 100
+        let width = Int(numberOfRowsTextField.text ?? "0") ?? 1
         return width
     }
 
@@ -82,11 +82,13 @@ class TableViewExampleViewController: ExamplesBaseViewController {
     @objc
     func insertAttachment(sender: UIButton) {
         data.removeAll()
-        counter = 1
-        for i in 1...Int(numberOfRows) {
-            data.append(createText(row: i))
-        }
         tableView.reloadData()
+            self.counter = 1
+            for i in 1...Int(self.numberOfRows) {
+                self.data.append(self.createText(row: i))
+            }
+            self.tableView.reloadData()
+
         numberOfRowsTextField.resignFirstResponder()
     }
 
@@ -96,7 +98,7 @@ class TableViewExampleViewController: ExamplesBaseViewController {
         for i in 0..<Int(random) {
             let attachment = PanelAttachment(frame: .zero)
             attachment.selectBeforeDelete = true
-            attachment.view.editor.isEditable = false
+            attachment.view.editor.isEditable = true
             attachment.view.editor.attributedText = NSAttributedString(string: "Overall: \(counter) Row: \(row) Panel: \(i)")
             text.append(NSAttributedString(attachment: attachment))
             counter += 1
@@ -109,8 +111,11 @@ extension TableViewExampleViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Self.cellIdentifier, for: indexPath)
         if let cell = cell as? EditorCell {
-            cell.editor.attributedText = data[indexPath.row]
-            cell.layoutIfNeeded()
+            DispatchQueue.main.async {
+                cell.editor.attributedText = NSAttributedString()
+                cell.editor.attributedText = self.data[indexPath.row]
+                cell.delegate = self
+            }
         }
         return cell
     }
@@ -120,8 +125,22 @@ extension TableViewExampleViewController: UITableViewDataSource {
     }
 }
 
+extension TableViewExampleViewController: EditorCellDelegate {
+    func editorCell(_ cell: EditorCell, didChangeSize size: CGSize) {
+        UIView.performWithoutAnimation {
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+        }
+    }
+}
+
+protocol EditorCellDelegate: AnyObject {
+    func editorCell(_ cell: EditorCell, didChangeSize size: CGSize)
+}
+
 class EditorCell: UITableViewCell {
     let editor = EditorView()
+    weak var delegate: EditorCellDelegate?
 
     convenience init() {
         self.init(frame: .zero)
@@ -138,16 +157,31 @@ class EditorCell: UITableViewCell {
 
     private func setup() {
         editor.translatesAutoresizingMaskIntoConstraints = false
-        editor.maxHeight = .infinite
-        editor.isEditable = false
+        editor.isEditable = true
+        editor.boundsObserver = self
+        editor.delegate = self
 
         contentView.addSubview(editor)
 
         NSLayoutConstraint.activate([
             editor.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
-            editor.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor),
+            editor.bottomAnchor.constraint(lessThanOrEqualTo: contentView.layoutMarginsGuide.bottomAnchor),
             editor.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
             editor.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
         ])
+    }
+}
+
+// Required for nested editors to call invalidation on the tableview cell size
+extension EditorCell: BoundsObserving {
+    func didChangeBounds(_ bounds: CGRect) {
+        delegate?.editorCell(self, didChangeSize: bounds.size)
+    }
+}
+
+// Required for main editor to call invalidation on the tableview cell size
+extension EditorCell: EditorViewDelegate {
+    func editor(_ editor: EditorView, didChangeTextAt range: NSRange) {
+        delegate?.editorCell(self, didChangeSize: editor.bounds.size)
     }
 }
