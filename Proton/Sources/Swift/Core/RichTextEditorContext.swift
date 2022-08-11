@@ -98,6 +98,7 @@ class RichTextEditorContext: RichTextViewContext {
             guard handled == false else {
                 return false
             }
+            richTextView.richTextViewDelegate?.richTextView(richTextView, didReceive: .enter, modifierFlags: [], at: range)
         }
 
         if text == "\t" {

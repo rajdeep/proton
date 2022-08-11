@@ -52,10 +52,11 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
     let commandExecutor = EditorCommandExecutor()
     var buttons = [UIButton]()
+    let stackView = UIStackView()
 
     var encodedContents: JSON = ["contents": []]
 
-    let commands: [(title: String, command: EditorCommand, highlightOnTouch: Bool)] = [
+    var commands: [(title: String, command: EditorCommand, highlightOnTouch: Bool)] = [
         (title: "Panel", command: PanelCommand(), highlightOnTouch: false),
         (title: "Expand", command: ExpandCommand(), highlightOnTouch: false),
         (title: "List", command: ListCommand(), highlightOnTouch: false),
@@ -65,6 +66,8 @@ class CommandsExampleViewController: ExamplesBaseViewController {
     ]
 
     let editorButtons: [(title: String, selector: Selector)] = [
+        (title: "Merge", selector: #selector(mergeCells(sender:))),
+        (title: "Split", selector: #selector(splitCells(sender:))),
         (title: "Encode", selector: #selector(encodeContents(sender:))),
         (title: "Decode", selector: #selector(decodeContents(sender:))),
         (title: "Sample", selector: #selector(loadSample(sender:))),
@@ -72,8 +75,24 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
     let listFormattingProvider = ListFormattingProvider()
 
+    var allButtons: [UIButton] {
+        stackView.subviews.compactMap({ $0 as? UIButton})
+    }
+
+    var mergeButton: UIButton? {
+        allButtons.first(where: { $0.titleLabel?.text == "Merge" })
+    }
+
+    var splitButton: UIButton? {
+        allButtons.first(where: { $0.titleLabel?.text == "Split" })
+    }
+
     override func setup() {
         super.setup()
+
+        commands.insert((title: "Table", command: CreateGridViewCommand(delegate: self), highlightOnTouch: false), at: 2)
+
+        buttons.first(where: { $0.titleLabel?.text == "Merge" })?.isSelected = false
 
         editor.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(editor)
@@ -86,7 +105,6 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
 
-        let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .equalCentering
         stackView.alignment = .center
@@ -131,6 +149,9 @@ class CommandsExampleViewController: ExamplesBaseViewController {
             editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
             editor.heightAnchor.constraint(lessThanOrEqualToConstant: 300),
         ])
+
+        mergeButton?.isEnabled = false
+        splitButton?.isEnabled = false
     }
 
     func makeCommandButtons() -> [UIButton] {
@@ -194,6 +215,29 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         commandExecutor.execute(sender.command)
     }
 
+    var selectedCells: [GridCell]? = nil
+    var selectedGrid: GridView? = nil
+
+    @objc
+    func mergeCells(sender: UIButton) {
+        if let cells = selectedCells {
+            selectedGrid?.merge(cells: cells)
+        }
+        selectedCells = nil
+        selectedGrid = nil
+    }
+
+    @objc
+    func splitCells(sender: UIButton) {
+        if selectedCells?.count == 1,
+           let cell = selectedCells?.first,
+           cell.isSplittable {
+            selectedGrid?.split(cell: cell)
+        }
+        selectedCells = nil
+        selectedGrid = nil
+    }
+
     @objc
     func encodeContents(sender: UIButton) {
         let value = editor.transformContents(using: JSONEncoder())
@@ -227,6 +271,19 @@ class CommandsExampleViewController: ExamplesBaseViewController {
             self.editor.attributedText = text
         }
     }
+
+    lazy var actionButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "chevron.down")!, for: .normal)
+
+        button.layer.cornerRadius = 4
+        button.layer.backgroundColor = UIColor.systemGray6.cgColor
+        button.layer.shadowColor = UIColor.systemGray2.cgColor
+        button.layer.shadowOffset = CGSize(width: -2, height: -2)
+        return button
+    }()
+    
 }
 
 extension CommandsExampleViewController: EditorViewDelegate {
@@ -252,6 +309,108 @@ extension CommandsExampleViewController: EditorViewDelegate {
         }
 
         print("Tapped at \(location) with text: \(editor.attributedText.attributedSubstring(from: characterRange))")
+    }
+
+    func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange) {
+        print("Key: \(key)")
+    }
+}
+
+extension CommandsExampleViewController: GridViewDelegate {
+    func gridView(_ gridView: GridView, didReceiveKey key: EditorKey, at range: NSRange, in cell: GridCell) {
+        
+    }
+
+    func gridView(_ gridView: GridView, didReceiveFocusAt range: NSRange, in cell: GridCell) {
+        let columnCount = gridView.numberOfColumns
+        let columnActions = [
+            UIAction(title: "Add column right", image: UIImage(systemName: "arrow.right"),
+                     handler: { (_) in
+                         gridView.insertColumn(at: cell.columnSpan.max()! + 1, configuration: GridColumnConfiguration(dimension: .fixed(100)))
+                     }),
+            UIAction(title: "Add column left", image: UIImage(systemName: "arrow.left"),
+                     handler: { (_) in
+                         gridView.insertColumn(at: cell.columnSpan.min()!, configuration: GridColumnConfiguration(dimension: .fixed(100)))
+                     }),
+            UIAction(title: "Delete Column", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
+                gridView.deleteColumn(at: cell.columnSpan.max()!)
+            }),
+        ]
+
+        let rowActions = [
+            UIAction(title: "Add row above", image: UIImage(systemName: "arrow.up"), handler: { (_) in
+                gridView.insertRow(at: cell.rowSpan.min()!, configuration: GridRowConfiguration(initialHeight: 40))
+            }),
+            UIAction(title: "Add row below", image: UIImage(systemName: "arrow.down"), handler: { (_) in
+                gridView.insertRow(at: cell.rowSpan.max()! + 1, configuration: GridRowConfiguration(initialHeight: 40))
+            }),
+            UIAction(title: "Delete Row", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
+                gridView.deleteRow(at: cell.rowSpan.max()!)
+            })
+        ]
+
+        let cellActions = [
+            UIAction(title: "Color cell", image: UIImage(systemName: "paintpalette"), handler: { (_) in
+                let style = GridCellStyle(backgroundColor: .systemGray3, textColor: .red, font: UIFont.boldSystemFont(ofSize: 14))
+                cell.applyStyle(style)
+            }),
+        ]
+
+        let columnMenu = UIMenu(title: "Column Options", options: .displayInline, children: columnActions)
+        let rowMenu = UIMenu(title: "Row Options", options: .displayInline, children: rowActions)
+        let cellMenu = UIMenu(title: "Cell Options", options: .displayInline, children: cellActions)
+
+        let menu = UIMenu(title: "Cell Options", children: [columnMenu, rowMenu, cellMenu])
+
+        let button = actionButton
+        if #available(iOS 14.0, *) {
+            button.menu = menu
+            button.showsMenuAsPrimaryAction = true
+        }
+
+        cell.contentView.addSubview(button)
+        NSLayoutConstraint.activate([
+            button.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -5),
+            button.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 5),
+            button.widthAnchor.constraint(equalToConstant: 20),
+            button.heightAnchor.constraint(equalTo: button.widthAnchor),
+        ])
+    }
+
+    func gridView(_ gridView: GridView, didLoseFocusFrom range: NSRange, in cell: GridCell) {
+        actionButton.removeFromSuperview()
+    }
+
+    func gridView(_ gridView: GridView, didTapAtLocation location: CGPoint, characterRange: NSRange?, in cell: GridCell) {
+
+    }
+
+    func gridView(_ gridView: GridView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name, in cell: GridCell) {
+
+    }
+
+    func gridView(_ gridView: GridView, didChangeBounds bounds: CGRect, in cell: GridCell) {
+
+    }
+
+    func gridView(_ gridView: GridView, didSelectCells cells: [GridCell]) {
+        selectedGrid = gridView
+        selectedCells = cells
+        mergeButton?.isEnabled = gridView.isCellSelectionMergeable(cells)
+
+        if cells.count == 1, cells[0].isSplittable {
+            splitButton?.isEnabled = true
+        } else {
+            splitButton?.isEnabled = false
+        }
+    }
+
+    func gridView(_ gridView: GridView, didUnselectCells cells: [GridCell]) {
+
+    }
+
+    func gridView(_ gridView: GridView, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool {
+        return proposedWidth > 50
     }
 }
 
