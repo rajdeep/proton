@@ -278,7 +278,6 @@
 		1BD993BF23C9EAA900563ACB /* TextTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransformer.swift; sourceTree = "<group>"; };
 		1BD993C323CACCE100563ACB /* MockAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAttachment.swift; sourceTree = "<group>"; };
 		1BE8825E250DD7B600E2CC1B /* PRTextStorage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PRTextStorage.m; sourceTree = "<group>"; };
-		1BE88260250DD81500E2CC1B /* Proton-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Proton-Bridging-Header.h"; sourceTree = "<group>"; };
 		1BE88263250E3ADB00E2CC1B /* PREditorContentName.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PREditorContentName.m; sourceTree = "<group>"; };
 		1BF90FB3245E503E00A411A3 /* TextBlockAttributeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBlockAttributeTests.swift; sourceTree = "<group>"; };
 		1BFA75A32897D52300E4A2AD /* GridViewAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewAttachment.swift; sourceTree = "<group>"; };
@@ -610,7 +609,6 @@
 				1BE3305826057DA100B15E67 /* ObjC */,
 				1BE3305B26057E1100B15E67 /* Swift */,
 				1BB214CA23BB2778008B84A0 /* Info.plist */,
-				1BE88260250DD81500E2CC1B /* Proton-Bridging-Header.h */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -1253,7 +1251,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rajdeep.Proton;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Sources/Proton-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1284,7 +1281,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rajdeep.Proton;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Sources/Proton-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 12.0;

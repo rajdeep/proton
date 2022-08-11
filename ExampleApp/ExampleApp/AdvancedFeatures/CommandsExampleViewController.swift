@@ -310,6 +310,10 @@ extension CommandsExampleViewController: EditorViewDelegate {
 
         print("Tapped at \(location) with text: \(editor.attributedText.attributedSubstring(from: characterRange))")
     }
+
+    func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange) {
+        print("Key: \(key)")
+    }
 }
 
 extension CommandsExampleViewController: GridViewDelegate {

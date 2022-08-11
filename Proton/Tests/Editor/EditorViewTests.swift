@@ -21,6 +21,7 @@
 import Foundation
 import UIKit
 import XCTest
+import ProtonCore
 
 @testable import Proton
 
