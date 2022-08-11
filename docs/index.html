@@ -66,6 +66,12 @@
                 <a href="Classes/FontTraitToggleCommand.html">FontTraitToggleCommand</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/GridCell.html">GridCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/GridView.html">GridView</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/ItalicsCommand.html">ItalicsCommand</a>
               </li>
               <li class="nav-group-task">
@@ -116,6 +122,9 @@
                 <a href="Enums/EditorKey.html">EditorKey</a>
               </li>
               <li class="nav-group-task">
+                <a href="Enums/GridColumnDimension.html">GridColumnDimension</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Enums/ListLineMarker.html">ListLineMarker</a>
               </li>
               <li class="nav-group-task">
@@ -126,6 +135,9 @@
           <li class="nav-group-name">
             <a href="Extensions.html">Extensions</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/EditorContentName.html">EditorContentName</a>
+              </li>
               <li class="nav-group-task">
                 <a href="Extensions/NSAttributedString.html">NSAttributedString</a>
               </li>
@@ -204,6 +216,9 @@
                 <a href="Protocols/Focusable.html">Focusable</a>
               </li>
               <li class="nav-group-task">
+                <a href="Protocols/GridViewDelegate.html">GridViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Protocols.html#/s:6Proton13InlineContentP">InlineContent</a>
               </li>
               <li class="nav-group-task">
@@ -243,6 +258,21 @@
               </li>
               <li class="nav-group-task">
                 <a href="Structs/EditorLine.html">EditorLine</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/GridCellStyle.html">GridCellStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/GridColumnConfiguration.html">GridColumnConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/GridConfiguration.html">GridConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/GridRowConfiguration.html">GridRowConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/GridStyle.html">GridStyle</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/InlineAttachmentImage.html">InlineAttachmentImage</a>
@@ -304,7 +334,6 @@
 <li>Should allow for working on multiple editors through the same toolbar based on where the focus is, and yet not be aware of the toolbar itself.</li>
 <li>Respect the bounds of the container i.e. resize to change bounds when the device orientation changes.</li>
 <li>Support a default font and styling like alignment and head indentation.</li>
-<li>Have a Native Renderer based on the Editor similar to analogy of <code>UITextView</code> and <code>UILabel</code>.</li>
 <li>And of course, support all this on macOS Catalyst as well with almost no additional effort.</li>
 </ul>
 <h2 id='core-concepts' class='heading'>Core Concepts</h2>
@@ -316,8 +345,6 @@
 <li><strong>TextProcessor:</strong> Allows you to inject a behavior that is invoked as you type text in the EditorView. This can be used to change text, add/remove attributes like color or replace the added text with an entirely different text/view. For e.g. as you type markup syntax, you can convert the markup text into a formatted text by adding corresponding behavior to the <code>TextProcessor</code>.</li>
 <li><strong>EditorCommand:</strong> Allows you to add a behavior that can be invoked on demand on the given EditorView. For e.g. selecting some text and making it bold.</li>
 <li><strong>Attachment:</strong> A container capable of hosting a custom view including another <code><a href="Classes/EditorView.html">EditorView</a></code>. Attachment is a supercharged <code>NSTextAttachment</code> that can have automatic constraints applied on it to size it in various configurations like matching content, range of width, fixed width and so on. It also has helper functions to get it&rsquo;s range in it&rsquo;s container as well as to remove itself from the container.</li>
-<li><strong>RendererView:</strong> Composes <code><a href="Classes/EditorView.html">EditorView</a></code> to provide a read-only behavior with an API that is suited for rendering the content.</li>
-<li><strong>RendererCommand:</strong> Similar to <code><a href="Protocols/EditorCommand.html">EditorCommand</a></code> but works on a <code>RendererView</code>.</li>
 </ul>
 <h2 id='a-practical-use-case' class='heading'>A practical use case</h2>
 
@@ -452,10 +479,10 @@
 <li><p>Relaying attributes to editor contained in an attachment:</p>
 
 <p><img src="https://github.com/rajdeep/proton/raw/main/exampleImages/relay-attributes.gif" width="50%" alt="Relay attributes"/></p></li>
-<li><p>Highlighting using custom command in Renderer:</p>
+<li><p>Highlighting using custom command in Editor:</p>
 
 <p><img src="https://github.com/rajdeep/proton/raw/main/exampleImages/renderer-highlight.gif" width="50%" alt="Highlight in Renderer"/></p></li>
-<li><p>Find text and scroll in Renderer:</p>
+<li><p>Find text and scroll in Editor:</p>
 
 <p><img src="https://github.com/rajdeep/proton/raw/main/exampleImages/renderer-find.gif" width="50%" alt="Find in Renderer"/></p></li>
 </ol>
@@ -475,7 +502,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep</a>. All rights reserved. (Last updated: 2022-06-26)</p>
+          <p>&copy; 2022 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep</a>. All rights reserved. (Last updated: 2022-08-11)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
