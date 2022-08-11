@@ -19,6 +19,7 @@
 //
 
 import Foundation
+import UIKit
 import Proton
 
 class MockGridViewDelegate: GridViewDelegate {
