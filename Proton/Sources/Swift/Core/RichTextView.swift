@@ -346,6 +346,7 @@ class RichTextView: AutogrowingTextView {
     }
 
     func resetTypingAttributes() {
+        self.textColor = nil
         self.typingAttributes = defaultTypingAttributes
     }
 
