@@ -222,12 +222,16 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let rowStyle = GridCellStyle(
             backgroundColor: .red,
             textColor: .white,
-            font: UIFont.systemFont(ofSize: 14, weight: .bold))
+            font: UIFont.systemFont(ofSize: 14, weight: .bold),
+            borderStyle: GridCellStyle.BorderStyle(color: .yellow, width: 1)
+        )
 
         let columnStyle = GridCellStyle(
             backgroundColor: .blue,
             textColor: .white,
-            font: UIFont.systemFont(ofSize: 14, weight: .bold))
+            font: UIFont.systemFont(ofSize: 14, weight: .bold),
+            borderStyle: GridCellStyle.BorderStyle(color: .green, width: 1)
+        )
 
         let config = GridConfiguration(
             columnsConfiguration: [

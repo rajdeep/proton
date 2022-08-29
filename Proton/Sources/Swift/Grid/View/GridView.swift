@@ -152,6 +152,14 @@ public class GridView: UIView {
         }
     }
 
+    public var minimumFrozenColumnIndex: Int? {
+        return gridView.minimumFrozenColumnIndex
+    }
+
+    public var minimumFrozenRowIndex: Int? {
+        return gridView.minimumFrozenRowIndex
+    }
+
     public var containsFrozenColumns: Bool {
         gridView.minimumFrozenColumnIndex != nil
     }
@@ -405,6 +413,18 @@ public class GridView: UIView {
     public func scrollToCellAt(rowIndex: Int, columnIndex: Int, animated: Bool = true) {
         if let cell = cellAt(rowIndex: rowIndex, columnIndex: columnIndex) {
             gridView.scrollTo(cell: cell, animated: animated)
+        }
+    }
+
+    public func applyStyle(_ style: GridCellStyle, toRow index: Int) {
+        for cell in cells where cell.rowSpan.contains (index) {
+            cell.applyStyle(style)
+        }
+    }
+
+    public func applyStyle(_ style: GridCellStyle, toColumn index: Int) {
+        for cell in cells where cell.columnSpan.contains (index) {
+            cell.applyStyle(style)
         }
     }
 }
