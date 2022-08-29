@@ -324,28 +324,42 @@ extension CommandsExampleViewController: GridViewDelegate {
     func gridView(_ gridView: GridView, didReceiveFocusAt range: NSRange, in cell: GridCell) {
         let columnCount = gridView.numberOfColumns
         let columnActions = [
-            UIAction(title: "Add column right", image: UIImage(systemName: "arrow.right"),
-                     handler: { (_) in
-                         gridView.insertColumn(at: cell.columnSpan.max()! + 1, configuration: GridColumnConfiguration(dimension: .fixed(100)))
-                     }),
-            UIAction(title: "Add column left", image: UIImage(systemName: "arrow.left"),
-                     handler: { (_) in
-                         gridView.insertColumn(at: cell.columnSpan.min()!, configuration: GridColumnConfiguration(dimension: .fixed(100)))
-                     }),
-            UIAction(title: "Delete Column", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
-                gridView.deleteColumn(at: cell.columnSpan.max()!)
+//            UIAction(title: "Add column right", image: UIImage(systemName: "arrow.right"),
+//                     handler: { (_) in
+//                         gridView.insertColumn(at: cell.columnSpan.max()! + 1, configuration: GridColumnConfiguration(dimension: .fixed(100)))
+//                     }),
+//            UIAction(title: "Add column left", image: UIImage(systemName: "arrow.left"),
+//                     handler: { (_) in
+//                         gridView.insertColumn(at: cell.columnSpan.min()!, configuration: GridColumnConfiguration(dimension: .fixed(100)))
+//                     }),
+//            UIAction(title: "Delete Column", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
+//                gridView.deleteColumn(at: cell.columnSpan.max()!)
+//            }),
+            UIAction(title: "Freeze Columns", image: UIImage(systemName: "arrow.up"), handler: { (_) in
+                gridView.freezeColumns(minIndex: cell.columnSpan.max()!)
             }),
+
+            UIAction(title: "Unfreeze Columns", image: UIImage(systemName: "trash"), attributes: gridView.containsFrozenColumns ? [] : .disabled, handler: { (_) in
+                gridView.unfreezeColumns()
+            })
         ]
 
         let rowActions = [
-            UIAction(title: "Add row above", image: UIImage(systemName: "arrow.up"), handler: { (_) in
-                gridView.insertRow(at: cell.rowSpan.min()!, configuration: GridRowConfiguration(initialHeight: 40))
+//            UIAction(title: "Add row above", image: UIImage(systemName: "arrow.up"), handler: { (_) in
+//                gridView.insertRow(at: cell.rowSpan.min()!, configuration: GridRowConfiguration(initialHeight: 40))
+//            }),
+//            UIAction(title: "Add row below", image: UIImage(systemName: "arrow.down"), handler: { (_) in
+//                gridView.insertRow(at: cell.rowSpan.max()! + 1, configuration: GridRowConfiguration(initialHeight: 40))
+//            }),
+//            UIAction(title: "Delete Row", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
+//                gridView.deleteRow(at: cell.rowSpan.max()!)
+//            })
+            UIAction(title: "Freeze Rows", image: UIImage(systemName: "arrow.up"), handler: { (_) in
+                gridView.freezeRows(minIndex: cell.rowSpan.max()!)
             }),
-            UIAction(title: "Add row below", image: UIImage(systemName: "arrow.down"), handler: { (_) in
-                gridView.insertRow(at: cell.rowSpan.max()! + 1, configuration: GridRowConfiguration(initialHeight: 40))
-            }),
-            UIAction(title: "Delete Row", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
-                gridView.deleteRow(at: cell.rowSpan.max()!)
+
+            UIAction(title: "Unfreeze Rows", image: UIImage(systemName: "trash"), attributes: gridView.containsFrozenRows ? [] : .disabled, handler: { (_) in
+                gridView.unfreezeRows()
             })
         ]
 

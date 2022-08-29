@@ -50,6 +50,8 @@ class GridContentView: UIScrollView {
     // since Editor may not be (and most likely not initialized at init of GridView.
     // Having actual value causes autolayout errors in combination with fractional widths.
     private let initialSize = CGSize(width: 100, height: 100)
+    private var frozenColumnsConstraints = [NSLayoutConstraint]()
+    private var frozenRowsConstraints = [NSLayoutConstraint]()
 
     weak var gridContentViewDelegate: GridContentViewDelegate?
     weak var boundsObserver: BoundsObserving?
@@ -68,6 +70,17 @@ class GridContentView: UIScrollView {
 
     var numberOfRows: Int {
         grid.numberOfRows
+    }
+
+    var minimumFrozenRowIndex: Int? {
+        didSet {
+            invalidateCellLayout()
+        }
+    }
+    var minimumFrozenColumnIndex: Int? {
+        didSet {
+            invalidateCellLayout()
+        }
     }
 
     init(config: GridConfiguration) {
@@ -219,7 +232,11 @@ class GridContentView: UIScrollView {
     }
 
     private func recalculateCellBounds() {
-        for c in grid.cells {
+        frozenRowsConstraints.forEach { $0.isActive = false }
+        frozenColumnsConstraints.forEach { $0.isActive = false }
+        removeConstraints(frozenRowsConstraints + frozenColumnsConstraints)
+
+        for c in grid.cells.reversed() {
             // TODO: Optimize to recalculate frames for affected cells only i.e. row>=current
 
             // Set the frame of the cell before adding to superview
@@ -242,10 +259,47 @@ class GridContentView: UIScrollView {
                 c.topAnchorConstraint.constant = frame.minY
                 c.leadingAnchorConstraint.constant = frame.minX
             }
+
+            freezeColumnCellIfRequired(c)
+            freezeRowCellIfRequired(c)
         }
 
         boundsObserver?.didChangeBounds(CGRect(origin: bounds.origin, size: frame.size))
         invalidateIntrinsicContentSize()
+    }
+
+    private func freezeColumnCellIfRequired(_ cell: GridCell) {
+        guard let minimumFrozenColumnIndex = minimumFrozenColumnIndex,
+              let container = superview else { return }
+
+        if cell.columnSpan.contains(where: { $0 <= minimumFrozenColumnIndex }) {
+            bringSubviewToFront(cell.contentView)
+            cell.leadingAnchorConstraint.priority = .defaultLow
+            let minimumLeadingConstraint = cell.contentView.leadingAnchor.constraint(greaterThanOrEqualTo: container.leadingAnchor, constant: cell.frame.minX)
+            NSLayoutConstraint.activate([
+                minimumLeadingConstraint
+            ])
+            frozenColumnsConstraints.append(minimumLeadingConstraint)
+        }
+    }
+
+    private func freezeRowCellIfRequired(_ cell: GridCell) {
+        guard let minimumFrozenRowIndex = minimumFrozenRowIndex,
+              let attachmentContentView = attachmentContentView,
+              let containerEditorView = attachmentContentView.attachment?.containerEditorView else { return }
+
+        if cell.rowSpan.contains(where: { $0 <= minimumFrozenRowIndex }) {
+            bringSubviewToFront(cell.contentView)
+            cell.topAnchorConstraint.priority = .defaultLow
+            let rowTopConstraint = cell.contentView.topAnchor.constraint(greaterThanOrEqualTo: containerEditorView.topAnchor, constant: cell.frame.minY)
+            let rowBottomConstraint = cell.contentView.bottomAnchor.constraint(lessThanOrEqualTo: attachmentContentView.bottomAnchor)
+            rowTopConstraint.priority = UILayoutPriority.defaultHigh
+            NSLayoutConstraint.activate([
+                rowTopConstraint,
+                rowBottomConstraint
+            ])
+            frozenRowsConstraints.append(contentsOf: [rowTopConstraint, rowBottomConstraint])
+        }
     }
 
     private static func generateCells(config: GridConfiguration) -> [GridCell] {

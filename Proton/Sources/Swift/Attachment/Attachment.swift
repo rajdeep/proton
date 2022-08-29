@@ -469,3 +469,17 @@ extension Attachment {
 //        editor.relayoutAttachments(in: range)
     }
 }
+
+extension UIView {
+    var attachmentContentView: AttachmentContentView? {
+        containerAttachmentFor(view: self)
+    }
+
+    private func containerAttachmentFor(view: UIView?) -> AttachmentContentView? {
+        guard view != nil else { return nil }
+        guard let attachmentView = view as? AttachmentContentView else {
+            return containerAttachmentFor(view: view?.superview)
+        }
+        return attachmentView
+    }
+}

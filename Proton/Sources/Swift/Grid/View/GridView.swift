@@ -152,6 +152,14 @@ public class GridView: UIView {
         }
     }
 
+    public var containsFrozenColumns: Bool {
+        gridView.minimumFrozenColumnIndex != nil
+    }
+
+    public var containsFrozenRows: Bool {
+        gridView.minimumFrozenRowIndex != nil
+    }
+
     /// Collection of cells contained in the `GridView`
     public var cells: [GridCell] {
         gridView.cells
@@ -362,6 +370,22 @@ public class GridView: UIView {
     /// - Parameter index: Index to delete
     public func deleteColumn(at index: Int) {
         gridView.deleteColumn(at: index)
+    }
+
+    public func freezeColumns(minIndex: Int) {
+        gridView.minimumFrozenColumnIndex = minIndex
+    }
+
+    public func freezeRows(minIndex: Int) {
+        gridView.minimumFrozenRowIndex = minIndex
+    }
+
+    public func unfreezeColumns() {
+        gridView.minimumFrozenColumnIndex = nil
+    }
+
+    public func unfreezeRows() {
+        gridView.minimumFrozenRowIndex = nil
     }
 
     /// Gets the cell at given row and column index. Indexes may be contained in a merged cell.
