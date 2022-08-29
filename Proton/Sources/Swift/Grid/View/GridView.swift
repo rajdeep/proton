@@ -152,6 +152,26 @@ public class GridView: UIView {
         }
     }
 
+    /// Maximum index up till which columns are frozen. Columns are frozen from 0 to this index value.
+    public var frozenColumnMaxIndex: Int? {
+        return gridView.frozenColumnMaxIndex
+    }
+
+    /// Maximum index up till which rows are frozen. Rows are frozen from 0 to this index value.
+    public var frozenRowMaxIndex: Int? {
+        return gridView.frozenRowMaxIndex
+    }
+
+    ///  Determines if there are any frozen columns in the `GridView`
+    public var containsFrozenColumns: Bool {
+        gridView.frozenColumnMaxIndex != nil
+    }
+
+    ///  Determines if there are any frozen rows in the `GridView`
+    public var containsFrozenRows: Bool {
+        gridView.frozenRowMaxIndex != nil
+    }
+
     /// Collection of cells contained in the `GridView`
     public var cells: [GridCell] {
         gridView.cells
@@ -364,6 +384,26 @@ public class GridView: UIView {
         gridView.deleteColumn(at: index)
     }
 
+    /// Freezes all the columns from 0 to the index provided
+    /// - Parameter maxIndex: Index to freeze upto
+    public func freezeColumns(upTo maxIndex: Int) {
+        gridView.frozenColumnMaxIndex = maxIndex
+    }
+
+    /// Freezes all the rows from 0 to the index provided
+    /// - Parameter maxIndex: Index to freeze upto
+    public func freezeRows(upTo maxIndex: Int) {
+        gridView.frozenRowMaxIndex = maxIndex
+    }
+
+    public func unfreezeColumns() {
+        gridView.frozenColumnMaxIndex = nil
+    }
+
+    public func unfreezeRows() {
+        gridView.frozenRowMaxIndex = nil
+    }
+
     /// Gets the cell at given row and column index. Indexes may be contained in a merged cell.
     /// - Parameters:
     ///   - rowIndex: Row index for the cell
@@ -378,9 +418,29 @@ public class GridView: UIView {
     ///   - rowIndex: Row index of the cell
     ///   - columnIndex: Column index for the cell
     ///   - animated: Animates scroll if `true`
-    public func scrollToCellAt(rowIndex: Int, columnIndex: Int, animated: Bool = true) {
+    public func scrollToCellAt(rowIndex: Int, columnIndex: Int, animated: Bool = false) {
         if let cell = cellAt(rowIndex: rowIndex, columnIndex: columnIndex) {
             gridView.scrollTo(cell: cell, animated: animated)
+        }
+    }
+
+    /// Applies style to row at given index
+    /// - Parameters:
+    ///   - style: Style to apply
+    ///   - index: Index of the row
+    public func applyStyle(_ style: GridCellStyle, toRow index: Int) {
+        for cell in cells where cell.rowSpan.contains (index) {
+            cell.applyStyle(style)
+        }
+    }
+
+    /// Applies style to column at given index
+    /// - Parameters:
+    ///   - style: Style to apply
+    ///   - index: Index of the column
+    public func applyStyle(_ style: GridCellStyle, toColumn index: Int) {
+        for cell in cells where cell.columnSpan.contains (index) {
+            cell.applyStyle(style)
         }
     }
 }

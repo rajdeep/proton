@@ -44,12 +44,15 @@ public class CreateGridViewCommand: EditorCommand {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 80),
                 GridRowConfiguration(initialHeight: 120),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 80),
+                GridRowConfiguration(initialHeight: 120),
             ])
 
         let attachment = GridViewAttachment(config: config)
         attachment.selectBeforeDelete = true
         attachment.view.delegate = delegate
-        attachment.view.setColumnResizing(true)
+//        attachment.view.setColumnResizing(true)
         editor.insertAttachment(in: editor.selectedRange, attachment: attachment)
     }
 }

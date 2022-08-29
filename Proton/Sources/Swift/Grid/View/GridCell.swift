@@ -44,6 +44,16 @@ public struct GridStyle {
 /// Style configuration for the `GridCell`
 public struct GridCellStyle {
 
+    /// Border style for individual cells. This may be used to override the style provided in the `GridStyle` for individual cells
+    public struct BorderStyle {
+        public var color: UIColor
+        public var width: CGFloat
+
+        public init(color: UIColor, width: CGFloat) {
+            self.color = color
+            self.width = width
+        }
+    }
     /// Default background color for the cell.
     public var backgroundColor: UIColor?
 
@@ -53,14 +63,18 @@ public struct GridCellStyle {
     /// Default font for the cell
     public var font: UIFont?
 
+    public var borderStyle: BorderStyle?
+
     public init(
         backgroundColor: UIColor? = nil,
         textColor: UIColor? = nil,
-        font: UIFont? = nil
+        font: UIFont? = nil,
+        borderStyle: BorderStyle? = nil
     ) {
         self.backgroundColor = backgroundColor
         self.textColor = textColor
         self.font = font
+        self.borderStyle = borderStyle
     }
 
     /// Creates a merged styles from given styles with precedence to the first style and any missing values used from the second style
@@ -72,7 +86,9 @@ public struct GridCellStyle {
         GridCellStyle(
             backgroundColor: style.backgroundColor ?? other.backgroundColor,
             textColor: style.textColor ?? other.textColor,
-            font: style.font ?? other.font)
+            font: style.font ?? other.font,
+            borderStyle: style.borderStyle ?? other.borderStyle
+        )
     }
 }
 
@@ -129,7 +145,6 @@ public class GridCell {
     /// Content view for the cell
     public let contentView = UIView()
 
-    let style: GridCellStyle
     let gridStyle: GridStyle
 
     let widthAnchorConstraint: NSLayoutConstraint
@@ -145,7 +160,6 @@ public class GridCell {
     init(rowSpan: [Int], columnSpan: [Int], initialHeight: CGFloat, style: GridCellStyle = .init(), gridStyle: GridStyle = .default) {
         self.rowSpan = rowSpan
         self.columnSpan = columnSpan
-        self.style = style
         self.gridStyle = gridStyle
         self.initialHeight = initialHeight
         self.contentView.layoutMargins = .zero
@@ -178,8 +192,8 @@ public class GridCell {
     /// Applies the given style to the cell
     /// - Parameter style: Style to apply
     public func applyStyle(_ style: GridCellStyle) {
-        contentView.layer.borderColor = gridStyle.borderColor.cgColor
-        contentView.layer.borderWidth = gridStyle.borderWidth
+        contentView.layer.borderColor = style.borderStyle?.color.cgColor ?? gridStyle.borderColor.cgColor
+        contentView.layer.borderWidth = style.borderStyle?.width ?? gridStyle.borderWidth
 
         if let font = style.font {
             editor.font = font
