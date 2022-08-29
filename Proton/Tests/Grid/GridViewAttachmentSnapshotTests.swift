@@ -1092,4 +1092,95 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+    func testFreezesRows() throws {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(30)),
+                GridColumnConfiguration(dimension: .fractional(0.45)),
+                GridColumnConfiguration(dimension: .fractional(0.45)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = GridViewAttachment(config: config)
+        let gridView = attachment.view
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+
+        for i in 1...8 {
+            gridView.cellAt(rowIndex: i-1, columnIndex: 0)?.editor.attributedText = NSAttributedString(string: "\(i).")
+        }
+
+        viewController.render(size: CGSize(width: 400, height: 200))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        gridView.freezeRows(minIndex: 1)
+        let style = GridCellStyle(backgroundColor: .gray, textColor: .white, borderStyle: GridCellStyle.BorderStyle(color: .white, width: 1))
+        for i in 0...1 {
+            gridView.applyStyle(style, toRow: i)
+        }
+
+        let cellFrame = try XCTUnwrap(gridView.cellAt(rowIndex: 6, columnIndex: 1)?.frame)
+        editor.scrollRectToVisible(cellFrame, animated: false)
+        viewController.render(size: CGSize(width: 400, height: 200))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testFreezesColumns() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(30)),
+                GridColumnConfiguration(dimension: .fixed(30)),
+                GridColumnConfiguration(dimension: .fractional(0.30)),
+                GridColumnConfiguration(dimension: .fractional(0.30)),
+                GridColumnConfiguration(dimension: .fractional(0.30)),
+                GridColumnConfiguration(dimension: .fractional(0.30)),
+                GridColumnConfiguration(dimension: .fractional(0.30)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+
+            ])
+        let attachment = GridViewAttachment(config: config)
+        let gridView = attachment.view
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+
+        for i in 1...7 {
+            gridView.cellAt(rowIndex: 0, columnIndex: i-1)?.editor.attributedText = NSAttributedString(string: "\(i).")
+        }
+
+        viewController.render(size: CGSize(width: 400, height: 200))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        gridView.freezeColumns(minIndex: 1)
+        let style = GridCellStyle(backgroundColor: .gray, textColor: .white, borderStyle: GridCellStyle.BorderStyle(color: .white, width: 1))
+        for i in 0...1 {
+            gridView.applyStyle(style, toColumn: i)
+        }
+
+        gridView.scrollToCellAt(rowIndex: 1, columnIndex: 5)
+        viewController.render(size: CGSize(width: 400, height: 200))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 }

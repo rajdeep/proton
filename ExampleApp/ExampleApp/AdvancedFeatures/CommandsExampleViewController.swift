@@ -357,7 +357,11 @@ extension CommandsExampleViewController: GridViewDelegate {
             UIAction(title: "Freeze Rows", image: UIImage(systemName: "arrow.up"), handler: { (_) in
                 gridView.freezeRows(minIndex: cell.rowSpan.max()!)
                 for i in 0...cell.rowSpan.max()! {
-                    gridView.applyStyle(GridCellStyle(backgroundColor: .systemGray, textColor: .white, font: UIFont.boldSystemFont(ofSize: 17), borderStyle: GridCellStyle.BorderStyle(color: .white, width: 1)), toRow: i)
+                    if i%2 == 0 {
+                        gridView.applyStyle(GridCellStyle(backgroundColor: .systemGray, textColor: .white, font: UIFont.boldSystemFont(ofSize: 17), borderStyle: GridCellStyle.BorderStyle(color: .white, width: 1)), toRow: i)
+                    } else {
+                        gridView.applyStyle(GridCellStyle(backgroundColor: .lightGray, textColor: .black, font: UIFont.boldSystemFont(ofSize: 17), borderStyle: GridCellStyle.BorderStyle(color: .white, width: 1)), toRow: i)
+                    }
                 }
             }),
 

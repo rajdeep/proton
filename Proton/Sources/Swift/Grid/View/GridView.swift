@@ -410,7 +410,7 @@ public class GridView: UIView {
     ///   - rowIndex: Row index of the cell
     ///   - columnIndex: Column index for the cell
     ///   - animated: Animates scroll if `true`
-    public func scrollToCellAt(rowIndex: Int, columnIndex: Int, animated: Bool = true) {
+    public func scrollToCellAt(rowIndex: Int, columnIndex: Int, animated: Bool = false) {
         if let cell = cellAt(rowIndex: rowIndex, columnIndex: columnIndex) {
             gridView.scrollTo(cell: cell, animated: animated)
         }
