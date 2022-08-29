@@ -1127,7 +1127,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 400, height: 200))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
-        gridView.freezeRows(minIndex: 1)
+        gridView.freezeRows(upTo: 1)
         let style = GridCellStyle(backgroundColor: .gray, textColor: .white, borderStyle: GridCellStyle.BorderStyle(color: .white, width: 1))
         for i in 0...1 {
             gridView.applyStyle(style, toRow: i)
@@ -1173,7 +1173,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 400, height: 200))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
-        gridView.freezeColumns(minIndex: 1)
+        gridView.freezeColumns(upTo: 1)
         let style = GridCellStyle(backgroundColor: .gray, textColor: .white, borderStyle: GridCellStyle.BorderStyle(color: .white, width: 1))
         for i in 0...1 {
             gridView.applyStyle(style, toColumn: i)

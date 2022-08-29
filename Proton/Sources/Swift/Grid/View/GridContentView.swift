@@ -72,12 +72,12 @@ class GridContentView: UIScrollView {
         grid.numberOfRows
     }
 
-    var minimumFrozenRowIndex: Int? {
+    var frozenRowMaxIndex: Int? {
         didSet {
             invalidateCellLayout()
         }
     }
-    var minimumFrozenColumnIndex: Int? {
+    var frozenColumnMaxIndex: Int? {
         didSet {
             invalidateCellLayout()
         }
@@ -269,7 +269,7 @@ class GridContentView: UIScrollView {
     }
 
     private func freezeColumnCellIfRequired(_ cell: GridCell) {
-        guard let minimumFrozenColumnIndex = minimumFrozenColumnIndex,
+        guard let minimumFrozenColumnIndex = frozenColumnMaxIndex,
               let container = superview else { return }
 
         if cell.columnSpan.contains(where: { $0 <= minimumFrozenColumnIndex }) {
@@ -284,7 +284,7 @@ class GridContentView: UIScrollView {
     }
 
     private func freezeRowCellIfRequired(_ cell: GridCell) {
-        guard let minimumFrozenRowIndex = minimumFrozenRowIndex,
+        guard let minimumFrozenRowIndex = frozenRowMaxIndex,
               let attachmentContentView = attachmentContentView,
               let containerEditorView = attachmentContentView.attachment?.containerEditorView else { return }
 

@@ -336,7 +336,7 @@ extension CommandsExampleViewController: GridViewDelegate {
 //                gridView.deleteColumn(at: cell.columnSpan.max()!)
 //            }),
             UIAction(title: "Freeze Columns", image: UIImage(systemName: "arrow.up"), handler: { (_) in
-                gridView.freezeColumns(minIndex: cell.columnSpan.max()!)
+                gridView.freezeColumns(upTo: cell.columnSpan.max()!)
             }),
 
             UIAction(title: "Unfreeze Columns", image: UIImage(systemName: "trash"), attributes: gridView.containsFrozenColumns ? [] : .disabled, handler: { (_) in
@@ -355,7 +355,7 @@ extension CommandsExampleViewController: GridViewDelegate {
 //                gridView.deleteRow(at: cell.rowSpan.max()!)
 //            })
             UIAction(title: "Freeze Rows", image: UIImage(systemName: "arrow.up"), handler: { (_) in
-                gridView.freezeRows(minIndex: cell.rowSpan.max()!)
+                gridView.freezeRows(upTo: cell.rowSpan.max()!)
                 for i in 0...cell.rowSpan.max()! {
                     if i%2 == 0 {
                         gridView.applyStyle(GridCellStyle(backgroundColor: .systemGray, textColor: .white, font: UIFont.boldSystemFont(ofSize: 17), borderStyle: GridCellStyle.BorderStyle(color: .white, width: 1)), toRow: i)
@@ -366,7 +366,7 @@ extension CommandsExampleViewController: GridViewDelegate {
             }),
 
             UIAction(title: "Unfreeze Rows", image: UIImage(systemName: "trash"), attributes: gridView.containsFrozenRows ? [] : .disabled, handler: { (_) in
-                if let index = gridView.minimumFrozenRowIndex {
+                if let index = gridView.frozenRowMaxIndex {
                     gridView.unfreezeRows()
                     for i in 0...index {
                         gridView.applyStyle(GridCellStyle(backgroundColor: .white, textColor: .black, font: UIFont.systemFont(ofSize: 17)), toRow: i)

@@ -44,6 +44,7 @@ public struct GridStyle {
 /// Style configuration for the `GridCell`
 public struct GridCellStyle {
 
+    /// Border style for individual cells. This may be used to override the style provided in the `GridStyle` for individual cells
     public struct BorderStyle {
         public var color: UIColor
         public var width: CGFloat
