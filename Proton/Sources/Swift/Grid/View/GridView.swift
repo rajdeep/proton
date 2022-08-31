@@ -354,12 +354,14 @@ public class GridView: UIView {
         }
     }
 
+
     /// Inserts a new row at given index.
     /// - Parameters:
     ///   - index: Index at which new row should be inserted.
     ///     If the index is out of bounds, row will be inserted at the top or bottom of the grid based on index value
     ///   - configuration: Configuration for the new row
-    public func insertRow(at index: Int, configuration: GridRowConfiguration) {
+    /// - Returns: Result with newly added cells for `.success`, error in case of `.failure`
+    public func insertRow(at index: Int, configuration: GridRowConfiguration) -> Result<[GridCell], GridViewError> {
         gridView.insertRow(at: index, configuration: configuration)
     }
 
@@ -368,7 +370,8 @@ public class GridView: UIView {
     ///   - index: Index at which new column should be inserted.
     ///   If the index is out of bounds, column will be inserted at the beginning or end of the grid based on index value
     ///   - configuration: Configuration for the new column
-    public func insertColumn(at index: Int, configuration: GridColumnConfiguration) {
+    /// - Returns: Result with newly added cells for `.success`, error in case of `.failure`
+    public func insertColumn(at index: Int, configuration: GridColumnConfiguration) -> Result<[GridCell], GridViewError> {
         gridView.insertColumn(at: index, configuration: configuration)
     }
 

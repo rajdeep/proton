@@ -215,7 +215,7 @@ class Grid {
         return newCells
     }
 
-    func insertRow(at index: Int, config: GridRowConfiguration, cellDelegate: GridCellDelegate?) {
+    func insertRow(at index: Int, frozenRowMaxIndex: Int?, config: GridRowConfiguration, cellDelegate: GridCellDelegate?) -> Result<[GridCell], GridViewError> {
         var sanitizedIndex = index
         if sanitizedIndex < 0 {
             sanitizedIndex = 0
@@ -223,11 +223,17 @@ class Grid {
             sanitizedIndex = numberOfRows
         }
 
+        if let frozenRowMaxIndex = frozenRowMaxIndex,
+           sanitizedIndex <= frozenRowMaxIndex {
+            return .failure(.failedToInsertInFrozenRows)
+        }
+
+
         if sanitizedIndex < numberOfRows {
             cellStore.moveCellRowIndex(from: sanitizedIndex, by: 1)
         }
         rowHeights.insert(GridRowDimension(rowConfiguration: config), at: sanitizedIndex)
-
+        var cells = [GridCell]()
         for c in 0..<numberOfColumns {
             let cell = GridCell(
                 rowSpan: [sanitizedIndex],
@@ -240,10 +246,12 @@ class Grid {
             }
             cell.delegate = cellDelegate
             cellStore.addCell(cell)
+            cells.append(cell)
         }
+        return .success(cells)
     }
 
-    func insertColumn(at index: Int, config: GridColumnConfiguration, cellDelegate: GridCellDelegate?) {
+    func insertColumn(at index: Int, frozenColumnMaxIndex: Int?, config: GridColumnConfiguration, cellDelegate: GridCellDelegate?) -> Result<[GridCell], GridViewError> {
         var sanitizedIndex = index
         if sanitizedIndex < 0 {
             sanitizedIndex = 0
@@ -251,11 +259,17 @@ class Grid {
             sanitizedIndex = numberOfColumns
         }
 
+        if let frozenColumnMaxIndex = frozenColumnMaxIndex,
+           sanitizedIndex <= frozenColumnMaxIndex {
+            return .failure(.failedToInsertInFrozenColumns)
+        }
+
         if sanitizedIndex < numberOfColumns {
             cellStore.moveCellColumnIndex(from: sanitizedIndex, by: 1)
         }
         columnWidths.insert(config.dimension, at: sanitizedIndex)
 
+        var cells = [GridCell]()
         for r in 0..<numberOfRows {
             let cell = GridCell(
                 rowSpan: [r],
@@ -268,7 +282,9 @@ class Grid {
             }
             cell.delegate = cellDelegate
             cellStore.addCell(cell)
+            cells.append(cell)
         }
+        return .success(cells)
     }
 
     func deleteRow(at index: Int) {
@@ -327,4 +343,9 @@ class Grid {
         }
 
     }
+}
+
+public enum GridViewError: Error {
+    case failedToInsertInFrozenRows
+    case failedToInsertInFrozenColumns
 }

@@ -172,16 +172,22 @@ class GridContentView: UIScrollView {
         return cells
     }
 
-    func insertRow(at index: Int, configuration: GridRowConfiguration) {
-        grid.insertRow(at: index, config: configuration, cellDelegate: self)
-        invalidateCellLayout()
-        gridContentViewDelegate?.gridContentView(self, didAddNewRowAt: index)
+    func insertRow(at index: Int, configuration: GridRowConfiguration) -> Result<[GridCell], GridViewError> {
+        let result = grid.insertRow(at: index, frozenRowMaxIndex: frozenRowMaxIndex, config: configuration, cellDelegate: self)
+        if case Result.success = result {
+            invalidateCellLayout()
+            gridContentViewDelegate?.gridContentView(self, didAddNewRowAt: index)
+        }
+        return result
     }
 
-    func insertColumn(at index: Int, configuration: GridColumnConfiguration) {
-        grid.insertColumn(at: index, config: configuration, cellDelegate: self)
-        invalidateCellLayout()
-        gridContentViewDelegate?.gridContentView(self, didAddNewColumnAt: index)
+    func insertColumn(at index: Int, configuration: GridColumnConfiguration) -> Result<[GridCell], GridViewError> {
+        let result = grid.insertColumn(at: index, frozenColumnMaxIndex: frozenColumnMaxIndex, config: configuration, cellDelegate: self)
+        if case Result.success = result {
+            invalidateCellLayout()
+            gridContentViewDelegate?.gridContentView(self, didAddNewColumnAt: index)
+        }
+        return result
     }
 
     func deleteRow(at index: Int) {
