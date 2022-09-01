@@ -165,6 +165,7 @@ class Grid {
         rowHeights[index].currentHeight = rowHeights[index].currentHeight + delta
     }
 
+    @discardableResult
     func merge(cells: [GridCell]) -> GridCell? {
         guard isMergeable(cells: cells) else { return nil }
         let firstCell = cells[0]
@@ -189,6 +190,7 @@ class Grid {
         cellStore.deleteCellAt(index: otherIndex)
     }
 
+    @discardableResult
     func split(cell: GridCell) -> [GridCell] {
         guard cell.isSplittable,
               cells.contains(where: { $0.id == cell.id }) else { return []}
@@ -215,6 +217,7 @@ class Grid {
         return newCells
     }
 
+    @discardableResult
     func insertRow(at index: Int, frozenRowMaxIndex: Int?, config: GridRowConfiguration, cellDelegate: GridCellDelegate?) -> Result<[GridCell], GridViewError> {
         var sanitizedIndex = index
         if sanitizedIndex < 0 {
@@ -251,6 +254,7 @@ class Grid {
         return .success(cells)
     }
 
+    @discardableResult
     func insertColumn(at index: Int, frozenColumnMaxIndex: Int?, config: GridColumnConfiguration, cellDelegate: GridCellDelegate?) -> Result<[GridCell], GridViewError> {
         var sanitizedIndex = index
         if sanitizedIndex < 0 {

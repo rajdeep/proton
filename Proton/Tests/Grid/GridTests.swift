@@ -215,7 +215,7 @@ class GridTests: XCTestCase {
             ])
 
         let grid = Grid(config: config, cells: generateCells(config: config))
-        grid.insertRow(at: 1, config: GridRowConfiguration(initialHeight: 20), cellDelegate: nil)
+        grid.insertRow(at: 1, frozenRowMaxIndex: nil, config: GridRowConfiguration(initialHeight: 20), cellDelegate: nil)
         XCTAssertEqual(grid.numberOfRows, 4)
         let newCells = grid.cells.filter { $0.rowSpan.contains(1) }
         XCTAssertEqual(newCells.count, 3)
@@ -254,7 +254,7 @@ class GridTests: XCTestCase {
             ])
 
         let grid = Grid(config: config, cells: generateCells(config: config))
-        grid.insertColumn(at: 1, config: GridColumnConfiguration(dimension: .fractional(0.30)), cellDelegate: nil)
+        grid.insertColumn(at: 1, frozenColumnMaxIndex: nil, config: GridColumnConfiguration(dimension: .fractional(0.30)), cellDelegate: nil)
         XCTAssertEqual(grid.numberOfColumns, 4)
         let newCells = grid.cells.filter { $0.columnSpan.contains(1) }
         XCTAssertEqual(newCells.count, 3)
@@ -381,7 +381,7 @@ class GridTests: XCTestCase {
             cell22
         ])
 
-        grid.insertRow(at: 2, config: GridRowConfiguration(initialHeight: 20), cellDelegate: nil)
+        grid.insertRow(at: 2, frozenRowMaxIndex: nil, config: GridRowConfiguration(initialHeight: 20), cellDelegate: nil)
         let expectedCellIDs = Set(["{[0],[0]}", "{[0],[1]}", "{[0],[2]}", "{[1],[0]}", "{[1, 2, 3],[1, 2]}", "{[3],[0]}", "{[2],[0]}"])
         let cells = Set(grid.cells.map { $0.id })
 
@@ -409,7 +409,7 @@ class GridTests: XCTestCase {
 
         grid.merge(cells: [cell11, cell12])
 
-        grid.insertColumn(at: 2, config: GridColumnConfiguration(dimension: .fixed(100)), cellDelegate: nil)
+        grid.insertColumn(at: 2, frozenColumnMaxIndex: nil, config: GridColumnConfiguration(dimension: .fixed(100)), cellDelegate: nil)
 
         print(grid.cells.map{ $0.id })
         let expectedCellIDs = Set(["{[0],[0]}", "{[0],[1]}", "{[0],[3]}", "{[1],[0]}", "{[1],[1, 2, 3]}", "{[2],[0]}", "{[2],[1]}", "{[2],[3]}", "{[0],[2]}", "{[2],[2]}"])
