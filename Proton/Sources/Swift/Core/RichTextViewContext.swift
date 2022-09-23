@@ -31,9 +31,7 @@ class RichTextViewContext: NSObject, UITextViewDelegate {
     func textViewDidChangeSelection(_ textView: UITextView) {
         guard textView.delegate === self else { return }
 
-        activeTextView = textView as? RichTextView
-
-        guard let richTextView = activeTextView else { return }
+        guard let richTextView = textView as? RichTextView else { return }
         let range = textView.selectedRange
 
         resetAttachmentSelection(textView)

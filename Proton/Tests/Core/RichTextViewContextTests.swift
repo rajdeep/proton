@@ -74,6 +74,7 @@ class RichTextViewContextTests: XCTestCase {
         let context = RichTextEditorContext.default
         let textView = RichTextView(context: context)
         textView.richTextViewDelegate = mockTextViewDelegate
+        context.textViewDidBeginEditing(textView)
         textView.text = "Sample text"
 
         let selectedRange = NSRange(location: 5, length: 1)
@@ -95,6 +96,7 @@ class RichTextViewContextTests: XCTestCase {
         let context = RichTextEditorContext.default
         let textView = RichTextView(context: context)
         textView.richTextViewDelegate = mockTextViewDelegate
+        context.textViewDidBeginEditing(textView)
         textView.text = "Sample text"
 
         let selectedRange = NSRange(location: 5, length: 1)
@@ -117,6 +119,7 @@ class RichTextViewContextTests: XCTestCase {
         let context = RichTextEditorContext.default
         let textView = RichTextView(context: context)
         textView.richTextViewDelegate = mockTextViewDelegate
+        context.textViewDidBeginEditing(textView)
         textView.text = "Sample text"
 
         let selectedRange = NSRange(location: 5, length: 1)
@@ -139,6 +142,7 @@ class RichTextViewContextTests: XCTestCase {
         let context = RichTextEditorContext.default
         let textView = RichTextView(context: context)
         textView.richTextViewDelegate = mockTextViewDelegate
+        context.textViewDidBeginEditing(textView)
         textView.text = "Sample text"
 
         let selectedRange = NSRange.zero
@@ -161,6 +165,7 @@ class RichTextViewContextTests: XCTestCase {
         let context = RichTextEditorContext.default
         let textView = RichTextView(context: context)
         textView.richTextViewDelegate = mockTextViewDelegate
+        context.textViewDidBeginEditing(textView)
         textView.text = "Sample text"
 
         let selectedRange = NSRange(location: 4, length: 1)

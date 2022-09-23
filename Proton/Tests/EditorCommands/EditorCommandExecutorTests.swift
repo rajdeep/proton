@@ -21,7 +21,7 @@
 import Foundation
 import XCTest
 
-import Proton
+@testable import Proton
 
 class EditorCommandExecutorTests: XCTestCase {
     func testExecutesCommandOnEditor() {
@@ -30,6 +30,7 @@ class EditorCommandExecutorTests: XCTestCase {
         let editor = EditorView(context: context)
 
         let selectedRange = NSRange(location: 3, length: 3)
+        context.didBeginEditing(editor)
         editor.replaceCharacters(in: .zero, with: "This is some text")
         editor.selectedRange = selectedRange
 
@@ -60,7 +61,7 @@ class EditorCommandExecutorTests: XCTestCase {
 
         let commandExecutor = EditorCommandExecutor()
         let editor = EditorView()
-
+        editor.editorViewContext.didBeginEditing(editor)
         editor.replaceCharacters(in: .zero, with: "This is some text")
         editor.selectedRange = editor.textEndRange
 
@@ -86,7 +87,7 @@ class EditorCommandExecutorTests: XCTestCase {
 
         let commandExecutor = EditorCommandExecutor()
         let editor = EditorView()
-
+        editor.editorViewContext.didBeginEditing(editor)
         editor.replaceCharacters(in: .zero, with: "This is some text")
         editor.selectedRange = editor.textEndRange
 
@@ -122,6 +123,7 @@ class EditorCommandExecutorTests: XCTestCase {
         let editor1 = EditorView(context: context1)
         let editor2 = EditorView(context: context1)
 
+        context1.didBeginEditing(editor1)
         editor1.replaceCharacters(in: .zero, with: "This is some text")
         editor1.selectedRange = editor1.textEndRange
 
@@ -131,7 +133,7 @@ class EditorCommandExecutorTests: XCTestCase {
         }
 
         commandExecutor1.execute(command1)
-
+        context2.didBeginEditing(editor2)
         editor2.replaceCharacters(in: .zero, with: "This is some text")
         editor2.selectedRange = editor2.textEndRange
 
@@ -172,5 +174,11 @@ class EditorCommandExecutorTests: XCTestCase {
         commandExecutor.execute(command1)
         commandExecutor.execute(command2)
         waitForExpectations(timeout: 1.0)
+    }
+}
+
+extension EditorViewContext {
+    func didBeginEditing(_ editor: EditorView) {
+        richTextViewContext.textViewDidBeginEditing(editor.richTextView)
     }
 }
