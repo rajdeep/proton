@@ -132,3 +132,9 @@ class ExpandableView: UIView, BlockContent, EditorContentView {
         }
     }
 }
+
+extension ExpandableView: Focusable {
+    func setFocus() {
+        textField.becomeFirstResponder()
+    }
+}

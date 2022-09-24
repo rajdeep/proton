@@ -77,7 +77,9 @@ class PanelView: UIView, BlockContent, EditorContentView {
         backgroundColor = UIColor(red: 0.99, green: 0.97, blue: 0.89, alpha: 1.00)
         container.layer.borderWidth = 1.0
         container.layer.cornerRadius = 4.0
-        container.layer.borderColor = UIColor(red: 0.99, green: 0.95, blue: 0.84, alpha: 1.00).cgColor
+
+        container.layer.borderColor = UIColor.systemGray.cgColor
+        iconView.layer.borderColor = UIColor.systemGray.cgColor
 
         addSubview(container)
         container.addSubview(iconView)
@@ -121,10 +123,8 @@ extension PanelView: EditorViewDelegate {
     }
 }
 
-extension PanelView {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        container.layer.borderColor = UIColor.systemGray.cgColor
-        iconView.layer.borderColor = UIColor.systemGray.cgColor
+extension PanelView: Focusable {
+    func setFocus() {
+        editor.becomeFirstResponder()
     }
 }
