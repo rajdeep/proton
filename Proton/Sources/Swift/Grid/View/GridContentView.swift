@@ -22,6 +22,8 @@ import Foundation
 import UIKit
 
 protocol GridContentViewDelegate: AnyObject {
+    func gridContentView(_ gridContentView: GridContentView, didCompleteLayoutWithBounds bounds: CGRect)
+    
     func gridContentView(_ gridContentView: GridContentView, didReceiveFocusAt range: NSRange, in cell: GridCell)
     func gridContentView(_ gridContentView: GridContentView, didLoseFocusFrom range: NSRange, in cell: GridCell)
     func gridContentView(_ gridContentView: GridContentView, didTapAtLocation location: CGPoint, characterRange: NSRange?, in cell: GridCell)
@@ -109,6 +111,11 @@ class GridContentView: UIScrollView {
             guard oldValue != bounds else { return }
             recalculateCellBounds()
         }
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gridContentViewDelegate?.gridContentView(self, didCompleteLayoutWithBounds: bounds)
     }
 
     private func setup() {

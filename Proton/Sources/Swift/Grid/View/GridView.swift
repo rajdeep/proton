@@ -96,6 +96,8 @@ public protocol GridViewDelegate: AnyObject {
 /// including another `GridView` as an attachment.
 public class GridView: UIView {
     private let gridView: GridContentView
+    private let leadingShadowView: UIView
+    private let trailingShadowView: UIView
     private var columnResizingHandles = [CellHandleButton]()
     private let handleSize: CGFloat = 20
     private let config: GridConfiguration
@@ -117,6 +119,10 @@ public class GridView: UIView {
     private lazy var columnBottomBorderView: UIView = {
         makeSelectionBorderView()
     }()
+
+    private var shadowWidth: CGFloat {
+        CGFloat(config.boundsLimitShadowColors.count) * 5.0
+    }
 
     /// Delegate for `GridView` which can be used to handle cell specific `EditorView` events
     public weak var delegate: GridViewDelegate?
@@ -197,6 +203,11 @@ public class GridView: UIView {
     /// - Parameter config: Configuration for `GridView`
     public init(config: GridConfiguration) {
         self.gridView = GridContentView(config: config)
+        let boundsShadowColors = config.boundsLimitShadowColors.map { $0.cgColor }
+        self.leadingShadowView = GradientView(colors: boundsShadowColors)
+        self.leadingShadowView.alpha = 0.2
+        self.trailingShadowView = GradientView(colors: boundsShadowColors.reversed())
+        self.trailingShadowView.alpha = 0.2
         self.config = config
         super.init(frame: .zero)
         setup()
@@ -208,13 +219,31 @@ public class GridView: UIView {
 
     private func setup() {
         gridView.translatesAutoresizingMaskIntoConstraints = false
+        leadingShadowView.translatesAutoresizingMaskIntoConstraints = false
+        trailingShadowView.translatesAutoresizingMaskIntoConstraints = false
+
         gridView.gridContentViewDelegate = self
+        gridView.delegate = self
+
         addSubview(gridView)
+        addSubview(leadingShadowView)
+        addSubview(trailingShadowView)
+
         NSLayoutConstraint.activate([
             gridView.topAnchor.constraint(equalTo: topAnchor),
             gridView.bottomAnchor.constraint(equalTo: bottomAnchor),
             gridView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            gridView.trailingAnchor.constraint(equalTo: trailingAnchor)
+            gridView.trailingAnchor.constraint(equalTo: trailingAnchor),
+
+            leadingShadowView.widthAnchor.constraint(equalToConstant: shadowWidth),
+            leadingShadowView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            leadingShadowView.topAnchor.constraint(equalTo: topAnchor),
+            leadingShadowView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            trailingShadowView.widthAnchor.constraint(equalToConstant: shadowWidth),
+            trailingShadowView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            trailingShadowView.topAnchor.constraint(equalTo: topAnchor),
+            trailingShadowView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 
@@ -446,9 +475,24 @@ public class GridView: UIView {
             cell.applyStyle(style)
         }
     }
+
+    private func resetShadows() {
+        leadingShadowView.isHidden = gridView.contentOffset.x <= 0
+        trailingShadowView.isHidden = gridView.contentOffset.x + gridView.bounds.width >= gridView.contentSize.width
+    }
+}
+
+extension GridView: UIScrollViewDelegate {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        resetShadows()
+    }
 }
 
 extension GridView: GridContentViewDelegate {
+    func gridContentView(_ gridContentView: GridContentView, didCompleteLayoutWithBounds bounds: CGRect) {
+        resetShadows()
+    }
+
     func gridContentView(_ gridContentView: GridContentView, didSelectCells cells: [GridCell]) {
         delegate?.gridView(self, didSelectCells: cells)
     }

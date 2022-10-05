@@ -39,6 +39,8 @@ public class CreateGridViewCommand: EditorCommand {
                 GridColumnConfiguration(dimension: .fractional(0.25)),
                 GridColumnConfiguration(dimension: .fractional(0.25)),
                 GridColumnConfiguration(dimension: .fractional(0.25)),
+                GridColumnConfiguration(dimension: .fractional(0.25)),
+                GridColumnConfiguration(dimension: .fractional(0.25)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),

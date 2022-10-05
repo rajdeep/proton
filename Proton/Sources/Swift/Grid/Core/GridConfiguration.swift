@@ -57,14 +57,16 @@ public struct GridRowConfiguration {
 
 public struct GridConfiguration {
     public let style: GridStyle
+    public let boundsLimitShadowColors: [UIColor]
 
     public let columnsConfiguration: [GridColumnConfiguration]
     public let rowsConfiguration: [GridRowConfiguration]
 
-    public init(columnsConfiguration: [GridColumnConfiguration], rowsConfiguration: [GridRowConfiguration], style: GridStyle = .default) {
+    public init(columnsConfiguration: [GridColumnConfiguration], rowsConfiguration: [GridRowConfiguration], style: GridStyle = .default, boundsLimitShadowColors: [UIColor] = [.black, .white]) {
         self.columnsConfiguration = columnsConfiguration
         self.rowsConfiguration = rowsConfiguration
         self.style = style
+        self.boundsLimitShadowColors = boundsLimitShadowColors
     }
 
     public var numberOfColumns: Int {

@@ -1183,4 +1183,41 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 400, height: 200))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+    func testGridShadows() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(30)),
+                GridColumnConfiguration(dimension: .fixed(30)),
+                GridColumnConfiguration(dimension: .fractional(0.30)),
+                GridColumnConfiguration(dimension: .fractional(0.30)),
+                GridColumnConfiguration(dimension: .fractional(0.30)),
+                GridColumnConfiguration(dimension: .fractional(0.30)),
+                GridColumnConfiguration(dimension: .fractional(0.30)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+
+            ],
+            style: GridStyle(borderColor: .orange, borderWidth: 0.5),
+            boundsLimitShadowColors: [.red, .orange, .yellow]
+        )
+        let attachment = GridViewAttachment(config: config)
+        let gridView = attachment.view
+
+        editor.textColor = .orange
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 200))
+        gridView.scrollToCellAt(rowIndex: 1, columnIndex: 4)
+
+        viewController.render(size: CGSize(width: 400, height: 200))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 }

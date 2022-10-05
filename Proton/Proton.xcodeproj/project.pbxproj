@@ -23,6 +23,7 @@
 		1B30A3642489E11F00FA1D48 /* MockRichTextViewListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B30A3632489E11F00FA1D48 /* MockRichTextViewListDelegate.swift */; };
 		1B3D19C8248346FF00B3AB59 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 1B3D19C7248346FF00B3AB59 /* SnapshotTesting */; };
 		1B3D19CA2483484A00B3AB59 /* EditorListsSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D19C92483484A00B3AB59 /* EditorListsSnapshotTests.swift */; };
+		1B44165328E5706A00836C71 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B44165228E5706A00836C71 /* GradientView.swift */; };
 		1B45014F247E5AD9007B3EE9 /* SequenceGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45014E247E5AD9007B3EE9 /* SequenceGenerator.swift */; };
 		1B45CD9123BDD7E6001EB196 /* AutogrowingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD8F23BDD7E6001EB196 /* AutogrowingTextView.swift */; };
 		1B45CD9423BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45CD9323BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift */; };
@@ -179,6 +180,7 @@
 		1B30A3612489DC7B00FA1D48 /* MockListFormattingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockListFormattingProvider.swift; sourceTree = "<group>"; };
 		1B30A3632489E11F00FA1D48 /* MockRichTextViewListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRichTextViewListDelegate.swift; sourceTree = "<group>"; };
 		1B3D19C92483484A00B3AB59 /* EditorListsSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorListsSnapshotTests.swift; sourceTree = "<group>"; };
+		1B44165228E5706A00836C71 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		1B45014E247E5AD9007B3EE9 /* SequenceGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceGenerator.swift; sourceTree = "<group>"; };
 		1B45CD8F23BDD7E6001EB196 /* AutogrowingTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutogrowingTextView.swift; sourceTree = "<group>"; };
 		1B45CD9323BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingTextViewSnapshotTests.swift; sourceTree = "<group>"; };
@@ -440,6 +442,7 @@
 				1B45CDE023C05476001EB196 /* UIColor+Image.swift */,
 				1BBAC3CE23CD5A1B0088A1C8 /* UITextRangeExtensions.swift */,
 				1B164F4023D2A4AB00A0869A /* String+NSRange.swift */,
+				1B44165228E5706A00836C71 /* GradientView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -974,6 +977,7 @@
 				1B183D8E23CEE9BA00AE83E5 /* AttributesEncoding.swift in Sources */,
 				1BD21554246951090000BCE2 /* LayoutManager.swift in Sources */,
 				1BD185BC284C29EF001F4FBC /* GridCell.swift in Sources */,
+				1B44165328E5706A00836C71 /* GradientView.swift in Sources */,
 				1B91E7B526AA697C0002DF45 /* UnderlineCommand.swift in Sources */,
 				1B91F4B323C72DC3003F9B55 /* TextProcessing.swift in Sources */,
 				1BD185C2284C3082001F4FBC /* GridView.swift in Sources */,
