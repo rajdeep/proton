@@ -55,14 +55,27 @@ public struct GridRowConfiguration {
     }
 }
 
+public struct GradientColors {
+    public let primary: UIColor
+    public let secondary: UIColor
+
+    public init(primary: UIColor, secondary: UIColor) {
+        self.primary = primary
+        self.secondary = secondary
+    }
+}
+
 public struct GridConfiguration {
     public let style: GridStyle
-    public let boundsLimitShadowColors: [UIColor]
+    public let boundsLimitShadowColors: GradientColors
 
     public let columnsConfiguration: [GridColumnConfiguration]
     public let rowsConfiguration: [GridRowConfiguration]
 
-    public init(columnsConfiguration: [GridColumnConfiguration], rowsConfiguration: [GridRowConfiguration], style: GridStyle = .default, boundsLimitShadowColors: [UIColor] = [.black, .white]) {
+    public init(columnsConfiguration: [GridColumnConfiguration],
+                rowsConfiguration: [GridRowConfiguration],
+                style: GridStyle = .default,
+                boundsLimitShadowColors: GradientColors = GradientColors(primary: .black, secondary: .white)) {
         self.columnsConfiguration = columnsConfiguration
         self.rowsConfiguration = rowsConfiguration
         self.style = style

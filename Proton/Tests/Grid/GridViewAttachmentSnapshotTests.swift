@@ -1204,7 +1204,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
 
             ],
             style: GridStyle(borderColor: .orange, borderWidth: 0.5),
-            boundsLimitShadowColors: [.red, .orange, .yellow]
+            boundsLimitShadowColors: GradientColors(primary: .red, secondary: .yellow)
         )
         let attachment = GridViewAttachment(config: config)
         let gridView = attachment.view

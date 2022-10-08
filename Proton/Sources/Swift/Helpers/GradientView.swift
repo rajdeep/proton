@@ -22,34 +22,20 @@ import Foundation
 import UIKit
 
 class GradientView: UIView {
-    private var colors = [
-        UIColor.black.cgColor,
-        UIColor.white.cgColor
-    ]
-
     override class var layerClass: AnyClass {
         return CAGradientLayer.self
     }
 
-    @available(*, unavailable, message: "init(coder:) unavailable, use init(colors:)")
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        initGradientLayer()
-    }
-
-    @available(*, unavailable, message: "init(frame:) unavailable, use init(colors:)")
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        initGradientLayer()
-    }
-
     init(colors: [CGColor]) {
         super.init(frame: .zero)
-        self.colors = colors
-        initGradientLayer()
+        initGradientLayer(colors: colors)
     }
 
-    func initGradientLayer() {
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func initGradientLayer(colors: [CGColor]) {
         guard let gradientLayer = self.layer as? CAGradientLayer else { return }
         gradientLayer.startPoint = CGPoint(x: 0, y: 0)
         gradientLayer.endPoint = CGPoint(x: 1, y: 0)

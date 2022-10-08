@@ -121,7 +121,7 @@ public class GridView: UIView {
     }()
 
     private var shadowWidth: CGFloat {
-        CGFloat(config.boundsLimitShadowColors.count) * 5.0
+        10.0
     }
 
     /// Delegate for `GridView` which can be used to handle cell specific `EditorView` events
@@ -203,7 +203,10 @@ public class GridView: UIView {
     /// - Parameter config: Configuration for `GridView`
     public init(config: GridConfiguration) {
         self.gridView = GridContentView(config: config)
-        let boundsShadowColors = config.boundsLimitShadowColors.map { $0.cgColor }
+        let boundsShadowColors = [
+            config.boundsLimitShadowColors.primary.cgColor,
+            config.boundsLimitShadowColors.secondary.cgColor
+        ]
         self.leadingShadowView = GradientView(colors: boundsShadowColors)
         self.leadingShadowView.alpha = 0.2
         self.trailingShadowView = GradientView(colors: boundsShadowColors.reversed())
