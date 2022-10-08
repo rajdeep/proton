@@ -89,6 +89,8 @@ public protocol GridViewDelegate: AnyObject {
     ///   - columnIndex: Index of column being resized
     /// - Returns: `true` if column resizing should be allowed, else false.
     func gridView(_ gridView: GridView, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool
+
+    func gridView(_ gridView: GridView, didLayoutCell cell: GridCell)
 }
 
 /// A view that provides a tabular structure where each cell is an `EditorView`.
@@ -494,6 +496,10 @@ extension GridView: UIScrollViewDelegate {
 extension GridView: GridContentViewDelegate {
     func gridContentView(_ gridContentView: GridContentView, didCompleteLayoutWithBounds bounds: CGRect) {
         resetShadows()
+    }
+
+    func gridContentView(_ gridContentView: GridContentView, didLayoutCell cell: GridCell) {
+        delegate?.gridView(self, didLayoutCell: cell)
     }
 
     func gridContentView(_ gridContentView: GridContentView, didSelectCells cells: [GridCell]) {

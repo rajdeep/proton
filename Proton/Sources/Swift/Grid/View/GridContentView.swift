@@ -23,6 +23,7 @@ import UIKit
 
 protocol GridContentViewDelegate: AnyObject {
     func gridContentView(_ gridContentView: GridContentView, didCompleteLayoutWithBounds bounds: CGRect)
+    func gridContentView(_ gridContentView: GridContentView, didLayoutCell cell: GridCell)
     
     func gridContentView(_ gridContentView: GridContentView, didReceiveFocusAt range: NSRange, in cell: GridCell)
     func gridContentView(_ gridContentView: GridContentView, didLoseFocusFrom range: NSRange, in cell: GridCell)
@@ -275,6 +276,7 @@ class GridContentView: UIScrollView {
 
             freezeColumnCellIfRequired(c)
             freezeRowCellIfRequired(c)
+            gridContentViewDelegate?.gridContentView(self, didLayoutCell: c)
         }
 
         boundsObserver?.didChangeBounds(CGRect(origin: bounds.origin, size: frame.size))

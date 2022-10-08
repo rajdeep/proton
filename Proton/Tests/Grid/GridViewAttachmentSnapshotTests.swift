@@ -1220,4 +1220,39 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 400, height: 200))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+    func testGridCellLayoutCompletion() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let delegate = MockGridViewDelegate()
+        delegate.onDidLayoutCell = { _, cell in
+            if cell.columnSpan.first == 0,
+               let row = cell.rowSpan.first {
+                cell.editor.textColor = UIColor.red
+                cell.editor.attributedText = NSAttributedString(string: "\(row + 1).")
+            }
+        }
+
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(30)),
+                GridColumnConfiguration(dimension: .fixed(50)),
+                GridColumnConfiguration(dimension: .fractional(0.30)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ]
+        )
+        let attachment = GridViewAttachment(config: config)
+        let gridView = attachment.view
+        gridView.delegate = delegate
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 200))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 }

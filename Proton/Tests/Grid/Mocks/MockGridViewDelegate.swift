@@ -30,6 +30,7 @@ class MockGridViewDelegate: GridViewDelegate {
     var onDidChangeBounds: ((_ gridView: GridView, _ bounds: CGRect, _ cell: GridCell) -> Void)?
     var onDidSelectCells: ((_ gridView: GridView, _ cells: [GridCell]) -> Void)?
     var onDidUnselectCells: ((_ gridView: GridView, _ cells: [GridCell]) -> Void)?
+    var onDidLayoutCell: ((_ gridView: GridView, _ cell: GridCell) -> Void)?
 
     func gridView(_ gridView: GridView, didReceiveFocusAt range: NSRange, in cell: GridCell) {
         onDidReceiveFocus?(gridView, range, cell)
@@ -66,5 +67,9 @@ class MockGridViewDelegate: GridViewDelegate {
     func gridView(_ gridView: GridView, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool {
         //TODO:
         return true
+    }
+
+    func gridView(_ gridView: Proton.GridView, didLayoutCell cell: Proton.GridCell) {
+        onDidLayoutCell?(gridView, cell)
     }
 }
