@@ -168,10 +168,10 @@ open class EditorView: UIView {
     ///   - context: Optional context to be used. `EditorViewContext` is link between `EditorCommandExecutor` and the `EditorView`.
     ///   `EditorCommandExecutor` needs to have same context as the `EditorView` to execute a command on it. Unless you need to have
     ///    restriction around some commands to be restricted in execution on certain specific editors, the default value may be used.
-    public init(frame: CGRect = .zero, context: EditorViewContext = .shared) {
+    public init(frame: CGRect = .zero, context: EditorViewContext = .shared, allowAutogrowing: Bool = true) {
         self.context = context.richTextViewContext
         self.editorViewContext = context
-        self.richTextView = RichTextView(frame: frame, context: self.context)
+        self.richTextView = RichTextView(frame: frame, context: self.context, allowAutogrowing: allowAutogrowing)
 
         super.init(frame: frame)
 
@@ -180,9 +180,9 @@ open class EditorView: UIView {
         setup()
     }
 
-    init(frame: CGRect, richTextViewContext: RichTextViewContext) {
+    init(frame: CGRect, richTextViewContext: RichTextViewContext, allowAutogrowing: Bool = true) {
         self.context = richTextViewContext
-        self.richTextView = RichTextView(frame: frame, context: context)
+        self.richTextView = RichTextView(frame: frame, context: context, allowAutogrowing: allowAutogrowing)
         self.editorViewContext = .null
         super.init(frame: frame)
 

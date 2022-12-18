@@ -24,19 +24,23 @@ import UIKit
 class AutogrowingTextView: UITextView {
 
     var maxHeight: CGFloat = 0
+    private var allowAutogrowing: Bool
     weak var boundsObserver: BoundsObserving?
     private var maxHeightConstraint: NSLayoutConstraint!
     private var heightAnchorConstraint: NSLayoutConstraint!
     private var isSizeRecalculationRequired = true
 
-    override init(frame: CGRect, textContainer: NSTextContainer?) {
+    init(frame: CGRect = .zero, textContainer: NSTextContainer? = nil, allowAutogrowing: Bool = false) {
+        self.allowAutogrowing = allowAutogrowing
         super.init(frame: frame, textContainer: textContainer)
         isScrollEnabled = false
         heightAnchorConstraint = heightAnchor.constraint(greaterThanOrEqualToConstant: contentSize.height)
         heightAnchorConstraint.priority = .defaultHigh
-        NSLayoutConstraint.activate([
-            heightAnchorConstraint
-        ])
+        if allowAutogrowing {
+            NSLayoutConstraint.activate([
+                heightAnchorConstraint
+            ])
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -58,14 +62,14 @@ class AutogrowingTextView: UITextView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        guard allowAutogrowing, maxHeight != .greatestFiniteMagnitude else { return }
         // Required to reset the size if content is removed
         if contentSize.height <= frame.height, isEditable {
             recalculateHeight()
             return
         }
 
-        guard isSizeRecalculationRequired,
-              maxHeight != .greatestFiniteMagnitude else { return }
+        guard isSizeRecalculationRequired else { return }
         isSizeRecalculationRequired = false
         recalculateHeight()
     }
