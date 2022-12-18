@@ -29,7 +29,7 @@ class AutogrowingTextField: UITextField, UITextFieldDelegate {
     override var bounds: CGRect {
         didSet {
             guard oldValue != bounds else { return }
-            boundsObserver?.didChangeBounds(bounds)
+            boundsObserver?.didChangeBounds(bounds, oldBounds: oldValue)
         }
     }
 
@@ -49,8 +49,10 @@ class AutogrowingTextField: UITextField, UITextFieldDelegate {
     }
 }
 
-extension AutogrowingTextField: InlineContent {
+extension AutogrowingTextField: AttachmentViewIdentifying {
     var name: EditorContent.Name {
         return EditorContent.Name(rawValue: "textField")
     }
+
+    var type: AttachmentType { .inline }
 }

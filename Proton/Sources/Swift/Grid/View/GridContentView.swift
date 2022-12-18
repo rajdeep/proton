@@ -279,7 +279,7 @@ class GridContentView: UIScrollView {
             gridContentViewDelegate?.gridContentView(self, didLayoutCell: c)
         }
 
-        boundsObserver?.didChangeBounds(CGRect(origin: bounds.origin, size: frame.size))
+        boundsObserver?.didChangeBounds(CGRect(origin: bounds.origin, size: frame.size), oldBounds: bounds)
         invalidateIntrinsicContentSize()
     }
 

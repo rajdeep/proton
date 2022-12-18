@@ -35,8 +35,10 @@ public class GridViewAttachment: Attachment {
     }
 }
 
-extension GridView: BlockContent {
-    open var name: EditorContent.Name {
+extension GridView: AttachmentViewIdentifying {
+    public var name: EditorContent.Name {
         return .grid
     }
+
+    public var type: AttachmentType { .block }
 }

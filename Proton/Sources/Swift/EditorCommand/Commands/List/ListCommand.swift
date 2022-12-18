@@ -21,7 +21,7 @@
 import Foundation
 import UIKit
 
-enum Indentation {
+public enum Indentation {
     case indent
     case outdent
 }
@@ -93,6 +93,7 @@ public class ListCommand: EditorCommand {
                 .paragraphStyle: paragraphStyle
             ], at: selectedRange)
             editor.removeAttribute(.listItem, at: selectedRange)
+            editor.typingAttributes[.listItem] = nil
             return
         }
 
@@ -109,6 +110,7 @@ public class ListCommand: EditorCommand {
             editor.addAttribute(.paragraphStyle, value: mutableStyle ?? editor.paragraphStyle, at: range)
         }
         editor.addAttribute(.listItem, value: attrValue, at: selectedRange)
+        editor.typingAttributes[.listItem] = attrValue
         attributeValue = nil
     }
 

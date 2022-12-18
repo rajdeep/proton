@@ -46,7 +46,7 @@ import ProtonCore
 public protocol BoundsObserving: AnyObject {
     /// Lets the observer know that bounds of current object have changed
     /// - Parameter bounds: New bounds
-    func didChangeBounds(_ bounds: CGRect)
+    func didChangeBounds(_ bounds: CGRect, oldBounds: CGRect)
 }
 
 
@@ -136,7 +136,9 @@ open class EditorView: UIView {
         didSet {
             guard oldValue != bounds else { return }
             for (attachment, _) in attributedText.attachmentRanges where attachment.isContainerDependentSizing {
-                attachment.invalidateLayout()
+                if attachment.cachedContainerSize != bounds.size {
+                    attachment.cachedBounds = nil
+                }
             }
 
             delegate?.editor(self, didChangeSize: bounds.size, previousSize: oldValue.size)
@@ -623,6 +625,30 @@ open class EditorView: UIView {
         return richTextView.becomeFirstResponder()
     }
 
+    /// The range of currently marked text in a document.
+    /// If there is no marked text, the value of the property is `nil`. Marked text is provisionally inserted text that requires user confirmation; it occurs in multistage text input. The current selection, which can be a caret or an extended range, always occurs within the marked text.
+    public var markedRange: NSRange? {
+        guard let range = richTextView.markedTextRange else { return nil }
+        let location = richTextView.offset(from: richTextView.beginningOfDocument, to: range.start)
+        let length = richTextView.offset(from: range.start, to: range.end)
+        // It returns `NSRange`, because `UITextPosition` is not very helpful without having access to additional methods and properties.
+        return NSRange(location: location, length: length)
+    }
+
+    public func setAttributes(_ attributes: [NSAttributedString.Key: Any], at range: NSRange) {
+//        self.richTextView.setAttributes(attributes, range: range)
+//        self.richTextView.enumerateAttribute(.attachment, in: range, options: .longestEffectiveRangeNotRequired) { value, rangeInContainer, _ in
+//            if let attachment = value as? Attachment {
+//                attachment.addedAttributesOnContainingRange(rangeInContainer: rangeInContainer, attributes: attributes)
+//            }
+//        }
+    }
+
+    public func rangeOfCharacter(at point: CGPoint) -> NSRange? {
+        let location = richTextView.convert(point, from: self)
+        return richTextView.rangeOfCharacter(at: location)
+    }
+
     /// Gets the lines separated by newline characters from the given range.
     /// - Parameter range: Range to get lines from.
     /// - Returns: Array of `EditorLine` from the given content range.
@@ -873,7 +899,7 @@ open class EditorView: UIView {
         unregisterCommands([command])
     }
 
-    public override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+    open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return richTextView.canPerformAction(action, withSender: sender)
     }
 
@@ -886,6 +912,52 @@ open class EditorView: UIView {
     /// `false` to conditionally disable/hide menu item. Display of menu item still depends on the context. E.g. Select is not shown
     /// in case the editor is empty.
     open func canPerformMenuAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return true
+    }
+
+    /// This method attempt to simulate the `paste` method but with explicitly provided attributed string and insertion range.
+    /// - Parameters:
+    ///   - attributedString: Attributed string to be inserted
+    ///   - range: Insertion range
+    /// - Returns:
+    /// `true` The paste operation was successful
+    /// `false` The paste operation was discarded
+    open func paste(attributedString: NSAttributedString, into range: NSRange) -> Bool {
+        let insertionRange: NSRange
+        let length = contentLength
+
+        if range.location < length {
+            insertionRange = range
+        } else {
+            // In case we're out of bounds, avoid a crash.
+            insertionRange = NSRange(location: length, length: 0)
+        }
+
+        let textViewDelegate = context as UITextViewDelegate
+
+        if let shouldChange = textViewDelegate.textView?(
+            richTextView,
+            shouldChangeTextIn: insertionRange,
+            replacementText: attributedString.string
+        ) {
+            guard shouldChange else { return false }
+        }
+
+        let newSelectedRange = NSRange(
+            location: insertionRange.location + attributedString.length,
+            length: 0
+        )
+
+        replaceCharacters(in: insertionRange, with: attributedString)
+        selectedRange = newSelectedRange
+        // Proton uses notifications from `UITextViewDelegate` to notify `EditorViewDelegate`,
+        // but in case of changing `UITextView` content in code
+        // `textViewDidChange` callback won't be triggered.
+        // That's why delegate in this case should be notified manually.
+        delegate?.editor(self, didChangeTextAt: newSelectedRange)
+        editorViewContext.delegate?.editor(self, didChangeTextAt: newSelectedRange)
+
+        textViewDelegate.textViewDidChange?(richTextView)
         return true
     }
 }

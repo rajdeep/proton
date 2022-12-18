@@ -25,8 +25,9 @@ class AutogrowingTextView: UITextView {
 
     var maxHeight: CGFloat = 0
     weak var boundsObserver: BoundsObserving?
-    var maxHeightConstraint: NSLayoutConstraint!
-    var heightAnchorConstraint: NSLayoutConstraint!
+    private var maxHeightConstraint: NSLayoutConstraint!
+    private var heightAnchorConstraint: NSLayoutConstraint!
+    private var isSizeRecalculationRequired = true
 
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
@@ -57,15 +58,27 @@ class AutogrowingTextView: UITextView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        guard maxHeight != .greatestFiniteMagnitude else { return }
+        // Required to reset the size if content is removed
+        if contentSize.height <= frame.height, isEditable {
+            recalculateHeight()
+            return
+        }
+
+        guard isSizeRecalculationRequired,
+              maxHeight != .greatestFiniteMagnitude else { return }
+        isSizeRecalculationRequired = false
+        recalculateHeight()
+    }
+
+    private func recalculateHeight() {
         let bounds = self.bounds.integral
         let fittingSize = self.calculatedSize(attributedText: attributedText, frame: frame.size, textContainerInset: textContainerInset)
         self.isScrollEnabled = (fittingSize.height > bounds.height) || (self.maxHeight > 0 && self.maxHeight < fittingSize.height)
-        heightAnchorConstraint.constant = fittingSize.height
+        heightAnchorConstraint.constant = min(fittingSize.height, contentSize.height)
     }
 
     override open func sizeThatFits(_ size: CGSize) -> CGSize {
-        var fittingSize = calculatedSize(attributedText: attributedText, frame: frame.size, textContainerInset: textContainerInset)
+        var fittingSize = calculatedSize(attributedText: attributedText, frame: size, textContainerInset: textContainerInset)
         if maxHeight > 0 {
             fittingSize.height = min(maxHeight, fittingSize.height)
         }
@@ -74,8 +87,9 @@ class AutogrowingTextView: UITextView {
 
     override var bounds: CGRect {
         didSet {
-            guard oldValue.height != bounds.height else { return }
-            boundsObserver?.didChangeBounds(bounds)
+            guard ceil(oldValue.height) != ceil(bounds.height) else { return }
+            boundsObserver?.didChangeBounds(bounds, oldBounds: oldValue)
+            isSizeRecalculationRequired = true
         }
     }
 

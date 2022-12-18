@@ -26,7 +26,7 @@ import UIKit
 class MockBoundsObserver: BoundsObserving {
     var onBoundsChanged: ((CGRect) -> Void)?
 
-    func didChangeBounds(_ bounds: CGRect) {
+    func didChangeBounds(_ bounds: CGRect, oldBounds: CGRect) {
         onBoundsChanged?(bounds)
     }
 }

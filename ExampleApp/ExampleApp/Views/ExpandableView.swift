@@ -27,7 +27,7 @@ extension EditorContent.Name {
     static let expandable = EditorContent.Name("expandable")
 }
 
-class ExpandableView: UIView, BlockContent, EditorContentView {
+class ExpandableView: AttachmentView, EditorContentView {
     let container = UIView()
     let editor: EditorView
     let button = UIButton()
@@ -39,6 +39,10 @@ class ExpandableView: UIView, BlockContent, EditorContentView {
 
     var name: EditorContent.Name {
         return .panel
+    }
+
+    var type: AttachmentType {
+        .block
     }
 
     override init(frame: CGRect) {

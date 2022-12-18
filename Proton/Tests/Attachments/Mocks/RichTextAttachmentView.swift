@@ -23,6 +23,7 @@ import UIKit
 
 @testable import Proton
 
-class RichTextAttachmentView: RichTextView, InlineContent {
+class RichTextAttachmentView: RichTextView, AttachmentViewIdentifying {
     let name = EditorContent.Name(rawValue: "TestContentView")
+    var type: AttachmentType { .inline }
 }

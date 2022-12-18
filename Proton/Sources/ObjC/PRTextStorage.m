@@ -122,17 +122,7 @@
     NSDictionary<NSAttributedStringKey, id> *updatedAttributes = [self applyingDefaultFormattingIfRequiredToAttributes:attrs];
     [_storage setAttributes:updatedAttributes range:range];
 
-    NSRange newlineRange = [_storage.string rangeOfCharacterFromSet:NSCharacterSet.newlineCharacterSet];
-    while (newlineRange.location != NSNotFound) {
-        [_storage addAttribute:@"_blockContentType" value:PREditorContentName.newlineName range:newlineRange];
-        NSUInteger remainingLocation = newlineRange.location + newlineRange.length;
-        NSUInteger remainingLength = _storage.length - remainingLocation;
-        newlineRange = [_storage.string rangeOfCharacterFromSet:NSCharacterSet.newlineCharacterSet
-                                                        options:0
-                                                          range:NSMakeRange(remainingLocation, remainingLength)];
-    }
-
-    [_storage fixAttributesInRange:NSMakeRange(0, _storage.length)];
+    [_storage fixAttributesInRange: range];
     [self edited:NSTextStorageEditedAttributes range:range changeInLength:0];
     [self endEditing];
 }
