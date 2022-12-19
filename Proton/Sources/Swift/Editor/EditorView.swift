@@ -103,8 +103,9 @@ public struct EditorLine {
 /// may be restricted using an absolute value or by using auto-layout constraints. Instantiation of `EditorView` is simple and straightforward
 /// and can be used to host simple formatted text or complex layout containing multiple nested `EditorView` via use of `Attachment`.
 open class EditorView: UIView {
+    private var defaultTextColor: UIColor?
+    var textProcessor: TextProcessor?
     let richTextView: RichTextView
-
     let context: RichTextViewContext
 
     var editorContextDelegate: EditorViewDelegate? {
@@ -113,8 +114,6 @@ open class EditorView: UIView {
 
     /// Context for the current Editor
     public let editorViewContext: EditorViewContext
-
-    var textProcessor: TextProcessor?
 
     @available(iOS 13.0, *)
     public var textInteractions: [UITextInteraction] {
@@ -350,8 +349,8 @@ open class EditorView: UIView {
     /// Default text color to be used by the Editor. The color may be overridden on whole or part of content in
     /// `EditorView` by an `EditorCommand` or `TextProcessing` conformances.
     public var textColor: UIColor {
-        get { richTextView.textColor ?? richTextView.defaultTextColor }
-        set { richTextView.textColor = newValue }
+        get { defaultTextColor ?? richTextView.defaultTextColor }
+        set { defaultTextColor = newValue }
     }
 
     /// Maximum height that the `EditorView` can expand to. After reaching the maximum specified height, the editor becomes scrollable.
