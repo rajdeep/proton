@@ -94,4 +94,28 @@ class FontTraitToggleCommandTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
 
+    func testTogglingFontAttributesRetainsFontSize() {
+        let editor = EditorView()
+        editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "This is some text", attributes: [.font: UIFont.systemFont(ofSize: 20)]))
+
+        editor.addAttribute(.font, value: UIFont.systemFont(ofSize: 40), at: NSRange(location: 0, length: 5))
+        editor.addAttribute(.font, value: UIFont.systemFont(ofSize: 10), at: NSRange(location: 7, length: 3))
+        editor.selectedRange = NSRange(location: 0, length: 10)
+        BoldCommand().execute(on: editor)
+
+        BoldCommand().execute(on: editor)
+
+        let editorText = editor.attributedText
+        guard let font1 = try? XCTUnwrap(editorText.attribute(.font, at: 0, effectiveRange: nil) as? UIFont) else {
+            XCTFail("Unable to get font information")
+            return
+        }
+        guard let font2 = try? XCTUnwrap(editorText.attribute(.font, at: 8, effectiveRange: nil) as? UIFont) else {
+            XCTFail("Unable to get font information")
+            return
+        }
+
+        XCTAssertEqual(font1.pointSize, 40)
+        XCTAssertEqual(font2.pointSize, 10)
+    }
 }
