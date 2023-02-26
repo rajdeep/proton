@@ -391,10 +391,21 @@ open class EditorView: UIView {
         }
     }
 
-    /// Gets or sets the selected range in the `EditorView`.
     public var selectedRange: NSRange {
-        get { richTextView.selectedRange }
-        set { richTextView.selectedRange = newValue }
+        get {
+            let range = richTextView.selectedRange
+            guard range.endLocation <= contentLength else {
+                return clamp(range: range)
+            }
+            return range
+        }
+        set {
+            if contains(range: newValue) {
+                richTextView.selectedRange = newValue
+            } else {
+                richTextView.selectedRange = clamp(range: newValue)
+            }
+        }
     }
 
     /// Typing attributes to be used. Automatically resets when the selection changes.
@@ -1139,5 +1150,17 @@ public extension EditorView {
     /// `true` if the command is registered with the Editor.
     func isCommandRegistered(_ name: CommandName) -> Bool {
         return registeredCommands?.contains { $0.name == name } ?? true
+    }
+}
+
+extension EditorView {
+    func contains(range: NSRange) -> Bool {
+        return range.location >= 0
+        && range.length >= 0
+        && range.upperBound <= contentLength
+    }
+
+    func clamp(range: NSRange) -> NSRange {
+        range.clamped(upperBound: contentLength)
     }
 }
