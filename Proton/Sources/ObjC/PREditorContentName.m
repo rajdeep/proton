@@ -25,6 +25,10 @@
 
 #define kRawValueKey       @"RawValue"
 
++ (BOOL)supportsSecureCoding {
+  return YES;
+}
+
 - (instancetype)initWithRawValue:(NSString *)rawValue {
     self = [super init];
     if (self) {
