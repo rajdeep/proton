@@ -76,9 +76,17 @@ class AutogrowingTextView: UITextView {
 
     private func recalculateHeight() {
         let bounds = self.bounds.integral
-        let fittingSize = sizeThatFits(frame.size)
+        let fittingSize = self.calculatedSize(attributedText: attributedText, frame: frame.size, textContainerInset: textContainerInset)
         self.isScrollEnabled = (fittingSize.height > bounds.height) || (self.maxHeight > 0 && self.maxHeight < fittingSize.height)
         heightAnchorConstraint.constant = min(fittingSize.height, contentSize.height)
+    }
+
+    override open func sizeThatFits(_ size: CGSize) -> CGSize {
+        var fittingSize = calculatedSize(attributedText: attributedText, frame: size, textContainerInset: textContainerInset)
+        if maxHeight > 0 {
+            fittingSize.height = min(maxHeight, fittingSize.height)
+        }
+        return fittingSize
     }
 
     override var bounds: CGRect {
@@ -91,5 +99,14 @@ class AutogrowingTextView: UITextView {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.becomeFirstResponder()
+    }
+
+    private func calculatedSize(attributedText: NSAttributedString, frame: CGSize, textContainerInset: UIEdgeInsets) -> CGSize {
+        // Adjust for horizontal paddings in textview to exclude from overall available width for attachment
+        let horizontalAdjustments = (textContainer.lineFragmentPadding * 2) + (textContainerInset.left + textContainerInset.right)
+        let boundingRect = attributedText.boundingRect(with: CGSize(width: frame.width - horizontalAdjustments, height: .greatestFiniteMagnitude), options: [.usesLineFragmentOrigin], context: nil).integral
+
+        let insets = UIEdgeInsets(top: -textContainerInset.top, left: -textContainerInset.left, bottom: -textContainerInset.bottom, right: -textContainerInset.right)
+        return boundingRect.inset(by: insets).size
     }
 }
