@@ -392,20 +392,8 @@ open class EditorView: UIView {
     }
 
     public var selectedRange: NSRange {
-        get {
-            let range = richTextView.selectedRange
-            guard range.endLocation <= contentLength else {
-                return clamp(range: range)
-            }
-            return range
-        }
-        set {
-            if contains(range: newValue) {
-                richTextView.selectedRange = newValue
-            } else {
-                richTextView.selectedRange = clamp(range: newValue)
-            }
-        }
+        get { richTextView.selectedRange }
+        set { richTextView.selectedRange = newValue }
     }
 
     /// Typing attributes to be used. Automatically resets when the selection changes.
