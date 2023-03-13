@@ -215,6 +215,10 @@ class RichTextView: AutogrowingTextView {
         let endLocation = max(startingRange.location, range.location + range.length - 1)
 
         while startingRange.location <= endLocation {
+            guard startingRange.isValidIn(self) else {
+                return lines
+            }
+
             let paraRange = rangeOfParagraph(at: startingRange.location)
             let text = self.attributedText.attributedSubstring(from: paraRange)
             let editorLine = EditorLine(text: text, range: paraRange)
@@ -239,7 +243,8 @@ class RichTextView: AutogrowingTextView {
         let currentLineRange = rangeOfParagraph(at: location)
         guard let position = self.position(from: beginningOfDocument, offset: currentLineRange.location - 1),
               let paraRange = tokenizer.rangeEnclosingPosition(position, with: .paragraph, inDirection: UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)),
-              let range = paraRange.toNSRange(in: self)
+              let range = paraRange.toNSRange(in: self),
+              range.isValidIn(self)
         else { return nil }
         
         return EditorLine(text: attributedText.attributedSubstring(from: range), range: range)
@@ -249,7 +254,8 @@ class RichTextView: AutogrowingTextView {
         let currentLineRange = rangeOfParagraph(at: location)
         guard let position = self.position(from: beginningOfDocument, offset: currentLineRange.endLocation + 1),
               let paraRange = tokenizer.rangeEnclosingPosition(position, with: .paragraph, inDirection: UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)),
-              let range = paraRange.toNSRange(in: self)
+              let range = paraRange.toNSRange(in: self),
+              range.isValidIn(self)
         else { return nil }
         
         return EditorLine(text: attributedText.attributedSubstring(from: range), range: range)
@@ -361,6 +367,11 @@ class RichTextView: AutogrowingTextView {
         guard contentLength > 0 else { return }
         let proposedRange = NSRange(location: max(0, selectedRange.location - 1), length: 0)
 
+        guard proposedRange.isValidIn(self) else {
+            super.deleteBackward()
+            return
+        }
+
         let attributedText: NSAttributedString = self.attributedText // single allocation
         let attributeExists = (attributedText.attribute(.textBlock, at: proposedRange.location, effectiveRange: nil)) != nil
 
@@ -461,6 +472,7 @@ class RichTextView: AutogrowingTextView {
     }
 
     func enumerateAttribute(_ attrName: NSAttributedString.Key, in enumerationRange: NSRange, options opts: NSAttributedString.EnumerationOptions = [], using block: (Any?, NSRange, UnsafeMutablePointer<ObjCBool>) -> Void) {
+        guard enumerationRange.isValidIn(self) else { return }
         textStorage.enumerateAttribute(attrName, in: enumerationRange, options: opts, using: block)
     }
 
