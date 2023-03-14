@@ -107,11 +107,6 @@
 }
 
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)str {
-    if ((range.location + range.length) > _storage.length) {
-        // Out of bounds
-        return;
-    }
-
     [self beginEditing];
     NSInteger delta = str.length - range.length;
 

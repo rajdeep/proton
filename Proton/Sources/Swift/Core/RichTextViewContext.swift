@@ -35,8 +35,7 @@ class RichTextViewContext: NSObject, UITextViewDelegate {
         let range = textView.selectedRange
 
         resetAttachmentSelection(textView)
-        guard range.length > 0,
-              range.isValidIn(textView) else {
+        guard range.length > 0 else {
             if textView.attributedText.length == 0 {
                 richTextView.resetTypingAttributes()
             }
