@@ -53,6 +53,7 @@ class AutogrowingTextView: UITextView {
         // Required to reset the size if content is removed
         if contentSize.height <= frame.height, isEditable {
             recalculateHeight()
+            invalidateIntrinsicContentSize()
             return
         }
 
@@ -66,7 +67,6 @@ class AutogrowingTextView: UITextView {
         let fittingSize = self.calculatedSize(attributedText: attributedText, frame: frame.size, textContainerInset: textContainerInset)
         self.isScrollEnabled = (fittingSize.height > bounds.height) || (self.maxHeight > 0 && self.maxHeight < fittingSize.height)
         heightAnchorConstraint.constant = min(fittingSize.height, contentSize.height)
-        invalidateIntrinsicContentSize()
     }
 
     override open func sizeThatFits(_ size: CGSize) -> CGSize {
