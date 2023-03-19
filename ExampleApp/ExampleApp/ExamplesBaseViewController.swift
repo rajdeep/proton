@@ -25,7 +25,7 @@ import Proton
 
 class ExamplesBaseViewController: UIViewController {
 
-    let editor = EditorView()
+    let editor = EditorView(allowAutogrowing: true)
 
     func setup() {
         self.view.backgroundColor = .secondarySystemBackground
