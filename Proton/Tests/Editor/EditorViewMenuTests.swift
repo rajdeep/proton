@@ -32,7 +32,7 @@ class EditorViewMenuTests: XCTestCase {
             ex.fulfill()
         }
 
-        editor.richTextView.copy(UIMenuController())
+        editor.richTextView.copy(UIView())
         waitForExpectations(timeout: 1.0)
     }
 
@@ -43,7 +43,7 @@ class EditorViewMenuTests: XCTestCase {
             ex.fulfill()
         }
 
-        editor.richTextView.cut(UIMenuController())
+        editor.richTextView.cut(UIView())
         waitForExpectations(timeout: 1.0)
     }
 
@@ -54,7 +54,7 @@ class EditorViewMenuTests: XCTestCase {
             ex.fulfill()
         }
 
-        editor.richTextView.paste(UIMenuController())
+        editor.richTextView.paste(UIView())
         waitForExpectations(timeout: 1.0)
     }
 
@@ -65,7 +65,7 @@ class EditorViewMenuTests: XCTestCase {
             ex.fulfill()
         }
 
-        editor.richTextView.select(UIMenuController())
+        editor.richTextView.select(UIView())
         waitForExpectations(timeout: 1.0)
     }
 
@@ -76,7 +76,7 @@ class EditorViewMenuTests: XCTestCase {
             ex.fulfill()
         }
 
-        editor.richTextView.toggleBoldface(UIMenuController())
+        editor.richTextView.toggleBoldface(UIView())
         waitForExpectations(timeout: 1.0)
     }
 
@@ -87,7 +87,7 @@ class EditorViewMenuTests: XCTestCase {
             ex.fulfill()
         }
 
-        editor.richTextView.toggleItalics(UIMenuController())
+        editor.richTextView.toggleItalics(UIView())
         waitForExpectations(timeout: 1.0)
     }
 
@@ -98,7 +98,7 @@ class EditorViewMenuTests: XCTestCase {
             ex.fulfill()
         }
 
-        editor.richTextView.toggleUnderline(UIMenuController())
+        editor.richTextView.toggleUnderline(UIView())
         waitForExpectations(timeout: 1.0)
     }
 
@@ -111,7 +111,7 @@ class EditorViewMenuTests: XCTestCase {
             ex.fulfill()
         }
 
-        editor.richTextView.selectAll(UIMenuController())
+        editor.richTextView.selectAll(UIView())
         XCTAssertEqual(editor.selectedRange, editor.attributedText.fullRange)
         waitForExpectations(timeout: 1.0)
     }

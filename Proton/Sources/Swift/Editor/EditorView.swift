@@ -350,7 +350,10 @@ open class EditorView: UIView {
     /// `EditorView` by an `EditorCommand` or `TextProcessing` conformances.
     public var textColor: UIColor {
         get { defaultTextColor ?? richTextView.defaultTextColor }
-        set { defaultTextColor = newValue }
+        set {
+            defaultTextColor = newValue
+            richTextView.textColor = newValue
+        }
     }
 
     /// Maximum height that the `EditorView` can expand to. After reaching the maximum specified height, the editor becomes scrollable.

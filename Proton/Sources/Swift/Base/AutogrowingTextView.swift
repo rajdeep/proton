@@ -67,9 +67,6 @@ class AutogrowingTextView: UITextView {
         self.isScrollEnabled = (fittingSize.height > bounds.height) || (self.maxHeight > 0 && self.maxHeight < fittingSize.height)
         heightAnchorConstraint.constant = min(fittingSize.height, contentSize.height)
         invalidateIntrinsicContentSize()
-        if !attributedText.attachmentRanges.isEmpty {
-            print("\(heightAnchorConstraint.constant)  \(bounds.size.height)")
-        }
     }
 
     override open func sizeThatFits(_ size: CGSize) -> CGSize {

@@ -20,6 +20,7 @@
 
 import Foundation
 import UIKit
+import ProtonCore
 
 /// Describes an object (typically attachment view) that may change size during the layout pass
 public protocol DynamicBoundsProviding: AnyObject {
@@ -93,8 +94,8 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
     @objc
     var spacer: NSAttributedString {
-        let spacer = isBlockAttachment == true ? "\n" : " "
-        return NSAttributedString(string: spacer)
+        let spacer = isBlockAttachment == true ? NSAttributedString(string: "\n", attributes: [.blockContentType: EditorContentName.newline()]) : NSAttributedString(string: " ")
+        return spacer
     }
     
     @objc

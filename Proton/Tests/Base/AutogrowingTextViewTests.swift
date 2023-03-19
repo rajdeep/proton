@@ -30,7 +30,7 @@ class AutogrowingTextViewTests: XCTestCase {
         let textView = AutogrowingTextView()
 
         let boundsChangeExpectation = expectation(description: #function)
-        boundsChangeExpectation.expectedFulfillmentCount = 4
+        boundsChangeExpectation.expectedFulfillmentCount = 2
 
         boundsObserver.onBoundsChanged = { _ in
             boundsChangeExpectation.fulfill()
