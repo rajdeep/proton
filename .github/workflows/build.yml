@@ -10,7 +10,7 @@ on:
 jobs:
   build:
 
-    runs-on: macos-13
+    runs-on: macos-latest
     strategy:
       matrix: 
         destination: ['platform=iOS Simulator,OS=16.1,name=iPhone 14 Pro']
