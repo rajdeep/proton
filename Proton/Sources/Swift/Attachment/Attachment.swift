@@ -347,9 +347,13 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         } else {
             indent = 0
         }
+
+        // Calculate lineFragmentPadding based on containerEditorView. Using passed-in `textContainer` may result in
+        // incorrect width if bounds are calculated directly on `attributedText` instead of using `textView`.
+        let lineFragmentPadding = containerEditorView.richTextView.textContainer.lineFragmentPadding
         // Account for text leading and trailing margins within the textContainer
         let adjustedContainerSize = CGSize(
-            width: containerEditorView.bounds.size.width - textContainer.lineFragmentPadding * 2 - indent,
+            width: containerEditorView.bounds.size.width - (lineFragmentPadding * 2) - indent,
             height: containerEditorView.bounds.size.height
         )
         let adjustedLineFrag = CGRect(
