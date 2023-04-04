@@ -32,7 +32,7 @@ protocol PanelViewDelegate: AnyObject {
     func panel(_ panel: PanelView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name)
 }
 
-class PanelView: UIView, BlockContent, EditorContentView {
+class PanelView: AttachmentView, EditorContentView {
     let container = UIView()
     let editor: EditorView
     let iconView = UIImageView()
@@ -42,6 +42,8 @@ class PanelView: UIView, BlockContent, EditorContentView {
     var name: EditorContent.Name {
         return .panel
     }
+
+    var type: AttachmentType { .block }
 
     override init(frame: CGRect) {
         self.editor = EditorView(frame: frame)

@@ -20,6 +20,7 @@
 
 import Foundation
 import UIKit
+import ProtonCore
 
 /// Describes an object (typically attachment view) that may change size during the layout pass
 public protocol DynamicBoundsProviding: AnyObject {
@@ -42,14 +43,32 @@ public protocol AttachmentOffsetProviding: AnyObject {
 /// `Attachment` also provides helper functions like `deleteFromContainer` and `rangeInContainer`
 open class Attachment: NSTextAttachment, BoundsObserving {
 
-    private let view: AttachmentContentView?
-    private let content: AttachmentContent
+    private var view: AttachmentContentView? = nil
+    private var content: AttachmentContent = .image(UIImage())
+    private var size: AttachmentSize? = nil
+    private var isBlockAttachment: Bool = false
+    private let selectionView = SelectionView()
+    private(set) var cachedContainerSize: CGSize?
+    private var indexInContainer: Int?
+
+    var cachedBounds: CGRect?
 
     /// Governs if the attachment should be selected before being deleted. When `true`, tapping the backspace key the first time on range containing `Attachment` will only
     /// select the attachment i.e. show as highlighted. Tapping the backspace again will delete the attachment. If the value is `false`, the attachment will be deleted on the first backspace itself.
     public var selectBeforeDelete = false
 
-    let isBlockAttachment: Bool
+    /// Attributed string representation of the `Attachment`. This can be used directly to replace a range of text in `EditorView`
+    /// ### Usage Example ###
+    /// ```
+    /// let attachment = Attachment(PanelView(), size: .fullWidth)
+    /// let attrString = NSMutableAttributedString(string: "This is a test string")
+    /// attrString.append(attachment.string)
+    /// editor.attributedText = attrString
+    /// ```
+    public var string: NSAttributedString {
+       return stringWithAttributes(attributes: attributes)
+    }
+
     var isImageBasedAttachment: Bool {
         self.view == nil
     }
@@ -61,8 +80,6 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     var isRendered: Bool {
         return view?.superview != nil
     }
-
-    private let selectionView = SelectionView()
 
     var isSelected: Bool = false {
         didSet {
@@ -77,8 +94,8 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
     @objc
     var spacer: NSAttributedString {
-        let spacer = isBlockAttachment == true ? "\n" : " "
-        return NSAttributedString(string: spacer)
+        let spacer = isBlockAttachment == true ? NSAttributedString(string: "\n", attributes: [.blockContentType: EditorContentName.newline()]) : NSAttributedString(string: " ")
+        return spacer
     }
     
     @objc
@@ -86,34 +103,6 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         return isBlockAttachment == true ? .newlines : .whitespaces
     }
 
-    @objc
-    func stringWithSpacers(appendPrev: Bool, appendNext: Bool) -> NSAttributedString {
-        let updatedString = NSMutableAttributedString()
-//        if appendPrev {
-//            updatedString.append(spacer)
-//        }
-        updatedString.append(string)
-        if appendNext {
-            updatedString.append(spacer)
-        }
-        return updatedString
-    }
-
-    /// Attributed string representation of the `Attachment`. This can be used directly to replace a range of text in `EditorView`
-    /// ### Usage Example ###
-    /// ```
-    /// let attachment = Attachment(PanelView(), size: .fullWidth)
-    /// let attrString = NSMutableAttributedString(string: "This is a test string")
-    /// attrString.append(attachment.string)
-    /// editor.attributedText = attrString
-    /// ```
-    public var string: NSAttributedString {
-        let string = NSMutableAttributedString(attachment: self)
-        
-        string.addAttributes(attributes, range: string.fullRange)
-        return string
-    }
-    
     var attributes: [NSAttributedString.Key: Any] {
         let value = name ?? EditorContent.Name.unknown
         let isBlockAttachment = self.isBlockAttachment == true
@@ -123,6 +112,19 @@ open class Attachment: NSTextAttachment, BoundsObserving {
             .isBlockAttachment: isBlockAttachment,
             .isInlineAttachment: !isBlockAttachment
         ]
+    }
+
+    var isContainerDependentSizing: Bool {
+        guard contentView as? DynamicBoundsProviding == nil else {
+            return false
+        }
+
+        switch size {
+        case .fullWidth, .percent, .matchContent:
+            return true
+        default:
+            return false
+        }
     }
 
     final var frame: CGRect? {
@@ -138,6 +140,9 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     /// `EditorView` containing this attachment
     public private(set) weak var containerEditorView: EditorView?
 
+    /// Offsets for the attachment. Can be used to align attachment with the text. Defaults to `.zero`
+    public weak var offsetProvider: AttachmentOffsetProviding?
+
     /// Name of the content for the `EditorView`
     /// - SeeAlso:
     /// `EditorView`
@@ -149,16 +154,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         return containerEditorView?.richTextView
     }
 
-    /// Causes invalidation of layout of the attachment when the containing view bounds are changed
-    /// - Parameter bounds: Updated bounds
-    /// - SeeAlso:
-    /// `BoundsObserving`
-    public func didChangeBounds(_ bounds: CGRect) {
-        containerTextView?.invalidateIntrinsicContentSize()
-        invalidateLayout()
-    }
-
-    var contentView: UIView? {
+    public private(set) var contentView: UIView? {
         get { view?.subviews.first }
         set {
             view?.subviews.forEach { $0.removeFromSuperview() }
@@ -180,63 +176,39 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
     /// Initializes an attachment with the image provided.
     /// - Note: Image and Size can be updated by invoking `updateImage(image: size:)` at any time
-    /// - Parameter image: Image to be used to display in the attachment. Image is rendered as Block content.
-    public init(image: BlockAttachmentImage) {
-        self.content = .image(image.image)
-        self.isBlockAttachment = true
-        self.view = nil
-        self.size = nil
-        super.init(data: nil, ofType: nil)
-        self.image = image.image
-        self.bounds = CGRect(origin: .zero, size: image.size)
-    }
-
-    /// Initializes an attachment with the image provided.
-    /// - Note: Image and Size can be updated by invoking `updateImage(image: size:)` at any time
     /// - Parameter image: Image to be used to display in the attachment.  Image is rendered as Inline content.
-    public init(image: InlineAttachmentImage) {
+    public init(image: AttachmentImage) {
+        super.init(data: nil, ofType: nil)
+        setup(image: image)
+    }
+
+    /// Initializes the attachment with the given content view
+    /// - Parameters:
+    ///   - contentView: Content view to be hosted within the attachment
+    ///   - size: Size rule for attachment
+    public init(_ contentView: AttachmentView, size: AttachmentSize) {
+        super.init(data: nil, ofType: nil)
+        setup(contentView: contentView, size: size)
+    }
+
+    private func setup(contentView: AttachmentView, size: AttachmentSize) {
+        let view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
+        self.view = view
+        self.size = size
+        self.image = nil
+        self.isBlockAttachment = contentView.type == .block
+        self.content = .view(view, size: size)
+        self.view?.attachment = self
+        initialize(contentView: contentView)
+    }
+
+    private func setup(image: AttachmentImage) {
         self.content = .image(image.image)
-        self.isBlockAttachment = false
+        self.isBlockAttachment = image.type == .block
         self.view = nil
         self.size = nil
-        super.init(data: nil, ofType: nil)
         self.image = image.image
         self.bounds = CGRect(origin: .zero, size: image.size)
-    }
-
-    let size: AttachmentSize?
-    // This cannot be made convenience init as it prevents this being called from a class that inherits from `Attachment`
-    /// Initializes the attachment with the given content view
-    /// - Parameters:
-    ///   - contentView: Content view to be hosted within the attachment
-    ///   - size: Size rule for attachment
-    public init<AttachmentView: UIView & BlockContent>(_ contentView: AttachmentView, size: AttachmentSize) {
-        let view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
-        self.view = view
-        self.size = size
-        self.isBlockAttachment = true
-        self.content = .view(view, size: size)
-        super.init(data: nil, ofType: nil)
-        // TODO: revisit - can this be done differently i.e. not setting afterwards
-        self.view?.attachment = self
-        initialize(contentView: contentView)
-    }
-
-    // This cannot be made convenience init as it prevents this being called from a class that inherits from `Attachment`
-    /// Initializes the attachment with the given content view
-    /// - Parameters:
-    ///   - contentView: Content view to be hosted within the attachment
-    ///   - size: Size rule for attachment
-    public init<AttachmentView: UIView & InlineContent>(_ contentView: AttachmentView, size: AttachmentSize) {
-        let view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
-        self.view = view
-        self.size = size
-        self.isBlockAttachment = false
-        self.content = .view(view, size: size)
-        super.init(data: nil, ofType: nil)
-        // TODO: revisit - can this be done differently i.e. not setting afterwards
-        self.view?.attachment = self
-        initialize(contentView: contentView)
     }
 
     private func initialize(contentView: AttachmentView) {
@@ -247,9 +219,6 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         // Required to disable rendering of default attachment image on iOS 13+
         self.image = UIColor.clear.image()
     }
-
-    /// Offsets for the attachment. Can be used to align attachment with the text. Defaults to `.zero`
-    public weak var offsetProvider: AttachmentOffsetProviding?
 
     private func setup() {
         guard let contentView = contentView else {
@@ -292,6 +261,16 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         view?.removeFromSuperview()
     }
 
+    /// Causes invalidation of layout of the attachment when the containing view bounds are changed
+    /// - Parameter bounds: Updated bounds
+    /// - SeeAlso:
+    /// `BoundsObserving`
+    public func didChangeBounds(_ bounds: CGRect, oldBounds: CGRect) {
+        // check how view.bounds can be checked against attachment.bounds
+        guard oldBounds != .zero else { return }
+        invalidateLayout()
+    }
+
     /// Removes this attachment from the `EditorView` it is contained in.
     public func removeFromContainer() {
         guard let containerTextView = containerTextView,
@@ -306,7 +285,8 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
     /// Range of this attachment in it's container
     public func rangeInContainer() -> NSRange? {
-        return containerTextView?.attributedText.rangeFor(attachment: self)
+        guard let charIndex = indexInContainer else { return nil }
+        return NSRange(location: charIndex, length: 1)
     }
 
     /// Invoked when attributes are added in the containing `EditorView` in the range of string in which this attachment is contained.
@@ -330,18 +310,6 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         fatalError("init(coder:) has not been implemented")
     }
 
-    var cachedBounds: CGRect?
-    var cachedContainerSize: CGSize?
-
-    var isContainerDependentSizing: Bool {
-        switch size {
-        case .fullWidth, .percent, .matchContent:
-            return true
-        default:
-            return false
-        }
-    }
-
     /// Returns the calculated bounds for the attachment based on size rule and content view provided during initialization.
     /// - Parameters:
     ///   - textContainer: Text container for attachment
@@ -349,12 +317,15 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     ///   - position: Position in the text container.
     ///   - charIndex: Character index
     public override func attachmentBounds(for textContainer: NSTextContainer?, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGRect {
+        self.indexInContainer = charIndex
+
         guard let textContainer = textContainer,
               textContainer.size.height > 0,
               textContainer.size.width > 0
         else { return .zero }
 
         if isImageBasedAttachment {
+            cachedBounds = bounds
             return bounds
         }
 
@@ -377,9 +348,13 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         } else {
             indent = 0
         }
+
+        // Calculate lineFragmentPadding based on containerEditorView. Using passed-in `textContainer` may result in
+        // incorrect width if bounds are calculated directly on `attributedText` instead of using `textView`.
+        let lineFragmentPadding = containerEditorView.richTextView.textContainer.lineFragmentPadding
         // Account for text leading and trailing margins within the textContainer
         let adjustedContainerSize = CGSize(
-            width: containerEditorView.bounds.size.width - textContainer.lineFragmentPadding * 2 - indent,
+            width: containerEditorView.bounds.size.width - (lineFragmentPadding * 2) - indent,
             height: containerEditorView.bounds.size.height
         )
         let adjustedLineFrag = CGRect(
@@ -394,25 +369,30 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         if let boundsProviding = contentView as? DynamicBoundsProviding {
             size = boundsProviding.sizeFor(attachment: self, containerSize: adjustedContainerSize, lineRect: adjustedLineFrag)
         } else {
-            size = contentView?.bounds.integral.size ?? view.bounds.integral.size
+            if let contentViewSize = contentView?.bounds.integral.size,
+               contentViewSize != .zero {
+                size = contentViewSize
+            } else {
+                size = view.bounds.integral.size
+            }
 
             if (size.width == 0 || size.height == 0),
                let fittingSize = contentView?.systemLayoutSizeFitting(adjustedContainerSize) {
                 size = fittingSize
             }
-        }
 
-        switch attachmentSize {
-        case .matchContent:
-            size = contentView?.bounds.integral.size ?? view.bounds.integral.size
-        case let .fixed(width):
-            size.width = min(size.width, width)
-        case .fullWidth:
-            size.width = adjustedContainerSize.width
-        case let .range(minWidth, maxWidth):
-            size.width = max(minWidth, min(maxWidth, size.width))
-        case let .percent(value):
-            size.width = adjustedContainerSize.width * (value / 100.0)
+            switch attachmentSize {
+            case .matchContent:
+                break
+            case let .fixed(width):
+                size.width = width
+            case .fullWidth:
+                size.width = adjustedContainerSize.width
+            case let .range(minWidth, maxWidth):
+                size.width = max(minWidth, min(maxWidth, size.width))
+            case let .percent(value):
+                size.width = adjustedContainerSize.width * (value / 100.0)
+            }
         }
 
         let offset = offsetProvider?.offset(for: self, in: textContainer, proposedLineFragment: adjustedLineFrag, glyphPosition: position, characterIndex: charIndex) ?? .zero
@@ -420,25 +400,25 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         self.bounds = CGRect(origin: offset, size: size)
         cachedBounds = self.bounds
         cachedContainerSize = containerEditorView.bounds.size
+        var frame = self.frame?.offsetBy(dx: offset.x, dy: offset.y)
+        frame?.size = bounds.size
+
+        self.frame = frame ?? view.frame
         return self.bounds
     }
 
-    /// Updated the image and/or size of the current attachment.
-    /// - Note: This is a no-op on View based Attachment created by providing an Inline or Block view.
-    /// - Parameters:
-    ///   - image: Image to update attachment with. Omit to use the existing image.
-    ///   - size: New size of the image attachment. Omit to use the existing size.
-    public func updateImage(_ image: UIImage? = nil, size: CGSize? = nil) {
-        guard isImageBasedAttachment else {
-            assertionFailure("Image/Size can only be updated for image based attachments")
-            return
-        }
-        if let image = image {
-            self.image = image
-        }
-        if let size = size {
-            self.bounds = CGRect(origin: bounds.origin, size: size)
-        }
+    public func update(with image: AttachmentImage) {
+        self.contentView?.removeFromSuperview()
+        setup(image: image)
+        guard let range = rangeInContainer() else { return }
+        let attributes = containerEditorView?.attributedText.attributes(at: range.location, effectiveRange: nil) ?? self.attributes
+        containerEditorView?.replaceCharacters(in: range, with: stringWithAttributes(attributes: attributes))
+    }
+
+    public func update(_ contentView: AttachmentView, size: AttachmentSize) {
+        self.contentView?.removeFromSuperview()
+        setup(contentView: contentView, size: size)
+        invalidateLayout()
     }
 
     func setContainerEditor(_ editor: EditorView) {
@@ -455,6 +435,12 @@ open class Attachment: NSTextAttachment, BoundsObserving {
            editorContentView.delegate == nil {
             editorContentView.delegate = editorView.delegate
         }
+    }
+
+    func stringWithAttributes(attributes: [NSAttributedString.Key: Any]) -> NSAttributedString {
+        let string = NSMutableAttributedString(attachment: self)
+        string.addAttributes(attributes, range: string.fullRange)
+        return string
     }
 }
 

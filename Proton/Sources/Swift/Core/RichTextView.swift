@@ -163,14 +163,14 @@ class RichTextView: AutogrowingTextView {
         selectedTextRange = rangeToSet?.toTextRange(textInput: self) ?? oldRange
     }
 
-    init(frame: CGRect = .zero, context: RichTextViewContext) {
+    init(frame: CGRect = .zero, context: RichTextViewContext, allowAutogrowing: Bool = false) {
         let textContainer = TextContainer()
         let layoutManager = LayoutManager()
 
         layoutManager.addTextContainer(textContainer)
         richTextStorage.addLayoutManager(layoutManager)
 
-        super.init(frame: frame, textContainer: textContainer)
+        super.init(frame: frame, textContainer: textContainer, allowAutogrowing: allowAutogrowing)
         layoutManager.delegate = self
         layoutManager.layoutManagerDelegate = self
         textContainer.textView = self
@@ -404,7 +404,10 @@ class RichTextView: AutogrowingTextView {
     }
 
     func replaceCharacters(in range: NSRange, with attrString: NSAttributedString) {
-        textStorage.replaceCharacters(in: range, with: attrString)
+        let string = NSMutableAttributedString(attributedString: attrString)
+        let newLineRanges = string.rangesOf(characterSet: .newlines)
+        newLineRanges.forEach { string.addAttributes([.blockContentType: EditorContentName.newline()], range: $0)}
+        textStorage.replaceCharacters(in: range, with: string)
     }
 
     func replaceCharacters(in range: NSRange, with string: String) {
@@ -443,6 +446,10 @@ class RichTextView: AutogrowingTextView {
 
     func contents(in range: NSRange? = nil) -> AnySequence<EditorContent> {
         return self.attributedText.enumerateContents(in: range)
+    }
+
+    func setAttributes(_ attrs: [NSAttributedString.Key: Any], range: NSRange) {
+        textStorage.setAttributes(attrs, range: range)
     }
 
     func addAttributes(_ attrs: [NSAttributedString.Key: Any], range: NSRange) {

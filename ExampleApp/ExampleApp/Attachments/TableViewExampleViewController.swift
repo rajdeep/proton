@@ -174,7 +174,7 @@ class EditorCell: UITableViewCell {
 
 // Required for nested editors to call invalidation on the tableview cell size
 extension EditorCell: BoundsObserving {
-    func didChangeBounds(_ bounds: CGRect) {
+    func didChangeBounds(_ bounds: CGRect, oldBounds: CGRect) {
         delegate?.editorCell(self, didChangeSize: bounds.size)
     }
 }

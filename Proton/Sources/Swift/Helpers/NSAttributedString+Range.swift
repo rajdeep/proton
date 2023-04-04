@@ -70,6 +70,8 @@ public extension NSAttributedString {
     ///   - location: Starting location
     ///   - reverseLookup: When true, look up is carried out in reverse direction. Default is false.
     func rangeOf(attribute: NSAttributedString.Key, startingLocation location: Int, reverseLookup: Bool = false) -> NSRange? {
+        guard location < length else { return nil }
+
         let range = reverseLookup ? NSRange(location: 0, length: location) : NSRange(location: location, length: length - location)
         let options = reverseLookup ? EnumerationOptions.reverse : []
 

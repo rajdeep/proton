@@ -24,48 +24,53 @@ import UIKit
 class AutogrowingTextView: UITextView {
 
     var maxHeight: CGFloat = 0
+    private var allowAutogrowing: Bool
     weak var boundsObserver: BoundsObserving?
-    var maxHeightConstraint: NSLayoutConstraint!
-    var heightAnchorConstraint: NSLayoutConstraint!
+    private var maxHeightConstraint: NSLayoutConstraint!
+    private var heightAnchorConstraint: NSLayoutConstraint!
+    private var isSizeRecalculationRequired = true
 
-    override init(frame: CGRect, textContainer: NSTextContainer?) {
+    init(frame: CGRect = .zero, textContainer: NSTextContainer? = nil, allowAutogrowing: Bool = false) {
+        self.allowAutogrowing = allowAutogrowing
         super.init(frame: frame, textContainer: textContainer)
         isScrollEnabled = false
         heightAnchorConstraint = heightAnchor.constraint(greaterThanOrEqualToConstant: contentSize.height)
         heightAnchorConstraint.priority = .defaultHigh
-        NSLayoutConstraint.activate([
-            heightAnchorConstraint
-        ])
+        if allowAutogrowing {
+            NSLayoutConstraint.activate([
+                heightAnchorConstraint
+            ])
+        }
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override var isScrollEnabled: Bool {
-        didSet {
-            // Invalidate intrinsic content size when scrolling is disabled again as a result of text
-            // getting cleared/removed. In absence of the following code, the textview does not
-            // resize when cleared until a character is typed in.
-            guard isScrollEnabled == false,
-                  oldValue == true
-            else { return }
-            
-            invalidateIntrinsicContentSize()
-        }
-    }
-
     override func layoutSubviews() {
         super.layoutSubviews()
-        guard maxHeight != .greatestFiniteMagnitude else { return }
+        guard allowAutogrowing, maxHeight != .greatestFiniteMagnitude else { return }
+        // Required to reset the size if content is removed
+        if contentSize.height <= frame.height, isEditable {
+            recalculateHeight()
+            invalidateIntrinsicContentSize()
+            return
+        }
+
+        guard isSizeRecalculationRequired else { return }
+        isSizeRecalculationRequired = false
+        recalculateHeight()
+    }
+
+    private func recalculateHeight() {
         let bounds = self.bounds.integral
         let fittingSize = self.calculatedSize(attributedText: attributedText, frame: frame.size, textContainerInset: textContainerInset)
         self.isScrollEnabled = (fittingSize.height > bounds.height) || (self.maxHeight > 0 && self.maxHeight < fittingSize.height)
-        heightAnchorConstraint.constant = fittingSize.height
+        heightAnchorConstraint.constant = min(fittingSize.height, contentSize.height)
     }
 
     override open func sizeThatFits(_ size: CGSize) -> CGSize {
-        var fittingSize = calculatedSize(attributedText: attributedText, frame: frame.size, textContainerInset: textContainerInset)
+        var fittingSize = calculatedSize(attributedText: attributedText, frame: size, textContainerInset: textContainerInset)
         if maxHeight > 0 {
             fittingSize.height = min(maxHeight, fittingSize.height)
         }
@@ -74,8 +79,9 @@ class AutogrowingTextView: UITextView {
 
     override var bounds: CGRect {
         didSet {
-            guard oldValue.height != bounds.height else { return }
-            boundsObserver?.didChangeBounds(bounds)
+            guard ceil(oldValue.height) != ceil(bounds.height) else { return }
+            boundsObserver?.didChangeBounds(bounds, oldBounds: oldValue)
+            isSizeRecalculationRequired = true
         }
     }
 

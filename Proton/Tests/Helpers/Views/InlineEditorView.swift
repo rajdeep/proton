@@ -23,8 +23,10 @@ import UIKit
 
 import Proton
 
-class InlineEditorView: EditorView, InlineContent {
+class InlineEditorView: EditorView, AttachmentViewIdentifying {
     public var name: EditorContent.Name {
         return EditorContent.Name("Editor")
     }
+
+    var type: AttachmentType { .inline }
 }

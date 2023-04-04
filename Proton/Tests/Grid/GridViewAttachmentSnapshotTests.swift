@@ -93,7 +93,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
-        attachment.view.cells[0].editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Test long text in the first cell"))
+        attachment.view.cells[0].editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Test some long text in the first cell"))
 
         viewController.render(size: CGSize(width: 400, height: 350))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
@@ -123,7 +123,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let cell01Editor = attachment.view.cells[1].editor
 
         // Render text which expands the first row
-        cell00Editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Test some text cell"))
+        cell00Editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Test some long text in the cell"))
         viewController.render(size: CGSize(width: 400, height: 350))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 

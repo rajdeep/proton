@@ -577,7 +577,7 @@ class EditorViewTests: XCTestCase {
 
     func testRangeInContainerForImageBasedAttachment() throws {
         let editor = EditorView()
-        let image = InlineAttachmentImage(name: EditorContentName("image"), image: UIImage(systemName: "car")!, size: CGSize(width: 40, height: 40))
+        let image = AttachmentImage(name: EditorContentName("image"), image: UIImage(systemName: "car")!, size: CGSize(width: 40, height: 40), type: .inline)
         let attachment = Attachment(image: image)
 
         editor.replaceCharacters(in: .zero, with: "In textView ")

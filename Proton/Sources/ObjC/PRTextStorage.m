@@ -55,10 +55,16 @@
 }
 
 - (id)attribute:(NSAttributedStringKey)attrName atIndex:(NSUInteger)location effectiveRange:(NSRangePointer)range {
+    if (_storage.length <= location ) {
+        return nil;
+    }
     return [_storage attribute:attrName atIndex:location effectiveRange:range];
 }
 
 - (NSDictionary<NSString *, id> *)attributesAtIndex:(NSUInteger)location effectiveRange:(NSRangePointer)effectiveRange {
+    if (_storage.length <= location ) {
+        return nil;
+    }
     return [_storage attributesAtIndex:location effectiveRange:effectiveRange];
 }
 
@@ -117,22 +123,17 @@
 }
 
 - (void)setAttributes:(NSDictionary<NSString *, id> *)attrs range:(NSRange)range {
+    if ((range.location + range.length) > _storage.length) {
+        // Out of bounds
+        return;
+    }
+
     [self beginEditing];
 
     NSDictionary<NSAttributedStringKey, id> *updatedAttributes = [self applyingDefaultFormattingIfRequiredToAttributes:attrs];
     [_storage setAttributes:updatedAttributes range:range];
 
-    NSRange newlineRange = [_storage.string rangeOfCharacterFromSet:NSCharacterSet.newlineCharacterSet];
-    while (newlineRange.location != NSNotFound) {
-        [_storage addAttribute:@"_blockContentType" value:PREditorContentName.newlineName range:newlineRange];
-        NSUInteger remainingLocation = newlineRange.location + newlineRange.length;
-        NSUInteger remainingLength = _storage.length - remainingLocation;
-        newlineRange = [_storage.string rangeOfCharacterFromSet:NSCharacterSet.newlineCharacterSet
-                                                        options:0
-                                                          range:NSMakeRange(remainingLocation, remainingLength)];
-    }
-
-    [_storage fixAttributesInRange:NSMakeRange(0, _storage.length)];
+    [_storage fixAttributesInRange: range];
     [self edited:NSTextStorageEditedAttributes range:range changeInLength:0];
     [self endEditing];
 }
@@ -155,6 +156,11 @@
 }
 
 - (void)addAttributes:(NSDictionary<NSAttributedStringKey, id> *)attrs range:(NSRange)range {
+    if ((range.location + range.length) > _storage.length) {
+        // Out of bounds
+        return;
+    }
+
     [self beginEditing];
     [_storage addAttributes:attrs range:range];
     [_storage fixAttributesInRange:NSMakeRange(0, _storage.length)];
@@ -163,6 +169,11 @@
 }
 
 - (void)removeAttributes:(NSArray<NSAttributedStringKey> *_Nonnull)attrs range:(NSRange)range {
+    if ((range.location + range.length) > _storage.length) {
+        // Out of bounds
+        return;
+    }
+
     [self beginEditing];
     for (NSAttributedStringKey attr in attrs) {
         [_storage removeAttribute:attr range:range];
@@ -174,12 +185,22 @@
 }
 
 - (void)removeAttribute:(NSAttributedStringKey)name range:(NSRange)range {
+    if ((range.location + range.length) > _storage.length) {
+        // Out of bounds
+        return;
+    }
+
     [_storage removeAttribute:name range:range];
 }
 
 #pragma mark - Private
 
 - (void)fixMissingAttributesForDeletedAttributes:(NSArray<NSAttributedStringKey> *)attrs range:(NSRange)range {
+    if ((range.location + range.length) > _storage.length) {
+        // Out of bounds
+        return;
+    }
+
     if ([attrs containsObject:NSForegroundColorAttributeName]) {
         [_storage addAttribute:NSForegroundColorAttributeName value:self.defaultTextColor range:range];
     }

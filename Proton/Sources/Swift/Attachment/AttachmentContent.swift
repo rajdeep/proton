@@ -41,44 +41,27 @@ class AttachmentContentView: UIView {
     }
 }
 
-/// Describes an image of Block Content type
-public struct BlockAttachmentImage: BlockContent {
+/// Describes an image for which can be used in an `Attachment`
+public struct AttachmentImage: AttachmentViewIdentifying {
     /// Content name for the image
     public let name: EditorContent.Name
     /// Image content
     public let image: UIImage
     /// Size of the image
     public let size: CGSize
+    /// Denotes if the image is block content or an inline
+    public var type: AttachmentType
 
     /// Initializes the Block Content image
     /// - Parameters:
     ///   - name: Content name
     ///   - image: Image
     ///   - size: Size of the image
-    public init(name: EditorContent.Name, image: UIImage, size: CGSize) {
+    ///   - isBlockContent: Determines if image is a block content
+    public init(name: EditorContent.Name, image: UIImage, size: CGSize, type: AttachmentType) {
         self.name = name
         self.image = image
         self.size = size
-    }
-}
-
-/// Describes an image of Inline Content type
-public struct InlineAttachmentImage: InlineContent {
-    /// Content name for the image
-    public let name: EditorContent.Name
-    /// Image content
-    public let image: UIImage
-    /// Size of the image
-    public let size: CGSize
-
-    /// Initializes the Block Content image
-    /// - Parameters:
-    ///   - name: Content name
-    ///   - image: Image
-    ///   - size: Size of the image
-    public init(name: EditorContent.Name, image: UIImage, size: CGSize) {
-        self.name = name
-        self.image = image
-        self.size = size
+        self.type = type
     }
 }

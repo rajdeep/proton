@@ -23,13 +23,15 @@ import UIKit
 
 import Proton
 
-class PanelView: UIView, BlockContent, EditorContentView {
+class PanelView: AttachmentView, EditorContentView {
     let editor: EditorView
     let iconView = UIImageView()
 
     var name: EditorContent.Name {
         return EditorContent.Name("panel")
     }
+
+    var type: AttachmentType { .block }
 
     init(context: EditorViewContext) {
         self.editor = EditorView(frame: .zero, context: context)

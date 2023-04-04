@@ -234,7 +234,7 @@ public class GridCell {
 }
 
 extension GridCell: BoundsObserving {
-    public func didChangeBounds(_ bounds: CGRect) {
+    public func didChangeBounds(_ bounds: CGRect, oldBounds: CGRect) {
         delegate?.cell(self, didChangeBounds: bounds)
     }
 }

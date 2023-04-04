@@ -71,3 +71,11 @@ public extension NSRange {
         return NSRange(location: self.location + shift, length: length)
     }
 }
+
+extension NSRange {
+    func clamped(upperBound: Int) -> NSRange {
+        let clampedLocation = max(min(location, upperBound), 0)
+        let clampedLength = max(min(length, upperBound - clampedLocation), 0)
+        return NSRange(location: clampedLocation, length: clampedLength)
+    }
+}
