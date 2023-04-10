@@ -83,7 +83,12 @@ public class ListCommand: EditorCommand {
         }
 
         guard selectedRange.length > 0 else {
-            ListTextProcessor().createListItemInANewLine(editor: editor, editedRange: selectedRange, indentMode: .indent, attributeValue: attributeValue)
+            if editor.isEmpty ||
+                editor.attributedText.attribute(.listItem, at: max(0, editor.selectedRange.location - 1), effectiveRange: nil) == nil {
+                ListTextProcessor().createListItemInANewLine(editor: editor, editedRange: selectedRange, indentMode: .indent, attributeValue: attributeValue)
+            } else {
+                ListTextProcessor().exitList(editor: editor)
+            }
             return
         }
 

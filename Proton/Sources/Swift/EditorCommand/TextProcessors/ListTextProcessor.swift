@@ -100,6 +100,33 @@ public class ListTextProcessor: TextProcessing {
         }
     }
 
+    func exitList(editor: EditorView) {
+        guard editor.isEmpty == false,
+            let currentContentLineRange = editor.contentLinesInRange(editor.selectedRange).first?.range,
+              editor.attributedText.attribute(
+                  .listItem,
+                  at: max(0, currentContentLineRange.endLocation - 1),
+                  effectiveRange: nil) != nil
+        else { return }
+
+        terminateList(editor: editor, editedRange: currentContentLineRange)
+    }
+
+    private func terminateList(editor: EditorView, editedRange: NSRange) {
+        editor.typingAttributes[.listItem] = nil
+        self.updateListItemIfRequired(
+            editor: editor,
+            editedRange: editedRange,
+            indentMode: .outdent,
+            attributeValue: nil
+        )
+        let rangeToReplace = NSRange(location: editedRange.location + 1, length: 1)
+        editor.replaceCharacters(in: rangeToReplace, with: "")
+        if editor.selectedRange.endLocation >= rangeToReplace.endLocation {
+            editor.selectedRange = NSRange(location: editor.selectedRange.location - 1, length: 0)
+        }
+    }
+
     private func handleShiftReturn(editor: EditorView, editedRange: NSRange, attrs: [NSAttributedString.Key: Any]) {
         var attributes = attrs
         attributes[.skipNextListMarker] = 1
@@ -141,12 +168,7 @@ public class ListTextProcessor: TextProcessing {
         if (currentLine.text.length == 0 || currentLine.text.string == ListTextProcessor.blankLineFiller),
            attributeValue != nil {
             executeOnDidProcess = { [weak self] editor in
-                self?.updateListItemIfRequired(editor: editor, editedRange: currentLine.range, indentMode: .outdent, attributeValue: attributeValue)
-                let rangeToReplace = NSRange(location: currentLine.range.location + 1, length: 1)
-                editor.replaceCharacters(in: rangeToReplace, with: "")
-                if editor.selectedRange.endLocation >= rangeToReplace.endLocation {
-                    editor.selectedRange = NSRange(location: editor.selectedRange.location - 1, length: 0)
-                }
+                self?.terminateList(editor: editor, editedRange: currentLine.range)
             }
         }
     }
