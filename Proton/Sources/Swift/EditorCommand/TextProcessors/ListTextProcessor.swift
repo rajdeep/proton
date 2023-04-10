@@ -142,7 +142,11 @@ public class ListTextProcessor: TextProcessing {
            attributeValue != nil {
             executeOnDidProcess = { [weak self] editor in
                 self?.updateListItemIfRequired(editor: editor, editedRange: currentLine.range, indentMode: .outdent, attributeValue: attributeValue)
-                editor.replaceCharacters(in: NSRange(location: currentLine.range.location + 1, length: 1), with: "")
+                let rangeToReplace = NSRange(location: currentLine.range.location + 1, length: 1)
+                editor.replaceCharacters(in: rangeToReplace, with: "")
+                if editor.selectedRange.endLocation >= rangeToReplace.endLocation {
+                    editor.selectedRange = NSRange(location: editor.selectedRange.location - 1, length: 0)
+                }
             }
         }
     }
