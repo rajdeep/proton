@@ -78,6 +78,18 @@ class RichTextView: AutogrowingTextView {
         }
     }
 
+    override var contentInset: UIEdgeInsets {
+        didSet {
+            updatePlaceholderVisibility()
+        }
+    }
+
+    override var textContainerInset: UIEdgeInsets {
+        didSet {
+            updatePlaceholderVisibility()
+        }
+    }
+
     private func adjustedTextBlockRangeOnSelectionChange(oldRange: NSRange?, newRange: NSRange?) -> NSRange? {
         guard let old = oldRange,
               let new = newRange,
