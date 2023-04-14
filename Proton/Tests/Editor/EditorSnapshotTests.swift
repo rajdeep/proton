@@ -41,6 +41,22 @@ class EditorSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testUpdatesPlaceholderWithInsets() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.contentInset = .zero
+        editor.textContainerInset = .zero
+        let font = UIFont(name: "Verdana", size: 17) ?? UIFont()
+        let placeholderString = NSMutableAttributedString(string: "Placeholder text", attributes: [
+            NSAttributedString.Key.font: font,
+            NSAttributedString.Key.foregroundColor: UIColor.lightGray
+        ])
+
+        editor.placeholderText = placeholderString
+        viewController.render(size: CGSize(width: 300, height: 60))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     func testRendersMatchContentAttachment() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
