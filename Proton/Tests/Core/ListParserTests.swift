@@ -21,7 +21,7 @@
 import Foundation
 import XCTest
 
-@testable import Proton
+import Proton
 
 class ListParserTests: XCTestCase {
 

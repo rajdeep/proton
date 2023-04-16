@@ -33,6 +33,17 @@ public struct ListItem {
 
     /// Attribute value of the list item.
     public let attributeValue: Any
+
+    /// Creates a `ListItem`
+    /// - Parameters:
+    ///   - text: Attributed value for text in `ListItem`
+    ///   - level: Indentation level of `ListItem`.
+    ///   - attributeValue: Attribute value to be applied to entire text range of `ListItem`
+    public init(text: NSAttributedString, level: Int, attributeValue: Any) {
+        self.text = text
+        self.level = level
+        self.attributeValue = attributeValue
+    }
 }
 
 /// Provides helper function to convert between `NSAttributedString` and `[ListItem]`
