@@ -23,7 +23,8 @@ let package = Package(
         .iOS(.v11),
     ],
     products: [
-        .library(name: "Proton", targets: ["Proton"])
+        .library(name: "Proton", targets: ["Proton"]),
+        .library(name: "ProtonCore", targets: ["ProtonCore"])
     ],
     dependencies: [
         .package(name: "SnapshotTesting", url: "https://github.com/pointfreeco/swift-snapshot-testing.git", .branch("master"))
