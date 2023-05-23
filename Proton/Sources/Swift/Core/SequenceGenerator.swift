@@ -53,8 +53,13 @@ public struct DiamondBulletSequenceGenerator: SequenceGenerator {
 public struct SquareBulletSequenceGenerator: SequenceGenerator {
     public init() { }
     public func value(at index: Int) -> ListLineMarker {
-        let font = UIFont.preferredFont(forTextStyle: .body)
-        let text = "▣"
-        return .string(NSAttributedString(string: text, attributes: [.font: font]))
+        if #available(iOSApplicationExtension 13.0, *),
+           let image = UIImage(systemName: "square.fill") {
+            return .image(image, size: CGSize(width: 5, height: 5))
+        } else {
+            let font = UIFont.preferredFont(forTextStyle: .body)
+            let text = "▣"
+            return .string(NSAttributedString(string: text, attributes: [.font: font]))
+        }
     }
 }
