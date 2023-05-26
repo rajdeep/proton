@@ -86,13 +86,17 @@ class GridContentView: UIScrollView {
         }
     }
 
-    init(config: GridConfiguration) {
+    init(config: GridConfiguration, cells: [GridCell]) {
         self.config = config
-        let cells = Self.generateCells(config: config)
         grid = Grid(config: config, cells: cells)
         super.init(frame: .zero)
         grid.delegate = self
         setup()
+    }
+
+    convenience init(config: GridConfiguration) {
+        let cells = Self.generateCells(config: config)
+        self.init(config: config, cells: cells)
     }
 
     required init?(coder: NSCoder) {

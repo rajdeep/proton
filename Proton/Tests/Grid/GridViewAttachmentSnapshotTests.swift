@@ -1255,4 +1255,200 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 400, height: 200))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+    func testRendersGridViewFromCells() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(200)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+
+        var cells = [GridCell]()
+        for row in 0..<2 {
+            for col in 0..<2 {
+                let cell = GridCell(rowSpan: [row], columnSpan: [col], initialHeight: 20)
+                cell.editor.attributedText = NSAttributedString(string: "{\(row), \(col)}")
+                cells.append(cell)
+            }
+        }
+
+        let attachment = GridViewAttachment(config: config, cells: cells)
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testRendersGridViewWithMergedRowsFromCells() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+
+        var cells = [GridCell]()
+        // 1st Row
+        for row in 0..<1 {
+            for col in 0..<3 {
+                let cell = GridCell(rowSpan: [row], columnSpan: [col])
+                cell.editor.attributedText = NSAttributedString(string: "{\(row), \(col)}")
+                cells.append(cell)
+            }
+        }
+
+        // 1st column of 2nd and 3rd row merged
+        let cell = GridCell(rowSpan: [1, 2], columnSpan: [0], style: GridCellStyle(backgroundColor: .yellow))
+        cell.editor.attributedText = NSAttributedString(string: "{(1,2), 0}")
+        cells.append(cell)
+
+        // 2nd and 3rd Rows
+        for row in 1...2 {
+            for col in 1...2 {
+                let cell = GridCell(rowSpan: [row], columnSpan: [col])
+                cell.editor.attributedText = NSAttributedString(string: "{\(row), \(col)}")
+                cells.append(cell)
+            }
+        }
+
+        let attachment = GridViewAttachment(config: config, cells: cells)
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testRendersGridViewWithMergedColumnsFromCells() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(dimension: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+
+        var cells = [GridCell]()
+        // 1st Row
+        let firstRow = 0
+        for col in 0..<3 {
+            let cell = GridCell(rowSpan: [firstRow], columnSpan: [col])
+            cell.editor.attributedText = NSAttributedString(string: "{\(firstRow), \(col)}")
+            cells.append(cell)
+        }
+
+
+        // 2nd row, first column
+        let cell = GridCell(rowSpan: [1], columnSpan: [0])
+        cell.editor.attributedText = NSAttributedString(string: "{0, 0}")
+        cells.append(cell)
+
+        // 2nd and 3rd columns of 2nd row merged
+        let mergedCell = GridCell(rowSpan: [1], columnSpan: [1, 2], style: GridCellStyle(backgroundColor: .yellow))
+        mergedCell.editor.attributedText = NSAttributedString(string: "{1, (1, 2)}")
+        cells.append(mergedCell)
+
+        let thirdRow = 2
+        for col in 0..<3 {
+            let cell = GridCell(rowSpan: [thirdRow], columnSpan: [col])
+            cell.editor.attributedText = NSAttributedString(string: "{\(thirdRow), \(col)}")
+            cells.append(cell)
+        }
+
+        let attachment = GridViewAttachment(config: config, cells: cells)
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testRendersGridViewWithMixedMergedColumnsAndRowsFromCells() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(dimension: .fixed(80)),
+                GridColumnConfiguration(dimension: .fixed(80)),
+                GridColumnConfiguration(dimension: .fixed(90)),
+                GridColumnConfiguration(dimension: .fixed(80)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+
+        var cells = [GridCell]()
+        // 1st Row
+        let firstRow = 0
+        for col in 0..<4 {
+            let cell = GridCell(rowSpan: [firstRow], columnSpan: [col])
+            cell.editor.attributedText = NSAttributedString(string: "{\(firstRow), \(col)}")
+            cells.append(cell)
+        }
+
+        // 2nd row, 1st and 2nd column
+        let mergedRowCell = GridCell(rowSpan: [1], columnSpan: [0, 1], style: GridCellStyle(backgroundColor: .yellow))
+        mergedRowCell.editor.attributedText = NSAttributedString(string: "{0, (0, 1)}")
+
+        cells.append(mergedRowCell)
+
+        let secondRow = 1
+        for col in 2...3 {
+            let cell = GridCell(rowSpan: [secondRow], columnSpan: [col])
+            cell.editor.attributedText = NSAttributedString(string: "{\(secondRow), \(col)}")
+            cells.append(cell)
+        }
+
+        for row in 2...4 {
+            for col in 0...3 {
+                if [2,3].contains(row) && col == 2 { continue }
+                let cell = GridCell(rowSpan: [row], columnSpan: [col])
+                cell.editor.attributedText = NSAttributedString(string: "{\(row), \(col)}")
+                cells.append(cell)
+            }
+        }
+
+        let mergedColumnCell = GridCell(rowSpan: [2, 3], columnSpan: [2], style: GridCellStyle(backgroundColor: .yellow))
+        mergedColumnCell.editor.attributedText = NSAttributedString(string: "{(2, 3), 2}")
+        cells.append(mergedColumnCell)
+
+        let attachment = GridViewAttachment(config: config, cells: cells)
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 350))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 }

@@ -200,11 +200,20 @@ public class GridView: UIView {
         gridView.numberOfRows
     }
 
-
     /// Initializes `GridView` using the provided configuration.
     /// - Parameter config: Configuration for `GridView`
-    public init(config: GridConfiguration) {
-        self.gridView = GridContentView(config: config)
+    public convenience init(config: GridConfiguration) {
+        let gridView = GridContentView(config: config)
+        self.init(config: config, gridView: gridView)
+    }
+
+    public convenience init(config: GridConfiguration, cells: [GridCell]) {
+        let gridView = GridContentView(config: config, cells: cells)
+        self.init(config: config, gridView: gridView)
+    }
+
+    private init(config: GridConfiguration, gridView: GridContentView) {
+        self.gridView = gridView
         let boundsShadowColors = [
             config.boundsLimitShadowColors.primary.cgColor,
             config.boundsLimitShadowColors.secondary.cgColor
