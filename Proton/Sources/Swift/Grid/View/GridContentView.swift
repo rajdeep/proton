@@ -59,6 +59,8 @@ class GridContentView: UIScrollView {
     weak var gridContentViewDelegate: GridContentViewDelegate?
     weak var boundsObserver: BoundsObserving?
 
+    var isFreeScrollingEnabled = false
+
     var cells: [GridCell] {
         grid.cells
     }
@@ -395,7 +397,7 @@ extension GridContentView: DynamicBoundsProviding {
 
 extension GridContentView: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return false
+        return isFreeScrollingEnabled
     }
 }
 

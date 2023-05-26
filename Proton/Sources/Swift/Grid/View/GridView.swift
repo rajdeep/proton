@@ -160,6 +160,13 @@ public class GridView: UIView {
         }
     }
 
+    /// Allows scrolling grid in any direction. Defaults to `false`
+    /// Default behaviour restricts scrolling to horizontal or vertical direction at a time.
+    public var isFreeScrollingEnabled: Bool {
+        get { gridView.isFreeScrollingEnabled }
+        set { gridView.isFreeScrollingEnabled  = newValue }
+    }
+
     /// Maximum index up till which columns are frozen. Columns are frozen from 0 to this index value.
     public var frozenColumnMaxIndex: Int? {
         return gridView.frozenColumnMaxIndex
