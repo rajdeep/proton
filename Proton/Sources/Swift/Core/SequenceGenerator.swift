@@ -53,7 +53,7 @@ public struct DiamondBulletSequenceGenerator: SequenceGenerator {
 public struct SquareBulletSequenceGenerator: SequenceGenerator {
     public init() { }
     public func value(at index: Int) -> ListLineMarker {
-        if #available(iOSApplicationExtension 13.0, *),
+        if #available(iOS 13.0, *),
            let image = UIImage(systemName: "square.fill") {
             return .image(image, size: CGSize(width: 5, height: 5))
         } else {
