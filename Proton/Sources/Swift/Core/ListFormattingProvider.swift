@@ -24,7 +24,7 @@ import UIKit
 /// Marker for the list item
 public enum ListLineMarker {
     case string(NSAttributedString)
-    case image(UIImage)
+    case image(UIImage, size: CGSize)
 }
 
 /// Describes an object capable of providing style and formatting information for rendering lists in `EditorView`.

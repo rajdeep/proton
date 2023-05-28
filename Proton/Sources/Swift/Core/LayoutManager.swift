@@ -197,15 +197,15 @@ class LayoutManager: NSLayoutManager {
 
         let listMarkerImage: UIImage
         let markerRect: CGRect
-
+        let topInset = layoutManagerDelegate?.textContainerInset.top ?? 0
         switch marker {
         case let .string(text):
             let markerSize = text.boundingRect(with: CGSize(width: paraStyle.firstLineHeadIndent, height: rect.height), options: [], context: nil).size
-            markerRect = rectForBullet(markerSize: markerSize, rect: rect, indent: paraStyle.firstLineHeadIndent, yOffset: paraStyle.paragraphSpacingBefore)
+            markerRect = rectForNumberedList(markerSize: markerSize, rect: rect, indent: paraStyle.firstLineHeadIndent, yOffset: paraStyle.paragraphSpacingBefore)
             listMarkerImage = self.generateBitmap(string: text, rect: markerRect)
-        case let .image(image):
-            markerRect = rectForBullet(markerSize: image.size, rect: rect, indent: paraStyle.firstLineHeadIndent, yOffset: paraStyle.paragraphSpacingBefore)
-            listMarkerImage = image
+        case let .image(image, size):
+            markerRect = rectForBullet(markerSize: size, rect: rect, indent: paraStyle.firstLineHeadIndent, yOffset: paraStyle.paragraphSpacingBefore)
+            listMarkerImage = image.resizeImage(to: markerRect.size)
         }
 
         listMarkerImage.draw(at: markerRect.origin)
@@ -222,7 +222,30 @@ class LayoutManager: NSLayoutManager {
     private func rectForBullet(markerSize: CGSize, rect: CGRect, indent: CGFloat, yOffset: CGFloat) -> CGRect {
         let topInset = layoutManagerDelegate?.textContainerInset.top ?? 0
         let spacerRect = CGRect(origin: CGPoint(x: rect.minX, y: rect.minY + topInset), size: CGSize(width: indent, height: rect.height))
-        let stringRect = CGRect(origin: CGPoint(x: spacerRect.maxX - markerSize.width, y: spacerRect.minY + yOffset), size: markerSize)
+        let scaleFactor = markerSize.height / spacerRect.height
+        var markerSizeToUse = markerSize
+        // Resize maintaining aspect ratio if bullet height is more than available line height
+        if scaleFactor > 1 {
+            markerSizeToUse = CGSize(width: markerSize.width/scaleFactor, height: markerSize.height/scaleFactor)
+        }
+
+        let stringRect = CGRect(origin: CGPoint(x: spacerRect.maxX - markerSizeToUse.width, y: spacerRect.midY - markerSizeToUse.height/2), size: markerSizeToUse)
+        return stringRect
+    }
+
+    private func rectForNumberedList(markerSize: CGSize, rect: CGRect, indent: CGFloat, yOffset: CGFloat) -> CGRect {
+        let topInset = layoutManagerDelegate?.textContainerInset.top ?? 0
+        let spacerRect = CGRect(origin: CGPoint(x: rect.minX, y: rect.minY + topInset), size: CGSize(width: indent, height: rect.height))
+
+        let scaleFactor = markerSize.height / spacerRect.height
+        var markerSizeToUse = markerSize
+        // Resize maintaining aspect ratio if bullet height is more than available line height
+        if scaleFactor > 1 {
+            markerSizeToUse = CGSize(width: markerSize.width/scaleFactor, height: markerSize.height/scaleFactor)
+        }
+
+        let stringRect = CGRect(origin: CGPoint(x: spacerRect.maxX - markerSizeToUse.width, y: spacerRect.minY + yOffset), size: markerSizeToUse)
+
         return stringRect
     }
 
@@ -450,10 +473,45 @@ class LayoutManager: NSLayoutManager {
 
         return corners
     }
+
+    // Helper function to debug rectangles by drawing in context
+    private func debugRect(rect: CGRect, color: UIColor) {
+        let path = UIBezierPath(rect: rect).cgPath
+        debugPath(path: path, color: color)
+    }
+
+    // Helper function to debug Bezier Path by drawing in context
+    private func debugPath(path: CGPath, color: UIColor) {
+        let currentCGContext = UIGraphicsGetCurrentContext()
+        currentCGContext?.saveGState()
+
+        currentCGContext?.setStrokeColor(color.cgColor)
+        currentCGContext?.addPath(path)
+        currentCGContext?.drawPath(using: .stroke)
+
+        currentCGContext?.restoreGState()
+    }
 }
 
 extension CGRect {
     func insetIfRequired(by insets: UIEdgeInsets) -> CGRect {
         return isEmpty ? self : inset(by: insets)
+    }
+}
+
+extension UIImage {
+    func resizeImage(to size: CGSize) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(
+            size: size
+        )
+
+        let scaledImage = renderer.image { _ in
+            self.draw(in: CGRect(
+                origin: .zero,
+                size: size
+            ))
+        }
+
+        return scaledImage
     }
 }
