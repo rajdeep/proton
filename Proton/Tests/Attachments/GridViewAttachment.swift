@@ -33,6 +33,12 @@ public class GridViewAttachment: Attachment {
         super.init(view, size: .fullWidth)
         view.boundsObserver = self
     }
+
+    public init(config: GridConfiguration, cells: [GridCell]) {
+        view = GridView(config: config, cells: cells)
+        super.init(view, size: .fullWidth)
+        view.boundsObserver = self
+    }
 }
 
 extension GridView: AttachmentViewIdentifying {

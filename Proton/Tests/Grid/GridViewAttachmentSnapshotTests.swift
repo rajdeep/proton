@@ -30,9 +30,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(30)),
-                GridColumnConfiguration(dimension: .fractional(0.45)),
-                GridColumnConfiguration(dimension: .fractional(0.45)),
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+                GridColumnConfiguration(width: .fractional(0.45)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -53,10 +53,10 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fractional(0.25)),
-                GridColumnConfiguration(dimension: .fractional(0.25)),
-                GridColumnConfiguration(dimension: .fractional(0.25)),
-                GridColumnConfiguration(dimension: .fractional(0.25)),
+                GridColumnConfiguration(width: .fractional(0.25)),
+                GridColumnConfiguration(width: .fractional(0.25)),
+                GridColumnConfiguration(width: .fractional(0.25)),
+                GridColumnConfiguration(width: .fractional(0.25)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -78,9 +78,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fractional(0.33)),
-                GridColumnConfiguration(dimension: .fractional(0.33)),
-                GridColumnConfiguration(dimension: .fractional(0.33)),
+                GridColumnConfiguration(width: .fractional(0.33)),
+                GridColumnConfiguration(width: .fractional(0.33)),
+                GridColumnConfiguration(width: .fractional(0.33)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -104,9 +104,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fractional(0.33)),
-                GridColumnConfiguration(dimension: .fractional(0.33)),
-                GridColumnConfiguration(dimension: .fractional(0.33)),
+                GridColumnConfiguration(width: .fractional(0.33)),
+                GridColumnConfiguration(width: .fractional(0.33)),
+                GridColumnConfiguration(width: .fractional(0.33)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -154,9 +154,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
             font: UIFont.systemFont(ofSize: 14, weight: .bold))
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(30), style: style),
-                GridColumnConfiguration(dimension: .fractional(0.45)),
-                GridColumnConfiguration(dimension: .fractional(0.45)),
+                GridColumnConfiguration(width: .fixed(30), style: style),
+                GridColumnConfiguration(width: .fractional(0.45)),
+                GridColumnConfiguration(width: .fractional(0.45)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -188,9 +188,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
 
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fractional(0.33)),
-                GridColumnConfiguration(dimension: .fractional(0.33)),
-                GridColumnConfiguration(dimension: .fractional(0.33)),
+                GridColumnConfiguration(width: .fractional(0.33)),
+                GridColumnConfiguration(width: .fractional(0.33)),
+                GridColumnConfiguration(width: .fractional(0.33)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40, style: style),
@@ -235,9 +235,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
 
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fractional(0.33)),
-                GridColumnConfiguration(dimension: .fractional(0.33), style: columnStyle),
-                GridColumnConfiguration(dimension: .fractional(0.33)),
+                GridColumnConfiguration(width: .fractional(0.33)),
+                GridColumnConfiguration(width: .fractional(0.33), style: columnStyle),
+                GridColumnConfiguration(width: .fractional(0.33)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -276,9 +276,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(150)),
-                GridColumnConfiguration(dimension: .fractional(0.50)),
-                GridColumnConfiguration(dimension: .fractional(0.40)),
+                GridColumnConfiguration(width: .fixed(150)),
+                GridColumnConfiguration(width: .fractional(0.50)),
+                GridColumnConfiguration(width: .fractional(0.40)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -306,9 +306,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -342,9 +342,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -377,9 +377,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -424,9 +424,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -476,9 +476,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(30)),
-                GridColumnConfiguration(dimension: .fractional(0.45)),
-                GridColumnConfiguration(dimension: .fractional(0.45)),
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+                GridColumnConfiguration(width: .fractional(0.45)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -514,9 +514,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(30)),
-                GridColumnConfiguration(dimension: .fractional(0.35)),
-                GridColumnConfiguration(dimension: .fractional(0.35)),
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.35)),
+                GridColumnConfiguration(width: .fractional(0.35)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -538,7 +538,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
-        gridView.insertColumn(at: 1, configuration: GridColumnConfiguration(dimension: .fractional(0.20)))
+        gridView.insertColumn(at: 1, configuration: GridColumnConfiguration(width: .fractional(0.20)))
 
         let newCell11 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))
         newCell11.editor.replaceCharacters(in: .zero, with: "New cell")
@@ -552,9 +552,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(30)),
-                GridColumnConfiguration(dimension: .fractional(0.45)),
-                GridColumnConfiguration(dimension: .fractional(0.45)),
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+                GridColumnConfiguration(width: .fractional(0.45)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -581,9 +581,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(30)),
-                GridColumnConfiguration(dimension: .fractional(0.45)),
-                GridColumnConfiguration(dimension: .fractional(0.45)),
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+                GridColumnConfiguration(width: .fractional(0.45)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -610,9 +610,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(30)),
-                GridColumnConfiguration(dimension: .fractional(0.35)),
-                GridColumnConfiguration(dimension: .fractional(0.35)),
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.35)),
+                GridColumnConfiguration(width: .fractional(0.35)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -625,7 +625,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         let gridView = attachment.view
-        gridView.insertColumn(at: 0, configuration: GridColumnConfiguration(dimension: .fractional(0.20)))
+        gridView.insertColumn(at: 0, configuration: GridColumnConfiguration(width: .fractional(0.20)))
 
         let newCell10 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 0))
         newCell10.editor.replaceCharacters(in: .zero, with: "New cell")
@@ -639,9 +639,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(30)),
-                GridColumnConfiguration(dimension: .fractional(0.35)),
-                GridColumnConfiguration(dimension: .fractional(0.35)),
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.35)),
+                GridColumnConfiguration(width: .fractional(0.35)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -654,7 +654,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         let gridView = attachment.view
-        gridView.insertColumn(at: 3, configuration: GridColumnConfiguration(dimension: .fractional(0.20)))
+        gridView.insertColumn(at: 3, configuration: GridColumnConfiguration(width: .fractional(0.20)))
 
         let newCell13 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 3))
         newCell13.editor.replaceCharacters(in: .zero, with: "New cell")
@@ -668,9 +668,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -713,9 +713,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -739,7 +739,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
-        gridView.insertColumn(at: 2, configuration: GridColumnConfiguration(dimension: .fixed(40)))
+        gridView.insertColumn(at: 2, configuration: GridColumnConfiguration(width: .fixed(40)))
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
@@ -749,9 +749,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(30)),
-                GridColumnConfiguration(dimension: .fractional(0.35)),
-                GridColumnConfiguration(dimension: .fractional(0.35)),
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.35)),
+                GridColumnConfiguration(width: .fractional(0.35)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -786,9 +786,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(30)),
-                GridColumnConfiguration(dimension: .fractional(0.35)),
-                GridColumnConfiguration(dimension: .fractional(0.35)),
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.35)),
+                GridColumnConfiguration(width: .fractional(0.35)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -827,9 +827,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(50)),
-                GridColumnConfiguration(dimension: .fixed(50)),
-                GridColumnConfiguration(dimension: .fixed(50)),
+                GridColumnConfiguration(width: .fixed(50)),
+                GridColumnConfiguration(width: .fixed(50)),
+                GridColumnConfiguration(width: .fixed(50)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -866,9 +866,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(50)),
-                GridColumnConfiguration(dimension: .fixed(50)),
-                GridColumnConfiguration(dimension: .fixed(50)),
+                GridColumnConfiguration(width: .fixed(50)),
+                GridColumnConfiguration(width: .fixed(50)),
+                GridColumnConfiguration(width: .fixed(50)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -914,9 +914,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -956,9 +956,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -985,7 +985,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
-        gridView.insertColumn(at: 1, configuration: GridColumnConfiguration(dimension: .fixed(50)))
+        gridView.insertColumn(at: 1, configuration: GridColumnConfiguration(width: .fixed(50)))
 
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
@@ -996,9 +996,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -1036,9 +1036,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -1067,9 +1067,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -1087,7 +1087,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
-        gridView.insertColumn(at: 1, configuration: GridColumnConfiguration(dimension: .fixed(50), style: GridCellStyle(backgroundColor: .red)))
+        gridView.insertColumn(at: 1, configuration: GridColumnConfiguration(width: .fixed(50), style: GridCellStyle(backgroundColor: .red)))
 
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
@@ -1098,9 +1098,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(30)),
-                GridColumnConfiguration(dimension: .fractional(0.45)),
-                GridColumnConfiguration(dimension: .fractional(0.45)),
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+                GridColumnConfiguration(width: .fractional(0.45)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -1144,13 +1144,13 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(30)),
-                GridColumnConfiguration(dimension: .fixed(30)),
-                GridColumnConfiguration(dimension: .fractional(0.30)),
-                GridColumnConfiguration(dimension: .fractional(0.30)),
-                GridColumnConfiguration(dimension: .fractional(0.30)),
-                GridColumnConfiguration(dimension: .fractional(0.30)),
-                GridColumnConfiguration(dimension: .fractional(0.30)),
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.30)),
+                GridColumnConfiguration(width: .fractional(0.30)),
+                GridColumnConfiguration(width: .fractional(0.30)),
+                GridColumnConfiguration(width: .fractional(0.30)),
+                GridColumnConfiguration(width: .fractional(0.30)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -1189,13 +1189,13 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(30)),
-                GridColumnConfiguration(dimension: .fixed(30)),
-                GridColumnConfiguration(dimension: .fractional(0.30)),
-                GridColumnConfiguration(dimension: .fractional(0.30)),
-                GridColumnConfiguration(dimension: .fractional(0.30)),
-                GridColumnConfiguration(dimension: .fractional(0.30)),
-                GridColumnConfiguration(dimension: .fractional(0.30)),
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.30)),
+                GridColumnConfiguration(width: .fractional(0.30)),
+                GridColumnConfiguration(width: .fractional(0.30)),
+                GridColumnConfiguration(width: .fractional(0.30)),
+                GridColumnConfiguration(width: .fractional(0.30)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -1235,9 +1235,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
 
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(30)),
-                GridColumnConfiguration(dimension: .fixed(50)),
-                GridColumnConfiguration(dimension: .fractional(0.30)),
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fixed(50)),
+                GridColumnConfiguration(width: .fractional(0.30)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -1254,5 +1254,272 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
 
         viewController.render(size: CGSize(width: 400, height: 200))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testRendersGridViewFromCells() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(200)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+
+        var cells = [GridCell]()
+        for row in 0..<2 {
+            for col in 0..<2 {
+                let cell = GridCell(rowSpan: [row], columnSpan: [col], initialHeight: 20)
+                cell.editor.attributedText = NSAttributedString(string: "{\(row), \(col)}")
+                cells.append(cell)
+            }
+        }
+
+        let attachment = GridViewAttachment(config: config, cells: cells)
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testRendersGridViewWithMergedRowsFromCells() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+
+        var cells = [GridCell]()
+        // 1st Row
+        for row in 0..<1 {
+            for col in 0..<3 {
+                let cell = GridCell(rowSpan: [row], columnSpan: [col])
+                cell.editor.attributedText = NSAttributedString(string: "{\(row), \(col)}")
+                cells.append(cell)
+            }
+        }
+
+        // 1st column of 2nd and 3rd row merged
+        let cell = GridCell(rowSpan: [1, 2], columnSpan: [0], style: GridCellStyle(backgroundColor: .yellow))
+        cell.editor.attributedText = NSAttributedString(string: "{(1,2), 0}")
+        cells.append(cell)
+
+        // 2nd and 3rd Rows
+        for row in 1...2 {
+            for col in 1...2 {
+                let cell = GridCell(rowSpan: [row], columnSpan: [col])
+                cell.editor.attributedText = NSAttributedString(string: "{\(row), \(col)}")
+                cells.append(cell)
+            }
+        }
+
+        let attachment = GridViewAttachment(config: config, cells: cells)
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testRendersGridViewWithMergedColumnsFromCells() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+
+        var cells = [GridCell]()
+        // 1st Row
+        let firstRow = 0
+        for col in 0..<3 {
+            let cell = GridCell(rowSpan: [firstRow], columnSpan: [col])
+            cell.editor.attributedText = NSAttributedString(string: "{\(firstRow), \(col)}")
+            cells.append(cell)
+        }
+
+
+        // 2nd row, first column
+        let cell = GridCell(rowSpan: [1], columnSpan: [0])
+        cell.editor.attributedText = NSAttributedString(string: "{0, 0}")
+        cells.append(cell)
+
+        // 2nd and 3rd columns of 2nd row merged
+        let mergedCell = GridCell(rowSpan: [1], columnSpan: [1, 2], style: GridCellStyle(backgroundColor: .yellow))
+        mergedCell.editor.attributedText = NSAttributedString(string: "{1, (1, 2)}")
+        cells.append(mergedCell)
+
+        let thirdRow = 2
+        for col in 0..<3 {
+            let cell = GridCell(rowSpan: [thirdRow], columnSpan: [col])
+            cell.editor.attributedText = NSAttributedString(string: "{\(thirdRow), \(col)}")
+            cells.append(cell)
+        }
+
+        let attachment = GridViewAttachment(config: config, cells: cells)
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testRendersGridViewWithMixedMergedColumnsAndRowsFromCells() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(80)),
+                GridColumnConfiguration(width: .fixed(80)),
+                GridColumnConfiguration(width: .fixed(90)),
+                GridColumnConfiguration(width: .fixed(80)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+
+        var cells = [GridCell]()
+        // 1st Row
+        let firstRow = 0
+        for col in 0..<4 {
+            let cell = GridCell(rowSpan: [firstRow], columnSpan: [col])
+            cell.editor.attributedText = NSAttributedString(string: "{\(firstRow), \(col)}")
+            cells.append(cell)
+        }
+
+        // 2nd row, 1st and 2nd column
+        let mergedRowCell = GridCell(rowSpan: [1], columnSpan: [0, 1], style: GridCellStyle(backgroundColor: .yellow))
+        mergedRowCell.editor.attributedText = NSAttributedString(string: "{0, (0, 1)}")
+
+        cells.append(mergedRowCell)
+
+        let secondRow = 1
+        for col in 2...3 {
+            let cell = GridCell(rowSpan: [secondRow], columnSpan: [col])
+            cell.editor.attributedText = NSAttributedString(string: "{\(secondRow), \(col)}")
+            cells.append(cell)
+        }
+
+        for row in 2...4 {
+            for col in 0...3 {
+                if [2,3].contains(row) && col == 2 { continue }
+                let cell = GridCell(rowSpan: [row], columnSpan: [col])
+                cell.editor.attributedText = NSAttributedString(string: "{\(row), \(col)}")
+                cells.append(cell)
+            }
+        }
+
+        let mergedColumnCell = GridCell(rowSpan: [2, 3], columnSpan: [2], style: GridCellStyle(backgroundColor: .yellow))
+        mergedColumnCell.editor.attributedText = NSAttributedString(string: "{(2, 3), 2}")
+        cells.append(mergedColumnCell)
+
+        let attachment = GridViewAttachment(config: config, cells: cells)
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 350))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testRendersGridViewWithCollapsedRows() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let attachment = make3By3GridViewAttachment()
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        attachment.view.collapseRow(at: 1)
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        attachment.view.expandRow(at: 1)
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testRendersGridViewWithCollapsedColumns() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let attachment = make3By3GridViewAttachment()
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        attachment.view.collapseColumn(at: 1)
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        attachment.view.expandColumn(at: 1)
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    private func make3By3GridViewAttachment() -> GridViewAttachment {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(150)),
+                GridColumnConfiguration(width: .fixed(150)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+
+        var cells = [GridCell]()
+        for row in 0...2 {
+            for col in 0...2 {
+                let cell = GridCell(rowSpan: [row], columnSpan: [col], initialHeight: 20)
+                cell.editor.attributedText = NSAttributedString(string: "{\(row), \(col)}")
+                cells.append(cell)
+            }
+        }
+
+        return GridViewAttachment(config: config, cells: cells)
     }
 }

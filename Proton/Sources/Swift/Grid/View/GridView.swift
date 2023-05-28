@@ -160,6 +160,13 @@ public class GridView: UIView {
         }
     }
 
+    /// Allows scrolling grid in any direction. Defaults to `false`
+    /// Default behaviour restricts scrolling to horizontal or vertical direction at a time.
+    public var isFreeScrollingEnabled: Bool {
+        get { gridView.isFreeScrollingEnabled }
+        set { gridView.isFreeScrollingEnabled  = newValue }
+    }
+
     /// Maximum index up till which columns are frozen. Columns are frozen from 0 to this index value.
     public var frozenColumnMaxIndex: Int? {
         return gridView.frozenColumnMaxIndex
@@ -200,11 +207,20 @@ public class GridView: UIView {
         gridView.numberOfRows
     }
 
-
     /// Initializes `GridView` using the provided configuration.
     /// - Parameter config: Configuration for `GridView`
-    public init(config: GridConfiguration) {
-        self.gridView = GridContentView(config: config)
+    public convenience init(config: GridConfiguration) {
+        let gridView = GridContentView(config: config)
+        self.init(config: config, gridView: gridView)
+    }
+
+    public convenience init(config: GridConfiguration, cells: [GridCell]) {
+        let gridView = GridContentView(config: config, cells: cells)
+        self.init(config: config, gridView: gridView)
+    }
+
+    private init(config: GridConfiguration, gridView: GridContentView) {
+        self.gridView = gridView
         let boundsShadowColors = [
             config.boundsLimitShadowColors.primary.cgColor,
             config.boundsLimitShadowColors.secondary.cgColor
@@ -388,7 +404,6 @@ public class GridView: UIView {
         }
     }
 
-
     /// Inserts a new row at given index.
     /// - Parameters:
     ///   - index: Index at which new row should be inserted.
@@ -439,6 +454,30 @@ public class GridView: UIView {
 
     public func unfreezeRows() {
         gridView.frozenRowMaxIndex = nil
+    }
+
+    public func collapseRow(at index: Int) {
+        gridView.collapseRow(at: index)
+    }
+
+    func expandRow(at index: Int) {
+        gridView.expandRow(at: index)
+    }
+
+    func collapseColumn(at index: Int) {
+        gridView.collapseColumn(at: index)
+    }
+
+    func expandColumn(at index: Int) {
+        gridView.expandColumn(at: index)
+    }
+
+    func getCollapsedRowIndices() -> [Int] {
+        return gridView.getCollapsedRowIndices()
+    }
+
+    func getCollapsedColumnIndices() -> [Int] {
+        return gridView.getCollapsedColumnIndices()
     }
 
     /// Gets the cell at given row and column index. Indexes may be contained in a merged cell.

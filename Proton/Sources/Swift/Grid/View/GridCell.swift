@@ -157,7 +157,7 @@ public class GridCell {
 
     let initialHeight: CGFloat
 
-    init(rowSpan: [Int], columnSpan: [Int], initialHeight: CGFloat, style: GridCellStyle = .init(), gridStyle: GridStyle = .default) {
+    init(rowSpan: [Int], columnSpan: [Int], initialHeight: CGFloat = 40, style: GridCellStyle = .init(), gridStyle: GridStyle = .default) {
         self.rowSpan = rowSpan
         self.columnSpan = columnSpan
         self.gridStyle = gridStyle
@@ -230,6 +230,14 @@ public class GridCell {
             widthAnchorConstraint,
             heightAnchorConstraint
         ])
+    }
+
+    func hideEditor() {
+        editor.removeFromSuperview()
+    }
+
+    func showEditor() {
+        contentView.addSubview(editor)
     }
 }
 

@@ -28,9 +28,9 @@ class GridViewSnapshotTests: SnapshotTestCase {
     func testRendersGridView() {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 30),
@@ -47,9 +47,9 @@ class GridViewSnapshotTests: SnapshotTestCase {
     func testRendersGridViewAsSelected() {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 30),
@@ -66,9 +66,9 @@ class GridViewSnapshotTests: SnapshotTestCase {
     func testRendersGridViewAsSelectedWithRedColor() {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 30),
@@ -86,9 +86,9 @@ class GridViewSnapshotTests: SnapshotTestCase {
 //    func testRendersGridViewWithFractionalColumns() {
 //        let config = GridConfiguration(
 //            columnsConfiguration: [
-//                GridColumnConfiguration(dimension: .fractional(0.33)),
-//                GridColumnConfiguration(dimension: .fractional(0.33)),
-//                GridColumnConfiguration(dimension: .fractional(0.33)),
+//                GridColumnConfiguration(width: .fractional(0.33)),
+//                GridColumnConfiguration(width: .fractional(0.33)),
+//                GridColumnConfiguration(width: .fractional(0.33)),
 //            ],
 //            rowsConfiguration: [
 //                GridRowConfiguration(initialHeight: 40),

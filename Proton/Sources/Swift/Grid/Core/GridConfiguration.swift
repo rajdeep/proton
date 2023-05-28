@@ -21,7 +21,22 @@
 import Foundation
 import UIKit
 
-public enum GridColumnDimension {
+class GridColumnDimension {
+    var isCollapsed: Bool
+    var width: GridColumnWidth
+
+    init(width: GridColumnWidth, isCollapsed: Bool = false) {
+        self.isCollapsed = isCollapsed
+        self.width = width
+    }
+
+    func value(basedOn total: CGFloat) -> CGFloat {
+        guard !isCollapsed else { return 2 }
+        return width.value(basedOn: total)
+    }
+}
+
+public enum GridColumnWidth {
     case fixed(CGFloat)
     case fractional(CGFloat)
 
@@ -36,11 +51,11 @@ public enum GridColumnDimension {
 }
 
 public struct GridColumnConfiguration {
-    public let dimension: GridColumnDimension
+    public let width: GridColumnWidth
     public let style: GridCellStyle
 
-    public init(dimension: GridColumnDimension, style: GridCellStyle = .init()) {
-        self.dimension = dimension
+    public init(width: GridColumnWidth, style: GridCellStyle = .init()) {
+        self.width = width
         self.style = style
     }
 }
