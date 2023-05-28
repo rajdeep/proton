@@ -326,7 +326,7 @@ extension CommandsExampleViewController: GridViewDelegate {
         let columnActions = [
             UIAction(title: "Add column right", image: UIImage(systemName: "arrow.right"),
                      handler: { (_) in
-                         let result = gridView.insertColumn(at: cell.columnSpan.max()! + 1, configuration: GridColumnConfiguration(dimension: .fixed(100)))
+                         let result = gridView.insertColumn(at: cell.columnSpan.max()! + 1, configuration: GridColumnConfiguration(width: .fixed(100)))
                          if case let Result.failure(error) = result {
                              print("Failed to insert: \(error)")
                          }

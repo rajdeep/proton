@@ -35,12 +35,12 @@ public class CreateGridViewCommand: EditorCommand {
         let config = GridConfiguration(
             columnsConfiguration: [
 //                GridColumnConfiguration(dimension: .fixed(150)),
-                GridColumnConfiguration(dimension: .fractional(0.25)),
-                GridColumnConfiguration(dimension: .fractional(0.25)),
-                GridColumnConfiguration(dimension: .fractional(0.25)),
-                GridColumnConfiguration(dimension: .fractional(0.25)),
-                GridColumnConfiguration(dimension: .fractional(0.25)),
-                GridColumnConfiguration(dimension: .fractional(0.25)),
+                GridColumnConfiguration(width: .fractional(0.25)),
+                GridColumnConfiguration(width: .fractional(0.25)),
+                GridColumnConfiguration(width: .fractional(0.25)),
+                GridColumnConfiguration(width: .fractional(0.25)),
+                GridColumnConfiguration(width: .fractional(0.25)),
+                GridColumnConfiguration(width: .fractional(0.25)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
