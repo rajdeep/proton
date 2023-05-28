@@ -26,8 +26,8 @@ import XCTest
 class GridViewTests: XCTestCase {
     var config = GridConfiguration(
         columnsConfiguration: [
-            GridColumnConfiguration(dimension: .fixed(100)),
-            GridColumnConfiguration(dimension: .fixed(100)),
+            GridColumnConfiguration(width: .fixed(100)),
+            GridColumnConfiguration(width: .fixed(100)),
         ],
         rowsConfiguration: [
             GridRowConfiguration(initialHeight: 50),

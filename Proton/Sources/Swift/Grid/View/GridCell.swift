@@ -231,6 +231,14 @@ public class GridCell {
             heightAnchorConstraint
         ])
     }
+
+    func hideEditor() {
+        editor.removeFromSuperview()
+    }
+
+    func showEditor() {
+        contentView.addSubview(editor)
+    }
 }
 
 extension GridCell: BoundsObserving {

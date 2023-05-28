@@ -27,8 +27,8 @@ class GridTests: XCTestCase {
     func testGeneratesGridCells() {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 50),
@@ -54,8 +54,8 @@ class GridTests: XCTestCase {
     func testSome() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 50),
@@ -74,9 +74,9 @@ class GridTests: XCTestCase {
     func testGetsFrameForCell() {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 50),
@@ -101,9 +101,9 @@ class GridTests: XCTestCase {
     func testMergesRows() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 50),
@@ -126,9 +126,9 @@ class GridTests: XCTestCase {
     func testMergesColumnsWithFixedDimensions() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 50),
@@ -151,9 +151,9 @@ class GridTests: XCTestCase {
     func testMergesColumnsWithFractionalDimensions() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fractional(0.25)),
-                GridColumnConfiguration(dimension: .fractional(0.25)),
-                GridColumnConfiguration(dimension: .fractional(0.50)),
+                GridColumnConfiguration(width: .fractional(0.25)),
+                GridColumnConfiguration(width: .fractional(0.25)),
+                GridColumnConfiguration(width: .fractional(0.50)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 50),
@@ -176,9 +176,9 @@ class GridTests: XCTestCase {
     func testMergesColumnsWithMixedDimensions() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fractional(0.25)),
-                GridColumnConfiguration(dimension: .fixed(100.0)),
-                GridColumnConfiguration(dimension: .fractional(0.50)),
+                GridColumnConfiguration(width: .fractional(0.25)),
+                GridColumnConfiguration(width: .fixed(100.0)),
+                GridColumnConfiguration(width: .fractional(0.50)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 50),
@@ -204,9 +204,9 @@ class GridTests: XCTestCase {
 
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fractional(0.25)),
-                GridColumnConfiguration(dimension: .fixed(100.0)),
-                GridColumnConfiguration(dimension: .fractional(0.50)),
+                GridColumnConfiguration(width: .fractional(0.25)),
+                GridColumnConfiguration(width: .fixed(100.0)),
+                GridColumnConfiguration(width: .fractional(0.50)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 50),
@@ -243,9 +243,9 @@ class GridTests: XCTestCase {
 
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fractional(0.25)),
-                GridColumnConfiguration(dimension: .fixed(100.0)),
-                GridColumnConfiguration(dimension: .fractional(0.50)),
+                GridColumnConfiguration(width: .fractional(0.25)),
+                GridColumnConfiguration(width: .fixed(100.0)),
+                GridColumnConfiguration(width: .fractional(0.50)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 30),
@@ -254,7 +254,7 @@ class GridTests: XCTestCase {
             ])
 
         let grid = Grid(config: config, cells: generateCells(config: config))
-        grid.insertColumn(at: 1, frozenColumnMaxIndex: nil, config: GridColumnConfiguration(dimension: .fractional(0.30)), cellDelegate: nil)
+        grid.insertColumn(at: 1, frozenColumnMaxIndex: nil, config: GridColumnConfiguration(width: .fractional(0.30)), cellDelegate: nil)
         XCTAssertEqual(grid.numberOfColumns, 4)
         let newCells = grid.cells.filter { $0.columnSpan.contains(1) }
         XCTAssertEqual(newCells.count, 3)
@@ -282,9 +282,9 @@ class GridTests: XCTestCase {
 
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fractional(0.25)),
-                GridColumnConfiguration(dimension: .fixed(100.0)),
-                GridColumnConfiguration(dimension: .fractional(0.50)),
+                GridColumnConfiguration(width: .fractional(0.25)),
+                GridColumnConfiguration(width: .fixed(100.0)),
+                GridColumnConfiguration(width: .fractional(0.50)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 30),
@@ -320,9 +320,9 @@ class GridTests: XCTestCase {
 
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fractional(0.25)),
-                GridColumnConfiguration(dimension: .fixed(100.0)),
-                GridColumnConfiguration(dimension: .fractional(0.50)),
+                GridColumnConfiguration(width: .fractional(0.25)),
+                GridColumnConfiguration(width: .fixed(100.0)),
+                GridColumnConfiguration(width: .fractional(0.50)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 30),
@@ -357,9 +357,9 @@ class GridTests: XCTestCase {
     func testInsertsRowInMixedMergeCells() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 50),
@@ -392,9 +392,9 @@ class GridTests: XCTestCase {
     func testInsertsColumnInMixedMergeCells() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
@@ -409,7 +409,7 @@ class GridTests: XCTestCase {
 
         grid.merge(cells: [cell11, cell12])
 
-        grid.insertColumn(at: 2, frozenColumnMaxIndex: nil, config: GridColumnConfiguration(dimension: .fixed(100)), cellDelegate: nil)
+        grid.insertColumn(at: 2, frozenColumnMaxIndex: nil, config: GridColumnConfiguration(width: .fixed(100)), cellDelegate: nil)
 
         print(grid.cells.map{ $0.id })
         let expectedCellIDs = Set(["{[0],[0]}", "{[0],[1]}", "{[0],[3]}", "{[1],[0]}", "{[1],[1, 2, 3]}", "{[2],[0]}", "{[2],[1]}", "{[2],[3]}", "{[0],[2]}", "{[2],[2]}"])
@@ -422,9 +422,9 @@ class GridTests: XCTestCase {
     func testIsMergableValid() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 50),
@@ -452,9 +452,9 @@ class GridTests: XCTestCase {
     func testIsMergableInvalid() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 50),
@@ -482,10 +482,10 @@ class GridTests: XCTestCase {
     func testIsMergableValidWithMergedCells() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 50),
@@ -524,10 +524,10 @@ class GridTests: XCTestCase {
     func testIsMergableInvalidWithMergedCells() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 50),
@@ -568,10 +568,10 @@ class GridTests: XCTestCase {
     func testIsMergableInvalidWithUShapedSelection() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 50),
@@ -602,10 +602,10 @@ class GridTests: XCTestCase {
     func testIsMergableInvalidWithOShapedSelection() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
-                GridColumnConfiguration(dimension: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 50),

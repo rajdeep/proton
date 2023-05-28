@@ -216,6 +216,34 @@ class GridContentView: UIScrollView {
         gridContentViewDelegate?.gridContentView(self, didAddNewColumnAt: index)
     }
 
+    func collapseRow(at index: Int) {
+        grid.collapseRow(at: index)
+        invalidateCellLayout()
+    }
+
+    func expandRow(at index: Int) {
+        grid.expandRow(at: index)
+        invalidateCellLayout()
+    }
+
+    func collapseColumn(at index: Int) {
+        grid.collapseColumn(at: index)
+        invalidateCellLayout()
+    }
+
+    func expandColumn(at index: Int) {
+        grid.expandColumn(at: index)
+        invalidateCellLayout()
+    }
+
+    func getCollapsedRowIndices() -> [Int] {
+        return grid.getCollapsedRowIndices()
+    }
+
+    func getCollapsedColumnIndices() -> [Int] {
+        return grid.getCollapsedColumnIndices()
+    }
+
     func cellAt(rowIndex: Int, columnIndex: Int) -> GridCell? {
         grid.cellAt(rowIndex: rowIndex, columnIndex: columnIndex)
     }

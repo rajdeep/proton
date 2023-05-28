@@ -404,7 +404,6 @@ public class GridView: UIView {
         }
     }
 
-
     /// Inserts a new row at given index.
     /// - Parameters:
     ///   - index: Index at which new row should be inserted.
@@ -455,6 +454,30 @@ public class GridView: UIView {
 
     public func unfreezeRows() {
         gridView.frozenRowMaxIndex = nil
+    }
+
+    public func collapseRow(at index: Int) {
+        gridView.collapseRow(at: index)
+    }
+
+    func expandRow(at index: Int) {
+        gridView.expandRow(at: index)
+    }
+
+    func collapseColumn(at index: Int) {
+        gridView.collapseColumn(at: index)
+    }
+
+    func expandColumn(at index: Int) {
+        gridView.expandColumn(at: index)
+    }
+
+    func getCollapsedRowIndices() -> [Int] {
+        return gridView.getCollapsedRowIndices()
+    }
+
+    func getCollapsedColumnIndices() -> [Int] {
+        return gridView.getCollapsedColumnIndices()
     }
 
     /// Gets the cell at given row and column index. Indexes may be contained in a merged cell.
