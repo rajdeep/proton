@@ -26,16 +26,18 @@ class GridRowDimension {
     var currentHeight: CGFloat
     var isCollapsed: Bool
     let rowConfiguration: GridRowConfiguration
+    let collapsedHeight: CGFloat
 
     var calculatedHeight: CGFloat {
-        guard !isCollapsed else { return 2 }
+        guard !isCollapsed else { return collapsedHeight }
         return currentHeight
     }
 
-    init(rowConfiguration: GridRowConfiguration, isCollapsed: Bool = false) {
+    init(rowConfiguration: GridRowConfiguration, isCollapsed: Bool = false, collapsedHeight: CGFloat) {
         self.rowConfiguration = rowConfiguration
         currentHeight = rowConfiguration.initialHeight
         self.isCollapsed = isCollapsed
+        self.collapsedHeight = collapsedHeight
     }
 }
 
@@ -72,11 +74,11 @@ class Grid {
         self.config = config
 
         for column in config.columnsConfiguration {
-            self.columnWidths.append(GridColumnDimension(width: column.width))
+            self.columnWidths.append(GridColumnDimension(width: column.width, collapsedWidth: config.collapsedColumnWidth))
         }
 
         for row in config.rowsConfiguration {
-            self.rowHeights.append(GridRowDimension(rowConfiguration: row))
+            self.rowHeights.append(GridRowDimension(rowConfiguration: row, collapsedHeight: config.collapsedRowHeight))
         }
         self.cellStore = GridCellStore(cells: cells)
     }
@@ -242,7 +244,7 @@ class Grid {
         if sanitizedIndex < numberOfRows {
             cellStore.moveCellRowIndex(from: sanitizedIndex, by: 1)
         }
-        rowHeights.insert(GridRowDimension(rowConfiguration: config), at: sanitizedIndex)
+        rowHeights.insert(GridRowDimension(rowConfiguration: config, collapsedHeight: self.config.collapsedRowHeight), at: sanitizedIndex)
         var cells = [GridCell]()
         for c in 0..<numberOfColumns {
             let cell = GridCell(
@@ -278,7 +280,7 @@ class Grid {
         if sanitizedIndex < numberOfColumns {
             cellStore.moveCellColumnIndex(from: sanitizedIndex, by: 1)
         }
-        columnWidths.insert(GridColumnDimension(width: config.width), at: sanitizedIndex)
+        columnWidths.insert(GridColumnDimension(width: config.width, collapsedWidth: self.config.collapsedColumnWidth), at: sanitizedIndex)
 
         var cells = [GridCell]()
         for r in 0..<numberOfRows {
