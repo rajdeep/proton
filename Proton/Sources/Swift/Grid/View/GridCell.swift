@@ -145,7 +145,7 @@ public class GridCell {
     /// Content view for the cell
     public let contentView = UIView()
 
-    let gridStyle: GridStyle
+    public let gridStyle: GridStyle
 
     let widthAnchorConstraint: NSLayoutConstraint
     let heightAnchorConstraint: NSLayoutConstraint
@@ -157,7 +157,7 @@ public class GridCell {
 
     let initialHeight: CGFloat
 
-    init(rowSpan: [Int], columnSpan: [Int], initialHeight: CGFloat = 40, style: GridCellStyle = .init(), gridStyle: GridStyle = .default) {
+    public init(rowSpan: [Int], columnSpan: [Int], initialHeight: CGFloat = 40, style: GridCellStyle = .init(), gridStyle: GridStyle = .default) {
         self.rowSpan = rowSpan
         self.columnSpan = columnSpan
         self.gridStyle = gridStyle
