@@ -79,4 +79,7 @@ public extension NSAttributedString.Key {
     /// `.lockedAttributes: [NSAttributedString.Key.backgroundStyle]`
     /// `], at: editor.selectedRange)`
     static let lockedAttributes = NSAttributedString.Key("_lockedAttributes")
+
+
+    static let asyncTextResolver = NSAttributedString.Key("_asyncTextResolver")
 }

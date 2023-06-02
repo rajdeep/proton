@@ -240,18 +240,21 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
     @objc
     func encodeContents(sender: UIButton) {
-        let value = editor.transformContents(using: JSONEncoder())
-        let data = try! JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
-        let jsonString = String(data: data, encoding: .utf8)!
-        self.encodedContents = ["contents": value]
+        editor.addAttribute(.asyncTextResolver, value: "dummy", at: editor.selectedRange)
+        editor.setNeedsAsyncTextResolution()
 
-        let printableContents = """
-            { "contents":  \(jsonString) }
-        """
-
-        print(printableContents)
-
-        editor.attributedText = NSAttributedString()
+//        let value = editor.transformContents(using: JSONEncoder())
+//        let data = try! JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
+//        let jsonString = String(data: data, encoding: .utf8)!
+//        self.encodedContents = ["contents": value]
+//
+//        let printableContents = """
+//            { "contents":  \(jsonString) }
+//        """
+//
+//        print(printableContents)
+//
+//        editor.attributedText = NSAttributedString()
     }
 
     @objc

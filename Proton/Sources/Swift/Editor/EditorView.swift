@@ -107,6 +107,7 @@ open class EditorView: UIView {
     var textProcessor: TextProcessor?
     let richTextView: RichTextView
     let context: RichTextViewContext
+    var needsAsyncTextResolution = false
 
     var editorContextDelegate: EditorViewDelegate? {
         get { editorViewContext.delegate }
@@ -155,6 +156,9 @@ open class EditorView: UIView {
     /// * To support any command, set value to nil. Default behaviour.
     /// * To prevent any command to be executed, set value to be an empty array.
     public var registeredCommands: [EditorCommand]?
+
+    /// Async Text Resolvers supported by the Editor.
+    public var asyncTextResolvers: [AsyncTextResolving] = []
 
     /// Low-tech lock mechanism to know when `attributedText` is being set
     private var isSettingAttributedText = false
@@ -645,6 +649,21 @@ open class EditorView: UIView {
 //        }
     }
 
+    /// Sets async text resolution to resolve on next text layout pass.
+    /// - Note: Changing attributes also causes layout pass to be performed, and this any applicable `AsyncTextResolvers` will be executed.
+    public func setNeedsAsyncTextResolution() {
+        needsAsyncTextResolution = true
+    }
+
+    /// Invokes async text resolution to resolve on demand.
+    public func resolveAsyncTextIfNeeded() {
+        needsAsyncTextResolution = true
+        resolveAsyncText()
+    }
+
+    /// Returns the range of character at the given point
+    /// - Parameter point: Point to get range from
+    /// - Returns: Character range if available, else nil
     public func rangeOfCharacter(at point: CGPoint) -> NSRange? {
         let location = richTextView.convert(point, from: self)
         return richTextView.rangeOfCharacter(at: location)
@@ -1076,6 +1095,7 @@ extension EditorView: RichTextViewDelegate {
     func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool) {
         guard finished else { return }
         relayoutAttachments()
+        resolveAsyncText()
     }
 
     func richTextView(_ richTextView: RichTextView, selectedRangeChangedFrom oldRange: NSRange?, to newRange: NSRange?) {
@@ -1130,6 +1150,29 @@ extension EditorView {
             }
             attachment.frame = frame
         }
+    }
+}
+
+public extension EditorView {
+    func resolveAsyncText() {
+        guard needsAsyncTextResolution else { return }
+        richTextView.enumerateAttribute(.asyncTextResolver, in: attributedText.fullRange, options: [.reverse]) { [weak self] (resolverName, range, stop) in
+            guard let self else {
+                stop.pointee = true
+                return
+            }
+
+            if let resolver = self.asyncTextResolvers.first(where: { $0.name == resolverName as? String }) {
+                let string = NSMutableAttributedString(attributedString: self.attributedText.attributedSubstring(from: range))
+                resolver.resolve(using: self, range: range, string: string) { result in
+                    self.removeAttribute(.asyncTextResolver, at: range)
+                    if case let AsyncTextResolvingResult.apply(newString, newRange) = result {
+                        self.richTextView.replaceCharacters(in: newRange, with: newString)
+                    }
+                }
+            }
+        }
+        needsAsyncTextResolution = false
     }
 }
 
