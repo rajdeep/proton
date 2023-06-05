@@ -17,7 +17,7 @@
     <a title="Attachment Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Proton Docs</a> (76% documented)</p>
+        <p><a href="../index.html">Proton Docs</a> (71% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -102,6 +102,9 @@
             <a href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Enums/AsyncTextResolvingResult.html">AsyncTextResolvingResult</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/AttachmentSize.html">AttachmentSize</a>
               </li>
               <li class="nav-group-task">
@@ -123,7 +126,13 @@
                 <a href="../Enums/EditorKey.html">EditorKey</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/GridColumnDimension.html">GridColumnDimension</a>
+                <a href="../Enums/GridColumnWidth.html">GridColumnWidth</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/GridViewError.html">GridViewError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Indentation.html">Indentation</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/ListLineMarker.html">ListLineMarker</a>
@@ -169,16 +178,19 @@
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Protocols/AsyncTextResolving.html">AsyncTextResolving</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/AttachmentEncoding.html">AttachmentEncoding</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/AttachmentOffsetProviding.html">AttachmentOffsetProviding</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/AttributesDecoding.html">AttributesDecoding</a>
+                <a href="../Protocols/AttachmentTypeIdentifying.html">AttachmentTypeIdentifying</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols.html#/s:6Proton12BlockContentP">BlockContent</a>
+                <a href="../Protocols/AttributesDecoding.html">AttributesDecoding</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/BoundsObserving.html">BoundsObserving</a>
@@ -220,9 +232,6 @@
                 <a href="../Protocols/GridViewDelegate.html">GridViewDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols.html#/s:6Proton13InlineContentP">InlineContent</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Protocols/SequenceGenerator.html">SequenceGenerator</a>
               </li>
               <li class="nav-group-task">
@@ -246,7 +255,7 @@
                 <a href="../Structs/AnyEditorTextEncoding.html">AnyEditorTextEncoding</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/BlockAttachmentImage.html">BlockAttachmentImage</a>
+                <a href="../Structs/AttachmentImage.html">AttachmentImage</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/CommandName.html">CommandName</a>
@@ -261,7 +270,13 @@
                 <a href="../Structs/EditorLine.html">EditorLine</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/GradientColors.html">GradientColors</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/GridCellStyle.html">GridCellStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/GridCellStyle/BorderStyle.html">– BorderStyle</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/GridColumnConfiguration.html">GridColumnConfiguration</a>
@@ -274,9 +289,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/GridStyle.html">GridStyle</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Structs/InlineAttachmentImage.html">InlineAttachmentImage</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/LineFormatting.html">LineFormatting</a>
@@ -298,6 +310,12 @@
           <li class="nav-group-name">
             <a href="../Typealiases.html">Type Aliases</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton14AttachmentViewa">AttachmentView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton25AttachmentViewIdentifyinga">AttachmentViewIdentifying</a>
+              </li>
               <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:6Proton10Attributesa">Attributes</a>
               </li>
@@ -420,6 +438,33 @@ select the attachment i.e. show as highlighted. Tapping the backspace again will
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton10AttachmentC14offsetProviderAA0B15OffsetProviding_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/offsetProvider" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC14offsetProviderAA0B15OffsetProviding_pSgvp">offsetProvider</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Offsets for the attachment. Can be used to align attachment with the text. Defaults to <code>.zero</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">offsetProvider</span><span class="p">:</span> <span class="kt"><a href="../Protocols/AttachmentOffsetProviding.html">AttachmentOffsetProviding</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton10AttachmentC20containerContentNameSo08PREditordE0CSgvp"></a>
                     <a name="//apple_ref/swift/Property/containerContentName" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton10AttachmentC20containerContentNameSo08PREditordE0CSgvp">containerContentName</a>
@@ -452,9 +497,9 @@ select the attachment i.e. show as highlighted. Tapping the backspace again will
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton10AttachmentC15didChangeBoundsyySo6CGRectVF"></a>
-                    <a name="//apple_ref/swift/Method/didChangeBounds(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10AttachmentC15didChangeBoundsyySo6CGRectVF">didChangeBounds(_:<wbr>)</a>
+                    <a name="/s:6Proton10AttachmentC11contentViewSo6UIViewCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/contentView" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC11contentViewSo6UIViewCSgvp">contentView</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -462,40 +507,16 @@ select the attachment i.e. show as highlighted. Tapping the backspace again will
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Causes invalidation of layout of the attachment when the containing view bounds are changed</p>
-<div class="aside aside-see-also">
-    <p class="aside-title">See also</p>
-    <code><a href="../Protocols/BoundsObserving.html">BoundsObserving</a></code>
-
-</div>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didChangeBounds</span><span class="p">(</span><span class="n">_</span> <span class="nv">bounds</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">contentView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>bounds</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Updated bounds</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
                       </div>
                     </section>
                   </div>
@@ -557,9 +578,9 @@ select the attachment i.e. show as highlighted. Tapping the backspace again will
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton10AttachmentC5imageAcA05BlockB5ImageV_tcfc"></a>
+                    <a name="/s:6Proton10AttachmentC5imageAcA0B5ImageV_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(image:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10AttachmentC5imageAcA05BlockB5ImageV_tcfc">init(image:<wbr>)</a>
+                    <a class="token" href="#/s:6Proton10AttachmentC5imageAcA0B5ImageV_tcfc">init(image:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -579,58 +600,7 @@ select the attachment i.e. show as highlighted. Tapping the backspace again will
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">image</span><span class="p">:</span> <span class="kt"><a href="../Structs/BlockAttachmentImage.html">BlockAttachmentImage</a></span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>image</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Image to be used to display in the attachment. Image is rendered as Block content.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:6Proton10AttachmentC5imageAcA06InlineB5ImageV_tcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(image:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10AttachmentC5imageAcA06InlineB5ImageV_tcfc">init(image:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Initializes an attachment with the image provided.</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    Image and Size can be updated by invoking <code>updateImage(image: size:)</code> at any time
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">image</span><span class="p">:</span> <span class="kt"><a href="../Structs/InlineAttachmentImage.html">InlineAttachmentImage</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">image</span><span class="p">:</span> <span class="kt"><a href="../Structs/AttachmentImage.html">AttachmentImage</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -659,9 +629,9 @@ select the attachment i.e. show as highlighted. Tapping the backspace again will
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton10AttachmentC_4sizeACx_AA0B4SizeOtcSo6UIViewCRbzAA12BlockContentRzlufc"></a>
+                    <a name="/s:6Proton10AttachmentC_4sizeAcA0B15TypeIdentifying_AA013EditorContentE0So6UIViewCXc_AA0B4SizeOtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(_:size:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10AttachmentC_4sizeACx_AA0B4SizeOtcSo6UIViewCRbzAA12BlockContentRzlufc">init(_:<wbr>size:<wbr>)</a>
+                    <a class="token" href="#/s:6Proton10AttachmentC_4sizeAcA0B15TypeIdentifying_AA013EditorContentE0So6UIViewCXc_AA0B4SizeOtcfc">init(_:<wbr>size:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -676,7 +646,7 @@ select the attachment i.e. show as highlighted. Tapping the backspace again will
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">AttachmentView</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">contentView</span><span class="p">:</span> <span class="kt">AttachmentView</span><span class="p">,</span> <span class="nv">size</span><span class="p">:</span> <span class="kt"><a href="../Enums/AttachmentSize.html">AttachmentSize</a></span><span class="p">)</span> <span class="k">where</span> <span class="kt">AttachmentView</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">,</span> <span class="kt">AttachmentView</span> <span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:6Proton12BlockContentP">BlockContent</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">contentView</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:6Proton14AttachmentViewa">AttachmentView</a></span><span class="p">,</span> <span class="nv">size</span><span class="p">:</span> <span class="kt"><a href="../Enums/AttachmentSize.html">AttachmentSize</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -717,9 +687,9 @@ select the attachment i.e. show as highlighted. Tapping the backspace again will
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton10AttachmentC_4sizeACx_AA0B4SizeOtcSo6UIViewCRbzAA13InlineContentRzlufc"></a>
-                    <a name="//apple_ref/swift/Method/init(_:size:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10AttachmentC_4sizeACx_AA0B4SizeOtcSo6UIViewCRbzAA13InlineContentRzlufc">init(_:<wbr>size:<wbr>)</a>
+                    <a name="/s:6Proton10AttachmentC15didChangeBounds_03oldE0ySo6CGRectV_AGtF"></a>
+                    <a name="//apple_ref/swift/Method/didChangeBounds(_:oldBounds:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC15didChangeBounds_03oldE0ySo6CGRectV_AGtF">didChangeBounds(_:<wbr>oldBounds:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -727,14 +697,19 @@ select the attachment i.e. show as highlighted. Tapping the backspace again will
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Initializes the attachment with the given content view</p>
+                        <p>Causes invalidation of layout of the attachment when the containing view bounds are changed</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <code><a href="../Protocols/BoundsObserving.html">BoundsObserving</a></code>
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">AttachmentView</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">contentView</span><span class="p">:</span> <span class="kt">AttachmentView</span><span class="p">,</span> <span class="nv">size</span><span class="p">:</span> <span class="kt"><a href="../Enums/AttachmentSize.html">AttachmentSize</a></span><span class="p">)</span> <span class="k">where</span> <span class="kt">AttachmentView</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">,</span> <span class="kt">AttachmentView</span> <span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:6Proton13InlineContentP">InlineContent</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didChangeBounds</span><span class="p">(</span><span class="n">_</span> <span class="nv">bounds</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">,</span> <span class="nv">oldBounds</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -745,56 +720,17 @@ select the attachment i.e. show as highlighted. Tapping the backspace again will
                             <tr>
                               <td>
                                 <code>
-                                <em>contentView</em>
+                                <em>bounds</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>Content view to be hosted within the attachment</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>size</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Size rule for attachment</p>
+                                  <p>Updated bounds</p>
                                 </div>
                               </td>
                             </tr>
                           </tbody>
                         </table>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:6Proton10AttachmentC14offsetProviderAA0B15OffsetProviding_pSgvp"></a>
-                    <a name="//apple_ref/swift/Property/offsetProvider" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10AttachmentC14offsetProviderAA0B15OffsetProviding_pSgvp">offsetProvider</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Offsets for the attachment. Can be used to align attachment with the text. Defaults to <code>.zero</code></p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">offsetProvider</span><span class="p">:</span> <span class="kt"><a href="../Protocols/AttachmentOffsetProviding.html">AttachmentOffsetProviding</a></span><span class="p">?</span></code></pre>
-
-                        </div>
                       </div>
                     </section>
                   </div>
@@ -1053,9 +989,9 @@ select the attachment i.e. show as highlighted. Tapping the backspace again will
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton10AttachmentC11updateImage_4sizeySo7UIImageCSg_So6CGSizeVSgtF"></a>
-                    <a name="//apple_ref/swift/Method/updateImage(_:size:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10AttachmentC11updateImage_4sizeySo7UIImageCSg_So6CGSizeVSgtF">updateImage(_:<wbr>size:<wbr>)</a>
+                    <a name="/s:6Proton10AttachmentC6update4withyAA0B5ImageV_tF"></a>
+                    <a name="//apple_ref/swift/Method/update(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC6update4withyAA0B5ImageV_tF">update(with:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1063,52 +999,43 @@ select the attachment i.e. show as highlighted. Tapping the backspace again will
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Updated the image and/or size of the current attachment.</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    This is a no-op on View based Attachment created by providing an Inline or Block view.
-
-</div>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updateImage</span><span class="p">(</span><span class="n">_</span> <span class="nv">image</span><span class="p">:</span> <span class="kt">UIImage</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">size</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="n">with</span> <span class="nv">image</span><span class="p">:</span> <span class="kt"><a href="../Structs/AttachmentImage.html">AttachmentImage</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>image</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Image to update attachment with. Omit to use the existing image.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>size</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>New size of the image attachment. Omit to use the existing size.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10AttachmentC6update_4sizeyAA0B15TypeIdentifying_AA013EditorContentF0So6UIViewCXc_AA0B4SizeOtF"></a>
+                    <a name="//apple_ref/swift/Method/update(_:size:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10AttachmentC6update_4sizeyAA0B15TypeIdentifying_AA013EditorContentF0So6UIViewCXc_AA0B4SizeOtF">update(_:<wbr>size:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="n">_</span> <span class="nv">contentView</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:6Proton14AttachmentViewa">AttachmentView</a></span><span class="p">,</span> <span class="nv">size</span><span class="p">:</span> <span class="kt"><a href="../Enums/AttachmentSize.html">AttachmentSize</a></span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -1145,8 +1072,8 @@ select the attachment i.e. show as highlighted. Tapping the backspace again will
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep</a>. All rights reserved. (Last updated: 2022-08-11)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-06-06)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>

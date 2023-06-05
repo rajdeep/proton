@@ -17,7 +17,7 @@
     <a title="EditorView Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Proton Docs</a> (76% documented)</p>
+        <p><a href="../index.html">Proton Docs</a> (71% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -102,6 +102,9 @@
             <a href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Enums/AsyncTextResolvingResult.html">AsyncTextResolvingResult</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/AttachmentSize.html">AttachmentSize</a>
               </li>
               <li class="nav-group-task">
@@ -123,7 +126,13 @@
                 <a href="../Enums/EditorKey.html">EditorKey</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/GridColumnDimension.html">GridColumnDimension</a>
+                <a href="../Enums/GridColumnWidth.html">GridColumnWidth</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/GridViewError.html">GridViewError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Indentation.html">Indentation</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/ListLineMarker.html">ListLineMarker</a>
@@ -169,16 +178,19 @@
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Protocols/AsyncTextResolving.html">AsyncTextResolving</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/AttachmentEncoding.html">AttachmentEncoding</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/AttachmentOffsetProviding.html">AttachmentOffsetProviding</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/AttributesDecoding.html">AttributesDecoding</a>
+                <a href="../Protocols/AttachmentTypeIdentifying.html">AttachmentTypeIdentifying</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols.html#/s:6Proton12BlockContentP">BlockContent</a>
+                <a href="../Protocols/AttributesDecoding.html">AttributesDecoding</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/BoundsObserving.html">BoundsObserving</a>
@@ -220,9 +232,6 @@
                 <a href="../Protocols/GridViewDelegate.html">GridViewDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols.html#/s:6Proton13InlineContentP">InlineContent</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Protocols/SequenceGenerator.html">SequenceGenerator</a>
               </li>
               <li class="nav-group-task">
@@ -246,7 +255,7 @@
                 <a href="../Structs/AnyEditorTextEncoding.html">AnyEditorTextEncoding</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/BlockAttachmentImage.html">BlockAttachmentImage</a>
+                <a href="../Structs/AttachmentImage.html">AttachmentImage</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/CommandName.html">CommandName</a>
@@ -261,7 +270,13 @@
                 <a href="../Structs/EditorLine.html">EditorLine</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/GradientColors.html">GradientColors</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/GridCellStyle.html">GridCellStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/GridCellStyle/BorderStyle.html">– BorderStyle</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/GridColumnConfiguration.html">GridColumnConfiguration</a>
@@ -274,9 +289,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/GridStyle.html">GridStyle</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Structs/InlineAttachmentImage.html">InlineAttachmentImage</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/LineFormatting.html">LineFormatting</a>
@@ -298,6 +310,12 @@
           <li class="nav-group-name">
             <a href="../Typealiases.html">Type Aliases</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton14AttachmentViewa">AttachmentView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton25AttachmentViewIdentifyinga">AttachmentViewIdentifying</a>
+              </li>
               <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:6Proton10Attributesa">Attributes</a>
               </li>
@@ -557,9 +575,36 @@ and can be used to host simple formatted text or complex layout containing multi
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton10EditorViewC5frame7contextACSo6CGRectV_AA0bC7ContextCtcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(frame:context:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC5frame7contextACSo6CGRectV_AA0bC7ContextCtcfc">init(frame:<wbr>context:<wbr>)</a>
+                    <a name="/s:6Proton10EditorViewC18asyncTextResolversSayAA05AsyncE9Resolving_pGvp"></a>
+                    <a name="//apple_ref/swift/Property/asyncTextResolvers" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC18asyncTextResolversSayAA05AsyncE9Resolving_pGvp">asyncTextResolvers</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Async Text Resolvers supported by the Editor.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">asyncTextResolvers</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/AsyncTextResolving.html">AsyncTextResolving</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC5frame7context16allowAutogrowingACSo6CGRectV_AA0bC7ContextCSbtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(frame:context:allowAutogrowing:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC5frame7context16allowAutogrowingACSo6CGRectV_AA0bC7ContextCSbtcfc">init(frame:<wbr>context:<wbr>allowAutogrowing:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -574,7 +619,7 @@ and can be used to host simple formatted text or complex layout containing multi
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">frame</span><span class="p">:</span> <span class="kt">CGRect</span> <span class="o">=</span> <span class="o">.</span><span class="n">zero</span><span class="p">,</span> <span class="nv">context</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorViewContext.html">EditorViewContext</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">shared</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">frame</span><span class="p">:</span> <span class="kt">CGRect</span> <span class="o">=</span> <span class="o">.</span><span class="n">zero</span><span class="p">,</span> <span class="nv">context</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorViewContext.html">EditorViewContext</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">shared</span><span class="p">,</span> <span class="nv">allowAutogrowing</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1358,7 +1403,7 @@ and <code>nextContentLine(location)</code>.
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Gets or sets the selected range in the <code>EditorView</code>.</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
@@ -1778,7 +1823,7 @@ default is <code>UITextAutocorrectionTypeDefault</code></p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">11.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(iOS 11.0, *)</span>
 <span class="kd">public</span> <span class="k">var</span> <span class="nv">smartQuotesType</span><span class="p">:</span> <span class="kt">UITextSmartQuotesType</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
@@ -1806,7 +1851,7 @@ default is <code>UITextAutocorrectionTypeDefault</code></p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">11.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(iOS 11.0, *)</span>
 <span class="kd">public</span> <span class="k">var</span> <span class="nv">smartDashesType</span><span class="p">:</span> <span class="kt">UITextSmartDashesType</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
@@ -1834,7 +1879,7 @@ default is <code>UITextAutocorrectionTypeDefault</code></p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">11.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(iOS 11.0, *)</span>
 <span class="kd">public</span> <span class="k">var</span> <span class="nv">smartInsertDeleteType</span><span class="p">:</span> <span class="kt">UITextSmartInsertDeleteType</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
@@ -2083,7 +2128,7 @@ This property controls the ability of the user to select content and interact wi
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOSApplicationExtension</span> <span class="mf">11.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(iOSApplicationExtension 11.0, *)</span>
 <span class="kd">public</span> <span class="k">var</span> <span class="nv">textDragDelegate</span><span class="p">:</span> <span class="kt">UITextDragDelegate</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
@@ -2111,7 +2156,7 @@ This property controls the ability of the user to select content and interact wi
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOSApplicationExtension</span> <span class="mf">11.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(iOSApplicationExtension 11.0, *)</span>
 <span class="kd">public</span> <span class="k">var</span> <span class="nv">textDropDelegate</span><span class="p">:</span> <span class="kt">UITextDropDelegate</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
@@ -2197,6 +2242,170 @@ This property controls the ability of the user to select content and interact wi
                       <div>
                         <h4>Return Value</h4>
                         <p><code>true</code> if this object is now the first-responder or <code>false</code> if it is not.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC11markedRangeSo8_NSRangeVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/markedRange" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC11markedRangeSo8_NSRangeVSgvp">markedRange</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The range of currently marked text in a document.
+If there is no marked text, the value of the property is <code>nil</code>. Marked text is provisionally inserted text that requires user confirmation; it occurs in multistage text input. The current selection, which can be a caret or an extended range, always occurs within the marked text.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">markedRange</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC13setAttributes_2atySDySo21NSAttributedStringKeyaypG_So8_NSRangeVtF"></a>
+                    <a name="//apple_ref/swift/Method/setAttributes(_:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC13setAttributes_2atySDySo21NSAttributedStringKeyaypG_So8_NSRangeVtF">setAttributes(_:<wbr>at:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setAttributes</span><span class="p">(</span><span class="n">_</span> <span class="nv">attributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">NSAttributedString</span><span class="o">.</span><span class="kt">Key</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">],</span> <span class="n">at</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC27setNeedsAsyncTextResolutionyyF"></a>
+                    <a name="//apple_ref/swift/Method/setNeedsAsyncTextResolution()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC27setNeedsAsyncTextResolutionyyF">setNeedsAsyncTextResolution()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Sets async text resolution to resolve on next text layout pass.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Changing attributes also causes layout pass to be performed, and this any applicable <code>AsyncTextResolvers</code> will be executed.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setNeedsAsyncTextResolution</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC24resolveAsyncTextIfNeededyyF"></a>
+                    <a name="//apple_ref/swift/Method/resolveAsyncTextIfNeeded()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC24resolveAsyncTextIfNeededyyF">resolveAsyncTextIfNeeded()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Invokes async text resolution to resolve on demand.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">resolveAsyncTextIfNeeded</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC16rangeOfCharacter2atSo8_NSRangeVSgSo7CGPointV_tF"></a>
+                    <a name="//apple_ref/swift/Method/rangeOfCharacter(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC16rangeOfCharacter2atSo8_NSRangeVSgSo7CGPointV_tF">rangeOfCharacter(at:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the range of character at the given point</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">rangeOfCharacter</span><span class="p">(</span><span class="n">at</span> <span class="nv">point</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">NSRange</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>point</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Point to get range from</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Character range if available, else nil</p>
                       </div>
                     </section>
                   </div>
@@ -3560,7 +3769,7 @@ type <code>NSAttributedString</code> that may have additional attributes defined
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">canPerformAction</span><span class="p">(</span><span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">Selector</span><span class="p">,</span> <span class="n">withSender</span> <span class="nv">sender</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">canPerformAction</span><span class="p">(</span><span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">Selector</span><span class="p">,</span> <span class="n">withSender</span> <span class="nv">sender</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -3627,6 +3836,69 @@ type <code>NSAttributedString</code> that may have additional attributes defined
                         <p><code>true</code> to invoke default behaviour.
 <code>false</code> to conditionally disable/hide menu item. Display of menu item still depends on the context. E.g. Select is not shown
 in case the editor is empty.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC5paste16attributedString4intoSbSo012NSAttributedF0C_So8_NSRangeVtF"></a>
+                    <a name="//apple_ref/swift/Method/paste(attributedString:into:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC5paste16attributedString4intoSbSo012NSAttributedF0C_So8_NSRangeVtF">paste(attributedString:<wbr>into:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This method attempt to simulate the <code>paste</code> method but with explicitly provided attributed string and insertion range.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">paste</span><span class="p">(</span><span class="nv">attributedString</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="p">,</span> <span class="n">into</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>attributedString</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Attributed string to be inserted</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Insertion range</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>true</code> The paste operation was successful
+<code>false</code> The paste operation was discarded</p>
                       </div>
                     </section>
                   </div>
@@ -3879,6 +4151,33 @@ existing value will be overwritten by the new value provided in the attributes.<
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton10EditorViewC16resolveAsyncTextyyF"></a>
+                    <a name="//apple_ref/swift/Method/resolveAsyncText()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC16resolveAsyncTextyyF">resolveAsyncText()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">resolveAsyncText</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton10EditorViewC19isCommandRegisteredySbAA0E4NameVF"></a>
                     <a name="//apple_ref/swift/Method/isCommandRegistered(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton10EditorViewC19isCommandRegisteredySbAA0E4NameVF">isCommandRegistered(_:<wbr>)</a>
@@ -3932,8 +4231,8 @@ existing value will be overwritten by the new value provided in the attributes.<
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep</a>. All rights reserved. (Last updated: 2022-08-11)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-06-06)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>

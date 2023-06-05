@@ -17,7 +17,7 @@
     <a title="GridView Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Proton Docs</a> (76% documented)</p>
+        <p><a href="../index.html">Proton Docs</a> (71% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -102,6 +102,9 @@
             <a href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Enums/AsyncTextResolvingResult.html">AsyncTextResolvingResult</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/AttachmentSize.html">AttachmentSize</a>
               </li>
               <li class="nav-group-task">
@@ -123,7 +126,13 @@
                 <a href="../Enums/EditorKey.html">EditorKey</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/GridColumnDimension.html">GridColumnDimension</a>
+                <a href="../Enums/GridColumnWidth.html">GridColumnWidth</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/GridViewError.html">GridViewError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Indentation.html">Indentation</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/ListLineMarker.html">ListLineMarker</a>
@@ -169,16 +178,19 @@
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Protocols/AsyncTextResolving.html">AsyncTextResolving</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/AttachmentEncoding.html">AttachmentEncoding</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/AttachmentOffsetProviding.html">AttachmentOffsetProviding</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/AttributesDecoding.html">AttributesDecoding</a>
+                <a href="../Protocols/AttachmentTypeIdentifying.html">AttachmentTypeIdentifying</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols.html#/s:6Proton12BlockContentP">BlockContent</a>
+                <a href="../Protocols/AttributesDecoding.html">AttributesDecoding</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/BoundsObserving.html">BoundsObserving</a>
@@ -220,9 +232,6 @@
                 <a href="../Protocols/GridViewDelegate.html">GridViewDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols.html#/s:6Proton13InlineContentP">InlineContent</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Protocols/SequenceGenerator.html">SequenceGenerator</a>
               </li>
               <li class="nav-group-task">
@@ -246,7 +255,7 @@
                 <a href="../Structs/AnyEditorTextEncoding.html">AnyEditorTextEncoding</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/BlockAttachmentImage.html">BlockAttachmentImage</a>
+                <a href="../Structs/AttachmentImage.html">AttachmentImage</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/CommandName.html">CommandName</a>
@@ -261,7 +270,13 @@
                 <a href="../Structs/EditorLine.html">EditorLine</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/GradientColors.html">GradientColors</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/GridCellStyle.html">GridCellStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/GridCellStyle/BorderStyle.html">– BorderStyle</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/GridColumnConfiguration.html">GridColumnConfiguration</a>
@@ -274,9 +289,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/GridStyle.html">GridStyle</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Structs/InlineAttachmentImage.html">InlineAttachmentImage</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/LineFormatting.html">LineFormatting</a>
@@ -299,6 +311,12 @@
             <a href="../Typealiases.html">Type Aliases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton14AttachmentViewa">AttachmentView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton25AttachmentViewIdentifyinga">AttachmentViewIdentifying</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:6Proton10Attributesa">Attributes</a>
               </li>
               <li class="nav-group-task">
@@ -319,6 +337,7 @@
                 <div class="language">
                   
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">GridView</span> <span class="p">:</span> <span class="kt">UIView</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">GridView</span><span class="p">:</span> <span class="kt">UIScrollViewDelegate</span></code></pre>
 
                 </div>
               </div>
@@ -474,6 +493,142 @@ are changed.
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton8GridViewC22isFreeScrollingEnabledSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isFreeScrollingEnabled" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridViewC22isFreeScrollingEnabledSbvp">isFreeScrollingEnabled</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Allows scrolling grid in any direction. Defaults to <code>false</code>
+Default behaviour restricts scrolling to horizontal or vertical direction at a time.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isFreeScrollingEnabled</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton8GridViewC20frozenColumnMaxIndexSiSgvp"></a>
+                    <a name="//apple_ref/swift/Property/frozenColumnMaxIndex" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridViewC20frozenColumnMaxIndexSiSgvp">frozenColumnMaxIndex</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Maximum index up till which columns are frozen. Columns are frozen from 0 to this index value.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">frozenColumnMaxIndex</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton8GridViewC17frozenRowMaxIndexSiSgvp"></a>
+                    <a name="//apple_ref/swift/Property/frozenRowMaxIndex" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridViewC17frozenRowMaxIndexSiSgvp">frozenRowMaxIndex</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Maximum index up till which rows are frozen. Rows are frozen from 0 to this index value.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">frozenRowMaxIndex</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton8GridViewC21containsFrozenColumnsSbvp"></a>
+                    <a name="//apple_ref/swift/Property/containsFrozenColumns" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridViewC21containsFrozenColumnsSbvp">containsFrozenColumns</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Determines if there are any frozen columns in the <code>GridView</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">containsFrozenColumns</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton8GridViewC18containsFrozenRowsSbvp"></a>
+                    <a name="//apple_ref/swift/Property/containsFrozenRows" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridViewC18containsFrozenRowsSbvp">containsFrozenRows</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Determines if there are any frozen rows in the <code>GridView</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">containsFrozenRows</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton8GridViewC5cellsSayAA0B4CellCGvp"></a>
                     <a name="//apple_ref/swift/Property/cells" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton8GridViewC5cellsSayAA0B4CellCGvp">cells</a>
@@ -599,7 +754,7 @@ are changed.
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">config</span><span class="p">:</span> <span class="kt"><a href="../Structs/GridConfiguration.html">GridConfiguration</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">config</span><span class="p">:</span> <span class="kt"><a href="../Structs/GridConfiguration.html">GridConfiguration</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -621,6 +776,33 @@ are changed.
                             </tr>
                           </tbody>
                         </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton8GridViewC6config5cellsAcA0B13ConfigurationV_SayAA0B4CellCGtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(config:cells:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridViewC6config5cellsAcA0B13ConfigurationV_SayAA0B4CellCGtcfc">init(config:<wbr>cells:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">config</span><span class="p">:</span> <span class="kt"><a href="../Structs/GridConfiguration.html">GridConfiguration</a></span><span class="p">,</span> <span class="nv">cells</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/GridCell.html">GridCell</a></span><span class="p">])</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -819,9 +1001,9 @@ are added as empty,</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton8GridViewC9insertRow2at13configurationySi_AA0bE13ConfigurationVtF"></a>
+                    <a name="/s:6Proton8GridViewC9insertRow2at13configurations6ResultOySayAA0B4CellCGAA0bC5ErrorOGSi_AA0bE13ConfigurationVtF"></a>
                     <a name="//apple_ref/swift/Method/insertRow(at:configuration:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton8GridViewC9insertRow2at13configurationySi_AA0bE13ConfigurationVtF">insertRow(at:<wbr>configuration:<wbr>)</a>
+                    <a class="token" href="#/s:6Proton8GridViewC9insertRow2at13configurations6ResultOySayAA0B4CellCGAA0bC5ErrorOGSi_AA0bE13ConfigurationVtF">insertRow(at:<wbr>configuration:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -836,7 +1018,7 @@ are added as empty,</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">insertRow</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">configuration</span><span class="p">:</span> <span class="kt"><a href="../Structs/GridRowConfiguration.html">GridRowConfiguration</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">insertRow</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">configuration</span><span class="p">:</span> <span class="kt"><a href="../Structs/GridRowConfiguration.html">GridRowConfiguration</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Result</span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Classes/GridCell.html">GridCell</a></span><span class="p">],</span> <span class="kt"><a href="../Enums/GridViewError.html">GridViewError</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -872,15 +1054,19 @@ If the index is out of bounds, row will be inserted at the top or bottom of the 
                           </tbody>
                         </table>
                       </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Result with newly added cells for <code>.success</code>, error in case of <code>.failure</code></p>
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton8GridViewC12insertColumn2at13configurationySi_AA0bE13ConfigurationVtF"></a>
+                    <a name="/s:6Proton8GridViewC12insertColumn2at13configurations6ResultOySayAA0B4CellCGAA0bC5ErrorOGSi_AA0bE13ConfigurationVtF"></a>
                     <a name="//apple_ref/swift/Method/insertColumn(at:configuration:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton8GridViewC12insertColumn2at13configurationySi_AA0bE13ConfigurationVtF">insertColumn(at:<wbr>configuration:<wbr>)</a>
+                    <a class="token" href="#/s:6Proton8GridViewC12insertColumn2at13configurations6ResultOySayAA0B4CellCGAA0bC5ErrorOGSi_AA0bE13ConfigurationVtF">insertColumn(at:<wbr>configuration:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -895,7 +1081,7 @@ If the index is out of bounds, row will be inserted at the top or bottom of the 
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">insertColumn</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">configuration</span><span class="p">:</span> <span class="kt"><a href="../Structs/GridColumnConfiguration.html">GridColumnConfiguration</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">insertColumn</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">configuration</span><span class="p">:</span> <span class="kt"><a href="../Structs/GridColumnConfiguration.html">GridColumnConfiguration</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Result</span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Classes/GridCell.html">GridCell</a></span><span class="p">],</span> <span class="kt"><a href="../Enums/GridViewError.html">GridViewError</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -930,6 +1116,10 @@ If the index is out of bounds, column will be inserted at the beginning or end o
                             </tr>
                           </tbody>
                         </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Result with newly added cells for <code>.success</code>, error in case of <code>.failure</code></p>
                       </div>
                     </section>
                   </div>
@@ -1029,6 +1219,179 @@ If the index is out of bounds, column will be inserted at the beginning or end o
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton8GridViewC13freezeColumns4upToySi_tF"></a>
+                    <a name="//apple_ref/swift/Method/freezeColumns(upTo:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridViewC13freezeColumns4upToySi_tF">freezeColumns(upTo:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Freezes all the columns from 0 to the index provided</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">freezeColumns</span><span class="p">(</span><span class="n">upTo</span> <span class="nv">maxIndex</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>maxIndex</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Index to freeze upto</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton8GridViewC10freezeRows4upToySi_tF"></a>
+                    <a name="//apple_ref/swift/Method/freezeRows(upTo:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridViewC10freezeRows4upToySi_tF">freezeRows(upTo:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Freezes all the rows from 0 to the index provided</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">freezeRows</span><span class="p">(</span><span class="n">upTo</span> <span class="nv">maxIndex</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>maxIndex</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Index to freeze upto</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton8GridViewC15unfreezeColumnsyyF"></a>
+                    <a name="//apple_ref/swift/Method/unfreezeColumns()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridViewC15unfreezeColumnsyyF">unfreezeColumns()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">unfreezeColumns</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton8GridViewC12unfreezeRowsyyF"></a>
+                    <a name="//apple_ref/swift/Method/unfreezeRows()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridViewC12unfreezeRowsyyF">unfreezeRows()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">unfreezeRows</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton8GridViewC11collapseRow2atySi_tF"></a>
+                    <a name="//apple_ref/swift/Method/collapseRow(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridViewC11collapseRow2atySi_tF">collapseRow(at:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collapseRow</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton8GridViewC6cellAt8rowIndex06columnG0AA0B4CellCSgSi_SitF"></a>
                     <a name="//apple_ref/swift/Method/cellAt(rowIndex:columnIndex:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton8GridViewC6cellAt8rowIndex06columnG0AA0B4CellCSgSi_SitF">cellAt(rowIndex:<wbr>columnIndex:<wbr>)</a>
@@ -1108,7 +1471,7 @@ If the index is out of bounds, column will be inserted at the beginning or end o
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">scrollToCellAt</span><span class="p">(</span><span class="nv">rowIndex</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">columnIndex</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">scrollToCellAt</span><span class="p">(</span><span class="nv">rowIndex</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">columnIndex</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1158,13 +1521,156 @@ If the index is out of bounds, column will be inserted at the beginning or end o
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton8GridViewC10applyStyle_5toRowyAA0b4CellE0V_SitF"></a>
+                    <a name="//apple_ref/swift/Method/applyStyle(_:toRow:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridViewC10applyStyle_5toRowyAA0b4CellE0V_SitF">applyStyle(_:<wbr>toRow:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Applies style to row at given index</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">applyStyle</span><span class="p">(</span><span class="n">_</span> <span class="nv">style</span><span class="p">:</span> <span class="kt"><a href="../Structs/GridCellStyle.html">GridCellStyle</a></span><span class="p">,</span> <span class="n">toRow</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>style</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Style to apply</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Index of the row</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton8GridViewC10applyStyle_8toColumnyAA0b4CellE0V_SitF"></a>
+                    <a name="//apple_ref/swift/Method/applyStyle(_:toColumn:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridViewC10applyStyle_8toColumnyAA0b4CellE0V_SitF">applyStyle(_:<wbr>toColumn:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Applies style to column at given index</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">applyStyle</span><span class="p">(</span><span class="n">_</span> <span class="nv">style</span><span class="p">:</span> <span class="kt"><a href="../Structs/GridCellStyle.html">GridCellStyle</a></span><span class="p">,</span> <span class="n">toColumn</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>style</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Style to apply</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Index of the column</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@Proton@objc(cs)GridView(im)scrollViewDidScroll:"></a>
+                    <a name="//apple_ref/swift/Method/scrollViewDidScroll(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@Proton@objc(cs)GridView(im)scrollViewDidScroll:">scrollViewDidScroll(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">scrollViewDidScroll</span><span class="p">(</span><span class="n">_</span> <span class="nv">scrollView</span><span class="p">:</span> <span class="kt">UIScrollView</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep</a>. All rights reserved. (Last updated: 2022-08-11)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-06-06)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>
