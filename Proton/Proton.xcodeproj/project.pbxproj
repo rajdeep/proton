@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1B004EC723C1C287007893AA /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B004EC623C1C287007893AA /* EditorView.swift */; };
+		1B0861D12A2D5AC000A84934 /* AsyncTextResolverSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0861CF2A2D5ABD00A84934 /* AsyncTextResolverSnapshotTests.swift */; };
+		1B140B182A26999B006CF4C3 /* AsyncTextResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B140B172A26999B006CF4C3 /* AsyncTextResolver.swift */; };
 		1B164F1023D1BE9900A0869A /* AttributesDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F0F23D1BE9900A0869A /* AttributesDecoding.swift */; };
 		1B164F4123D2A4AB00A0869A /* String+NSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F4023D2A4AB00A0869A /* String+NSRange.swift */; };
 		1B164F5223D2B9D400A0869A /* TestTextProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B164F5123D2B9D400A0869A /* TestTextProcessor.swift */; };
@@ -166,6 +168,8 @@
 
 /* Begin PBXFileReference section */
 		1B004EC623C1C287007893AA /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
+		1B0861CF2A2D5ABD00A84934 /* AsyncTextResolverSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTextResolverSnapshotTests.swift; sourceTree = "<group>"; };
+		1B140B172A26999B006CF4C3 /* AsyncTextResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTextResolver.swift; sourceTree = "<group>"; };
 		1B164F0F23D1BE9900A0869A /* AttributesDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesDecoding.swift; sourceTree = "<group>"; };
 		1B164F4023D2A4AB00A0869A /* String+NSRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+NSRange.swift"; sourceTree = "<group>"; };
 		1B164F5123D2B9D400A0869A /* TestTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTextProcessor.swift; sourceTree = "<group>"; };
@@ -323,6 +327,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B0861CE2A2D5AA900A84934 /* AsyncTextResolver */ = {
+			isa = PBXGroup;
+			children = (
+				1B0861CF2A2D5ABD00A84934 /* AsyncTextResolverSnapshotTests.swift */,
+			);
+			path = AsyncTextResolver;
+			sourceTree = "<group>";
+		};
+		1B140B162A269984006CF4C3 /* AsyncTextResolver */ = {
+			isa = PBXGroup;
+			children = (
+				1B140B172A26999B006CF4C3 /* AsyncTextResolver.swift */,
+			);
+			path = AsyncTextResolver;
+			sourceTree = "<group>";
+		};
 		1B164F5023D2B99900A0869A /* Processors */ = {
 			isa = PBXGroup;
 			children = (
@@ -535,7 +555,6 @@
 		1B82570723C567370033A0A9 /* EditorCommand */ = {
 			isa = PBXGroup;
 			children = (
-				1B4B60CB247FC698002B63CF /* TextProcessors */,
 				1B4B60C8247FC502002B63CF /* Commands */,
 				1B82570823C5674E0033A0A9 /* EditorCommand.swift */,
 				1B82570A23C567B90033A0A9 /* EditorCommandExecutor.swift */,
@@ -562,6 +581,7 @@
 		1B91F4AF23C72D66003F9B55 /* TextProcessors */ = {
 			isa = PBXGroup;
 			children = (
+				1B4B60CB247FC698002B63CF /* TextProcessors */,
 				1B91F4B023C72D87003F9B55 /* TextProcessor.swift */,
 				1B91F4B223C72DC3003F9B55 /* TextProcessing.swift */,
 			);
@@ -619,6 +639,7 @@
 		1BB214D323BB2778008B84A0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				1B0861CE2A2D5AA900A84934 /* AsyncTextResolver */,
 				1BD185BD284C2A51001F4FBC /* Grid */,
 				1B5E2581240F5AED00163E74 /* ExtensionTests */,
 				1B45CDE923C16816001EB196 /* Attachments */,
@@ -750,6 +771,7 @@
 		1BE3305B26057E1100B15E67 /* Swift */ = {
 			isa = PBXGroup;
 			children = (
+				1B140B162A269984006CF4C3 /* AsyncTextResolver */,
 				1BD185B8284C29DB001F4FBC /* Grid */,
 				1B2BC0DA23CF18A900407DEE /* Decoding */,
 				1B183D8A23CEA8F000AE83E5 /* Encoding */,
@@ -978,6 +1000,7 @@
 				1BD21554246951090000BCE2 /* LayoutManager.swift in Sources */,
 				1BD185BC284C29EF001F4FBC /* GridCell.swift in Sources */,
 				1B44165328E5706A00836C71 /* GradientView.swift in Sources */,
+				1B140B182A26999B006CF4C3 /* AsyncTextResolver.swift in Sources */,
 				1B91E7B526AA697C0002DF45 /* UnderlineCommand.swift in Sources */,
 				1B91F4B323C72DC3003F9B55 /* TextProcessing.swift in Sources */,
 				1BD185C2284C3082001F4FBC /* GridView.swift in Sources */,
@@ -1073,6 +1096,7 @@
 				1B576089245ADDDA00D92AE8 /* EditorViewMenuTests.swift in Sources */,
 				1B617A98283711D700095FEE /* AttachmentUpdateSnapshotTests.swift in Sources */,
 				1BFFEF1C23C334D200D2BA35 /* InlineEditorView.swift in Sources */,
+				1B0861D12A2D5AC000A84934 /* AsyncTextResolverSnapshotTests.swift in Sources */,
 				1B45CDF123C16EF4001EB196 /* RichTextAttachmentView.swift in Sources */,
 				1BFFEF1F23C3366200D2BA35 /* MockAttachmentOffsetProvider.swift in Sources */,
 				1B45CD9423BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift in Sources */,
