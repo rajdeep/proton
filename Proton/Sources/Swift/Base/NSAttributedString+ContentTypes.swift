@@ -65,6 +65,7 @@ public extension NSAttributedString.Key {
     /// Attribute denoting the range as a list item. This attribute enables use of `ListTextProcessor` to indent/outdent list
     /// using tab/shift-tab (macOS) as well as create a new list item on hitting enter key.
     static let listItem = NSAttributedString.Key("_listItem")
+    static let checklist = NSAttributedString.Key("_checklist")
 
     /// When applied to a new line char alongside `listItem` attribute, skips the rendering of list marker on subsequent line.
     static let skipNextListMarker = NSAttributedString.Key("_skipNextListMarker")

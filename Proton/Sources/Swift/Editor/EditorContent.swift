@@ -44,12 +44,12 @@ public struct EditorContent {
     /// Range within the `Editor` for this content
     public let enclosingRange: NSRange?
 
-    init(type: EditorContentType) {
+    public init(type: EditorContentType) {
         self.type = type
         self.enclosingRange = nil
     }
 
-    init(type: EditorContentType, enclosingRange: NSRange) {
+    public init(type: EditorContentType, enclosingRange: NSRange) {
         self.type = type
         self.enclosingRange = enclosingRange
     }

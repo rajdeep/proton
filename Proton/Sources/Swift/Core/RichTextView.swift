@@ -385,6 +385,11 @@ class RichTextView: AutogrowingTextView {
                 super.deleteBackward()
             }
             super.deleteBackward()
+
+            if let layoutManager = self.textStorage.layoutManagers.first as? LayoutManager {
+                layoutManager.clear()
+            }
+            self.subviews.filter { $0 is ListItemView }.forEach { $0.removeFromSuperview() }
             return
         }
 

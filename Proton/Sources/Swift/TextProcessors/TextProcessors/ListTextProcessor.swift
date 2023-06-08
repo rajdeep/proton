@@ -36,7 +36,7 @@ public class ListTextProcessor: TextProcessing {
 
     // Zero width space - used for laying out the list bullet/number in an empty line.
     // This is required when using tab on a blank bullet line. Without this, layout calculations are not performed.
-    static let blankLineFiller = "\u{200B}"
+    static public let blankLineFiller = "\u{200B}"
 
     /// Initializes text processor.
     public init() { }
@@ -125,6 +125,9 @@ public class ListTextProcessor: TextProcessing {
         if editor.selectedRange.endLocation >= rangeToReplace.endLocation {
             editor.selectedRange = NSRange(location: editor.selectedRange.location - 1, length: 0)
         }
+        editor.removeAttribute(.strikethroughStyle, at: editor.selectedRange)
+        editor.typingAttributes[.foregroundColor] = editor.textColor
+        editor.typingAttributes[.strikethroughStyle] = nil
     }
 
     private func handleShiftReturn(editor: EditorView, editedRange: NSRange, attrs: [NSAttributedString.Key: Any]) {
