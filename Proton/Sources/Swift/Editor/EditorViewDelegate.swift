@@ -85,6 +85,8 @@ public protocol EditorViewDelegate: AnyObject {
     ///   - location: Location of the tap event
     ///   - characterRange: Range of character at the tapped location, if available.
     func editor(_ editor: EditorView, didTapAtLocation location: CGPoint, characterRange: NSRange?)
+
+    func editor(_ editor: EditorView, didLayout content: NSAttributedString)
 }
 
 public extension EditorViewDelegate {
@@ -97,4 +99,5 @@ public extension EditorViewDelegate {
     func editor(_ editor: EditorView, didExecuteProcessors processors: [TextProcessing], at range: NSRange) { }
     func editor(_ editor: EditorView, didChangeSize currentSize: CGSize, previousSize: CGSize) { }
     func editor(_ editor: EditorView, didTapAtLocation location: CGPoint, characterRange: NSRange?) { }
+    func editor(_ editor: EditorView, didLayout content: NSAttributedString) { }
 }

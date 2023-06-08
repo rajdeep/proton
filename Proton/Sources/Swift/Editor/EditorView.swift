@@ -1096,6 +1096,7 @@ extension EditorView: RichTextViewDelegate {
         guard finished else { return }
         relayoutAttachments()
         resolveAsyncText()
+        delegate?.editor(self, didLayout: attributedText)
     }
 
     func richTextView(_ richTextView: RichTextView, selectedRangeChangedFrom oldRange: NSRange?, to newRange: NSRange?) {
