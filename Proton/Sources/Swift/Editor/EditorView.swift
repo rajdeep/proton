@@ -115,6 +115,14 @@ open class EditorView: UIView {
 
     /// Context for the current Editor
     public let editorViewContext: EditorViewContext
+    
+    public var editGestureRecognizers: [UIGestureRecognizer] {
+        return richTextView.gestureRecognizers ?? []
+    }
+    
+    public var markedTextRange: UITextRange? {
+        return richTextView.markedTextRange
+    }
 
     @available(iOS 13.0, *)
     public var textInteractions: [UITextInteraction] {
@@ -1045,7 +1053,7 @@ extension EditorView {
 extension EditorView: DefaultTextFormattingProviding { }
 
 extension EditorView: RichTextViewListDelegate {
-    var listLineFormatting: LineFormatting {
+    public var listLineFormatting: LineFormatting {
         return listFormattingProvider?.listLineFormatting ?? RichTextView.defaultListLineFormatting
     }
 
