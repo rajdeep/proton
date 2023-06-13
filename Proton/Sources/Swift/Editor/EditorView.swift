@@ -250,6 +250,10 @@ open class EditorView: UIView {
         get { richTextView.contentInset }
         set { richTextView.contentInset = newValue }
     }
+    
+    public var textStorage: NSTextStorage {
+        return richTextView.textStorage
+    }
 
     @available(iOS 11.1, *)
     @available(iOSApplicationExtension 11.1, *)

@@ -99,6 +99,7 @@ public class ListCommand: EditorCommand {
             ], at: selectedRange)
             editor.removeAttribute(.listItem, at: selectedRange)
             editor.typingAttributes[.listItem] = nil
+            editor.typingAttributes[.listItemValue] = nil
             return
         }
 
@@ -114,8 +115,21 @@ public class ListCommand: EditorCommand {
             let mutableStyle = ListTextProcessor().updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: .indent)
             editor.addAttribute(.paragraphStyle, value: mutableStyle ?? editor.paragraphStyle, at: range)
         }
+        
+        if let prevListItem = editor.attributedText.attribute(.listItem, at: selectedRange.location, effectiveRange: nil) as? String {
+            if prevListItem == "listItemSelectedChecklist" {
+                editor.removeAttribute(.strikethroughStyle, at: selectedRange)
+                editor.addAttribute(.foregroundColor, value: editor.textColor, at: selectedRange)
+                editor.typingAttributes[.strikethroughStyle] = nil
+                editor.typingAttributes[.foregroundColor] = editor.textColor
+            }
+        }
+        
+        let listItemValue = editor.attributedText.attribute(.listItemValue, at: selectedRange.location, effectiveRange: nil)
         editor.addAttribute(.listItem, value: attrValue, at: selectedRange)
+        editor.addAttribute(.listItemValue, value: listItemValue, at: selectedRange)
         editor.typingAttributes[.listItem] = attrValue
+        editor.typingAttributes[.listItemValue] = listItemValue
         attributeValue = nil
     }
 

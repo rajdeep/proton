@@ -21,7 +21,7 @@ public let checklistTapKey = Notification.Name("ChecklistTap")
 
 class ListItemView: UIView {
     
-    private var checked: Bool = false
+    var checked: Bool = false
     
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -70,8 +70,14 @@ class ListItemView: UIView {
         checked.toggle()
         if let richView = self.superview as? RichTextView {
             let location = CGPoint(x: 30, y: frame.midY)
-            if let characterRange = richView.rangeOfCharacter(at: location) {
-                if (characterRange.location + 1) < richView.contentLength, let lineRange = richView.lineRange(from: characterRange.location + 1) {
+            if let characterRange = richView.rangeOfCharacter(at: location), (characterRange.location + 1) < richView.contentLength {
+                let location: Int
+                if richView.attributedText.substring(from: NSRange(location: characterRange.location, length: 1)) == ListTextProcessor.blankLineFiller {
+                    location = characterRange.location
+                } else {
+                    location = characterRange.location + 1
+                }
+                if location < richView.contentLength, let lineRange = currentLine(on: richView, at: location) {
                     let item = ListItemModel(range: lineRange, selected: checked)
                     NotificationCenter.default.post(name: checklistTapKey, object: item)
                 } else {
@@ -79,6 +85,19 @@ class ListItemView: UIView {
                 }
             }
         }
+    }
+    
+    private func currentLine(on textView: RichTextView, at location: Int) -> NSRange? {
+        guard textView.contentLength > location else { return nil }
+        var loc = location
+        while loc < textView.contentLength {
+            if textView.attributedText.substring(from: NSRange(location: loc, length: 1)) == "\n" {
+                loc += 1
+                break
+            }
+            loc += 1
+        }
+        return NSRange(location: location, length: loc - location)
     }
     
     required init?(coder: NSCoder) {

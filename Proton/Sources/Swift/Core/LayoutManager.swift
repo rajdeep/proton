@@ -95,7 +95,6 @@ class LayoutManager: NSLayoutManager {
         }
         
         reDrawChecklist()
-        
         lastListItemModels = listItemViewModels
         listItemViewModels = []
     }
@@ -261,18 +260,18 @@ class LayoutManager: NSLayoutManager {
                     if lastItem.view.frame == item.view.frame {
                         flag = true
                         if lastItem.attrValue != item.attrValue {
-                            removeItems.append(item)
                             addItems.append(item)
+                            removeItems.append(item)
                         }
                         break
                     }
                 }
-                
+
                 if !flag {
                     removeItems.append(lastItem)
                 }
             }
-            
+
             for item in listItemViewModels {
                 var flag = false
                 for subview in textView.subviews {
@@ -282,12 +281,12 @@ class LayoutManager: NSLayoutManager {
                         break
                     }
                 }
-                
+
                 if !flag {
                     addItems.append(item)
                 }
             }
-            
+
             for item in removeItems {
                 for subview in textView.subviews {
                     if let lisItemView = subview as? ListItemView,
@@ -300,9 +299,11 @@ class LayoutManager: NSLayoutManager {
             }
             for item in addItems {
                 if !drawedRects.contains(item.view.frame) {
+                    drawedRects.append(item.view.frame)
                     textView.addSubview(item.view)
                 }
             }
+
         }
     }
     

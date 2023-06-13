@@ -52,6 +52,7 @@ public class ListTextProcessor: TextProcessing {
            let value = editorView.attributedText.attribute(.listItem, at: rangeToCheck, effectiveRange: nil),
            (editorView.attributedText.attribute(.paragraphStyle, at: rangeToCheck, effectiveRange: nil) as? NSParagraphStyle)?.firstLineHeadIndent ?? 0 > 0 {
             editorView.typingAttributes[.listItem] = value
+            editorView.typingAttributes[.listItemValue] = editorView.attributedText.attribute(.listItemValue, at: rangeToCheck, effectiveRange: nil)
         }
         return true
     }
@@ -114,6 +115,7 @@ public class ListTextProcessor: TextProcessing {
 
     private func terminateList(editor: EditorView, editedRange: NSRange) {
         editor.typingAttributes[.listItem] = nil
+        editor.typingAttributes[.listItemValue] = nil
         self.updateListItemIfRequired(
             editor: editor,
             editedRange: editedRange,
@@ -257,6 +259,7 @@ public class ListTextProcessor: TextProcessing {
         let updatedStyle = updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: indentMode)
         attrs[.paragraphStyle] = updatedStyle
         attrs[.listItem] = updatedStyle?.firstLineHeadIndent ?? 0 > 0.0 ? listAttributeValue : nil
+        attrs[.listItemValue] = updatedStyle?.firstLineHeadIndent ?? 0 > 0.0 ? UUID().uuidString : nil
         let marker = NSAttributedString(string: ListTextProcessor.blankLineFiller, attributes: attrs)
         editor.replaceCharacters(in: editedRange, with: marker)
         editor.selectedRange = editedRange.nextPosition
@@ -266,10 +269,10 @@ public class ListTextProcessor: TextProcessing {
         let mutableStyle = paraStyle?.mutableCopy() as? NSMutableParagraphStyle
         let indent = listLineFormatting.indentation
         if indentMode == .indent {
-            mutableStyle?.firstLineHeadIndent += indent
+            mutableStyle?.firstLineHeadIndent = indent
             mutableStyle?.headIndent = mutableStyle?.firstLineHeadIndent ?? 0
         } else {
-            mutableStyle?.firstLineHeadIndent -= indent
+            mutableStyle?.firstLineHeadIndent = 0
             mutableStyle?.headIndent = mutableStyle?.firstLineHeadIndent ?? 0
         }
         mutableStyle?.paragraphSpacingBefore = listLineFormatting.spacingBefore
