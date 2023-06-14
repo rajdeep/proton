@@ -49,6 +49,21 @@ public protocol BoundsObserving: AnyObject {
     func didChangeBounds(_ bounds: CGRect, oldBounds: CGRect)
 }
 
+/// Describes opening and closing separators for `EditorView`'`getFullAttributedText(:)` function.
+public struct AttachmentContentIdentifier {
+    
+    public let openingID: NSAttributedString
+    public let closingID: NSAttributedString
+
+    /// Constructs separators for using in `getFullAttributedText(:)`
+    /// - Parameters:
+    ///   - openingID: Used to identify start of attachment content
+    ///   - closingID: Used to identify end of attachment content
+    init(openingID: NSAttributedString, closingID: NSAttributedString) {
+        self.openingID = openingID
+        self.closingID = closingID
+    }
+}
 
 /// Defines the height for the Editor
 public enum EditorHeight {
@@ -469,6 +484,20 @@ open class EditorView: UIView {
         return nestingLevel
     }
 
+    /// Returns the root editor of the current Editor. Returns `self` where the current editor is not contained within an `Attachment`.
+    /// - Note:This is different from `parentEditor` which is immediate parent of the current editor
+    public var rootEditor: EditorView {
+        if let parentEditor {
+            return parentEditor.rootEditor
+        }
+        return self
+    }
+
+    /// `EditorView` containing the current `EditorView` in an `Attachment`
+    public var parentEditor: EditorView? {
+        containerAttachment?.containerEditorView
+    }
+
     /// Clears the contents in the Editor.
     public func clear() {
         self.attributedText = NSAttributedString()
@@ -647,6 +676,33 @@ open class EditorView: UIView {
 //                attachment.addedAttributesOnContainingRange(rangeInContainer: rangeInContainer, attributes: attributes)
 //            }
 //        }
+    }
+
+    /// Returns the full attributed text contained in the `EditorView` along with the ones in editors nested in contained Attachments.
+    /// - Parameter attachmentContentIdentifier: Identifier for opening and closing ranges for Attachment Content
+    /// - Returns: Full attributed text
+    /// - Note: An additional attribute with value of `Attachment.name` is automatically added with key `NSAttributedString.Key.viewOnly`.
+    /// This can be changed by overriding default implementation of `getFullTextRangeIdentificationAttributes()` in `Attachment`.
+    public func getFullAttributedText(using attachmentContentIdentifier: AttachmentContentIdentifier) -> NSAttributedString {
+        let text = NSMutableAttributedString()
+        attributedText.enumerateAttribute(.attachment, in: attributedText.fullRange) { value, range, _ in
+            if let attachment = value as? Attachment {
+                let attachmentID = attachment.getFullTextRangeIdentificationAttributes()
+                attachment.contentEditors.forEach { editor in
+                    let editorText = NSMutableAttributedString(attributedString: editor.getFullAttributedText(using: attachmentContentIdentifier))
+                    let openingID = attachmentContentIdentifier.openingID.addingAttributes(attachmentID)
+                    let closingID = attachmentContentIdentifier.closingID.addingAttributes(attachmentID)
+
+                    editorText.insert(openingID, at: 0)
+                    editorText.insert(closingID, at: editorText.length)
+                    text.append(editorText)
+                }
+            } else {
+                let string = NSMutableAttributedString(attributedString: attributedText.attributedSubstring(from: range))
+                text.append(string)
+            }
+        }
+        return text
     }
 
     /// Sets async text resolution to resolve on next text layout pass.

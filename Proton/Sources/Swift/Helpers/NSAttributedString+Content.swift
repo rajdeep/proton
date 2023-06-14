@@ -23,6 +23,18 @@ import UIKit
 
 public extension NSAttributedString {
 
+    /// Creates a mutable copy 
+    var asMutable: NSMutableAttributedString {
+        NSMutableAttributedString(attributedString: self)
+    }
+
+    func addingAttributes(_ attributes: [NSAttributedString.Key: Any], to range: NSRange? = nil) -> NSAttributedString {
+        let range = range?.clamped(upperBound: length) ?? fullRange
+        let mutable = asMutable
+        mutable.addAttributes(attributes, range: range)
+        return mutable
+    }
+
     /// Enumerates block contents in given range.
     /// - Parameter range: Range to enumerate contents in. Nil to enumerate in entire string.
     func enumerateContents(in range: NSRange? = nil) -> AnySequence<EditorContent> {

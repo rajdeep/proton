@@ -69,12 +69,18 @@ open class Attachment: NSTextAttachment, BoundsObserving {
        return stringWithAttributes(attributes: attributes)
     }
 
-    var isImageBasedAttachment: Bool {
-        self.view == nil
+    /// Name of the content contained within the `Attachment`
+    public var name: EditorContent.Name? {
+        return view?.name
     }
 
-    var name: EditorContent.Name? {
-        return (contentView as? EditorContentIdentifying)?.name
+    public var contentEditors: [EditorView] {
+        guard let contentView else { return [] }
+        return contentView.subviews.compactMap{ $0 as? EditorView }
+    }
+
+    var isImageBasedAttachment: Bool {
+        self.view == nil
     }
 
     var isRendered: Bool {
@@ -419,6 +425,10 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         self.contentView?.removeFromSuperview()
         setup(contentView: contentView, size: size)
         invalidateLayout()
+    }
+
+    open func getFullTextRangeIdentificationAttributes() -> [NSAttributedString.Key: Any] {
+        [NSAttributedString.Key.viewOnly: name?.rawValue ?? "<no-name>"]
     }
 
     func setContainerEditor(_ editor: EditorView) {

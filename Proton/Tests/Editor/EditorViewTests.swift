@@ -588,4 +588,127 @@ class EditorViewTests: XCTestCase {
         XCTAssertEqual(range, NSRange(location: 12, length: 1))
 
     }
+
+    func testGetsRootEditor() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let panel1 = PanelView()
+        let panelAttachment1 = Attachment(panel1, size: .matchContent)
+        editor.insertAttachment(in: .zero, attachment: panelAttachment1)
+
+        let panel2 = PanelView()
+        let panelAttachment2 = Attachment(panel2, size: .matchContent)
+        panel1.editor.insertAttachment(in: .zero, attachment: panelAttachment2)
+
+        let panel3 = PanelView()
+        let panelAttachment3 = Attachment(panel3, size: .matchContent)
+        panel2.editor.insertAttachment(in: .zero, attachment: panelAttachment3)
+
+        viewController.render()
+
+        XCTAssertEqual(editor.rootEditor, editor)
+        XCTAssertEqual(panel1.editor.rootEditor, editor)
+        XCTAssertEqual(panel2.editor.rootEditor, editor)
+    }
+
+    func testGetsParentEditor() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let panel1 = PanelView()
+        let panelAttachment1 = Attachment(panel1, size: .matchContent)
+        editor.insertAttachment(in: .zero, attachment: panelAttachment1)
+
+        let panel2 = PanelView()
+        let panelAttachment2 = Attachment(panel2, size: .matchContent)
+        panel1.editor.insertAttachment(in: .zero, attachment: panelAttachment2)
+
+        let panel3 = PanelView()
+        let panelAttachment3 = Attachment(panel3, size: .matchContent)
+        panel2.editor.insertAttachment(in: .zero, attachment: panelAttachment3)
+
+        viewController.render()
+
+        XCTAssertNil(editor.parentEditor)
+        XCTAssertEqual(panel1.editor.parentEditor, editor)
+        XCTAssertEqual(panel2.editor.parentEditor, panel1.editor)
+    }
+
+    func testGetsAttachmentContentEditors() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let dummyAttachment1 = DummyMultiEditorAttachment(numberOfEditors: 1)
+        editor.insertAttachment(in: .zero, attachment: dummyAttachment1)
+
+        let dummyAttachment2 = DummyMultiEditorAttachment(numberOfEditors: 2)
+        editor.insertAttachment(in: editor.textEndRange, attachment: dummyAttachment2)
+
+        viewController.render()
+
+        XCTAssertEqual(dummyAttachment1.contentEditors.count, 1)
+        XCTAssertEqual(dummyAttachment2.contentEditors.count, 2)
+    }
+
+    func testGetsFullAttributedText() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        editor.attributedText = NSAttributedString(string: "Text before panel 1")
+
+        let panel1 = PanelView()
+        panel1.editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Text inside panel 1"))
+        let panelAttachment1 = Attachment(panel1, size: .matchContent)
+        editor.insertAttachment(in: editor.textEndRange, attachment: panelAttachment1)
+
+        editor.replaceCharacters(in: editor.textEndRange, with: NSAttributedString(string: "Text after panel 1"))
+
+        let panel2 = PanelView()
+        panel2.editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Text inside panel 2"))
+        let panelAttachment2 = Attachment(panel2, size: .matchContent)
+        panel1.editor.insertAttachment(in: panel1.editor.textEndRange, attachment: panelAttachment2)
+
+        let panel3 = PanelView()
+        panel3.editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Text inside panel 3"))
+        let panelAttachment3 = Attachment(panel3, size: .matchContent)
+        panel2.editor.insertAttachment(in: panel2.editor.textEndRange, attachment: panelAttachment3)
+
+        viewController.render()
+
+        let attachmentContentIdentifier = AttachmentContentIdentifier(openingID: NSAttributedString(string: "["), closingID: NSAttributedString(string: "]"))
+
+        let text = editor.getFullAttributedText(using: attachmentContentIdentifier)
+        let expectedString = "Text before panel 1[Text inside panel 1[Text inside panel 2[Text inside panel 3]\n]\n]\nText after panel 1"
+        XCTAssertEqual(text.string, expectedString)
+    }
+}
+
+class DummyMultiEditorAttachment: Attachment {
+    let view: DummyMultiEditorView
+    init(numberOfEditors: Int) {
+        view = DummyMultiEditorView(numberOfEditors: numberOfEditors)
+        super.init(view, size: .fullWidth)
+    }
+}
+
+class DummyMultiEditorView: AttachmentView {
+    var type: Proton.AttachmentType { .block }
+    var name: Proton.EditorContent.Name { .init("dummy") }
+
+    var contentEditors = [EditorView]()
+
+    init(numberOfEditors: Int) {
+        for i in 0..<numberOfEditors {
+            let editor = EditorView()
+            editor.attributedText = NSAttributedString(string: "\(i)")
+            contentEditors.append(editor)
+        }
+        super.init(frame: CGRect(origin: .zero, size: CGSize(width: 300, height: 40)))
+        contentEditors.forEach { addSubview($0) }
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
