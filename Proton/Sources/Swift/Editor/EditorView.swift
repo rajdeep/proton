@@ -1197,7 +1197,9 @@ extension EditorView {
                 size = contentSize
             }
 
-            frame = CGRect(origin: frame.origin, size: size)
+            var adjustedOrigin = frame.origin
+            adjustedOrigin.x += textContainerInset.left
+            frame = CGRect(origin: adjustedOrigin, size: size)
 
             if attachment.isRendered == false {
                 attachment.render(in: self)
@@ -1205,6 +1207,7 @@ extension EditorView {
                     focusable.setFocus()
                 }
             }
+
             attachment.frame = frame
         }
     }

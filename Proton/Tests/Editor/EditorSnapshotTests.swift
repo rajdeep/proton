@@ -214,6 +214,33 @@ class EditorSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testRendersAttachmentWithTextContainerInset() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let offsetProvider = MockAttachmentOffsetProvider()
+        offsetProvider.offset = CGPoint(x: 0, y: -4)
+
+        editor.font = UIFont.systemFont(ofSize: 12)
+        editor.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        var panel = PanelView()
+        panel.backgroundColor = .cyan
+        panel.layer.borderWidth = 1.0
+        panel.layer.cornerRadius = 4.0
+        panel.layer.borderColor = UIColor.black.cgColor
+
+        let attachment = Attachment(panel, size: .fullWidth)
+        panel.boundsObserver = attachment
+        panel.editor.font = editor.font
+
+        panel.attributedText = NSAttributedString(string: "In full-width attachment")
+
+        editor.replaceCharacters(in: .zero, with: "This text is in Editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+
+        viewController.render()
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     func testDeletesAttachments() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor

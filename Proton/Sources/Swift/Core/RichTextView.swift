@@ -309,6 +309,7 @@ class RichTextView: AutogrowingTextView {
         placeholderLabel.numberOfLines = 0
         placeholderLabel.lineBreakMode = .byTruncatingTail
 
+        placeholderLabel.removeFromSuperview()
         addSubview(placeholderLabel)
         placeholderLabel.attributedText = placeholderText
         NSLayoutConstraint.activate([

@@ -359,12 +359,13 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         // incorrect width if bounds are calculated directly on `attributedText` instead of using `textView`.
         let lineFragmentPadding = containerEditorView.richTextView.textContainer.lineFragmentPadding
         // Account for text leading and trailing margins within the textContainer
+        let horizontalTextInsets = (containerEditorView.textContainerInset.left + containerEditorView.textContainerInset.right)
         let adjustedContainerSize = CGSize(
-            width: containerEditorView.bounds.size.width - (lineFragmentPadding * 2) - indent,
+            width: containerEditorView.bounds.size.width - (lineFragmentPadding * 2) - indent - horizontalTextInsets,
             height: containerEditorView.bounds.size.height
         )
         let adjustedLineFrag = CGRect(
-            x: lineFrag.origin.x,
+            x: lineFrag.origin.x + containerEditorView.textContainerInset.left,
             y: lineFrag.origin.y,
             width: min(lineFrag.size.width, adjustedContainerSize.width),
             height: lineFrag.height
