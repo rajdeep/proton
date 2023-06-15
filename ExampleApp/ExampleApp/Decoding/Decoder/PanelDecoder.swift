@@ -24,12 +24,12 @@ import UIKit
 import Proton
 
 struct PanelDecoder: EditorContentDecoding {
-    func decode(mode: EditorContentMode, maxSize: CGSize, value: JSON, context: EditorDecodingContext?) -> NSAttributedString {
+    func decode(mode: EditorContentMode, maxSize: CGSize, value: JSON, context: EditorDecodingContext?) throws -> NSAttributedString {
         let frame = CGRect(origin: .zero, size: CGSize(width: 200, height: 30))
         let attachment = PanelAttachment(frame: frame)
 //        attachment.readOnly = (mode == .readOnly)
 
-        attachment.attributedText = EditorContentJSONDecoder().decode(mode: mode, maxSize: maxSize, value: value, context: context)
+        attachment.attributedText = try EditorContentJSONDecoder().decode(mode: mode, maxSize: maxSize, value: value, context: context)
         return attachment.string
     }
 }

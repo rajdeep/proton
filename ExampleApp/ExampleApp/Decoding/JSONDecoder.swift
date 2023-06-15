@@ -39,13 +39,13 @@ struct EditorContentJSONDecoder: EditorContentDecoding {
         "style": AnyAttributedStringAttributeDecoding(ParagraphStyleDecoder()),
     ]
 
-    func decode(mode: EditorContentMode, maxSize: CGSize, value: JSON, context: EditorDecodingContext?) -> NSAttributedString {
+    func decode(mode: EditorContentMode, maxSize: CGSize, value: JSON, context: EditorDecodingContext?) throws -> NSAttributedString {
         let string = NSMutableAttributedString()
         for content in value.contents ?? [] {
             if let type = content.type {
                 let typeName = EditorContent.Name(type)
                 let decoder = EditorContentJSONDecoder.contentDecoders[typeName]
-                let contentValue = decoder?.decode(mode: mode, maxSize: maxSize, value: content, context: context) ?? NSAttributedString()
+                let contentValue = try decoder?.decode(mode: mode, maxSize: maxSize, value: content, context: context) ?? NSAttributedString()
                 string.append(contentValue)
             }
         }

@@ -43,14 +43,14 @@ public protocol EditorContentDecoding {
     ///   - maxSize: Maximum available size of the container in which the content will be rendered.
     ///   - value: Value to decode.
     ///   - context: Context used for decoding.
-    func decode(mode: EditorContentMode, maxSize: CGSize, value: TypeToDecode, context: DecodingContext) -> NSAttributedString
+    func decode(mode: EditorContentMode, maxSize: CGSize, value: TypeToDecode, context: DecodingContext) throws -> NSAttributedString
 }
 
 /// A type-erased implementation of `EditorContentDecoding`
 /// - SeeAlso:
 /// `EditorContentDecoding`
 public struct AnyEditorContentDecoding<T, C>: EditorContentDecoding {
-    let decoding: (EditorContentMode, CGSize, T, C) -> NSAttributedString
+    let decoding: (EditorContentMode, CGSize, T, C) throws -> NSAttributedString
 
     /// Initializes AnyEditorContentDecoding
     /// - Parameter decoder: Decoder to use
@@ -64,7 +64,7 @@ public struct AnyEditorContentDecoding<T, C>: EditorContentDecoding {
     ///   - maxSize: Maximum available size of the container in which the content will be rendered.
     ///   - value: Value to decode.
     ///   - context: Context used for decoding.
-    public func decode(mode: EditorContentMode, maxSize: CGSize, value: T, context: C) -> NSAttributedString {
-        return decoding(mode, maxSize, value, context)
+    public func decode(mode: EditorContentMode, maxSize: CGSize, value: T, context: C) throws -> NSAttributedString {
+        return try decoding(mode, maxSize, value, context)
     }
 }

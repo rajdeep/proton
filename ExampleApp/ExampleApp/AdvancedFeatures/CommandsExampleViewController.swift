@@ -256,8 +256,13 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
     @objc
     func decodeContents(sender: UIButton) {
-        let text = EditorContentJSONDecoder().decode(mode: .editor, maxSize: editor.frame.size, value: encodedContents, context: nil)
-        self.editor.attributedText = text
+        let text = try? EditorContentJSONDecoder(
+            ).decode(mode: .editor,
+            maxSize: editor.frame.size,
+            value: encodedContents,
+            context: nil)
+        self.editor.attributedText = text ?? NSAttributedString(string: "<Error decoding contents>",
+                                                                attributes: [.foregroundColor: UIColor.red])
     }
 
     @objc
@@ -266,9 +271,10 @@ class CommandsExampleViewController: ExamplesBaseViewController {
             return
         }
 
-        let text = EditorContentJSONDecoder().decode(mode: .editor, maxSize: editor.frame.size, value: contents, context: nil)
+        let text = try? EditorContentJSONDecoder().decode(mode: .editor, maxSize: editor.frame.size, value: contents, context: nil)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-            self.editor.attributedText = text
+            self.editor.attributedText = text ?? NSAttributedString(string: "<Error decoding contents>",
+                                                                    attributes: [.foregroundColor: UIColor.red])
         }
     }
 
