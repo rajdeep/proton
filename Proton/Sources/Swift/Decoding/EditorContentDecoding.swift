@@ -35,24 +35,26 @@ public enum EditorContentMode {
 /// An object capable of decoding the given type of content into `NSAttributedString` for using in `EditorView` or the `RendererView`.
 public protocol EditorContentDecoding {
     associatedtype TypeToDecode
+    associatedtype DecodingContext
 
     /// Decodes the given value to `NSAttributedString`
     /// - Parameters:
     ///   - mode: Mode for decoding
     ///   - maxSize: Maximum available size of the container in which the content will be rendered.
     ///   - value: Value to decode.
-    func decode(mode: EditorContentMode, maxSize: CGSize, value: TypeToDecode) -> NSAttributedString
+    ///   - context: Context used for decoding.
+    func decode(mode: EditorContentMode, maxSize: CGSize, value: TypeToDecode, context: DecodingContext) -> NSAttributedString
 }
 
 /// A type-erased implementation of `EditorContentDecoding`
 /// - SeeAlso:
 /// `EditorContentDecoding`
-public struct AnyEditorContentDecoding<T>: EditorContentDecoding {
-    let decoding: (EditorContentMode, CGSize, T) -> NSAttributedString
+public struct AnyEditorContentDecoding<T, C>: EditorContentDecoding {
+    let decoding: (EditorContentMode, CGSize, T, C) -> NSAttributedString
 
     /// Initializes AnyEditorContentDecoding
     /// - Parameter decoder: Decoder to use
-    public init<D: EditorContentDecoding>(_ decoder: D) where D.TypeToDecode == T {
+    public init<D: EditorContentDecoding>(_ decoder: D) where D.TypeToDecode == T, D.DecodingContext == C {
         decoding = decoder.decode
     }
 
@@ -61,7 +63,8 @@ public struct AnyEditorContentDecoding<T>: EditorContentDecoding {
     ///   - mode: Mode for decoding
     ///   - maxSize: Maximum available size of the container in which the content will be rendered.
     ///   - value: Value to decode.
-    public func decode(mode: EditorContentMode, maxSize: CGSize, value: T) -> NSAttributedString {
-        return decoding(mode, maxSize, value)
+    ///   - context: Context used for decoding.
+    public func decode(mode: EditorContentMode, maxSize: CGSize, value: T, context: C) -> NSAttributedString {
+        return decoding(mode, maxSize, value, context)
     }
 }

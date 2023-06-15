@@ -255,6 +255,9 @@
                 <a href="../Structs/AnyEditorTextEncoding.html">AnyEditorTextEncoding</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/AttachmentContentIdentifier.html">AttachmentContentIdentifier</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/AttachmentImage.html">AttachmentImage</a>
               </li>
               <li class="nav-group-task">
@@ -1696,6 +1699,65 @@ The value is nil if the Editor is not contained within an <code><a href="../Clas
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton10EditorViewC04rootB0ACvp"></a>
+                    <a name="//apple_ref/swift/Property/rootEditor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC04rootB0ACvp">rootEditor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the root editor of the current Editor. Returns <code>self</code> where the current editor is not contained within an <code><a href="../Classes/Attachment.html">Attachment</a></code>.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Note:This is different from <code><a href="../Classes/EditorView.html#/s:6Proton10EditorViewC06parentB0ACSgvp">parentEditor</a></code> which is immediate parent of the current editor
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">rootEditor</span><span class="p">:</span> <span class="kt">EditorView</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC06parentB0ACSgvp"></a>
+                    <a name="//apple_ref/swift/Property/parentEditor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC06parentB0ACSgvp">parentEditor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>EditorView</code> containing the current <code>EditorView</code> in an <code><a href="../Classes/Attachment.html">Attachment</a></code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">parentEditor</span><span class="p">:</span> <span class="kt">EditorView</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton10EditorViewC5clearyyF"></a>
                     <a name="//apple_ref/swift/Method/clear()" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton10EditorViewC5clearyyF">clear()</a>
@@ -2304,6 +2366,62 @@ If there is no marked text, the value of the property is <code>nil</code>. Marke
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton10EditorViewC21getFullAttributedText5usingSo18NSAttributedStringCAA27AttachmentContentIdentifierV_tF"></a>
+                    <a name="//apple_ref/swift/Method/getFullAttributedText(using:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC21getFullAttributedText5usingSo18NSAttributedStringCAA27AttachmentContentIdentifierV_tF">getFullAttributedText(using:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the full attributed text contained in the <code>EditorView</code> along with the ones in editors nested in contained Attachments.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    An additional attribute with value of <code><a href="../Classes/Attachment.html#/s:6Proton10AttachmentC4nameSo19PREditorContentNameCSgvp">Attachment.name</a></code> is automatically added with key <code>NSAttributedString.Key.viewOnly</code>.
+This can be changed by overriding default implementation of <code>getFullTextRangeIdentificationAttributes()</code> in <code><a href="../Classes/Attachment.html">Attachment</a></code>.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getFullAttributedText</span><span class="p">(</span><span class="n">using</span> <span class="nv">attachmentContentIdentifier</span><span class="p">:</span> <span class="kt"><a href="../Structs/AttachmentContentIdentifier.html">AttachmentContentIdentifier</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">NSAttributedString</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>attachmentContentIdentifier</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Identifier for opening and closing ranges for Attachment Content</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Full attributed text</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton10EditorViewC27setNeedsAsyncTextResolutionyyF"></a>
                     <a name="//apple_ref/swift/Method/setNeedsAsyncTextResolution()" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton10EditorViewC27setNeedsAsyncTextResolutionyyF">setNeedsAsyncTextResolution()</a>
@@ -2827,6 +2945,68 @@ only returns the rectangle denoting the caret positioning. The actual caret is n
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton10EditorViewC17attributeRangeFor_2atSo8_NSRangeVSgSo21NSAttributedStringKeya_SitF"></a>
+                    <a name="//apple_ref/swift/Method/attributeRangeFor(_:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC17attributeRangeFor_2atSo8_NSRangeVSgSo21NSAttributedStringKeya_SitF">attributeRangeFor(_:<wbr>at:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets the full range of attribute at given location.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">attributeRangeFor</span><span class="p">(</span><span class="n">_</span> <span class="nv">attribute</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="o">.</span><span class="kt">Key</span><span class="p">,</span> <span class="n">at</span> <span class="nv">location</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">NSRange</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>attribute</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Attribute to search for</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>location</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Location for the attribute. Location may lie anywhere in the range of attribute.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Full range encompassing the given location. <code>nil</code> if attribute does not exist.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton10EditorViewC14deleteBackwardyyF"></a>
                     <a name="//apple_ref/swift/Method/deleteBackward()" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton10EditorViewC14deleteBackwardyyF">deleteBackward()</a>
@@ -2837,7 +3017,7 @@ only returns the rectangle denoting the caret positioning. The actual caret is n
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Deletes text backwards</p>
 
                       </div>
                       <div class="declaration">
@@ -4231,7 +4411,7 @@ existing value will be overwritten by the new value provided in the attributes.<
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-06-06)</p>
+          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-06-15)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

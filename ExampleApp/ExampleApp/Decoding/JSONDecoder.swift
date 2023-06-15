@@ -23,8 +23,12 @@ import UIKit
 
 import Proton
 
+struct EditorDecodingContext {
+    var name: String
+}
+
 struct EditorContentJSONDecoder: EditorContentDecoding {
-    static let contentDecoders: [EditorContent.Name: AnyEditorContentDecoding<JSON>] = [
+    static let contentDecoders: [EditorContent.Name: AnyEditorContentDecoding<JSON, EditorDecodingContext?>] = [
         EditorContent.Name.paragraph: AnyEditorContentDecoding(ParagraphDecoder()),
         EditorContent.Name.text: AnyEditorContentDecoding(TextDecoder()),
         EditorContent.Name("panel"): AnyEditorContentDecoding(PanelDecoder())
@@ -35,13 +39,13 @@ struct EditorContentJSONDecoder: EditorContentDecoding {
         "style": AnyAttributedStringAttributeDecoding(ParagraphStyleDecoder()),
     ]
 
-    func decode(mode: EditorContentMode, maxSize: CGSize, value: JSON) -> NSAttributedString {
+    func decode(mode: EditorContentMode, maxSize: CGSize, value: JSON, context: EditorDecodingContext?) -> NSAttributedString {
         let string = NSMutableAttributedString()
         for content in value.contents ?? [] {
             if let type = content.type {
                 let typeName = EditorContent.Name(type)
                 let decoder = EditorContentJSONDecoder.contentDecoders[typeName]
-                let contentValue = decoder?.decode(mode: mode, maxSize: maxSize, value: content) ?? NSAttributedString()
+                let contentValue = decoder?.decode(mode: mode, maxSize: maxSize, value: content, context: context) ?? NSAttributedString()
                 string.append(contentValue)
             }
         }

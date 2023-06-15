@@ -24,7 +24,7 @@ import UIKit
 import Proton
 
 struct TextDecoder: EditorContentDecoding {
-    func decode(mode: EditorContentMode, maxSize: CGSize, value: JSON) -> NSAttributedString {
+    func decode(mode: EditorContentMode, maxSize: CGSize, value: JSON, context: EditorDecodingContext?) -> NSAttributedString {
         let text = value["text"] as? String ?? ""
         let string = NSMutableAttributedString(string: text)
         if let font = value["font"] as? JSON,

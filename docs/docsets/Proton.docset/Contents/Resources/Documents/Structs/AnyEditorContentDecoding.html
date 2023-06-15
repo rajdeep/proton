@@ -255,6 +255,9 @@
                 <a href="../Structs/AnyEditorTextEncoding.html">AnyEditorTextEncoding</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/AttachmentContentIdentifier.html">AttachmentContentIdentifier</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/AttachmentImage.html">AttachmentImage</a>
               </li>
               <li class="nav-group-task">
@@ -336,7 +339,7 @@
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">AnyEditorContentDecoding</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/EditorContentDecoding.html">EditorContentDecoding</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">AnyEditorContentDecoding</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt">C</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/EditorContentDecoding.html">EditorContentDecoding</a></span></code></pre>
 
                 </div>
               </div>
@@ -354,9 +357,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton24AnyEditorContentDecodingVyACyxGqd__c12TypeToDecodeQyd__RszAA0cdE0Rd__lufc"></a>
+                    <a name="/s:6Proton24AnyEditorContentDecodingVyACyxq_Gqd__c12TypeToDecodeQyd__Rsz0E7ContextQyd__Rs_AA0cdE0Rd__lufc"></a>
                     <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton24AnyEditorContentDecodingVyACyxGqd__c12TypeToDecodeQyd__RszAA0cdE0Rd__lufc">init(_:<wbr>)</a>
+                    <a class="token" href="#/s:6Proton24AnyEditorContentDecodingVyACyxq_Gqd__c12TypeToDecodeQyd__Rsz0E7ContextQyd__Rs_AA0cdE0Rd__lufc">init(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -371,7 +374,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">D</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">decoder</span><span class="p">:</span> <span class="kt">D</span><span class="p">)</span> <span class="k">where</span> <span class="kt">T</span> <span class="o">==</span> <span class="kt">D</span><span class="o">.</span><span class="kt">TypeToDecode</span><span class="p">,</span> <span class="kt">D</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/EditorContentDecoding.html">EditorContentDecoding</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">init</span><span class="o">&lt;</span><span class="kt">D</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">decoder</span><span class="p">:</span> <span class="kt">D</span><span class="p">)</span> <span class="k">where</span> <span class="kt">T</span> <span class="o">==</span> <span class="kt">D</span><span class="o">.</span><span class="kt">TypeToDecode</span><span class="p">,</span> <span class="kt">C</span> <span class="o">==</span> <span class="kt">D</span><span class="o">.</span><span class="kt">DecodingContext</span><span class="p">,</span> <span class="kt">D</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/EditorContentDecoding.html">EditorContentDecoding</a></span></code></pre>
 
                         </div>
                       </div>
@@ -400,9 +403,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton24AnyEditorContentDecodingV6decode4mode7maxSize5valueSo18NSAttributedStringCAA0cD4ModeO_So6CGSizeVxtF"></a>
-                    <a name="//apple_ref/swift/Method/decode(mode:maxSize:value:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton24AnyEditorContentDecodingV6decode4mode7maxSize5valueSo18NSAttributedStringCAA0cD4ModeO_So6CGSizeVxtF">decode(mode:<wbr>maxSize:<wbr>value:<wbr>)</a>
+                    <a name="/s:6Proton24AnyEditorContentDecodingV6decode4mode7maxSize5value7contextSo18NSAttributedStringCAA0cD4ModeO_So6CGSizeVxq_tF"></a>
+                    <a name="//apple_ref/swift/Method/decode(mode:maxSize:value:context:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton24AnyEditorContentDecodingV6decode4mode7maxSize5value7contextSo18NSAttributedStringCAA0cD4ModeO_So6CGSizeVxq_tF">decode(mode:<wbr>maxSize:<wbr>value:<wbr>context:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -417,7 +420,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">decode</span><span class="p">(</span><span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Enums/EditorContentMode.html">EditorContentMode</a></span><span class="p">,</span> <span class="nv">maxSize</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">NSAttributedString</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">decode</span><span class="p">(</span><span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Enums/EditorContentMode.html">EditorContentMode</a></span><span class="p">,</span> <span class="nv">maxSize</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">C</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">NSAttributedString</span></code></pre>
 
                         </div>
                       </div>
@@ -461,6 +464,18 @@
                                 </div>
                               </td>
                             </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Context used for decoding.</p>
+                                </div>
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>
@@ -472,7 +487,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-06-06)</p>
+          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-06-15)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
