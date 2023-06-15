@@ -814,6 +814,20 @@ open class EditorView: UIView {
         return richTextView.wordAt(location)
     }
 
+    /// Gets the full range of attribute at given location.
+    /// - Parameters:
+    ///   - attribute: Attribute to search for
+    ///   - location: Location for the attribute. Location may lie anywhere in the range of attribute.
+    /// - Returns: Full range encompassing the given location. `nil` if attribute does not exist.
+    public func attributeRangeFor(_ attribute: NSAttributedString.Key, at location: Int) -> NSRange? {
+        guard location < attributedText.length else { return nil }
+        var range = NSRange()
+        let value = attributedText.attribute(attribute, at: location, longestEffectiveRange: &range, in: NSRange(location: 0, length: attributedText.length))
+        guard value != nil else { return nil }
+        return range
+    }
+
+    /// Deletes text backwards
     public func deleteBackward() {
         richTextView.deleteBackward()
     }
