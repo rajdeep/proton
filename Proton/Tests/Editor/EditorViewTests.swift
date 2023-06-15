@@ -682,6 +682,28 @@ class EditorViewTests: XCTestCase {
         let expectedString = "Text before panel 1[Text inside panel 1[Text inside panel 2[Text inside panel 3]\n]\n]\nText after panel 1"
         XCTAssertEqual(text.string, expectedString)
     }
+
+    func testGetsRangeForAttributeAtLocation() {
+        let editor = EditorView()
+        let customAttribute = NSAttributedString.Key("_custom")
+        editor.replaceCharacters(in: editor.textEndRange, with: NSAttributedString(string: "This is some text with attributes"))
+        editor.addAttributes([
+            customAttribute: UIColor.red
+        ], at: NSRange(location: 6, length: 4))
+
+        editor.addAttributes([
+            customAttribute: UIColor.red
+        ], at: NSRange(location: 12, length: 4))
+
+        let range1 = editor.attributeRangeFor(customAttribute, at: 2)
+        XCTAssertNil(range1)
+        let range2 = editor.attributeRangeFor(customAttribute, at: 8)
+        XCTAssertEqual(range2, NSRange(location: 6, length: 4))
+        let range3 = editor.attributeRangeFor(customAttribute, at: 11)
+        XCTAssertNil(range3)
+        let range4 = editor.attributeRangeFor(customAttribute, at: 15)
+        XCTAssertEqual(range4, NSRange(location: 12, length: 4))
+    }
 }
 
 class DummyMultiEditorAttachment: Attachment {
