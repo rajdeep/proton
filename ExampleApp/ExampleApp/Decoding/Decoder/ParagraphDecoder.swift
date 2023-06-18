@@ -24,14 +24,14 @@ import UIKit
 import Proton
 
 struct ParagraphDecoder: EditorContentDecoding {
-    func decode(mode: EditorContentMode, maxSize: CGSize, value: JSON, context: EditorDecodingContext?) -> NSAttributedString {
+    func decode(mode: EditorContentMode, maxSize: CGSize, value: JSON, context: EditorDecodingContext?) throws -> NSAttributedString {
         let string = NSMutableAttributedString()
         var attr = Attributes()
         if let style = value["style"] as? JSON,
             let decoder = EditorContentJSONDecoder.attributeDecoders["style"] {
             attr = decoder.decode(style)
 
-            string.append(EditorContentJSONDecoder().decode(mode: mode, maxSize: maxSize, value: value, context: context))
+            string.append(try EditorContentJSONDecoder().decode(mode: mode, maxSize: maxSize, value: value, context: context))
         }
         string.append(NSAttributedString(string: "\n"))
         string.addAttributes(attr, range: string.fullRange)
