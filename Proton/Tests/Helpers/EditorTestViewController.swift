@@ -41,6 +41,7 @@ class EditorTestViewController: SnapshotTestViewController {
     private func setup() {
         editor.translatesAutoresizingMaskIntoConstraints = false
         editor.addBorder()
+        editor.forceApplyAttributedText = true
 
         view.addSubview(editor)
         NSLayoutConstraint.activate([
