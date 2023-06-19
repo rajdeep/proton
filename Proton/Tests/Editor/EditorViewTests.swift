@@ -687,6 +687,40 @@ class EditorViewTests: XCTestCase {
         XCTAssertEqual(text.string, expectedString)
     }
 
+    func testGetsFullAttributedTextFromRange() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        editor.attributedText = NSAttributedString(string: "Text before panel 1")
+
+        let panel1 = PanelView()
+        panel1.editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Text inside panel 1"))
+        let panelAttachment1 = Attachment(panel1, size: .matchContent)
+        editor.insertAttachment(in: editor.textEndRange, attachment: panelAttachment1)
+
+        editor.replaceCharacters(in: editor.textEndRange, with: NSAttributedString(string: "Text after panel 1"))
+
+        let panel2 = PanelView()
+        panel2.editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Text inside panel 2"))
+        let panelAttachment2 = Attachment(panel2, size: .matchContent)
+        editor.insertAttachment(in: editor.textEndRange, attachment: panelAttachment2)
+
+        let panel3 = PanelView()
+        panel3.editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Text inside panel 3"))
+        let panelAttachment3 = Attachment(panel3, size: .matchContent)
+        editor.insertAttachment(in: editor.textEndRange, attachment: panelAttachment3)
+
+        editor.selectedRange = NSRange(location: 5, length: 15)
+
+        viewController.render()
+
+        let attachmentContentIdentifier = AttachmentContentIdentifier(openingID: NSAttributedString(string: "["), closingID: NSAttributedString(string: "]"))
+
+        let text = editor.getFullAttributedText(using: attachmentContentIdentifier, in: editor.selectedRange)
+        let expectedString = "before panel 1[Text inside panel 1]"
+        XCTAssertEqual(text.string, expectedString)
+    }
+
     func testGetsRangeForAttributeAtLocation() {
         let editor = EditorView()
         let customAttribute = NSAttributedString.Key("_custom")

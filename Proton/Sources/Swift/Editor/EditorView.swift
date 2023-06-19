@@ -714,9 +714,11 @@ open class EditorView: UIView {
     /// - Returns: Full attributed text
     /// - Note: An additional attribute with value of `Attachment.name` is automatically added with key `NSAttributedString.Key.viewOnly`.
     /// This can be changed by overriding default implementation of `getFullTextRangeIdentificationAttributes()` in `Attachment`.
-    public func getFullAttributedText(using attachmentContentIdentifier: AttachmentContentIdentifier) -> NSAttributedString {
+    public func getFullAttributedText(using attachmentContentIdentifier: AttachmentContentIdentifier, in range: NSRange? = nil) -> NSAttributedString {
         let text = NSMutableAttributedString()
-        attributedText.enumerateAttribute(.attachment, in: attributedText.fullRange) { value, range, _ in
+        let rangeToUse = range ?? attributedText.fullRange
+        let substring = attributedText.attributedSubstring(from: rangeToUse)
+        substring.enumerateAttribute(.attachment, in: substring.fullRange) { value, range, _ in
             if let attachment = value as? Attachment {
                 let attachmentID = attachment.getFullTextRangeIdentificationAttributes()
                 attachment.contentEditors.forEach { editor in
@@ -729,7 +731,7 @@ open class EditorView: UIView {
                     text.append(editorText)
                 }
             } else {
-                let string = NSMutableAttributedString(attributedString: attributedText.attributedSubstring(from: range))
+                let string = NSMutableAttributedString(attributedString: substring.attributedSubstring(from: range))
                 text.append(string)
             }
         }
