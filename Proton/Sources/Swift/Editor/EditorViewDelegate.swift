@@ -86,12 +86,28 @@ public protocol EditorViewDelegate: AnyObject {
     ///   - characterRange: Range of character at the tapped location, if available.
     func editor(_ editor: EditorView, didTapAtLocation location: CGPoint, characterRange: NSRange?)
 
+    /// Invoked whenever layout pass completes as a result of changing or text or attributes
+    /// - Parameters:
+    ///   - editor: Editor view receiving the event.
+    ///   - content: Attributed text value.
     func editor(_ editor: EditorView, didLayout content: NSAttributedString)
 
+    /// Invoked before attributedText is set on the `EditorView`
+    /// - Parameters:
+    ///   - editor: Editor view receiving the event.
+    ///   - content: Attributed text value to be set.
     func editor(_ editor: EditorView, willSetAttributedText attributedText: NSAttributedString)
 
+    /// Invoked after attributedText is set on the `EditorView`
+    /// - Parameters:
+    ///   - editor: Editor view receiving the event.
+    ///   - content: Attributed text value set on the editor.
     func editor(_ editor: EditorView, didSetAttributedText attributedText: NSAttributedString)
 
+    /// Invoked when Editor has been added to the view hierarchy and is ready to receive events.
+    /// - Parameters:
+    ///   - editor: Editor view receiving the event.
+    ///   - isReady: `true` if Editor is loaded. `false` when Editor is initialized but not yet in view hierarchy.
     func editor(_editor: EditorView, isReady: Bool)
 }
 

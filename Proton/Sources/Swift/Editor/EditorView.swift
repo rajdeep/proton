@@ -667,11 +667,11 @@ open class EditorView: UIView {
     /// - IMPORTANT: Overriding implementations must call `super.didMoveToWindow()`
     open override func didMoveToWindow() {
         super.didMoveToWindow()
-        delegate?.editor(_editor: self, isReady: true)
         if let pendingAttributedText {
             attributedText = pendingAttributedText
             self.pendingAttributedText = nil
         }
+        delegate?.editor(_editor: self, isReady: true)
     }
 
     /// Asks the view to calculate and return the size that best fits the specified size.
