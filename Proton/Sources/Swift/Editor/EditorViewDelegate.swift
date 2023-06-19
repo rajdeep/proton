@@ -87,6 +87,12 @@ public protocol EditorViewDelegate: AnyObject {
     func editor(_ editor: EditorView, didTapAtLocation location: CGPoint, characterRange: NSRange?)
 
     func editor(_ editor: EditorView, didLayout content: NSAttributedString)
+
+    func editor(_ editor: EditorView, willSetAttributedText attributedText: NSAttributedString)
+
+    func editor(_ editor: EditorView, didSetAttributedText attributedText: NSAttributedString)
+
+    func editor(_editor: EditorView, isReady: Bool)
 }
 
 public extension EditorViewDelegate {
@@ -100,4 +106,7 @@ public extension EditorViewDelegate {
     func editor(_ editor: EditorView, didChangeSize currentSize: CGSize, previousSize: CGSize) { }
     func editor(_ editor: EditorView, didTapAtLocation location: CGPoint, characterRange: NSRange?) { }
     func editor(_ editor: EditorView, didLayout content: NSAttributedString) { }
+    func editor(_ editor: EditorView, willSetAttributedText attributedText: NSAttributedString) { }
+    func editor(_ editor: EditorView, didSetAttributedText attributedText: NSAttributedString) { }
+    func editor(_editor: EditorView, isReady: Bool) { }
 }

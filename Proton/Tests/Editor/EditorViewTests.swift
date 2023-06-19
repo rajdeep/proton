@@ -224,6 +224,7 @@ class EditorViewTests: XCTestCase {
 
         let delegate = MockEditorViewDelegate()
         let editor = EditorView()
+        editor.forceApplyAttributedText = true
         let attachment = Attachment(PanelView(), size: .fullWidth)
         let attrString = NSMutableAttributedString(string: "This is a test string")
         attrString.append(attachment.string)
@@ -385,6 +386,7 @@ class EditorViewTests: XCTestCase {
 
     func testReturnsNilForInvalidNextLine() throws {
         let editor = EditorView()
+        editor.forceApplyAttributedText = true
         let attrString = NSMutableAttributedString(string: "This is a test string")
         editor.attributedText = attrString
 
@@ -395,6 +397,7 @@ class EditorViewTests: XCTestCase {
 
     func testReturnsNilForInvalidPreviousLine() throws {
         let editor = EditorView()
+        editor.forceApplyAttributedText = true
         let attrString = NSMutableAttributedString(string: "This is a test string")
         editor.attributedText = attrString
 
@@ -405,6 +408,7 @@ class EditorViewTests: XCTestCase {
 
     func testResetsAttributesWhenCleared() {
         let editor = EditorView()
+        editor.forceApplyAttributedText = true
         editor.textColor = UIColor.red
         let attrString = NSMutableAttributedString(string: "This is a test string", attributes: [.foregroundColor: UIColor.blue])
         editor.attributedText = attrString

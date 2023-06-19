@@ -151,6 +151,7 @@ class TextProcessorTests: XCTestCase {
         processorExpectation.expectedFulfillmentCount = 3
 
         let editor = EditorView()
+        editor.forceApplyAttributedText = true
         editor.attributedText = NSAttributedString(string: "Test")
         let testAttribute = NSAttributedString.Key("testAttr")
 
@@ -182,7 +183,7 @@ class TextProcessorTests: XCTestCase {
     func testGetsNotifiedOfSelectedRangeChanges() {
         let testExpectation = functionExpectation()
         let editor = EditorView()
-
+        editor.forceApplyAttributedText = true
         let name = "TextProcessorTest"
         let mockProcessor = MockTextProcessor(name: name)
         let originalRange = NSRange(location: 2, length: 1)

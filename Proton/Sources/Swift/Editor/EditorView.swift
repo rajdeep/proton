@@ -124,6 +124,11 @@ open class EditorView: UIView {
     let context: RichTextViewContext
     var needsAsyncTextResolution = false
 
+    // Holds `attributedText` until Editor move to a window
+    // Setting attributed text without Editor being fully ready
+    // causes issues with cached bounds that shows up when rotating the device.
+    private var pendingAttributedText: NSAttributedString?
+
     var editorContextDelegate: EditorViewDelegate? {
         get { editorViewContext.delegate }
     }
@@ -403,13 +408,27 @@ open class EditorView: UIView {
         }
     }
 
+    /// Forces setting attributed text in `EditorView` even if it is not
+    /// yet in view hierarchy.
+    /// - Note: This may result in misplaced `Attachment`s and is recommended to be set to `true` only in unit tests.
+    public var forceApplyAttributedText = false
+
     /// Text to be set in the `EditorView`
     public var attributedText: NSAttributedString {
-        get { richTextView.attributedText }
+        get {
+            pendingAttributedText ?? richTextView.attributedText
+        }
         set {
+            if forceApplyAttributedText == false && window == nil {
+                pendingAttributedText = newValue
+                return
+            }
+
+            delegate?.editor(self, willSetAttributedText: newValue)
             isSettingAttributedText = true
             richTextView.attributedText = newValue
             isSettingAttributedText = false
+            delegate?.editor(self, didSetAttributedText: newValue)
         }
     }
 
@@ -641,6 +660,18 @@ open class EditorView: UIView {
             .paragraphStyle: paragraphStyle
         ]
         richTextView.adjustsFontForContentSizeCategory = true
+        delegate?.editor(_editor: self, isReady: false)
+    }
+
+    /// Subclasses can override it to perform additional actions whenever the window changes.
+    /// - IMPORTANT: Overriding implementations must call `super.didMoveToWindow()`
+    open override func didMoveToWindow() {
+        super.didMoveToWindow()
+        delegate?.editor(_editor: self, isReady: true)
+        if let pendingAttributedText {
+            attributedText = pendingAttributedText
+            self.pendingAttributedText = nil
+        }
     }
 
     /// Asks the view to calculate and return the size that best fits the specified size.

@@ -63,6 +63,7 @@ class EditorViewContextTests: XCTestCase {
 
     func testCarriesOverCustomTypingAttributes() {
         let editor = EditorView()
+        editor.forceApplyAttributedText = true
         let context = EditorViewContext.shared
         context.richTextViewContext.textViewDidBeginEditing(editor.richTextView)
 
@@ -79,6 +80,7 @@ class EditorViewContextTests: XCTestCase {
 
     func testLockedAttributes() {
         let editor = EditorView()
+        editor.forceApplyAttributedText = true
         let context = EditorViewContext.shared
         context.richTextViewContext.textViewDidBeginEditing(editor.richTextView)
 

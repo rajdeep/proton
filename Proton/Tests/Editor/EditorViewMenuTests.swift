@@ -126,6 +126,15 @@ class TestEditorView: EditorView {
     var onToggleUnderline: (()->Void)?
     var onToggleItalics: (()->Void)?
 
+    init() {
+        super.init()
+        forceApplyAttributedText = true
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func copy(_ sender: Any?) {
         onCopy?()
     }
