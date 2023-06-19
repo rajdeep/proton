@@ -1369,6 +1369,39 @@ and <code>nextContentLine(location)</code>.
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton10EditorViewC24forceApplyAttributedTextSbvp"></a>
+                    <a name="//apple_ref/swift/Property/forceApplyAttributedText" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC24forceApplyAttributedTextSbvp">forceApplyAttributedText</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Forces setting attributed text in <code>EditorView</code> even if it is not
+yet in view hierarchy.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This may result in misplaced <code><a href="../Classes/Attachment.html">Attachment</a></code>s and is recommended to be set to <code>true</code> only in unit tests.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">forceApplyAttributedText</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton10EditorViewC14attributedTextSo18NSAttributedStringCvp"></a>
                     <a name="//apple_ref/swift/Property/attributedText" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton10EditorViewC14attributedTextSo18NSAttributedStringCvp">attributedText</a>
@@ -2229,6 +2262,38 @@ This property controls the ability of the user to select content and interact wi
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:@M@Proton@objc(cs)EditorView(im)didMoveToWindow"></a>
+                    <a name="//apple_ref/swift/Method/didMoveToWindow()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Proton@objc(cs)EditorView(im)didMoveToWindow">didMoveToWindow()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Subclasses can override it to perform additional actions whenever the window changes.</p>
+<div class="aside aside-important">
+    <p class="aside-title">Important</p>
+    Overriding implementations must call <code>super.didMoveToWindow()</code>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">didMoveToWindow</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:@M@Proton@objc(cs)EditorView(im)sizeThatFits:"></a>
                     <a name="//apple_ref/swift/Method/sizeThatFits(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/c:@M@Proton@objc(cs)EditorView(im)sizeThatFits:">sizeThatFits(_:<wbr>)</a>
@@ -2366,9 +2431,9 @@ If there is no marked text, the value of the property is <code>nil</code>. Marke
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton10EditorViewC21getFullAttributedText5usingSo18NSAttributedStringCAA27AttachmentContentIdentifierV_tF"></a>
-                    <a name="//apple_ref/swift/Method/getFullAttributedText(using:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC21getFullAttributedText5usingSo18NSAttributedStringCAA27AttachmentContentIdentifierV_tF">getFullAttributedText(using:<wbr>)</a>
+                    <a name="/s:6Proton10EditorViewC21getFullAttributedText5using2inSo18NSAttributedStringCAA27AttachmentContentIdentifierV_So8_NSRangeVSgtF"></a>
+                    <a name="//apple_ref/swift/Method/getFullAttributedText(using:in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC21getFullAttributedText5using2inSo18NSAttributedStringCAA27AttachmentContentIdentifierV_So8_NSRangeVSgtF">getFullAttributedText(using:<wbr>in:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2389,7 +2454,7 @@ This can be changed by overriding default implementation of <code>getFullTextRan
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getFullAttributedText</span><span class="p">(</span><span class="n">using</span> <span class="nv">attachmentContentIdentifier</span><span class="p">:</span> <span class="kt"><a href="../Structs/AttachmentContentIdentifier.html">AttachmentContentIdentifier</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">NSAttributedString</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getFullAttributedText</span><span class="p">(</span><span class="n">using</span> <span class="nv">attachmentContentIdentifier</span><span class="p">:</span> <span class="kt"><a href="../Structs/AttachmentContentIdentifier.html">AttachmentContentIdentifier</a></span><span class="p">,</span> <span class="k">in</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">NSAttributedString</span></code></pre>
 
                         </div>
                       </div>
@@ -4411,7 +4476,7 @@ existing value will be overwritten by the new value provided in the attributes.<
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-06-15)</p>
+          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-06-19)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
