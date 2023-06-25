@@ -130,7 +130,7 @@ public class GridCell {
     }
 
     /// Editor within the cell
-    public let editor = EditorView()
+    public let editor: EditorView
 
     /// Denotes if the cell can be split i.e. is a merged cell.
     public var isSplittable: Bool {
@@ -157,7 +157,8 @@ public class GridCell {
 
     let initialHeight: CGFloat
 
-    public init(rowSpan: [Int], columnSpan: [Int], initialHeight: CGFloat = 40, style: GridCellStyle = .init(), gridStyle: GridStyle = .default) {
+    public init(editor: EditorView, rowSpan: [Int], columnSpan: [Int], initialHeight: CGFloat = 40, style: GridCellStyle = .init(), gridStyle: GridStyle = .default) {
+        self.editor = editor
         self.rowSpan = rowSpan
         self.columnSpan = columnSpan
         self.gridStyle = gridStyle
@@ -177,6 +178,10 @@ public class GridCell {
         }
 
         setup()
+    }
+
+    public convenience init(rowSpan: [Int], columnSpan: [Int], initialHeight: CGFloat = 40, style: GridCellStyle = .init(), gridStyle: GridStyle = .default) {
+        self.init(editor: EditorView(), rowSpan: rowSpan, columnSpan: columnSpan, initialHeight: initialHeight, style: style, gridStyle: gridStyle)
     }
 
     /// Sets the focus in the `Editor` within the cell.
