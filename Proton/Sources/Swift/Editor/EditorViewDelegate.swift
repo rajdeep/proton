@@ -108,7 +108,13 @@ public protocol EditorViewDelegate: AnyObject {
     /// - Parameters:
     ///   - editor: Editor view receiving the event.
     ///   - isReady: `true` if Editor is loaded. `false` when Editor is initialized but not yet in view hierarchy.
-    func editor(_editor: EditorView, isReady: Bool)
+    func editor(_ editor: EditorView, isReady: Bool)
+
+    /// Invoked when Editor's isEditable status is changed
+    /// - Parameters:
+    ///   - editor: Editor view receiving the event.
+    ///   - isEditable: `true` if editor is editable, else `false`
+    func editor(_ editor: EditorView, didChangeEditable isEditable: Bool)
 }
 
 public extension EditorViewDelegate {
@@ -124,5 +130,6 @@ public extension EditorViewDelegate {
     func editor(_ editor: EditorView, didLayout content: NSAttributedString) { }
     func editor(_ editor: EditorView, willSetAttributedText attributedText: NSAttributedString) { }
     func editor(_ editor: EditorView, didSetAttributedText attributedText: NSAttributedString) { }
-    func editor(_editor: EditorView, isReady: Bool) { }
+    func editor(_ editor: EditorView, isReady: Bool) { }
+    func editor(_ editor: EditorView, didChangeEditable isEditable: Bool) { }
 }
