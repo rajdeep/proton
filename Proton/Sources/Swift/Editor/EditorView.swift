@@ -166,7 +166,7 @@ open class EditorView: UIView {
     }
 
     /// An object interested in responding to editing and focus related events in the `EditorView`.
-    public weak var delegate: EditorViewDelegate?
+    open weak var delegate: EditorViewDelegate?
 
     /// List formatting provider to be used for rendering lists in the Editor.
     public weak var listFormattingProvider: EditorListFormattingProvider?
