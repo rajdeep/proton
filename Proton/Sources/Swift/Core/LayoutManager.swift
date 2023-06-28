@@ -135,8 +135,11 @@ class LayoutManager: NSLayoutManager {
                     self.counters[level] = 1
                 }
 
+                var adjustedRect = rect
+                // Account for height of line fragment based on styles defined in paragraph, like paragraphSpacing
+                adjustedRect.size.height = usedRect.height
                 if level > 0 {
-                    self.drawListItem(level: level, previousLevel: previousLevel, index: index, rect: rect, paraStyle: paraStyle, font: font, attributeValue: attributeValue)
+                    self.drawListItem(level: level, previousLevel: previousLevel, index: index, rect: adjustedRect, paraStyle: paraStyle, font: font, attributeValue: attributeValue)
                 }
                 previousLevel = level
 
