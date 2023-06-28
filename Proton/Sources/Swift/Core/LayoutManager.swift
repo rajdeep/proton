@@ -222,7 +222,8 @@ class LayoutManager: NSLayoutManager {
 
     private func rectForBullet(markerSize: CGSize, rect: CGRect, indent: CGFloat, yOffset: CGFloat) -> CGRect {
         let topInset = layoutManagerDelegate?.textContainerInset.top ?? 0
-        let spacerRect = CGRect(origin: CGPoint(x: rect.minX, y: rect.minY + topInset), size: CGSize(width: indent, height: rect.height))
+        let leftInset = layoutManagerDelegate?.textContainerInset.left ?? 0
+        let spacerRect = CGRect(origin: CGPoint(x: rect.minX + leftInset, y: rect.minY + topInset), size: CGSize(width: indent, height: rect.height))
         let scaleFactor = markerSize.height / spacerRect.height
         var markerSizeToUse = markerSize
         // Resize maintaining aspect ratio if bullet height is more than available line height
@@ -236,7 +237,8 @@ class LayoutManager: NSLayoutManager {
 
     private func rectForNumberedList(markerSize: CGSize, rect: CGRect, indent: CGFloat, yOffset: CGFloat) -> CGRect {
         let topInset = layoutManagerDelegate?.textContainerInset.top ?? 0
-        let spacerRect = CGRect(origin: CGPoint(x: rect.minX, y: rect.minY + topInset), size: CGSize(width: indent, height: rect.height))
+        let leftInset = layoutManagerDelegate?.textContainerInset.left ?? 0
+        let spacerRect = CGRect(origin: CGPoint(x: rect.minX + leftInset, y: rect.minY + topInset), size: CGSize(width: indent, height: rect.height))
 
         let scaleFactor = markerSize.height / spacerRect.height
         var markerSizeToUse = markerSize
