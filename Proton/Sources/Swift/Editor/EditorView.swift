@@ -1266,7 +1266,9 @@ extension EditorView {
 public extension EditorView {
     func resolveAsyncText() {
         guard needsAsyncTextResolution else { return }
-        richTextView.enumerateAttribute(.asyncTextResolver, in: attributedText.fullRange, options: [.reverse]) { [weak self] (resolverName, range, stop) in
+        needsAsyncTextResolution = false
+        var resolversInProgressCount = 0
+        richTextView.enumerateAttribute(.asyncTextResolver, in: attributedText.fullRange, options: []) { [weak self] (resolverName, range, stop) in
             guard let self else {
                 stop.pointee = true
                 return
@@ -1274,15 +1276,24 @@ public extension EditorView {
 
             if let resolver = self.asyncTextResolvers.first(where: { $0.name == resolverName as? String }) {
                 let string = NSMutableAttributedString(attributedString: self.attributedText.attributedSubstring(from: range))
-                resolver.resolve(using: self, range: range, string: string) { result in
-                    self.removeAttribute(.asyncTextResolver, at: range)
-                    if case let AsyncTextResolvingResult.apply(newString, newRange) = result {
-                        self.richTextView.replaceCharacters(in: newRange, with: newString)
+                resolversInProgressCount += 1
+                resolver.resolve(using: self, range: range, string: string) { [originalString = string] result in
+                    resolversInProgressCount -= 1
+                    switch result {
+                    case .apply(let newString, let newRange):
+                        let currentString = NSMutableAttributedString(attributedString: self.attributedText.attributedSubstring(from: range))
+                        if originalString.string == currentString.string {
+                            self.removeAttribute(.asyncTextResolver, at: range)
+                            self.richTextView.replaceCharacters(in: newRange, with: newString)
+                        }
+                    case .discard:
+                        self.removeAttribute(.asyncTextResolver, at: range)
                     }
                 }
             }
         }
-        needsAsyncTextResolution = false
+        // Enable next pass if there was any resolver in progress, else disable the next run.
+        self.needsAsyncTextResolution = resolversInProgressCount > 0
     }
 }
 
