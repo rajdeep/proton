@@ -307,7 +307,10 @@ open class EditorView: UIView {
     /// in case of text with large number of attachments. 
     public var isEditable: Bool {
         get { richTextView.isEditable }
-        set { richTextView.isEditable = newValue }
+        set {
+            richTextView.isEditable = newValue
+            delegate?.editor(self, didChangeEditable: newValue)
+        }
     }
 
     /// Determines if the editor is empty.
@@ -660,7 +663,7 @@ open class EditorView: UIView {
             .paragraphStyle: paragraphStyle
         ]
         richTextView.adjustsFontForContentSizeCategory = true
-        delegate?.editor(_editor: self, isReady: false)
+        delegate?.editor(self, isReady: false)
     }
 
     /// Subclasses can override it to perform additional actions whenever the window changes.
@@ -671,7 +674,7 @@ open class EditorView: UIView {
             attributedText = pendingAttributedText
             self.pendingAttributedText = nil
         }
-        delegate?.editor(_editor: self, isReady: true)
+        delegate?.editor(self, isReady: true)
     }
 
     /// Asks the view to calculate and return the size that best fits the specified size.

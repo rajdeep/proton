@@ -742,6 +742,21 @@ class EditorViewTests: XCTestCase {
         let range4 = editor.attributeRangeFor(customAttribute, at: 15)
         XCTAssertEqual(range4, NSRange(location: 12, length: 4))
     }
+
+    func testNotifiedOfIsEditableChanges() {
+        let testExpectation = functionExpectation()
+        let delegate = MockEditorViewDelegate()
+        let editor = EditorView()
+        editor.delegate = delegate
+        XCTAssertTrue(editor.isEditable)
+
+        delegate.onDidChangeEditable = { _, isEditable in
+            XCTAssertFalse(isEditable)
+            testExpectation.fulfill()
+        }
+        editor.isEditable = false
+        waitForExpectations(timeout: 1.0)
+    }
 }
 
 class DummyMultiEditorAttachment: Attachment {

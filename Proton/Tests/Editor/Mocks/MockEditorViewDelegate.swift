@@ -31,6 +31,7 @@ class MockEditorViewDelegate: EditorViewDelegate {
     var onLostFocus: ((EditorView, NSRange) -> Void)?
     var onDidExecuteProcessors: ((EditorView, [TextProcessing], NSRange) -> Void)?
     var onDidChangeSize: ((EditorView, CGSize, CGSize) -> Void)?
+    var onDidChangeEditable: ((EditorView, Bool) -> Void)?
 
     func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
         onSelectionChanged?(editor, range, attributes, contentType)
@@ -58,5 +59,9 @@ class MockEditorViewDelegate: EditorViewDelegate {
 
     func editor(_ editor: EditorView, didChangeSize currentSize: CGSize, previousSize: CGSize) {
         onDidChangeSize?(editor, currentSize, previousSize)
+    }
+
+    func editor(_ editor: EditorView, didChangeEditable isEditable: Bool) {
+        onDidChangeEditable?(editor, isEditable)
     }
 }
