@@ -652,6 +652,43 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testRendersListInArrowFormat() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()])
+        editor.listFormattingProvider = listFormattingProvider
+
+        let indent: CGFloat = 25
+        let paraStyle1 = NSMutableParagraphStyle()
+        paraStyle1.firstLineHeadIndent = indent * 1
+        paraStyle1.headIndent = indent * 1
+
+        let paraStyle2 = NSMutableParagraphStyle()
+        paraStyle2.firstLineHeadIndent = indent * 2
+        paraStyle2.headIndent = indent * 2
+
+        let paraStyle3 = NSMutableParagraphStyle()
+        paraStyle3.firstLineHeadIndent = indent * 3
+        paraStyle3.headIndent = indent * 3
+
+        let paraStyle4 = NSMutableParagraphStyle()
+        paraStyle4.firstLineHeadIndent = indent * 4
+        paraStyle4.headIndent = indent * 4
+
+        editor.appendCharacters(NSAttributedString(string: "Text before list\n"))
+        editor.appendCharacters(NSAttributedString(string: "Some Item\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "Nested\n", attributes: [.listItem: 2, .paragraphStyle: paraStyle2]))
+        editor.appendCharacters(NSAttributedString(string: "Nested further\n", attributes: [.listItem: 2, .paragraphStyle: paraStyle3]))
+        editor.appendCharacters(NSAttributedString(string: "And some more\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle4]))
+        editor.appendCharacters(NSAttributedString(string: "Coming back\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle3]))
+        editor.appendCharacters(NSAttributedString(string: "To previous level\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle2]))
+        editor.appendCharacters(NSAttributedString(string: "and now at root", attributes: [.listItem: 2, .paragraphStyle: paraStyle1]))
+        editor.appendCharacters(NSAttributedString(string: "\nText after list"))
+
+        viewController.render(size: CGSize(width: 300, height: 375))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     func testContinuesNumberingWhenTwoListsAreCombined() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor

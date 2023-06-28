@@ -81,7 +81,7 @@ class LayoutManager: NSLayoutManager {
         textStorage.enumerateAttribute(.paragraphStyle, in: listRange, options: []) { value, range, _ in
             levelToSet = 0
             if let paraStyle = (value as? NSParagraphStyle)?.mutableParagraphStyle {
-                let previousLevel = Int(prevStyle?.firstLineHeadIndent ?? 0)/Int(listIndent)
+                previousLevel = Int(prevStyle?.firstLineHeadIndent ?? 0)/Int(listIndent)
                 let currentLevel = Int(paraStyle.firstLineHeadIndent)/Int(listIndent)
 
                 if currentLevel - previousLevel > 1 {
@@ -93,6 +93,7 @@ class LayoutManager: NSLayoutManager {
                     prevStyle = paraStyle
                 } else {
                     prevStyle = value as? NSParagraphStyle
+                    previousLevel = 0
                 }
             }
         }
