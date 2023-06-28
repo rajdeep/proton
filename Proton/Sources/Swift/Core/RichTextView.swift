@@ -312,7 +312,7 @@ class RichTextView: AutogrowingTextView {
         addSubview(placeholderLabel)
         placeholderLabel.attributedText = placeholderText
         NSLayoutConstraint.activate([
-            placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: textContainerInset.top),
+            placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: textContainerInset.top + 40),
             placeholderLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -textContainerInset.bottom),
             placeholderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: textContainer.lineFragmentPadding),
             placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -textContainer.lineFragmentPadding),
@@ -363,9 +363,25 @@ class RichTextView: AutogrowingTextView {
     }
 
     override func deleteBackward() {
+        var range: NSRange? = currentLineRange
         defer {
             if contentLength == 0 {
                 resetTypingAttributes()
+            }
+            if let range, selectedRange.location == range.location {
+                if let currentLineRange {
+                    let attributes = attributedText.attributes(at: currentLineRange.location, effectiveRange: nil)
+                    addAttributes([.listItem: attributes[.listItem], .listItemValue: attributes[.listItemValue]], range: range)
+                } else {
+                    removeAttributes([.listItem, .listItemValue], range: range)
+                }
+                if range.location < contentLength, let paragraph = attributedText.attribute(.paragraphStyle, at: range.location, effectiveRange: nil) as? NSParagraphStyle {
+                    let p = NSMutableParagraphStyle()
+                    p.lineSpacing = paragraph.lineSpacing
+                    p.paragraphSpacing = paragraph.paragraphSpacing
+                    p.paragraphSpacingBefore = paragraph.paragraphSpacingBefore
+                    addAttributes([.paragraphStyle: p], range: range)
+                }
             }
             richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: selectedRange)
         }
@@ -385,6 +401,9 @@ class RichTextView: AutogrowingTextView {
                 super.deleteBackward()
             }
             super.deleteBackward()
+            if let r = range {
+                range = NSRange(location: r.location - 1, length: r.length - 1)
+            }
 
             if let layoutManager = self.textStorage.layoutManagers.first as? LayoutManager {
                 layoutManager.clear()
@@ -433,7 +452,7 @@ class RichTextView: AutogrowingTextView {
     }
 
     private func updatePlaceholderVisibility() {
-        guard self.attributedText.length == 0 else {
+        guard self.attributedText.length <= 2 else {
             if placeholderLabel.superview != nil {
                 placeholderLabel.removeFromSuperview()
             }
@@ -518,6 +537,7 @@ class RichTextView: AutogrowingTextView {
         if editorView?.responds(to: #selector(copy(_:))) ?? false {
             editorView?.copy(sender)
         } else {
+            NotificationCenter.default.post(name: ProtonNotificationName.copy, object: nil)
             super.copy(sender)
         }
     }
@@ -526,7 +546,19 @@ class RichTextView: AutogrowingTextView {
         if editorView?.responds(to: #selector(paste(_:))) ?? false {
             editorView?.paste(sender)
         } else {
-            super.paste(sender)
+            if let data = UIPasteboard.general.data(forPasteboardType: "public.html") {
+                if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+                    let object = PasteModel(attr: attributedString, sourceFrom: .outer)
+                    NotificationCenter.default.post(name: ProtonNotificationName.paste, object: object)
+                    return
+                }
+            }
+            if let attr = GLLPasteboard.general.last() {
+                let object = PasteModel(attr: attr, sourceFrom: .internal)
+                NotificationCenter.default.post(name: ProtonNotificationName.paste, object: object)
+            } else {
+                super.paste(sender)
+            }
         }
     }
 
@@ -534,6 +566,7 @@ class RichTextView: AutogrowingTextView {
         if editorView?.responds(to: #selector(cut)) ?? false {
             editorView?.cut(sender)
         } else {
+            NotificationCenter.default.post(name: ProtonNotificationName.cut, object: nil)
             super.cut(sender)
         }
     }
@@ -589,6 +622,16 @@ class RichTextView: AutogrowingTextView {
         var caretRect = super.caretRect(for: position)
         caretRect.origin.y = lineRect.minY + textContainerInset.top
         caretRect.size.height = lineRect.height
+        
+        if location < (editorView?.contentLength ?? 0), location >= 1,
+           let font = editorView?.attributedText.attribute(.font, at: location - 1, effectiveRange: nil) as? UIFont,
+           let paragraphStyle = editorView?.attributedText.attribute(.paragraphStyle, at: location, effectiveRange: nil) as? NSParagraphStyle {
+            if (font.pointSize + paragraphStyle.lineSpacing) < caretRect.height {
+                caretRect.size.height = font.pointSize + 3
+                caretRect.origin.y = lineRect.minY + (lineRect.height - caretRect.size.height - paragraphStyle.lineSpacing)
+            }
+        }
+        
         return caretRect
     }
     

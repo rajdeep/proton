@@ -43,6 +43,7 @@ class PanelAttachment: Attachment {
         // Do not carry over para/list styles to panel content as it may be inconsistent based on outer content
         attributesWithoutParaStyle[.paragraphStyle] = nil
         attributesWithoutParaStyle[.listItem] = nil
+        attributesWithoutParaStyle[.listItemValue] = nil
         view.editor.addAttributes(attributesWithoutParaStyle, at: view.editor.attributedText.fullRange)
     }
 

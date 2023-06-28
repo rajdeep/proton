@@ -133,12 +133,14 @@ class RichTextEditorContext: RichTextViewContext {
         else { return }
 
         // custom attributes to carry over
-        let customAttributesToApply: [NSAttributedString.Key] = [.backgroundStyle]
         let attributes = editor.attributedText.attributes(at: editedRange.location - 1, effectiveRange: nil)
+        if editor.typingAttributes[.backgroundStyle] == nil {
+            let customAttributesToApply: [NSAttributedString.Key] = [.backgroundStyle]
 
-        let filteredAttributes = attributes.filter { customAttributesToApply.contains($0.key) }
-        for attribute in filteredAttributes {
-            editor.typingAttributes[attribute.key] = attribute.value
+            let filteredAttributes = attributes.filter { customAttributesToApply.contains($0.key) }
+            for attribute in filteredAttributes {
+                editor.typingAttributes[attribute.key] = attribute.value
+            }
         }
 
         // Drop locked attributes

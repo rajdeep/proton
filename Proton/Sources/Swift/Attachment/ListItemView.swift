@@ -39,12 +39,22 @@ class ListItemView: UIView {
         setUp()
     }
     
+    func update(with image: UIImage) {
+        imageView.image = image
+    }
+    
     func render(with type: ListItemViewType) {
         switch type {
         case let .image(image, checked):
             textLabel.isHidden = true
             imageView.isHidden = false
             self.checked = checked
+            switch image.renderingMode {
+            case .alwaysTemplate:
+                imageView.tintColor = .white
+            default:
+                imageView.tintColor = .clear
+            }
             imageView.image = image
             imageView.frame = CGRect(x: frame.midX - image.size.width / 2, y: (frame.height - image.size.height) / 2, width: image.size.width, height: image.size.height)
         case let .text(attr, rect):
@@ -78,7 +88,11 @@ class ListItemView: UIView {
                     location = characterRange.location + 1
                 }
                 if location < richView.contentLength, let lineRange = currentLine(on: richView, at: location) {
-                    let item = ListItemModel(range: lineRange, selected: checked)
+                    var range = lineRange
+                    if let last = richView.attributedText.substring(from: lineRange).last, last == "\n" {
+                        range = NSRange(location: lineRange.location, length: lineRange.length - 1)
+                    }
+                    let item = ListItemModel(range: range, selected: checked)
                     NotificationCenter.default.post(name: checklistTapKey, object: item)
                 } else {
                     NotificationCenter.default.post(name: checklistTapKey, object: ListItemModel(range: NSRange(location: richView.contentLength, length: 0), selected: checked))

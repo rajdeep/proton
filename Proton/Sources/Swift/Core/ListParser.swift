@@ -63,6 +63,8 @@ public struct ListParser {
             paraStyle.headIndent = paraStyle.firstLineHeadIndent
             let listText = NSMutableAttributedString(attributedString: item.text)
             listText.addAttribute(.listItem, value: item.attributeValue, range: listText.fullRange)
+            let listItemValue = listText.attribute(.listItemValue, at: listText.fullRange.location, effectiveRange: nil)
+            listText.addAttribute(.listItemValue, value: listItemValue, range: listText.fullRange)
             listText.addAttribute(.paragraphStyle, value: paraStyle, range: listText.fullRange)
             let newLineRanges = listText.rangesOf(characterSet: .newlines)
             for newLineRange in newLineRanges {

@@ -52,7 +52,9 @@ public class ListTextProcessor: TextProcessing {
            let value = editorView.attributedText.attribute(.listItem, at: rangeToCheck, effectiveRange: nil),
            (editorView.attributedText.attribute(.paragraphStyle, at: rangeToCheck, effectiveRange: nil) as? NSParagraphStyle)?.firstLineHeadIndent ?? 0 > 0 {
             editorView.typingAttributes[.listItem] = value
-            editorView.typingAttributes[.listItemValue] = editorView.attributedText.attribute(.listItemValue, at: rangeToCheck, effectiveRange: nil)
+            if !((value as? String)?.isChecklist ?? false) {
+                editorView.typingAttributes[.listItemValue] = editorView.attributedText.attribute(.listItemValue, at: rangeToCheck, effectiveRange: nil)
+            }
         }
         return true
     }
@@ -95,7 +97,9 @@ public class ListTextProcessor: TextProcessing {
                   attributedText.substring(from: editedRange) == ListTextProcessor.blankLineFiller,
                   attributedText.attribute(.listItem, at: editedRange.location, effectiveRange: nil) != nil,
                   attributedText.substring(from: NSRange(location: editedRange.location - 1, length: 1)) == "\n"
-            else { return }
+            else {
+                return
+            }
             
             editor.deleteBackward()
         }
@@ -127,6 +131,14 @@ public class ListTextProcessor: TextProcessing {
         if editor.selectedRange.endLocation >= rangeToReplace.endLocation {
             editor.selectedRange = NSRange(location: editor.selectedRange.location - 1, length: 0)
         }
+        
+        let range = NSRange(location: editor.selectedRange.location, length: 1)
+        if range.endLocation < editor.contentLength,
+           editor.attributedText.substring(from: range) == "\n" {
+            editor.removeAttribute(.listItem, at: range)
+            editor.removeAttribute(.listItemValue, at: range)
+        }
+        
         editor.removeAttribute(.strikethroughStyle, at: editor.selectedRange)
         editor.typingAttributes[.foregroundColor] = editor.textColor
         editor.typingAttributes[.strikethroughStyle] = nil
@@ -189,7 +201,7 @@ public class ListTextProcessor: TextProcessing {
         editor.typingAttributes[.skipNextListMarker] = nil
     }
 
-    private func updateListItemIfRequired(editor: EditorView, editedRange: NSRange, indentMode: Indentation, attributeValue: Any?) {
+    func updateListItemIfRequired(editor: EditorView, editedRange: NSRange, indentMode: Indentation, attributeValue: Any?) {
         let lines = editor.contentLinesInRange(editedRange)
 
         for line in lines {
@@ -219,9 +231,11 @@ public class ListTextProcessor: TextProcessing {
             // Remove listItem attribute if indented all the way back
             if mutableStyle?.firstLineHeadIndent == 0 {
                 editor.removeAttribute(.listItem, at: line.range)
+                editor.removeAttribute(.listItemValue, at: line.range)
                 // remove list attribute from new line char in the previous line
                 if let previousLine = previousLine {
                     editor.removeAttribute(.listItem, at: NSRange(location: previousLine.range.endLocation, length: 1))
+                    editor.removeAttribute(.listItemValue, at: NSRange(location: previousLine.range.endLocation, length: 1))
                 }
             }
             indentChildLists(editor: editor, editedRange: line.range, originalParaStyle: paraStyle, indentMode: indentMode)

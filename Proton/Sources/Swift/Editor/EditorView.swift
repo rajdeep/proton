@@ -272,6 +272,11 @@ open class EditorView: UIView {
         set { richTextView.isScrollEnabled = newValue }
     }
     
+    public var showsVerticalScrollIndicator: Bool {
+        get { richTextView.showsVerticalScrollIndicator }
+        set { richTextView.showsVerticalScrollIndicator = newValue }
+    }
+    
     /// Gets or sets the insets for the text container's layout area within the editor's content area
     public var textContainerInset: UIEdgeInsets {
         get { richTextView.textContainerInset }

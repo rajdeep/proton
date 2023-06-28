@@ -21,6 +21,12 @@
 import Foundation
 import UIKit
 
+extension String {
+    var isChecklist: Bool {
+        return self == "listItemCheckList" || self == "listItemSelectedChecklist"
+    }
+}
+
 public enum Indentation {
     case indent
     case outdent
@@ -81,11 +87,24 @@ public class ListCommand: EditorCommand {
             }
             selectedRange = NSRange(location: location, length: length)
         }
-
+        
         guard selectedRange.length > 0 else {
             if editor.isEmpty ||
                 editor.attributedText.attribute(.listItem, at: max(0, editor.selectedRange.location - 1), effectiveRange: nil) == nil {
                 ListTextProcessor().createListItemInANewLine(editor: editor, editedRange: selectedRange, indentMode: .indent, attributeValue: attributeValue)
+            } else if let listItem = editor.attributedText.attribute(.listItem, at: max(0, editor.selectedRange.location - 1), effectiveRange: nil) as? String, let attributeValue = attributeValue as? String, listItem != attributeValue {
+                let listItemValue = editor.attributedText.attribute(.listItemValue, at: max(0, editor.selectedRange.location - 1), effectiveRange: nil) as? String
+                
+                if listItem.isChecklist || attributeValue.isChecklist {
+                    ListTextProcessor().createListItemInANewLine(editor: editor, editedRange: selectedRange, indentMode: .indent, attributeValue: attributeValue)
+                } else {
+                    editor.attributedText.enumerateAttribute(.listItemValue, in: editor.attributedText.fullRange) { value, range, stop in
+                        guard let value = value as? String else { return }
+                        if value == listItemValue {
+                            editor.addAttribute(.listItem, value: attributeValue, at: range)
+                        }
+                    }
+                }
             } else {
                 ListTextProcessor().exitList(editor: editor)
             }
@@ -98,39 +117,84 @@ public class ListCommand: EditorCommand {
                 .paragraphStyle: paragraphStyle
             ], at: selectedRange)
             editor.removeAttribute(.listItem, at: selectedRange)
+            editor.removeAttribute(.listItemValue, at: selectedRange)
             editor.typingAttributes[.listItem] = nil
             editor.typingAttributes[.listItemValue] = nil
             return
         }
-
-        // Fix the list attribute on the trailing `\n` in previous line, if previous line has a listItem attribute applied
-        if let previousLine = editor.previousContentLine(from: selectedRange.location),
+        
+        var flag = false
+        if let line = editor.currentLayoutLine, let listItem = editor.attributedText.attribute(.listItem, at: line.range.location, effectiveRange: nil) as? String {
+             if listItem == "listItemSelectedChecklist" {
+                 editor.typingAttributes[.strikethroughStyle] = nil
+                 editor.typingAttributes[.foregroundColor] = editor.textColor
+             }
+             
+             flag = listItem.isChecklist || ((attrValue as? String)?.isChecklist ?? false)
+        }
+        
+        var listItemValue = editor.attributedText.attribute(.listItemValue, at: selectedRange.location, effectiveRange: nil) as? String
+        if listItemValue == nil {
+            if let prevLine = editor.previousContentLine(from: selectedRange.location),
+               let v = getListItemValue(from: prevLine, editor: editor) {
+                listItemValue = v
+            } else if let nextLine = editor.nextContentLine(from: selectedRange.location),
+                      let v = getListItemValue(from: nextLine, editor: editor) {
+                listItemValue = v
+            }
+        }
+        
+        listItemValue = listItemValue ?? UUID().uuidString
+        
+        if !flag {
+            editor.attributedText.enumerateAttribute(.listItemValue, in: editor.attributedText.fullRange) { value, range, stop in
+                guard let value = value as? String else { return }
+                if value == listItemValue {
+                    self.handle(on: editor, range: range, attrValue: attrValue)
+                }
+            }
+        }
+        handle(on: editor, range: selectedRange, attrValue: attrValue)
+        editor.addAttribute(.listItemValue, value: listItemValue, at: selectedRange)
+        editor.typingAttributes[.listItem] = attrValue
+        if !flag {
+            editor.typingAttributes[.listItemValue] = listItemValue
+        }
+        
+        attributeValue = nil
+    }
+    
+    private func getListItemValue(from line: EditorLine, editor: EditorView) -> String? {
+        guard let listItem = editor.attributedText.attribute(.listItem, at: line.range.location, effectiveRange: nil) as? String,
+           let attrValue = attributeValue as? String,
+           listItem == attrValue else {
+            return nil
+        }
+        return editor.attributedText.attribute(.listItemValue, at: line.range.location, effectiveRange: nil) as? String
+    }
+    
+    func handle(on editor: EditorView, range: NSRange, attrValue: Any) {
+        if let previousLine = editor.previousContentLine(from: range.location),
            let listValue = editor.attributedText.attribute(.listItem, at: previousLine.range.endLocation - 1, effectiveRange: nil),
            editor.attributedText.attribute(.listItem, at: previousLine.range.endLocation, effectiveRange: nil) == nil {
+            if let listItemValue = editor.attributedText.attribute(.listItemValue, at: previousLine.range.endLocation - 1, effectiveRange: nil) as? String,
+               editor.attributedText.attribute(.listItemValue, at: previousLine.range.endLocation, effectiveRange: nil) == nil {
+                editor.addAttribute(.listItemValue, value: listItemValue, at: NSRange(location: previousLine.range.endLocation, length: 1))
+            }
             editor.addAttribute(.listItem, value: listValue, at: NSRange(location: previousLine.range.endLocation, length: 1))
         }
-
-        editor.attributedText.enumerateAttribute(.paragraphStyle, in: selectedRange, options: []) { (value, range, _) in
+        editor.attributedText.enumerateAttribute(.paragraphStyle, in: range, options: []) { (value, range, _) in
             let paraStyle = value as? NSParagraphStyle
             let mutableStyle = ListTextProcessor().updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: .indent)
             editor.addAttribute(.paragraphStyle, value: mutableStyle ?? editor.paragraphStyle, at: range)
         }
         
-        if let prevListItem = editor.attributedText.attribute(.listItem, at: selectedRange.location, effectiveRange: nil) as? String {
-            if prevListItem == "listItemSelectedChecklist" {
-                editor.removeAttribute(.strikethroughStyle, at: selectedRange)
-                editor.addAttribute(.foregroundColor, value: editor.textColor, at: selectedRange)
-                editor.typingAttributes[.strikethroughStyle] = nil
-                editor.typingAttributes[.foregroundColor] = editor.textColor
-            }
+        editor.attributedText.enumerateAttribute(.listItem, in: range) { value, range, stop in
+            guard let value = value as? String, value == "listItemSelectedChecklist" else { return }
+            editor.removeAttribute(.strikethroughStyle, at: range)
+            editor.addAttribute(.foregroundColor, value: editor.textColor, at: range)
         }
-        
-        let listItemValue = editor.attributedText.attribute(.listItemValue, at: selectedRange.location, effectiveRange: nil)
-        editor.addAttribute(.listItem, value: attrValue, at: selectedRange)
-        editor.addAttribute(.listItemValue, value: listItemValue, at: selectedRange)
-        editor.typingAttributes[.listItem] = attrValue
-        editor.typingAttributes[.listItemValue] = listItemValue
-        attributeValue = nil
+        editor.addAttribute(.listItem, value: attrValue, at: range)
     }
 
     /// Executes the command with value of `attributeValue` for `.listItem` attribute.
@@ -138,6 +202,11 @@ public class ListCommand: EditorCommand {
     ///   - editor: Editor to execute the command on.
     ///   - attributeValue: Value of `.listItem` attribute. Use nil to remove list formatting.
     public func execute(on editor: EditorView, attributeValue: Any?) {
+        editor.attributedText.enumerateAttribute(.listItem, in: editor.attributedText.fullRange) { value, range, stop in
+            guard let value = value as? String, value.isChecklist else { return }
+            editor.removeAttribute(.listItemValue, at: range)
+        }
+        
         self.attributeValue = attributeValue
         execute(on: editor)
     }

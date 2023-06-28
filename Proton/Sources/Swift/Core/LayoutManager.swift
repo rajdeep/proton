@@ -23,7 +23,6 @@ import UIKit
 
 struct ListItemViewModel {
     var view: UIView
-    var path: UIBezierPath
     var attrValue: String
     var image: UIImage
 }
@@ -54,6 +53,7 @@ class LayoutManager: NSLayoutManager {
     
     private let defaultBulletColor = UIColor.black
     private var counters = [Int: Int]()
+    private var numberDict: [String: Int] = [:]
     
     weak var layoutManagerDelegate: LayoutManagerDelegate?
     
@@ -79,7 +79,13 @@ class LayoutManager: NSLayoutManager {
             }
         }
         
-        guard !items.isEmpty else { return }
+        guard !items.isEmpty else {
+            if let textContainer = self.textContainers.first as? TextContainer,
+               let textView = textContainer.textView {
+                textView.subviews.filter { $0 is ListItemView }.forEach { $0.removeFromSuperview() }
+            }
+            return
+        }
         var pre = 0
         for index in 1..<items.count {
             let preItem = items[pre]
@@ -97,6 +103,7 @@ class LayoutManager: NSLayoutManager {
         reDrawChecklist()
         lastListItemModels = listItemViewModels
         listItemViewModels = []
+        numberDict = [:]
     }
     
     var defaultParagraphStyle: NSParagraphStyle {
@@ -180,6 +187,7 @@ class LayoutManager: NSLayoutManager {
                 let level = Int(paraStyle.firstLineHeadIndent/listIndent)
                 
                 if let attributeValue = attributeValue as? String, attributeValue == "listItemNumber" {
+                    let listItemValue = (textStorage.attribute(.listItemValue, at: characterRange.location, effectiveRange: nil) as? String) ?? attributeValue
                     var index = (self.counters[level] ?? 0)
                     self.counters[level] = index + 1
                     
@@ -190,7 +198,8 @@ class LayoutManager: NSLayoutManager {
                     }
                     
                     if level > 0 {
-                        self.drawListItem(level: level, previousLevel: previousLevel, index: index, rect: rect, paraStyle: paraStyle, font: font, attributeValue: attributeValue)
+                        self.drawListItem(level: level, previousLevel: previousLevel, index: self.numberDict[listItemValue, default: 0], rect: rect, paraStyle: paraStyle, font: font, attributeValue: attributeValue)
+                        self.numberDict[listItemValue, default: 0] += 1
                     }
                     
                 } else {
@@ -245,7 +254,12 @@ class LayoutManager: NSLayoutManager {
         previousLevel = level
         
         let font = lastLayoutFont ?? defaultFont
-        drawListItem(level: level, previousLevel: previousLevel, index: index, rect: newLineRect, paraStyle: paraStyle, font: font, attributeValue: attributeValue)
+        var idx = index
+        if let listItemValue = textStorage.attribute(.listItemValue, at: listRange.endLocation - 1, effectiveRange: nil) as? String {
+            idx = self.numberDict[listItemValue, default: 0]
+            self.numberDict[listItemValue, default: 0] += 1
+        }
+        drawListItem(level: level, previousLevel: previousLevel, index: idx, rect: newLineRect, paraStyle: paraStyle, font: font, attributeValue: attributeValue)
     }
     
     func reDrawChecklist() {
@@ -259,9 +273,10 @@ class LayoutManager: NSLayoutManager {
                 for item in listItemViewModels {
                     if lastItem.view.frame == item.view.frame {
                         flag = true
-                        if lastItem.attrValue != item.attrValue {
-                            addItems.append(item)
-                            removeItems.append(item)
+                        for subview in textView.subviews {
+                            if subview.frame == item.view.frame, let v = subview as? ListItemView {
+                                v.update(with: item.image)
+                            }
                         }
                         break
                     }
@@ -295,7 +310,6 @@ class LayoutManager: NSLayoutManager {
                         break
                     }
                 }
-                textContainer.exclusionPaths.removeAll { $0 == item.path }
             }
             for item in addItems {
                 if !drawedRects.contains(item.view.frame) {
@@ -345,17 +359,15 @@ class LayoutManager: NSLayoutManager {
                 imageSize = CGSize(width: width, height: width)
             }
             markerRect = CGRect(origin: CGPoint(x: rect.minX, y: rect.minY + topInset), size: CGSize(width: paraStyle.firstLineHeadIndent, height: rect.height))
-            listMarkerImage = image.resizeImage(to: imageSize)
+            listMarkerImage = image.resizeImage(to: imageSize).withRenderingMode(image.renderingMode)
             
             if size.width == 16 {
                 let rect = CGRect(x: 0, y: markerRect.minY, width: markerRect.width, height: markerRect.height)
                 let itemView = ListItemView(frame: rect)
                 let checked = attributeValue == "listItemSelectedChecklist"
                 itemView.render(with: .image(listMarkerImage, checked))
-                let path = UIBezierPath(rect: rect)
                 listItemViewModels.append(ListItemViewModel(
                     view: itemView,
-                    path: path,
                     attrValue: attributeValue,
                     image: listMarkerImage)
                 )
@@ -433,10 +445,13 @@ class LayoutManager: NSLayoutManager {
             if let backgroundStyle = attr as? BackgroundStyle {
                 let bgStyleGlyphRange = self.glyphRange(forCharacterRange: bgStyleRange, actualCharacterRange: nil)
                 enumerateLineFragments(forGlyphRange: bgStyleGlyphRange) { _, usedRect, textContainer, lineRange, _ in
-                    let rangeIntersection = NSIntersectionRange(bgStyleGlyphRange, lineRange)
+                    var rangeIntersection = NSIntersectionRange(bgStyleGlyphRange, lineRange)
+                    let last = textStorage.substring(from: NSRange(location: rangeIntersection.endLocation - 1, length: 1))
+                    if last == "\n" {
+                        rangeIntersection = NSRange(location: rangeIntersection.location, length: rangeIntersection.length - 1)
+                    }
                     var rect = self.boundingRect(forGlyphRange: rangeIntersection, in: textContainer)
                     
-                    var contentSize: CGSize?
                     if backgroundStyle.widthMode == .matchText {
                         let content = textStorage.attributedSubstring(from: rangeIntersection)
                         let contentWidth = content.boundingRect(with: rect.size, options: [.usesDeviceMetrics, .usesFontLeading], context: nil).width
@@ -453,15 +468,29 @@ class LayoutManager: NSLayoutManager {
                     case .matchLine:
                         // Glyphs can take space outside of the line fragment, and we cannot draw outside of it.
                         // So it is best to restrict the height just to the line fragment.
+                        var lineSpacing: CGFloat = 0.0
+                        if let paragraphStyle = textStorage.attribute(.paragraphStyle, at: rangeIntersection.location, effectiveRange: nil) as? NSParagraphStyle {
+                            lineSpacing = paragraphStyle.lineSpacing
+                        }
+                        if let font = textStorage.attribute(.font, at: rangeIntersection.location, effectiveRange: nil) as? UIFont {
+                            if usedRect.height < (font.pointSize + lineSpacing) {
+                                lineSpacing = 0
+                            }
+                        }
                         rect.origin.y = usedRect.origin.y
-                        rect.size.height = usedRect.height
-                        
+                        rect.size.height = usedRect.height - lineSpacing
+                        let content = textStorage.attributedSubstring(from: rangeIntersection)
+                        var contentWidth = content.boundingRect(with: rect.size, options: [.usesDeviceMetrics, .usesFontLeading], context: nil).width
+                        if contentWidth >= 1 {
+                            contentWidth += 2
+                        }
+                        rect.size.width = contentWidth
                     }
                     
                     let insetTop = self.layoutManagerDelegate?.textContainerInset.top ?? 0
                     rects.append(rect.offsetBy(dx: 0, dy: insetTop))
+                    self.drawBackground(backgroundStyle: backgroundStyle, rects: [rect], currentCGContext: currentCGContext)
                 }
-                drawBackground(backgroundStyle: backgroundStyle, rects: rects, currentCGContext: currentCGContext)
             }
         }
     }
