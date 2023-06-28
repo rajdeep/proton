@@ -308,6 +308,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
 
         let viewController = EditorTestViewController()
         let editor = viewController.editor
+        editor.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         editor.listFormattingProvider = listFormattingProvider
         editor.attributedText = NSAttributedString(string: text)
         editor.selectedRange = editor.attributedText.fullRange
