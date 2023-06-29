@@ -62,6 +62,7 @@ class LayoutManager: NSLayoutManager {
         var lastLayoutFont: UIFont?
 
         var previousLevel = 0
+        var level = 0
 
         let defaultFont = self.layoutManagerDelegate?.font ?? UIFont.preferredFont(forTextStyle: .body)
         let listIndent = layoutManagerDelegate?.listLineFormatting.indentation ?? 25.0
@@ -81,7 +82,7 @@ class LayoutManager: NSLayoutManager {
         textStorage.enumerateAttribute(.paragraphStyle, in: listRange, options: []) { value, range, _ in
             levelToSet = 0
             if let paraStyle = (value as? NSParagraphStyle)?.mutableParagraphStyle {
-                previousLevel = Int(prevStyle?.firstLineHeadIndent ?? 0)/Int(listIndent)
+                let previousLevel = Int(prevStyle?.firstLineHeadIndent ?? 0)/Int(listIndent)
                 let currentLevel = Int(paraStyle.firstLineHeadIndent)/Int(listIndent)
 
                 if currentLevel - previousLevel > 1 {
@@ -93,12 +94,12 @@ class LayoutManager: NSLayoutManager {
                     prevStyle = paraStyle
                 } else {
                     prevStyle = value as? NSParagraphStyle
-                    previousLevel = 0
                 }
             }
         }
 
         let listGlyphRange = glyphRange(forCharacterRange: listRange, actualCharacterRange: nil)
+        previousLevel = 0
         enumerateLineFragments(forGlyphRange: listGlyphRange) { [weak self] (rect, usedRect, textContainer, glyphRange, stop) in
             guard let self = self else { return }
             let characterRange = self.characterRange(forGlyphRange: glyphRange, actualGlyphRange: nil)
@@ -121,11 +122,19 @@ class LayoutManager: NSLayoutManager {
             }
 
             let font = textStorage.attribute(.font, at: characterRange.location, effectiveRange: nil) as? UIFont ?? defaultFont
-            let paraStyle = textStorage.attribute(.paragraphStyle, at: characterRange.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
+            let previousParaStyle: NSParagraphStyle?
 
+            if characterRange.location == 0 {
+                previousParaStyle = nil
+            } else {
+                previousParaStyle  = textStorage.attribute(.paragraphStyle, at: max(characterRange.location - 1, 0), effectiveRange: nil) as? NSParagraphStyle
+            }
+
+            let paraStyle = textStorage.attribute(.paragraphStyle, at: characterRange.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
+            previousLevel = Int(previousParaStyle?.firstLineHeadIndent ?? 0)/Int(listIndent)
             if isPreviousLineComplete, skipMarker == false {
 
-                let level = Int(paraStyle.firstLineHeadIndent/listIndent)
+                level = Int(paraStyle.firstLineHeadIndent/listIndent)
                 var index = (self.counters[level] ?? 0)
                 self.counters[level] = index + 1
 
@@ -141,13 +150,13 @@ class LayoutManager: NSLayoutManager {
                 if level > 0 {
                     self.drawListItem(level: level, previousLevel: previousLevel, index: index, rect: adjustedRect, paraStyle: paraStyle, font: font, attributeValue: attributeValue)
                 }
-                previousLevel = level
 
                 // TODO: should this be moved inside level > 0 check above?
             }
             lastLayoutParaStyle = paraStyle
             lastLayoutRect = rect
             lastLayoutFont = font
+            previousLevel = level
         }
 
         var skipMarker = false
@@ -165,7 +174,6 @@ class LayoutManager: NSLayoutManager {
               let paraStyle = lastLayoutParaStyle
         else { return }
 
-        let level = Int(paraStyle.firstLineHeadIndent/listIndent)
         var index = (counters[level] ?? 0)
         let origin = CGPoint(x: lastRect.minX, y: lastRect.maxY)
 

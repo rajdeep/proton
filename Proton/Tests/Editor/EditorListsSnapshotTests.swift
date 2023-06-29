@@ -311,20 +311,20 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         editor.paragraphStyle.paragraphSpacing = 5
         editor.textContainerInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         editor.listFormattingProvider = listFormattingProvider
-        editor.attributedText = NSAttributedString(string: text)
+        editor.attributedText = NSAttributedString(string: "Line 0: \(text)")
         editor.selectedRange = editor.attributedText.fullRange
         listCommand.execute(on: editor)
 
-        for _ in 0..<9 {
+        for i in 1..<10 {
             var range = NSRange(location: editor.contentLength - 1, length: 1)
             listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: range)
             range = editor.textEndRange//NSRange(location: editor.contentLength - 1, length: 1)
             listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: range)
             let attrs = editor.attributedText.attributes(at: editor.contentLength - 1, effectiveRange: nil)
-            editor.appendCharacters(NSAttributedString(string: text, attributes: attrs))
+            editor.appendCharacters(NSAttributedString(string: "Line \(i): \(text)", attributes: attrs))
         }
 
-        viewController.render(size: CGSize(width: 400, height: 420))
+        viewController.render(size: CGSize(width: 450, height: 450))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
