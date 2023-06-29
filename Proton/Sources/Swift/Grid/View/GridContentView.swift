@@ -88,6 +88,10 @@ class GridContentView: UIScrollView {
         }
     }
 
+    var columnWidths: [GridColumnDimension] {
+        grid.columnWidths
+    }
+
     init(config: GridConfiguration, cells: [GridCell]) {
         self.config = config
         grid = Grid(config: config, cells: cells)

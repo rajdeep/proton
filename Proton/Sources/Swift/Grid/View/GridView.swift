@@ -105,6 +105,7 @@ public class GridView: UIView {
     private let config: GridConfiguration
     private let selectionView = SelectionView()
     private var resizingDragHandleLastLocation: CGPoint? = nil
+    private var leadingShadowConstraint: NSLayoutConstraint!
 
     private lazy var columnRightBorderView: UIView = {
         makeSelectionBorderView()
@@ -231,6 +232,7 @@ public class GridView: UIView {
         self.trailingShadowView.alpha = 0.2
         self.config = config
         super.init(frame: .zero)
+        self.leadingShadowConstraint = leadingShadowView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
         setup()
     }
 
@@ -257,7 +259,7 @@ public class GridView: UIView {
             gridView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
             leadingShadowView.widthAnchor.constraint(equalToConstant: shadowWidth),
-            leadingShadowView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            leadingShadowConstraint,
             leadingShadowView.topAnchor.constraint(equalTo: topAnchor),
             leadingShadowView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
@@ -521,7 +523,17 @@ public class GridView: UIView {
     }
 
     private func resetShadows() {
-        leadingShadowView.isHidden = gridView.contentOffset.x <= 0
+        if let frozenColumnMaxIndex {
+            let frozenColumnWidth = gridView.columnWidths.prefix(upTo: frozenColumnMaxIndex + 1).reduce(0) { partialResult, dimension in
+                partialResult + dimension.value(basedOn: frame.size.width)
+            }
+            let borderOffSet = self.config.style.borderWidth
+            leadingShadowConstraint.constant = frozenColumnWidth + borderOffSet
+            leadingShadowView.isHidden = gridView.contentOffset.x < 1
+        } else {
+            leadingShadowView.isHidden = gridView.contentOffset.x <= 0
+        }
+
         trailingShadowView.isHidden = gridView.contentOffset.x + gridView.bounds.width >= gridView.contentSize.width
     }
 }
