@@ -116,6 +116,11 @@ open class EditorView: UIView {
     /// Context for the current Editor
     public let editorViewContext: EditorViewContext
     
+    public var editorTintColor: UIColor {
+        get { return richTextView.tintColor }
+        set { richTextView.tintColor = newValue }
+    }
+    
     public var editGestureRecognizers: [UIGestureRecognizer] {
         return richTextView.gestureRecognizers ?? []
     }

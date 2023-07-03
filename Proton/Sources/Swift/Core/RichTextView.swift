@@ -383,11 +383,12 @@ class RichTextView: AutogrowingTextView {
                     addAttributes([.paragraphStyle: p], range: range)
                 }
             }
+
             richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: selectedRange)
         }
 
         guard contentLength > 0 else { return }
-        let proposedRange = NSRange(location: max(0, selectedRange.location - 1), length: 0)
+        var proposedRange = NSRange(location: max(0, selectedRange.location - 1), length: 0)
 
         let attributedText: NSAttributedString = self.attributedText // single allocation
         let attributeExists = (attributedText.attribute(.textBlock, at: proposedRange.location, effectiveRange: nil)) != nil
@@ -396,11 +397,23 @@ class RichTextView: AutogrowingTextView {
               let textRange = adjustedTextBlockRangeOnSelectionChange(oldRange: selectedRange, newRange: proposedRange)
         else {
             // if the character getting deleted is a list item spacer, do a double delete
-            let textToBeDeleted = attributedText.substring(from: NSRange(location: proposedRange.location, length: 1))
+            var textToBeDeleted = attributedText.substring(from: NSRange(location: proposedRange.location, length: 1))
+            var fromBlankLineFiller = false
             if textToBeDeleted == ListTextProcessor.blankLineFiller {
                 super.deleteBackward()
+                textToBeDeleted = attributedText.substring(from: NSRange(location: proposedRange.location - 1, length: 1))
+                proposedRange = NSRange(location: proposedRange.location - 1, length: 1)
+                fromBlankLineFiller = true
             }
-            super.deleteBackward()
+            if textToBeDeleted == "\n" {
+                if fromBlankLineFiller || attributedText.attribute(.listItem, at: proposedRange.location, effectiveRange: nil) != nil {
+                    replaceNewLineCharacter(proposedRange: proposedRange)
+                } else {
+                    super.deleteBackward()
+                }
+            } else {
+                super.deleteBackward()
+            }
             if let r = range {
                 range = NSRange(location: r.location - 1, length: r.length - 1)
             }
@@ -415,6 +428,21 @@ class RichTextView: AutogrowingTextView {
         let rangeToDelete = NSRange(location: textRange.location, length: selectedRange.location - textRange.location)
         replaceCharacters(in: rangeToDelete, with: NSAttributedString())
         selectedRange = NSRange(location: textRange.location, length: 0)
+    }
+    
+    func replaceNewLineCharacter(proposedRange: NSRange) {
+        let r = NSRange(location: proposedRange.location, length: 1)
+        editorView?.removeAttributes([.paragraphStyle, .listItem, .listItemValue], at: r)
+        if let paragraph = attributedText.attribute(.paragraphStyle, at: r.location, effectiveRange: nil) as? NSParagraphStyle {
+            let p = NSMutableParagraphStyle()
+            p.lineSpacing = paragraph.lineSpacing
+            p.paragraphSpacing = paragraph.paragraphSpacing
+            p.paragraphSpacingBefore = paragraph.paragraphSpacingBefore
+            typingAttributes[.paragraphStyle] = p
+        }
+        editorView?.typingAttributes[.listItem] = nil
+        editorView?.typingAttributes[.listItemValue] = nil
+        replaceCharacters(in: r, with: NSAttributedString(string: "\n"))
     }
 
     func insertAttachment(in range: NSRange, attachment: Attachment) {
