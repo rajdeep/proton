@@ -51,7 +51,7 @@ class AutogrowingTextView: UITextView {
         super.layoutSubviews()
         guard allowAutogrowing, maxHeight != .greatestFiniteMagnitude else { return }
         // Required to reset the size if content is removed
-        if contentSize.height <= frame.height, isEditable {
+        if contentSize.height <= frame.height {
             recalculateHeight()
             invalidateIntrinsicContentSize()
             return
