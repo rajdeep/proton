@@ -88,10 +88,7 @@ class ListItemView: UIView {
                     location = characterRange.location + 1
                 }
                 if location < richView.contentLength, let lineRange = currentLine(on: richView, at: location) {
-                    var range = lineRange
-                    if let last = richView.attributedText.substring(from: lineRange).last, last == "\n" {
-                        range = NSRange(location: lineRange.location, length: lineRange.length - 1)
-                    }
+                    let range = lineRange
                     let item = ListItemModel(range: range, selected: checked)
                     NotificationCenter.default.post(name: checklistTapKey, object: item)
                 } else {

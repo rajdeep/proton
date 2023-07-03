@@ -24,7 +24,7 @@ import UIKit
 struct ListItemViewModel {
     var view: UIView
     var attrValue: String
-    var image: UIImage
+    var listItemViewType: ListItemViewType
 }
 
 protocol LayoutManagerDelegate: AnyObject {
@@ -60,6 +60,7 @@ class LayoutManager: NSLayoutManager {
     private var listItemViewModels: [ListItemViewModel] = []
     private var lastListItemModels: [ListItemViewModel] = []
     private var drawedRects: [CGRect] = []
+    private var markerCache: ListMarkerCache = ListMarkerCache()
     
     func clear() {
         listItemViewModels = []
@@ -274,9 +275,10 @@ class LayoutManager: NSLayoutManager {
                     if lastItem.view.frame == item.view.frame {
                         flag = true
                         for subview in textView.subviews {
-                            if subview.frame == item.view.frame, let v = subview as? ListItemView {
-                                v.update(with: item.image)
-                            }
+                            if subview.frame == item.view.frame,
+                               let v = subview as? ListItemView {
+                                    v.render(with: item.listItemViewType)
+                                }
                         }
                         break
                     }
@@ -345,13 +347,16 @@ class LayoutManager: NSLayoutManager {
                 attr.addAttribute(.font, value: f.withSize(font.pointSize), range: attr.fullRange)
             }
             markerRect = CGRect(origin: CGPoint(x: rect.minX, y: rect.minY + topInset), size: CGSize(width: paraStyle.firstLineHeadIndent, height: rect.height))
-            let rect = CGRect(x: 0, y: 0, width: markerRect.width, height: markerRect.height)
+            let rect = CGRect(x: 0, y: markerRect.minY, width: markerRect.width, height: markerRect.height)
             let itemView = ListItemView(frame: rect)
             itemView.render(with: .text(attr, markerRect))
-            let image = itemView.toImage()
-            image?.draw(at: markerRect.origin)
-            
-            drawedRects.append(CGRect(x: 0, y: markerRect.minY, width: markerRect.width, height: markerRect.height))
+            listItemViewModels.append(
+                ListItemViewModel(
+                    view: itemView,
+                    attrValue: attributeValue,
+                    listItemViewType: .text(attr, markerRect)
+                )
+            )
         case let .image(image, size):
             var imageSize = size
             if size.width != 16 {
@@ -366,18 +371,24 @@ class LayoutManager: NSLayoutManager {
                 let itemView = ListItemView(frame: rect)
                 let checked = attributeValue == "listItemSelectedChecklist"
                 itemView.render(with: .image(listMarkerImage, checked))
-                listItemViewModels.append(ListItemViewModel(
-                    view: itemView,
-                    attrValue: attributeValue,
-                    image: listMarkerImage)
+                listItemViewModels.append(
+                    ListItemViewModel(
+                        view: itemView,
+                        attrValue: attributeValue,
+                        listItemViewType: .image(listMarkerImage, checked)
+                    )
                 )
             } else {
-                let rect = CGRect(x: 0, y: 0, width: markerRect.width, height: markerRect.height)
+                let rect = CGRect(x: 0, y: markerRect.minY, width: markerRect.width, height: markerRect.height)
                 let itemView = ListItemView(frame: rect)
                 itemView.render(with: .image(listMarkerImage, false))
-                let image = itemView.toImage()
-                image?.draw(at: markerRect.origin)
-                drawedRects.append(CGRect(x: 0, y: markerRect.minY, width: markerRect.width, height: markerRect.height))
+                listItemViewModels.append(
+                    ListItemViewModel(
+                        view: itemView,
+                        attrValue: attributeValue,
+                        listItemViewType: .image(listMarkerImage, false)
+                    )
+                )
             }
         }
     }

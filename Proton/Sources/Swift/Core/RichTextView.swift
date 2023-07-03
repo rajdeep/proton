@@ -431,7 +431,16 @@ class RichTextView: AutogrowingTextView {
     }
     
     func replaceNewLineCharacter(proposedRange: NSRange) {
-        let r = NSRange(location: proposedRange.location, length: 1)
+        let r: NSRange
+        let replaceString: String
+        if (proposedRange.location + 2) < attributedText.length,
+           attributedText.substring(from: NSRange(location: proposedRange.location + 1, length: 1)) == "\n" {
+            r = NSRange(location: proposedRange.location, length: 2)
+            replaceString = "\n\n"
+        } else {
+            r = NSRange(location: proposedRange.location, length: 1)
+            replaceString = "\n"
+        }
         editorView?.removeAttributes([.paragraphStyle, .listItem, .listItemValue], at: r)
         if let paragraph = attributedText.attribute(.paragraphStyle, at: r.location, effectiveRange: nil) as? NSParagraphStyle {
             let p = NSMutableParagraphStyle()
@@ -442,7 +451,7 @@ class RichTextView: AutogrowingTextView {
         }
         editorView?.typingAttributes[.listItem] = nil
         editorView?.typingAttributes[.listItemValue] = nil
-        replaceCharacters(in: r, with: NSAttributedString(string: "\n"))
+        editorView?.replaceCharacters(in: r, with: NSAttributedString(string: replaceString))
     }
 
     func insertAttachment(in range: NSRange, attachment: Attachment) {
