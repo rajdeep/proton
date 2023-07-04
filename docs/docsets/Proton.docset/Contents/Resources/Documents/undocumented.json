@@ -457,106 +457,92 @@
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 135,
+      "line": 140,
       "symbol": "EditorView.textInteractions",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 140,
+      "line": 145,
       "symbol": "EditorView.textViewGestures",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 145,
+      "line": 150,
       "symbol": "EditorView.textDragInteractionEnabled",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 150,
+      "line": 155,
       "symbol": "EditorView.bounds",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 224,
+      "line": 229,
       "symbol": "EditorView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 243,
+      "line": 248,
       "symbol": "EditorView.selectedTextRange",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 263,
+      "line": 268,
       "symbol": "EditorView.verticalScrollIndicatorInsets",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 268,
+      "line": 273,
       "symbol": "EditorView.keyboardDismissMode",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 273,
+      "line": 278,
       "symbol": "EditorView.isScrollEnabled",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 416,
+      "line": 435,
       "symbol": "EditorView.selectedRange",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 672,
+      "line": 703,
       "symbol": "EditorView.setAttributes(_:at:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 992,
+      "line": 1025,
       "symbol": "EditorView.canPerformAction(_:withSender:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 1231,
+      "line": 1264,
       "symbol": "EditorView.resolveAsyncText()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorViewDelegate.swift",
-      "line": 89,
-      "symbol": "EditorViewDelegate.editor(_:didLayout:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorViewDelegate.swift",
-      "line": 102,
-      "symbol": "EditorViewDelegate.editor(_:didLayout:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
