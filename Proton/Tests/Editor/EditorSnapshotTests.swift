@@ -37,6 +37,7 @@ class EditorSnapshotTests: SnapshotTestCase {
         placeholderString.addAttribute(.font, value: font.adding(trait: .traitBold), range: NSRange(location: 12, length: 4))
 
         editor.placeholderText = placeholderString
+        editor.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         viewController.render(size: CGSize(width: 300, height: 120))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
