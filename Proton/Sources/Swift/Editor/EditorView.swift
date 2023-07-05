@@ -426,12 +426,14 @@ open class EditorView: UIView {
                 pendingAttributedText = newValue
                 return
             }
+            let isDeferred = pendingAttributedText != nil
+            pendingAttributedText = nil
 
-            delegate?.editor(self, willSetAttributedText: newValue)
+            delegate?.editor(self, willSetAttributedText: newValue, isDeferred: isDeferred)
             isSettingAttributedText = true
             richTextView.attributedText = newValue
             isSettingAttributedText = false
-            delegate?.editor(self, didSetAttributedText: newValue)
+            delegate?.editor(self, didSetAttributedText: newValue, isDeferred: isDeferred)
         }
     }
 
@@ -677,10 +679,6 @@ open class EditorView: UIView {
         super.didMoveToWindow()
         if let pendingAttributedText {
             attributedText = pendingAttributedText
-            self.pendingAttributedText = nil
-            if isRootEditor {
-                layoutIfNeeded()
-            }
         }
         delegate?.editor(self, isReady: true)
     }

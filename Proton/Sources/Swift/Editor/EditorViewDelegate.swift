@@ -95,14 +95,16 @@ public protocol EditorViewDelegate: AnyObject {
     /// Invoked before attributedText is set on the `EditorView`
     /// - Parameters:
     ///   - editor: Editor view receiving the event.
-    ///   - content: Attributed text value to be set.
-    func editor(_ editor: EditorView, willSetAttributedText attributedText: NSAttributedString)
+    ///   - attributedText: Attributed text value to be set.
+    ///   - isDeferred: `true` if setter is called deferred owing to Editor not being on `window` when `attributedText` was originally set.
+    func editor(_ editor: EditorView, willSetAttributedText attributedText: NSAttributedString, isDeferred: Bool)
 
     /// Invoked after attributedText is set on the `EditorView`
     /// - Parameters:
     ///   - editor: Editor view receiving the event.
-    ///   - content: Attributed text value set on the editor.
-    func editor(_ editor: EditorView, didSetAttributedText attributedText: NSAttributedString)
+    ///   - attributedText: Attributed text value set on the editor.
+    ///   - isDeferred: `true` if setter is called deferred owing to Editor not being on `window` when `attributedText` was originally set.
+    func editor(_ editor: EditorView, didSetAttributedText attributedText: NSAttributedString, isDeferred: Bool)
 
     /// Invoked when Editor has been added to the view hierarchy and is ready to receive events.
     /// - Parameters:
@@ -128,8 +130,8 @@ public extension EditorViewDelegate {
     func editor(_ editor: EditorView, didChangeSize currentSize: CGSize, previousSize: CGSize) { }
     func editor(_ editor: EditorView, didTapAtLocation location: CGPoint, characterRange: NSRange?) { }
     func editor(_ editor: EditorView, didLayout content: NSAttributedString) { }
-    func editor(_ editor: EditorView, willSetAttributedText attributedText: NSAttributedString) { }
-    func editor(_ editor: EditorView, didSetAttributedText attributedText: NSAttributedString) { }
+    func editor(_ editor: EditorView, willSetAttributedText attributedText: NSAttributedString, isDeferred: Bool) { }
+    func editor(_ editor: EditorView, didSetAttributedText attributedText: NSAttributedString, isDeferred: Bool) { }
     func editor(_ editor: EditorView, isReady: Bool) { }
     func editor(_ editor: EditorView, didChangeEditable isEditable: Bool) { }
 }

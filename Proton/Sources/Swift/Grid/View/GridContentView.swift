@@ -308,8 +308,8 @@ class GridContentView: UIScrollView {
                 c.topAnchorConstraint = c.contentView.topAnchor.constraint(equalTo: topAnchor, constant: frame.minY)
                 c.leadingAnchorConstraint = c.contentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: frame.minX)
             } else {
-                c.topAnchorConstraint.constant = frame.minY
-                c.leadingAnchorConstraint.constant = frame.minX
+                c.topAnchorConstraint?.constant = frame.minY
+                c.leadingAnchorConstraint?.constant = frame.minX
             }
 
             freezeColumnCellIfRequired(c)
