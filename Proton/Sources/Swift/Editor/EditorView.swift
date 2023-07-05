@@ -506,6 +506,11 @@ open class EditorView: UIView {
         return nestingLevel
     }
 
+    /// Returns if the `EditorView` is a root editor i.e. not contained in any `Attachment`
+    public var isRootEditor: Bool {
+        parentEditor == nil
+    }
+
     /// Returns the root editor of the current Editor. Returns `self` where the current editor is not contained within an `Attachment`.
     /// - Note:This is different from `parentEditor` which is immediate parent of the current editor
     public var rootEditor: EditorView {

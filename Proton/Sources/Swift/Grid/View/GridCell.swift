@@ -163,6 +163,8 @@ public class GridCell {
         self.columnSpan = columnSpan
         self.gridStyle = gridStyle
         self.initialHeight = initialHeight
+        // Ensure Editor frame is .zero as otherwise it conflicts with some layout calculations
+        self.editor.frame = .zero
         self.contentView.layoutMargins = .zero
 
         widthAnchorConstraint = contentView.widthAnchor.constraint(equalToConstant: 0)
