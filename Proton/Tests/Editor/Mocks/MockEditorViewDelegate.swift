@@ -64,4 +64,28 @@ class MockEditorViewDelegate: EditorViewDelegate {
     func editor(_ editor: EditorView, didChangeEditable isEditable: Bool) {
         onDidChangeEditable?(editor, isEditable)
     }
+
+    func editor(_ editor: Proton.EditorView, didChangeTextAt range: NSRange) {
+
+    }
+
+    func editor(_ editor: Proton.EditorView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
+
+    }
+
+    func editor(_ editor: Proton.EditorView, didLayout content: NSAttributedString) {
+
+    }
+
+    func editor(_ editor: Proton.EditorView, willSetAttributedText attributedText: NSAttributedString) {
+
+    }
+
+    func editor(_ editor: Proton.EditorView, didSetAttributedText attributedText: NSAttributedString) {
+
+    }
+
+    func editor(_ editor: Proton.EditorView, isReady: Bool) {
+
+    }
 }
