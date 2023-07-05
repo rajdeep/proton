@@ -116,3 +116,20 @@ public protocol EditorViewDelegate: AnyObject {
     ///   - isEditable: `true` if editor is editable, else `false`
     func editor(_ editor: EditorView, didChangeEditable isEditable: Bool)
 }
+
+public extension EditorViewDelegate {
+    func editor(_ editor: EditorView, shouldHandle key: EditorKey, at range: NSRange, handled: inout Bool) { }
+    func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange) { }
+    func editor(_ editor: EditorView, didReceiveFocusAt range: NSRange) { }
+    func editor(_ editor: EditorView, didLoseFocusFrom range: NSRange) { }
+    func editor(_ editor: EditorView, didChangeTextAt range: NSRange) { }
+    func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) { }
+    func editor(_ editor: EditorView, didExecuteProcessors processors: [TextProcessing], at range: NSRange) { }
+    func editor(_ editor: EditorView, didChangeSize currentSize: CGSize, previousSize: CGSize) { }
+    func editor(_ editor: EditorView, didTapAtLocation location: CGPoint, characterRange: NSRange?) { }
+    func editor(_ editor: EditorView, didLayout content: NSAttributedString) { }
+    func editor(_ editor: EditorView, willSetAttributedText attributedText: NSAttributedString) { }
+    func editor(_ editor: EditorView, didSetAttributedText attributedText: NSAttributedString) { }
+    func editor(_ editor: EditorView, isReady: Bool) { }
+    func editor(_ editor: EditorView, didChangeEditable isEditable: Bool) { }
+}

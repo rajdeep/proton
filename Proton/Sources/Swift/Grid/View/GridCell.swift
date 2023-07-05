@@ -274,44 +274,6 @@ extension GridCell: EditorViewDelegate {
     public func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange) {
         delegate?.cell(self, didReceiveKey: key, at: range)
     }
-
-    public func editor(_ editor: EditorView, shouldHandle key: EditorKey, at range: NSRange, handled: inout Bool) {
-
-    }
-
-    public func editor(_ editor: EditorView, didChangeTextAt range: NSRange) {
-
-    }
-
-    public func editor(_ editor: EditorView, didExecuteProcessors processors: [TextProcessing], at range: NSRange) {
-
-    }
-
-    public func editor(_ editor: EditorView, didChangeSize currentSize: CGSize, previousSize: CGSize) {
-
-    }
-
-    public func editor(_ editor: EditorView, didLayout content: NSAttributedString) {
-
-    }
-
-    public func editor(_ editor: EditorView, willSetAttributedText attributedText: NSAttributedString) {
-
-    }
-
-    public func editor(_ editor: EditorView, didSetAttributedText attributedText: NSAttributedString) {
-
-    }
-
-    public func editor(_ editor: EditorView, isReady: Bool) {
-
-    }
-
-    public func editor(_ editor: EditorView, didChangeEditable isEditable: Bool) {
-
-    }
-
-
 }
 
 extension GridCell: Equatable {
