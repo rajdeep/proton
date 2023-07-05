@@ -678,6 +678,9 @@ open class EditorView: UIView {
         if let pendingAttributedText {
             attributedText = pendingAttributedText
             self.pendingAttributedText = nil
+            if isRootEditor {
+                layoutIfNeeded()
+            }
         }
         delegate?.editor(self, isReady: true)
     }
