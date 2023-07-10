@@ -757,6 +757,43 @@ class EditorViewTests: XCTestCase {
         editor.isEditable = false
         waitForExpectations(timeout: 1.0)
     }
+
+    func testGetsNestedEditors() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        editor.attributedText = NSAttributedString(string: "Text before panel 1")
+
+        let panel1 = PanelView()
+        panel1.editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Text inside panel 1"))
+        let panelAttachment1 = Attachment(panel1, size: .matchContent)
+        editor.insertAttachment(in: editor.textEndRange, attachment: panelAttachment1)
+
+        editor.replaceCharacters(in: editor.textEndRange, with: NSAttributedString(string: "Text after panel 1"))
+
+        let panel2 = PanelView()
+        panel2.editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Text inside panel 2 (parent panel 1)"))
+        let panelAttachment2 = Attachment(panel2, size: .matchContent)
+        panel1.editor.insertAttachment(in: panel1.editor.textEndRange, attachment: panelAttachment2)
+
+        let panel3 = PanelView()
+        panel3.editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Text inside panel 3 (parent panel 2)"))
+        let panelAttachment3 = Attachment(panel3, size: .matchContent)
+        panel2.editor.insertAttachment(in: panel2.editor.textEndRange, attachment: panelAttachment3)
+
+        let panel4 = PanelView()
+        panel4.editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Text inside panel 4 (parent panel 2)"))
+        let panelAttachment4 = Attachment(panel4, size: .matchContent)
+        panel2.editor.insertAttachment(in: panel2.editor.textEndRange, attachment: panelAttachment4)
+
+        let nestedEditorsTexts = editor.nestedEditors.map { $0.text }
+
+        XCTAssertEqual(nestedEditorsTexts[0], panel1.editor.text)
+        XCTAssertEqual(nestedEditorsTexts[1], panel2.editor.text)
+        XCTAssertEqual(nestedEditorsTexts[2], panel3.editor.text)
+        XCTAssertEqual(nestedEditorsTexts[3], panel4.editor.text)
+
+    }
 }
 
 class DummyMultiEditorAttachment: Attachment {
