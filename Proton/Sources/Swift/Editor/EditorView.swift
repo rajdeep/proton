@@ -462,6 +462,11 @@ open class EditorView: UIView {
         set { richTextView.contentOffset = newValue }
     }
 
+    /// The size of the content view.
+    public var contentSize: CGSize {
+        get { richTextView.contentSize }
+    }
+
     /// The attributes to apply to links.
     public var linkTextAttributes: [NSAttributedString.Key: Any]! {
         get { richTextView.linkTextAttributes }
