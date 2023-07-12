@@ -300,8 +300,8 @@ class LayoutManager: NSLayoutManager {
 
                     }
 
-                    let insetTop = self.layoutManagerDelegate?.textContainerInset.top ?? 0
-                    rects.append(rect.offsetBy(dx: 0, dy: insetTop))
+                    let inset = self.layoutManagerDelegate?.textContainerInset ?? .zero
+                    rects.append(rect.offsetBy(dx: inset.left, dy: inset.top))
                 }
                 drawBackground(backgroundStyle: backgroundStyle, rects: rects, currentCGContext: currentCGContext)
             }

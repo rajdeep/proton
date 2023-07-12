@@ -814,6 +814,31 @@ class EditorSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testBackgroundStyleWithTextContainerInsets() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        let text =
+        """
+        Line 1 Text\nLine 2 Text
+        """
+
+        let rangeToUpdate = NSRange(location: 5, length: 14)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render()
+        let backgroundStyle = BackgroundStyle(color: .cyan,
+                                              roundedCornerStyle: .relative(percent: 50),
+                                              hasSquaredOffJoins: true,
+                                              heightMode: .matchText)
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render(size: CGSize(width: 160, height: 100))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     func testBackgroundStyleWithOverlappingLineNoBorder() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
