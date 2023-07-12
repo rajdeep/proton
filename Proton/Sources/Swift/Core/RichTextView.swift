@@ -90,6 +90,22 @@ class RichTextView: AutogrowingTextView {
         }
     }
 
+    var nestedTextViews: [RichTextView] {
+        getNestedEditors(for: self)
+    }
+
+    private func getNestedEditors(for containerView: UIView) -> [RichTextView] {
+        var textViews = [RichTextView]()
+        for view in containerView.subviews {
+            if let textView = view as? RichTextView {
+                textViews.append(textView)
+            }
+            textViews.append(contentsOf: getNestedEditors(for: view))
+        }
+
+        return textViews
+    }
+
     private func adjustedTextBlockRangeOnSelectionChange(oldRange: NSRange?, newRange: NSRange?) -> NSRange? {
         guard let old = oldRange,
               let new = newRange,

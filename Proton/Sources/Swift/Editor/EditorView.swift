@@ -437,6 +437,14 @@ open class EditorView: UIView {
         }
     }
 
+    public var nestedEditors: [EditorView] {
+        richTextView.nestedTextViews.compactMap { $0.editorView }
+    }
+
+    public var text: String {
+        richTextView.text
+    }
+
     public var selectedRange: NSRange {
         get { richTextView.selectedRange }
         set { richTextView.selectedRange = newValue }
