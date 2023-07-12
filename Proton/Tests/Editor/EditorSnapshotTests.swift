@@ -827,7 +827,7 @@ class EditorSnapshotTests: SnapshotTestCase {
 
         editor.appendCharacters(NSAttributedString(string: text))
         viewController.render()
-        let backgroundStyle = BackgroundStyle(color: .cyan.withAlphaComponent(0.5),
+        let backgroundStyle = BackgroundStyle(color: .cyan,
                                               roundedCornerStyle: .relative(percent: 50),
                                               hasSquaredOffJoins: true,
                                               heightMode: .matchText)
