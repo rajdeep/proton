@@ -25,6 +25,11 @@ import SnapshotTesting
 @testable import Proton
 
 class EditorSnapshotTests: SnapshotTestCase {
+    override func setUp() {
+        super.setUp()
+        recordMode = false
+    }
+
     func testRendersPlaceholder() {
         let viewController = EditorTestViewController(height: 80)
         let editor = viewController.editor
@@ -780,6 +785,83 @@ class EditorSnapshotTests: SnapshotTestCase {
         ], at: rangeToUpdate)
 
         viewController.render()
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testBackgroundStyleWithHeightMatchingText() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let text =
+        """
+        Line 1 Text\nLine 2 Text
+        """
+
+        let rangeToUpdate = NSRange(location: 5, length: 14)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render()
+        let backgroundStyle = BackgroundStyle(color: .cyan.withAlphaComponent(0.5),
+                                              roundedCornerStyle: .relative(percent: 50),
+                                              border: BorderStyle(lineWidth: 1, color: .yellow),
+                                              hasSquaredOffJoins: true,
+                                              heightMode: .matchText)
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render(size: CGSize(width: 130, height: 100))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testBackgroundStyleWithOverlappingLineNoBorder() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let text =
+        """
+        Line 1 Text\nLine 2 Text
+        """
+
+        let rangeToUpdate = NSRange(location: 5, length: 14)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render()
+        let backgroundStyle = BackgroundStyle(color: .cyan.withAlphaComponent(0.5),
+                                              roundedCornerStyle: .relative(percent: 50),
+                                              hasSquaredOffJoins: true,
+                                              heightMode: .matchText)
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render(size: CGSize(width: 130, height: 100))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testBackgroundStyleWithOverlappingLine() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let text =
+        """
+        Line 1 Text\nLine 2 Text
+        """
+
+        let rangeToUpdate = NSRange(location: 5, length: 16)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render()
+        let backgroundStyle = BackgroundStyle(color: .cyan,
+                                              roundedCornerStyle: .relative(percent: 50),
+                                              border: BorderStyle(lineWidth: 1, color: .black),
+                                              hasSquaredOffJoins: true,
+                                              heightMode: .matchText)
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render(size: CGSize(width: 150, height: 100))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 

@@ -288,7 +288,7 @@ class LayoutManager: NSLayoutManager {
                     switch backgroundStyle.heightMode {
                     case .matchText:
                         let styledText = textStorage.attributedSubstring(from: bgStyleGlyphRange)
-                        let textRect = styledText.boundingRect(with: rect.size, options: [.usesLineFragmentOrigin, .usesFontLeading, .usesDeviceMetrics], context: nil)
+                        let textRect = styledText.boundingRect(with: rect.size, options: [.usesFontLeading], context: nil)
 
                         rect.origin.y = usedRect.origin.y + (rect.size.height - textRect.height)
                         rect.size.height = textRect.height
@@ -374,11 +374,25 @@ class LayoutManager: NSLayoutManager {
             // Shadow for vertical lines need to be drawn separately to get the perfect alignment with shadow on rectangles.
             let leftVerticalJoiningLineShadow = UIBezierPath()
             let rightVerticalJoiningLineShadow = UIBezierPath()
+            var lineLength: CGFloat = 0
 
             if !previousRect.isEmpty, (currentRect.maxX - previousRect.minX) > cornerRadius {
                 let yDiff = currentRect.minY - previousRect.maxY
-                overlappingLine.move(to: CGPoint(x: max(previousRect.minX, currentRect.minX) + lineWidth/2, y: previousRect.maxY + yDiff/2))
-                overlappingLine.addLine(to: CGPoint(x: min(previousRect.maxX, currentRect.maxX) - lineWidth/2, y: previousRect.maxY + yDiff/2))
+                var overLapMinX = max(previousRect.minX, currentRect.minX) + lineWidth/2
+                var overlapMaxX = min(previousRect.maxX, currentRect.maxX) - lineWidth/2
+                lineLength = overlapMaxX - overLapMinX
+
+                // Adjust overlap line length if the rounding on current and previous overlaps
+                // accounting for relative rounding as it rounds at both top and bottom vs. fixed which rounds
+                // only at top when in an overlap
+                if (currentRect.maxX - previousRect.minX <= cornerRadius)
+                    || (previousRect.minX - currentRect.maxX <= cornerRadius) && backgroundStyle.roundedCornerStyle.isRelative  {
+                    overLapMinX += cornerRadius
+                    overlapMaxX -= cornerRadius
+                }
+
+                overlappingLine.move(to: CGPoint(x: overLapMinX , y: previousRect.maxY + yDiff/2))
+                overlappingLine.addLine(to: CGPoint(x: overlapMaxX, y: previousRect.maxY + yDiff/2))
 
                 let leftX = max(previousRect.minX, currentRect.minX)
                 let rightX = min(previousRect.maxX, currentRect.maxX)
@@ -425,9 +439,15 @@ class LayoutManager: NSLayoutManager {
                 currentCGContext.drawPath(using: .stroke)
             }
 
-            // always draw over the overlapping bounds of previous and next rect to hide shadow/borders
-            currentCGContext.setStrokeColor(color.cgColor)
-            currentCGContext.addPath(overlappingLine.cgPath)
+            // draw over the overlapping bounds of previous and next rect to hide shadow/borders
+            // if the border color is defined and different from background
+            // Also, account for rounding so that the overlap line does not eat into rounding lines
+            if let borderColor = backgroundStyle.border?.color,
+               lineLength > (cornerRadius * 2),
+                color != borderColor {
+                currentCGContext.setStrokeColor(color.cgColor)
+                currentCGContext.addPath(overlappingLine.cgPath)
+            }
             // account for the spread of shadow
             let blur = (backgroundStyle.shadow?.blur ?? 1) * 2
             let offsetHeight = abs(backgroundStyle.shadow?.offset.height ?? 1)
@@ -527,5 +547,11 @@ extension UIImage {
         }
 
         return scaledImage
+    }
+}
+
+extension CGFloat {
+    func isBetween(_ first: CGFloat, _ second: CGFloat) -> Bool {
+        return self > first && self < second
     }
 }
