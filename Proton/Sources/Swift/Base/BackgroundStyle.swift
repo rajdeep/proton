@@ -75,8 +75,10 @@ public enum RoundedCornerStyle {
 
 /// Defines the mode for height/width used for the background for the text
 public enum BackgroundMode {
-    /// Background matches the height/width of text
+    /// Background matches the height/width of text with font leading padding all around
     case matchText
+    /// Background matches the height of text with minimal padding all around
+    case matchTextExact
     /// Background matches entire line irrespective of font height/used character width in the given line
     case matchLine
 }

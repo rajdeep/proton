@@ -278,7 +278,6 @@ class LayoutManager: NSLayoutManager {
                     let rangeIntersection = NSIntersectionRange(bgStyleGlyphRange, lineRange)
                     var rect = self.boundingRect(forGlyphRange: rangeIntersection, in: textContainer)
 
-                    var contentSize: CGSize?
                     if backgroundStyle.widthMode == .matchText {
                         let content = textStorage.attributedSubstring(from: rangeIntersection)
                         let contentWidth = content.boundingRect(with: rect.size, options: [.usesDeviceMetrics, .usesFontLeading], context: nil).width
@@ -286,9 +285,12 @@ class LayoutManager: NSLayoutManager {
                     }
 
                     switch backgroundStyle.heightMode {
-                    case .matchText:
+                    case .matchText,
+                            .matchTextExact:
                         let styledText = textStorage.attributedSubstring(from: bgStyleGlyphRange)
-                        let textRect = styledText.boundingRect(with: rect.size, options: [.usesFontLeading], context: nil)
+                        let drawingOptions = backgroundStyle.heightMode == .matchText ? NSStringDrawingOptions.usesFontLeading : []
+
+                        let textRect = styledText.boundingRect(with: rect.size, options: drawingOptions, context: nil)
 
                         rect.origin.y = usedRect.origin.y + (rect.size.height - textRect.height)
                         rect.size.height = textRect.height
@@ -376,7 +378,8 @@ class LayoutManager: NSLayoutManager {
             let rightVerticalJoiningLineShadow = UIBezierPath()
             var lineLength: CGFloat = 0
 
-            if !previousRect.isEmpty, (currentRect.maxX - previousRect.minX) > cornerRadius {
+            if backgroundStyle.heightMode != .matchTextExact,
+                !previousRect.isEmpty, (currentRect.maxX - previousRect.minX) > cornerRadius {
                 let yDiff = currentRect.minY - previousRect.maxY
                 var overLapMinX = max(previousRect.minX, currentRect.minX) + lineWidth/2
                 var overlapMaxX = min(previousRect.maxX, currentRect.maxX) - lineWidth/2

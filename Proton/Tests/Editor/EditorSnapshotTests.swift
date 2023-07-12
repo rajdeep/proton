@@ -890,6 +890,32 @@ class EditorSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testBackgroundStyleWithOverlappingLineExactTextHeight() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let text =
+        """
+        Line 1 Text\nLine 2 Text
+        """
+
+        let rangeToUpdate = NSRange(location: 5, length: 16)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render()
+        let backgroundStyle = BackgroundStyle(color: .cyan,
+                                              roundedCornerStyle: .relative(percent: 50),
+//                                              border: BorderStyle(lineWidth: 1, color: .black),
+                                              hasSquaredOffJoins: true,
+                                              heightMode: .matchTextExact)
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render(size: CGSize(width: 150, height: 100))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     func testBackgroundStyleWithVariedFontSizes() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
