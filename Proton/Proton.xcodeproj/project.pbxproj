@@ -62,6 +62,9 @@
 		1B617A98283711D700095FEE /* AttachmentUpdateSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B617A97283711D700095FEE /* AttachmentUpdateSnapshotTests.swift */; };
 		1B617A9A283724C900095FEE /* EditorViewContextSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B617A99283724C900095FEE /* EditorViewContextSnapshotTests.swift */; };
 		1B617AA42839EA2D00095FEE /* AttachmentContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B617AA32839EA2D00095FEE /* AttachmentContent.swift */; };
+		1B63EE732A5FC86E004BFE9B /* LineNumberFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B63EE722A5FC86E004BFE9B /* LineNumberFormatting.swift */; };
+		1B63EE752A612455004BFE9B /* EditorLineNumberProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B63EE742A612455004BFE9B /* EditorLineNumberProvider.swift */; };
+		1B63EE782A612FDB004BFE9B /* MockLineNumberProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B63EE762A612F86004BFE9B /* MockLineNumberProvider.swift */; };
 		1B6DE9D923C5940B007F9859 /* EditorCommandSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */; };
 		1B7A985723C4828A00C34B14 /* RichTextEditorContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A985623C4828A00C34B14 /* RichTextEditorContext.swift */; };
 		1B7A985923C484BC00C34B14 /* RichTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */; };
@@ -221,6 +224,9 @@
 		1B617A97283711D700095FEE /* AttachmentUpdateSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentUpdateSnapshotTests.swift; sourceTree = "<group>"; };
 		1B617A99283724C900095FEE /* EditorViewContextSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewContextSnapshotTests.swift; sourceTree = "<group>"; };
 		1B617AA32839EA2D00095FEE /* AttachmentContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentContent.swift; sourceTree = "<group>"; };
+		1B63EE722A5FC86E004BFE9B /* LineNumberFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineNumberFormatting.swift; sourceTree = "<group>"; };
+		1B63EE742A612455004BFE9B /* EditorLineNumberProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorLineNumberProvider.swift; sourceTree = "<group>"; };
+		1B63EE762A612F86004BFE9B /* MockLineNumberProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLineNumberProvider.swift; sourceTree = "<group>"; };
 		1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommandSnapshotTests.swift; sourceTree = "<group>"; };
 		1B7A985623C4828A00C34B14 /* RichTextEditorContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextEditorContext.swift; sourceTree = "<group>"; };
 		1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewDelegate.swift; sourceTree = "<group>"; };
@@ -422,6 +428,7 @@
 			isa = PBXGroup;
 			children = (
 				1B45CDCF23C007AF001EB196 /* RichTextView.swift */,
+				1B63EE722A5FC86E004BFE9B /* LineNumberFormatting.swift */,
 				1BD21553246951090000BCE2 /* LayoutManager.swift */,
 				1B45CDD123C00856001EB196 /* TextContainer.swift */,
 				1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */,
@@ -432,6 +439,7 @@
 				1BD9323D243CA506005E4136 /* CommandName.swift */,
 				1B45014E247E5AD9007B3EE9 /* SequenceGenerator.swift */,
 				1B30A35F2489CE3E00FA1D48 /* ListFormattingProvider.swift */,
+				1B63EE742A612455004BFE9B /* EditorLineNumberProvider.swift */,
 				1BFDC80E254A9BFC00BD83BD /* ListParser.swift */,
 			);
 			path = Core;
@@ -819,6 +827,7 @@
 				1BFFEF1E23C3366200D2BA35 /* MockAttachmentOffsetProvider.swift */,
 				1B8BE91E23C71E8A00353B17 /* MockEditorViewDelegate.swift */,
 				1BD993C323CACCE100563ACB /* MockAttachment.swift */,
+				1B63EE762A612F86004BFE9B /* MockLineNumberProvider.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -980,6 +989,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B238D6E2456A40200BF49D5 /* NullRichTextEditorContext.swift in Sources */,
+				1B63EE732A5FC86E004BFE9B /* LineNumberFormatting.swift in Sources */,
 				1B45CDBE23BF125D001EB196 /* NSAttributedString+ContentTypes.swift in Sources */,
 				1B7A985723C4828A00C34B14 /* RichTextEditorContext.swift in Sources */,
 				1BC0AA64284DF918004B8862 /* GridConfiguration.swift in Sources */,
@@ -1023,6 +1033,7 @@
 				1BD993B823C9AE4200563ACB /* NSAttributedString+Content.swift in Sources */,
 				1B4B60CD247FC6AF002B63CF /* ListTextProcessor.swift in Sources */,
 				1BFFEF0C23C30D5200D2BA35 /* EditorContentView.swift in Sources */,
+				1B63EE752A612455004BFE9B /* EditorLineNumberProvider.swift in Sources */,
 				1B82570923C5674E0033A0A9 /* EditorCommand.swift in Sources */,
 				1B91E7B926AA698A0002DF45 /* StrikethroughCommand.swift in Sources */,
 				1B82570D23C5686F0033A0A9 /* EditorViewContext.swift in Sources */,
@@ -1066,6 +1077,7 @@
 				1B9AF9E92851ECC300CD65C4 /* MockGridViewDelegate.swift in Sources */,
 				1B4B60C6247F692D002B63CF /* ListsSnapshotTests.swift in Sources */,
 				1BD993C023C9EAA900563ACB /* TextTransformer.swift in Sources */,
+				1B63EE782A612FDB004BFE9B /* MockLineNumberProvider.swift in Sources */,
 				1B8BE91D23C71E4B00353B17 /* EditorViewDelegateTests.swift in Sources */,
 				1BD185C6284C34CF001F4FBC /* GenericViewTestViewController.swift in Sources */,
 				1BFFEF2123C33EA900D2BA35 /* PanelView.swift in Sources */,

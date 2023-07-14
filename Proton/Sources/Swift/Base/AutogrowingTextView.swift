@@ -41,6 +41,7 @@ class AutogrowingTextView: UITextView {
                 heightAnchorConstraint
             ])
         }
+        contentMode = .redraw
     }
 
     required init?(coder: NSCoder) {

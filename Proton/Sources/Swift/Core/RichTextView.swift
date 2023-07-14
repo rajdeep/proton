@@ -30,6 +30,7 @@ class RichTextView: AutogrowingTextView {
 
     weak var richTextViewDelegate: RichTextViewDelegate?
     weak var richTextViewListDelegate: RichTextViewListDelegate?
+    weak var lineNumberProvider: LineNumberProvider?
 
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding?
     {
@@ -64,6 +65,71 @@ class RichTextView: AutogrowingTextView {
         } else {
             return .white
         }
+    }
+
+    var lineNumberFormatting = LineNumberFormatting.default {
+        didSet {
+            let gutterOffset = lineNumberFormatting.gutter.width + lineNumberFormatting.gutter.lineWidth
+            let adjustedLeftInset = isLineNumbersEnabled ? (gutterOffset + textContainerInset.left - oldValue.gutter.width): nil
+
+            textContainerInset = UIEdgeInsets(
+                top: textContainerInset.top,
+                left: adjustedLeftInset ?? textContainerInset.left,
+                bottom: textContainerInset.bottom,
+                right: textContainerInset.right
+            )
+            setNeedsDisplay()
+        }
+    }
+    var isLineNumbersEnabled = false {
+        didSet {
+            let gutterOffset = lineNumberFormatting.gutter.width + lineNumberFormatting.gutter.lineWidth
+
+            let adjustedLeftInset: CGFloat
+            switch (oldValue, isLineNumbersEnabled) {
+            case (false, true):
+                adjustedLeftInset = gutterOffset + textContainerInset.left
+            case (true, false):
+                adjustedLeftInset = textContainerInset.left - gutterOffset
+            default:
+                adjustedLeftInset = textContainerInset.left
+            }
+
+            textContainerInset = UIEdgeInsets(
+                top: textContainerInset.top,
+                left: adjustedLeftInset,
+                bottom: textContainerInset.bottom,
+                right: textContainerInset.right
+            )
+            setNeedsDisplay()
+        }
+    }
+
+
+    override func draw(_ rect: CGRect) {
+        guard isLineNumbersEnabled,
+            let currentCGContext = UIGraphicsGetCurrentContext() else {
+            super.draw(rect)
+            return
+        }
+
+        let rect = CGRect(x: 0, y: 0, width: lineNumberFormatting.gutter.width, height: bounds.height)
+        let rectanglePath = UIBezierPath(rect: rect)
+
+        currentCGContext.saveGState()
+        currentCGContext.addPath(rectanglePath.cgPath)
+
+        if let lineColor = lineNumberFormatting.gutter.lineColor {
+            currentCGContext.setStrokeColor(lineColor.cgColor)
+            currentCGContext.setLineWidth(lineNumberFormatting.gutter.lineWidth)
+            currentCGContext.drawPath(using: .stroke)
+        }
+
+        currentCGContext.setFillColor(lineNumberFormatting.gutter.backgroundColor.cgColor)
+        currentCGContext.fill(rect)
+        currentCGContext.restoreGState()
+
+        super.draw(rect)
     }
 
     override var selectedTextRange: UITextRange? {
@@ -211,6 +277,7 @@ class RichTextView: AutogrowingTextView {
         self.textColor = defaultTextColor
 
         setupPlaceholder()
+        contentMode = .redraw
     }
 
     var contentLength: Int {
@@ -644,6 +711,14 @@ extension RichTextView: TextStorageDelegate {
 }
 
 extension RichTextView: LayoutManagerDelegate {
+    var lineNumberWrappingMarker: String? {
+        lineNumberProvider?.lineNumberWrappingMarker
+    }
+
+    func lineNumberString(for index: Int) -> String? {
+        lineNumberProvider?.lineNumberString(for: index)
+    }
+
     var listLineFormatting: LineFormatting {
         return richTextViewListDelegate?.listLineFormatting ?? RichTextView.defaultListLineFormatting
     }

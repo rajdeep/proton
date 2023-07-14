@@ -171,6 +171,13 @@ open class EditorView: UIView {
     /// List formatting provider to be used for rendering lists in the Editor.
     public weak var listFormattingProvider: EditorListFormattingProvider?
 
+    /// Line number provider to be used to show custom line numbers in gutter.
+    /// - Note: Only applicable when `isLineNumbersEnabled` is set to `true`
+    public var lineNumberProvider: LineNumberProvider? {
+        get { richTextView.lineNumberProvider }
+        set { richTextView.lineNumberProvider = newValue }
+    }
+
     /// List of commands supported by the editor.
     /// - Note:
     /// * To support any command, set value to nil. Default behaviour.
@@ -538,6 +545,16 @@ open class EditorView: UIView {
     /// `EditorView` containing the current `EditorView` in an `Attachment`
     public var parentEditor: EditorView? {
         containerAttachment?.containerEditorView
+    }
+
+    public var isLineNumbersEnabled: Bool {
+        get { richTextView.isLineNumbersEnabled }
+        set { richTextView.isLineNumbersEnabled = newValue }
+    }
+
+    public var lineNumberFormatting: LineNumberFormatting {
+        get { richTextView.lineNumberFormatting }
+        set { richTextView.lineNumberFormatting = newValue }
     }
 
     /// Clears the contents in the Editor.
