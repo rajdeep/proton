@@ -30,7 +30,7 @@ class EditorSnapshotTests: SnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        recordMode = false
+//        recordMode = false
     }
 
     func testRendersPlaceholder() {
@@ -1053,7 +1053,6 @@ class EditorSnapshotTests: SnapshotTestCase {
     }
 
     func testCustomLineNumbersWithWrappedText() {
-        recordMode = true
         let viewController = EditorTestViewController()
         let editor = viewController.editor
         editor.lineNumberProvider = mockLineNumberProvider
