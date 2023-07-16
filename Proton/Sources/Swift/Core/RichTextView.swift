@@ -108,12 +108,13 @@ class RichTextView: AutogrowingTextView {
 
     override func draw(_ rect: CGRect) {
         guard isLineNumbersEnabled,
-            let currentCGContext = UIGraphicsGetCurrentContext() else {
+              let currentCGContext = UIGraphicsGetCurrentContext() else {
             super.draw(rect)
             return
         }
 
-        let rect = CGRect(x: 0, y: 0, width: lineNumberFormatting.gutter.width, height: bounds.height)
+        let height = max(contentSize.height, bounds.height)
+        let rect = CGRect(x: 0, y: 0, width: lineNumberFormatting.gutter.width, height: height)
         let rectanglePath = UIBezierPath(rect: rect)
 
         currentCGContext.saveGState()
@@ -127,6 +128,16 @@ class RichTextView: AutogrowingTextView {
 
         currentCGContext.setFillColor(lineNumberFormatting.gutter.backgroundColor.cgColor)
         currentCGContext.fill(rect)
+
+        // Draw line number if textView is empty
+        if let layoutManager = layoutManager as? LayoutManager,
+           attributedText.length == 0 {
+            let lineNumberToDisplay = lineNumberString(for: 1) ?? "1"
+            let width = lineNumberFormatting.gutter.width
+            let height = defaultFont.lineHeight
+            layoutManager.drawLineNumber(lineNumber: lineNumberToDisplay, rect: CGRect(origin: .zero, size: CGSize(width: width, height: height)), lineNumberFormatting: lineNumberFormatting, currentCGContext: currentCGContext)
+        }
+
         currentCGContext.restoreGState()
 
         super.draw(rect)
@@ -511,6 +522,11 @@ class RichTextView: AutogrowingTextView {
         textStorage.replaceCharacters(in: range, with: NSAttributedString(string: string))
     }
 
+    func drawDefaultLineNumberIfRequired() {
+        guard isLineNumbersEnabled else { return }
+        draw(CGRect(origin: .zero, size: contentSize))
+    }
+
     private func updatePlaceholderVisibility() {
         guard self.attributedText.length == 0 else {
             if placeholderLabel.superview != nil {
@@ -707,6 +723,7 @@ extension RichTextView: TextStorageDelegate {
     
     func textStorage(_ textStorage: PRTextStorage, edited actions: NSTextStorage.EditActions, in editedRange: NSRange, changeInLength delta: Int) {
         updatePlaceholderVisibility()
+        drawDefaultLineNumberIfRequired()
     }
 }
 
@@ -731,6 +748,12 @@ extension RichTextView: LayoutManagerDelegate {
         let font = UIFont.preferredFont(forTextStyle: .body)
         let defaultValue = NSAttributedString(string: "*", attributes: [.font: font])
         return richTextViewListDelegate?.richTextView(self, listMarkerForItemAt: index, level: level, previousLevel: previousLevel, attributeValue: attributeValue) ?? .string(defaultValue)
+    }
+}
+
+extension RichTextView: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        drawDefaultLineNumberIfRequired()
     }
 }
 
