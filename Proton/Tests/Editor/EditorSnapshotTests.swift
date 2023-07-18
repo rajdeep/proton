@@ -769,6 +769,7 @@ class EditorSnapshotTests: SnapshotTestCase {
     func testBackgroundStyleWithCapsuleStyle() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
+        editor.paragraphStyle.lineSpacing = 10
 
         let text =
         """
@@ -784,9 +785,59 @@ class EditorSnapshotTests: SnapshotTestCase {
             .backgroundStyle: backgroundStyle
         ], at: rangeToUpdate)
 
-        viewController.render()
+        viewController.render(size: CGSize(width: 300, height: 140))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+
+    func testBackgroundStyleTextHeightWithCapsuleStyle() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.paragraphStyle.lineSpacing = 10
+
+        let text =
+        """
+        Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 2 text Line 3 text Line 3
+        """
+
+        let rangeToUpdate = NSRange(location: 19, length: 36)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render()
+        let backgroundStyle = BackgroundStyle(color: .cyan, roundedCornerStyle: .relative(percent: 50), heightMode: .matchText)
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render(size: CGSize(width: 300, height: 140))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+
+
+    func testBackgroundStyleTextHeightExactWithCapsuleStyle() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.paragraphStyle.lineSpacing = 10
+
+        let text =
+        """
+        Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 2 text Line 3 text Line 3
+        """
+
+        let rangeToUpdate = NSRange(location: 19, length: 36)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+        viewController.render()
+        let backgroundStyle = BackgroundStyle(color: .cyan, roundedCornerStyle: .relative(percent: 50), heightMode: .matchTextExact)
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render(size: CGSize(width: 300, height: 140))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
 
     func testBackgroundStyleWithHeightMatchingText() {
         let viewController = EditorTestViewController()

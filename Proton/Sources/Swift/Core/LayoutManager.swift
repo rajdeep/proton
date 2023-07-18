@@ -209,7 +209,7 @@ class LayoutManager: NSLayoutManager {
 
         let listMarkerImage: UIImage
         let markerRect: CGRect
-        let topInset = layoutManagerDelegate?.textContainerInset.top ?? 0
+        _ = layoutManagerDelegate?.textContainerInset.top ?? 0
         switch marker {
         case let .string(text):
             let markerSize = text.boundingRect(with: CGSize(width: paraStyle.firstLineHeadIndent, height: rect.height), options: [], context: nil).size
@@ -284,20 +284,18 @@ class LayoutManager: NSLayoutManager {
                             rect.size.width = contentWidth
                     }
 
+                    let styledText = textStorage.attributedSubstring(from: bgStyleGlyphRange)
                     switch backgroundStyle.heightMode {
                     case .matchText,
                             .matchTextExact:
-                        let styledText = textStorage.attributedSubstring(from: bgStyleGlyphRange)
-                        let drawingOptions = backgroundStyle.heightMode == .matchText ? NSStringDrawingOptions.usesFontLeading : []
-
+                        let drawingOptions: NSStringDrawingOptions = backgroundStyle.heightMode == .matchText ? [.usesFontLeading] : []
                         let textRect = styledText.boundingRect(with: rect.size, options: drawingOptions, context: nil)
-
-                        rect.origin.y = usedRect.origin.y + (rect.size.height - textRect.height)
                         rect.size.height = textRect.height
                     case .matchLine:
                         // Glyphs can take space outside of the line fragment, and we cannot draw outside of it.
                         // So it is best to restrict the height just to the line fragment.
-                        rect.origin.y = usedRect.origin.y
+                        let textRect = styledText.boundingRect(with: rect.size, options: [.usesFontLeading], context: nil)
+                        rect.origin.y = usedRect.origin.y - ((rect.size.height - textRect.height)/2)
                         rect.size.height = usedRect.height
 
                     }
