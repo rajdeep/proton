@@ -50,6 +50,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     private let selectionView = SelectionView()
     private(set) var cachedContainerSize: CGSize?
     private var indexInContainer: Int?
+    private let backgroundColor: UIColor?
 
     var cachedBounds: CGRect?
 
@@ -184,6 +185,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     /// - Note: Image and Size can be updated by invoking `updateImage(image: size:)` at any time
     /// - Parameter image: Image to be used to display in the attachment.  Image is rendered as Inline content.
     public init(image: AttachmentImage) {
+        backgroundColor = nil
         super.init(data: nil, ofType: nil)
         setup(image: image)
     }
@@ -192,7 +194,9 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     /// - Parameters:
     ///   - contentView: Content view to be hosted within the attachment
     ///   - size: Size rule for attachment
-    public init(_ contentView: AttachmentView, size: AttachmentSize) {
+    ///   - backgroundColor: Background color of attachment. Can be used with DEBUG to track the attachment size/location with respect to content view
+    public init(_ contentView: AttachmentView, size: AttachmentSize, backgroundColor: UIColor? = nil) {
+        self.backgroundColor = backgroundColor
         super.init(data: nil, ofType: nil)
         setup(contentView: contentView, size: size)
     }
@@ -223,7 +227,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         self.bounds = contentView.bounds
 
         // Required to disable rendering of default attachment image on iOS 13+
-        self.image = UIColor.clear.image()
+        self.image = (backgroundColor ?? UIColor.clear).image()
     }
 
     private func setup() {
