@@ -1115,9 +1115,10 @@ extension EditorView {
     ///   - attributes: Attributes to be added.
     ///   - range: Range on which attributes should be applied to.
     public func addAttributes(_ attributes: [NSAttributedString.Key: Any], at range: NSRange) {
-        guard range.isValidIn(self.richTextView) else { return }
         self.invalidateAttachmentSizeIfRequired(newAttributes: attributes, at: range)
         self.richTextView.addAttributes(attributes, range: range)
+        // Check for range validity as enumerating over attachment hangs if the range is invalid
+        guard range.isValidIn(self.richTextView) else { return }
         self.richTextView.enumerateAttribute(.attachment, in: range, options: .longestEffectiveRangeNotRequired) { value, rangeInContainer, _ in
             if let attachment = value as? Attachment {
                 attachment.addedAttributesOnContainingRange(rangeInContainer: rangeInContainer, attributes: attributes)
@@ -1130,8 +1131,9 @@ extension EditorView {
     ///   - attributes: Attributes to remove.
     ///   - range: Range to remove the attributes from.
     public func removeAttributes(_ attributes: [NSAttributedString.Key], at range: NSRange) {
-        guard range.isValidIn(self.richTextView) else { return }
         self.richTextView.removeAttributes(attributes, range: range)
+        // Check for range validity as enumerating over attachment hangs if the range is invalid
+        guard range.isValidIn(self.richTextView) else { return }
         self.richTextView.enumerateAttribute(.attachment, in: range, options: .longestEffectiveRangeNotRequired) { value, rangeInContainer, _ in
             if let attachment = value as? Attachment {
                 attachment.removedAttributesFromContainingRange(rangeInContainer: rangeInContainer, attributes: attributes)
