@@ -160,8 +160,7 @@ open class EditorView: UIView {
                     attachment.cachedBounds = nil
                 }
             }
-
-            delegate?.editor(self, didChangeSize: bounds.size, previousSize: oldValue.size)
+            AggregateEditorViewDelegate.editor(self, didChangeSize: bounds.size, previousSize: oldValue.size)
         }
     }
 
@@ -309,7 +308,7 @@ open class EditorView: UIView {
         get { richTextView.isEditable }
         set {
             richTextView.isEditable = newValue
-            delegate?.editor(self, didChangeEditable: newValue)
+            AggregateEditorViewDelegate.editor(self, didChangeEditable: newValue)
         }
     }
 
@@ -429,11 +428,11 @@ open class EditorView: UIView {
             let isDeferred = pendingAttributedText != nil
             pendingAttributedText = nil
 
-            delegate?.editor(self, willSetAttributedText: newValue, isDeferred: isDeferred)
+            AggregateEditorViewDelegate.editor(self, willSetAttributedText: newValue, isDeferred: isDeferred)
             isSettingAttributedText = true
             richTextView.attributedText = newValue
             isSettingAttributedText = false
-            delegate?.editor(self, didSetAttributedText: newValue, isDeferred: isDeferred)
+            AggregateEditorViewDelegate.editor(self, didSetAttributedText: newValue, isDeferred: isDeferred)
         }
     }
 
@@ -683,7 +682,7 @@ open class EditorView: UIView {
             .paragraphStyle: paragraphStyle
         ]
         richTextView.adjustsFontForContentSizeCategory = true
-        delegate?.editor(self, isReady: false)
+        AggregateEditorViewDelegate.editor(self, isReady: false)
     }
 
     /// Subclasses can override it to perform additional actions whenever the window changes.
@@ -693,7 +692,8 @@ open class EditorView: UIView {
         if let pendingAttributedText {
             attributedText = pendingAttributedText
         }
-        delegate?.editor(self, isReady: true)
+        let isReady = window != nil
+        AggregateEditorViewDelegate.editor(self, isReady: isReady)
     }
 
     /// Asks the view to calculate and return the size that best fits the specified size.
@@ -1099,8 +1099,7 @@ open class EditorView: UIView {
         // but in case of changing `UITextView` content in code
         // `textViewDidChange` callback won't be triggered.
         // That's why delegate in this case should be notified manually.
-        delegate?.editor(self, didChangeTextAt: newSelectedRange)
-        editorViewContext.delegate?.editor(self, didChangeTextAt: newSelectedRange)
+        AggregateEditorViewDelegate.editor(self, didChangeTextAt: newSelectedRange)
 
         textViewDelegate.textViewDidChange?(richTextView)
         return true
@@ -1185,43 +1184,37 @@ extension EditorView: RichTextViewListDelegate {
 extension EditorView: RichTextViewDelegate {
 
     func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
-        delegate?.editor(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
-        editorContextDelegate?.editor(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
+        AggregateEditorViewDelegate.editor(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
     }
 
     func richTextView(_ richTextView: RichTextView, shouldHandle key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange, handled: inout Bool) {
-        delegate?.editor(self, shouldHandle: key, at: range, handled: &handled)
-        editorContextDelegate?.editor(self, shouldHandle: key, at: range, handled: &handled)
+        AggregateEditorViewDelegate.editor(self, shouldHandle: key, at: range, handled: &handled)
     }
 
     func richTextView(_ richTextView: RichTextView, didReceive key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange) {
         textProcessor?.activeProcessors.forEach { processor in
             processor.handleKeyWithModifiers(editor: self, key: key, modifierFlags: modifierFlags, range: range)
         }
-        delegate?.editor(self, didReceiveKey: key, at: range)
-        editorContextDelegate?.editor(self, didReceiveKey: key, at: range)
+        AggregateEditorViewDelegate.editor(self, didReceiveKey: key, at: range)
     }
 
     func richTextView(_ richTextView: RichTextView, didReceiveFocusAt range: NSRange) {
-        delegate?.editor(self, didReceiveFocusAt: range)
-        editorContextDelegate?.editor(self, didReceiveFocusAt: range)
+        AggregateEditorViewDelegate.editor(self, didReceiveFocusAt: range)
     }
 
     func richTextView(_ richTextView: RichTextView, didLoseFocusFrom range: NSRange) {
-        delegate?.editor(self, didLoseFocusFrom: range)
-        editorContextDelegate?.editor(self, didLoseFocusFrom: range)
+        AggregateEditorViewDelegate.editor(self, didLoseFocusFrom: range)
     }
 
     func richTextView(_ richTextView: RichTextView, didChangeTextAtRange range: NSRange) {
-        delegate?.editor(self, didChangeTextAt: range)
-        editorContextDelegate?.editor(self, didChangeTextAt: range)
+        AggregateEditorViewDelegate.editor(self, didChangeTextAt: range)
     }
 
     func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool) {
         guard finished else { return }
         relayoutAttachments()
         resolveAsyncText()
-        delegate?.editor(self, didLayout: attributedText)
+        AggregateEditorViewDelegate.editor(self, didLayout: attributedText)
     }
 
     func richTextView(_ richTextView: RichTextView, selectedRangeChangedFrom oldRange: NSRange?, to newRange: NSRange?) {
@@ -1229,7 +1222,7 @@ extension EditorView: RichTextViewDelegate {
     }
 
     func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
-        delegate?.editor(self, didTapAtLocation: location, characterRange: characterRange)
+        AggregateEditorViewDelegate.editor(self, didTapAtLocation: location, characterRange: characterRange)
     }
 }
 

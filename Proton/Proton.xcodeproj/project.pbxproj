@@ -23,6 +23,7 @@
 		1B30A3602489CE3E00FA1D48 /* ListFormattingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B30A35F2489CE3E00FA1D48 /* ListFormattingProvider.swift */; };
 		1B30A3622489DC7B00FA1D48 /* MockListFormattingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B30A3612489DC7B00FA1D48 /* MockListFormattingProvider.swift */; };
 		1B30A3642489E11F00FA1D48 /* MockRichTextViewListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B30A3632489E11F00FA1D48 /* MockRichTextViewListDelegate.swift */; };
+		1B36192D2A68D89A00323BBF /* AggregateEditorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B36192C2A68D89A00323BBF /* AggregateEditorViewDelegate.swift */; };
 		1B3D19C8248346FF00B3AB59 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 1B3D19C7248346FF00B3AB59 /* SnapshotTesting */; };
 		1B3D19CA2483484A00B3AB59 /* EditorListsSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D19C92483484A00B3AB59 /* EditorListsSnapshotTests.swift */; };
 		1B44165328E5706A00836C71 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B44165228E5706A00836C71 /* GradientView.swift */; };
@@ -183,6 +184,7 @@
 		1B30A35F2489CE3E00FA1D48 /* ListFormattingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFormattingProvider.swift; sourceTree = "<group>"; };
 		1B30A3612489DC7B00FA1D48 /* MockListFormattingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockListFormattingProvider.swift; sourceTree = "<group>"; };
 		1B30A3632489E11F00FA1D48 /* MockRichTextViewListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRichTextViewListDelegate.swift; sourceTree = "<group>"; };
+		1B36192C2A68D89A00323BBF /* AggregateEditorViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AggregateEditorViewDelegate.swift; sourceTree = "<group>"; };
 		1B3D19C92483484A00B3AB59 /* EditorListsSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorListsSnapshotTests.swift; sourceTree = "<group>"; };
 		1B44165228E5706A00836C71 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		1B45014E247E5AD9007B3EE9 /* SequenceGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceGenerator.swift; sourceTree = "<group>"; };
@@ -487,6 +489,7 @@
 				1BFFEF0B23C30D5200D2BA35 /* EditorContentView.swift */,
 				1B82570C23C5686F0033A0A9 /* EditorViewContext.swift */,
 				1B8BE91A23C71CEA00353B17 /* EditorViewDelegate.swift */,
+				1B36192C2A68D89A00323BBF /* AggregateEditorViewDelegate.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -1011,6 +1014,7 @@
 				1B8BE91B23C71CEA00353B17 /* EditorViewDelegate.swift in Sources */,
 				1BC021D628588DDD00796585 /* GridCellStore.swift in Sources */,
 				1B4B60CF247FC86A002B63CF /* NSParagraphStyleExtensions.swift in Sources */,
+				1B36192D2A68D89A00323BBF /* AggregateEditorViewDelegate.swift in Sources */,
 				1BD18583284863A6001F4FBC /* ListOutdentCommand.swift in Sources */,
 				1BD21556246952370000BCE2 /* BackgroundStyle.swift in Sources */,
 				1B91F4B123C72D87003F9B55 /* TextProcessor.swift in Sources */,

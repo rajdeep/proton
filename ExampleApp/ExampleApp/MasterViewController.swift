@@ -27,32 +27,32 @@ struct Navigation {
 
 struct NavigationItem {
     let title: String
-    let viewController: UIViewController
+    let viewController: (() -> UIViewController)
 }
 
 class MasterViewController: UITableViewController {
 
     let navigation = [
         Navigation(title: "Basic features", items: [
-            NavigationItem(title: "Autogrowing Editor", viewController: AutogrowingEditorViewExampleViewController()),
+            NavigationItem(title: "Autogrowing Editor", viewController: { AutogrowingEditorViewExampleViewController() }),
         ]),
         Navigation(title: "Attachment", items: [
-            NavigationItem(title: "Match Content", viewController: MatchContentAttachmentExampleViewController()),
-            NavigationItem(title: "Full Width", viewController: FullWidthAttachmentExampleViewController()),
-            NavigationItem(title: "Fixed Width", viewController: FixedWidthAttachmentExampleViewController()),
-            NavigationItem(title: "Width Range", viewController: WidthRangeAttachmentExampleViewController()),
-            NavigationItem(title: "Percent Width", viewController: PercentWidthAttachmentExampleViewController()),
-            NavigationItem(title: "TableView", viewController: TableViewExampleViewController()),
+            NavigationItem(title: "Match Content", viewController: { MatchContentAttachmentExampleViewController() }),
+            NavigationItem(title: "Full Width", viewController: { FullWidthAttachmentExampleViewController() }),
+            NavigationItem(title: "Fixed Width", viewController: { FixedWidthAttachmentExampleViewController() }),
+            NavigationItem(title: "Width Range", viewController: { WidthRangeAttachmentExampleViewController() }),
+            NavigationItem(title: "Percent Width", viewController: { PercentWidthAttachmentExampleViewController() }),
+            NavigationItem(title: "TableView", viewController: { TableViewExampleViewController() }),
         ]),
         Navigation(title: "Advanced features", items: [
-            NavigationItem(title: "Commands", viewController: CommandsExampleViewController()),
-            NavigationItem(title: "Text Processors", viewController: TextProcessorExampleViewController()),
+            NavigationItem(title: "Commands", viewController: { CommandsExampleViewController() }),
+            NavigationItem(title: "Text Processors", viewController: { TextProcessorExampleViewController() }),
         ]),
         Navigation(title: "Renderer", items: [
-            NavigationItem(title: "Commands", viewController: RendererCommandsExampleViewController())
+            NavigationItem(title: "Commands", viewController: { RendererCommandsExampleViewController() })
         ]),
         Navigation(title: "Miscellaneous", items: [
-            NavigationItem(title: "Menu", viewController: MenuExampleViewController())
+            NavigationItem(title: "Menu", viewController: { MenuExampleViewController() })
         ]),
     ]
 
@@ -84,7 +84,7 @@ class MasterViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = navigation.item(at: indexPath)
-        let viewController = item.viewController
+        let viewController = item.viewController()
         viewController.title = item.title
         self.showDetailViewController(viewController, sender: self)
     }
