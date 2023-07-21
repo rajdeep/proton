@@ -53,6 +53,14 @@ public class EditorViewContext {
         return richTextViewContext.activeTextView?.editorView
     }
 
+    /// `EditorView` for this context that is currently selected. An editor is selected when in any of the following states even if it is read-only:
+    /// * Gets focus
+    /// * Selected range is changed to non-nil value
+    /// * Is tapped on
+    public var selectedEditorView: EditorView? {
+        richTextViewContext.selectedTextView?.editorView
+    }
+
     /// Initializes a new context
     /// - Parameter name: Friendly name for the context.
     public convenience init(name: String) {

@@ -27,8 +27,9 @@ class RichTextEditorContext: RichTextViewContext {
 
     func textViewDidBeginEditing(_ textView: UITextView) {
         guard textView.delegate === self else { return }
+        selectedTextView = textView.asRichTextView
+        activeTextView = textView.asRichTextView
 
-        activeTextView = textView as? RichTextView
         guard let richTextView = activeTextView else { return }
         
         let range = richTextView.selectedRange
@@ -51,6 +52,7 @@ class RichTextEditorContext: RichTextViewContext {
 
         defer {
             activeTextView = nil
+            selectedTextView = nil
         }
         guard let richTextView = activeTextView else { return }
         richTextView.richTextViewDelegate?.richTextView(richTextView, didLoseFocusFrom: textView.selectedRange)
@@ -150,9 +152,10 @@ class RichTextEditorContext: RichTextViewContext {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        guard textView.delegate === self,
-              let richTextView = activeTextView
-        else { return }
+        guard textView.delegate === self else { return }
+        selectedTextView = textView.asRichTextView
+
+        guard let richTextView = activeTextView else { return }
 
         applyFontFixForEmojiIfRequired(in: richTextView, at: textView.selectedRange)
         invokeDidProcessIfRequired(richTextView)
