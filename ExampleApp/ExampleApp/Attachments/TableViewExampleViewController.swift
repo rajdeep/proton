@@ -160,6 +160,7 @@ class EditorCell: UITableViewCell {
         editor.isEditable = true
         editor.boundsObserver = self
         editor.delegate = self
+        editor.maxHeight = .infinite
 
         contentView.addSubview(editor)
 
