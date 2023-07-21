@@ -220,4 +220,68 @@ class RichTextViewContextTests: XCTestCase {
 
         waitForExpectations(timeout: 1.0)
     }
+
+    func testSetsSelectedEditorOnTextRangeChange() {
+        let testExpectation = expectation(description: #function)
+        let mockTextViewDelegate = MockRichTextViewDelegate()
+
+        let context = RichTextEditorContext.default
+        let textView = RichTextView(context: context)
+        textView.richTextViewDelegate = mockTextViewDelegate
+
+        textView.text = "Sample text"
+        textView.selectedRange = .zero
+
+        mockTextViewDelegate.onSelectionChanged = { _, _, _, _ in
+            XCTAssertEqual(context.selectedTextView, textView)
+            testExpectation.fulfill()
+        }
+
+        context.textViewDidChangeSelection(textView)
+
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testUnsetsSelectedEditorOnTextRangeNil() {
+        let testExpectation = expectation(description: #function)
+        let mockTextViewDelegate = MockRichTextViewDelegate()
+
+        let context = RichTextEditorContext.default
+        let textView = RichTextView(context: context)
+        textView.richTextViewDelegate = mockTextViewDelegate
+
+        textView.text = "Sample text"
+        textView.selectedTextRange = nil
+
+        mockTextViewDelegate.onSelectionChanged = { _, _, _, _ in
+            XCTAssertNil(context.selectedTextView)
+            testExpectation.fulfill()
+        }
+
+        context.textViewDidChangeSelection(textView)
+
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testSetsSelectedEditorOnTap() {
+        let testExpectation = expectation(description: #function)
+        let mockTextViewDelegate = MockRichTextViewDelegate()
+
+        let context = RichTextEditorContext.default
+        let textView = RichTextView(context: context)
+        textView.richTextViewDelegate = mockTextViewDelegate
+
+        textView.text = "Sample text"
+        textView.selectedTextRange = nil
+
+        mockTextViewDelegate.onDidTapAtLocation = { _, _, _ in
+            XCTAssertEqual(context.selectedTextView, textView)
+            testExpectation.fulfill()
+        }
+
+        textView.didTap(at: .zero)
+
+        waitForExpectations(timeout: 1.0)
+    }
+
 }

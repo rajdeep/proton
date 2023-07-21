@@ -24,12 +24,19 @@ import UIKit
 class RichTextViewContext: NSObject, UITextViewDelegate {
     weak var activeTextView: RichTextView?
 
+    weak var selectedTextView: RichTextView?
+
     func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         return interaction != .presentActions
     }
 
     func textViewDidChangeSelection(_ textView: UITextView) {
         guard textView.delegate === self else { return }
+        if textView.selectedTextRange != nil {
+            selectedTextView = textView.asRichTextView
+        } else {
+            selectedTextView = nil
+        }
 
         guard let richTextView = textView as? RichTextView else { return }
         let range = textView.selectedRange
@@ -70,5 +77,11 @@ class RichTextViewContext: NSObject, UITextViewDelegate {
                 attachment.isSelected = false
             }
         }
+    }
+}
+
+extension UITextView {
+    var asRichTextView: RichTextView? {
+        self as? RichTextView
     }
 }

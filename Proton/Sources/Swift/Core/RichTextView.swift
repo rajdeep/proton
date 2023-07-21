@@ -191,6 +191,10 @@ class RichTextView: AutogrowingTextView {
         selectedTextRange = rangeToSet?.toTextRange(textInput: self) ?? oldRange
     }
 
+    var context: RichTextViewContext? {
+        delegate as? RichTextViewContext
+    }
+
     init(frame: CGRect = .zero, context: RichTextViewContext, allowAutogrowing: Bool = false) {
         let textContainer = TextContainer()
         let layoutManager = LayoutManager()
@@ -498,6 +502,7 @@ class RichTextView: AutogrowingTextView {
     }
 
     func didTap(at location: CGPoint) {
+        context?.selectedTextView = self
         let characterRange = rangeOfCharacter(at: location)
         richTextViewDelegate?.richTextView(self, didTapAtLocation: location, characterRange: characterRange)
     }
