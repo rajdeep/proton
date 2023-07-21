@@ -195,7 +195,7 @@ class EditorViewTests: XCTestCase {
 
         editor.replaceCharacters(in: .zero, with: testString)
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
-        editor.addAttributes(attributesToAdd, at: NSRange(location: 7, length: editor.contentLength - 7))
+        editor.addAttributes(attributesToAdd, at: NSRange(location: 7, length: editor.contentLength - 8))
         waitForExpectations(timeout: 1.0)
     }
 
@@ -215,7 +215,7 @@ class EditorViewTests: XCTestCase {
 
         editor.replaceCharacters(in: .zero, with: testString)
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
-        editor.removeAttribute(key, at: NSRange(location: 7, length: editor.contentLength - 7))
+        editor.removeAttribute(key, at: NSRange(location: 7, length: editor.contentLength - 8))
         waitForExpectations(timeout: 1.0)
     }
 
