@@ -769,7 +769,7 @@ class EditorSnapshotTests: SnapshotTestCase {
     func testBackgroundStyleWithCapsuleStyle() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-
+        editor.paragraphStyle.lineHeightMultiple = 1.12
         let text =
         """
         Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 2 text Line 3 text Line 3
@@ -779,7 +779,7 @@ class EditorSnapshotTests: SnapshotTestCase {
 
         editor.appendCharacters(NSAttributedString(string: text))
         viewController.render()
-        let backgroundStyle = BackgroundStyle(color: .cyan, roundedCornerStyle: .relative(percent: 50))
+        let backgroundStyle = BackgroundStyle(color: .cyan, roundedCornerStyle: .relative(percent: 50), heightMode: .matchText)
         editor.addAttributes([
             .backgroundStyle: backgroundStyle
         ], at: rangeToUpdate)
