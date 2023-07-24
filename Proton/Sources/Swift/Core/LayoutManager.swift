@@ -196,7 +196,7 @@ class LayoutManager: NSLayoutManager {
         previousLevel = level
 
         let font = lastLayoutFont ?? defaultFont
-        drawListItem(level: level, previousLevel: previousLevel, index: index, rect: newLineRect, paraStyle: paraStyle, font: font, attributeValue: attributeValue)
+        drawListItem(level: level, previousLevel: previousLevel, index: index, rect: newLineRect.integral, paraStyle: paraStyle, font: font, attributeValue: attributeValue)
     }
 
     private func drawListItem(level: Int, previousLevel: Int, index: Int, rect: CGRect, paraStyle: NSParagraphStyle, font: UIFont, attributeValue: Any?) {
@@ -220,7 +220,9 @@ class LayoutManager: NSLayoutManager {
             listMarkerImage = image.resizeImage(to: markerRect.size)
         }
 
-        listMarkerImage.draw(at: markerRect.origin)
+        let lineHeightMultiple = max(paraStyle.lineHeightMultiple, 1)
+        let lineHeightMultipleOffset = (rect.size.height - rect.size.height/lineHeightMultiple)
+        listMarkerImage.draw(at: markerRect.offsetBy(dx: 0, dy: lineHeightMultipleOffset).origin)
     }
 
     private func generateBitmap(string: NSAttributedString, rect: CGRect) -> UIImage {
