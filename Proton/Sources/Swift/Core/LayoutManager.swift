@@ -196,7 +196,7 @@ class LayoutManager: NSLayoutManager {
         previousLevel = level
 
         let font = lastLayoutFont ?? defaultFont
-        drawListItem(level: level, previousLevel: previousLevel, index: index, rect: newLineRect, paraStyle: paraStyle, font: font, attributeValue: attributeValue)
+        drawListItem(level: level, previousLevel: previousLevel, index: index, rect: newLineRect.integral, paraStyle: paraStyle, font: font, attributeValue: attributeValue)
     }
 
     private func drawListItem(level: Int, previousLevel: Int, index: Int, rect: CGRect, paraStyle: NSParagraphStyle, font: UIFont, attributeValue: Any?) {
@@ -220,7 +220,10 @@ class LayoutManager: NSLayoutManager {
             listMarkerImage = image.resizeImage(to: markerRect.size)
         }
 
-        listMarkerImage.draw(at: markerRect.origin)
+        let lineSpacing = paraStyle.lineSpacing
+        let lineHeightMultiple = max(paraStyle.lineHeightMultiple, 1)
+        let lineHeightMultipleOffset = (rect.size.height - rect.size.height/lineHeightMultiple)
+        listMarkerImage.draw(at: markerRect.offsetBy(dx: 0, dy: lineHeightMultipleOffset).origin)
     }
 
     private func generateBitmap(string: NSAttributedString, rect: CGRect) -> UIImage {
@@ -275,9 +278,13 @@ class LayoutManager: NSLayoutManager {
             if let backgroundStyle = attr as? BackgroundStyle {
                 let bgStyleGlyphRange = self.glyphRange(forCharacterRange: bgStyleRange, actualCharacterRange: nil)
                 enumerateLineFragments(forGlyphRange: bgStyleGlyphRange) { _, usedRect, textContainer, lineRange, _ in
+                    let usedRect = usedRect.integral
                     let rangeIntersection = NSIntersectionRange(bgStyleGlyphRange, lineRange)
-                    var rect = self.boundingRect(forGlyphRange: rangeIntersection, in: textContainer)
-
+                    let paragraphStyle = textStorage.attribute(.paragraphStyle, at: rangeIntersection.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
+                    let lineHeightMultiple = max(paragraphStyle.lineHeightMultiple, 1)
+                    var rect = self.boundingRect(forGlyphRange: rangeIntersection, in: textContainer).integral
+                    let lineHeightMultipleOffset = (rect.size.height - rect.size.height/lineHeightMultiple)
+                    let lineSpacing = paragraphStyle.lineSpacing
                     if backgroundStyle.widthMode == .matchText {
                         let content = textStorage.attributedSubstring(from: rangeIntersection)
                         let contentWidth = content.boundingRect(with: rect.size, options: [.usesDeviceMetrics, .usesFontLeading], context: nil).width
@@ -292,8 +299,8 @@ class LayoutManager: NSLayoutManager {
 
                         let textRect = styledText.boundingRect(with: rect.size, options: drawingOptions, context: nil)
 
-                        rect.origin.y = usedRect.origin.y + (rect.size.height - textRect.height)
-                        rect.size.height = textRect.height
+                        rect.origin.y = usedRect.origin.y + (rect.size.height - textRect.height) + lineHeightMultipleOffset - lineSpacing
+                        rect.size.height = textRect.height - lineHeightMultipleOffset
                     case .matchLine:
                         // Glyphs can take space outside of the line fragment, and we cannot draw outside of it.
                         // So it is best to restrict the height just to the line fragment.

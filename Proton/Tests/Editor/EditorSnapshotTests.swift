@@ -769,7 +769,7 @@ class EditorSnapshotTests: SnapshotTestCase {
     func testBackgroundStyleWithCapsuleStyle() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-
+        editor.paragraphStyle.lineHeightMultiple = 1.12
         let text =
         """
         Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 2 text Line 3 text Line 3
@@ -779,7 +779,7 @@ class EditorSnapshotTests: SnapshotTestCase {
 
         editor.appendCharacters(NSAttributedString(string: text))
         viewController.render()
-        let backgroundStyle = BackgroundStyle(color: .cyan, roundedCornerStyle: .relative(percent: 50))
+        let backgroundStyle = BackgroundStyle(color: .cyan, roundedCornerStyle: .relative(percent: 50), heightMode: .matchText)
         editor.addAttributes([
             .backgroundStyle: backgroundStyle
         ], at: rangeToUpdate)
@@ -919,14 +919,14 @@ class EditorSnapshotTests: SnapshotTestCase {
     func testBackgroundStyleWithVariedFontSizes() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-
+        editor.paragraphStyle.lineSpacing = 5
         let text =
         """
         Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 3 text Line 3 text Line 3 text Line 4
         """
 
         editor.appendCharacters(NSAttributedString(string: text))
-        viewController.render(size: CGSize(width: 300, height: 150))
+        viewController.render(size: CGSize(width: 300, height: 175))
         let backgroundStyle = BackgroundStyle(color: .cyan, roundedCornerStyle: .relative(percent: 50), heightMode: .matchText)
 
 
@@ -946,7 +946,7 @@ class EditorSnapshotTests: SnapshotTestCase {
         editor.addAttributes([.font: UIFont.systemFont(ofSize: 24)], at: NSRange(location: 0, length: 5))
         editor.addAttributes([.font: UIFont.systemFont(ofSize: 24)], at: NSRange(location: 35, length: 8))
 
-        viewController.render(size: CGSize(width: 300, height: 150))
+        viewController.render(size: CGSize(width: 300, height: 175))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
@@ -1060,7 +1060,7 @@ class EditorSnapshotTests: SnapshotTestCase {
         ], at: NSRange(location: 70, length: 10))
 
         viewController.render(size: CGSize(width: 300, height: 200))
-        assertSnapshot(matching: viewController.view, as: .image, record: false)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testEditorWithArabicText() {

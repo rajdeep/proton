@@ -5,6 +5,18 @@
 //  Created by Rajdeep Kwatra on 31/5/20.
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
 
 import Foundation
 import XCTest
@@ -625,14 +637,17 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         let paraStyle1 = NSMutableParagraphStyle()
         paraStyle1.firstLineHeadIndent = indent * 1
         paraStyle1.headIndent = indent * 1
+        paraStyle1.lineHeightMultiple = 1.4
 
         let paraStyle2 = NSMutableParagraphStyle()
         paraStyle2.firstLineHeadIndent = indent * 2
         paraStyle2.headIndent = indent * 2
+        paraStyle2.lineHeightMultiple = 1.6
 
         let paraStyle3 = NSMutableParagraphStyle()
         paraStyle3.firstLineHeadIndent = indent * 3
         paraStyle3.headIndent = indent * 3
+        paraStyle3.lineHeightMultiple = 1.8
 
         editor.appendCharacters(NSAttributedString(string: "Ordered 1\n", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
         editor.appendCharacters(NSAttributedString(string: "Unordered 2\n", attributes: [.listItem: 2, .paragraphStyle: paraStyle2]))
@@ -650,7 +665,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         editor.appendCharacters(NSAttributedString(string: "Unordered 2\n", attributes: [.listItem: 2, .paragraphStyle: paraStyle2]))
         editor.appendCharacters(NSAttributedString(string: "Ordered 1", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
 
-        viewController.render(size: CGSize(width: 300, height: 375))
+        viewController.render(size: CGSize(width: 300, height: 575))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
