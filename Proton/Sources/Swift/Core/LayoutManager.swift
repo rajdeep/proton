@@ -220,6 +220,7 @@ class LayoutManager: NSLayoutManager {
             listMarkerImage = image.resizeImage(to: markerRect.size)
         }
 
+        let lineSpacing = paraStyle.lineSpacing
         let lineHeightMultiple = max(paraStyle.lineHeightMultiple, 1)
         let lineHeightMultipleOffset = (rect.size.height - rect.size.height/lineHeightMultiple)
         listMarkerImage.draw(at: markerRect.offsetBy(dx: 0, dy: lineHeightMultipleOffset).origin)
@@ -277,11 +278,13 @@ class LayoutManager: NSLayoutManager {
             if let backgroundStyle = attr as? BackgroundStyle {
                 let bgStyleGlyphRange = self.glyphRange(forCharacterRange: bgStyleRange, actualCharacterRange: nil)
                 enumerateLineFragments(forGlyphRange: bgStyleGlyphRange) { _, usedRect, textContainer, lineRange, _ in
+                    let usedRect = usedRect.integral
                     let rangeIntersection = NSIntersectionRange(bgStyleGlyphRange, lineRange)
                     let paragraphStyle = textStorage.attribute(.paragraphStyle, at: rangeIntersection.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
                     let lineHeightMultiple = max(paragraphStyle.lineHeightMultiple, 1)
-                    var rect = self.boundingRect(forGlyphRange: rangeIntersection, in: textContainer)
+                    var rect = self.boundingRect(forGlyphRange: rangeIntersection, in: textContainer).integral
                     let lineHeightMultipleOffset = (rect.size.height - rect.size.height/lineHeightMultiple)
+                    let lineSpacing = paragraphStyle.lineSpacing
                     if backgroundStyle.widthMode == .matchText {
                         let content = textStorage.attributedSubstring(from: rangeIntersection)
                         let contentWidth = content.boundingRect(with: rect.size, options: [.usesDeviceMetrics, .usesFontLeading], context: nil).width
@@ -296,7 +299,7 @@ class LayoutManager: NSLayoutManager {
 
                         let textRect = styledText.boundingRect(with: rect.size, options: drawingOptions, context: nil)
 
-                        rect.origin.y = usedRect.origin.y + (rect.size.height - textRect.height) + lineHeightMultipleOffset
+                        rect.origin.y = usedRect.origin.y + (rect.size.height - textRect.height) + lineHeightMultipleOffset - lineSpacing
                         rect.size.height = textRect.height - lineHeightMultipleOffset
                     case .matchLine:
                         // Glyphs can take space outside of the line fragment, and we cannot draw outside of it.
