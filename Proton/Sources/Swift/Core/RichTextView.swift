@@ -237,7 +237,7 @@ class RichTextView: AutogrowingTextView {
 
     var visibleRange: NSRange {
         let textBounds = bounds.inset(by: textContainerInset)
-        return layoutManager.glyphRange(forBoundingRect: textBounds, in: textContainer)
+        return layoutManager.glyphRange(forBoundingRectWithoutAdditionalLayout: textBounds, in: textContainer)
     }
 
     func contentLinesInRange(_ range: NSRange) -> [EditorLine] {
