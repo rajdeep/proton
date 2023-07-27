@@ -332,12 +332,16 @@ class RichTextView: AutogrowingTextView {
         placeholderLabel.removeFromSuperview()
         addSubview(placeholderLabel)
         placeholderLabel.attributedText = placeholderText
+
+        let placeholderLabelWidthConstraint = placeholderLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -textContainer.lineFragmentPadding - textContainerInset.right)
+        placeholderLabelWidthConstraint.priority = .defaultHigh
+
         NSLayoutConstraint.activate([
             placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: textContainerInset.top),
             placeholderLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -textContainerInset.bottom),
             placeholderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: textContainer.lineFragmentPadding + textContainerInset.left),
-            placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -textContainer.lineFragmentPadding),
-            placeholderLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -textContainer.lineFragmentPadding - textContainerInset.right)
+            placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -textContainer.lineFragmentPadding - textContainerInset.right),
+            placeholderLabelWidthConstraint
         ])
     }
 
