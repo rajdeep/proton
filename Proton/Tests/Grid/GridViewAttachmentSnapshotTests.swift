@@ -1498,6 +1498,39 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func XtestReRendersRequiredCellsOnly() {
+        recordMode = true
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let colsCount = 30
+        let rowCount = 30
+
+        let config = GridConfiguration(
+            columnsConfiguration: [GridColumnConfiguration](repeating: GridColumnConfiguration(width: .fixed(100)), count: colsCount),
+            rowsConfiguration: [GridRowConfiguration](repeating: GridRowConfiguration(initialHeight: 40), count: rowCount))
+
+        var cells = [GridCell]()
+        for row in 0..<rowCount {
+            for col in 0..<colsCount {
+                let cell = GridCell(rowSpan: [row], columnSpan: [col], initialHeight: 20)
+                cell.editor.attributedText = NSAttributedString(string: "{\(row), \(col)} kjh dsjkhajskd askjhjd sakajshd ")
+                cells.append(cell)
+            }
+        }
+
+        let attachment = GridViewAttachment(config: config, cells: cells)
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+        measure {
+            viewController.render(size: CGSize(width: 400, height: 300))
+        }
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+
     private func make3By3GridViewAttachment() -> GridViewAttachment {
         let config = GridConfiguration(
             columnsConfiguration: [
