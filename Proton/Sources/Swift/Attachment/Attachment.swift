@@ -22,6 +22,11 @@ import Foundation
 import UIKit
 import ProtonCore
 
+public enum SelectionStyle {
+    case mask
+    case border(UIColor, CGFloat)
+}
+
 /// Describes an object (typically attachment view) that may change size during the layout pass
 public protocol DynamicBoundsProviding: AnyObject {
     func sizeFor(attachment: Attachment, containerSize: CGSize, lineRect: CGRect) -> CGSize
@@ -52,6 +57,10 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     private var indexInContainer: Int?
 
     var cachedBounds: CGRect?
+    
+    public var selectionStyle: SelectionStyle = .mask
+    
+    public var changeSelectionStyleClosure: ((UIView?) -> Void)?
 
     /// Governs if the attachment should be selected before being deleted. When `true`, tapping the backspace key the first time on range containing `Attachment` will only
     /// select the attachment i.e. show as highlighted. Tapping the backspace again will delete the attachment. If the value is `false`, the attachment will be deleted on the first backspace itself.
@@ -81,14 +90,27 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         return view?.superview != nil
     }
 
-    var isSelected: Bool = false {
+    public var isSelected: Bool = false {
         didSet {
-            guard let view = self.view else { return }
-            if isSelected {
+            self.changeSelectedStyle()
+        }
+    }
+    
+    open func changeSelectedStyle() {
+        guard let view = self.view else { return }
+        if isSelected {
+            switch selectionStyle {
+            case .mask:
                 selectionView.addTo(parent: view)
-            } else {
-                selectionView.removeFromSuperview()
+            case .border(let color, let width):
+                if let tableView = view.subviews.first?.subviews.first as? UITableView,
+                   let cell = tableView.visibleCells.first {
+                    cell.contentView.layer.borderColor = color.cgColor
+                    cell.contentView.layer.borderWidth = width
+                }
             }
+        } else {
+            selectionView.removeFromSuperview()
         }
     }
 

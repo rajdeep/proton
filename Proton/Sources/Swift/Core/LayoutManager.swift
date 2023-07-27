@@ -71,6 +71,8 @@ class LayoutManager: NSLayoutManager {
         super.drawGlyphs(forGlyphRange: glyphsToShow, at: origin)
         guard let textStorage = self.textStorage else { return }
         
+        drawHorizontalLines()
+        
         drawedRects = []
         
         var items: [ListItemValue] = []
@@ -277,8 +279,11 @@ class LayoutManager: NSLayoutManager {
                         for subview in textView.subviews {
                             if subview.frame == item.view.frame,
                                let v = subview as? ListItemView {
-                                    v.render(with: item.listItemViewType)
-                                }
+                                v.render(
+                                    with: item.listItemViewType,
+                                    attrValue: item.attrValue
+                                )
+                            }
                         }
                         break
                     }
@@ -349,7 +354,7 @@ class LayoutManager: NSLayoutManager {
             markerRect = CGRect(origin: CGPoint(x: rect.minX, y: rect.minY + topInset), size: CGSize(width: paraStyle.firstLineHeadIndent, height: rect.height))
             let rect = CGRect(x: 0, y: markerRect.minY, width: markerRect.width, height: markerRect.height)
             let itemView = ListItemView(frame: rect)
-            itemView.render(with: .text(attr, markerRect))
+            itemView.render(with: .text(attr, markerRect), attrValue: attributeValue)
             listItemViewModels.append(
                 ListItemViewModel(
                     view: itemView,
@@ -370,7 +375,7 @@ class LayoutManager: NSLayoutManager {
                 let rect = CGRect(x: 0, y: markerRect.minY, width: markerRect.width, height: markerRect.height)
                 let itemView = ListItemView(frame: rect)
                 let checked = attributeValue == "listItemSelectedChecklist"
-                itemView.render(with: .image(listMarkerImage, checked))
+                itemView.render(with: .image(listMarkerImage, checked), attrValue: attributeValue)
                 listItemViewModels.append(
                     ListItemViewModel(
                         view: itemView,
@@ -381,7 +386,7 @@ class LayoutManager: NSLayoutManager {
             } else {
                 let rect = CGRect(x: 0, y: markerRect.minY, width: markerRect.width, height: markerRect.height)
                 let itemView = ListItemView(frame: rect)
-                itemView.render(with: .image(listMarkerImage, false))
+                itemView.render(with: .image(listMarkerImage, false), attrValue: attributeValue)
                 listItemViewModels.append(
                     ListItemViewModel(
                         view: itemView,
@@ -444,12 +449,21 @@ class LayoutManager: NSLayoutManager {
         return stringRect
     }
     
+    func drawHorizontalLines() {
+        guard let textContainer = self.textContainers.first as? TextContainer,
+              let textView = textContainer.textView,
+              let editor = textView.editorView else {
+            return
+        }
+        editor.drawHorizontalLines()
+    }
+    
     override func drawBackground(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
         super.drawBackground(forGlyphRange: glyphsToShow, at: origin)
         guard let textStorage = textStorage,
               let currentCGContext = UIGraphicsGetCurrentContext()
         else { return }
-        
+
         let characterRange = self.characterRange(forGlyphRange: glyphsToShow, actualGlyphRange: nil)
         textStorage.enumerateAttribute(.backgroundStyle, in: characterRange) { attr, bgStyleRange, _ in
             var rects = [CGRect]()

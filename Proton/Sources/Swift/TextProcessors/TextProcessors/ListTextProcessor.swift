@@ -127,6 +127,7 @@ public class ListTextProcessor: TextProcessing {
             attributeValue: nil
         )
         let rangeToReplace = NSRange(location: editedRange.location + 1, length: 1)
+        
         editor.replaceCharacters(in: rangeToReplace, with: "")
         if editor.selectedRange.endLocation >= rangeToReplace.endLocation {
             editor.selectedRange = NSRange(location: editor.selectedRange.location - 1, length: 0)

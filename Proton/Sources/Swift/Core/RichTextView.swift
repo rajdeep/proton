@@ -312,7 +312,7 @@ class RichTextView: AutogrowingTextView {
         addSubview(placeholderLabel)
         placeholderLabel.attributedText = placeholderText
         NSLayoutConstraint.activate([
-            placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: textContainerInset.top + 40),
+            placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: textContainerInset.top + 44),
             placeholderLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -textContainerInset.bottom),
             placeholderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: textContainer.lineFragmentPadding),
             placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -textContainer.lineFragmentPadding),
@@ -368,22 +368,19 @@ class RichTextView: AutogrowingTextView {
             if contentLength == 0 {
                 resetTypingAttributes()
             }
-            if let range, selectedRange.location == range.location {
-                if let currentLineRange {
-                    let attributes = attributedText.attributes(at: currentLineRange.location, effectiveRange: nil)
-                    addAttributes([.listItem: attributes[.listItem], .listItemValue: attributes[.listItemValue]], range: range)
-                } else {
-                    removeAttributes([.listItem, .listItemValue], range: range)
-                }
-                if range.location < contentLength, let paragraph = attributedText.attribute(.paragraphStyle, at: range.location, effectiveRange: nil) as? NSParagraphStyle {
-                    let p = NSMutableParagraphStyle()
-                    p.lineSpacing = paragraph.lineSpacing
-                    p.paragraphSpacing = paragraph.paragraphSpacing
-                    p.paragraphSpacingBefore = paragraph.paragraphSpacingBefore
-                    addAttributes([.paragraphStyle: p], range: range)
-                }
-            }
 
+            let last = attributedText.attributedSubstring(from: NSRange(location: selectedRange.location - 1, length: 1))
+            if last.string == "\n",
+               last.attribute(.listItem, at: 0, effectiveRange: nil) == nil,
+               let paragraph = last.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle {
+                let p = NSMutableParagraphStyle()
+                p.paragraphSpacing = paragraph.paragraphSpacing
+                p.lineSpacing = paragraph.lineSpacing
+                p.headIndent = 0
+                p.firstLineHeadIndent = 0
+                editorView?.addAttribute(.paragraphStyle, value: p, at: NSRange(location: selectedRange.location - 1, length: 1))
+                editorView?.removeAttribute(.paragraphStyle, at: NSRange(location: selectedRange.location - 1, length: 1))
+            }
             richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: selectedRange)
         }
 
@@ -406,7 +403,7 @@ class RichTextView: AutogrowingTextView {
                 fromBlankLineFiller = true
             }
             if textToBeDeleted == "\n" {
-                if fromBlankLineFiller || attributedText.attribute(.listItem, at: proposedRange.location, effectiveRange: nil) != nil {
+                if attributedText.attribute(.listItem, at: proposedRange.location, effectiveRange: nil) != nil {
                     replaceNewLineCharacter(proposedRange: proposedRange)
                 } else {
                     super.deleteBackward()
@@ -442,16 +439,35 @@ class RichTextView: AutogrowingTextView {
             replaceString = "\n"
         }
         editorView?.removeAttributes([.paragraphStyle, .listItem, .listItemValue], at: r)
+        let mutableAttr = NSMutableAttributedString(string: replaceString)
         if let paragraph = attributedText.attribute(.paragraphStyle, at: r.location, effectiveRange: nil) as? NSParagraphStyle {
             let p = NSMutableParagraphStyle()
             p.lineSpacing = paragraph.lineSpacing
             p.paragraphSpacing = paragraph.paragraphSpacing
             p.paragraphSpacingBefore = paragraph.paragraphSpacingBefore
+            p.firstLineHeadIndent = 0
+            p.headIndent = 0
             typingAttributes[.paragraphStyle] = p
+            editorView?.typingAttributes[.paragraphStyle] = p
+            mutableAttr.addAttribute(.paragraphStyle, value: p, range: mutableAttr.fullRange)
+            editorView?.addAttribute(.paragraphStyle, value: p, at: r)
         }
         editorView?.typingAttributes[.listItem] = nil
         editorView?.typingAttributes[.listItemValue] = nil
-        editorView?.replaceCharacters(in: r, with: NSAttributedString(string: replaceString))
+        editorView?.replaceCharacters(in: r, with: mutableAttr)
+        
+        if let editor = editorView {
+            var attrs = editor.typingAttributes
+            let paraStyle = (attrs[.paragraphStyle] as? NSParagraphStyle)?.mutableParagraphStyle
+            paraStyle?.firstLineHeadIndent = 0
+            paraStyle?.headIndent = 0
+            attrs[.paragraphStyle] = paraStyle
+            attrs[.listItem] = nil
+            attrs[.listItemValue] = nil
+            let marker = NSAttributedString(string: ListTextProcessor.blankLineFiller, attributes: attrs)
+            editor.replaceCharacters(in: selectedRange, with: marker)
+            editor.selectedRange = selectedRange.nextPosition
+        }
     }
 
     func insertAttachment(in range: NSRange, attachment: Attachment) {
@@ -660,12 +676,20 @@ class RichTextView: AutogrowingTextView {
         caretRect.origin.y = lineRect.minY + textContainerInset.top
         caretRect.size.height = lineRect.height
         
-        if location < (editorView?.contentLength ?? 0), location >= 1,
-           let font = editorView?.attributedText.attribute(.font, at: location - 1, effectiveRange: nil) as? UIFont,
-           let paragraphStyle = editorView?.attributedText.attribute(.paragraphStyle, at: location, effectiveRange: nil) as? NSParagraphStyle {
-            if (font.pointSize + paragraphStyle.lineSpacing) < caretRect.height {
-                caretRect.size.height = font.pointSize + 3
-                caretRect.origin.y = lineRect.minY + (lineRect.height - caretRect.size.height - paragraphStyle.lineSpacing)
+        if location < (editorView?.contentLength ?? 0), location >= 1 {
+            if let attachment = editorView?.attributedText.attribute(.attachment, at: location - 1, effectiveRange: nil) as? Attachment {
+                if let font = editorView?.attributedText.attribute(.font, at: location - 1, effectiveRange: nil) as? UIFont,
+                   let paragraphStyle = editorView?.attributedText.attribute(.paragraphStyle, at: location, effectiveRange: nil) as? NSParagraphStyle {
+                    if (font.pointSize + paragraphStyle.lineSpacing) < caretRect.height {
+                        caretRect.origin.y = caretRect.minY + max(0, (lineRect.height - caretRect.size.height - paragraphStyle.lineSpacing))
+                        caretRect.size.height -= paragraphStyle.lineSpacing
+                    }
+                }
+            } else if let font = editorView?.attributedText.attribute(.font, at: location - 1, effectiveRange: nil) as? UIFont,
+               let paragraphStyle = editorView?.attributedText.attribute(.paragraphStyle, at: location, effectiveRange: nil) as? NSParagraphStyle {
+                if (font.pointSize + paragraphStyle.lineSpacing) < caretRect.height {
+                    caretRect.size.height = font.pointSize + 3
+                }
             }
         }
         

@@ -43,7 +43,8 @@ class ListItemView: UIView {
         imageView.image = image
     }
     
-    func render(with type: ListItemViewType) {
+    func render(with type: ListItemViewType, attrValue: String) {
+        self.isUserInteractionEnabled = attrValue == "listItemCheckList" || attrValue == "listItemSelectedChecklist"
         switch type {
         case let .image(image, checked):
             textLabel.isHidden = true

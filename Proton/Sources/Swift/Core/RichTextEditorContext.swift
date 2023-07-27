@@ -84,7 +84,6 @@ class RichTextEditorContext: RichTextViewContext {
                 !attachment.isSelected // ... but isn't.
             {
                 attachment.isSelected = true // Select it
-                textView.selectedRange = range
                 return false // don't delete anything
             }
 

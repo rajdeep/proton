@@ -29,6 +29,8 @@ class AutogrowingTextView: UITextView {
     private var maxHeightConstraint: NSLayoutConstraint!
     private var heightAnchorConstraint: NSLayoutConstraint!
     private var isSizeRecalculationRequired = true
+    
+    let lineSpacing = 29.0
 
     init(frame: CGRect = .zero, textContainer: NSTextContainer? = nil, allowAutogrowing: Bool = false) {
         self.allowAutogrowing = allowAutogrowing
@@ -49,6 +51,7 @@ class AutogrowingTextView: UITextView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        
         guard allowAutogrowing, maxHeight != .greatestFiniteMagnitude else { return }
         // Required to reset the size if content is removed
         if contentSize.height <= frame.height, isEditable {

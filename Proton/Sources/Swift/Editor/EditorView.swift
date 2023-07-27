@@ -108,6 +108,10 @@ open class EditorView: UIView {
     let richTextView: RichTextView
     let context: RichTextViewContext
     var needsAsyncTextResolution = false
+    
+    public var contentSize: CGSize {
+        return richTextView.contentSize
+    }
 
     var editorContextDelegate: EditorViewDelegate? {
         get { editorViewContext.delegate }
@@ -440,7 +444,7 @@ open class EditorView: UIView {
     }
 
     /// Gets and sets the content offset.
-    public var contentOffset: CGPoint {
+    @objc open var contentOffset: CGPoint {
         get { richTextView.contentOffset }
         set { richTextView.contentOffset = newValue }
     }
@@ -611,6 +615,10 @@ open class EditorView: UIView {
         }
         return getAttachmentContentView(view: view.superview)
     }
+    
+    private var token: NSKeyValueObservation?
+    
+    public var contentOffsetClosure: ((CGPoint) -> Void)?
 
     private func setup() {
         maxHeight = .default
@@ -634,6 +642,15 @@ open class EditorView: UIView {
             .paragraphStyle: paragraphStyle
         ]
         richTextView.adjustsFontForContentSizeCategory = true
+        
+        token = richTextView.observe(\.contentOffset) { [weak self] _, _ in
+            guard let strongSelf = self else { return }
+            strongSelf.contentOffsetClosure?(strongSelf.richTextView.contentOffset)
+        }
+    }
+    
+    deinit {
+        token?.invalidate()
     }
 
     /// Asks the view to calculate and return the size that best fits the specified size.
@@ -675,6 +692,10 @@ open class EditorView: UIView {
     /// - Note: Changing attributes also causes layout pass to be performed, and this any applicable `AsyncTextResolvers` will be executed.
     public func setNeedsAsyncTextResolution() {
         needsAsyncTextResolution = true
+    }
+    
+    public func configHorizontalLines(with view: UIView) {
+        richTextView.insertSubview(view, at: 0)
     }
 
     /// Invokes async text resolution to resolve on demand.
