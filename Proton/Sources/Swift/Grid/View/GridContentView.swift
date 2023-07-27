@@ -283,38 +283,43 @@ class GridContentView: UIScrollView {
         recalculateCellBounds()
     }
 
-    private func recalculateCellBounds() {
+    private func recalculateCellBounds(initiatingCell: GridCell? = nil) {
         frozenRowsConstraints.forEach { $0.isActive = false }
         frozenColumnsConstraints.forEach { $0.isActive = false }
         removeConstraints(frozenRowsConstraints + frozenColumnsConstraints)
 
-        for c in grid.cells.reversed() {
+        var cells = grid.cells
+        if let initiatingCell {
+            cells = [initiatingCell]
+        }
+
+        for cell in cells {
             // TODO: Optimize to recalculate frames for affected cells only i.e. row>=current
 
             // Set the frame of the cell before adding to superview
             // This is required to avoid breaking layout constraints
             // as default size is 0
-            let frame = grid.frameForCell(c, basedOn: bounds.size)
-            c.frame = frame
-            c.contentView.frame = frame
-            c.widthAnchorConstraint.constant = frame.width
-            c.heightAnchorConstraint.constant = frame.height
+            let frame = grid.frameForCell(cell, basedOn: bounds.size)
+            cell.frame = frame
+            cell.contentView.frame = frame
+            cell.widthAnchorConstraint.constant = frame.width
+            cell.heightAnchorConstraint.constant = frame.height
 
             // Add to grid if this is a newly inserted cell after initial setup.
             // A new cell may exist as a result of inserting a new row/column
             // or splitting an existing merged cell
-            if c.contentView.superview == nil {
-                addSubview(c.contentView)
-                c.topAnchorConstraint = c.contentView.topAnchor.constraint(equalTo: topAnchor, constant: frame.minY)
-                c.leadingAnchorConstraint = c.contentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: frame.minX)
+            if cell.contentView.superview == nil {
+                addSubview(cell.contentView)
+                cell.topAnchorConstraint = cell.contentView.topAnchor.constraint(equalTo: topAnchor, constant: frame.minY)
+                cell.leadingAnchorConstraint = cell.contentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: frame.minX)
             } else {
-                c.topAnchorConstraint?.constant = frame.minY
-                c.leadingAnchorConstraint?.constant = frame.minX
+                cell.topAnchorConstraint?.constant = frame.minY
+                cell.leadingAnchorConstraint?.constant = frame.minX
             }
 
-            freezeColumnCellIfRequired(c)
-            freezeRowCellIfRequired(c)
-            gridContentViewDelegate?.gridContentView(self, didLayoutCell: c)
+            freezeColumnCellIfRequired(cell)
+            freezeRowCellIfRequired(cell)
+            gridContentViewDelegate?.gridContentView(self, didLayoutCell: cell)
         }
 
         boundsObserver?.didChangeBounds(CGRect(origin: bounds.origin, size: frame.size), oldBounds: bounds)
@@ -404,7 +409,7 @@ extension GridContentView: GridCellDelegate {
             grid.rowHeights[row].currentHeight = grid.maxContentHeightCellForRow(at: row)?.contentSize.height ?? 0
         }
 
-        recalculateCellBounds()
+        recalculateCellBounds(initiatingCell: cell)
         gridContentViewDelegate?.gridContentView(self, didChangeBounds: cell.frame, in: cell)
     }
 
