@@ -329,6 +329,14 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     public override func attachmentBounds(for textContainer: NSTextContainer?, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGRect {
         self.indexInContainer = charIndex
 
+        // When calculating size of EditorView, this may be called on the background thread. Since size of attachment depends on contained view,
+        // we need to put the bounds calculation back on main.
+        guard Thread.isMainThread else {
+            return DispatchQueue.main.sync {
+                attachmentBounds(for: textContainer, proposedLineFragment: lineFrag, glyphPosition: position, characterIndex: charIndex)
+            }
+        }
+
         guard let textContainer = textContainer,
               textContainer.size.height > 0,
               textContainer.size.width > 0
