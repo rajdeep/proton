@@ -65,8 +65,10 @@ class AutogrowingTextView: UITextView {
     private func recalculateHeight() {
         let bounds = self.bounds.integral
         let fittingSize = self.calculatedSize(attributedText: attributedText, frame: frame.size, textContainerInset: textContainerInset)
+
         self.isScrollEnabled = (fittingSize.height > bounds.height) || (self.maxHeight > 0 && self.maxHeight < fittingSize.height)
-        heightAnchorConstraint.constant = min(fittingSize.height, contentSize.height)
+        self.heightAnchorConstraint.constant = min(fittingSize.height, self.contentSize.height)
+
     }
 
     override open func sizeThatFits(_ size: CGSize) -> CGSize {
@@ -90,11 +92,13 @@ class AutogrowingTextView: UITextView {
     }
 
     private func calculatedSize(attributedText: NSAttributedString, frame: CGSize, textContainerInset: UIEdgeInsets) -> CGSize {
-        // Adjust for horizontal paddings in textview to exclude from overall available width for attachment
-        let horizontalAdjustments = (textContainer.lineFragmentPadding * 2) + (textContainerInset.left + textContainerInset.right)
-        let boundingRect = attributedText.boundingRect(with: CGSize(width: frame.width - horizontalAdjustments, height: .greatestFiniteMagnitude), options: [.usesLineFragmentOrigin], context: nil).integral
+        DispatchQueue.global(qos: .userInteractive).sync { [lineFragmentPadding = textContainer.lineFragmentPadding ]  in
+            // Adjust for horizontal paddings in textview to exclude from overall available width for attachment
+            let horizontalAdjustments = (lineFragmentPadding * 2) + (textContainerInset.left + textContainerInset.right)
+            let boundingRect = attributedText.boundingRect(with: CGSize(width: frame.width - horizontalAdjustments, height: .greatestFiniteMagnitude), options: [.usesLineFragmentOrigin], context: nil).integral
 
-        let insets = UIEdgeInsets(top: -textContainerInset.top, left: -textContainerInset.left, bottom: -textContainerInset.bottom, right: -textContainerInset.right)
-        return boundingRect.inset(by: insets).size
+            let insets = UIEdgeInsets(top: -textContainerInset.top, left: -textContainerInset.left, bottom: -textContainerInset.bottom, right: -textContainerInset.right)
+            return boundingRect.inset(by: insets).size
+        }
     }
 }
