@@ -26,6 +26,8 @@ class RichTextView: AutogrowingTextView {
     
     /// Equivalent, strongly-typed alternative to `textStorage`
     private let richTextStorage = PRTextStorage()
+    private var didTapTask: DispatchWorkItem?
+
     static let defaultListLineFormatting = LineFormatting(indentation: 25, spacingBefore: 0)
 
     weak var richTextViewDelegate: RichTextViewDelegate?
@@ -506,16 +508,27 @@ class RichTextView: AutogrowingTextView {
     }
 
     func didTap(at location: CGPoint) {
-        context?.selectedTextView = self
-        let characterRange = rangeOfCharacter(at: location)
-        richTextViewDelegate?.richTextView(self, didTapAtLocation: location, characterRange: characterRange)
+        // didTap is being invoked by hitTest which in turn can be invoked multiple times.
+        // To avoid issue of didTapAtLocation being invoked multiple times, debounce has been added.
+        didTapTask?.cancel()
+        let task = DispatchWorkItem { [weak self] in
+            guard let self else { return }
+            context?.selectedTextView = self
+            let characterRange = self.rangeOfCharacter(at: location)
+            self.richTextViewDelegate?.richTextView(self, didTapAtLocation: location, characterRange: characterRange)
+        }
+        didTapTask = task
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: task)
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let touch = touches.first {
-            let position = touch.location(in: self)
-            didTap(at: position)
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if super.hitTest(point, with: event) == self,
+            bounds.contains(point),
+           event?.type == .touches {
+            didTap(at: point)
         }
+
+        return super.hitTest(point, with: event)
     }
 
     // When a user enables `Use keyboard navigation to move focus between controls` it enables the focus system in the app.
