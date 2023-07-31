@@ -37,13 +37,18 @@ class GridViewTests: XCTestCase {
 
     func testFocusesCell() {
         let expectation = functionExpectation()
+        expectation.expectedFulfillmentCount = 2
+
         let context = EditorViewContext.shared
         let gridView = GridView(config: config)
         let delegate = MockGridViewDelegate()
+        let editorDelegate = MockEditorViewDelegate()
+
         gridView.delegate = delegate
 
         let rangeToSelect = NSRange(location: 2, length: 2)
         let focusedCell = gridView.cellAt(rowIndex: 2, columnIndex: 1)!
+        focusedCell.editor.delegate = editorDelegate
 
         delegate.onDidReceiveFocus = { grid, range, cell in
             XCTAssertEqual(grid, gridView)
@@ -51,6 +56,13 @@ class GridViewTests: XCTestCase {
             XCTAssertEqual(focusedCell, cell)
             expectation.fulfill()
         }
+
+        editorDelegate.onReceivedFocus = { editor, range in
+            XCTAssertEqual(editor, focusedCell.editor)
+            XCTAssertEqual(range, rangeToSelect)
+            expectation.fulfill()
+        }
+
         focusedCell.editor.replaceCharacters(in: .zero, with: "This is a test string")
         focusedCell.editor.selectedRange = rangeToSelect
         context.richTextViewContext.textViewDidBeginEditing(focusedCell.editor.richTextView)
@@ -60,13 +72,19 @@ class GridViewTests: XCTestCase {
 
     func testResignsFocusFromCell() {
         let expectation = functionExpectation()
+        expectation.expectedFulfillmentCount = 2
+
         let context = EditorViewContext.shared
         let gridView = GridView(config: config)
         let delegate = MockGridViewDelegate()
+        let editorDelegate = MockEditorViewDelegate()
+
         gridView.delegate = delegate
+
 
         let rangeToSelect = NSRange(location: 2, length: 2)
         let focusedCell = gridView.cellAt(rowIndex: 2, columnIndex: 1)!
+        focusedCell.editor.delegate = editorDelegate
 
         delegate.onDidLoseFocus = { grid, range, cell in
             XCTAssertEqual(grid, gridView)
@@ -74,6 +92,14 @@ class GridViewTests: XCTestCase {
             XCTAssertEqual(focusedCell, cell)
             expectation.fulfill()
         }
+
+        editorDelegate.onLostFocus = { editor, range in
+            XCTAssertEqual(editor, focusedCell.editor)
+            XCTAssertEqual(range, rangeToSelect)
+            expectation.fulfill()
+        }
+
+
         focusedCell.editor.replaceCharacters(in: .zero, with: "This is a test string")
         focusedCell.editor.selectedRange = rangeToSelect
         context.richTextViewContext.textViewDidBeginEditing(focusedCell.editor.richTextView)
@@ -116,13 +142,18 @@ class GridViewTests: XCTestCase {
 
     func testTapAtLocationInCell() {
         let expectation = functionExpectation()
+        expectation.expectedFulfillmentCount = 2
 
         let gridView = GridView(config: config)
         let delegate = MockGridViewDelegate()
+        let editorDelegate = MockEditorViewDelegate()
+
         gridView.delegate = delegate
 
         let expectedCell = gridView.cellAt(rowIndex: 2, columnIndex: 1)
         let point = CGPoint(x: 40, y: 20)
+
+        expectedCell?.editor.delegate = editorDelegate
 
         delegate.onDidTapAtLocation = { grid, location, range , cell in
             XCTAssertEqual(grid, gridView)
@@ -131,6 +162,14 @@ class GridViewTests: XCTestCase {
             XCTAssertEqual(expectedCell, cell)
             expectation.fulfill()
         }
+
+        editorDelegate.onDidTapAtLocation = { editor, location, range  in
+            XCTAssertEqual(editor, expectedCell?.editor)
+            XCTAssertEqual(location, point)
+            XCTAssertEqual(range, NSRange(location: 4, length: 1))
+            expectation.fulfill()
+        }
+
         expectedCell?.editor.replaceCharacters(in: .zero, with: "This is a test string")
         gridView.render()
         expectedCell?.editor.richTextView.didTap(at: CGPoint(x: 40, y: 20))
@@ -140,14 +179,17 @@ class GridViewTests: XCTestCase {
 
     func testChangeSelectionInCell() {
         let expectation = functionExpectation()
+        expectation.expectedFulfillmentCount = 2
 
         let gridView = GridView(config: config)
         let delegate = MockGridViewDelegate()
+        let editorDelegate = MockEditorViewDelegate()
         gridView.delegate = delegate
 
         let expectedCell = gridView.cellAt(rowIndex: 2, columnIndex: 1)
         let rangeToSelect = NSRange(location: 4, length: 3)
 
+        expectedCell?.editor.delegate = editorDelegate
         delegate.onDidChangeSelection = { grid, range, attributes, _, cell in
             XCTAssertEqual(grid, gridView)
             XCTAssertEqual(range, rangeToSelect)
@@ -156,6 +198,15 @@ class GridViewTests: XCTestCase {
 
             expectation.fulfill()
         }
+
+        editorDelegate.onSelectionChanged = { editor, range, attributes, _ in
+            XCTAssertEqual(editor, expectedCell?.editor)
+            XCTAssertEqual(range, rangeToSelect)
+            XCTAssertFalse(attributes.isEmpty)
+
+            expectation.fulfill()
+        }
+
         expectedCell?.editor.replaceCharacters(in: .zero, with: "This is a test string")
         gridView.render()
         expectedCell?.editor.selectedRange = rangeToSelect

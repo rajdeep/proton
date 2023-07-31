@@ -223,7 +223,7 @@ public class GridCell {
     private func setup() {
         editor.translatesAutoresizingMaskIntoConstraints = false
         editor.boundsObserver = self
-        editor.delegate = self
+        editor.richTextView.richTextViewDelegate = self
         contentView.addSubview(editor)
 
         NSLayoutConstraint.activate([
@@ -254,26 +254,37 @@ extension GridCell: BoundsObserving {
     }
 }
 
-extension GridCell: EditorViewDelegate {
-    public func editor(_ editor: EditorView, didReceiveFocusAt range: NSRange) {
+extension GridCell: RichTextViewDelegate {
+    func richTextView(_ richTextView: RichTextView, didReceiveFocusAt range: NSRange) {
         delegate?.cell(self, didReceiveFocusAt: range)
+        editor.delegate?.editor(editor, didReceiveFocusAt: range)
     }
 
-    public func editor(_ editor: EditorView, didLoseFocusFrom range: NSRange) {
+    func richTextView(_ richTextView: RichTextView, didLoseFocusFrom range: NSRange) {
         delegate?.cell(self, didLoseFocusFrom: range)
+        editor.delegate?.editor(editor, didLoseFocusFrom: range)
     }
 
-    public func editor(_ editor: EditorView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
+    func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
         delegate?.cell(self, didTapAtLocation: location, characterRange: characterRange)
+        editor.delegate?.editor(editor, didTapAtLocation: location, characterRange: characterRange)
     }
 
-    public func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name) {
+    func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name) {
         delegate?.cell(self, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
+        editor.delegate?.editor(editor, didChangeSelectionAt: range, attributes: attributes, contentType: contentType)
     }
 
-    public func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange) {
+    func richTextView(_ richTextView: RichTextView, didReceiveKey key: EditorKey, at range: NSRange) {
         delegate?.cell(self, didReceiveKey: key, at: range)
+        editor.delegate?.editor(editor, didReceiveKey: key, at: range)
     }
+
+    func richTextView(_ richTextView: RichTextView, shouldHandle key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange, handled: inout Bool) { }
+    func richTextView(_ richTextView: RichTextView, didReceive key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange) { }
+    func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool) { }
+    func richTextView(_ richTextView: RichTextView, didChangeTextAtRange range: NSRange) { }
+    func richTextView(_ richTextView: RichTextView, selectedRangeChangedFrom oldRange: NSRange?, to newRange: NSRange?) { }
 }
 
 extension GridCell: Equatable {

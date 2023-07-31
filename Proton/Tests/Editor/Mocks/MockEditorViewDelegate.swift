@@ -32,6 +32,7 @@ class MockEditorViewDelegate: EditorViewDelegate {
     var onDidExecuteProcessors: ((EditorView, [TextProcessing], NSRange) -> Void)?
     var onDidChangeSize: ((EditorView, CGSize, CGSize) -> Void)?
     var onDidChangeEditable: ((EditorView, Bool) -> Void)?
+    var onDidTapAtLocation: ((EditorView, CGPoint, NSRange?) -> Void)?
 
     func editor(_ editor: EditorView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
         onSelectionChanged?(editor, range, attributes, contentType)
@@ -70,7 +71,7 @@ class MockEditorViewDelegate: EditorViewDelegate {
     }
 
     func editor(_ editor: Proton.EditorView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
-
+        onDidTapAtLocation?(editor, location, characterRange)
     }
 
     func editor(_ editor: Proton.EditorView, didLayout content: NSAttributedString) {
