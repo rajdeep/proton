@@ -1278,8 +1278,49 @@ extension EditorView {
                 }
             }
 
+
             attachment.frame = frame
+            richTextView.layoutManager.setAttachmentSize(frame.size, forGlyphRange: range)
         }
+    }
+
+    func relayout(attachment: Attachment) {
+        if attachment.isImageBasedAttachment {
+            attachment.setContainerEditor(self)
+            return
+        }
+
+        guard let attachmentFrame = attachment.frame,
+              let range = attachment.rangeInContainer() else { return }
+
+        // Remove attachment from container if it is already added to another Editor
+        // for e.g. when moving text with attachment into another attachment
+        if attachment.containerEditorView != self {
+            attachment.removeFromContainer()
+        }
+
+        let glyphRange = richTextView.glyphRange(forCharacterRange: range)
+        var frame = richTextView.boundingRect(forGlyphRange: glyphRange)
+        frame.origin.y += self.textContainerInset.top
+
+        var size = attachmentFrame.size
+        if size == .zero,
+           let contentSize = attachment.contentView?.systemLayoutSizeFitting(bounds.size) {
+            size = contentSize
+        }
+
+        var adjustedOrigin = frame.origin
+        adjustedOrigin.x += textContainerInset.left
+        frame = CGRect(origin: adjustedOrigin, size: size)
+
+        if attachment.isRendered == false {
+            attachment.render(in: self)
+            if !isSettingAttributedText, let focusable = attachment.contentView as? Focusable {
+                focusable.setFocus()
+            }
+        }
+
+        attachment.frame = frame
     }
 }
 

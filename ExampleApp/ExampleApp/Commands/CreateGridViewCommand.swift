@@ -33,10 +33,10 @@ public class CreateGridViewCommand: EditorCommand {
 
         text.append(NSAttributedString(string: "lkahjsd ljaksljd jaskld \nakljshd ahs dhkjsaj \nakjhds kjhas"))
 //        text.append(makeGridViewAttachment(numRows: 50, numColumns: 20).string)
-        for i in 0..<5 {
-            let attachment = PanelAttachment(frame: CGRect(origin: .zero, size: CGSize(width: 1, height: 1)))
+        for i in 0..<500 {
+            let attachment = PanelAttachment(frame: .zero)
             attachment.view.editor.maxHeight = .infinite
-            attachment.view.editor.attributedText = NSAttributedString(string: "*\(i)* kj jhjk hkj jkjkjkh jh jkh jk hjkhjk k hjkhkj hkjh kj")
+            attachment.view.editor.attributedText = NSAttributedString(string: "*\(i)* kj jhjk hkj jkjkjkh j")
             text.append(attachment.string)
             text.append(NSAttributedString(string: "\n"))
         }

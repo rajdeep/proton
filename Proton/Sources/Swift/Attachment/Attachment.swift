@@ -474,7 +474,8 @@ extension Attachment {
               let range = editor.attributedText.rangeFor(attachment: self)
         else { return }
         cachedBounds = nil
-        editor.invalidateLayout(for: range)
+        editor.relayout(attachment: self)
+//        editor.invalidateLayout(for: range)
 //        editor.relayoutAttachments(in: range)
     }
 }
