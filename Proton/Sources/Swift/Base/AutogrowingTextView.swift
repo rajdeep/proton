@@ -51,14 +51,11 @@ class AutogrowingTextView: UITextView {
         super.layoutSubviews()
         guard allowAutogrowing, maxHeight != .greatestFiniteMagnitude else { return }
         // Required to reset the size if content is removed
-        if contentSize.height <= frame.height {
+        if contentSize.height < frame.height {
             recalculateHeight()
             invalidateIntrinsicContentSize()
             return
         }
-
-        guard isSizeRecalculationRequired else { return }
-        isSizeRecalculationRequired = false
         recalculateHeight()
     }
 
@@ -92,13 +89,17 @@ class AutogrowingTextView: UITextView {
     }
 
     private func calculatedSize(attributedText: NSAttributedString, frame: CGSize, textContainerInset: UIEdgeInsets) -> CGSize {
-        DispatchQueue.global(qos: .userInteractive).sync { [lineFragmentPadding = textContainer.lineFragmentPadding ]  in
-            // Adjust for horizontal paddings in textview to exclude from overall available width for attachment
-            let horizontalAdjustments = (lineFragmentPadding * 2) + (textContainerInset.left + textContainerInset.right)
-            let boundingRect = attributedText.boundingRect(with: CGSize(width: frame.width - horizontalAdjustments, height: .greatestFiniteMagnitude), options: [.usesLineFragmentOrigin], context: nil).integral
-
-            let insets = UIEdgeInsets(top: -textContainerInset.top, left: -textContainerInset.left, bottom: -textContainerInset.bottom, right: -textContainerInset.right)
-            return boundingRect.inset(by: insets).size
+        var boundingRect: CGRect
+        let lineFragmentPadding = textContainer.lineFragmentPadding
+        let horizontalAdjustments = (lineFragmentPadding * 2) + (textContainerInset.left + textContainerInset.right)
+        if contentSize.height >= bounds.height {
+            boundingRect = CGRect(origin: .zero, size: contentSize).integral //attributedText.boundingRect(with: CGSize(width: frame.width - horizontalAdjustments, height: .greatestFiniteMagnitude), options: [.usesLineFragmentOrigin], context: nil).integral
+        } else {
+            boundingRect = attributedText.boundingRect(with: CGSize(width: frame.width - horizontalAdjustments, height: .greatestFiniteMagnitude), options: [.usesLineFragmentOrigin], context: nil).integral
         }
+
+        // Adjust for horizontal paddings in textview to exclude from overall available width for attachment
+        let insets = UIEdgeInsets(top: -textContainerInset.top, left: -textContainerInset.left, bottom: -textContainerInset.bottom, right: -textContainerInset.right)
+        return boundingRect.inset(by: insets).size
     }
 }

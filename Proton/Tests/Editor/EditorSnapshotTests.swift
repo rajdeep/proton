@@ -27,7 +27,6 @@ import SnapshotTesting
 class EditorSnapshotTests: SnapshotTestCase {
     override func setUp() {
         super.setUp()
-        recordMode = false
     }
 
     func testRendersPlaceholder() {
