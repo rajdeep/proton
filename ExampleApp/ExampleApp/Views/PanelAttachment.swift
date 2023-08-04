@@ -28,7 +28,7 @@ class PanelAttachment: Attachment {
 
     init(frame: CGRect) {
         view = PanelView(frame: frame)
-        super.init(view, size: .fullWidth)
+        super.init(view, size: .fullWidth, backgroundColor: .red)
         view.delegate = self
         view.boundsObserver = self
     }

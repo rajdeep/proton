@@ -178,7 +178,9 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
     /// The bounds rectangle, which describes the attachment's location and size in its own coordinate system.
     public override var bounds: CGRect {
-        didSet { view?.bounds = bounds }
+        didSet {
+            self.view?.frame = CGRect(origin: view?.frame.origin ?? bounds.origin, size: bounds.size)
+        }
     }
 
     /// Initializes an attachment with the image provided.
@@ -347,11 +349,21 @@ open class Attachment: NSTextAttachment, BoundsObserving {
             return bounds
         }
 
+        if !isRendered,
+           let editor = (textContainer as? TextContainer)?.textView?.editorView {
+            render(in: editor)
+        }
+
         guard case let AttachmentContent.view(view, attachmentSize) = self.content,
               let containerEditorView = containerEditorView,
               containerEditorView.bounds.size != .zero else {
             return self.frame ?? bounds
         }
+
+        let originX = position.x + textContainer.lineFragmentPadding
+        let originY = position.y + containerEditorView.textContainerInset.top
+
+        self.frame?.origin = CGPoint(x: originX, y: originY)
 
         if let cachedBounds = cachedBounds,
             (cachedContainerSize == containerEditorView.bounds.size) {
@@ -416,13 +428,16 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
         let offset = offsetProvider?.offset(for: self, in: textContainer, proposedLineFragment: adjustedLineFrag, glyphPosition: position, characterIndex: charIndex) ?? .zero
 
+        
+        let frameToRender = CGRect(origin: CGPoint(x: originX, y: originY), size: size)
+
         self.bounds = CGRect(origin: offset, size: size)
         cachedBounds = self.bounds
         cachedContainerSize = containerEditorView.bounds.size
-        var frame = self.frame?.offsetBy(dx: offset.x, dy: offset.y)
-        frame?.size = bounds.size
+        var frame = frameToRender.offsetBy(dx: offset.x, dy: offset.y)
+//        frame?.size = bounds.size
 
-        self.frame = frame ?? view.frame
+        self.frame = frame //?? view.frame
         return self.bounds
     }
 

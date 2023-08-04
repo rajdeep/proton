@@ -1220,7 +1220,7 @@ extension EditorView: RichTextViewDelegate {
 
     func richTextView(_ richTextView: RichTextView, didFinishLayout finished: Bool) {
         guard finished else { return }
-        relayoutAttachments()
+//        relayoutAttachments()
         resolveAsyncText()
         AggregateEditorViewDelegate.editor(self, didLayout: attributedText)
     }
@@ -1271,15 +1271,15 @@ extension EditorView {
             adjustedOrigin.x += textContainerInset.left
             frame = CGRect(origin: adjustedOrigin, size: size)
 
-            if attachment.isRendered == false {
-                attachment.render(in: self)
-                if !isSettingAttributedText, let focusable = attachment.contentView as? Focusable {
-                    focusable.setFocus()
-                }
-            }
+//            if attachment.isRendered == false {
+//                attachment.render(in: self)
+//                if !isSettingAttributedText, let focusable = attachment.contentView as? Focusable {
+//                    focusable.setFocus()
+//                }
+//            }
 
 
-            attachment.frame = frame
+//            attachment.frame = frame
             richTextView.layoutManager.setAttachmentSize(frame.size, forGlyphRange: range)
         }
     }
