@@ -324,6 +324,7 @@ class RichTextView: AutogrowingTextView {
     }
 
     private func setupPlaceholder() {
+        return
         placeholderLabel.accessibilityIdentifier = "RichTextView.placeholderLabel"
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
         placeholderLabel.numberOfLines = 0
