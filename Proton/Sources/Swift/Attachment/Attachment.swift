@@ -339,20 +339,21 @@ open class Attachment: NSTextAttachment, BoundsObserving {
             }
         }
 
-        guard let textContainer = textContainer,
-              textContainer.size.height > 0,
-              textContainer.size.width > 0
-        else { return .zero }
-
         if isImageBasedAttachment {
             cachedBounds = bounds
             return bounds
         }
 
+
         if !isRendered,
            let editor = (textContainer as? TextContainer)?.textView?.editorView {
             render(in: editor)
         }
+
+        guard let textContainer = textContainer,
+              textContainer.size.height > 0,
+              textContainer.size.width > 0
+        else { return .zero }
 
         guard case let AttachmentContent.view(view, attachmentSize) = self.content,
               let containerEditorView = containerEditorView,
@@ -489,8 +490,8 @@ extension Attachment {
               let range = editor.attributedText.rangeFor(attachment: self)
         else { return }
         cachedBounds = nil
-        editor.relayout(attachment: self)
-//        editor.invalidateLayout(for: range)
+//        editor.relayout(attachment: self)
+        editor.invalidateLayout(for: range)
 //        editor.relayoutAttachments(in: range)
     }
 }
