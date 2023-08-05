@@ -213,8 +213,6 @@ class RichTextView: AutogrowingTextView {
 
         self.backgroundColor = defaultBackgroundColor
         self.textColor = defaultTextColor
-
-        setupPlaceholder()
     }
 
     var contentLength: Int {
