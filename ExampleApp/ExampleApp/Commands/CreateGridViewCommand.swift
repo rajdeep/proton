@@ -27,34 +27,34 @@ public class CreateGridViewCommand: EditorCommand {
 
     public let name = CommandName("createGridViewCommand")
     weak var delegate: GridViewDelegate?
+    var text = NSMutableAttributedString()
+
     public init(delegate: GridViewDelegate) {
         self.delegate = delegate
+
+        text.append(NSAttributedString(string: "Text before Grid"))
+        text.append(makeGridViewAttachment(numRows: 5, numColumns: 5).string)
+        text.append(NSAttributedString(string: "Text before Grid"))
     }
 
     public func execute(on editor: EditorView) {
-        let config = GridConfiguration(
-            columnsConfiguration: [
-//                GridColumnConfiguration(dimension: .fixed(150)),
-                GridColumnConfiguration(width: .fractional(0.25)),
-                GridColumnConfiguration(width: .fractional(0.25)),
-                GridColumnConfiguration(width: .fractional(0.25)),
-                GridColumnConfiguration(width: .fractional(0.25)),
-                GridColumnConfiguration(width: .fractional(0.25)),
-                GridColumnConfiguration(width: .fractional(0.25)),
-            ],
-            rowsConfiguration: [
-                GridRowConfiguration(initialHeight: 40),
-                GridRowConfiguration(initialHeight: 80),
-                GridRowConfiguration(initialHeight: 120),
-                GridRowConfiguration(initialHeight: 40),
-                GridRowConfiguration(initialHeight: 80),
-                GridRowConfiguration(initialHeight: 120),
-            ])
+        editor.attributedText = text
+    }
 
-        let attachment = GridViewAttachment(config: config)
-        attachment.selectBeforeDelete = true
-        attachment.view.delegate = delegate
-//        attachment.view.setColumnResizing(true)
-        editor.insertAttachment(in: editor.selectedRange, attachment: attachment)
+    private func makeGridViewAttachment(numRows: Int, numColumns: Int) -> GridViewAttachment {
+        let config = GridConfiguration(columnsConfiguration: [GridColumnConfiguration](repeating: GridColumnConfiguration(width: .fixed(100)), count: numColumns),
+                                       rowsConfiguration: [GridRowConfiguration](repeating: GridRowConfiguration(initialHeight: 40), count: numRows))
+
+        var cells = [GridCell]()
+        for row in 0..<numRows {
+            for col in 0..<numColumns {
+                let cell = GridCell(rowSpan: [row], columnSpan: [col], initialHeight: 20)
+                cell.editor.isEditable = false
+                cell.editor.attributedText = NSAttributedString(string: "{\(row), \(col)} Text in cell")
+                cells.append(cell)
+            }
+        }
+
+        return GridViewAttachment(config: config, cells: cells)
     }
 }
