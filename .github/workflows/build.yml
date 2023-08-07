@@ -23,7 +23,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build and Test Proton
       run: xcodebuild -resultBundlePath TestResults -scheme "Proton" -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.4" clean test
-    - uses: kishikawakatsumi/xcresulttool@v1
+    - name: Compile Test results  
+      uses: kishikawakatsumi/xcresulttool@v1
       with:
         path: TestResults.xcresult
       if: success() || failure()
