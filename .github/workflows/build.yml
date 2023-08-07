@@ -17,7 +17,7 @@ jobs:
 
     steps:
     - name: Select Xcode
-      run: sudo xcode-select -switch /Applications/Xcode_14.3.app
+      run: sudo xcode-select -switch /Applications/Xcode_14.3.1.app
     - name: Xcode version
       run: /usr/bin/xcodebuild -version    
     - uses: actions/checkout@v2
