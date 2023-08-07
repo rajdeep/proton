@@ -473,8 +473,7 @@ extension Attachment {
         guard let editor = containerEditorView,
               let range = editor.attributedText.rangeFor(attachment: self)
         else { return }
-        cachedBounds = contentView?.bounds
-        bounds = cachedBounds ?? bounds
+        cachedBounds = nil
         editor.invalidateLayout(for: range)
     }
 }
