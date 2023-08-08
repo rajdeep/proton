@@ -475,7 +475,6 @@ extension Attachment {
         else { return }
         cachedBounds = nil
         editor.invalidateLayout(for: range)
-//        editor.relayoutAttachments(in: range)
     }
 }
 

@@ -37,11 +37,19 @@ class RichTextView: AutogrowingTextView {
         set { richTextStorage.defaultTextFormattingProvider = newValue }
     }
 
-    private let placeholderLabel = UILabel()
+    private lazy var placeholderLabel: UILabel = {
+        let placeholderLabel = UILabel()
+        placeholderLabel.accessibilityIdentifier = "RichTextView.placeholderLabel"
+        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
+        placeholderLabel.numberOfLines = 0
+        placeholderLabel.lineBreakMode = .byTruncatingTail
+        return placeholderLabel
+    }()
 
     var placeholderText: NSAttributedString? {
         didSet {
             placeholderLabel.attributedText = placeholderText
+            updatePlaceholderVisibility()
         }
     }
 
@@ -213,8 +221,6 @@ class RichTextView: AutogrowingTextView {
 
         self.backgroundColor = defaultBackgroundColor
         self.textColor = defaultTextColor
-
-        setupPlaceholder()
     }
 
     var contentLength: Int {
@@ -324,17 +330,12 @@ class RichTextView: AutogrowingTextView {
     }
 
     private func setupPlaceholder() {
-        placeholderLabel.accessibilityIdentifier = "RichTextView.placeholderLabel"
-        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
-        placeholderLabel.numberOfLines = 0
-        placeholderLabel.lineBreakMode = .byTruncatingTail
-
         placeholderLabel.removeFromSuperview()
         addSubview(placeholderLabel)
         placeholderLabel.attributedText = placeholderText
 
         let placeholderLabelWidthConstraint = placeholderLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -textContainer.lineFragmentPadding - textContainerInset.right)
-        placeholderLabelWidthConstraint.priority = .defaultHigh
+        placeholderLabelWidthConstraint.priority = .init(UILayoutPriority.required.rawValue - 1)
 
         NSLayoutConstraint.activate([
             placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: textContainerInset.top),
@@ -453,7 +454,8 @@ class RichTextView: AutogrowingTextView {
     }
 
     private func updatePlaceholderVisibility() {
-        guard self.attributedText.length == 0 else {
+        guard (placeholderText ?? NSAttributedString(string: "")).string.count > 0,
+            self.attributedText.length == 0 else {
             if placeholderLabel.superview != nil {
                 placeholderLabel.removeFromSuperview()
             }

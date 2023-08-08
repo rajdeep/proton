@@ -28,8 +28,15 @@ extension EditorContent.Name {
 
 public class GridViewAttachment: Attachment {
     public let view: GridView
+
     public init(config: GridConfiguration) {
         view = GridView(config: config)
+        super.init(view, size: .fullWidth)
+        view.boundsObserver = self
+    }
+
+    public init(config: GridConfiguration, cells: [GridCell]) {
+        view = GridView(config: config, cells: cells)
         super.init(view, size: .fullWidth)
         view.boundsObserver = self
     }
