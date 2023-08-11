@@ -43,6 +43,11 @@ class MasterViewController: UITableViewController {
             NavigationItem(title: "Width Range", viewController: { WidthRangeAttachmentExampleViewController() }),
             NavigationItem(title: "Percent Width", viewController: { PercentWidthAttachmentExampleViewController() }),
             NavigationItem(title: "TableView", viewController: { TableViewExampleViewController() }),
+            NavigationItem(title: "ScrollView", viewController: {
+                let vc = ScrollViewExampleViewController()
+                vc.setupText()
+                return vc
+            }),
         ]),
         Navigation(title: "Advanced features", items: [
             NavigationItem(title: "Commands", viewController: { CommandsExampleViewController() }),

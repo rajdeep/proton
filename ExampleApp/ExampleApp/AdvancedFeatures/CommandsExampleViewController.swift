@@ -95,6 +95,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         buttons.first(where: { $0.titleLabel?.text == "Merge" })?.isSelected = false
 
         editor.translatesAutoresizingMaskIntoConstraints = false
+        editor.isScrollEnabled = true
         view.addSubview(editor)
 
         editor.layer.borderColor = UIColor.systemBlue.cgColor
