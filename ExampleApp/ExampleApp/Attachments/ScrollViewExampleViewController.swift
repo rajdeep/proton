@@ -56,13 +56,13 @@ class ScrollViewExampleViewController: ExamplesBaseViewController {
         contentView.axis = .vertical
 
         let contentMargin = 0.0
-//        let sa = scrollView.contentLayoutGuide
-//        NSLayoutConstraint.activate([
-//            editor.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: contentMargin),
-//            editor.leadingAnchor.constraint(equalTo: sa.leadingAnchor, constant: contentMargin),
-//            editor.trailingAnchor.constraint(equalTo: sa.trailingAnchor, constant: -contentMargin),
-//            editor.bottomAnchor.constraint(equalTo: sa.bottomAnchor, constant: -contentMargin)
-//        ])
+        let sa = scrollView.contentLayoutGuide
+        NSLayoutConstraint.activate([
+            editor.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: contentMargin),
+            editor.leadingAnchor.constraint(equalTo: sa.leadingAnchor, constant: contentMargin),
+            editor.trailingAnchor.constraint(equalTo: sa.trailingAnchor, constant: -contentMargin),
+            editor.bottomAnchor.constraint(equalTo: sa.bottomAnchor, constant: -contentMargin)
+        ])
 
         scrollView.layer.borderColor = UIColor.label.cgColor
         scrollView.layer.borderWidth = 1.0
