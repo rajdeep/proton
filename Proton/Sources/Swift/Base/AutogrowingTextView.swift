@@ -25,6 +25,7 @@ class AutogrowingTextView: UITextView {
 
     var maxHeight: CGFloat = 0
     private var allowAutogrowing: Bool
+    var allowScrolling: Bool = false
     weak var boundsObserver: BoundsObserving?
     private var maxHeightConstraint: NSLayoutConstraint!
     private var heightAnchorConstraint: NSLayoutConstraint!
@@ -36,11 +37,11 @@ class AutogrowingTextView: UITextView {
         isScrollEnabled = false
         heightAnchorConstraint = heightAnchor.constraint(greaterThanOrEqualToConstant: contentSize.height)
         heightAnchorConstraint.priority = .defaultHigh
-        if allowAutogrowing {
+//        if allowAutogrowing {
             NSLayoutConstraint.activate([
                 heightAnchorConstraint
             ])
-        }
+//        }
     }
 
     required init?(coder: NSCoder) {
@@ -66,7 +67,7 @@ class AutogrowingTextView: UITextView {
         let bounds = self.bounds.integral
         let fittingSize = self.calculatedSize(attributedText: attributedText, frame: frame.size, textContainerInset: textContainerInset)
 
-        self.isScrollEnabled = (fittingSize.height > bounds.height) || (self.maxHeight > 0 && self.maxHeight < fittingSize.height)
+        self.isScrollEnabled = allowScrolling && (fittingSize.height > bounds.height) || (self.maxHeight > 0 && self.maxHeight < fittingSize.height)
         self.heightAnchorConstraint.constant = min(fittingSize.height, self.contentSize.height)
 
     }

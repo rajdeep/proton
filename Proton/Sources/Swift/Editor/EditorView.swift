@@ -275,8 +275,8 @@ open class EditorView: UIView {
     }
     
     public var isScrollEnabled: Bool {
-        get { richTextView.isScrollEnabled }
-        set { richTextView.isScrollEnabled = newValue }
+        get { richTextView.allowScrolling }
+        set { richTextView.allowScrolling = newValue }
     }
     
     /// Gets or sets the insets for the text container's layout area within the editor's content area
