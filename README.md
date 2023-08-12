@@ -177,6 +177,74 @@ Let's take an example of a `Panel` and see how that can be created in the `Edito
 
     <img src="https://github.com/rajdeep/proton/raw/main/exampleImages/renderer-find.gif" width="50%" alt="Find in Renderer"/>
 
+## Basic SWIFT UI integration example
+Proton's Editor may be used with SwiftUI same was as a standard UIKit component. SwiftUI support is provided as is, and will be refined on in future.
+
+```swift
+struct ProtonView: View {
+    
+    @Binding var attributedText: NSAttributedString
+    @State var height: CGFloat = 0
+    var body: some View {
+        ProtonWrapperView(attributedText: $attributedText) { view in
+            let height = view.systemLayoutSizeFitting(UIView.layoutFittingExpandedSize).height
+
+            self.height = height
+        }
+        .frame(height: height)
+    }
+}
+
+struct ProtonWrapperView: UIViewRepresentable {
+    
+    @Binding var attributedText: NSAttributedString
+    let textDidChange: (EditorView) -> Void
+
+    
+    func makeUIView(context: Context) -> EditorView {
+        let view = EditorView()
+        view.becomeFirstResponder()
+        view.attributedText = attributedText
+        view.isScrollEnabled = false
+        view.setContentCompressionResistancePriority(.required, for: .vertical)
+
+        view.heightAnchor.constraint(greaterThanOrEqualToConstant: 300).isActive = true
+        
+        DispatchQueue.main.async {
+            self.textDidChange(view)
+        }
+        
+        EditorViewContext.shared.delegate = context.coordinator
+
+        return view
+    }
+    
+    func updateUIView(_ view: EditorView, context: Context) {
+
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject, EditorViewDelegate {
+        var parent: ProtonWrapperView
+        
+        init(_ parent: ProtonWrapperView) {
+            self.parent = parent
+        }
+        
+        func editor(_ editor: EditorView, didChangeTextAt range: NSRange) {
+            editor.isScrollEnabled = false
+            parent.attributedText = editor.attributedText
+            DispatchQueue.main.async {
+                self.parent.textDidChange(editor)
+            }
+        }
+    }
+}
+```
+
 ## Learn more
 
 * Proton API reference is available [here](https://rajdeep.github.io/proton/).
