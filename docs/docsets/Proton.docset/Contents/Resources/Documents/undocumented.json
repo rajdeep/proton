@@ -520,28 +520,28 @@
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 435,
+      "line": 438,
       "symbol": "EditorView.selectedRange",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 703,
+      "line": 706,
       "symbol": "EditorView.setAttributes(_:at:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 1025,
+      "line": 1028,
       "symbol": "EditorView.canPerformAction(_:withSender:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 1264,
+      "line": 1267,
       "symbol": "EditorView.resolveAsyncText()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -962,13 +962,20 @@
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridCell.swift",
       "line": 160,
+      "symbol": "GridCell.init(editor:rowSpan:columnSpan:initialHeight:style:gridStyle:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridCell.swift",
+      "line": 183,
       "symbol": "GridCell.init(rowSpan:columnSpan:initialHeight:style:gridStyle:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridContentView.swift",
-      "line": 420,
+      "line": 424,
       "symbol": "GridContentView.sizeFor(attachment:containerSize:lineRect:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -982,42 +989,42 @@
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridView.swift",
-      "line": 196,
+      "line": 197,
       "symbol": "GridView.selectedCells",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridView.swift",
-      "line": 217,
+      "line": 218,
       "symbol": "GridView.init(config:cells:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridView.swift",
-      "line": 451,
+      "line": 453,
       "symbol": "GridView.unfreezeColumns()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridView.swift",
-      "line": 455,
+      "line": 457,
       "symbol": "GridView.unfreezeRows()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridView.swift",
-      "line": 459,
+      "line": 461,
       "symbol": "GridView.collapseRow(at:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridView.swift",
-      "line": 530,
+      "line": 542,
       "symbol": "GridView.scrollViewDidScroll(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

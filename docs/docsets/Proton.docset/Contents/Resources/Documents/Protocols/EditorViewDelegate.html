@@ -1098,9 +1098,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton18EditorViewDelegateP6editor_21willSetAttributedTextyAA0bC0C_So18NSAttributedStringCtF"></a>
-                    <a name="//apple_ref/swift/Method/editor(_:willSetAttributedText:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton18EditorViewDelegateP6editor_21willSetAttributedTextyAA0bC0C_So18NSAttributedStringCtF">editor(_:<wbr>willSetAttributedText:<wbr>)</a>
+                    <a name="/s:6Proton18EditorViewDelegateP6editor_21willSetAttributedText10isDeferredyAA0bC0C_So18NSAttributedStringCSbtF"></a>
+                    <a name="//apple_ref/swift/Method/editor(_:willSetAttributedText:isDeferred:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton18EditorViewDelegateP6editor_21willSetAttributedText10isDeferredyAA0bC0C_So18NSAttributedStringCSbtF">editor(_:<wbr>willSetAttributedText:<wbr>isDeferred:<wbr>)</a>
                     </code>
                       <span class="declaration-note">
                         Default implementation
@@ -1122,7 +1122,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">editor</span><span class="p">(</span><span class="n">_</span> <span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="n">willSetAttributedText</span> <span class="nv">attributedText</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">editor</span><span class="p">(</span><span class="n">_</span> <span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="n">willSetAttributedText</span> <span class="nv">attributedText</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="p">,</span> <span class="nv">isDeferred</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1145,12 +1145,24 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>content</em>
+                                <em>attributedText</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
                                   <p>Attributed text value to be set.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>isDeferred</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>true</code> if setter is called deferred owing to Editor not being on <code>window</code> when <code>attributedText</code> was originally set.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1163,9 +1175,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton18EditorViewDelegateP6editor_20didSetAttributedTextyAA0bC0C_So18NSAttributedStringCtF"></a>
-                    <a name="//apple_ref/swift/Method/editor(_:didSetAttributedText:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton18EditorViewDelegateP6editor_20didSetAttributedTextyAA0bC0C_So18NSAttributedStringCtF">editor(_:<wbr>didSetAttributedText:<wbr>)</a>
+                    <a name="/s:6Proton18EditorViewDelegateP6editor_20didSetAttributedText10isDeferredyAA0bC0C_So18NSAttributedStringCSbtF"></a>
+                    <a name="//apple_ref/swift/Method/editor(_:didSetAttributedText:isDeferred:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton18EditorViewDelegateP6editor_20didSetAttributedText10isDeferredyAA0bC0C_So18NSAttributedStringCSbtF">editor(_:<wbr>didSetAttributedText:<wbr>isDeferred:<wbr>)</a>
                     </code>
                       <span class="declaration-note">
                         Default implementation
@@ -1187,7 +1199,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">editor</span><span class="p">(</span><span class="n">_</span> <span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="n">didSetAttributedText</span> <span class="nv">attributedText</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">editor</span><span class="p">(</span><span class="n">_</span> <span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="n">didSetAttributedText</span> <span class="nv">attributedText</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="p">,</span> <span class="nv">isDeferred</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1210,12 +1222,24 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>content</em>
+                                <em>attributedText</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
                                   <p>Attributed text value set on the editor.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>isDeferred</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>true</code> if setter is called deferred owing to Editor not being on <code>window</code> when <code>attributedText</code> was originally set.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1360,7 +1384,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-07-04)</p>
+          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-08-12)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
