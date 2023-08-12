@@ -31,13 +31,13 @@ public class GridViewAttachment: Attachment {
 
     public init(config: GridConfiguration) {
         view = GridView(config: config)
-        super.init(view, size: .fullWidth)
+        super.init(view, size: .fullWidth, enableHeightConstraint: true)
         view.boundsObserver = self
     }
 
     public init(config: GridConfiguration, cells: [GridCell]) {
         view = GridView(config: config, cells: cells)
-        super.init(view, size: .fullWidth)
+        super.init(view, size: .fullWidth, enableHeightConstraint: true)
         view.boundsObserver = self
     }
 }

@@ -51,6 +51,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     private(set) var cachedContainerSize: CGSize?
     private var indexInContainer: Int?
     private let backgroundColor: UIColor?
+    private let enableHeightConstraint: Bool
 
     var cachedBounds: CGRect?
 
@@ -186,6 +187,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     /// - Parameter image: Image to be used to display in the attachment.  Image is rendered as Inline content.
     public init(image: AttachmentImage) {
         backgroundColor = nil
+        enableHeightConstraint = false
         super.init(data: nil, ofType: nil)
         setup(image: image)
     }
@@ -195,11 +197,14 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     ///   - contentView: Content view to be hosted within the attachment
     ///   - size: Size rule for attachment
     ///   - backgroundColor: Background color of attachment. Can be used with DEBUG to track the attachment size/location with respect to content view
-    public init(_ contentView: AttachmentView, size: AttachmentSize, backgroundColor: UIColor? = nil) {
+    public init(_ contentView: AttachmentView, size: AttachmentSize, backgroundColor: UIColor? = nil, enableHeightConstraint: Bool = false) {
         self.backgroundColor = backgroundColor
+        self.enableHeightConstraint = enableHeightConstraint
         super.init(data: nil, ofType: nil)
         setup(contentView: contentView, size: size)
     }
+
+    var contentViewHeightConstraint: NSLayoutConstraint?
 
     private func setup(contentView: AttachmentView, size: AttachmentSize) {
         let view = AttachmentContentView(name: contentView.name, frame: contentView.frame)
@@ -241,7 +246,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         }
 
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        view.translatesAutoresizingMaskIntoConstraints = true
+        view.translatesAutoresizingMaskIntoConstraints = !enableHeightConstraint
 
         NSLayoutConstraint.activate([
             contentView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -320,6 +325,8 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         fatalError("init(coder:) has not been implemented")
     }
 
+    var heightAnchorConstraint: NSLayoutConstraint!
+    var widthAnchorConstraint: NSLayoutConstraint!
     /// Returns the calculated bounds for the attachment based on size rule and content view provided during initialization.
     /// - Parameters:
     ///   - textContainer: Text container for attachment
@@ -358,6 +365,9 @@ open class Attachment: NSTextAttachment, BoundsObserving {
             cachedContainerSize = containerEditorView.bounds.size
             return cachedBounds
         }
+
+
+
 
         let indent: CGFloat
         if charIndex < containerEditorView.contentLength {
@@ -414,6 +424,19 @@ open class Attachment: NSTextAttachment, BoundsObserving {
             }
         }
 
+        if enableHeightConstraint {
+            if heightAnchorConstraint == nil {
+                heightAnchorConstraint = view.heightAnchor.constraint(equalToConstant: size.height)
+                widthAnchorConstraint = view.widthAnchor.constraint(equalToConstant: size.width)
+            } else {
+                heightAnchorConstraint.constant = size.height
+                widthAnchorConstraint.constant = size.width
+            }
+
+            heightAnchorConstraint.isActive = true
+            widthAnchorConstraint.isActive = true
+        }
+
         let offset = offsetProvider?.offset(for: self, in: textContainer, proposedLineFragment: adjustedLineFrag, glyphPosition: position, characterIndex: charIndex) ?? .zero
 
         self.bounds = CGRect(origin: offset, size: size)
@@ -422,7 +445,9 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         var frame = self.frame?.offsetBy(dx: offset.x, dy: offset.y)
         frame?.size = bounds.size
 
+
         self.frame = frame ?? view.frame
+
         return self.bounds
     }
 
