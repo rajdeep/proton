@@ -507,6 +507,72 @@
 
 <p><img src="https://github.com/rajdeep/proton/raw/main/exampleImages/renderer-find.gif" width="50%" alt="Find in Renderer"/></p></li>
 </ol>
+<h2 id='basic-swift-ui-integration-example' class='heading'>Basic SWIFT UI integration example</h2>
+
+<p>Proton&rsquo;s Editor may be used with SwiftUI same was as a standard UIKit component. SwiftUI support is provided as is, and will be refined on in future.</p>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">ProtonView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+
+    <span class="kd">@Binding</span> <span class="k">var</span> <span class="nv">attributedText</span><span class="p">:</span> <span class="kt">NSAttributedString</span>
+    <span class="kd">@State</span> <span class="k">var</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">ProtonWrapperView</span><span class="p">(</span><span class="nv">attributedText</span><span class="p">:</span> <span class="err">$</span><span class="n">attributedText</span><span class="p">)</span> <span class="p">{</span> <span class="n">view</span> <span class="k">in</span>
+            <span class="k">let</span> <span class="nv">height</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="nf">systemLayoutSizeFitting</span><span class="p">(</span><span class="kt">UIView</span><span class="o">.</span><span class="n">layoutFittingExpandedSize</span><span class="p">)</span><span class="o">.</span><span class="n">height</span>
+
+            <span class="k">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
+        <span class="p">}</span>
+        <span class="o">.</span><span class="nf">frame</span><span class="p">(</span><span class="nv">height</span><span class="p">:</span> <span class="n">height</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">struct</span> <span class="kt">ProtonWrapperView</span><span class="p">:</span> <span class="kt">UIViewRepresentable</span> <span class="p">{</span>
+
+    <span class="kd">@Binding</span> <span class="k">var</span> <span class="nv">attributedText</span><span class="p">:</span> <span class="kt">NSAttributedString</span>
+    <span class="k">let</span> <span class="nv">textDidChange</span><span class="p">:</span> <span class="p">(</span><span class="kt">EditorView</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span>
+
+
+    <span class="kd">func</span> <span class="nf">makeUIView</span><span class="p">(</span><span class="nv">context</span><span class="p">:</span> <span class="kt">Context</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">EditorView</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="kt">EditorView</span><span class="p">()</span>
+        <span class="n">view</span><span class="o">.</span><span class="nf">becomeFirstResponder</span><span class="p">()</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">attributedText</span> <span class="o">=</span> <span class="n">attributedText</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">isScrollEnabled</span> <span class="o">=</span> <span class="kc">false</span>
+        <span class="n">view</span><span class="o">.</span><span class="nf">setContentCompressionResistancePriority</span><span class="p">(</span><span class="o">.</span><span class="kd">required</span><span class="p">,</span> <span class="nv">for</span><span class="p">:</span> <span class="o">.</span><span class="n">vertical</span><span class="p">)</span>
+
+        <span class="n">view</span><span class="o">.</span><span class="n">heightAnchor</span><span class="o">.</span><span class="nf">constraint</span><span class="p">(</span><span class="nv">greaterThanOrEqualToConstant</span><span class="p">:</span> <span class="mi">300</span><span class="p">)</span><span class="o">.</span><span class="n">isActive</span> <span class="o">=</span> <span class="kc">true</span>
+
+        <span class="kt">DispatchQueue</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
+            <span class="k">self</span><span class="o">.</span><span class="nf">textDidChange</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="kt">EditorViewContext</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">coordinator</span>
+
+        <span class="k">return</span> <span class="n">view</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">updateUIView</span><span class="p">(</span><span class="n">_</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">EditorView</span><span class="p">,</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">Context</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">makeCoordinator</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Coordinator</span> <span class="p">{</span>
+        <span class="kt">Coordinator</span><span class="p">(</span><span class="k">self</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="kd">class</span> <span class="kt">Coordinator</span><span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">EditorViewDelegate</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nv">parent</span><span class="p">:</span> <span class="kt">ProtonWrapperView</span>
+
+        <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">parent</span><span class="p">:</span> <span class="kt">ProtonWrapperView</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="p">}</span>
+
+        <span class="kd">func</span> <span class="nf">editor</span><span class="p">(</span><span class="n">_</span> <span class="nv">editor</span><span class="p">:</span> <span class="kt">EditorView</span><span class="p">,</span> <span class="n">didChangeTextAt</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">editor</span><span class="o">.</span><span class="n">isScrollEnabled</span> <span class="o">=</span> <span class="kc">false</span>
+            <span class="n">parent</span><span class="o">.</span><span class="n">attributedText</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">attributedText</span>
+            <span class="kt">DispatchQueue</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
+                <span class="k">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="nf">textDidChange</span><span class="p">(</span><span class="n">editor</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
 <h2 id='learn-more' class='heading'>Learn more</h2>
 
 <ul>
@@ -523,7 +589,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-07-04)</p>
+          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-08-12)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
