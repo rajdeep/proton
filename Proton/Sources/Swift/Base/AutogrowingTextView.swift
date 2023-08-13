@@ -25,7 +25,7 @@ class AutogrowingTextView: UITextView {
 
     var maxHeight: CGFloat = 0
     private var allowAutogrowing: Bool
-    var allowScrolling: Bool = false
+    var allowScrolling: Bool = true
     weak var boundsObserver: BoundsObserving?
     private var maxHeightConstraint: NSLayoutConstraint!
     private var heightAnchorConstraint: NSLayoutConstraint!
