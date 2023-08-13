@@ -117,22 +117,22 @@ class ScrollViewExampleViewController: ExamplesBaseViewController {
         let grid2 = makeGridViewAttachment(id: "2", numRows: 10, numColumns: 5)
 
         var text = NSMutableAttributedString()
-        text.append(grid.string)
+//        text.append(grid.string)
 
         for i in 0..<5 {
             text.append(makePanelAttachment(text: NSAttributedString(string: "Panel \(i) The issue started happening after Proton v0.8.8 as it fixed code for isReady to only set isReady to true if window is not nil")).string)
         }
 
-        text.append(NSAttributedString(string: """
-        The issue started happening after Proton v0.8.8 as it fixed code for isReady to only set isReady to true if window is not nil. Previously, due to this bug in Proton, Editor code was invoking processInlineComments twice which was somehow hiding this likely bug in iOS. After the fix,  processInlineComments is only invoked once and thus highlights this issue when editor is in read-only mode and annotation to scroll to happens to be in last 2 lines of content.
-
-        The issue is fixed by invoking scrollRectToVisible twice for annotation. It is still better than executing processInlineComments twice. This may be fixed with a future version of iOS after which we may remove the duplicate call.
-        """))
+//        text.append(NSAttributedString(string: """
+//        The issue started happening after Proton v0.8.8 as it fixed code for isReady to only set isReady to true if window is not nil. Previously, due to this bug in Proton, Editor code was invoking processInlineComments twice which was somehow hiding this likely bug in iOS. After the fix,  processInlineComments is only invoked once and thus highlights this issue when editor is in read-only mode and annotation to scroll to happens to be in last 2 lines of content.
+//
+//        The issue is fixed by invoking scrollRectToVisible twice for annotation. It is still better than executing processInlineComments twice. This may be fixed with a future version of iOS after which we may remove the duplicate call.
+//        """))
 //        for i in 11..<13 {
 //            text.append(makePanelAttachment(text: NSAttributedString(string: "Panel \(i)")).string)
 //        }
 
-        text.append(grid2.string)
+//        text.append(grid2.string)
 //        editor.maxHeight = .infinite
         editor.attributedText = text
     }

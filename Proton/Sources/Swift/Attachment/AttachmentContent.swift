@@ -36,9 +36,9 @@ class AttachmentContentView: UIView {
         super.init(frame: frame)
     }
 
-    override var intrinsicContentSize: CGSize {
-        return subviews.first?.frame.size ?? CGSize(width: 300, height: 50)
-    }
+//    override var intrinsicContentSize: CGSize {
+//        return subviews.first?.frame.size ?? CGSize(width: 300, height: 50)
+//    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
