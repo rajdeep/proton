@@ -93,7 +93,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         commands.insert((title: "Table", command: CreateGridViewCommand(delegate: self), highlightOnTouch: false), at: 2)
 
         buttons.first(where: { $0.titleLabel?.text == "Merge" })?.isSelected = false
-
+        editor.isScrollEnabled = true
         editor.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(editor)
 
