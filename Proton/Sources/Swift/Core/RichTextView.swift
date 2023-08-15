@@ -223,6 +223,12 @@ class RichTextView: AutogrowingTextView {
         self.textColor = defaultTextColor
     }
 
+    private var _isSelectable = false
+    override var isSelectable: Bool {
+        get { return _isSelectable }
+        set { _isSelectable = newValue }
+    }
+
     var contentLength: Int {
         return textStorage.length
     }
@@ -510,7 +516,16 @@ class RichTextView: AutogrowingTextView {
     func didTap(at location: CGPoint) {
         context?.selectedTextView = self
         let characterRange = rangeOfCharacter(at: location)
+        enableSelectable()
         richTextViewDelegate?.richTextView(self, didTapAtLocation: location, characterRange: characterRange)
+    }
+
+    private func enableSelectable() {
+        super.isSelectable = _isSelectable
+        becomeFirstResponder()
+        typingAttributes[.font] = typingAttributes[.font] ?? defaultFont
+        typingAttributes[.paragraphStyle] = typingAttributes[.paragraphStyle] ?? paragraphStyle
+        typingAttributes[.foregroundColor] = typingAttributes[.foregroundColor] ?? defaultTextColor
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
