@@ -35,7 +35,12 @@ class RichTextView: AutogrowingTextView {
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding?
     {
         get { richTextStorage.defaultTextFormattingProvider }
-        set { richTextStorage.defaultTextFormattingProvider = newValue }
+        set {
+            richTextStorage.defaultTextFormattingProvider = newValue
+//            typingAttributes[.font] = defaultTypingAttributes[.font]
+//            typingAttributes[.paragraphStyle] = defaultTypingAttributes[.paragraphStyle]
+//            typingAttributes[.foregroundColor] = defaultTypingAttributes[.foregroundColor]
+        }
     }
 
     private lazy var placeholderLabel: UILabel = {
@@ -222,6 +227,18 @@ class RichTextView: AutogrowingTextView {
 
         self.backgroundColor = defaultBackgroundColor
         self.textColor = defaultTextColor
+//        self.typingAttributes = defaultTypingAttributes
+    }
+
+    private var _isSelectable = false
+    override var isSelectable: Bool {
+        get { return _isSelectable }
+        set {
+            _isSelectable = newValue
+            if EditorView.experimentalFlags.isDeferredSelectable == false {
+                super.isSelectable = newValue
+            }
+        }
     }
 
     var contentLength: Int {
@@ -511,7 +528,17 @@ class RichTextView: AutogrowingTextView {
     func didTap(at location: CGPoint) {
         context?.selectedTextView = self
         let characterRange = rangeOfCharacter(at: location)
+        enableSelectable()
         richTextViewDelegate?.richTextView(self, didTapAtLocation: location, characterRange: characterRange)
+    }
+
+    private func enableSelectable() {
+        guard EditorView.experimentalFlags.isDeferredSelectable else { return }
+        super.isSelectable = _isSelectable
+        becomeFirstResponder()
+        typingAttributes[.font] = defaultTypingAttributes[.font]
+        typingAttributes[.paragraphStyle] = defaultTypingAttributes[.paragraphStyle]
+        typingAttributes[.foregroundColor] = defaultTypingAttributes[.foregroundColor]
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
