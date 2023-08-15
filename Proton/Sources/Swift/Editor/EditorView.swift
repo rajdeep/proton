@@ -1048,6 +1048,12 @@ open class EditorView: UIView {
         unregisterCommands([command])
     }
 
+    /// Relayout `EditorView` on demand. This may be required if the size appears incorrect, for e..g. when hosted in an ScrollView
+    /// - Parameter size: Size to use for relayout. When nil, default bounds are used.
+    public func relayout(size: CGSize? = nil) {
+        richTextView.recalculateHeight(size: size)
+    }
+
     open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return richTextView.canPerformAction(action, withSender: sender)
     }

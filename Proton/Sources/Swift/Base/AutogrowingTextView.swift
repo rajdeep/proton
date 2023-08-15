@@ -62,9 +62,10 @@ class AutogrowingTextView: UITextView {
         recalculateHeight()
     }
 
-    private func recalculateHeight() {
+    func recalculateHeight(size: CGSize? = nil) {
         let bounds = self.bounds.integral
-        let fittingSize = self.calculatedSize(attributedText: attributedText, frame: frame.size, textContainerInset: textContainerInset)
+        let sizeToUse = size ?? frame.size
+        let fittingSize = self.calculatedSize(attributedText: attributedText, frame: sizeToUse, textContainerInset: textContainerInset)
 
         self.isScrollEnabled = (fittingSize.height > bounds.height) || (self.maxHeight > 0 && self.maxHeight < fittingSize.height)
         self.heightAnchorConstraint.constant = min(fittingSize.height, self.contentSize.height)
