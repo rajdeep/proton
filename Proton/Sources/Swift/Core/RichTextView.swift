@@ -34,7 +34,12 @@ class RichTextView: AutogrowingTextView {
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding?
     {
         get { richTextStorage.defaultTextFormattingProvider }
-        set { richTextStorage.defaultTextFormattingProvider = newValue }
+        set {
+            richTextStorage.defaultTextFormattingProvider = newValue
+            typingAttributes[.font] = defaultTypingAttributes[.font]
+            typingAttributes[.paragraphStyle] = defaultTypingAttributes[.paragraphStyle]
+            typingAttributes[.foregroundColor] = defaultTypingAttributes[.foregroundColor]
+        }
     }
 
     private lazy var placeholderLabel: UILabel = {
@@ -221,13 +226,14 @@ class RichTextView: AutogrowingTextView {
 
         self.backgroundColor = defaultBackgroundColor
         self.textColor = defaultTextColor
+        self.typingAttributes = defaultTypingAttributes
     }
 
-    private var _isSelectable = false
-    override var isSelectable: Bool {
-        get { return _isSelectable }
-        set { _isSelectable = newValue }
-    }
+    private var _isSelectable = true
+//    override var isSelectable: Bool {
+//        get { return _isSelectable }
+//        set { _isSelectable = newValue }
+//    }
 
     var contentLength: Int {
         return textStorage.length
@@ -523,9 +529,9 @@ class RichTextView: AutogrowingTextView {
     private func enableSelectable() {
         super.isSelectable = _isSelectable
         becomeFirstResponder()
-        typingAttributes[.font] = typingAttributes[.font] ?? defaultFont
-        typingAttributes[.paragraphStyle] = typingAttributes[.paragraphStyle] ?? paragraphStyle
-        typingAttributes[.foregroundColor] = typingAttributes[.foregroundColor] ?? defaultTextColor
+        typingAttributes[.font] = defaultTypingAttributes[.font]
+        typingAttributes[.paragraphStyle] = defaultTypingAttributes[.paragraphStyle]
+        typingAttributes[.foregroundColor] = defaultTypingAttributes[.foregroundColor]
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
