@@ -19,6 +19,7 @@
 //
 
 import UIKit
+import Proton
 
 struct Navigation {
     let title: String
@@ -32,7 +33,7 @@ struct NavigationItem {
 
 class MasterViewController: UITableViewController {
 
-    let navigation = [
+    lazy var navigation = [
         Navigation(title: "Basic features", items: [
             NavigationItem(title: "Autogrowing Editor", viewController: { AutogrowingEditorViewExampleViewController() }),
         ]),
@@ -55,6 +56,11 @@ class MasterViewController: UITableViewController {
             NavigationItem(title: "Menu", viewController: { MenuExampleViewController() })
         ]),
     ]
+
+    required init?(coder: NSCoder) {
+        EditorView.experimentalFlags.isDeferredSelectable = true
+        super.init(coder: coder)
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed

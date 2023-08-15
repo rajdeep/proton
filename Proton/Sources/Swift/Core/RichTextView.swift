@@ -36,9 +36,9 @@ class RichTextView: AutogrowingTextView {
         get { richTextStorage.defaultTextFormattingProvider }
         set {
             richTextStorage.defaultTextFormattingProvider = newValue
-            typingAttributes[.font] = defaultTypingAttributes[.font]
-            typingAttributes[.paragraphStyle] = defaultTypingAttributes[.paragraphStyle]
-            typingAttributes[.foregroundColor] = defaultTypingAttributes[.foregroundColor]
+//            typingAttributes[.font] = defaultTypingAttributes[.font]
+//            typingAttributes[.paragraphStyle] = defaultTypingAttributes[.paragraphStyle]
+//            typingAttributes[.foregroundColor] = defaultTypingAttributes[.foregroundColor]
         }
     }
 
@@ -226,14 +226,19 @@ class RichTextView: AutogrowingTextView {
 
         self.backgroundColor = defaultBackgroundColor
         self.textColor = defaultTextColor
-        self.typingAttributes = defaultTypingAttributes
+//        self.typingAttributes = defaultTypingAttributes
     }
 
-    private var _isSelectable = true
-//    override var isSelectable: Bool {
-//        get { return _isSelectable }
-//        set { _isSelectable = newValue }
-//    }
+    private var _isSelectable = false
+    override var isSelectable: Bool {
+        get { return _isSelectable }
+        set {
+            _isSelectable = newValue
+            if EditorView.experimentalFlags.isDeferredSelectable == false {
+                super.isSelectable = newValue
+            }
+        }
+    }
 
     var contentLength: Int {
         return textStorage.length
@@ -527,6 +532,7 @@ class RichTextView: AutogrowingTextView {
     }
 
     private func enableSelectable() {
+        guard EditorView.experimentalFlags.isDeferredSelectable else { return }
         super.isSelectable = _isSelectable
         becomeFirstResponder()
         typingAttributes[.font] = defaultTypingAttributes[.font]
