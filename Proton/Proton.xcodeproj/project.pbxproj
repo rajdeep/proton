@@ -91,6 +91,7 @@
 		1B98D5B0286828EC0091C927 /* SnapshotTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B98D5AF286828EC0091C927 /* SnapshotTestCase.swift */; };
 		1B9AF9E62851EC2500CD65C4 /* GridViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9AF9E52851EC2500CD65C4 /* GridViewTests.swift */; };
 		1B9AF9E92851ECC300CD65C4 /* MockGridViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9AF9E82851ECC300CD65C4 /* MockGridViewDelegate.swift */; };
+		1B9B744D2A8B09EF00FF4E92 /* GestureRegognizerDelegateOverride.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B744C2A8B09EF00FF4E92 /* GestureRegognizerDelegateOverride.swift */; };
 		1BB214D023BB2778008B84A0 /* Proton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB214C623BB2778008B84A0 /* Proton.framework */; };
 		1BB4AAEB2606DA2D000D7584 /* ProtonCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BB4AAE92606DA2D000D7584 /* ProtonCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1BB4AAF42606DA37000D7584 /* PREditorContentName.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B9AED8B26059D1A00660B99 /* PREditorContentName.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -253,6 +254,7 @@
 		1B9AED8B26059D1A00660B99 /* PREditorContentName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PREditorContentName.h; sourceTree = "<group>"; };
 		1B9AF9E52851EC2500CD65C4 /* GridViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewTests.swift; sourceTree = "<group>"; };
 		1B9AF9E82851ECC300CD65C4 /* MockGridViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGridViewDelegate.swift; sourceTree = "<group>"; };
+		1B9B744C2A8B09EF00FF4E92 /* GestureRegognizerDelegateOverride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureRegognizerDelegateOverride.swift; sourceTree = "<group>"; };
 		1BB214C623BB2778008B84A0 /* Proton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Proton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BB214CA23BB2778008B84A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BB214CF23BB2778008B84A0 /* ProtonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -424,6 +426,7 @@
 			isa = PBXGroup;
 			children = (
 				1B45CDCF23C007AF001EB196 /* RichTextView.swift */,
+				1B9B744C2A8B09EF00FF4E92 /* GestureRegognizerDelegateOverride.swift */,
 				1BD21553246951090000BCE2 /* LayoutManager.swift */,
 				1B45CDD123C00856001EB196 /* TextContainer.swift */,
 				1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */,
@@ -1034,6 +1037,7 @@
 				1B45CDE823C05C0C001EB196 /* Focusable.swift in Sources */,
 				1B7C76AA2608A489006618AC /* FontTraitToggleCommand.swift in Sources */,
 				1B164F4123D2A4AB00A0869A /* String+NSRange.swift in Sources */,
+				1B9B744D2A8B09EF00FF4E92 /* GestureRegognizerDelegateOverride.swift in Sources */,
 				1B45CDDF23C053FB001EB196 /* EditorContentIdentifying.swift in Sources */,
 				1B45CDD523C00927001EB196 /* EditorContent.swift in Sources */,
 				1B975AFD23CD40D200EC410C /* RichTextRendererContext.swift in Sources */,

@@ -30,6 +30,7 @@ class RichTextView: AutogrowingTextView {
 
     weak var richTextViewDelegate: RichTextViewDelegate?
     weak var richTextViewListDelegate: RichTextViewListDelegate?
+    private var delegateOverrides = [GestureRecognizerDelegateOverride]()
 
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding?
     {
@@ -209,8 +210,8 @@ class RichTextView: AutogrowingTextView {
 
         layoutManager.addTextContainer(textContainer)
         richTextStorage.addLayoutManager(layoutManager)
-
         super.init(frame: frame, textContainer: textContainer, allowAutogrowing: allowAutogrowing)
+        delegateOverrides = [GestureRecognizerDelegateOverride]()
         layoutManager.delegate = self
         layoutManager.layoutManagerDelegate = self
         textContainer.textView = self
@@ -614,7 +615,23 @@ class RichTextView: AutogrowingTextView {
         caretRect.size.height = lineRect.height
         return caretRect
     }
-    
+
+    override func addGestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) {
+        if gestureRecognizer.delegate is UIScrollView {
+            super.addGestureRecognizer(gestureRecognizer)
+        } else {
+            // Add an override for gesture recognizer to handle long-press in attachments.
+            // In absence of override, ling press on attachment will cause attachment to be lifted up
+            // instead of allowing to select text in editor
+            if let delegate = gestureRecognizer.delegate {
+                let delegateOverride = GestureRecognizerDelegateOverride(baseDelegate: delegate)
+                gestureRecognizer.delegate = delegateOverride
+                delegateOverrides.append(delegateOverride)
+            }
+            super.addGestureRecognizer(gestureRecognizer)
+        }
+    }
+
     override func selectionRects(for range: UITextRange) -> [UITextSelectionRect] {
         let firstCharacterRect = caretRect(for: range.start)
         let lastCharacterRect = caretRect(for: range.end)
