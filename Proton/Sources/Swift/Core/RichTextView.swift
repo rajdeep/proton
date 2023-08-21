@@ -80,6 +80,13 @@ class RichTextView: AutogrowingTextView {
         }
     }
 
+    override var attributedText: NSAttributedString! {
+        willSet {
+            // Remove all attachment subviews else we may run into PRTextStorage "in middle of editing" crash
+            subviews.filter { $0 is AttachmentContentView }.forEach { $0.removeFromSuperview() }
+        }
+    }
+
     override var selectedTextRange: UITextRange? {
         didSet{
             let old = oldValue?.toNSRange(in: self)
