@@ -49,7 +49,11 @@ class AutogrowingTextView: UITextView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        guard allowAutogrowing, maxHeight != .greatestFiniteMagnitude else { return }
+        guard allowAutogrowing, maxHeight != .greatestFiniteMagnitude else {
+            invalidateIntrinsicContentSize()
+            return
+        }
+
         // Required to reset the size if content is removed
         if contentSize.height <= frame.height {
             recalculateHeight()
@@ -83,6 +87,10 @@ class AutogrowingTextView: UITextView {
     override var bounds: CGRect {
         didSet {
             guard ceil(oldValue.height) != ceil(bounds.height) else { return }
+            if allowAutogrowing == false {
+                invalidateIntrinsicContentSize()
+            }
+
             boundsObserver?.didChangeBounds(bounds, oldBounds: oldValue)
             isSizeRecalculationRequired = true
         }
