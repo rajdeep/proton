@@ -167,6 +167,11 @@ open class EditorView: UIView {
         }
     }
 
+//    open override func layoutSubviews() {
+//        super.layoutSubviews()
+//        print("length: \(attributedText.length) con: \(contentSize.height)")
+//    }
+
     /// An object interested in responding to editing and focus related events in the `EditorView`.
     open weak var delegate: EditorViewDelegate?
 
@@ -278,8 +283,8 @@ open class EditorView: UIView {
     }
     
     public var isScrollEnabled: Bool {
-        get { richTextView.isScrollEnabled }
-        set { richTextView.isScrollEnabled = newValue }
+        get { richTextView.allowScrolling }
+        set { richTextView.allowScrolling = newValue }
     }
     
     /// Gets or sets the insets for the text container's layout area within the editor's content area

@@ -320,6 +320,8 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         fatalError("init(coder:) has not been implemented")
     }
 
+    var heightAnchorConstraint: NSLayoutConstraint!
+    var widthAnchorConstraint: NSLayoutConstraint!
     /// Returns the calculated bounds for the attachment based on size rule and content view provided during initialization.
     /// - Parameters:
     ///   - textContainer: Text container for attachment
