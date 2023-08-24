@@ -49,7 +49,12 @@ class AutogrowingTextView: UITextView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        guard allowAutogrowing, maxHeight != .greatestFiniteMagnitude else { return }
+        guard allowAutogrowing, maxHeight != .greatestFiniteMagnitude else {
+            // Without this line the attachment size changes do not reflect in the editor, though text changes do
+            invalidateIntrinsicContentSize()
+            return
+        }
+
         // Required to reset the size if content is removed
         if contentSize.height <= frame.height {
             recalculateHeight()
@@ -85,6 +90,9 @@ class AutogrowingTextView: UITextView {
             guard ceil(oldValue.height) != ceil(bounds.height) else { return }
             boundsObserver?.didChangeBounds(bounds, oldBounds: oldValue)
             isSizeRecalculationRequired = true
+            if allowAutogrowing == false, isScrollEnabled == false {
+                invalidateIntrinsicContentSize()
+            }
         }
     }
 
