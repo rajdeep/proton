@@ -52,6 +52,13 @@ class RichTextView: AutogrowingTextView {
         return placeholderLabel
     }()
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if editorView?.isRootEditor == true {
+            invalidateIntrinsicContentSize()
+        }
+    }
+
     var placeholderText: NSAttributedString? {
         didSet {
             placeholderLabel.attributedText = placeholderText

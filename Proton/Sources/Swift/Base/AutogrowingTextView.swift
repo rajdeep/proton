@@ -35,12 +35,15 @@ class AutogrowingTextView: UITextView {
         self.allowAutogrowing = allowAutogrowing
         super.init(frame: frame, textContainer: textContainer)
         isScrollEnabled = false
-        heightAnchorConstraint = heightAnchor.constraint(greaterThanOrEqualToConstant: contentSize.height)
-        heightAnchorConstraint.priority = .defaultHigh
-        if allowAutogrowing {
-            NSLayoutConstraint.activate([
-                heightAnchorConstraint
-            ])
+
+        if false {
+            heightAnchorConstraint = heightAnchor.constraint(greaterThanOrEqualToConstant: contentSize.height)
+            heightAnchorConstraint.priority = .defaultHigh
+            if allowAutogrowing {
+                NSLayoutConstraint.activate([
+                    heightAnchorConstraint
+                ])
+            }
         }
     }
 
@@ -50,7 +53,10 @@ class AutogrowingTextView: UITextView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+//        invalidateIntrinsicContentSize()
         guard allowAutogrowing, maxHeight != .greatestFiniteMagnitude else { return }
+
+        return
         // Required to reset the size if content is removed
         if contentSize.height <= frame.height {
             recalculateHeight()

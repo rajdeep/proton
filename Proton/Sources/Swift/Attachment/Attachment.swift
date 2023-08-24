@@ -196,7 +196,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     ///   - size: Size rule for attachment
     ///   - backgroundColor: Background color of attachment. Can be used with DEBUG to track the attachment size/location with respect to content view
     public init(_ contentView: AttachmentView, size: AttachmentSize, backgroundColor: UIColor? = nil) {
-        self.backgroundColor = backgroundColor
+        self.backgroundColor = .red// backgroundColor
         super.init(data: nil, ofType: nil)
         setup(contentView: contentView, size: size)
     }
@@ -279,6 +279,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         // check how view.bounds can be checked against attachment.bounds
         guard oldBounds != .zero else { return }
         invalidateLayout()
+        containerTextView?.invalidateIntrinsicContentSize()
     }
 
     /// Removes this attachment from the `EditorView` it is contained in.

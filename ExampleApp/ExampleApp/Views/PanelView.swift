@@ -52,6 +52,13 @@ class PanelView: AttachmentView, EditorContentView {
         setup()
     }
 
+    override var bounds: CGRect {
+        didSet {
+            print("** BOUNDS: \(bounds.size)")
+            boundsObserver?.didChangeBounds(bounds, oldBounds: oldValue)
+        }
+    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
