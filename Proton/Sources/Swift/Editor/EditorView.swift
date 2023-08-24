@@ -124,9 +124,6 @@ open class EditorView: UIView {
     let context: RichTextViewContext
     var needsAsyncTextResolution = false
 
-    public static var experimentalFlags = Experimental()
-
-
     // Holds `attributedText` until Editor move to a window
     // Setting attributed text without Editor being fully ready
     // causes issues with cached bounds that shows up when rotating the device.
