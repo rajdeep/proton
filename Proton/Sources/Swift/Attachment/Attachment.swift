@@ -475,6 +475,10 @@ extension Attachment {
         else { return }
         cachedBounds = nil
         editor.invalidateLayout(for: range)
+
+        if containerTextView?.isScrollEnabled == false {
+            containerTextView?.invalidateIntrinsicContentSize()
+        }
     }
 }
 
