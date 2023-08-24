@@ -57,11 +57,6 @@ class MasterViewController: UITableViewController {
         ]),
     ]
 
-    required init?(coder: NSCoder) {
-        EditorView.experimentalFlags.isDeferredSelectable = true
-        super.init(coder: coder)
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)

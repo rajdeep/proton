@@ -16,7 +16,6 @@
 		1B183D8C23CEA90400AE83E5 /* EditorContentEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D8B23CEA90400AE83E5 /* EditorContentEncoding.swift */; };
 		1B183D8E23CEE9BA00AE83E5 /* AttributesEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D8D23CEE9BA00AE83E5 /* AttributesEncoding.swift */; };
 		1B183D9223CEEED900AE83E5 /* EditorContentEncoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B183D9023CEEEC400AE83E5 /* EditorContentEncoderTests.swift */; };
-		1B1B36372A8B52390084C282 /* Experimental.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1B36362A8B52390084C282 /* Experimental.swift */; };
 		1B1C3727244BE0D60028E1ED /* EditorViewContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1C3726244BE0D60028E1ED /* EditorViewContextTests.swift */; };
 		1B238D6E2456A40200BF49D5 /* NullRichTextEditorContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B238D6D2456A40200BF49D5 /* NullRichTextEditorContext.swift */; };
 		1B2BC0D823CF17E300407DEE /* EditorContentTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2BC0D723CF17E300407DEE /* EditorContentTransformerTests.swift */; };
@@ -179,7 +178,6 @@
 		1B183D8B23CEA90400AE83E5 /* EditorContentEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentEncoding.swift; sourceTree = "<group>"; };
 		1B183D8D23CEE9BA00AE83E5 /* AttributesEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesEncoding.swift; sourceTree = "<group>"; };
 		1B183D9023CEEEC400AE83E5 /* EditorContentEncoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentEncoderTests.swift; sourceTree = "<group>"; };
-		1B1B36362A8B52390084C282 /* Experimental.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experimental.swift; sourceTree = "<group>"; };
 		1B1C3726244BE0D60028E1ED /* EditorViewContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewContextTests.swift; sourceTree = "<group>"; };
 		1B238D6D2456A40200BF49D5 /* NullRichTextEditorContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NullRichTextEditorContext.swift; sourceTree = "<group>"; };
 		1B2BC0D723CF17E300407DEE /* EditorContentTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentTransformerTests.swift; sourceTree = "<group>"; };
@@ -495,7 +493,6 @@
 				1B82570C23C5686F0033A0A9 /* EditorViewContext.swift */,
 				1B8BE91A23C71CEA00353B17 /* EditorViewDelegate.swift */,
 				1B36192C2A68D89A00323BBF /* AggregateEditorViewDelegate.swift */,
-				1B1B36362A8B52390084C282 /* Experimental.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -1036,7 +1033,6 @@
 				1B82570923C5674E0033A0A9 /* EditorCommand.swift in Sources */,
 				1B91E7B926AA698A0002DF45 /* StrikethroughCommand.swift in Sources */,
 				1B82570D23C5686F0033A0A9 /* EditorViewContext.swift in Sources */,
-				1B1B36372A8B52390084C282 /* Experimental.swift in Sources */,
 				1B975AFF23CD454700EC410C /* RichTextViewContext.swift in Sources */,
 				1B45CDE823C05C0C001EB196 /* Focusable.swift in Sources */,
 				1B7C76AA2608A489006618AC /* FontTraitToggleCommand.swift in Sources */,
