@@ -87,6 +87,13 @@ class RichTextView: AutogrowingTextView {
         }
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if editorView?.isRootEditor == true, editorView?.isScrollEnabled == false {
+            invalidateIntrinsicContentSize()
+        }
+    }
+
     override var selectedTextRange: UITextRange? {
         didSet{
             let old = oldValue?.toNSRange(in: self)
