@@ -65,6 +65,7 @@ class AutogrowingTextView: UITextView {
     }
 
     func recalculateHeight(size: CGSize? = nil) {
+        guard allowAutogrowing else { return }
         let bounds = self.bounds.integral
         let sizeToUse = size ?? frame.size
         let fittingSize = self.calculatedSize(attributedText: attributedText, frame: sizeToUse, textContainerInset: textContainerInset)
