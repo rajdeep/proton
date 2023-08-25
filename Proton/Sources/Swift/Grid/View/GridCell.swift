@@ -183,7 +183,7 @@ public class GridCell {
     }
 
     public convenience init(rowSpan: [Int], columnSpan: [Int], initialHeight: CGFloat = 40, style: GridCellStyle = .init(), gridStyle: GridStyle = .default) {
-        self.init(editor: EditorView(), rowSpan: rowSpan, columnSpan: columnSpan, initialHeight: initialHeight, style: style, gridStyle: gridStyle)
+        self.init(editor: EditorView(allowAutogrowing: false), rowSpan: rowSpan, columnSpan: columnSpan, initialHeight: initialHeight, style: style, gridStyle: gridStyle)
     }
 
     /// Sets the focus in the `Editor` within the cell.

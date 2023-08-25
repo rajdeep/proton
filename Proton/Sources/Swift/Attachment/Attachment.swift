@@ -474,9 +474,10 @@ extension Attachment {
               let range = editor.attributedText.rangeFor(attachment: self)
         else { return }
         cachedBounds = nil
+        let needsInvalidation = bounds.integral.size != contentView?.bounds.integral.size
         editor.invalidateLayout(for: range)
 
-        if containerTextView?.isScrollEnabled == false {
+        if containerTextView?.isScrollEnabled == false, needsInvalidation {
             containerTextView?.invalidateIntrinsicContentSize()
         }
     }
