@@ -56,6 +56,10 @@ class LayoutManager: NSLayoutManager {
         return layoutManagerDelegate?.paragraphStyle ?? NSParagraphStyle()
     }
 
+    var defaultFont: UIFont {
+        return layoutManagerDelegate?.font ?? UIFont.preferredFont(forTextStyle: .body)
+    }
+
     private func drawListMarkers(textStorage: NSTextStorage, listRange: NSRange, attributeValue: Any?) {
         var lastLayoutRect: CGRect?
         var lastLayoutParaStyle: NSParagraphStyle?
@@ -281,6 +285,7 @@ class LayoutManager: NSLayoutManager {
                     let usedRect = usedRect.integral
                     let rangeIntersection = NSIntersectionRange(bgStyleGlyphRange, lineRange)
                     let paragraphStyle = textStorage.attribute(.paragraphStyle, at: rangeIntersection.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
+                    let font = textStorage.attribute(.font, at: rangeIntersection.location, effectiveRange: nil) as? UIFont ?? self.defaultFont
                     let lineHeightMultiple = max(paragraphStyle.lineHeightMultiple, 1)
                     var rect = self.boundingRect(forGlyphRange: rangeIntersection, in: textContainer).integral
                     let lineHeightMultipleOffset = (rect.size.height - rect.size.height/lineHeightMultiple)
@@ -291,13 +296,15 @@ class LayoutManager: NSLayoutManager {
                             rect.size.width = contentWidth
                     }
 
+                    let inset = self.layoutManagerDelegate?.textContainerInset ?? .zero
                     switch backgroundStyle.heightMode {
-                    case .matchText,
-                            .matchTextExact:
+                    case .matchTextExact:
+                        rect.origin.y = usedRect.origin.y - (font.pointSize - font.ascender)
+                        rect.origin.y += (font.ascender - font.capHeight)
+                        rect.size.height =  font.capHeight + abs(font.descender)
+                    case .matchText:
                         let styledText = textStorage.attributedSubstring(from: bgStyleGlyphRange)
-                        let drawingOptions = backgroundStyle.heightMode == .matchText ? NSStringDrawingOptions.usesFontLeading : []
-
-                        let textRect = styledText.boundingRect(with: rect.size, options: drawingOptions, context: nil)
+                        let textRect = styledText.boundingRect(with: rect.size, options: .usesFontLeading, context: nil)
 
                         rect.origin.y = usedRect.origin.y + (rect.size.height - textRect.height) + lineHeightMultipleOffset - lineSpacing
                         rect.size.height = textRect.height - lineHeightMultipleOffset
@@ -306,10 +313,9 @@ class LayoutManager: NSLayoutManager {
                         // So it is best to restrict the height just to the line fragment.
                         rect.origin.y = usedRect.origin.y
                         rect.size.height = usedRect.height
-
                     }
 
-                    let inset = self.layoutManagerDelegate?.textContainerInset ?? .zero
+
                     rects.append(rect.offsetBy(dx: inset.left, dy: inset.top))
                 }
                 drawBackground(backgroundStyle: backgroundStyle, rects: rects, currentCGContext: currentCGContext)
