@@ -471,7 +471,7 @@ extension Attachment {
     /// Invalidates the current layout and triggers a layout update.
     public func invalidateLayout() {
         guard let editor = containerEditorView,
-              let range = editor.attributedText.rangeFor(attachment: self)
+              let range = rangeInContainer()
         else { return }
         cachedBounds = nil
         let needsInvalidation = bounds.integral.size != contentView?.bounds.integral.size
