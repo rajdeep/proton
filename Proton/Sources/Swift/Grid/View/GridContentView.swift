@@ -97,6 +97,15 @@ class GridContentView: UIScrollView {
         grid = Grid(config: config, cells: cells)
         super.init(frame: .zero)
         grid.delegate = self
+    }
+
+    var isRendered = false
+    public override func willMove(toWindow newWindow: UIWindow?) {
+        guard isRendered == false,
+              newWindow != nil else {
+                  return
+              }
+        isRendered = true
         setup()
     }
 
@@ -136,6 +145,7 @@ class GridContentView: UIScrollView {
 
     private func makeCells() {
         for cell in grid.cells {
+            cell.setupEditor()
             cell.contentView.translatesAutoresizingMaskIntoConstraints = false
 
             addSubview(cell.contentView)
@@ -310,6 +320,9 @@ class GridContentView: UIScrollView {
             // or splitting an existing merged cell
             if cell.contentView.superview == nil {
                 addSubview(cell.contentView)
+                if window != nil, cell.editorSetupComplete == false {
+                    cell.setupEditor()
+                }
                 cell.topAnchorConstraint = cell.contentView.topAnchor.constraint(equalTo: topAnchor, constant: frame.minY)
                 cell.leadingAnchorConstraint = cell.contentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: frame.minX)
             } else {

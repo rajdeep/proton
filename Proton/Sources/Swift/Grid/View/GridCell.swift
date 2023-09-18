@@ -103,6 +103,8 @@ protocol GridCellDelegate: AnyObject {
 
 /// Denotes a cell in the `GridView`
 public class GridCell {
+    public typealias EditorInitializer = () -> EditorView
+
     var id: String {
         "{\(rowSpan),\(columnSpan)}"
     }
@@ -129,8 +131,34 @@ public class GridCell {
         }
     }
 
+    var isRunningTests: Bool {
+    #if DEBUG
+        return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+        #else
+        return false
+    #endif
+    }
+
+
+    private(set) var editorSetupComplete = false
+    private var _editor: EditorView?
     /// Editor within the cell
-    public let editor: EditorView
+    public var editor: EditorView {
+        if !isRunningTests {
+            assert(editorSetupComplete,
+                """
+                Editor setup is not complete as Grid containing cell is not in a window.
+                Refer to initialiser documentation for additional details.
+                """)
+        }
+
+        if let _editor {
+            return _editor
+        }
+        let editor = editorInitializer()
+        _editor = editor
+        return editor
+    }
 
     /// Denotes if the cell can be split i.e. is a merged cell.
     public var isSplittable: Bool {
@@ -146,6 +174,7 @@ public class GridCell {
     public let contentView = UIView()
 
     public let gridStyle: GridStyle
+    public let style: GridCellStyle
 
     let widthAnchorConstraint: NSLayoutConstraint
     let heightAnchorConstraint: NSLayoutConstraint
@@ -157,20 +186,33 @@ public class GridCell {
 
     let initialHeight: CGFloat
 
-    public init(editor: EditorView, rowSpan: [Int], columnSpan: [Int], initialHeight: CGFloat = 40, style: GridCellStyle = .init(), gridStyle: GridStyle = .default) {
-        self.editor = editor
+    private let editorInitializer: EditorInitializer
+
+    /// Initializes the cell
+    /// - Parameters:
+    ///   - editorInitializer: Closure for setting up the `EditorView` within the cell. I
+    ///   - rowSpan: Array of row indexes the cells spans. For e.g. a cell with first two rows as merged, will have a value of [0, 1] denoting 0th and 1st index.
+    ///   - columnSpan: Array of column indexes the cells spans. For e.g. a cell with first two columns as merged, will have a value of [0, 1] denoting 0th and 1st index.
+    ///   - initialHeight: Initial height of the cell. This will be updated based on size of editor content on load,
+    ///   - style: Visual style of the cell
+    ///   - gridStyle: Visual style for grid containing cell border color and width
+    /// - Important:
+    /// Creating a `GridView` with 100s of cells can result in slow performance when creating an attributed string containing the GridView attachment. Using the closure defers the creation until the view is ready to be rendered in the UI.
+    /// It is recommended to setup all the parts of editor in closure where possible, or wait until after the GridView is rendered. In case, editor must be initialized before the rendering is complete and it is not possible to configure an aspect within the closure itself,
+    /// `setupEditor()` may be invoked. Use of `setupEditor()` is discouraged.
+    public init(editorInitializer: @escaping EditorInitializer, rowSpan: [Int], columnSpan: [Int], initialHeight: CGFloat = 40, style: GridCellStyle = .init(), gridStyle: GridStyle = .default) {
+        self.editorInitializer = editorInitializer
         self.rowSpan = rowSpan
         self.columnSpan = columnSpan
         self.gridStyle = gridStyle
+        self.style = style
         self.initialHeight = initialHeight
         // Ensure Editor frame is .zero as otherwise it conflicts with some layout calculations
-        self.editor.frame = .zero
+//        self.editor.frame = .zero
         self.contentView.layoutMargins = .zero
 
         widthAnchorConstraint = contentView.widthAnchor.constraint(equalToConstant: 0)
         heightAnchorConstraint = contentView.heightAnchor.constraint(equalToConstant: 0)
-
-        applyStyle(style)
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(contentViewTapped))
         contentView.addGestureRecognizer(tapGestureRecognizer)
@@ -183,7 +225,9 @@ public class GridCell {
     }
 
     public convenience init(rowSpan: [Int], columnSpan: [Int], initialHeight: CGFloat = 40, style: GridCellStyle = .init(), gridStyle: GridStyle = .default) {
-        self.init(editor: EditorView(allowAutogrowing: false), rowSpan: rowSpan, columnSpan: columnSpan, initialHeight: initialHeight, style: style, gridStyle: gridStyle)
+        let editor = EditorView(allowAutogrowing: false)
+        self.init(editorInitializer: { editor }, rowSpan: rowSpan, columnSpan: columnSpan, initialHeight: initialHeight, style: style, gridStyle: gridStyle)
+        _editor = editor
     }
 
     /// Sets the focus in the `Editor` within the cell.
@@ -221,6 +265,18 @@ public class GridCell {
     }
 
     private func setup() {
+        NSLayoutConstraint.activate([
+            widthAnchorConstraint,
+            heightAnchorConstraint
+        ])
+    }
+
+    /// Sets up the editor for use. This function is called automatically as soon as the `GridView` moves to a window.
+    /// Calling this function directly is discouraged as it may result in performance issues when dealing with a Grid having
+    /// hundreds of cells. Refer to `GridCell` initializer documentation for further details.
+    public func setupEditor() {
+        guard editorSetupComplete == false else { return }
+        editorSetupComplete = true
         editor.translatesAutoresizingMaskIntoConstraints = false
         editor.boundsObserver = self
         editor.delegate = self
@@ -233,10 +289,7 @@ public class GridCell {
             editor.heightAnchor.constraint(greaterThanOrEqualToConstant: initialHeight)
         ])
 
-        NSLayoutConstraint.activate([
-            widthAnchorConstraint,
-            heightAnchorConstraint
-        ])
+        applyStyle(style)
     }
 
     func hideEditor() {
