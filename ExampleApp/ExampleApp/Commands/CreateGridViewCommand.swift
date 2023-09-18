@@ -33,7 +33,9 @@ public class CreateGridViewCommand: EditorCommand {
         self.delegate = delegate
 
         text.append(NSAttributedString(string: "Text before Grid"))
-        text.append(makeGridViewAttachment(numRows: 5, numColumns: 5).string)
+        for i in 1...5 {
+            text.append(makeGridViewAttachment(id: i, numRows: 5, numColumns: 5).string)
+        }
         text.append(NSAttributedString(string: "Text before Grid"))
     }
 
@@ -41,16 +43,19 @@ public class CreateGridViewCommand: EditorCommand {
         editor.attributedText = text
     }
 
-    private func makeGridViewAttachment(numRows: Int, numColumns: Int) -> GridViewAttachment {
+    private func makeGridViewAttachment(id: Int, numRows: Int, numColumns: Int) -> GridViewAttachment {
         let config = GridConfiguration(columnsConfiguration: [GridColumnConfiguration](repeating: GridColumnConfiguration(width: .fixed(100)), count: numColumns),
                                        rowsConfiguration: [GridRowConfiguration](repeating: GridRowConfiguration(initialHeight: 40), count: numRows))
 
         var cells = [GridCell]()
         for row in 0..<numRows {
             for col in 0..<numColumns {
-                let cell = GridCell(rowSpan: [row], columnSpan: [col], initialHeight: 20)
-                cell.editor.isEditable = false
-                cell.editor.attributedText = NSAttributedString(string: "{\(row), \(col)} Text in cell")
+                let editorInit = {
+                    let editor = EditorView(allowAutogrowing: false)
+                    editor.attributedText = NSAttributedString(string: "Table: \(id) {\(row), \(col)} Text in cell")
+                    return editor
+                }
+                let cell = GridCell(editorInitializer: editorInit, rowSpan: [row], columnSpan: [col], initialHeight: 20)
                 cells.append(cell)
             }
         }

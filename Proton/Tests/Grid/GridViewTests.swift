@@ -41,6 +41,7 @@ class GridViewTests: XCTestCase {
         let gridView = GridView(config: config)
         let delegate = MockGridViewDelegate()
         gridView.delegate = delegate
+        gridView.gridView.willMove(toWindow: UIWindow())
 
         let rangeToSelect = NSRange(location: 2, length: 2)
         let focusedCell = gridView.cellAt(rowIndex: 2, columnIndex: 1)!
@@ -51,6 +52,7 @@ class GridViewTests: XCTestCase {
             XCTAssertEqual(focusedCell, cell)
             expectation.fulfill()
         }
+
         focusedCell.editor.replaceCharacters(in: .zero, with: "This is a test string")
         focusedCell.editor.selectedRange = rangeToSelect
         context.richTextViewContext.textViewDidBeginEditing(focusedCell.editor.richTextView)
@@ -64,6 +66,7 @@ class GridViewTests: XCTestCase {
         let gridView = GridView(config: config)
         let delegate = MockGridViewDelegate()
         gridView.delegate = delegate
+        gridView.gridView.willMove(toWindow: UIWindow())
 
         let rangeToSelect = NSRange(location: 2, length: 2)
         let focusedCell = gridView.cellAt(rowIndex: 2, columnIndex: 1)!
@@ -89,6 +92,7 @@ class GridViewTests: XCTestCase {
         let gridView = GridView(config: config)
         let delegate = MockGridViewDelegate()
         gridView.delegate = delegate
+        gridView.gridView.willMove(toWindow: UIWindow())
 
         let focusedCell = gridView.cellAt(rowIndex: 2, columnIndex: 1)
         var affectedCells = [
@@ -120,6 +124,7 @@ class GridViewTests: XCTestCase {
         let gridView = GridView(config: config)
         let delegate = MockGridViewDelegate()
         gridView.delegate = delegate
+        gridView.gridView.willMove(toWindow: UIWindow())
 
         let expectedCell = gridView.cellAt(rowIndex: 2, columnIndex: 1)
         let point = CGPoint(x: 40, y: 20)
@@ -144,6 +149,7 @@ class GridViewTests: XCTestCase {
         let gridView = GridView(config: config)
         let delegate = MockGridViewDelegate()
         gridView.delegate = delegate
+        gridView.gridView.willMove(toWindow: UIWindow())
 
         let expectedCell = gridView.cellAt(rowIndex: 2, columnIndex: 1)
         let rangeToSelect = NSRange(location: 4, length: 3)

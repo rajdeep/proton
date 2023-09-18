@@ -97,7 +97,7 @@ public protocol GridViewDelegate: AnyObject {
 /// Since the cells contains an `EditorView` in itself, it is capable of hosting any attachment that `EditorView` can host
 /// including another `GridView` as an attachment.
 public class GridView: UIView {
-    private let gridView: GridContentView
+    let gridView: GridContentView
     private let leadingShadowView: UIView
     private let trailingShadowView: UIView
     private var columnResizingHandles = [CellHandleButton]()
