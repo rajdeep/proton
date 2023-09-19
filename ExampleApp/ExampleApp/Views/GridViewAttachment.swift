@@ -49,13 +49,3 @@ extension GridView: AttachmentViewIdentifying {
 
     public var type: AttachmentType { .block }
 }
-
-extension GridViewAttachment: AsyncAttachmentRendering {
-    public var isAsyncRendering: Bool {
-        true
-    }
-
-    public func didRenderAttachment(_ attachment: Proton.Attachment) {
-        print("Rendered: \(attachment.id)")
-    }
-}

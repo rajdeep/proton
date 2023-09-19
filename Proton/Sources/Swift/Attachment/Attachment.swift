@@ -39,9 +39,9 @@ public protocol AttachmentOffsetProviding: AnyObject {
     func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint
 }
 
-public protocol AsyncAttachmentRendering: AnyObject {
-    var isAsyncRendering: Bool { get }
-    func didRenderAttachment(_ attachment: Attachment)
+public protocol AsyncAttachmentRenderingDelegate: AnyObject {
+    func shouldRenderAsync(attachment: Attachment) -> Bool
+    func didRenderAttachment(_ attachment: Attachment, in editor: EditorView)
 }
 
 /// An attachment can be used as a container for any view object. Based on the `AttachmentSize` provided, the attachment automatically renders itself alongside the text in `EditorView`.
@@ -57,11 +57,6 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     private let backgroundColor: UIColor?
 
     var cachedBounds: CGRect?
-
-    var asyncRendering: AsyncAttachmentRendering? {
-        return self as? AsyncAttachmentRendering
-    }
-
 
     /// Identifier that uniquely identifies an attachment. Auto-generated.
     public let id: String = UUID().uuidString

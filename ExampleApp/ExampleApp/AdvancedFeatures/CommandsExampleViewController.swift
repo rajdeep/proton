@@ -112,6 +112,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         editor.delegate = self
+        editor.asyncAttachmentRenderingDelegate = self
         EditorViewContext.shared.delegate = self
 
         editor.registerProcessor(ListTextProcessor())
@@ -459,5 +460,15 @@ class ListFormattingProvider: EditorListFormattingProvider {
     func listLineMarkerFor(editor: EditorView, index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
         let sequenceGenerator = self.sequenceGenerators[(level - 1) % self.sequenceGenerators.count]
         return sequenceGenerator.value(at: index)
+    }
+}
+
+extension CommandsExampleViewController: AsyncAttachmentRenderingDelegate {
+    func shouldRenderAsync(attachment: Proton.Attachment) -> Bool {
+        attachment is GridViewAttachment
+    }
+
+    func didRenderAttachment(_ attachment: Proton.Attachment, in editor: Proton.EditorView) {
+        print("Render: \(attachment.id)")
     }
 }

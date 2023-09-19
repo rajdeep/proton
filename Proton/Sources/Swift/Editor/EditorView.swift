@@ -123,7 +123,7 @@ open class EditorView: UIView {
     let richTextView: RichTextView
     let context: RichTextViewContext
     var needsAsyncTextResolution = false
-    private var attachmentRenderingScheduler = AsyncTaskScheduler()
+    private let attachmentRenderingScheduler = AsyncTaskScheduler()
 
     // Holds `attributedText` until Editor move to a window
     // Setting attributed text without Editor being fully ready
@@ -136,6 +136,8 @@ open class EditorView: UIView {
 
     /// Context for the current Editor
     public let editorViewContext: EditorViewContext
+
+    public weak var asyncAttachmentRenderingDelegate: AsyncAttachmentRenderingDelegate?
 
     @available(iOS 13.0, *)
     public var textInteractions: [UITextInteraction] {
@@ -1249,8 +1251,9 @@ extension EditorView {
 
     func relayoutAttachments(in range: NSRange? = nil) {
         let rangeToUse = range ?? NSRange(location: 0, length: contentLength)
-        richTextView.enumerateAttribute(.attachment, in: rangeToUse, options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
-            guard let attachment = attach as? Attachment else { return }
+        richTextView.enumerateAttribute(.attachment, in: rangeToUse, options: .longestEffectiveRangeNotRequired) { [weak self] (attach, range, _) in
+            guard let self,
+                let attachment = attach as? Attachment else { return }
 
             if attachment.isImageBasedAttachment {
                 attachment.setContainerEditor(self)
@@ -1280,12 +1283,11 @@ extension EditorView {
             frame = CGRect(origin: adjustedOrigin, size: size)
 
             if attachment.isRendered == false {
-                let asyncAttachment = attachment.asyncRendering
-                if asyncAttachment?.isAsyncRendering == true {
-                    attachmentRenderingScheduler.enqueue(id: attachment.id) { [weak self] in
+                if self.asyncAttachmentRenderingDelegate?.shouldRenderAsync(attachment: attachment) == true {
+                    self.attachmentRenderingScheduler.enqueue(id: attachment.id) { [weak self] in
                         guard let self else { return }
                         attachment.render(in: self)
-                        asyncAttachment?.didRenderAttachment(attachment)
+                        self.asyncAttachmentRenderingDelegate?.didRenderAttachment(attachment, in: self)
 
                     }
                 } else {
