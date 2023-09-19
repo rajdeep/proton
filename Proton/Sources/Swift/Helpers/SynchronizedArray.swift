@@ -23,7 +23,7 @@ import Foundation
 final class SynchronizedArray<Element>: Sequence {
 
     private var array: [Element]
-    private let queue = DispatchQueue(label: "com.proton.synchronizedArray")
+    private let queue: DispatchQueue
 
     var count: Int {
         return queue.sync { self.array.count }
@@ -41,8 +41,9 @@ final class SynchronizedArray<Element>: Sequence {
         return queue.sync { self.array.last }
     }
 
-    init(array: [Element] = []) {
+    init(array: [Element] = [], qos: DispatchQoS = .userInteractive) {
         self.array = array
+        self.queue = DispatchQueue(label: "com.proton.synchronizedArray", qos: qos)
     }
 
     @discardableResult
