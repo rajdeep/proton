@@ -39,10 +39,14 @@ public protocol AttachmentOffsetProviding: AnyObject {
     func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint
 }
 
+public protocol AsyncAttachmentRendering: AnyObject {
+    var isAsyncRendering: Bool { get }
+    func didRenderAttachment(_ attachment: Attachment)
+}
+
 /// An attachment can be used as a container for any view object. Based on the `AttachmentSize` provided, the attachment automatically renders itself alongside the text in `EditorView`.
 /// `Attachment` also provides helper functions like `deleteFromContainer` and `rangeInContainer`
 open class Attachment: NSTextAttachment, BoundsObserving {
-
     private var view: AttachmentContentView? = nil
     private var content: AttachmentContent = .image(UIImage())
     private var size: AttachmentSize? = nil
@@ -54,6 +58,13 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
     var cachedBounds: CGRect?
 
+    var asyncRendering: AsyncAttachmentRendering? {
+        return self as? AsyncAttachmentRendering
+    }
+
+
+    /// Identifier that uniquely identifies an attachment. Auto-generated.
+    public let id: String = UUID().uuidString
     /// Governs if the attachment should be selected before being deleted. When `true`, tapping the backspace key the first time on range containing `Attachment` will only
     /// select the attachment i.e. show as highlighted. Tapping the backspace again will delete the attachment. If the value is `false`, the attachment will be deleted on the first backspace itself.
     public var selectBeforeDelete = false

@@ -66,6 +66,8 @@
 		1B6DE9D923C5940B007F9859 /* EditorCommandSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */; };
 		1B7A985723C4828A00C34B14 /* RichTextEditorContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A985623C4828A00C34B14 /* RichTextEditorContext.swift */; };
 		1B7A985923C484BC00C34B14 /* RichTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */; };
+		1B7C188A2AAEC078005457D9 /* AsyncTaskScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C18892AAEC078005457D9 /* AsyncTaskScheduler.swift */; };
+		1B7C188C2AB17621005457D9 /* SynchronizedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C188B2AB17621005457D9 /* SynchronizedArray.swift */; };
 		1B7C76AA2608A489006618AC /* FontTraitToggleCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76A92608A489006618AC /* FontTraitToggleCommand.swift */; };
 		1B7C76AB2608A489006618AC /* BoldCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76A72608A489006618AC /* BoldCommand.swift */; };
 		1B7C76AC2608A489006618AC /* ItalicsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C76A82608A489006618AC /* ItalicsCommand.swift */; };
@@ -227,6 +229,8 @@
 		1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommandSnapshotTests.swift; sourceTree = "<group>"; };
 		1B7A985623C4828A00C34B14 /* RichTextEditorContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextEditorContext.swift; sourceTree = "<group>"; };
 		1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewDelegate.swift; sourceTree = "<group>"; };
+		1B7C18892AAEC078005457D9 /* AsyncTaskScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTaskScheduler.swift; sourceTree = "<group>"; };
+		1B7C188B2AB17621005457D9 /* SynchronizedArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizedArray.swift; sourceTree = "<group>"; };
 		1B7C76A72608A489006618AC /* BoldCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoldCommand.swift; sourceTree = "<group>"; };
 		1B7C76A82608A489006618AC /* ItalicsCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItalicsCommand.swift; sourceTree = "<group>"; };
 		1B7C76A92608A489006618AC /* FontTraitToggleCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTraitToggleCommand.swift; sourceTree = "<group>"; };
@@ -438,6 +442,7 @@
 				1B45014E247E5AD9007B3EE9 /* SequenceGenerator.swift */,
 				1B30A35F2489CE3E00FA1D48 /* ListFormattingProvider.swift */,
 				1BFDC80E254A9BFC00BD83BD /* ListParser.swift */,
+				1B7C18892AAEC078005457D9 /* AsyncTaskScheduler.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -468,6 +473,7 @@
 				1BBAC3CE23CD5A1B0088A1C8 /* UITextRangeExtensions.swift */,
 				1B164F4023D2A4AB00A0869A /* String+NSRange.swift */,
 				1B44165228E5706A00836C71 /* GradientView.swift */,
+				1B7C188B2AB17621005457D9 /* SynchronizedArray.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -999,6 +1005,7 @@
 				1B45CDD223C00856001EB196 /* TextContainer.swift in Sources */,
 				1B4B60CA247FC51E002B63CF /* ListCommand.swift in Sources */,
 				1B7C76AB2608A489006618AC /* BoldCommand.swift in Sources */,
+				1B7C188C2AB17621005457D9 /* SynchronizedArray.swift in Sources */,
 				1BBAC3CF23CD5A1B0088A1C8 /* UITextRangeExtensions.swift in Sources */,
 				1BFDC80F254A9BFC00BD83BD /* ListParser.swift in Sources */,
 				1B7C76AC2608A489006618AC /* ItalicsCommand.swift in Sources */,
@@ -1031,6 +1038,7 @@
 				1B4B60CD247FC6AF002B63CF /* ListTextProcessor.swift in Sources */,
 				1BFFEF0C23C30D5200D2BA35 /* EditorContentView.swift in Sources */,
 				1B82570923C5674E0033A0A9 /* EditorCommand.swift in Sources */,
+				1B7C188A2AAEC078005457D9 /* AsyncTaskScheduler.swift in Sources */,
 				1B91E7B926AA698A0002DF45 /* StrikethroughCommand.swift in Sources */,
 				1B82570D23C5686F0033A0A9 /* EditorViewContext.swift in Sources */,
 				1B975AFF23CD454700EC410C /* RichTextViewContext.swift in Sources */,

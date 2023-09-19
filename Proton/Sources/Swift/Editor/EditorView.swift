@@ -123,6 +123,7 @@ open class EditorView: UIView {
     let richTextView: RichTextView
     let context: RichTextViewContext
     var needsAsyncTextResolution = false
+    private var attachmentRenderingScheduler = AsyncTaskScheduler()
 
     // Holds `attributedText` until Editor move to a window
     // Setting attributed text without Editor being fully ready
@@ -1114,6 +1115,7 @@ open class EditorView: UIView {
         textViewDelegate.textViewDidChange?(richTextView)
         return true
     }
+    var pending = false
 }
 
 extension EditorView {
@@ -1278,14 +1280,25 @@ extension EditorView {
             frame = CGRect(origin: adjustedOrigin, size: size)
 
             if attachment.isRendered == false {
-                attachment.render(in: self)
-                if !isSettingAttributedText, let focusable = attachment.contentView as? Focusable {
-                    focusable.setFocus()
+                let asyncAttachment = attachment.asyncRendering
+                if asyncAttachment?.isAsyncRendering == true {
+                    attachmentRenderingScheduler.enqueue(id: attachment.id) { [weak self] in
+                        guard let self else { return }
+                        attachment.render(in: self)
+                        asyncAttachment?.didRenderAttachment(attachment)
+
+                    }
+                } else {
+                    attachment.render(in: self)
+                    if !self.isSettingAttributedText, let focusable = attachment.contentView as? Focusable {
+                        focusable.setFocus()
+                    }
                 }
             }
 
             attachment.frame = frame
         }
+        attachmentRenderingScheduler.executeNext()
     }
 }
 

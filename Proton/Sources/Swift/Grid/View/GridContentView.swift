@@ -60,6 +60,7 @@ class GridContentView: UIScrollView {
     weak var boundsObserver: BoundsObserving?
 
     var isFreeScrollingEnabled = false
+    var isRendered = false
 
     var cells: [GridCell] {
         grid.cells
@@ -99,16 +100,6 @@ class GridContentView: UIScrollView {
         grid.delegate = self
     }
 
-    var isRendered = false
-    public override func willMove(toWindow newWindow: UIWindow?) {
-        guard isRendered == false,
-              newWindow != nil else {
-                  return
-              }
-        isRendered = true
-        setup()
-    }
-
     convenience init(config: GridConfiguration) {
         let cells = Self.generateCells(config: config)
         self.init(config: config, cells: cells)
@@ -141,6 +132,15 @@ class GridContentView: UIScrollView {
     private func setup() {
         makeCells()
         setupSelectionGesture()
+    }
+
+    public override func willMove(toWindow newWindow: UIWindow?) {
+        guard isRendered == false,
+              newWindow != nil else {
+                  return
+              }
+        isRendered = true
+        setup()
     }
 
     private func makeCells() {
@@ -329,7 +329,6 @@ class GridContentView: UIScrollView {
                 cell.topAnchorConstraint?.constant = frame.minY
                 cell.leadingAnchorConstraint?.constant = frame.minX
             }
-
             freezeColumnCellIfRequired(cell)
             freezeRowCellIfRequired(cell)
             gridContentViewDelegate?.gridContentView(self, didLayoutCell: cell)

@@ -305,7 +305,7 @@ extension CommandsExampleViewController: EditorViewDelegate {
     }
 
     func editor(_ editor: EditorView, didChangeSize currentSize: CGSize, previousSize: CGSize) {
-        print("Height changed from \(previousSize.height) to \(currentSize.height)")
+//        print("Height changed from \(previousSize.height) to \(currentSize.height)")
     }
 
     func editor(_ editor: EditorView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {

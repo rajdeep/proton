@@ -573,7 +573,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         newCell01.editor.replaceCharacters(in: .zero, with: "New cell")
 
         // Editor shows caret for some reason - needs further investigation
-        gridView.cellAt(rowIndex: 0, columnIndex: 0)?.editor.isSelectable = false
+        gridView.cellAt(rowIndex: 0, columnIndex:0)?.editor.isSelectable = false
         viewController.render(size: CGSize(width: 400, height: 400))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
@@ -604,7 +604,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         newCell21.editor.replaceCharacters(in: .zero, with: "New cell")
 
         // Editor shows caret for some reason - needs further investigation
-        gridView.cellAt(rowIndex: 2, columnIndex: 0)?.editor.isSelectable = false
+        gridView.cellAt(rowIndex: 2, columnIndex:0)?.editor.isSelectable = false
         viewController.render(size: CGSize(width: 400, height: 400))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
@@ -631,11 +631,11 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let gridView = attachment.view
         gridView.insertColumn(at: 0, configuration: GridColumnConfiguration(width: .fractional(0.20)))
 
-        // Editor shows caret for some reason - needs further investigation
-        gridView.cellAt(rowIndex: 0, columnIndex: 0)?.editor.isSelectable = false
         let newCell10 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 0))
         newCell10.editor.replaceCharacters(in: .zero, with: "New cell")
 
+        // Editor shows caret for some reason - needs further investigation
+        gridView.cellAt(rowIndex: 0, columnIndex:0)?.editor.isSelectable = false
         viewController.render(size: CGSize(width: 500, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
@@ -666,7 +666,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         newCell13.editor.replaceCharacters(in: .zero, with: "New cell")
 
         // Editor shows caret for some reason - needs further investigation
-        gridView.cellAt(rowIndex: 0, columnIndex: 3)?.editor.isSelectable = false
+        gridView.cellAt(rowIndex: 0, columnIndex:3)?.editor.isSelectable = false
         viewController.render(size: CGSize(width: 500, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }

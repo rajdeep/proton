@@ -127,6 +127,10 @@ public class GridView: UIView {
         10.0
     }
 
+    var isRendered: Bool {
+        gridView.superview != nil
+    }
+
     /// Delegate for `GridView` which can be used to handle cell specific `EditorView` events
     public weak var delegate: GridViewDelegate?
 
@@ -233,12 +237,21 @@ public class GridView: UIView {
         self.config = config
         super.init(frame: .zero)
         self.leadingShadowConstraint = leadingShadowView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
+
         setup()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+//    public override func willMove(toWindow newWindow: UIWindow?) {
+//        guard isRendered == false,
+//              newWindow != nil else {
+//                  return
+//              }
+//        setup()
+//    }
 
     private func setup() {
         gridView.translatesAutoresizingMaskIntoConstraints = false
