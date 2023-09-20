@@ -56,6 +56,10 @@ final class SynchronizedArray<Element>: Sequence {
         }
     }
 
+    func removeAll() {
+        queue.sync { self.array.removeAll() }
+    }
+
     func append(_ newElement: Element) {
         queue.sync { self.array.append(newElement) }
     }

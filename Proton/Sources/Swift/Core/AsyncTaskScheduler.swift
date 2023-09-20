@@ -34,6 +34,10 @@ class AsyncTaskScheduler {
         }
     }
 
+    func clear() {
+        tasks.removeAll()
+    }
+
     func enqueue(id: String, task: @escaping VoidTask) {
         guard tasks.contains(where: { $0.id == id }) == false else { return }
         self.tasks.append((id, task))

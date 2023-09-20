@@ -428,6 +428,7 @@ open class EditorView: UIView {
                 pendingAttributedText = newValue
                 return
             }
+            attachmentRenderingScheduler.clear()
             // Clear text before setting new value to avoid issues with formatting/layout when
             // editor is hosted in a scrollable container and content is set multiple times.
             richTextView.attributedText = NSAttributedString()
@@ -1117,7 +1118,6 @@ open class EditorView: UIView {
         textViewDelegate.textViewDidChange?(richTextView)
         return true
     }
-    var pending = false
 }
 
 extension EditorView {
@@ -1284,11 +1284,10 @@ extension EditorView {
 
             if attachment.isRendered == false {
                 if self.asyncAttachmentRenderingDelegate?.shouldRenderAsync(attachment: attachment) == true {
-                    self.attachmentRenderingScheduler.enqueue(id: attachment.id) { [weak self] in
-                        guard let self,
-                              // Because of async nature the attachment may get scheduled again to be rendered.
-                              // ignore the attachments that are already rendered
-                              attachment.isRendered == false else { return }
+                    self.attachmentRenderingScheduler.enqueue(id: attachment.id) {
+                        // Because of async nature the attachment may get scheduled again to be rendered.
+                        // ignore the attachments that are already rendered
+                        guard attachment.isRendered == false else { return }
                         attachment.render(in: self)
                         self.asyncAttachmentRenderingDelegate?.didRenderAttachment(attachment, in: self)
                     }
