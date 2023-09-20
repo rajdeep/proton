@@ -38,7 +38,7 @@ class EditorViewContextSnapshotTests: SnapshotTestCase {
 
         textView.replaceCharacters(in: .zero, with: "In textView ")
         textView.insertAttachment(in: textView.textEndRange, attachment: attachment)
-        textView.selectedRange = NSRange(location: textView.textEndRange.location - 1, length: 0)
+        textView.selectedRange = NSRange(location: textView.textEndRange.location - 2, length: 1)
         viewController.render()
         _ = context.richTextViewContext.textView(textView.richTextView, shouldChangeTextIn: NSRange(location: textView.selectedRange.location - 1, length: 1), replacementText: "")
         addSelectionRects(at: textView.selectedTextRange!, in: textView, color: .cyan)
