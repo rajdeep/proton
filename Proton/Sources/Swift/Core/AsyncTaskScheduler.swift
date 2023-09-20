@@ -62,12 +62,10 @@ class AsyncTaskScheduler {
                     guard let self else { return }
                     if RunLoop.current.currentMode != .tracking {
                         task()
-                        self.pending = false
                     } else {
-                        self.pending = false
                         self.tasks.insert((id: id, task: task), at: 0)
-                        self.executeNext()
                     }
+                    self.pending = false
                 }
             }
         }
