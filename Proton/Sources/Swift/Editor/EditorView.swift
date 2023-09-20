@@ -1285,10 +1285,12 @@ extension EditorView {
             if attachment.isRendered == false {
                 if self.asyncAttachmentRenderingDelegate?.shouldRenderAsync(attachment: attachment) == true {
                     self.attachmentRenderingScheduler.enqueue(id: attachment.id) { [weak self] in
-                        guard let self else { return }
+                        guard let self,
+                              // Because of async nature the attachment may get scheduled again to be rendered.
+                              // ignore the attachments that are already rendered
+                              attachment.isRendered == false else { return }
                         attachment.render(in: self)
                         self.asyncAttachmentRenderingDelegate?.didRenderAttachment(attachment, in: self)
-
                     }
                 } else {
                     attachment.render(in: self)
