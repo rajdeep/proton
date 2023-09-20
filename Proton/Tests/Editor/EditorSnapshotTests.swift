@@ -248,6 +248,44 @@ class EditorSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testRendersAsyncAttachments() {
+        let ex = functionExpectation()
+        ex.expectedFulfillmentCount = 11
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let text = NSMutableAttributedString(string: "Text before panels")
+
+        let delegate = MockAsyncAttachmentRenderingDelegate()
+        delegate.onDidRenderAttachment = { _, _ in
+            editor.render()
+            ex.fulfill()
+        }
+        editor.asyncAttachmentRenderingDelegate = delegate
+
+        for i in 1...10 {
+            var panel = PanelView()
+            panel.editor.forceApplyAttributedText = true
+            panel.backgroundColor = .cyan
+            panel.layer.borderWidth = 1.0
+            panel.layer.cornerRadius = 4.0
+            panel.layer.borderColor = UIColor.black.cgColor
+
+            let attachment = Attachment(panel, size: .fullWidth)
+            panel.boundsObserver = attachment
+            panel.attributedText = NSAttributedString(string: "Panel id: \(i): Some text in the panel")
+            text.append(attachment.string)
+        }
+        text.append(NSMutableAttributedString(string: "Text after panels"))
+        editor.attributedText = text
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            viewController.render(size: CGSize(width: 300, height: 720))
+            assertSnapshot(matching: viewController.view, as: .image, record: self.recordMode)
+            ex.fulfill()
+        }
+        waitForExpectations(timeout: 2.0)
+    }
+
     func testDeletesAttachments() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor

@@ -64,6 +64,7 @@
 		1B617A9A283724C900095FEE /* EditorViewContextSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B617A99283724C900095FEE /* EditorViewContextSnapshotTests.swift */; };
 		1B617AA42839EA2D00095FEE /* AttachmentContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B617AA32839EA2D00095FEE /* AttachmentContent.swift */; };
 		1B6DE9D923C5940B007F9859 /* EditorCommandSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */; };
+		1B6FB18A2ABA75E7008CE69E /* MockAsyncAttachmentRenderingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6FB1892ABA75E7008CE69E /* MockAsyncAttachmentRenderingDelegate.swift */; };
 		1B7A985723C4828A00C34B14 /* RichTextEditorContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A985623C4828A00C34B14 /* RichTextEditorContext.swift */; };
 		1B7A985923C484BC00C34B14 /* RichTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */; };
 		1B7C188A2AAEC078005457D9 /* AsyncTaskScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C18892AAEC078005457D9 /* AsyncTaskScheduler.swift */; };
@@ -227,6 +228,7 @@
 		1B617A99283724C900095FEE /* EditorViewContextSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewContextSnapshotTests.swift; sourceTree = "<group>"; };
 		1B617AA32839EA2D00095FEE /* AttachmentContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentContent.swift; sourceTree = "<group>"; };
 		1B6DE9D823C5940B007F9859 /* EditorCommandSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorCommandSnapshotTests.swift; sourceTree = "<group>"; };
+		1B6FB1892ABA75E7008CE69E /* MockAsyncAttachmentRenderingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAsyncAttachmentRenderingDelegate.swift; sourceTree = "<group>"; };
 		1B7A985623C4828A00C34B14 /* RichTextEditorContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextEditorContext.swift; sourceTree = "<group>"; };
 		1B7A985823C484BC00C34B14 /* RichTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewDelegate.swift; sourceTree = "<group>"; };
 		1B7C18892AAEC078005457D9 /* AsyncTaskScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTaskScheduler.swift; sourceTree = "<group>"; };
@@ -831,6 +833,7 @@
 				1BFFEF1E23C3366200D2BA35 /* MockAttachmentOffsetProvider.swift */,
 				1B8BE91E23C71E8A00353B17 /* MockEditorViewDelegate.swift */,
 				1BD993C323CACCE100563ACB /* MockAttachment.swift */,
+				1B6FB1892ABA75E7008CE69E /* MockAsyncAttachmentRenderingDelegate.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -1097,6 +1100,7 @@
 				1B9AF9E62851EC2500CD65C4 /* GridViewTests.swift in Sources */,
 				1B98D5B0286828EC0091C927 /* SnapshotTestCase.swift in Sources */,
 				1BFDC811254AA11F00BD83BD /* ListParserTests.swift in Sources */,
+				1B6FB18A2ABA75E7008CE69E /* MockAsyncAttachmentRenderingDelegate.swift in Sources */,
 				1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */,
 				1B82570423C48C350033A0A9 /* MockRichTextViewDelegate.swift in Sources */,
 				1BBE4EFC248CB15E00D1C788 /* ListCommandTests.swift in Sources */,
