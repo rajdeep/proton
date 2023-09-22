@@ -64,6 +64,14 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     /// select the attachment i.e. show as highlighted. Tapping the backspace again will delete the attachment. If the value is `false`, the attachment will be deleted on the first backspace itself.
     public var selectBeforeDelete = false
 
+    public var isBlockType: Bool {
+        isBlockAttachment
+    }
+
+    public var isInlineType: Bool {
+        !isBlockAttachment
+    }
+
     /// Attributed string representation of the `Attachment`. This can be used directly to replace a range of text in `EditorView`
     /// ### Usage Example ###
     /// ```
