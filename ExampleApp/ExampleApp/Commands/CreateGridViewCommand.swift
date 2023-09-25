@@ -33,13 +33,17 @@ public class CreateGridViewCommand: EditorCommand {
         self.delegate = delegate
 
         text.append(NSAttributedString(string: "Text before Grid"))
-        for i in 1...5 {
-            text.append(makeGridViewAttachment(id: i, numRows: 5, numColumns: 5).string)
+        timeEvent(label: "Create")
+        for i in 1..<25 {
+            text.append(makeGridViewAttachment(id: i, numRows: 25, numColumns: 5).string)
+            text.append(NSAttributedString(string: "\ntest middle\n"))
         }
-        text.append(NSAttributedString(string: "Text before Grid"))
+
+        text.append(NSAttributedString(string: "Text After Grid"))
     }
 
     public func execute(on editor: EditorView) {
+        timeEvent(label: "Render")
         editor.attributedText = text
     }
 
@@ -52,7 +56,7 @@ public class CreateGridViewCommand: EditorCommand {
             for col in 0..<numColumns {
                 let editorInit = {
                     let editor = EditorView(allowAutogrowing: false)
-                    editor.attributedText = NSAttributedString(string: "Table: \(id) {\(row), \(col)} Text in cell")
+                    editor.attributedText = NSAttributedString(string: "Table \(id) {\(row), \(col)} Text in cell")
                     return editor
                 }
                 let cell = GridCell(editorInitializer: editorInit, rowSpan: [row], columnSpan: [col], initialHeight: 20)
@@ -61,5 +65,15 @@ public class CreateGridViewCommand: EditorCommand {
         }
 
         return GridViewAttachment(config: config, cells: cells)
+    }
+
+    func timeEvent(label: String) {
+        let start = DispatchTime.now()
+        DispatchQueue.main.async {
+            let end = DispatchTime.now()
+            let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
+            let timeInterval = Double(nanoTime) / 1_000_000_000
+            print("\(label): \(timeInterval) seconds")
+        }
     }
 }

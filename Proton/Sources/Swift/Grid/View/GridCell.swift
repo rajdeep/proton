@@ -118,6 +118,15 @@ public class GridCell {
     public internal(set) var frame: CGRect = .zero
 
     private var selectionView: SelectionView?
+    private let editorInitializer: EditorInitializer
+
+    var isRunningTests: Bool {
+#if DEBUG
+        return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+#else
+        return false
+#endif
+    }
 
     /// Sets the cell selected
     public var isSelected: Bool {
@@ -131,27 +140,17 @@ public class GridCell {
         }
     }
 
-    var isRunningTests: Bool {
-    #if DEBUG
-        return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
-        #else
-        return false
-    #endif
-    }
-
-
     private(set) var editorSetupComplete = false
     private var _editor: EditorView?
     /// Editor within the cell
     public var editor: EditorView {
         if !isRunningTests {
             assert(editorSetupComplete,
-                """
-                Editor setup is not complete as Grid containing cell is not in a window.
-                Refer to initialiser documentation for additional details.
-                """)
+                  """
+                  Editor setup is not complete as Grid containing cell is not in a window.
+                  Refer to initialiser documentation for additional details.
+                  """)
         }
-
         if let _editor {
             return _editor
         }
@@ -186,7 +185,6 @@ public class GridCell {
 
     let initialHeight: CGFloat
 
-    private let editorInitializer: EditorInitializer
 
     /// Initializes the cell
     /// - Parameters:
@@ -214,6 +212,7 @@ public class GridCell {
         widthAnchorConstraint = contentView.widthAnchor.constraint(equalToConstant: 0)
         heightAnchorConstraint = contentView.heightAnchor.constraint(equalToConstant: 0)
 
+
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(contentViewTapped))
         contentView.addGestureRecognizer(tapGestureRecognizer)
 
@@ -225,9 +224,7 @@ public class GridCell {
     }
 
     public convenience init(rowSpan: [Int], columnSpan: [Int], initialHeight: CGFloat = 40, style: GridCellStyle = .init(), gridStyle: GridStyle = .default) {
-        let editor = EditorView(allowAutogrowing: false)
-        self.init(editorInitializer: { editor }, rowSpan: rowSpan, columnSpan: columnSpan, initialHeight: initialHeight, style: style, gridStyle: gridStyle)
-        _editor = editor
+        self.init(editorInitializer: { EditorView(allowAutogrowing: false) }, rowSpan: rowSpan, columnSpan: columnSpan, initialHeight: initialHeight, style: style, gridStyle: gridStyle)
     }
 
     /// Sets the focus in the `Editor` within the cell.
@@ -271,12 +268,9 @@ public class GridCell {
         ])
     }
 
-    /// Sets up the editor for use. This function is called automatically as soon as the `GridView` moves to a window.
-    /// Calling this function directly is discouraged as it may result in performance issues when dealing with a Grid having
-    /// hundreds of cells. Refer to `GridCell` initializer documentation for further details.
-    public func setupEditor() {
-        guard editorSetupComplete == false else { return }
+    func setupEditor() {
         editorSetupComplete = true
+        applyStyle(style)
         editor.translatesAutoresizingMaskIntoConstraints = false
         editor.boundsObserver = self
         editor.delegate = self
@@ -288,8 +282,6 @@ public class GridCell {
             editor.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
             editor.heightAnchor.constraint(greaterThanOrEqualToConstant: initialHeight)
         ])
-
-        applyStyle(style)
     }
 
     func hideEditor() {

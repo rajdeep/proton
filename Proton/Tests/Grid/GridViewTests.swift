@@ -52,7 +52,6 @@ class GridViewTests: XCTestCase {
             XCTAssertEqual(focusedCell, cell)
             expectation.fulfill()
         }
-
         focusedCell.editor.replaceCharacters(in: .zero, with: "This is a test string")
         focusedCell.editor.selectedRange = rangeToSelect
         context.richTextViewContext.textViewDidBeginEditing(focusedCell.editor.richTextView)

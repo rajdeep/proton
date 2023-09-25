@@ -123,6 +123,7 @@ open class EditorView: UIView {
     let richTextView: RichTextView
     let context: RichTextViewContext
     var needsAsyncTextResolution = false
+    private let attachmentRenderingScheduler = AsyncTaskScheduler()
 
     // Holds `attributedText` until Editor move to a window
     // Setting attributed text without Editor being fully ready
@@ -135,6 +136,8 @@ open class EditorView: UIView {
 
     /// Context for the current Editor
     public let editorViewContext: EditorViewContext
+
+    public weak var asyncAttachmentRenderingDelegate: AsyncAttachmentRenderingDelegate?
 
     @available(iOS 13.0, *)
     public var textInteractions: [UITextInteraction] {
@@ -425,6 +428,7 @@ open class EditorView: UIView {
                 pendingAttributedText = newValue
                 return
             }
+            attachmentRenderingScheduler.clear()
             // Clear text before setting new value to avoid issues with formatting/layout when
             // editor is hosted in a scrollable container and content is set multiple times.
             richTextView.attributedText = NSAttributedString()
@@ -1247,8 +1251,9 @@ extension EditorView {
 
     func relayoutAttachments(in range: NSRange? = nil) {
         let rangeToUse = range ?? NSRange(location: 0, length: contentLength)
-        richTextView.enumerateAttribute(.attachment, in: rangeToUse, options: .longestEffectiveRangeNotRequired) { (attach, range, _) in
-            guard let attachment = attach as? Attachment else { return }
+        richTextView.enumerateAttribute(.attachment, in: rangeToUse, options: .longestEffectiveRangeNotRequired) { [weak self] (attach, range, _) in
+            guard let self,
+                let attachment = attach as? Attachment else { return }
 
             if attachment.isImageBasedAttachment {
                 attachment.setContainerEditor(self)
@@ -1278,14 +1283,25 @@ extension EditorView {
             frame = CGRect(origin: adjustedOrigin, size: size)
 
             if attachment.isRendered == false {
-                attachment.render(in: self)
-                if !isSettingAttributedText, let focusable = attachment.contentView as? Focusable {
-                    focusable.setFocus()
+                if self.asyncAttachmentRenderingDelegate?.shouldRenderAsync(attachment: attachment) == true {
+                    self.attachmentRenderingScheduler.enqueue(id: attachment.id) {
+                        // Because of async nature the attachment may get scheduled again to be rendered.
+                        // ignore the attachments that are already rendered
+                        guard attachment.isRendered == false else { return }
+                        attachment.render(in: self)
+                        self.asyncAttachmentRenderingDelegate?.didRenderAttachment(attachment, in: self)
+                    }
+                } else {
+                    attachment.render(in: self)
+                    if !self.isSettingAttributedText, let focusable = attachment.contentView as? Focusable {
+                        focusable.setFocus()
+                    }
                 }
             }
 
             attachment.frame = frame
         }
+        attachmentRenderingScheduler.executeNext()
     }
 }
 

@@ -233,6 +233,7 @@ public class GridView: UIView {
         self.config = config
         super.init(frame: .zero)
         self.leadingShadowConstraint = leadingShadowView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
+
         setup()
     }
 
