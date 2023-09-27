@@ -42,7 +42,8 @@ public extension UIFont {
 
     var isAppleEmoji: Bool {
         return fontName == ".AppleColorEmojiUI" // inserted from iOS Emoji keyboard or macOS Character Viewer
-            || fontName == "LastResort" // interesting font available since Mac OS 8.5 to render unsupported emoji
+            || fontName == "LastResort"
+            || fontName == "AppleColorEmoji"  // interesting font available since Mac OS 8.5 to render unsupported emoji
     }
 
     var textStyle: UIFont.TextStyle {

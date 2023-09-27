@@ -502,7 +502,7 @@ class LayoutManager: NSLayoutManager {
                                 lineSpacing = 0
                             }
                         }
-                        rect.origin.y = usedRect.origin.y
+                        rect.origin.y = usedRect.origin.y + lineSpacing
                         rect.size.height = usedRect.height - lineSpacing
                         let content = textStorage.attributedSubstring(from: rangeIntersection)
                         var contentWidth = content.boundingRect(with: rect.size, options: [.usesDeviceMetrics, .usesFontLeading], context: nil).width

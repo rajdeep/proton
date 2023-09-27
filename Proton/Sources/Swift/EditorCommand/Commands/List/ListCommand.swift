@@ -88,6 +88,9 @@ public class ListCommand: EditorCommand {
             selectedRange = NSRange(location: location, length: length)
         }
         
+        if selectedRange.location == 0, selectedRange.length >= 2 {
+            selectedRange = NSRange(location: 2, length: selectedRange.length - 2)
+        }
         guard selectedRange.length > 0 else {
             if editor.isEmpty ||
                 editor.attributedText.attribute(.listItem, at: max(0, editor.selectedRange.location - 1), effectiveRange: nil) == nil {

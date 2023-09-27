@@ -111,6 +111,10 @@ open class Attachment: NSTextAttachment, BoundsObserving {
             }
         } else {
             selectionView.removeFromSuperview()
+            if let tableView = view.subviews.first?.subviews.first as? UITableView,
+               let cell = tableView.visibleCells.first {
+                cell.contentView.layer.borderWidth = 0
+            }
         }
     }
 

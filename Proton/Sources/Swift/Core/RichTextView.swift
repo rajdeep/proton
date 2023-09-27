@@ -368,7 +368,6 @@ class RichTextView: AutogrowingTextView {
             if contentLength == 0 {
                 resetTypingAttributes()
             }
-
             let last = attributedText.attributedSubstring(from: NSRange(location: selectedRange.location - 1, length: 1))
             if last.string == "\n",
                last.attribute(.listItem, at: 0, effectiveRange: nil) == nil,
@@ -505,13 +504,24 @@ class RichTextView: AutogrowingTextView {
     }
 
     private func updatePlaceholderVisibility() {
-        guard self.attributedText.length <= 2 else {
+        guard showPlaceholder() else {
             if placeholderLabel.superview != nil {
                 placeholderLabel.removeFromSuperview()
             }
             return
         }
         setupPlaceholder()
+    }
+    
+    private func showPlaceholder() -> Bool {
+        let str = self.attributedText.string
+        guard !str.isEmpty else { return true }
+        for ch in str.dropFirst() {
+            if ch != "\n" {
+                return false
+            }
+        }
+        return true
     }
 
     func attributeValue(at location: CGPoint, for attribute: NSAttributedString.Key) -> Any? {
@@ -665,6 +675,35 @@ class RichTextView: AutogrowingTextView {
     }
 
     override func caretRect(for position: UITextPosition) -> CGRect {
+//        guard isEditable else {
+//            return super.caretRect(for: position)
+//        }
+//
+//        let location = offset(from: beginningOfDocument, to: position)
+//        let lineRect = layoutManager.boundingRect(forGlyphRange: NSRange(location: location, length: 0), in: textContainer)
+//
+//        var caretRect = super.caretRect(for: position)
+//        caretRect.origin.y = lineRect.minY + textContainerInset.top
+//        caretRect.size.height = lineRect.height
+//        
+//        if location < (editorView?.contentLength ?? 0), location >= 1 {
+//            if let attachment = editorView?.attributedText.attribute(.attachment, at: location - 1, effectiveRange: nil) as? Attachment {
+//                if let font = editorView?.attributedText.attribute(.font, at: location - 1, effectiveRange: nil) as? UIFont,
+//                   let paragraphStyle = editorView?.attributedText.attribute(.paragraphStyle, at: location, effectiveRange: nil) as? NSParagraphStyle {
+//                    if (font.pointSize + paragraphStyle.lineSpacing) < caretRect.height {
+//                        caretRect.origin.y = caretRect.minY + max(0, (lineRect.height - caretRect.size.height - paragraphStyle.lineSpacing))
+//                        caretRect.size.height -= paragraphStyle.lineSpacing
+//                    }
+//                }
+//            } else if let font = editorView?.attributedText.attribute(.font, at: location - 1, effectiveRange: nil) as? UIFont,
+//               let paragraphStyle = editorView?.attributedText.attribute(.paragraphStyle, at: location, effectiveRange: nil) as? NSParagraphStyle {
+//                if (font.pointSize + paragraphStyle.lineSpacing) < caretRect.height {
+//                    caretRect.size.height = font.pointSize + 3
+//                }
+//            }
+//        }
+//        
+//        return caretRect
         guard isEditable else {
             return super.caretRect(for: position)
         }
@@ -675,24 +714,6 @@ class RichTextView: AutogrowingTextView {
         var caretRect = super.caretRect(for: position)
         caretRect.origin.y = lineRect.minY + textContainerInset.top
         caretRect.size.height = lineRect.height
-        
-        if location < (editorView?.contentLength ?? 0), location >= 1 {
-            if let attachment = editorView?.attributedText.attribute(.attachment, at: location - 1, effectiveRange: nil) as? Attachment {
-                if let font = editorView?.attributedText.attribute(.font, at: location - 1, effectiveRange: nil) as? UIFont,
-                   let paragraphStyle = editorView?.attributedText.attribute(.paragraphStyle, at: location, effectiveRange: nil) as? NSParagraphStyle {
-                    if (font.pointSize + paragraphStyle.lineSpacing) < caretRect.height {
-                        caretRect.origin.y = caretRect.minY + max(0, (lineRect.height - caretRect.size.height - paragraphStyle.lineSpacing))
-                        caretRect.size.height -= paragraphStyle.lineSpacing
-                    }
-                }
-            } else if let font = editorView?.attributedText.attribute(.font, at: location - 1, effectiveRange: nil) as? UIFont,
-               let paragraphStyle = editorView?.attributedText.attribute(.paragraphStyle, at: location, effectiveRange: nil) as? NSParagraphStyle {
-                if (font.pointSize + paragraphStyle.lineSpacing) < caretRect.height {
-                    caretRect.size.height = font.pointSize + 3
-                }
-            }
-        }
-        
         return caretRect
     }
     
