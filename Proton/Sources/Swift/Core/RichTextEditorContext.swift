@@ -195,3 +195,69 @@ class RichTextEditorContext: RichTextViewContext {
         return fontToApply ?? textView.defaultFont
     }
 }
+
+extension UIScrollView {
+    var scrollViewDelegate: UIScrollViewDelegate? {
+        (self as? RichTextView)?.richTextScrollViewDelegate
+    }
+}
+
+// ScrollView Delegate functions
+extension RichTextEditorContext {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollView.scrollViewDelegate?.scrollViewDidScroll?(scrollView)
+    }
+
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        scrollView.scrollViewDelegate?.scrollViewDidZoom?(scrollView)
+    }
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        scrollView.scrollViewDelegate?.scrollViewWillBeginDragging?(scrollView)
+    }
+
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        scrollView.scrollViewDelegate?.scrollViewWillEndDragging?(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
+    }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        scrollView.scrollViewDelegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
+    }
+
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        scrollView.scrollViewDelegate?.scrollViewWillBeginDecelerating?(scrollView)
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        scrollView.scrollViewDelegate?.scrollViewDidEndDecelerating?(scrollView)
+    }
+
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        scrollView.scrollViewDelegate?.scrollViewDidEndScrollingAnimation?(scrollView)
+    }
+
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        scrollView.scrollViewDelegate?.viewForZooming?(in: scrollView)
+    }
+
+    func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+        scrollView.scrollViewDelegate?.scrollViewWillBeginZooming?(scrollView, with: view)
+    }
+
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+        scrollView.scrollViewDelegate?.scrollViewDidEndZooming?(scrollView, with: view, atScale: scale)
+    }
+
+    func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
+        scrollView.scrollViewDelegate?.scrollViewShouldScrollToTop?(scrollView) ?? false
+    }
+
+    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+        scrollView.scrollViewDelegate?.scrollViewDidScrollToTop?(scrollView)
+    }
+
+    @available(iOSApplicationExtension 11.0, *)
+    func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
+        scrollView.scrollViewDelegate?.scrollViewDidChangeAdjustedContentInset?(scrollView)
+    }
+}
