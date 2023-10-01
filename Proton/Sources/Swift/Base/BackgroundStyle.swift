@@ -62,12 +62,24 @@ public enum RoundedCornerStyle {
     /// Rounding based on relative percent value of the content height. For e.g. 50% would provide a capsule appearance
     /// for shorter content.
     case relative(percent: CGFloat)
+    
+    public var isRelative: Bool {
+        switch self {
+        case .absolute:
+            return false
+        case .relative:
+            return true
+        }
+    }
 }
 
 /// Defines the mode for height/width used for the background for the text
 public enum BackgroundMode {
     /// Background matches the height/width of text
     case matchText
+    
+    case matchTextExact
+    
     /// Background matches entire line irrespective of font height/used character width in the given line
     case matchLine
 }

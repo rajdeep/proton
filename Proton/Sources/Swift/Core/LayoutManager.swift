@@ -458,6 +458,212 @@ class LayoutManager: NSLayoutManager {
         editor.drawHorizontalLines()
     }
     
+//    override func drawBackground(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
+//        super.drawBackground(forGlyphRange: glyphsToShow, at: origin)
+//        guard let textStorage = textStorage,
+//              let currentCGContext = UIGraphicsGetCurrentContext()
+//        else { return }
+//
+//        let characterRange = self.characterRange(forGlyphRange: glyphsToShow, actualGlyphRange: nil)
+//        textStorage.enumerateAttribute(.backgroundStyle, in: characterRange) { attr, bgStyleRange, _ in
+//            var rects = [CGRect]()
+//            if let backgroundStyle = attr as? BackgroundStyle {
+//                let bgStyleGlyphRange = self.glyphRange(forCharacterRange: bgStyleRange, actualCharacterRange: nil)
+//                enumerateLineFragments(forGlyphRange: bgStyleGlyphRange) { _, usedRect, textContainer, lineRange, _ in
+//                    var rangeIntersection = NSIntersectionRange(bgStyleGlyphRange, lineRange)
+//                    let last = textStorage.substring(from: NSRange(location: rangeIntersection.endLocation - 1, length: 1))
+//                    if last == "\n" {
+//                        rangeIntersection = NSRange(location: rangeIntersection.location, length: rangeIntersection.length - 1)
+//                    }
+//                    var rect = self.boundingRect(forGlyphRange: rangeIntersection, in: textContainer)
+//                    
+//                    if backgroundStyle.widthMode == .matchText {
+//                        let content = textStorage.attributedSubstring(from: rangeIntersection)
+//                        let contentWidth = content.boundingRect(with: rect.size, options: [.usesDeviceMetrics, .usesFontLeading], context: nil).width
+//                        rect.size.width = contentWidth
+//                    }
+//                    
+//                    switch backgroundStyle.heightMode {
+//                    case .matchText:
+//                        let styledText = textStorage.attributedSubstring(from: bgStyleGlyphRange)
+//                        let textRect = styledText.boundingRect(with: rect.size, options: [.usesLineFragmentOrigin, .usesFontLeading, .usesDeviceMetrics], context: nil)
+//                        
+//                        rect.origin.y = usedRect.origin.y + (rect.size.height - textRect.height)
+//                        rect.size.height = textRect.height
+//                    case .matchLine:
+//                        // Glyphs can take space outside of the line fragment, and we cannot draw outside of it.
+//                        // So it is best to restrict the height just to the line fragment.
+//                        var lineSpacing: CGFloat = 0.0
+//                        if let paragraphStyle = textStorage.attribute(.paragraphStyle, at: rangeIntersection.location, effectiveRange: nil) as? NSParagraphStyle {
+//                            lineSpacing = paragraphStyle.lineSpacing
+//                        }
+//                        if let font = textStorage.attribute(.font, at: rangeIntersection.location, effectiveRange: nil) as? UIFont {
+//                            if usedRect.height < (font.pointSize + lineSpacing) {
+//                                lineSpacing = 0
+//                            }
+//                        }
+//                        rect.origin.y = usedRect.origin.y + lineSpacing
+//                        rect.size.height = usedRect.height - lineSpacing
+//                        let content = textStorage.attributedSubstring(from: rangeIntersection)
+//                        var contentWidth = content.boundingRect(with: rect.size, options: [.usesDeviceMetrics, .usesFontLeading], context: nil).width
+//                        if contentWidth >= 1 {
+//                            contentWidth += 2
+//                        }
+//                        rect.size.width = contentWidth
+//                    }
+//                    
+//                    let insetTop = self.layoutManagerDelegate?.textContainerInset.top ?? 0
+//                    rects.append(rect.offsetBy(dx: 0, dy: insetTop))
+//                }
+//                var rs: [CGRect] = []
+//                for rect in rects.dropLast() {
+//                    var r = rect
+//                    r.origin.y -= 11
+//                    rs.append(r)
+//                }
+//                if let last = rects.last {
+//                    rs.append(last)
+//                }
+//                print("rs: \(rs)")
+//                print("rect: \(rects)")
+//                self.drawBackground(backgroundStyle: backgroundStyle, rects: rs, currentCGContext: currentCGContext)
+//            }
+//        }
+//    }
+//    
+//    private func drawBackground(backgroundStyle: BackgroundStyle, rects: [CGRect], currentCGContext: CGContext) {
+//        currentCGContext.saveGState()
+//        
+//        let rectCount = rects.count
+//        let rectArray = rects
+//        
+//        let color = backgroundStyle.color
+//        
+//        for i in 0..<rectCount {
+//            var previousRect = CGRect.zero
+//            var nextRect = CGRect.zero
+//            
+//            let currentRect = rectArray[i].insetIfRequired(by: backgroundStyle.insets)
+//            
+//            if currentRect.isEmpty {
+//                continue
+//            }
+//            
+//            let cornerRadius: CGFloat
+//            
+//            switch backgroundStyle.roundedCornerStyle {
+//            case let .absolute(value):
+//                cornerRadius = value
+//            case let .relative(percent):
+//                cornerRadius = currentRect.height * (percent/100.0)
+//            }
+//            
+//            if i > 0 {
+//                previousRect = rectArray[i - 1].insetIfRequired(by: backgroundStyle.insets)
+//            }
+//            
+//            if i < rectCount - 1 {
+//                nextRect = rectArray[i + 1].insetIfRequired(by: backgroundStyle.insets)
+//            }
+//            
+//            let corners: UIRectCorner
+//            if backgroundStyle.hasSquaredOffJoins {
+//                corners = calculateCornersForSquaredOffJoins(previousRect: previousRect, currentRect: currentRect, nextRect: nextRect, cornerRadius: cornerRadius)
+//            } else {
+//                corners = calculateCornersForBackground(previousRect: previousRect, currentRect: currentRect, nextRect: nextRect, cornerRadius: cornerRadius)
+//            }
+//            
+//            let rectanglePath = UIBezierPath(roundedRect: currentRect, byRoundingCorners: corners, cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+//            color.set()
+//            
+//            currentCGContext.setAllowsAntialiasing(true)
+//            currentCGContext.setShouldAntialias(true)
+//            
+//            if let shadowStyle = backgroundStyle.shadow {
+//                currentCGContext.setShadow(offset: shadowStyle.offset, blur: shadowStyle.blur, color: shadowStyle.color.cgColor)
+//            }
+//            
+//            currentCGContext.setFillColor(color.cgColor)
+//            currentCGContext.addPath(rectanglePath.cgPath)
+//            currentCGContext.drawPath(using: .fill)
+//            
+//            let lineWidth = backgroundStyle.border?.lineWidth ?? 0
+//            let overlappingLine = UIBezierPath()
+//            
+//            // TODO: Revisit shadow drawing logic to simplify a bit
+//            
+//            let leftVerticalJoiningLine = UIBezierPath()
+//            let rightVerticalJoiningLine = UIBezierPath()
+//            // Shadow for vertical lines need to be drawn separately to get the perfect alignment with shadow on rectangles.
+//            let leftVerticalJoiningLineShadow = UIBezierPath()
+//            let rightVerticalJoiningLineShadow = UIBezierPath()
+//            
+//            if !previousRect.isEmpty, (currentRect.maxX - previousRect.minX) > cornerRadius {
+//                let yDiff = currentRect.minY - previousRect.maxY
+//                overlappingLine.move(to: CGPoint(x: max(previousRect.minX, currentRect.minX) + lineWidth/2, y: previousRect.maxY + yDiff/2))
+//                overlappingLine.addLine(to: CGPoint(x: min(previousRect.maxX, currentRect.maxX) - lineWidth/2, y: previousRect.maxY + yDiff/2))
+//                
+//                let leftX = max(previousRect.minX, currentRect.minX)
+//                let rightX = min(previousRect.maxX, currentRect.maxX)
+//                
+//                leftVerticalJoiningLine.move(to: CGPoint(x: leftX, y: previousRect.maxY))
+//                leftVerticalJoiningLine.addLine(to: CGPoint(x: leftX, y: currentRect.minY))
+//                
+//                rightVerticalJoiningLine.move(to: CGPoint(x: rightX, y: previousRect.maxY))
+//                rightVerticalJoiningLine.addLine(to: CGPoint(x: rightX, y: currentRect.minY))
+//                
+//                let leftShadowX = max(previousRect.minX, currentRect.minX) + lineWidth
+//                let rightShadowX = min(previousRect.maxX, currentRect.maxX) - lineWidth
+//                
+//                leftVerticalJoiningLineShadow.move(to: CGPoint(x: leftShadowX, y: previousRect.maxY))
+//                leftVerticalJoiningLineShadow.addLine(to: CGPoint(x: leftShadowX, y: currentRect.minY))
+//                
+//                rightVerticalJoiningLineShadow.move(to: CGPoint(x: rightShadowX, y: previousRect.maxY))
+//                rightVerticalJoiningLineShadow.addLine(to: CGPoint(x: rightShadowX, y: currentRect.minY))
+//            }
+//            
+//            if let borderColor = backgroundStyle.border?.color {
+//                currentCGContext.setLineWidth(lineWidth * 2)
+//                currentCGContext.setStrokeColor(borderColor.cgColor)
+//                
+//                // always draw vertical joining lines
+//                currentCGContext.addPath(leftVerticalJoiningLineShadow.cgPath)
+//                currentCGContext.addPath(rightVerticalJoiningLineShadow.cgPath)
+//                
+//                currentCGContext.drawPath(using: .stroke)
+//            }
+//            
+//            currentCGContext.setShadow(offset: .zero, blur:0, color: UIColor.clear.cgColor)
+//            
+//            if !currentRect.isEmpty,
+//               let borderColor = backgroundStyle.border?.color {
+//                currentCGContext.setLineWidth(lineWidth)
+//                currentCGContext.setStrokeColor(borderColor.cgColor)
+//                currentCGContext.addPath(rectanglePath.cgPath)
+//                
+//                // always draw vertical joining lines
+//                currentCGContext.addPath(leftVerticalJoiningLine.cgPath)
+//                currentCGContext.addPath(rightVerticalJoiningLine.cgPath)
+//                
+//                currentCGContext.drawPath(using: .stroke)
+//            }
+//            
+//            // always draw over the overlapping bounds of previous and next rect to hide shadow/borders
+//            currentCGContext.setStrokeColor(color.cgColor)
+//            currentCGContext.addPath(overlappingLine.cgPath)
+//            // account for the spread of shadow
+//            let blur = (backgroundStyle.shadow?.blur ?? 1) * 2
+//            let offsetHeight = abs(backgroundStyle.shadow?.offset.height ?? 1)
+//            currentCGContext.setLineWidth(lineWidth + (currentRect.minY - previousRect.maxY) + blur + offsetHeight + 1)
+//            currentCGContext.drawPath(using: .stroke)
+//        }
+//        currentCGContext.restoreGState()
+//    }
+    
+    var defaultFont: UIFont {
+        return layoutManagerDelegate?.font ?? UIFont.preferredFont(forTextStyle: .body)
+    }
+    
     override func drawBackground(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
         super.drawBackground(forGlyphRange: glyphsToShow, at: origin)
         guard let textStorage = textStorage,
@@ -470,176 +676,191 @@ class LayoutManager: NSLayoutManager {
             if let backgroundStyle = attr as? BackgroundStyle {
                 let bgStyleGlyphRange = self.glyphRange(forCharacterRange: bgStyleRange, actualCharacterRange: nil)
                 enumerateLineFragments(forGlyphRange: bgStyleGlyphRange) { _, usedRect, textContainer, lineRange, _ in
-                    var rangeIntersection = NSIntersectionRange(bgStyleGlyphRange, lineRange)
-                    let last = textStorage.substring(from: NSRange(location: rangeIntersection.endLocation - 1, length: 1))
-                    if last == "\n" {
-                        rangeIntersection = NSRange(location: rangeIntersection.location, length: rangeIntersection.length - 1)
-                    }
-                    var rect = self.boundingRect(forGlyphRange: rangeIntersection, in: textContainer)
-                    
+                    let usedRect = usedRect.integral
+                    let rangeIntersection = NSIntersectionRange(bgStyleGlyphRange, lineRange)
+                    let paragraphStyle = textStorage.attribute(.paragraphStyle, at: rangeIntersection.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
+                    let font = textStorage.attribute(.font, at: rangeIntersection.location, effectiveRange: nil) as? UIFont ?? self.defaultFont
+                    let lineHeightMultiple = max(paragraphStyle.lineHeightMultiple, 1)
+                    var rect = self.boundingRect(forGlyphRange: rangeIntersection, in: textContainer).integral
+                    let lineHeightMultipleOffset = (rect.size.height - rect.size.height/lineHeightMultiple)
+                    let lineSpacing = paragraphStyle.lineSpacing
                     if backgroundStyle.widthMode == .matchText {
                         let content = textStorage.attributedSubstring(from: rangeIntersection)
                         let contentWidth = content.boundingRect(with: rect.size, options: [.usesDeviceMetrics, .usesFontLeading], context: nil).width
-                        rect.size.width = contentWidth
+                            rect.size.width = contentWidth
                     }
-                    
+
+                    let inset = self.layoutManagerDelegate?.textContainerInset ?? .zero
                     switch backgroundStyle.heightMode {
+                    case .matchTextExact:
+                        rect.origin.y = usedRect.origin.y - (font.pointSize - font.ascender)
+                        rect.origin.y += (font.ascender - font.capHeight)
+                        rect.size.height =  font.capHeight + abs(font.descender)
+                        let content = textStorage.attributedSubstring(from: rangeIntersection)
+                        var contentWidth = content.boundingRect(with: rect.size, options: [.usesDeviceMetrics, .usesFontLeading], context: nil).width
+                        rect.size.width = contentWidth
+                        rect.origin.x = max(5, rect.origin.x)
                     case .matchText:
                         let styledText = textStorage.attributedSubstring(from: bgStyleGlyphRange)
-                        let textRect = styledText.boundingRect(with: rect.size, options: [.usesLineFragmentOrigin, .usesFontLeading, .usesDeviceMetrics], context: nil)
-                        
-                        rect.origin.y = usedRect.origin.y + (rect.size.height - textRect.height)
-                        rect.size.height = textRect.height
+                        let textRect = styledText.boundingRect(with: rect.size, options: .usesFontLeading, context: nil)
+
+                        rect.origin.y = usedRect.origin.y + (rect.size.height - textRect.height) + lineHeightMultipleOffset - lineSpacing
+                        rect.size.height = textRect.height - lineHeightMultipleOffset
                     case .matchLine:
                         // Glyphs can take space outside of the line fragment, and we cannot draw outside of it.
                         // So it is best to restrict the height just to the line fragment.
-                        var lineSpacing: CGFloat = 0.0
-                        if let paragraphStyle = textStorage.attribute(.paragraphStyle, at: rangeIntersection.location, effectiveRange: nil) as? NSParagraphStyle {
-                            lineSpacing = paragraphStyle.lineSpacing
-                        }
-                        if let font = textStorage.attribute(.font, at: rangeIntersection.location, effectiveRange: nil) as? UIFont {
-                            if usedRect.height < (font.pointSize + lineSpacing) {
-                                lineSpacing = 0
-                            }
-                        }
-                        rect.origin.y = usedRect.origin.y + lineSpacing
-                        rect.size.height = usedRect.height - lineSpacing
-                        let content = textStorage.attributedSubstring(from: rangeIntersection)
-                        var contentWidth = content.boundingRect(with: rect.size, options: [.usesDeviceMetrics, .usesFontLeading], context: nil).width
-                        if contentWidth >= 1 {
-                            contentWidth += 2
-                        }
-                        rect.size.width = contentWidth
+                        rect.origin.y = usedRect.origin.y
+                        rect.size.height = usedRect.height
                     }
-                    
-                    let insetTop = self.layoutManagerDelegate?.textContainerInset.top ?? 0
-                    rects.append(rect.offsetBy(dx: 0, dy: insetTop))
-                    self.drawBackground(backgroundStyle: backgroundStyle, rects: [rect], currentCGContext: currentCGContext)
+
+                    rects.append(rect.offsetBy(dx: 1, dy: inset.top))
                 }
+                self.drawBackground(backgroundStyle: backgroundStyle, rects: rects, currentCGContext: currentCGContext)
             }
         }
     }
-    
+
     private func drawBackground(backgroundStyle: BackgroundStyle, rects: [CGRect], currentCGContext: CGContext) {
         currentCGContext.saveGState()
-        
+
         let rectCount = rects.count
         let rectArray = rects
-        
+
         let color = backgroundStyle.color
-        
+
         for i in 0..<rectCount {
             var previousRect = CGRect.zero
             var nextRect = CGRect.zero
-            
+
             let currentRect = rectArray[i].insetIfRequired(by: backgroundStyle.insets)
-            
+
             if currentRect.isEmpty {
                 continue
             }
-            
+
             let cornerRadius: CGFloat
-            
+
             switch backgroundStyle.roundedCornerStyle {
             case let .absolute(value):
                 cornerRadius = value
             case let .relative(percent):
                 cornerRadius = currentRect.height * (percent/100.0)
             }
-            
+
             if i > 0 {
                 previousRect = rectArray[i - 1].insetIfRequired(by: backgroundStyle.insets)
             }
-            
+
             if i < rectCount - 1 {
                 nextRect = rectArray[i + 1].insetIfRequired(by: backgroundStyle.insets)
             }
-            
+
             let corners: UIRectCorner
             if backgroundStyle.hasSquaredOffJoins {
                 corners = calculateCornersForSquaredOffJoins(previousRect: previousRect, currentRect: currentRect, nextRect: nextRect, cornerRadius: cornerRadius)
             } else {
-                corners = calculateCornersForBackground(previousRect: previousRect, currentRect: currentRect, nextRect: nextRect, cornerRadius: cornerRadius)
+               corners = calculateCornersForBackground(previousRect: previousRect, currentRect: currentRect, nextRect: nextRect, cornerRadius: cornerRadius)
             }
-            
+
             let rectanglePath = UIBezierPath(roundedRect: currentRect, byRoundingCorners: corners, cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
             color.set()
-            
+
             currentCGContext.setAllowsAntialiasing(true)
             currentCGContext.setShouldAntialias(true)
-            
+
             if let shadowStyle = backgroundStyle.shadow {
                 currentCGContext.setShadow(offset: shadowStyle.offset, blur: shadowStyle.blur, color: shadowStyle.color.cgColor)
             }
-            
+
             currentCGContext.setFillColor(color.cgColor)
             currentCGContext.addPath(rectanglePath.cgPath)
             currentCGContext.drawPath(using: .fill)
-            
+
             let lineWidth = backgroundStyle.border?.lineWidth ?? 0
             let overlappingLine = UIBezierPath()
-            
+
             // TODO: Revisit shadow drawing logic to simplify a bit
-            
+
             let leftVerticalJoiningLine = UIBezierPath()
             let rightVerticalJoiningLine = UIBezierPath()
             // Shadow for vertical lines need to be drawn separately to get the perfect alignment with shadow on rectangles.
             let leftVerticalJoiningLineShadow = UIBezierPath()
             let rightVerticalJoiningLineShadow = UIBezierPath()
-            
-            if !previousRect.isEmpty, (currentRect.maxX - previousRect.minX) > cornerRadius {
+            var lineLength: CGFloat = 0
+
+            if backgroundStyle.heightMode != .matchTextExact,
+                !previousRect.isEmpty, (currentRect.maxX - previousRect.minX) > cornerRadius {
                 let yDiff = currentRect.minY - previousRect.maxY
-                overlappingLine.move(to: CGPoint(x: max(previousRect.minX, currentRect.minX) + lineWidth/2, y: previousRect.maxY + yDiff/2))
-                overlappingLine.addLine(to: CGPoint(x: min(previousRect.maxX, currentRect.maxX) - lineWidth/2, y: previousRect.maxY + yDiff/2))
-                
+                var overLapMinX = max(previousRect.minX, currentRect.minX) + lineWidth/2
+                var overlapMaxX = min(previousRect.maxX, currentRect.maxX) - lineWidth/2
+                lineLength = overlapMaxX - overLapMinX
+
+                // Adjust overlap line length if the rounding on current and previous overlaps
+                // accounting for relative rounding as it rounds at both top and bottom vs. fixed which rounds
+                // only at top when in an overlap
+                if (currentRect.maxX - previousRect.minX <= cornerRadius)
+                    || (previousRect.minX - currentRect.maxX <= cornerRadius) && backgroundStyle.roundedCornerStyle.isRelative  {
+                    overLapMinX += cornerRadius
+                    overlapMaxX -= cornerRadius
+                }
+
+                overlappingLine.move(to: CGPoint(x: overLapMinX , y: previousRect.maxY + yDiff/2))
+                overlappingLine.addLine(to: CGPoint(x: overlapMaxX, y: previousRect.maxY + yDiff/2))
+
                 let leftX = max(previousRect.minX, currentRect.minX)
                 let rightX = min(previousRect.maxX, currentRect.maxX)
-                
+
                 leftVerticalJoiningLine.move(to: CGPoint(x: leftX, y: previousRect.maxY))
                 leftVerticalJoiningLine.addLine(to: CGPoint(x: leftX, y: currentRect.minY))
-                
+
                 rightVerticalJoiningLine.move(to: CGPoint(x: rightX, y: previousRect.maxY))
                 rightVerticalJoiningLine.addLine(to: CGPoint(x: rightX, y: currentRect.minY))
-                
+
                 let leftShadowX = max(previousRect.minX, currentRect.minX) + lineWidth
                 let rightShadowX = min(previousRect.maxX, currentRect.maxX) - lineWidth
-                
+
                 leftVerticalJoiningLineShadow.move(to: CGPoint(x: leftShadowX, y: previousRect.maxY))
                 leftVerticalJoiningLineShadow.addLine(to: CGPoint(x: leftShadowX, y: currentRect.minY))
-                
+
                 rightVerticalJoiningLineShadow.move(to: CGPoint(x: rightShadowX, y: previousRect.maxY))
                 rightVerticalJoiningLineShadow.addLine(to: CGPoint(x: rightShadowX, y: currentRect.minY))
             }
-            
+
             if let borderColor = backgroundStyle.border?.color {
                 currentCGContext.setLineWidth(lineWidth * 2)
                 currentCGContext.setStrokeColor(borderColor.cgColor)
-                
+
                 // always draw vertical joining lines
                 currentCGContext.addPath(leftVerticalJoiningLineShadow.cgPath)
                 currentCGContext.addPath(rightVerticalJoiningLineShadow.cgPath)
-                
+
                 currentCGContext.drawPath(using: .stroke)
             }
-            
+
             currentCGContext.setShadow(offset: .zero, blur:0, color: UIColor.clear.cgColor)
-            
+
             if !currentRect.isEmpty,
-               let borderColor = backgroundStyle.border?.color {
+                let borderColor = backgroundStyle.border?.color {
                 currentCGContext.setLineWidth(lineWidth)
                 currentCGContext.setStrokeColor(borderColor.cgColor)
                 currentCGContext.addPath(rectanglePath.cgPath)
-                
+
                 // always draw vertical joining lines
                 currentCGContext.addPath(leftVerticalJoiningLine.cgPath)
                 currentCGContext.addPath(rightVerticalJoiningLine.cgPath)
-                
+
                 currentCGContext.drawPath(using: .stroke)
             }
-            
-            // always draw over the overlapping bounds of previous and next rect to hide shadow/borders
-            currentCGContext.setStrokeColor(color.cgColor)
-            currentCGContext.addPath(overlappingLine.cgPath)
+
+            // draw over the overlapping bounds of previous and next rect to hide shadow/borders
+            // if the border color is defined and different from background
+            // Also, account for rounding so that the overlap line does not eat into rounding lines
+            if let borderColor = backgroundStyle.border?.color,
+               lineLength > (cornerRadius * 2),
+                color != borderColor {
+                currentCGContext.setStrokeColor(color.cgColor)
+                currentCGContext.addPath(overlappingLine.cgPath)
+            }
             // account for the spread of shadow
             let blur = (backgroundStyle.shadow?.blur ?? 1) * 2
             let offsetHeight = abs(backgroundStyle.shadow?.offset.height ?? 1)
@@ -648,73 +869,73 @@ class LayoutManager: NSLayoutManager {
         }
         currentCGContext.restoreGState()
     }
-    
+
     private func calculateCornersForSquaredOffJoins(previousRect: CGRect, currentRect: CGRect, nextRect: CGRect, cornerRadius: CGFloat) -> UIRectCorner {
         var corners = UIRectCorner()
-        
+
         let isFirst = previousRect.isEmpty  && !currentRect.isEmpty
         let isLast = nextRect.isEmpty && !currentRect.isEmpty
-        
+
         if isFirst {
             corners.formUnion(.topLeft)
             corners.formUnion(.bottomLeft)
         }
-        
+
         if isLast {
             corners.formUnion(.topRight)
             corners.formUnion(.bottomRight)
         }
-        
+
         return corners
     }
-    
+
     private func calculateCornersForBackground(previousRect: CGRect, currentRect: CGRect, nextRect: CGRect, cornerRadius: CGFloat) -> UIRectCorner {
         var corners = UIRectCorner()
-        
+
         if previousRect.minX > currentRect.minX {
             corners.formUnion(.topLeft)
         }
-        
+
         if previousRect.maxX < currentRect.maxX {
             corners.formUnion(.topRight)
         }
-        
+
         if currentRect.maxX > nextRect.maxX {
             corners.formUnion(.bottomRight)
         }
-        
+
         if currentRect.minX < nextRect.minX {
             corners.formUnion(.bottomLeft)
         }
-        
+
         if nextRect.isEmpty || nextRect.maxX <= currentRect.minX + cornerRadius {
             corners.formUnion(.bottomLeft)
             corners.formUnion(.bottomRight)
         }
-        
+
         if previousRect.isEmpty || (currentRect.maxX <= previousRect.minX + cornerRadius) {
             corners.formUnion(.topLeft)
             corners.formUnion(.topRight)
         }
-        
+
         return corners
     }
-    
+
     // Helper function to debug rectangles by drawing in context
     private func debugRect(rect: CGRect, color: UIColor) {
         let path = UIBezierPath(rect: rect).cgPath
         debugPath(path: path, color: color)
     }
-    
+
     // Helper function to debug Bezier Path by drawing in context
     private func debugPath(path: CGPath, color: UIColor) {
         let currentCGContext = UIGraphicsGetCurrentContext()
         currentCGContext?.saveGState()
-        
+
         currentCGContext?.setStrokeColor(color.cgColor)
         currentCGContext?.addPath(path)
         currentCGContext?.drawPath(using: .stroke)
-        
+
         currentCGContext?.restoreGState()
     }
 }
