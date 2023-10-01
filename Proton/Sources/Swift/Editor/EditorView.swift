@@ -134,6 +134,10 @@ open class EditorView: UIView {
         get { editorViewContext.delegate }
     }
 
+    var scrollView: UIScrollView {
+        richTextView as UIScrollView
+    }
+
     /// Context for the current Editor
     public let editorViewContext: EditorViewContext
 
@@ -250,6 +254,23 @@ open class EditorView: UIView {
     public var selectedTextRange: UITextRange? {
         get { richTextView.selectedTextRange }
         set { richTextView.selectedTextRange = newValue }
+    }
+
+    public var scrollViewDelegate: UIScrollViewDelegate? {
+        get { richTextView.richTextScrollViewDelegate }
+        set { richTextView.richTextScrollViewDelegate  = newValue }
+    }
+
+    public var panGestureRecognizer: UIGestureRecognizer {
+        get { scrollView.panGestureRecognizer }
+    }
+
+    public var pinchGestureRecognizer: UIPinchGestureRecognizer? {
+        get { scrollView.pinchGestureRecognizer }
+    }
+
+    public var directionalPressGestureRecognizer: UIGestureRecognizer? {
+        get { scrollView.directionalPressGestureRecognizer }
     }
 
     /// Placeholder text for the `EditorView`. The value can contain any attributes which is natively

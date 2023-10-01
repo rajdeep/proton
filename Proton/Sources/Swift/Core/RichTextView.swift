@@ -30,6 +30,8 @@ class RichTextView: AutogrowingTextView {
 
     weak var richTextViewDelegate: RichTextViewDelegate?
     weak var richTextViewListDelegate: RichTextViewListDelegate?
+    weak var richTextScrollViewDelegate: UIScrollViewDelegate?
+
     private var delegateOverrides = [GestureRecognizerDelegateOverride]()
 
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding?
