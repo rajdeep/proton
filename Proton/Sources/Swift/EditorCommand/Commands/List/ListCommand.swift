@@ -127,10 +127,11 @@ public class ListCommand: EditorCommand {
         }
         
         var flag = false
-        if let line = editor.currentLayoutLine, let listItem = editor.attributedText.attribute(.listItem, at: line.range.location, effectiveRange: nil) as? String {
+        if let line = editor.currentLayoutLine, 
+            let listItem = editor.attributedText.attribute(.listItem, at: line.range.location, effectiveRange: nil) as? String {
              if listItem == "listItemSelectedChecklist" {
                  editor.typingAttributes[.strikethroughStyle] = nil
-                 editor.typingAttributes[.foregroundColor] = editor.textColor
+                 editor.typingAttributes[.foregroundColor] = editor.defaultColor
              }
              
              flag = listItem.isChecklist || ((attrValue as? String)?.isChecklist ?? false)
@@ -195,7 +196,7 @@ public class ListCommand: EditorCommand {
         editor.attributedText.enumerateAttribute(.listItem, in: range) { value, range, stop in
             guard let value = value as? String, value == "listItemSelectedChecklist" else { return }
             editor.removeAttribute(.strikethroughStyle, at: range)
-            editor.addAttribute(.foregroundColor, value: editor.textColor, at: range)
+            editor.addAttribute(.foregroundColor, value: editor.defaultColor, at: range)
         }
         editor.addAttribute(.listItem, value: attrValue, at: range)
     }

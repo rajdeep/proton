@@ -53,10 +53,15 @@ class ListItemView: UIView {
             switch image.renderingMode {
             case .alwaysTemplate:
                 imageView.tintColor = .white
+                imageView.image = image
             default:
                 imageView.tintColor = .clear
+                if #available(iOS 13.0, *), attrValue == "listItemBullet" {
+                    imageView.image = image.withRenderingMode(.alwaysOriginal).withTintColor(UIColor(hex: "#001C30")!)
+                } else {
+                    imageView.image = image
+                }
             }
-            imageView.image = image
             imageView.frame = CGRect(x: frame.midX - image.size.width / 2, y: (frame.height - image.size.height) / 2, width: image.size.width, height: image.size.height)
         case let .text(attr, rect):
             textLabel.attributedText = attr
@@ -129,6 +134,59 @@ extension UIView {
             return image
         }
         
+        return nil
+    }
+}
+
+extension UIColor {
+    convenience init?(hex: String, alpha: CGFloat = 1) {
+        let characterSet = CharacterSet.whitespacesAndNewlines
+        var string = hex.trimmingCharacters(in: characterSet).uppercased()
+        
+        if string.count < 6 {
+            return nil
+        }
+
+        if string.hasPrefix("0X") {
+            let ns = string as NSString
+            string = ns.substring(from: 2)
+        }
+        if string.hasPrefix("#") {
+            let ns = string as NSString
+            string = ns.substring(from: 1)
+        }
+
+        let r, g, b, a: CGFloat
+
+        let hexColor = string
+
+        if hexColor.count == 8 {
+            let scanner = Scanner(string: hexColor)
+            var hexNumber: UInt64 = 0
+
+            if scanner.scanHexInt64(&hexNumber) {
+                r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
+                g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
+                b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+                a = CGFloat(hexNumber & 0x000000ff) / 255
+
+                self.init(red: r, green: g, blue: b, alpha: a)
+                return
+            }
+        } else if hexColor.count == 6 {
+            let scanner = Scanner(string: hexColor)
+            var hexNumber: UInt64 = 0
+
+            if scanner.scanHexInt64(&hexNumber) {
+                r = CGFloat((hexNumber & 0xff0000) >> 16) / 255
+                g = CGFloat((hexNumber & 0x00ff00) >> 8) / 255
+                b = CGFloat((hexNumber & 0x0000ff)) / 255
+
+                self.init(red: r, green: g, blue: b, alpha: alpha)
+                return
+            }
+        }
+
         return nil
     }
 }

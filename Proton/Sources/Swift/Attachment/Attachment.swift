@@ -153,7 +153,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         }
     }
 
-    final var frame: CGRect? {
+    final public var frame: CGRect? {
         get { view?.frame }
         set {
             guard let newValue = newValue,
