@@ -379,7 +379,16 @@ class RichTextView: AutogrowingTextView {
                 p.firstLineHeadIndent = 0
                 editorView?.addAttribute(.paragraphStyle, value: p, at: NSRange(location: selectedRange.location - 1, length: 1))
                 editorView?.removeAttribute(.paragraphStyle, at: NSRange(location: selectedRange.location - 1, length: 1))
+            } else if last.string == ListTextProcessor.blankLineFiller {
+                let range = NSRange(location: selectedRange.location - 1, length: 1)
+                editorView?.removeAttribute(.strikethroughStyle, at: range)
+                editorView?.typingAttributes[.strikethroughStyle] = nil
+                
+                if let color = self.editorView?.defaultColor {
+                    editorView?.typingAttributes[.foregroundColor] = color
+                }
             }
+                      
             richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: selectedRange)
         }
 

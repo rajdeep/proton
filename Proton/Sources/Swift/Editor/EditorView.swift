@@ -112,6 +112,15 @@ open class EditorView: UIView {
     public var contentSize: CGSize {
         return richTextView.contentSize
     }
+    
+    public enum DarkMode {
+        case dark
+        case light
+    }
+    
+    public var mode: DarkMode = .light
+    
+    public var defaultColor: UIColor?
 
     var editorContextDelegate: EditorViewDelegate? {
         get { editorViewContext.delegate }
