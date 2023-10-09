@@ -27,6 +27,8 @@ class AsyncTaskScheduler {
     private var tasks = SynchronizedArray<(id: String, task: VoidTask)>()
     private var scheduled = SynchronizedArray<String>()
 
+    var runID = UUID().uuidString
+
     var pending = false {
         didSet {
             guard pending == false else { return }
@@ -35,7 +37,9 @@ class AsyncTaskScheduler {
     }
 
     func clear() {
+        runID = UUID().uuidString
         tasks.removeAll()
+        pending = false
     }
 
     func enqueue(id: String, task: @escaping VoidTask) {
@@ -44,7 +48,8 @@ class AsyncTaskScheduler {
     }
 
     func dequeue(_ completion: @escaping (String, VoidTask?) -> Void)  {
-        guard let task = self.tasks.remove(at: 0) else {
+        guard tasks.isEmpty == false,
+            let task = self.tasks.remove(at: 0) else {
             completion("", nil)
             return
         }
@@ -58,8 +63,8 @@ class AsyncTaskScheduler {
                 self.pending = true
                 // A delay is required so that tracking mode may be intercepted.
                 // Intercepting tracking allows handling of user interactions on UI
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) { [weak self] in
-                    guard let self else { return }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) { [weak self, runID = self.runID] in
+                    guard let self, runID == self.runID else { return }
                     if RunLoop.current.currentMode != .tracking {
                         task()
                     } else {
