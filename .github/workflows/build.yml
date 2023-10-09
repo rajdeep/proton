@@ -7,6 +7,11 @@ on:
     branches:
     - main
 
+permissions:
+  # This workflow needs write access to the checks to publish
+  # the results of the tests via xcresulttool.
+  checks: write
+
 jobs:
   build:
 
