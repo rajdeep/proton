@@ -36,7 +36,7 @@ class AsyncTaskScheduler {
         }
     }
 
-    func clear() {
+    func cancel() {
         runID = UUID().uuidString
         tasks.removeAll()
         pending = false

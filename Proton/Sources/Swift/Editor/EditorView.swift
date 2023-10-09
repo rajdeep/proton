@@ -458,7 +458,7 @@ open class EditorView: UIView {
                 pendingAttributedText = newValue
                 return
             }
-            attachmentRenderingScheduler.clear()
+            attachmentRenderingScheduler.cancel()
             // Clear text before setting new value to avoid issues with formatting/layout when
             // editor is hosted in a scrollable container and content is set multiple times.
             richTextView.attributedText = NSAttributedString()
@@ -754,7 +754,7 @@ open class EditorView: UIView {
     /// - Note:
     /// Asynchronous rendering is opt-in feature scheduled by providing `asyncAttachmentRenderingDelegate` to `EditorView`
     public func cancelPendingAsyncRendering() {
-        attachmentRenderingScheduler.clear()
+        attachmentRenderingScheduler.cancel()
     }
 
     /// The range of currently marked text in a document.

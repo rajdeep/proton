@@ -241,9 +241,6 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
     @objc
     func encodeContents(sender: UIButton) {
-        editor.cancelPendingAsyncRendering()
-        return
-
         let value = editor.transformContents(using: JSONEncoder())
         let data = try! JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
         let jsonString = String(data: data, encoding: .utf8)!
