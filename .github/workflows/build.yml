@@ -3,7 +3,7 @@ name: Build
 on: 
   push:
   page_build:
-  pull_request_target:
+  pull_request:
     branches:
     - main
 
