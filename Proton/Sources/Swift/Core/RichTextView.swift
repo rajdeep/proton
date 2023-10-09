@@ -117,6 +117,21 @@ class RichTextView: AutogrowingTextView {
         getNestedEditors(for: self)
     }
 
+    override public func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        guard #available(iOS 13.4, *) else { return }
+        var handled: Bool = false
+        presses.forEach { press in
+            guard
+                let key = press.key,
+                let editorKey = EditorKey(key.charactersIgnoringModifiers)
+            else { return }
+            richTextViewDelegate?.richTextView(self, shouldHandle: editorKey, modifierFlags: key.modifierFlags, at: self.selectedRange, handled: &handled)
+        }
+        if handled == false {
+            super.pressesBegan(presses, with: event)
+        }
+    }
+
     private func getNestedEditors(for containerView: UIView) -> [RichTextView] {
         var textViews = [RichTextView]()
         for view in containerView.subviews {

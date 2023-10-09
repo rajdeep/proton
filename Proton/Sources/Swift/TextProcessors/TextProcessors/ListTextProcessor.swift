@@ -97,6 +97,9 @@ public class ListTextProcessor: TextProcessing {
             else { return }
             
             editor.deleteBackward()
+            
+        default:
+            break
         }
     }
 
