@@ -172,12 +172,13 @@ class RichTextViewContextTests: XCTestCase {
         let selectedRange = NSRange.zero
         textView.selectedRange = selectedRange
 
-        mockTextViewDelegate.onShouldHandleKey = { _, key, _, range, _ in
+        mockTextViewDelegate.onShouldHandleKey = { _, key, _, _, _ in
             XCTAssertEqual(key, EditorKey.right)
             testExpectation.fulfill()
         }
 
-        textView.pressesBegan(Set(arrayLiteral: MockUIPress(characters: UIKeyCommand.inputRightArrow)), with: nil)
+        let uiPresses: Set<UIPress> = [MockUIPress(characters: UIKeyCommand.inputRightArrow)]
+        textView.pressesBegan(uiPresses, with: nil)
         waitForExpectations(timeout: 1.0)
     }
 
