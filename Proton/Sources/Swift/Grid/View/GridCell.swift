@@ -197,15 +197,13 @@ public class GridCell {
     /// Creating a `GridView` with 100s of cells can result in slow performance when creating an attributed string containing the GridView attachment. Using the closure defers the creation until the view is ready to be rendered in the UI.
     /// It is recommended to setup all the parts of editor in closure where possible, or wait until after the GridView is rendered. In case, editor must be initialized before the rendering is complete and it is not possible to configure an aspect within the closure itself,
     /// `setupEditor()` may be invoked. Use of `setupEditor()` is discouraged.
-    public init(
-        editorInitializer: @escaping EditorInitializer,
-        rowSpan: [Int],
-        columnSpan: [Int],
-        initialHeight: CGFloat = 40,
-        style: GridCellStyle = .init(),
-        gridStyle: GridStyle = .default,
-        ignoresOptimizedInit: Bool = false)
-    {
+    public init(editorInitializer: @escaping EditorInitializer,
+                rowSpan: [Int],
+                columnSpan: [Int],
+                initialHeight: CGFloat = 40,
+                style: GridCellStyle = .init(),
+                gridStyle: GridStyle = .default,
+                ignoresOptimizedInit: Bool = false) {
         self.editorInitializer = editorInitializer
         self.rowSpan = rowSpan
         self.columnSpan = columnSpan
@@ -230,7 +228,12 @@ public class GridCell {
         setup()
     }
 
-    public convenience init(rowSpan: [Int], columnSpan: [Int], initialHeight: CGFloat = 40, style: GridCellStyle = .init(), gridStyle: GridStyle = .default, ignoresOptimizedInit: Bool = true) {
+    public convenience init(rowSpan: [Int],
+                            columnSpan: [Int],
+                            initialHeight: CGFloat = 40,
+                            style: GridCellStyle = .init(),
+                            gridStyle: GridStyle = .default,
+                            ignoresOptimizedInit: Bool = true) {
         self.init(
             editorInitializer: { EditorView(allowAutogrowing: false) },
             rowSpan: rowSpan,
@@ -278,7 +281,7 @@ public class GridCell {
         }
 
         guard !isRunningTests else {
-            if #available(iOSApplicationExtension 14.0, *) {
+            if #available(iOS 14.0, *) {
             Logger.gridView.info(
                 """
                 Editor setup is not complete as Grid containing cell is not in a window.

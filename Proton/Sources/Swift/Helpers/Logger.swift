@@ -20,10 +20,10 @@
 
 import OSLog
 
-@available(iOSApplicationExtension 14.0, *)
+@available(iOS 14.0, *)
 extension Logger {
     private static var subsystem = Bundle.main.bundleIdentifier!
 
+    @available(iOSApplicationExtension 14.0, *)
     static let gridView = Logger(subsystem: subsystem, category: "gridView")
-
 }
