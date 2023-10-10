@@ -92,12 +92,17 @@ public struct GridConfiguration {
     public let collapsedColumnWidth: CGFloat
     public let collapsedRowHeight: CGFloat
 
+    /// Ignores optimization to initialize editor within the cell. With optimization, the editor is not initialized until the cell is ready to be rendered on the UI thereby
+    /// not incurring any overheads when creating attributedText containing a `GridView` in an attachment. Defaults to `false`.
+    public let ignoresOptimizedInit: Bool
+
     public init(columnsConfiguration: [GridColumnConfiguration],
                 rowsConfiguration: [GridRowConfiguration],
                 style: GridStyle = .default,
                 boundsLimitShadowColors: GradientColors = GradientColors(primary: .black, secondary: .white),
                 collapsedColumnWidth: CGFloat = 2,
-                collapsedRowHeight: CGFloat = 2
+                collapsedRowHeight: CGFloat = 2,
+                ignoresOptimizedInit: Bool = false
     ) {
         self.columnsConfiguration = columnsConfiguration
         self.rowsConfiguration = rowsConfiguration
@@ -105,6 +110,7 @@ public struct GridConfiguration {
         self.boundsLimitShadowColors = boundsLimitShadowColors
         self.collapsedColumnWidth = collapsedColumnWidth
         self.collapsedRowHeight = collapsedRowHeight
+        self.ignoresOptimizedInit = ignoresOptimizedInit
     }
 
     public var numberOfColumns: Int {

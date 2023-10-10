@@ -754,6 +754,13 @@ open class EditorView: UIView {
         return richTextView.becomeFirstResponder()
     }
 
+    /// Converts given range to `UITextRange`, if valid
+    /// - Parameter range: Range to convert
+    /// - Returns: `UITextRange` representation of provided NSRange, if valid.
+    public func textRange(from range: NSRange) -> UITextRange? {
+        range.toTextRange(textInput: richTextView)
+    }
+
     /// Cancels any pending rendering when async rendering of attachment is schedules.
     /// - Note:
     /// Asynchronous rendering is opt-in feature scheduled by providing `asyncAttachmentRenderingDelegate` to `EditorView`
@@ -1324,13 +1331,19 @@ extension EditorView {
             frame = CGRect(origin: adjustedOrigin, size: size)
 
             if attachment.isRendered == false {
+                attachment.isAsyncRendered = false
                 if self.asyncAttachmentRenderingDelegate?.shouldRenderAsync(attachment: attachment) == true {
+                    attachment.isRenderingAsync = true
                     self.attachmentRenderingScheduler.enqueue(id: attachment.id) {
                         // Because of async nature the attachment may get scheduled again to be rendered.
                         // ignore the attachments that are already rendered
                         guard attachment.isRendered == false else { return }
                         attachment.render(in: self)
-                        self.asyncAttachmentRenderingDelegate?.didRenderAttachment(attachment, in: self)
+                        if attachment.needsDeferredRendering == false {
+                            attachment.isAsyncRendered = true
+                            self.asyncAttachmentRenderingDelegate?.didRenderAttachment(attachment, in: self)
+                        }
+
                     }
                 } else {
                     attachment.render(in: self)

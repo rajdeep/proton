@@ -212,7 +212,12 @@ class Grid {
         var newCells = [GridCell]()
         for row in minRowIndex ... maxRowIndex {
             for col in minColumnIndex ... maxColumnIndex {
-                let c = GridCell(rowSpan: [row], columnSpan: [col], initialHeight: cell.initialHeight)
+                let c = GridCell(
+                    rowSpan: [row],
+                    columnSpan: [col],
+                    initialHeight: cell.initialHeight,
+                    ignoresOptimizedInit: true
+                )
                 c.delegate = cell.delegate
                 newCells.append(c)
             }

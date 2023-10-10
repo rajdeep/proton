@@ -86,7 +86,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
@@ -112,7 +114,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
@@ -161,7 +165,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
@@ -195,7 +201,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40, style: style),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
 
         let attachment = GridViewAttachment(config: config)
 
@@ -243,7 +251,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40, style: rowStyle),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
 
         let attachment = GridViewAttachment(config: config)
 
@@ -283,7 +293,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
@@ -314,7 +326,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         let gridView = attachment.view
@@ -350,7 +364,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         let gridView = attachment.view
@@ -385,7 +401,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         let gridView = attachment.view
@@ -432,7 +450,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         let gridView = attachment.view
@@ -483,7 +503,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
@@ -521,7 +543,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
@@ -621,7 +645,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
@@ -652,7 +678,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
@@ -684,8 +712,10 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ]
+            ],
+            ignoresOptimizedInit: true
         )
+        
         let attachment = GridViewAttachment(config: config)
 
         let gridView = attachment.view
@@ -729,7 +759,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         let gridView = attachment.view
@@ -764,7 +796,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
@@ -801,7 +835,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
@@ -843,7 +879,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
@@ -882,7 +920,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
@@ -930,7 +970,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         let gridView = attachment.view
@@ -972,7 +1014,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         let gridView = attachment.view
@@ -1012,7 +1056,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
 
         let gridView = attachment.view
@@ -1119,7 +1165,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
         let attachment = GridViewAttachment(config: config)
         let gridView = attachment.view
 
@@ -1165,7 +1213,10 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
 
-            ])
+            ],
+            ignoresOptimizedInit: true
+        )
+
         let attachment = GridViewAttachment(config: config)
         let gridView = attachment.view
 
@@ -1250,8 +1301,10 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
-            ]
+            ],
+            ignoresOptimizedInit: true
         )
+        
         let attachment = GridViewAttachment(config: config)
         let gridView = attachment.view
         gridView.delegate = delegate

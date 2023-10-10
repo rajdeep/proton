@@ -44,6 +44,16 @@ public protocol AsyncAttachmentRenderingDelegate: AnyObject {
     func didRenderAttachment(_ attachment: Attachment, in editor: EditorView)
 }
 
+/// Marker protocol for attachment views that may need to defer completion of rendering in asynchronous mode until the view bounds are changed. This may be
+/// important for cases like `GridView` that does not directly contain the Editors within but instead hosts another view that in turn hosts multiple editors i.e. one
+/// per cell. Conformance to this protocol defers invoking the `didRenderAttachment` on `AsyncAttachmentRenderingDelegate` until the view size
+/// are changed to a non-zero value. In absence of this, `didRenderAttachment` is invoked as soon as the attachment is rendered in the editor.
+/// - Important:
+/// In almost all the cases where the `EditorView` is hosted directly inside the attachment, this conformance is **not required** and **not advised**. When
+/// used in such cases, the async rendering may result in unexpected results. This is advisable only in case the `didRenderAttachment` is getting triggered
+/// sooner than the layout of view within the `Attachment` is able to complete.
+public protocol AsyncDeferredRenderable { }
+
 /// An attachment can be used as a container for any view object. Based on the `AttachmentSize` provided, the attachment automatically renders itself alongside the text in `EditorView`.
 /// `Attachment` also provides helper functions like `deleteFromContainer` and `rangeInContainer`
 open class Attachment: NSTextAttachment, BoundsObserving {
@@ -58,11 +68,26 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
     var cachedBounds: CGRect?
 
+    /// Determines if attachment renders async
+    var isRenderingAsync: Bool = false
+
+    /// Determines if async rendering is completed for the attachment.
+    var isAsyncRendered = false
+
     /// Identifier that uniquely identifies an attachment. Auto-generated.
     public let id: String = UUID().uuidString
     /// Governs if the attachment should be selected before being deleted. When `true`, tapping the backspace key the first time on range containing `Attachment` will only
     /// select the attachment i.e. show as highlighted. Tapping the backspace again will delete the attachment. If the value is `false`, the attachment will be deleted on the first backspace itself.
     public var selectBeforeDelete = false
+
+    /// Estimated height for attachment when it is rendering asynchronously.
+    /// This will result in a blank placeholder with given height for the attachment to render.
+    /// When rendering completed, the Editor content will readjust to accomodate the actual height of `Attachment`
+    public var estimatedHeight: CGFloat = 40
+
+    public var needsDeferredRendering: Bool {
+        contentView is AsyncDeferredRenderable
+    }
 
     public var isBlockType: Bool {
         isBlockAttachment
@@ -148,6 +173,10 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         }
     }
 
+    public var contentSize: CGSize? {
+        frame?.size
+    }
+
     final var frame: CGRect? {
         get { view?.frame }
         set {
@@ -224,6 +253,14 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         self.content = .view(view, size: size)
         self.view?.attachment = self
         initialize(contentView: contentView)
+        view.onSubviewRendered = { [weak self] in
+            guard let self,
+                  self.needsDeferredRendering,
+                  self.isAsyncRendered == false,
+                  let containerEditorView = self.containerEditorView else { return }
+            self.isAsyncRendered = true
+            self.containerEditorView?.asyncAttachmentRenderingDelegate?.didRenderAttachment(self, in: containerEditorView)
+        }
     }
 
     private func setup(image: AttachmentImage) {
@@ -364,7 +401,16 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         guard case let AttachmentContent.view(view, attachmentSize) = self.content,
               let containerEditorView = containerEditorView,
               containerEditorView.bounds.size != .zero else {
-            return self.frame ?? bounds
+            if isRenderingAsync {
+                if case let AttachmentContent.view(_, attachmentSize) = self.content {
+                    let estimatedWidth = estimatedAttachmentWidth(for: attachmentSize, textContainerSize: textContainer.size)
+                    return CGRect(origin: .zero, size: CGSize(width: estimatedWidth, height: estimatedHeight))
+                } else {
+                    return CGRect(origin: .zero, size: CGSize(width: textContainer.size.width, height: estimatedHeight))
+                }
+            } else {
+                return self.frame ?? bounds
+            }
         }
 
         if let cachedBounds = cachedBounds,
@@ -478,6 +524,23 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         let string = NSMutableAttributedString(attachment: self)
         string.addAttributes(attributes, range: string.fullRange)
         return string
+    }
+
+    func estimatedAttachmentWidth(for attachmentSize: AttachmentSize, textContainerSize: CGSize) -> CGFloat {
+        let attachmentWidth: CGFloat
+        switch attachmentSize {
+        case .matchContent:
+            attachmentWidth = textContainerSize.width
+        case let .fixed(width):
+            attachmentWidth = width
+        case .fullWidth:
+            attachmentWidth = textContainerSize.width
+        case let .range(minWidth, _):
+            attachmentWidth = minWidth
+        case let .percent(value):
+            attachmentWidth = textContainerSize.width * (value / 100.0)
+        }
+        return attachmentWidth
     }
 }
 
