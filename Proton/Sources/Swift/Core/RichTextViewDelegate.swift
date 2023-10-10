@@ -25,6 +25,10 @@ public enum EditorKey {
     case enter
     case backspace
     case tab
+    case left
+    case right
+    case up
+    case down
 
     init?(_ string: String) {
         switch string {
@@ -32,6 +36,14 @@ public enum EditorKey {
             self = .tab
         case "\n", "\r":
             self = .enter
+        case UIKeyCommand.inputUpArrow:
+            self = .up
+        case UIKeyCommand.inputDownArrow:
+            self = .down
+        case UIKeyCommand.inputLeftArrow:
+            self = .left
+        case UIKeyCommand.inputRightArrow:
+            self = .right
         default:
             return nil
         }

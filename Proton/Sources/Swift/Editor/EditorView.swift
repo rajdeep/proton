@@ -141,6 +141,15 @@ open class EditorView: UIView {
     /// Context for the current Editor
     public let editorViewContext: EditorViewContext
 
+    /// Enables asynchronous rendering of attachments.
+    /// - Note:
+    /// Since attachments must me rendered on main thread, the rendering only continues when there is no user interaction. By default, rendering starts
+    /// immediately after the content is set in the `EditorView`. However, since attachments must render on main thread only, as soon as there is a user
+    /// interaction event, like scrolling, is received, the rendering is paused until scrolling stops and then, resumes again.
+    /// - Important:
+    /// This feature allows for almost instantaneous load of the editor content. However, this is only recommended when there are lots of attachments that
+    /// may be causing overall load time to be in unacceptable region. Since attachments are rendered one at a time, for simple content, the overall load time
+    /// mat be more than when synchronous mode, ie default, is used. The perceived performance/TTI will almost always be better with asynchronous rendering.
     public weak var asyncAttachmentRenderingDelegate: AsyncAttachmentRenderingDelegate?
 
     @available(iOS 13.0, *)
@@ -230,6 +239,10 @@ open class EditorView: UIView {
     open var editorInputView: UIView? {
         get { richTextView.inputView }
         set { richTextView.inputView = newValue }
+    }
+
+    open override var isFirstResponder: Bool {
+        richTextView.isFirstResponder
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -449,7 +462,7 @@ open class EditorView: UIView {
                 pendingAttributedText = newValue
                 return
             }
-            attachmentRenderingScheduler.clear()
+            attachmentRenderingScheduler.cancel()
             // Clear text before setting new value to avoid issues with formatting/layout when
             // editor is hosted in a scrollable container and content is set multiple times.
             richTextView.attributedText = NSAttributedString()
@@ -746,6 +759,13 @@ open class EditorView: UIView {
     /// - Returns: `UITextRange` representation of provided NSRange, if valid.
     public func textRange(from range: NSRange) -> UITextRange? {
         range.toTextRange(textInput: richTextView)
+    }
+
+    /// Cancels any pending rendering when async rendering of attachment is schedules.
+    /// - Note:
+    /// Asynchronous rendering is opt-in feature scheduled by providing `asyncAttachmentRenderingDelegate` to `EditorView`
+    public func cancelPendingAsyncRendering() {
+        attachmentRenderingScheduler.cancel()
     }
 
     /// The range of currently marked text in a document.
