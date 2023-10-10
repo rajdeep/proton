@@ -232,6 +232,10 @@ open class EditorView: UIView {
         set { richTextView.inputView = newValue }
     }
 
+    open override var isFirstResponder: Bool {
+        richTextView.isFirstResponder
+    }
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -158,6 +158,30 @@ class RichTextViewContextTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
 
+    func testReceiveRightKey() {
+        guard #available(iOS 13.4, *) else { return }
+        let testExpectation = expectation(description: #function)
+        let mockTextViewDelegate = MockRichTextViewDelegate()
+
+        let context = RichTextEditorContext.default
+        let textView = RichTextView(context: context)
+        textView.richTextViewDelegate = mockTextViewDelegate
+        context.textViewDidBeginEditing(textView)
+        textView.text = "Sample text"
+
+        let selectedRange = NSRange.zero
+        textView.selectedRange = selectedRange
+
+        mockTextViewDelegate.onShouldHandleKey = { _, key, _, _, _ in
+            XCTAssertEqual(key, EditorKey.right)
+            testExpectation.fulfill()
+        }
+
+        let uiPresses: Set<UIPress> = [MockUIPress(characters: UIKeyCommand.inputRightArrow)]
+        textView.pressesBegan(uiPresses, with: nil)
+        waitForExpectations(timeout: 1.0)
+    }
+
     func testInvokesTextDidChange() {
         let testExpectation = expectation(description: #function)
         let mockTextViewDelegate = MockRichTextViewDelegate()
