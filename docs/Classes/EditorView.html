@@ -17,7 +17,7 @@
     <a title="EditorView Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Proton Docs</a> (71% documented)</p>
+        <p><a href="../index.html">Proton Docs</a> (70% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -177,6 +177,12 @@
           <li class="nav-group-name">
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AsyncAttachmentRenderingDelegate.html">AsyncAttachmentRenderingDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:6Proton23AsyncDeferredRenderableP">AsyncDeferredRenderable</a>
+              </li>
               <li class="nav-group-task">
                 <a href="../Protocols/AsyncTextResolving.html">AsyncTextResolving</a>
               </li>
@@ -373,6 +379,46 @@ and can be used to host simple formatted text or complex layout containing multi
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">editorViewContext</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorViewContext.html">EditorViewContext</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC32asyncAttachmentRenderingDelegateAA05AsyncefG0_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/asyncAttachmentRenderingDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC32asyncAttachmentRenderingDelegateAA05AsyncefG0_pSgvp">asyncAttachmentRenderingDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Enables asynchronous rendering of attachments.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Since attachments must me rendered on main thread, the rendering only continues when there is no user interaction. By default, rendering starts
+immediately after the content is set in the <code>EditorView</code>. However, since attachments must render on main thread only, as soon as there is a user
+interaction event, like scrolling, is received, the rendering is paused until scrolling stops and then, resumes again.
+
+</div><div class="aside aside-important">
+    <p class="aside-title">Important</p>
+    This feature allows for almost instantaneous load of the editor content. However, this is only recommended when there are lots of attachments that
+may be causing overall load time to be in unacceptable region. Since attachments are rendered one at a time, for simple content, the overall load time
+mat be more than when synchronous mode, ie default, is used. The perceived performance/TTI will almost always be better with asynchronous rendering.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">asyncAttachmentRenderingDelegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/AsyncAttachmentRenderingDelegate.html">AsyncAttachmentRenderingDelegate</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -719,6 +765,33 @@ restriction around some commands to be restricted in execution on certain specif
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:@M@Proton@objc(cs)EditorView(py)isFirstResponder"></a>
+                    <a name="//apple_ref/swift/Property/isFirstResponder" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@Proton@objc(cs)EditorView(py)isFirstResponder">isFirstResponder</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">isFirstResponder</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:@M@Proton@objc(cs)EditorView(im)initWithCoder:"></a>
                     <a name="//apple_ref/swift/Method/init(coder:)" class="dashAnchor"></a>
                     <a class="token" href="#/c:@M@Proton@objc(cs)EditorView(im)initWithCoder:">init(coder:<wbr>)</a>
@@ -800,6 +873,114 @@ text processors from the container <code>EditorView</code>.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">selectedTextRange</span><span class="p">:</span> <span class="kt">UITextRange</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC06scrollC8DelegateSo08UIScrollcE0_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/scrollViewDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC06scrollC8DelegateSo08UIScrollcE0_pSgvp">scrollViewDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">scrollViewDelegate</span><span class="p">:</span> <span class="kt">UIScrollViewDelegate</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC20panGestureRecognizerSo09UIGestureF0Cvp"></a>
+                    <a name="//apple_ref/swift/Property/panGestureRecognizer" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC20panGestureRecognizerSo09UIGestureF0Cvp">panGestureRecognizer</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">panGestureRecognizer</span><span class="p">:</span> <span class="kt">UIGestureRecognizer</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC22pinchGestureRecognizerSo07UIPincheF0CSgvp"></a>
+                    <a name="//apple_ref/swift/Property/pinchGestureRecognizer" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC22pinchGestureRecognizerSo07UIPincheF0CSgvp">pinchGestureRecognizer</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">pinchGestureRecognizer</span><span class="p">:</span> <span class="kt">UIPinchGestureRecognizer</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC33directionalPressGestureRecognizerSo09UIGestureG0CSgvp"></a>
+                    <a name="//apple_ref/swift/Property/directionalPressGestureRecognizer" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC33directionalPressGestureRecognizerSo09UIGestureG0CSgvp">directionalPressGestureRecognizer</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">directionalPressGestureRecognizer</span><span class="p">:</span> <span class="kt">UIGestureRecognizer</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -2484,6 +2665,88 @@ This property controls the ability of the user to select content and interact wi
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton10EditorViewC9textRange4fromSo06UITextE0CSgSo8_NSRangeV_tF"></a>
+                    <a name="//apple_ref/swift/Method/textRange(from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC9textRange4fromSo06UITextE0CSgSo8_NSRangeV_tF">textRange(from:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Converts given range to <code>UITextRange</code>, if valid</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">textRange</span><span class="p">(</span><span class="n">from</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UITextRange</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>range</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Range to convert</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>UITextRange</code> representation of provided NSRange, if valid.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC27cancelPendingAsyncRenderingyyF"></a>
+                    <a name="//apple_ref/swift/Method/cancelPendingAsyncRendering()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC27cancelPendingAsyncRenderingyyF">cancelPendingAsyncRendering()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Cancels any pending rendering when async rendering of attachment is schedules.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Asynchronous rendering is opt-in feature scheduled by providing <code><a href="../Classes/EditorView.html#/s:6Proton10EditorViewC32asyncAttachmentRenderingDelegateAA05AsyncefG0_pSgvp">asyncAttachmentRenderingDelegate</a></code> to <code>EditorView</code>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">cancelPendingAsyncRendering</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton10EditorViewC11markedRangeSo8_NSRangeVSgvp"></a>
                     <a name="//apple_ref/swift/Property/markedRange" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton10EditorViewC11markedRangeSo8_NSRangeVSgvp">markedRange</a>
@@ -4105,6 +4368,52 @@ type <code>NSAttributedString</code> that may have additional attributes defined
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton10EditorViewC8relayout4sizeySo6CGSizeVSg_tF"></a>
+                    <a name="//apple_ref/swift/Method/relayout(size:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC8relayout4sizeySo6CGSizeVSg_tF">relayout(size:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Relayout <code>EditorView</code> on demand. This may be required if the size appears incorrect, for e..g. when hosted in an ScrollView</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">relayout</span><span class="p">(</span><span class="nv">size</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>size</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Size to use for relayout. When nil, default bounds are used.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:@M@Proton@objc(cs)EditorView(im)canPerformAction:withSender:"></a>
                     <a name="//apple_ref/swift/Method/canPerformAction(_:withSender:)" class="dashAnchor"></a>
                     <a class="token" href="#/c:@M@Proton@objc(cs)EditorView(im)canPerformAction:withSender:">canPerformAction(_:<wbr>withSender:<wbr>)</a>
@@ -4584,7 +4893,7 @@ existing value will be overwritten by the new value provided in the attributes.<
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-08-12)</p>
+          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-10-10)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

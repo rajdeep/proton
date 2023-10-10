@@ -17,7 +17,7 @@
     <a title="GridConfiguration Structure Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Proton Docs</a> (71% documented)</p>
+        <p><a href="../index.html">Proton Docs</a> (70% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -177,6 +177,12 @@
           <li class="nav-group-name">
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AsyncAttachmentRenderingDelegate.html">AsyncAttachmentRenderingDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:6Proton23AsyncDeferredRenderableP">AsyncDeferredRenderable</a>
+              </li>
               <li class="nav-group-task">
                 <a href="../Protocols/AsyncTextResolving.html">AsyncTextResolving</a>
               </li>
@@ -514,9 +520,37 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton17GridConfigurationV07columnsC004rowsC05style23boundsLimitShadowColors20collapsedColumnWidth0K9RowHeightACSayAA0blC0VG_SayAA0bnC0VGAA0B5StyleVAA08GradientJ0V14CoreFoundation7CGFloatVAVtcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(columnsConfiguration:rowsConfiguration:style:boundsLimitShadowColors:collapsedColumnWidth:collapsedRowHeight:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton17GridConfigurationV07columnsC004rowsC05style23boundsLimitShadowColors20collapsedColumnWidth0K9RowHeightACSayAA0blC0VG_SayAA0bnC0VGAA0B5StyleVAA08GradientJ0V14CoreFoundation7CGFloatVAVtcfc">init(columnsConfiguration:<wbr>rowsConfiguration:<wbr>style:<wbr>boundsLimitShadowColors:<wbr>collapsedColumnWidth:<wbr>collapsedRowHeight:<wbr>)</a>
+                    <a name="/s:6Proton17GridConfigurationV20ignoresOptimizedInitSbvp"></a>
+                    <a name="//apple_ref/swift/Property/ignoresOptimizedInit" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton17GridConfigurationV20ignoresOptimizedInitSbvp">ignoresOptimizedInit</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Ignores optimization to initialize editor within the cell. With optimization, the editor is not initialized until the cell is ready to be rendered on the UI thereby
+not incurring any overheads when creating attributedText containing a <code><a href="../Classes/GridView.html">GridView</a></code> in an attachment. Defaults to <code>false</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">ignoresOptimizedInit</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton17GridConfigurationV07columnsC004rowsC05style23boundsLimitShadowColors20collapsedColumnWidth0K9RowHeight20ignoresOptimizedInitACSayAA0blC0VG_SayAA0bnC0VGAA0B5StyleVAA08GradientJ0V14CoreFoundation7CGFloatVAWSbtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(columnsConfiguration:rowsConfiguration:style:boundsLimitShadowColors:collapsedColumnWidth:collapsedRowHeight:ignoresOptimizedInit:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton17GridConfigurationV07columnsC004rowsC05style23boundsLimitShadowColors20collapsedColumnWidth0K9RowHeight20ignoresOptimizedInitACSayAA0blC0VG_SayAA0bnC0VGAA0B5StyleVAA08GradientJ0V14CoreFoundation7CGFloatVAWSbtcfc">init(columnsConfiguration:<wbr>rowsConfiguration:<wbr>style:<wbr>boundsLimitShadowColors:<wbr>collapsedColumnWidth:<wbr>collapsedRowHeight:<wbr>ignoresOptimizedInit:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -536,7 +570,8 @@
             <span class="nv">style</span><span class="p">:</span> <span class="kt"><a href="../Structs/GridStyle.html">GridStyle</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
             <span class="nv">boundsLimitShadowColors</span><span class="p">:</span> <span class="kt"><a href="../Structs/GradientColors.html">GradientColors</a></span> <span class="o">=</span> <span class="kt"><a href="../Structs/GradientColors.html">GradientColors</a></span><span class="p">(</span><span class="nv">primary</span><span class="p">:</span> <span class="o">.</span><span class="n">black</span><span class="p">,</span> <span class="nv">secondary</span><span class="p">:</span> <span class="o">.</span><span class="n">white</span><span class="p">),</span>
             <span class="nv">collapsedColumnWidth</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
-            <span class="nv">collapsedRowHeight</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="nv">collapsedRowHeight</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="nv">ignoresOptimizedInit</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span>
 <span class="p">)</span></code></pre>
 
                         </div>
@@ -603,7 +638,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-08-12)</p>
+          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-10-10)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
