@@ -315,14 +315,28 @@ class RichTextView: AutogrowingTextView {
         if let editorView, editorView.attributedText.length > 0 {
             editorView.attributedText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: 1)) { value, range, stop in
                 guard let attachment = value as? Attachment, let frame = attachment.frame else { return }
+                let leading: CGFloat
+                if let editorView = self.editorView, editorView.containerAttachment?.containerEditorView == nil {
+                    leading = textContainer.lineFragmentPadding
+                } else {
+                    leading = textContainer.lineFragmentPadding + 5
+                }
                 NSLayoutConstraint.activate([
                     placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: textContainerInset.top + frame.maxY),
                     placeholderLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -textContainerInset.bottom),
-                    placeholderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: textContainer.lineFragmentPadding),
+                    placeholderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leading),
                     placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -textContainer.lineFragmentPadding),
                     placeholderLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -textContainer.lineFragmentPadding)
                 ])
             }
+        } else {
+            NSLayoutConstraint.activate([
+                placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: textContainerInset.top),
+                placeholderLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -textContainerInset.bottom),
+                placeholderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: textContainer.lineFragmentPadding),
+                placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -textContainer.lineFragmentPadding),
+                placeholderLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -textContainer.lineFragmentPadding)
+            ])
         }
     }
 
