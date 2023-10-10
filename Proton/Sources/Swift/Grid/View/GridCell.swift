@@ -20,6 +20,7 @@
 
 import Foundation
 import UIKit
+import OSLog
 
 /// Style configuration for the grid
 public struct GridStyle {
@@ -144,13 +145,8 @@ public class GridCell {
     private var _editor: EditorView?
     /// Editor within the cell
     public var editor: EditorView {
-        if !isRunningTests {
-            assert(editorSetupComplete,
-                  """
-                  Editor setup is not complete as Grid containing cell is not in a window.
-                  Refer to initialiser documentation for additional details.
-                  """)
-        }
+        assertEditorSetupCompleted()
+
         if let _editor {
             return _editor
         }
@@ -174,6 +170,7 @@ public class GridCell {
 
     public let gridStyle: GridStyle
     public let style: GridCellStyle
+    public let ignoresOptimizedInit: Bool
 
     let widthAnchorConstraint: NSLayoutConstraint
     let heightAnchorConstraint: NSLayoutConstraint
@@ -194,11 +191,21 @@ public class GridCell {
     ///   - initialHeight: Initial height of the cell. This will be updated based on size of editor content on load,
     ///   - style: Visual style of the cell
     ///   - gridStyle: Visual style for grid containing cell border color and width
+    ///   - ignoresOptimizedInit: Ignores optimization to initialize editor within the cell. With optimization, the editor is not initialized until the cell is ready to be rendered on the UI thereby not incurring any overheads when creating
+    ///   attributedText containing a `GridView` in an attachment. Defaults to `false`.
     /// - Important:
     /// Creating a `GridView` with 100s of cells can result in slow performance when creating an attributed string containing the GridView attachment. Using the closure defers the creation until the view is ready to be rendered in the UI.
     /// It is recommended to setup all the parts of editor in closure where possible, or wait until after the GridView is rendered. In case, editor must be initialized before the rendering is complete and it is not possible to configure an aspect within the closure itself,
     /// `setupEditor()` may be invoked. Use of `setupEditor()` is discouraged.
-    public init(editorInitializer: @escaping EditorInitializer, rowSpan: [Int], columnSpan: [Int], initialHeight: CGFloat = 40, style: GridCellStyle = .init(), gridStyle: GridStyle = .default) {
+    public init(
+        editorInitializer: @escaping EditorInitializer,
+        rowSpan: [Int],
+        columnSpan: [Int],
+        initialHeight: CGFloat = 40,
+        style: GridCellStyle = .init(),
+        gridStyle: GridStyle = .default,
+        ignoresOptimizedInit: Bool = false)
+    {
         self.editorInitializer = editorInitializer
         self.rowSpan = rowSpan
         self.columnSpan = columnSpan
@@ -206,12 +213,12 @@ public class GridCell {
         self.style = style
         self.initialHeight = initialHeight
         // Ensure Editor frame is .zero as otherwise it conflicts with some layout calculations
-//        self.editor.frame = .zero
+        //        self.editor.frame = .zero
         self.contentView.layoutMargins = .zero
+        self.ignoresOptimizedInit = ignoresOptimizedInit
 
         widthAnchorConstraint = contentView.widthAnchor.constraint(equalToConstant: 0)
         heightAnchorConstraint = contentView.heightAnchor.constraint(equalToConstant: 0)
-
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(contentViewTapped))
         contentView.addGestureRecognizer(tapGestureRecognizer)
@@ -223,8 +230,16 @@ public class GridCell {
         setup()
     }
 
-    public convenience init(rowSpan: [Int], columnSpan: [Int], initialHeight: CGFloat = 40, style: GridCellStyle = .init(), gridStyle: GridStyle = .default) {
-        self.init(editorInitializer: { EditorView(allowAutogrowing: false) }, rowSpan: rowSpan, columnSpan: columnSpan, initialHeight: initialHeight, style: style, gridStyle: gridStyle)
+    public convenience init(rowSpan: [Int], columnSpan: [Int], initialHeight: CGFloat = 40, style: GridCellStyle = .init(), gridStyle: GridStyle = .default, ignoresOptimizedInit: Bool = true) {
+        self.init(
+            editorInitializer: { EditorView(allowAutogrowing: false) },
+            rowSpan: rowSpan,
+            columnSpan: columnSpan,
+            initialHeight: initialHeight,
+            style: style,
+            gridStyle: gridStyle,
+            ignoresOptimizedInit: ignoresOptimizedInit
+        )
     }
 
     /// Sets the focus in the `Editor` within the cell.
@@ -254,6 +269,30 @@ public class GridCell {
             editor.backgroundColor = backgroundColor
             contentView.backgroundColor = backgroundColor
         }
+    }
+
+    private func assertEditorSetupCompleted() {
+        guard editorSetupComplete == false,
+              ignoresOptimizedInit == false else {
+            return
+        }
+
+        guard !isRunningTests else {
+            if #available(iOSApplicationExtension 14.0, *) {
+            Logger.gridView.info(
+                """
+                Editor setup is not complete as Grid containing cell is not in a window.
+                Set `ignoresOptimizedInit` to true in GridConfig or GridCell to suppress this message.
+                """
+            )}
+            return
+        }
+
+        assertionFailure(
+          """
+          Editor setup is not complete as Grid containing cell is not in a window.
+          Refer to initialiser documentation for additional details.
+          """)
     }
 
     @objc

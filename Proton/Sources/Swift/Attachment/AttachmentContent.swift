@@ -31,6 +31,13 @@ class AttachmentContentView: UIView {
     let name: EditorContent.Name
     weak var attachment: Attachment?
 
+    var onSubviewRendered: (() -> Void)?
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        onSubviewRendered?()
+    }
+
     init(name: EditorContent.Name, frame: CGRect) {
         self.name = name
         super.init(frame: frame)

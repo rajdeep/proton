@@ -469,6 +469,6 @@ extension CommandsExampleViewController: AsyncAttachmentRenderingDelegate {
     }
 
     func didRenderAttachment(_ attachment: Proton.Attachment, in editor: Proton.EditorView) {
-        print("Render: \(attachment.id)")
+        print("Render: \(attachment.id) : \(attachment.contentSize)")
     }
 }
