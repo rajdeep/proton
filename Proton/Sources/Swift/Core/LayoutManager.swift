@@ -675,9 +675,13 @@ class LayoutManager: NSLayoutManager {
             var rects = [CGRect]()
             if let backgroundStyle = attr as? BackgroundStyle {
                 let bgStyleGlyphRange = self.glyphRange(forCharacterRange: bgStyleRange, actualCharacterRange: nil)
-                enumerateLineFragments(forGlyphRange: bgStyleGlyphRange) { _, usedRect, textContainer, lineRange, _ in
+                enumerateLineFragments(forGlyphRange: bgStyleGlyphRange) { originRect, usedRect, textContainer, lineRange, _ in
                     let usedRect = usedRect.integral
-                    let rangeIntersection = NSIntersectionRange(bgStyleGlyphRange, lineRange)
+                    var rangeIntersection = NSIntersectionRange(bgStyleGlyphRange, lineRange)
+                    let last = textStorage.substring(from: NSRange(location: rangeIntersection.endLocation - 1, length: 1))
+                    if last == "\n" {
+                        rangeIntersection = NSRange(location: rangeIntersection.location, length: rangeIntersection.length - 1)
+                    }
                     let paragraphStyle = textStorage.attribute(.paragraphStyle, at: rangeIntersection.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
                     let font = textStorage.attribute(.font, at: rangeIntersection.location, effectiveRange: nil) as? UIFont ?? self.defaultFont
                     let lineHeightMultiple = max(paragraphStyle.lineHeightMultiple, 1)
@@ -704,8 +708,10 @@ class LayoutManager: NSLayoutManager {
                         let styledText = textStorage.attributedSubstring(from: bgStyleGlyphRange)
                         let textRect = styledText.boundingRect(with: rect.size, options: .usesFontLeading, context: nil)
 
-                        rect.origin.y = usedRect.origin.y + (rect.size.height - textRect.height) + lineHeightMultipleOffset - lineSpacing
+                        rect.origin.y = usedRect.origin.y - (font.pointSize - font.ascender)
+                        rect.origin.y += (font.ascender - font.capHeight)
                         rect.size.height = textRect.height - lineHeightMultipleOffset
+                        rect.origin.x = max(5, rect.origin.x)
                     case .matchLine:
                         // Glyphs can take space outside of the line fragment, and we cannot draw outside of it.
                         // So it is best to restrict the height just to the line fragment.
@@ -713,9 +719,9 @@ class LayoutManager: NSLayoutManager {
                         rect.size.height = usedRect.height
                     }
 
-                    rects.append(rect.offsetBy(dx: 1, dy: inset.top))
+                    let r = rect.offsetBy(dx: 1, dy: inset.top)
+                    self.drawBackground(backgroundStyle: backgroundStyle, rects: [r], currentCGContext: currentCGContext)
                 }
-                self.drawBackground(backgroundStyle: backgroundStyle, rects: rects, currentCGContext: currentCGContext)
             }
         }
     }
