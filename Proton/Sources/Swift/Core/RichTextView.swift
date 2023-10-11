@@ -389,7 +389,7 @@ class RichTextView: AutogrowingTextView {
             return
         }
         
-        guard selectedRange.location > 2 else {
+        guard selectedRange.location >= 2 else {
             richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: selectedRange)
             return
         }
@@ -490,6 +490,11 @@ class RichTextView: AutogrowingTextView {
             editorView?.typingAttributes[.paragraphStyle] = p
             mutableAttr.addAttribute(.paragraphStyle, value: p, range: mutableAttr.fullRange)
             editorView?.addAttribute(.paragraphStyle, value: p, at: r)
+            
+            let command = ListCommand()
+            if let editorView {
+                command.execute(on: editorView, attributeValue: nil)
+            }
         }
         editorView?.typingAttributes[.listItem] = nil
         editorView?.typingAttributes[.listItemValue] = nil
