@@ -440,10 +440,12 @@ class RichTextView: AutogrowingTextView {
                 textToBeDeleted = attributedText.substring(from: NSRange(location: proposedRange.location - 1, length: 1))
                 proposedRange = NSRange(location: proposedRange.location - 1, length: 1)
                 fromBlankLineFiller = true
+                removeAttrbutesWhenDelete()
             }
             if textToBeDeleted == "\n" {
                 if attributedText.attribute(.listItem, at: proposedRange.location, effectiveRange: nil) != nil {
                     replaceNewLineCharacter(proposedRange: proposedRange)
+                    removeAttrbutesWhenDelete()
                 } else {
                     super.deleteBackward()
                 }
@@ -490,11 +492,6 @@ class RichTextView: AutogrowingTextView {
             editorView?.typingAttributes[.paragraphStyle] = p
             mutableAttr.addAttribute(.paragraphStyle, value: p, range: mutableAttr.fullRange)
             editorView?.addAttribute(.paragraphStyle, value: p, at: r)
-            
-            let command = ListCommand()
-            if let editorView {
-                command.execute(on: editorView, attributeValue: nil)
-            }
         }
         editorView?.typingAttributes[.listItem] = nil
         editorView?.typingAttributes[.listItemValue] = nil
@@ -511,6 +508,34 @@ class RichTextView: AutogrowingTextView {
             let marker = NSAttributedString(string: ListTextProcessor.blankLineFiller, attributes: attrs)
             editor.replaceCharacters(in: selectedRange, with: marker)
             editor.selectedRange = selectedRange.nextPosition
+        }
+    }
+    
+    func removeAttrbutesWhenDelete() {
+        if let editor = editorView {
+            var selectedRange = editor.selectedRange
+            // Adjust to span entire line range if the selection starts in the middle of the line
+            if let currentLine = editor.contentLinesInRange(NSRange(location: selectedRange.location, length: 0)).first,
+               currentLine.range.length > 0 {
+                let location = currentLine.range.location
+                var length = max(currentLine.range.length, selectedRange.length + (selectedRange.location - currentLine.range.location))
+                let range = NSRange(location: location, length: length)
+                if editor.contentLength > range.endLocation,
+                   editor.attributedText.substring(from: NSRange(location: range.endLocation, length: 1)) == "\n" {
+                    length += 1
+                }
+                selectedRange = NSRange(location: location, length: length)
+            }
+            editor.removeAttribute(.listItem, at: selectedRange)
+            editor.removeAttribute(.listItemValue, at: selectedRange)
+            editor.removeAttribute(.strikethroughStyle, at: selectedRange)
+            editor.typingAttributes[.foregroundColor] = editor.defaultColor
+            editor.attributedText.enumerateAttribute(.foregroundColor, in: selectedRange) { value, range, stop in
+                guard let color = value as? UIColor, let defaultColor = editor.defaultColor else { return }
+                if color.hexString() == defaultColor.withAlphaComponent(0.32).hexString() {
+                    editor.addAttribute(.foregroundColor, value: defaultColor, at: range)
+                }
+            }
         }
     }
 
