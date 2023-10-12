@@ -389,8 +389,26 @@ class RichTextView: AutogrowingTextView {
             return
         }
         
+        let location = max(selectedRange.location, 2)
+        editorView.selectedRange = NSRange(location: location, length: editorView.selectedRange.length)
         guard selectedRange.location >= 2 else {
-            richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: selectedRange)
+            richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: NSRange(location: 0, length: 0))
+            return
+        }
+        guard contentLength > 0 else { return }
+        var proposedRange = NSRange(location: max(0, selectedRange.location - 1), length: 0)
+        if location == 2 && editorView.selectedRange.length == 0 {
+            if let range = currentLineRange, range.length > 0 {
+                let attr = attributedText.attributedSubstring(from: range)
+                if attr.attribute(.listItem, at: 0, effectiveRange: nil) != nil {
+                    editorView.selectedRange = NSRange(location: 2, length: 0)
+                } else {
+                    richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: NSRange(location: 0, length: 0))
+                }
+            } else {
+                richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: NSRange(location: 0, length: 0))
+            }
+            removeAttrbutesWhenDelete()
             return
         }
         var range: NSRange? = currentLineRange
@@ -419,12 +437,9 @@ class RichTextView: AutogrowingTextView {
                     editorView.typingAttributes[.foregroundColor] = color
                 }
             }
-                      
+            
             richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: selectedRange)
         }
-
-        guard contentLength > 0 else { return }
-        var proposedRange = NSRange(location: max(0, selectedRange.location - 1), length: 0)
 
         let attributedText: NSAttributedString = self.attributedText // single allocation
         let attributeExists = (attributedText.attribute(.textBlock, at: proposedRange.location, effectiveRange: nil)) != nil
@@ -435,20 +450,31 @@ class RichTextView: AutogrowingTextView {
             // if the character getting deleted is a list item spacer, do a double delete
             var textToBeDeleted = attributedText.substring(from: NSRange(location: proposedRange.location, length: 1))
             var fromBlankLineFiller = false
+            var paragraphStyle: NSMutableParagraphStyle? = editorView.paragraphStyle
+            var currentLocation = selectedRange.location
             if textToBeDeleted == ListTextProcessor.blankLineFiller {
                 super.deleteBackward()
                 textToBeDeleted = attributedText.substring(from: NSRange(location: proposedRange.location - 1, length: 1))
+                paragraphStyle = attributedText.attribute(.paragraphStyle, at: (proposedRange.location - 1), effectiveRange: nil) as? NSMutableParagraphStyle
                 proposedRange = NSRange(location: proposedRange.location - 1, length: 1)
                 fromBlankLineFiller = true
                 removeAttrbutesWhenDelete()
+                currentLocation -= 1
             }
             if textToBeDeleted == "\n" {
                 if attributedText.attribute(.listItem, at: proposedRange.location, effectiveRange: nil) != nil {
                     replaceNewLineCharacter(proposedRange: proposedRange)
-                    removeAttrbutesWhenDelete()
-                } else {
-                    super.deleteBackward()
+                } else if currentLocation > 2 {
+                    if let line = editorView.currentLayoutLine,
+                       line.range.length > 0,
+                       let paragraphStyle = line.text.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSMutableParagraphStyle,
+                       paragraphStyle.headIndent > 0  {
+                        replaceNewLineCharacter(proposedRange: proposedRange)
+                    } else {
+                        super.deleteBackward()
+                    }
                 }
+                removeAttrbutesWhenDelete()
             } else {
                 super.deleteBackward()
             }
@@ -536,6 +562,21 @@ class RichTextView: AutogrowingTextView {
                     editor.addAttribute(.foregroundColor, value: defaultColor, at: range)
                 }
             }
+            
+            editor.removeAttributes([.paragraphStyle, .listItem, .listItemValue], at: selectedRange)
+            if let paragraph = attributedText.attribute(.paragraphStyle, at: selectedRange.location, effectiveRange: nil) as? NSParagraphStyle {
+                let p = NSMutableParagraphStyle()
+                p.lineSpacing = 11
+                p.paragraphSpacing = paragraph.paragraphSpacing
+                p.paragraphSpacingBefore = paragraph.paragraphSpacingBefore
+                p.firstLineHeadIndent = 0
+                p.headIndent = 0
+                typingAttributes[.paragraphStyle] = p
+                editor.typingAttributes[.paragraphStyle] = p
+                editor.addAttribute(.paragraphStyle, value: p, at: selectedRange)
+            }
+            editorView?.typingAttributes[.listItem] = nil
+            editorView?.typingAttributes[.listItemValue] = nil
         }
     }
 
