@@ -20,7 +20,6 @@
 
 import UIKit
 
-@available(iOS 13.4, *)
 class MockUIPress: UIPress {
     private let _characters: String
     override var key: UIKey? {
@@ -32,7 +31,6 @@ class MockUIPress: UIPress {
     }
 }
 
-@available(iOS 13.4, *)
 class MockUIKey: UIKey {
     private let _characters: String
     override var charactersIgnoringModifiers: String { _characters }

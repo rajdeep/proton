@@ -200,6 +200,7 @@ class GridContentView: UIScrollView {
         return cells
     }
 
+    @discardableResult
     func insertRow(at index: Int, configuration: GridRowConfiguration) -> Result<[GridCell], GridViewError> {
         let result = grid.insertRow(at: index, frozenRowMaxIndex: frozenRowMaxIndex, config: configuration, cellDelegate: self)
         if case Result.success = result {
@@ -209,6 +210,7 @@ class GridContentView: UIScrollView {
         return result
     }
 
+    @discardableResult
     func insertColumn(at index: Int, configuration: GridColumnConfiguration) -> Result<[GridCell], GridViewError> {
         let result = grid.insertColumn(at: index, frozenColumnMaxIndex: frozenColumnMaxIndex, config: configuration, cellDelegate: self)
         if case Result.success = result {

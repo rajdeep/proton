@@ -213,7 +213,7 @@ class LayoutManager: NSLayoutManager {
 
         let listMarkerImage: UIImage
         let markerRect: CGRect
-        let topInset = layoutManagerDelegate?.textContainerInset.top ?? 0
+//        let topInset = layoutManagerDelegate?.textContainerInset.top ?? 0
         switch marker {
         case let .string(text):
             let markerSize = text.boundingRect(with: CGSize(width: paraStyle.firstLineHeadIndent, height: rect.height), options: [], context: nil).size
@@ -224,7 +224,7 @@ class LayoutManager: NSLayoutManager {
             listMarkerImage = image.resizeImage(to: markerRect.size)
         }
 
-        let lineSpacing = paraStyle.lineSpacing
+//        let lineSpacing = paraStyle.lineSpacing
         let lineHeightMultiple = max(paraStyle.lineHeightMultiple, 1)
         let lineHeightMultipleOffset = (rect.size.height - rect.size.height/lineHeightMultiple)
         listMarkerImage.draw(at: markerRect.offsetBy(dx: 0, dy: lineHeightMultipleOffset).origin)

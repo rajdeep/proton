@@ -26,7 +26,6 @@ public extension NSAttributedString.Key {
     static let isHighlighted = NSAttributedString.Key("_IsHighlighted")
 }
 
-@available(iOS 13.0, *)
 /// Renderer command that toggles highlights in the selected range in Renderer.
 public class HighlightTextCommand: EditorCommand {
 

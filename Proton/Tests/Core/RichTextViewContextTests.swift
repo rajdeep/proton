@@ -159,7 +159,6 @@ class RichTextViewContextTests: XCTestCase {
     }
 
     func testReceiveRightKey() {
-        guard #available(iOS 13.4, *) else { return }
         let testExpectation = expectation(description: #function)
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
