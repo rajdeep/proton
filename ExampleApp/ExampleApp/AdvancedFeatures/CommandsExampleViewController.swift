@@ -321,6 +321,10 @@ extension CommandsExampleViewController: EditorViewDelegate {
     func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange) {
         print("Key: \(key)")
     }
+
+    func editor(_ editor: EditorView, shouldHandle key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange, handled: inout Bool) {
+        print("Key: \(key)")
+    }
 }
 
 extension CommandsExampleViewController: GridViewDelegate {

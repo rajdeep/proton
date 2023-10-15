@@ -1240,7 +1240,7 @@ extension EditorView: RichTextViewDelegate {
     }
 
     func richTextView(_ richTextView: RichTextView, shouldHandle key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange, handled: inout Bool) {
-        AggregateEditorViewDelegate.editor(self, shouldHandle: key, at: range, handled: &handled)
+        AggregateEditorViewDelegate.editor(self, shouldHandle: key, modifierFlags: modifierFlags, at: range, handled: &handled)
     }
 
     func richTextView(_ richTextView: RichTextView, didReceive key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange) {

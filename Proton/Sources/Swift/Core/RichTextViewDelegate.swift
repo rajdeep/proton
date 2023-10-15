@@ -25,27 +25,44 @@ public enum EditorKey {
     case enter
     case backspace
     case tab
-    case left
-    case right
-    case up
-    case down
+    case other(UIKey)
+
+    init?(_ key: UIKey) {
+        switch key.keyCode {
+        case .keyboardDeleteOrBackspace:
+            self = .backspace
+        case .keyboardTab:
+            self = .tab
+        case .keyboardReturnOrEnter:
+            self = .enter
+        default:
+            self = .other(key)
+        }
+    }
 
     init?(_ string: String) {
-        switch string {
-        case "\t":
-            self = .tab
-        case "\n", "\r":
-            self = .enter
-        case UIKeyCommand.inputUpArrow:
-            self = .up
-        case UIKeyCommand.inputDownArrow:
-            self = .down
-        case UIKeyCommand.inputLeftArrow:
-            self = .left
-        case UIKeyCommand.inputRightArrow:
-            self = .right
+            switch string {
+            case "\t":
+                self = .tab
+            case "\n", "\r":
+                self = .enter
+            default:
+                return nil
+            }
+        }
+}
+
+extension EditorKey: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        switch (lhs, rhs) {
+        case (.backspace, .backspace),
+            (.tab, .tab),
+            (.enter, .enter):
+            return true
+        case (.other(let lKey), .other(let rKey)):
+            return lKey == rKey
         default:
-            return nil
+            return false
         }
     }
 }

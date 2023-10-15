@@ -31,22 +31,6 @@ final class EditorKeyTests: XCTestCase {
         XCTAssertEqual(EditorKey("\n"), EditorKey.enter)
     }
 
-    func test_ReturnsUp() {
-        XCTAssertEqual(EditorKey(UIKeyCommand.inputUpArrow), EditorKey.up)
-    }
-
-    func test_ReturnsDown() {
-        XCTAssertEqual(EditorKey(UIKeyCommand.inputDownArrow), EditorKey.down)
-    }
-
-    func test_ReturnsLeft() {
-        XCTAssertEqual(EditorKey(UIKeyCommand.inputLeftArrow), EditorKey.left)
-    }
-
-    func test_ReturnsRight() {
-        XCTAssertEqual(EditorKey(UIKeyCommand.inputRightArrow), EditorKey.right)
-    }
-
     func testReturnsNil() {
         XCTAssertNil(EditorKey("any"))
     }

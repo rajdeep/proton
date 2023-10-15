@@ -172,11 +172,15 @@ class RichTextViewContextTests: XCTestCase {
         textView.selectedRange = selectedRange
 
         mockTextViewDelegate.onShouldHandleKey = { _, key, _, _, _ in
-            XCTAssertEqual(key, EditorKey.right)
+            guard case let EditorKey.other(actualKey) = key else {
+                XCTFail("Expected key not found")
+                return
+            }
+            XCTAssertEqual(actualKey.charactersIgnoringModifiers, UIKeyCommand.inputRightArrow)
             testExpectation.fulfill()
         }
 
-        let uiPresses: Set<UIPress> = [MockUIPress(characters: UIKeyCommand.inputRightArrow)]
+        let uiPresses: Set<UIPress> = [MockUIPress(key: .init(characters: UIKeyCommand.inputRightArrow))]
         textView.pressesBegan(uiPresses, with: nil)
         waitForExpectations(timeout: 1.0)
     }
