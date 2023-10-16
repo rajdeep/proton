@@ -61,11 +61,7 @@ class GestureRecognizerDelegateOverride: NSObject, UIGestureRecognizerDelegate {
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive event: UIEvent) -> Bool {
-        if #available(iOS 13.4, *) {
-            return baseDelegate.gestureRecognizer?(gestureRecognizer, shouldReceive: event) ?? true
-        } else {
-            return true
-        }
+        return baseDelegate.gestureRecognizer?(gestureRecognizer, shouldReceive: event) ?? true
     }
 
     private func isInAttachment(_ view: UIView?) -> Bool {

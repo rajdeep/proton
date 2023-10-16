@@ -256,7 +256,6 @@ extension RichTextEditorContext {
         scrollView.scrollViewDelegate?.scrollViewDidScrollToTop?(scrollView)
     }
 
-    @available(iOSApplicationExtension 11.0, *)
     func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
         scrollView.scrollViewDelegate?.scrollViewDidChangeAdjustedContentInset?(scrollView)
     }

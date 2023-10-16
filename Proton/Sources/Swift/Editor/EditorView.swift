@@ -152,17 +152,14 @@ open class EditorView: UIView {
     /// mat be more than when synchronous mode, ie default, is used. The perceived performance/TTI will almost always be better with asynchronous rendering.
     public weak var asyncAttachmentRenderingDelegate: AsyncAttachmentRenderingDelegate?
 
-    @available(iOS 13.0, *)
     public var textInteractions: [UITextInteraction] {
         richTextView.interactions.compactMap({ $0 as? UITextInteraction })
     }
 
-    @available(iOS, deprecated: 13.0, message: "Use textInteractions")
     public var textViewGestures: [UIGestureRecognizer] {
         richTextView.gestureRecognizers ?? []
     }
 
-    @available(iOS 11.0, *)
     public var textDragInteractionEnabled: Bool {
         get { richTextView.textDragInteraction?.isEnabled ?? false }
         set { richTextView.textDragInteraction?.isEnabled = newValue }
@@ -295,8 +292,6 @@ open class EditorView: UIView {
         set { richTextView.contentInset = newValue }
     }
 
-    @available(iOS 11.1, *)
-    @available(iOSApplicationExtension 11.1, *)
     public var verticalScrollIndicatorInsets: UIEdgeInsets {
         get { richTextView.verticalScrollIndicatorInsets }
         set { richTextView.verticalScrollIndicatorInsets = newValue }
@@ -603,21 +598,18 @@ open class EditorView: UIView {
     }
 
     /// The configuration state for smart quotes.
-    @available(iOS 11.0, *)
     public var smartQuotesType: UITextSmartQuotesType {
         get { richTextView.smartQuotesType }
         set { richTextView.smartQuotesType = newValue }
     }
 
     /// The configuration state for smart dashes.
-    @available(iOS 11.0, *)
     public var smartDashesType: UITextSmartDashesType {
         get { richTextView.smartDashesType }
         set { richTextView.smartDashesType = newValue }
     }
 
     /// The configuration state for the smart insertion and deletion of space characters.
-    @available(iOS 11.0, *)
     public var smartInsertDeleteType: UITextSmartInsertDeleteType {
         get { richTextView.smartInsertDeleteType }
         set { richTextView.smartInsertDeleteType = newValue }
@@ -677,14 +669,12 @@ open class EditorView: UIView {
     }
 
     /// A text drag delegate object for customizing the drag source behavior of a text view.
-    @available(iOSApplicationExtension 11.0, *)
     public var textDragDelegate: UITextDragDelegate? {
         get { richTextView.textDragDelegate }
         set { richTextView.textDragDelegate = newValue }
     }
 
     /// The text drop delegate for interacting with a drop activity in the text view.
-    @available(iOSApplicationExtension 11.0, *)
     public var textDropDelegate: UITextDropDelegate? {
         get { richTextView.textDropDelegate }
         set { richTextView.textDropDelegate = newValue }

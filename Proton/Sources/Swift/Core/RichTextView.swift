@@ -75,11 +75,7 @@ class RichTextView: AutogrowingTextView {
     var defaultFont: UIFont { richTextStorage.defaultFont }
     var defaultTextColor: UIColor { richTextStorage.defaultTextColor }
     var defaultBackgroundColor: UIColor {
-        if #available(iOS 13.0, *) {
-            return .systemBackground
-        } else {
-            return .white
-        }
+        return .systemBackground
     }
 
     override var attributedText: NSAttributedString! {
@@ -118,7 +114,6 @@ class RichTextView: AutogrowingTextView {
     }
 
     override public func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        guard #available(iOS 13.4, *) else { return }
         var handled: Bool = false
         presses.forEach { press in
             guard

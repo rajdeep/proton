@@ -1,4 +1,4 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.3
 //
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
@@ -20,7 +20,7 @@ import PackageDescription
 let package = Package(
     name: "Proton",
     platforms: [
-        .iOS(.v11),
+        .iOS(.v14),
     ],
     products: [
         .library(name: "Proton", targets: ["Proton"]),
