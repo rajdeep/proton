@@ -423,7 +423,7 @@ class RichTextView: AutogrowingTextView {
                let paragraph = last.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle {
                 let p = NSMutableParagraphStyle()
                 p.paragraphSpacing = paragraph.paragraphSpacing
-                p.lineSpacing = paragraph.lineSpacing
+                p.lineSpacing = 11
                 p.headIndent = 0
                 p.firstLineHeadIndent = 0
                 editorView.addAttribute(.paragraphStyle, value: p, at: NSRange(location: selectedRange.location - 1, length: 1))
@@ -467,6 +467,7 @@ class RichTextView: AutogrowingTextView {
                 } else if currentLocation > 2 {
                     if let line = editorView.currentLayoutLine,
                        line.range.length > 0,
+                       line.range.location >= proposedRange.location,
                        let paragraphStyle = line.text.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSMutableParagraphStyle,
                        paragraphStyle.headIndent > 0  {
                         replaceNewLineCharacter(proposedRange: proposedRange)
@@ -509,7 +510,7 @@ class RichTextView: AutogrowingTextView {
         let mutableAttr = NSMutableAttributedString(string: replaceString)
         if let paragraph = attributedText.attribute(.paragraphStyle, at: r.location, effectiveRange: nil) as? NSParagraphStyle {
             let p = NSMutableParagraphStyle()
-            p.lineSpacing = paragraph.lineSpacing
+            p.lineSpacing = 11
             p.paragraphSpacing = paragraph.paragraphSpacing
             p.paragraphSpacingBefore = paragraph.paragraphSpacingBefore
             p.firstLineHeadIndent = 0
@@ -542,6 +543,7 @@ class RichTextView: AutogrowingTextView {
             var selectedRange = editor.selectedRange
             // Adjust to span entire line range if the selection starts in the middle of the line
             if let currentLine = editor.contentLinesInRange(NSRange(location: selectedRange.location, length: 0)).first,
+               currentLine.range.location >= selectedRange.location,
                currentLine.range.length > 0 {
                 let location = currentLine.range.location
                 var length = max(currentLine.range.length, selectedRange.length + (selectedRange.location - currentLine.range.location))
@@ -564,11 +566,20 @@ class RichTextView: AutogrowingTextView {
             }
             
             editor.removeAttributes([.paragraphStyle, .listItem, .listItemValue], at: selectedRange)
-            if let paragraph = attributedText.attribute(.paragraphStyle, at: selectedRange.location, effectiveRange: nil) as? NSParagraphStyle {
+            if attributedText.length < selectedRange.location,
+               let paragraph = attributedText.attribute(.paragraphStyle, at: selectedRange.location, effectiveRange: nil) as? NSParagraphStyle {
                 let p = NSMutableParagraphStyle()
                 p.lineSpacing = 11
                 p.paragraphSpacing = paragraph.paragraphSpacing
                 p.paragraphSpacingBefore = paragraph.paragraphSpacingBefore
+                p.firstLineHeadIndent = 0
+                p.headIndent = 0
+                typingAttributes[.paragraphStyle] = p
+                editor.typingAttributes[.paragraphStyle] = p
+                editor.addAttribute(.paragraphStyle, value: p, at: selectedRange)
+            } else {
+                let p = NSMutableParagraphStyle()
+                p.lineSpacing = 11
                 p.firstLineHeadIndent = 0
                 p.headIndent = 0
                 typingAttributes[.paragraphStyle] = p
