@@ -114,14 +114,16 @@ class RichTextView: AutogrowingTextView {
     }
 
     override public func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        var handled: Bool = false
-        presses.forEach { press in
-            guard
-                let key = press.key,
-                let editorKey = EditorKey(key.charactersIgnoringModifiers)
-            else { return }
-            richTextViewDelegate?.richTextView(self, shouldHandle: editorKey, modifierFlags: key.modifierFlags, at: self.selectedRange, handled: &handled)
+        guard let key = presses.first?.key else {
+            super.pressesBegan(presses, with: event)
+            return
         }
+
+        var handled: Bool = false
+
+        guard let editorKey = EditorKey(key) else { return }
+        richTextViewDelegate?.richTextView(self, shouldHandle: editorKey, modifierFlags: key.modifierFlags, at: self.selectedRange, handled: &handled)
+
         if handled == false {
             super.pressesBegan(presses, with: event)
         }

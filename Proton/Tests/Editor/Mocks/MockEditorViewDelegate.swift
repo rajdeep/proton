@@ -41,7 +41,7 @@ class MockEditorViewDelegate: EditorViewDelegate {
         onKeyReceived?(editor, key, range)
     }
 
-    func editor(_ editor: EditorView, shouldHandle key: EditorKey, at range: NSRange, handled: inout Bool) {
+    func editor(_ editor: EditorView, shouldHandle key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange, handled: inout Bool) { 
         onShouldHandleKey?(editor, key, range, handled)
     }
 

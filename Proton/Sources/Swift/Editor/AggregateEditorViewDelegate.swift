@@ -24,9 +24,9 @@ import UIKit
 class AggregateEditorViewDelegate: EditorViewDelegate {
     private init(){ }
 
-    static func editor(_ editor: EditorView, shouldHandle key: EditorKey, at range: NSRange, handled: inout Bool) {
-        editor.delegate?.editor(editor, shouldHandle: key, at: range, handled: &handled)
-        editor.editorContextDelegate?.editor(editor, shouldHandle: key, at: range, handled: &handled)
+    static func editor(_ editor: EditorView, shouldHandle key: EditorKey, modifierFlags: UIKeyModifierFlags, at range: NSRange, handled: inout Bool) {
+        editor.delegate?.editor(editor, shouldHandle: key, modifierFlags: modifierFlags, at: range, handled: &handled)
+        editor.editorContextDelegate?.editor(editor, shouldHandle: key, modifierFlags: modifierFlags, at: range, handled: &handled)
     }
 
     static func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange) {

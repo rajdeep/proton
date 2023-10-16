@@ -21,13 +21,13 @@
 import UIKit
 
 class MockUIPress: UIPress {
-    private let _characters: String
+    private var _key: UIKey
     override var key: UIKey? {
-        MockUIKey(characters: _characters)
+        _key
     }
 
-    init(characters: String) {
-        self._characters = characters
+    init(key: MockUIKey) {
+        _key = key
     }
 }
 
