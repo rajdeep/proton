@@ -33,7 +33,11 @@ public extension NSRange {
     }
 
     var lastCharacterRange: NSRange {
-        return NSRange(location: location + length, length: 1)
+        return NSRange(location: max(location + length - 1, 0), length: 1)
+    }
+
+    var previousPosition: NSRange {
+        return NSRange(location: max(location - 1, 0), length: 0)
     }
 
     var nextPosition: NSRange {
@@ -42,6 +46,14 @@ public extension NSRange {
 
     var endLocation: Int {
         return location + length
+    }
+
+    var nextCharacterRange: NSRange {
+        NSRange(location: location + length, length: 1)
+    }
+
+    var previousCharacterRange: NSRange {
+        NSRange(location: location - 1, length: 1)
     }
 
     /// Converts the range to `UITextRange` in given `UITextInput`. Returns nil if the range is invalid in the `UITextInput`.
