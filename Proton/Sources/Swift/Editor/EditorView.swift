@@ -152,6 +152,11 @@ open class EditorView: UIView {
     /// mat be more than when synchronous mode, ie default, is used. The perceived performance/TTI will almost always be better with asynchronous rendering.
     public weak var asyncAttachmentRenderingDelegate: AsyncAttachmentRenderingDelegate?
 
+    /// Returns `UITextInput` of current instance
+    public var textInput: UITextInput {
+        richTextView
+    }
+
     public var textInteractions: [UITextInteraction] {
         richTextView.interactions.compactMap({ $0 as? UITextInteraction })
     }
@@ -738,6 +743,18 @@ open class EditorView: UIView {
     @discardableResult
     public override func becomeFirstResponder() -> Bool {
         return richTextView.becomeFirstResponder()
+    }
+
+    /// Denotes of the Editor is first responder
+    /// - Returns: true, if is first responder
+    public func isFirstResponder() -> Bool {
+        richTextView.isFirstResponder
+    }
+
+    /// Resets typing attributes back to default text color, font and paragraph style.
+    ///All other attributes are dropped.
+    public func resetTypingAttributes() {
+        richTextView.resetTypingAttributes()
     }
 
     /// Converts given range to `UITextRange`, if valid
