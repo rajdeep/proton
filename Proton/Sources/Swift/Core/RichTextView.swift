@@ -464,6 +464,7 @@ class RichTextView: AutogrowingTextView {
             if textToBeDeleted == "\n" {
                 if attributedText.attribute(.listItem, at: proposedRange.location, effectiveRange: nil) != nil {
                     replaceNewLineCharacter(proposedRange: proposedRange)
+                    removeAttrbutesWhenDelete()
                 } else if currentLocation > 2 {
                     if let line = editorView.currentLayoutLine,
                        line.range.length > 0,
@@ -471,11 +472,11 @@ class RichTextView: AutogrowingTextView {
                        let paragraphStyle = line.text.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSMutableParagraphStyle,
                        paragraphStyle.headIndent > 0  {
                         replaceNewLineCharacter(proposedRange: proposedRange)
+                        removeAttrbutesWhenDelete()
                     } else {
                         super.deleteBackward()
                     }
                 }
-                removeAttrbutesWhenDelete()
             } else {
                 super.deleteBackward()
             }
@@ -839,7 +840,32 @@ class RichTextView: AutogrowingTextView {
 
         var caretRect = super.caretRect(for: position)
         caretRect.origin.y = lineRect.minY + textContainerInset.top
-        caretRect.size.height = max(16, lineRect.height - (self.paragraphStyle?.lineSpacing ?? 0)) + 3
+        
+        let lineSpacing: CGFloat
+        if location >= 1,
+            let paragraphStyle = editorView?.attributedText.attribute(.paragraphStyle, at: location - 1, effectiveRange: nil) as? NSParagraphStyle {
+            lineSpacing = paragraphStyle.lineSpacing
+            if caretRect.origin.x < paragraphStyle.headIndent {
+                caretRect.origin.x = paragraphStyle.headIndent + 1
+            }
+        } else {
+            lineSpacing = self.paragraphStyle?.lineSpacing ?? 0
+        }
+        
+        if location >= 1, let font = editorView?.attributedText.attribute(.font, at: location - 1, effectiveRange: nil) as? UIFont {
+            let height = font.capHeight + abs(font.descender)
+            var mxHeight: CGFloat = height
+            if let line = self.editorView?.currentLayoutLine {
+                self.editorView?.attributedText.enumerateAttribute(.font, in: line.range) { value, range, stop in
+                    guard let font = value as? UIFont else { return }
+                    mxHeight = max(mxHeight, font.capHeight + abs(font.descender))
+                }
+            }
+            caretRect.origin.y += (font.pointSize - font.ascender) + (mxHeight - height) - 1.5
+            caretRect.size.height = height + 3
+        } else {
+            caretRect.size.height = max(16, lineRect.height - lineSpacing) + 3
+        }
         return caretRect
     }
     
