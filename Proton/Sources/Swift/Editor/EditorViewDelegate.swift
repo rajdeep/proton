@@ -117,6 +117,15 @@ public protocol EditorViewDelegate: AnyObject {
     ///   - editor: Editor view receiving the event.
     ///   - isEditable: `true` if editor is editable, else `false`
     func editor(_ editor: EditorView, didChangeEditable isEditable: Bool)
+
+    /// Notifies when an `Attachment` is rendered for the first time in `EditorView`
+    /// - Parameters:
+    ///   - editor: Editor view receiving the event.
+    ///   - attachment: `Attachment` getting rendered
+    /// - Note:
+    /// This invocation only applies in default mode of rendering attachment. If `EditorView` has `AsyncAttachmentRenderingDelegate` provided,
+    /// that delegate will receive the event instead.
+    func editor(_ editor: EditorView, didRenderAttachment attachment: Attachment)
 }
 
 public extension EditorViewDelegate {
@@ -134,4 +143,5 @@ public extension EditorViewDelegate {
     func editor(_ editor: EditorView, didSetAttributedText attributedText: NSAttributedString, isDeferred: Bool) { }
     func editor(_ editor: EditorView, isReady: Bool) { }
     func editor(_ editor: EditorView, didChangeEditable isEditable: Bool) { }
+    func editor(_ editor: EditorView, didRenderAttachment attachment: Attachment) { }
 }
