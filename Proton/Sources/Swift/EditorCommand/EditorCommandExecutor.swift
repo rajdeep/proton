@@ -20,11 +20,18 @@
 
 import Foundation
 
+public protocol EditorCommandExecutorDelegate: AnyObject {
+    func willExecuteCommand(_ command: EditorCommand, on editor: EditorView)
+    func didExecuteCommand(_ command: EditorCommand, on editor: EditorView)
+}
+
 /// `EditorCommandExecutor` manages all the `EditorView` in the main `EditorView`. Sub editors may have been added as `Attachment` in the `EditorView`.
 /// All the `EditorView`s in the hierarchy sharing the same `EditorContext` will automatically be handled by the `EditorCommandExecutor`.
 /// `EditorCommandExecutor` keeps the track of the `EditorView` that has the focus and executes the given command in the active `EditorView`.
 public class EditorCommandExecutor {
     private let context: RichTextEditorContext
+
+    public weak var delegate: EditorCommandExecutorDelegate?
 
     /// Initializes the `EditorCommandExecutor`
     /// - Parameter context: The context for the command executor. `EditorCommandExecutor` is capable of executing commands only on the `EditorView`s
@@ -41,7 +48,8 @@ public class EditorCommandExecutor {
               editor.isCommandRegistered(command.name),
               command.canExecute(on: editor)
         else { return }
-        
+        delegate?.willExecuteCommand(command, on: editor)
         command.execute(on: editor)
+        delegate?.didExecuteCommand(command, on: editor)
     }
 }
