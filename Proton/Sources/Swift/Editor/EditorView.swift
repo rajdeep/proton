@@ -1346,13 +1346,13 @@ extension EditorView {
                             attachment.isAsyncRendered = true
                             self.asyncAttachmentRenderingDelegate?.didRenderAttachment(attachment, in: self)
                         }
-
                     }
                 } else {
                     attachment.render(in: self)
                     if !self.isSettingAttributedText, let focusable = attachment.contentView as? Focusable {
                         focusable.setFocus()
                     }
+                    self.delegate?.editor(self, didRenderAttachment: attachment)
                 }
             }
 

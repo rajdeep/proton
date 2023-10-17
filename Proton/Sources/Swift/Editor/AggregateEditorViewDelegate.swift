@@ -93,4 +93,9 @@ class AggregateEditorViewDelegate: EditorViewDelegate {
         editor.delegate?.editor(editor, didChangeEditable: isEditable)
         editor.editorContextDelegate?.editor(editor, didChangeEditable: isEditable)
     }
+
+    static func editor(_ editor: EditorView, didRenderAttachment attachment: Attachment) {
+        editor.delegate?.editor(editor, didRenderAttachment: attachment)
+        editor.editorContextDelegate?.editor(editor, didRenderAttachment: attachment)
+    }
 }
