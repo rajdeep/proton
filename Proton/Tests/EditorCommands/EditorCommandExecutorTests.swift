@@ -175,6 +175,48 @@ class EditorCommandExecutorTests: XCTestCase {
         commandExecutor.execute(command2)
         waitForExpectations(timeout: 1.0)
     }
+
+    func testCommandExecutorDelegate() {
+        let ex = functionExpectation()
+        ex.expectedFulfillmentCount = 2
+
+        let context = EditorViewContext(name: "test_context")
+        let commandExecutor = EditorCommandExecutor(context: context)
+        let editor = EditorView(context: context)
+
+        let selectedRange = NSRange(location: 3, length: 3)
+        context.didBeginEditing(editor)
+        editor.replaceCharacters(
+            in: .zero,
+            with: NSAttributedString(string: "This is some text",
+            attributes: [.foregroundColor: UIColor.black])
+        )
+        editor.selectedRange = selectedRange
+
+        let delegate = MockEditorCommandExecutorDelegate()
+        let colorCommand = MockEditorCommand { editor in
+            editor.addAttributes([.foregroundColor: UIColor.red], at: editor.selectedRange)
+        }
+
+        delegate.onWillExecute = { command, editor in
+            XCTAssertEqual(command.name, colorCommand.name)
+            let color = editor.selectedText.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor
+            XCTAssertTrue(color == .black)
+            ex.fulfill()
+        }
+
+        delegate.onDidExecute = { command, editor in
+            XCTAssertEqual(command.name, colorCommand.name)
+            let updatedColor = editor.selectedText.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor
+            XCTAssertTrue(updatedColor == .red)
+            ex.fulfill()
+        }
+
+        commandExecutor.delegate = delegate
+        commandExecutor.execute(colorCommand)
+
+        waitForExpectations(timeout: 1.0)
+    }
 }
 
 extension EditorViewContext {

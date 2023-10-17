@@ -130,6 +130,7 @@
 		1BDA09422AD4B4D400674CFE /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDA09412AD4B4D400674CFE /* Logger.swift */; };
 		1BF90FB4245E503E00A411A3 /* TextBlockAttributeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90FB3245E503E00A411A3 /* TextBlockAttributeTests.swift */; };
 		1BFA75A42897D52300E4A2AD /* GridViewAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFA75A32897D52300E4A2AD /* GridViewAttachment.swift */; };
+		1BFBFC892ADE34050057CCB3 /* MockEditorCommandExecutorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFBFC882ADE34050057CCB3 /* MockEditorCommandExecutorDelegate.swift */; };
 		1BFDC80F254A9BFC00BD83BD /* ListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFDC80E254A9BFC00BD83BD /* ListParser.swift */; };
 		1BFDC811254AA11F00BD83BD /* ListParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFDC810254AA11F00BD83BD /* ListParserTests.swift */; };
 		1BFFEF0523C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEF0423C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift */; };
@@ -301,6 +302,7 @@
 		1BE88263250E3ADB00E2CC1B /* PREditorContentName.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PREditorContentName.m; sourceTree = "<group>"; };
 		1BF90FB3245E503E00A411A3 /* TextBlockAttributeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBlockAttributeTests.swift; sourceTree = "<group>"; };
 		1BFA75A32897D52300E4A2AD /* GridViewAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewAttachment.swift; sourceTree = "<group>"; };
+		1BFBFC882ADE34050057CCB3 /* MockEditorCommandExecutorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEditorCommandExecutorDelegate.swift; sourceTree = "<group>"; };
 		1BFDC80E254A9BFC00BD83BD /* ListParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListParser.swift; sourceTree = "<group>"; };
 		1BFDC810254AA11F00BD83BD /* ListParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListParserTests.swift; sourceTree = "<group>"; };
 		1BFFEF0423C308BF00D2BA35 /* MockAutogrowingTextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAutogrowingTextViewDelegate.swift; sourceTree = "<group>"; };
@@ -597,6 +599,7 @@
 			isa = PBXGroup;
 			children = (
 				1B840F602401E63100D5E8F7 /* MockEditorCommand.swift */,
+				1BFBFC882ADE34050057CCB3 /* MockEditorCommandExecutorDelegate.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -1087,6 +1090,7 @@
 				1BD993B423C9966A00563ACB /* MockTextProcessor.swift in Sources */,
 				1B164F5223D2B9D400A0869A /* TestTextProcessor.swift in Sources */,
 				1BFA75A42897D52300E4A2AD /* GridViewAttachment.swift in Sources */,
+				1BFBFC892ADE34050057CCB3 /* MockEditorCommandExecutorDelegate.swift in Sources */,
 				1BD993B123C995B000563ACB /* TextProcessorTests.swift in Sources */,
 				1B30A3642489E11F00FA1D48 /* MockRichTextViewListDelegate.swift in Sources */,
 				1BF90FB4245E503E00A411A3 /* TextBlockAttributeTests.swift in Sources */,
