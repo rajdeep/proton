@@ -426,15 +426,15 @@ class RichTextView: AutogrowingTextView {
                 p.lineSpacing = 11
                 p.headIndent = 0
                 p.firstLineHeadIndent = 0
-                editorView?.addAttribute(.paragraphStyle, value: p, at: NSRange(location: selectedRange.location - 1, length: 1))
-                editorView?.removeAttribute(.paragraphStyle, at: NSRange(location: selectedRange.location - 1, length: 1))
+                editorView.addAttribute(.paragraphStyle, value: p, at: NSRange(location: selectedRange.location - 1, length: 1))
+                editorView.removeAttribute(.paragraphStyle, at: NSRange(location: selectedRange.location - 1, length: 1))
             } else if last.string == ListTextProcessor.blankLineFiller {
                 let range = NSRange(location: selectedRange.location - 1, length: 1)
-                editorView?.removeAttribute(.strikethroughStyle, at: range)
-                editorView?.typingAttributes[.strikethroughStyle] = nil
+                editorView.removeAttribute(.strikethroughStyle, at: range)
+                editorView.typingAttributes[.strikethroughStyle] = nil
                 
                 if let color = self.editorView?.defaultColor {
-                    editorView?.typingAttributes[.foregroundColor] = color
+                    editorView.typingAttributes[.foregroundColor] = color
                 }
             }
             
