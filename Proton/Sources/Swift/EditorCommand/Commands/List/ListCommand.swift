@@ -123,6 +123,15 @@ public class ListCommand: EditorCommand {
             editor.removeAttribute(.listItemValue, at: selectedRange)
             editor.typingAttributes[.listItem] = nil
             editor.typingAttributes[.listItemValue] = nil
+            editor.removeAttribute(.strikethroughStyle, at: selectedRange)
+            editor.typingAttributes[.strikethroughStyle] = nil
+            editor.typingAttributes[.foregroundColor] = editor.defaultColor
+            editor.attributedText.enumerateAttribute(.foregroundColor, in: selectedRange) { value, range, stop in
+                guard let color = value as? UIColor, let defaultColor = editor.defaultColor else { return }
+                if color.hexString() == defaultColor.withAlphaComponent(0.32).hexString() {
+                    editor.addAttribute(.foregroundColor, value: defaultColor, at: range)
+                }
+            }
             return
         }
         
@@ -213,5 +222,35 @@ public class ListCommand: EditorCommand {
         
         self.attributeValue = attributeValue
         execute(on: editor)
+    }
+}
+
+extension UIColor {
+    func hexStringThrows(_ includeAlpha: Bool = true) -> String?  {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        self.getRed(&r, green: &g, blue: &b, alpha: &a)
+        
+        guard r >= 0 && r <= 1 && g >= 0 && g <= 1 && b >= 0 && b <= 1 else {
+            return nil
+        }
+        
+        if (includeAlpha) {
+            return String(format: "#%02X%02X%02X%02X",
+                          Int(round(r * 255)), Int(round(g * 255)),
+                          Int(round(b * 255)), Int(round(a * 255)))
+        } else {
+            return String(format: "#%02X%02X%02X", Int(round(r * 255)),
+                          Int(round(g * 255)), Int(round(b * 255)))
+        }
+    }
+    
+    func hexString(_ includeAlpha: Bool = true) -> String  {
+        guard let hexString = hexStringThrows(includeAlpha) else {
+            return ""
+        }
+        return hexString
     }
 }
