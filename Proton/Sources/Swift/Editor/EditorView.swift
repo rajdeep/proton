@@ -110,12 +110,18 @@ open class EditorView: UIView {
     var needsAsyncTextResolution = false
     
     public var contentSize: CGSize {
+        richTextView.alwaysBounceVertical = true
         return richTextView.contentSize
     }
     
     public enum DarkMode {
         case dark
         case light
+    }
+    
+    public var alwaysBounceVertical: Bool {
+        get { return richTextView.alwaysBounceVertical }
+        set { richTextView.alwaysBounceVertical = newValue }
     }
     
     public var mode: DarkMode = .light
@@ -262,6 +268,10 @@ open class EditorView: UIView {
         get { richTextView.placeholderText }
         set { richTextView.placeholderText = newValue }
     }
+    
+    public var placeholderLabel: UILabel {
+        richTextView.placeholderLabel
+    }
 
     /// Gets or sets insets for additional scroll area around the content. Default value is UIEdgeInsetsZero.
     public var contentInset: UIEdgeInsets {
@@ -299,6 +309,10 @@ open class EditorView: UIView {
     public var textContainerInset: UIEdgeInsets {
         get { richTextView.textContainerInset }
         set { richTextView.textContainerInset = newValue }
+    }
+    
+    public func updatePlaceholderVisibility() {
+        richTextView.updatePlaceholderVisibility()
     }
 
     /// The types of data converted to tappable URLs in the editor view.

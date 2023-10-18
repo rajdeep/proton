@@ -37,7 +37,7 @@ class RichTextView: AutogrowingTextView {
         set { richTextStorage.defaultTextFormattingProvider = newValue }
     }
 
-    private let placeholderLabel = UILabel()
+    let placeholderLabel = UILabel()
 
     var placeholderText: NSAttributedString? {
         didSet {
@@ -311,13 +311,33 @@ class RichTextView: AutogrowingTextView {
 
         addSubview(placeholderLabel)
         placeholderLabel.attributedText = placeholderText
-        NSLayoutConstraint.activate([
-            placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: textContainerInset.top + 44),
-            placeholderLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -textContainerInset.bottom),
-            placeholderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: textContainer.lineFragmentPadding),
-            placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -textContainer.lineFragmentPadding),
-            placeholderLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -textContainer.lineFragmentPadding)
-        ])
+        
+        if let editorView, editorView.attributedText.length > 0 {
+            editorView.attributedText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: 1)) { value, range, stop in
+                guard let attachment = value as? Attachment, let frame = attachment.frame else { return }
+                let leading: CGFloat
+                if let editorView = self.editorView, editorView.containerAttachment?.containerEditorView == nil {
+                    leading = textContainer.lineFragmentPadding
+                } else {
+                    leading = textContainer.lineFragmentPadding + 5
+                }
+                NSLayoutConstraint.activate([
+                    placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: textContainerInset.top + frame.maxY),
+                    placeholderLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -textContainerInset.bottom),
+                    placeholderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leading),
+                    placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -textContainer.lineFragmentPadding),
+                    placeholderLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -textContainer.lineFragmentPadding)
+                ])
+            }
+        } else {
+            NSLayoutConstraint.activate([
+                placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: textContainerInset.top),
+                placeholderLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -textContainerInset.bottom),
+                placeholderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: textContainer.lineFragmentPadding),
+                placeholderLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -textContainer.lineFragmentPadding),
+                placeholderLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -textContainer.lineFragmentPadding)
+            ])
+        }
     }
 
     func wordAt(_ location: Int) -> NSAttributedString? {
@@ -363,6 +383,34 @@ class RichTextView: AutogrowingTextView {
     }
 
     override func deleteBackward() {
+        guard let editorView, editorView.containerAttachment?.containerEditorView == nil else {
+            super.deleteBackward()
+            richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: selectedRange)
+            return
+        }
+        
+        let location = max(selectedRange.location, 2)
+        editorView.selectedRange = NSRange(location: location, length: editorView.selectedRange.length)
+        guard selectedRange.location >= 2 else {
+            richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: NSRange(location: 0, length: 0))
+            return
+        }
+        guard contentLength > 0 else { return }
+        var proposedRange = NSRange(location: max(0, selectedRange.location - 1), length: 0)
+        if location == 2 && editorView.selectedRange.length == 0 {
+            if let range = currentLineRange, range.length > 0 {
+                let attr = attributedText.attributedSubstring(from: range)
+                if attr.attribute(.listItem, at: 0, effectiveRange: nil) != nil {
+                    editorView.selectedRange = NSRange(location: 2, length: 0)
+                } else {
+                    richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: NSRange(location: 0, length: 0))
+                }
+            } else {
+                richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: NSRange(location: 0, length: 0))
+            }
+            removeAttrbutesWhenDelete()
+            return
+        }
         var range: NSRange? = currentLineRange
         defer {
             if contentLength == 0 {
@@ -371,10 +419,11 @@ class RichTextView: AutogrowingTextView {
             let last = attributedText.attributedSubstring(from: NSRange(location: selectedRange.location - 1, length: 1))
             if last.string == "\n",
                last.attribute(.listItem, at: 0, effectiveRange: nil) == nil,
+               selectedRange.location >= 1,
                let paragraph = last.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle {
                 let p = NSMutableParagraphStyle()
                 p.paragraphSpacing = paragraph.paragraphSpacing
-                p.lineSpacing = paragraph.lineSpacing
+                p.lineSpacing = 11
                 p.headIndent = 0
                 p.firstLineHeadIndent = 0
                 editorView?.addAttribute(.paragraphStyle, value: p, at: NSRange(location: selectedRange.location - 1, length: 1))
@@ -388,12 +437,9 @@ class RichTextView: AutogrowingTextView {
                     editorView?.typingAttributes[.foregroundColor] = color
                 }
             }
-                      
+            
             richTextViewDelegate?.richTextView(self, didReceive: .backspace, modifierFlags: [], at: selectedRange)
         }
-
-        guard contentLength > 0 else { return }
-        var proposedRange = NSRange(location: max(0, selectedRange.location - 1), length: 0)
 
         let attributedText: NSAttributedString = self.attributedText // single allocation
         let attributeExists = (attributedText.attribute(.textBlock, at: proposedRange.location, effectiveRange: nil)) != nil
@@ -404,17 +450,32 @@ class RichTextView: AutogrowingTextView {
             // if the character getting deleted is a list item spacer, do a double delete
             var textToBeDeleted = attributedText.substring(from: NSRange(location: proposedRange.location, length: 1))
             var fromBlankLineFiller = false
+            var paragraphStyle: NSMutableParagraphStyle? = editorView.paragraphStyle
+            var currentLocation = selectedRange.location
             if textToBeDeleted == ListTextProcessor.blankLineFiller {
                 super.deleteBackward()
                 textToBeDeleted = attributedText.substring(from: NSRange(location: proposedRange.location - 1, length: 1))
+                paragraphStyle = attributedText.attribute(.paragraphStyle, at: (proposedRange.location - 1), effectiveRange: nil) as? NSMutableParagraphStyle
                 proposedRange = NSRange(location: proposedRange.location - 1, length: 1)
                 fromBlankLineFiller = true
+                removeAttrbutesWhenDelete()
+                currentLocation -= 1
             }
             if textToBeDeleted == "\n" {
                 if attributedText.attribute(.listItem, at: proposedRange.location, effectiveRange: nil) != nil {
                     replaceNewLineCharacter(proposedRange: proposedRange)
-                } else {
-                    super.deleteBackward()
+                    removeAttrbutesWhenDelete()
+                } else if currentLocation > 2 {
+                    if let line = editorView.currentLayoutLine,
+                       line.range.length > 0,
+                       line.range.location >= proposedRange.location,
+                       let paragraphStyle = line.text.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSMutableParagraphStyle,
+                       paragraphStyle.headIndent > 0  {
+                        replaceNewLineCharacter(proposedRange: proposedRange)
+                        removeAttrbutesWhenDelete()
+                    } else {
+                        super.deleteBackward()
+                    }
                 }
             } else {
                 super.deleteBackward()
@@ -450,7 +511,7 @@ class RichTextView: AutogrowingTextView {
         let mutableAttr = NSMutableAttributedString(string: replaceString)
         if let paragraph = attributedText.attribute(.paragraphStyle, at: r.location, effectiveRange: nil) as? NSParagraphStyle {
             let p = NSMutableParagraphStyle()
-            p.lineSpacing = paragraph.lineSpacing
+            p.lineSpacing = 11
             p.paragraphSpacing = paragraph.paragraphSpacing
             p.paragraphSpacingBefore = paragraph.paragraphSpacingBefore
             p.firstLineHeadIndent = 0
@@ -475,6 +536,59 @@ class RichTextView: AutogrowingTextView {
             let marker = NSAttributedString(string: ListTextProcessor.blankLineFiller, attributes: attrs)
             editor.replaceCharacters(in: selectedRange, with: marker)
             editor.selectedRange = selectedRange.nextPosition
+        }
+    }
+    
+    func removeAttrbutesWhenDelete() {
+        if let editor = editorView {
+            var selectedRange = editor.selectedRange
+            // Adjust to span entire line range if the selection starts in the middle of the line
+            if let currentLine = editor.contentLinesInRange(NSRange(location: selectedRange.location, length: 0)).first,
+               currentLine.range.location >= selectedRange.location,
+               currentLine.range.length > 0 {
+                let location = currentLine.range.location
+                var length = max(currentLine.range.length, selectedRange.length + (selectedRange.location - currentLine.range.location))
+                let range = NSRange(location: location, length: length)
+                if editor.contentLength > range.endLocation,
+                   editor.attributedText.substring(from: NSRange(location: range.endLocation, length: 1)) == "\n" {
+                    length += 1
+                }
+                selectedRange = NSRange(location: location, length: length)
+            }
+            editor.removeAttribute(.listItem, at: selectedRange)
+            editor.removeAttribute(.listItemValue, at: selectedRange)
+            editor.removeAttribute(.strikethroughStyle, at: selectedRange)
+            editor.typingAttributes[.foregroundColor] = editor.defaultColor
+            editor.attributedText.enumerateAttribute(.foregroundColor, in: selectedRange) { value, range, stop in
+                guard let color = value as? UIColor, let defaultColor = editor.defaultColor else { return }
+                if color.hexString() == defaultColor.withAlphaComponent(0.32).hexString() {
+                    editor.addAttribute(.foregroundColor, value: defaultColor, at: range)
+                }
+            }
+            
+            editor.removeAttributes([.paragraphStyle, .listItem, .listItemValue], at: selectedRange)
+            if attributedText.length < selectedRange.location,
+               let paragraph = attributedText.attribute(.paragraphStyle, at: selectedRange.location, effectiveRange: nil) as? NSParagraphStyle {
+                let p = NSMutableParagraphStyle()
+                p.lineSpacing = 11
+                p.paragraphSpacing = paragraph.paragraphSpacing
+                p.paragraphSpacingBefore = paragraph.paragraphSpacingBefore
+                p.firstLineHeadIndent = 0
+                p.headIndent = 0
+                typingAttributes[.paragraphStyle] = p
+                editor.typingAttributes[.paragraphStyle] = p
+                editor.addAttribute(.paragraphStyle, value: p, at: selectedRange)
+            } else {
+                let p = NSMutableParagraphStyle()
+                p.lineSpacing = 11
+                p.firstLineHeadIndent = 0
+                p.headIndent = 0
+                typingAttributes[.paragraphStyle] = p
+                editor.typingAttributes[.paragraphStyle] = p
+                editor.addAttribute(.paragraphStyle, value: p, at: selectedRange)
+            }
+            editorView?.typingAttributes[.listItem] = nil
+            editorView?.typingAttributes[.listItemValue] = nil
         }
     }
 
@@ -512,18 +626,22 @@ class RichTextView: AutogrowingTextView {
         textStorage.replaceCharacters(in: range, with: NSAttributedString(string: string))
     }
 
-    private func updatePlaceholderVisibility() {
+    func updatePlaceholderVisibility() {
         guard showPlaceholder() else {
             if placeholderLabel.superview != nil {
                 placeholderLabel.removeFromSuperview()
             }
             return
         }
+        placeholderLabel.removeFromSuperview()
         setupPlaceholder()
     }
     
     private func showPlaceholder() -> Bool {
         let str = self.attributedText.string
+        guard let editorView, editorView.containerAttachment?.containerEditorView == nil else {
+            return str.isEmpty
+        }
         guard !str.isEmpty else { return true }
         for ch in str.dropFirst() {
             if ch != "\n" {
@@ -722,7 +840,32 @@ class RichTextView: AutogrowingTextView {
 
         var caretRect = super.caretRect(for: position)
         caretRect.origin.y = lineRect.minY + textContainerInset.top
-        caretRect.size.height = lineRect.height
+        
+        let lineSpacing: CGFloat
+        if location >= 1,
+            let paragraphStyle = editorView?.attributedText.attribute(.paragraphStyle, at: location - 1, effectiveRange: nil) as? NSParagraphStyle {
+            lineSpacing = paragraphStyle.lineSpacing
+            if caretRect.origin.x < paragraphStyle.headIndent {
+                caretRect.origin.x = paragraphStyle.headIndent + 1
+            }
+        } else {
+            lineSpacing = self.paragraphStyle?.lineSpacing ?? 0
+        }
+        
+        if location >= 1, let font = editorView?.attributedText.attribute(.font, at: location - 1, effectiveRange: nil) as? UIFont {
+            let height = font.capHeight + abs(font.descender)
+            var mxHeight: CGFloat = height
+            if let line = self.editorView?.currentLayoutLine {
+                self.editorView?.attributedText.enumerateAttribute(.font, in: line.range) { value, range, stop in
+                    guard let font = value as? UIFont else { return }
+                    mxHeight = max(mxHeight, font.capHeight + abs(font.descender))
+                }
+            }
+            caretRect.origin.y += (font.pointSize - font.ascender) + (mxHeight - height) - 1.5
+            caretRect.size.height = height + 3
+        } else {
+            caretRect.size.height = max(16, lineRect.height - lineSpacing) + 3
+        }
         return caretRect
     }
     
