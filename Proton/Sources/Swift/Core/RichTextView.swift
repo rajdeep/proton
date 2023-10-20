@@ -844,9 +844,14 @@ class RichTextView: AutogrowingTextView {
         let lineSpacing: CGFloat
         if location >= 1,
             let paragraphStyle = editorView?.attributedText.attribute(.paragraphStyle, at: location - 1, effectiveRange: nil) as? NSParagraphStyle {
-            lineSpacing = paragraphStyle.lineSpacing
-            if caretRect.origin.x < paragraphStyle.headIndent {
-                caretRect.origin.x = paragraphStyle.headIndent + 1
+            if location < (editorView?.contentLength ?? 0),
+               editorView?.attributedText.attribute(.listItem, at: location, effectiveRange: nil) == nil {
+                lineSpacing = self.paragraphStyle?.lineSpacing ?? 0
+            } else {
+                lineSpacing = paragraphStyle.lineSpacing
+                if caretRect.origin.x < paragraphStyle.headIndent {
+                    caretRect.origin.x = paragraphStyle.headIndent + 1
+                }
             }
         } else {
             lineSpacing = self.paragraphStyle?.lineSpacing ?? 0
