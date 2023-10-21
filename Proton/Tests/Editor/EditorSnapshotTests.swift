@@ -1112,6 +1112,49 @@ class EditorSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testGetsRangeForRect() throws {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let editorString = NSAttributedString(string:
+        """
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam enim nunc. Maecenas porta turpis quam,
+        sed ultricies enim condimentum ut. Vestibulum convallis nunc semper purus pellentesque varius. Phasellus
+        accumsan odio nec est imperdiet, at mattis dolor elementum.
+        """)
+        editor.replaceCharacters(in: .zero, with: editorString)
+        viewController.render(size: CGSize(width: 300, height: 300))
+
+        let firstRect = CGRect(origin: .zero, size: CGSize(width: 50, height: 20))
+        let rangeInFirstLine = try XCTUnwrap(editor.rangeForRect(firstRect))
+
+        // Add marker to show actual requested rect
+        let view = UIView(frame: firstRect)
+        view.frame.origin = CGPoint(x: 5, y: 8)
+        view.layer.borderColor = UIColor.red.cgColor
+        view.layer.borderWidth = 1
+        view.backgroundColor = .clear
+        editor.addSubview(view)
+
+        let textRangeInFirstLine = try XCTUnwrap(rangeInFirstLine.toTextRange(textInput: editor.richTextView))
+        addSelectionRects(at: textRangeInFirstLine, in: editor, color: .blue)
+        XCTAssertEqual(rangeInFirstLine, NSRange(location: 0, length: 28))
+
+        let rangeInLastLine = try XCTUnwrap(editor.rangeForRect(
+            CGRect(origin: CGPoint(x: 5, y: 230), size: CGSize(width: 300, height: 30)))
+        )
+        let textRangeInLastLine = try XCTUnwrap(rangeInLastLine.toTextRange(textInput: editor.richTextView))
+
+        addSelectionRects(at: textRangeInLastLine, in: editor, color: .red)
+        XCTAssertEqual(rangeInLastLine, NSRange(location: 262, length: 10))
+        let invalidRange = editor.rangeForRect(
+            CGRect(origin: CGPoint(x: 5, y: 350), size: CGSize(width: 300, height: 30)))
+        XCTAssertNil(invalidRange)
+
+        viewController.render(size: CGSize(width: 300, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: false)
+    }
+
     private func addCaretRect(at range: NSRange, in editor: EditorView, color: UIColor) {
         let rect = editor.caretRect(for: range.location)
         let view = UIView(frame: rect)
@@ -1119,7 +1162,6 @@ class EditorSnapshotTests: SnapshotTestCase {
         view.addBorder(color)
         editor.addSubview(view)
     }
-
 }
 
 extension XCTestCase {

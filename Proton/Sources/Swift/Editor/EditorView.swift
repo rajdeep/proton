@@ -907,6 +907,20 @@ open class EditorView: UIView {
         return rects.map { $0.rect }
     }
 
+    /// Returns the range of text in the given rect.
+    /// - Parameters:
+    ///   - rect: Rect to get range from
+    ///   - performingLayout: If `true`, layout is performed before returning the range. Defaults to `false`
+    /// - Returns: Range for the given rect
+    /// - Note:
+    /// This function returns a contiguous glyph range containing all glyphs that would need to be displayed in order to draw all glyphs that fall (even partially) within the bounding rect given.
+    /// This range might include glyphs which do not fall into the rect at all.  At most this will return the glyph range for the whole container.
+    /// When `performingLayout` is set to true, it will not generate glyphs or perform layout in attempting to answer, and thus may not be entirely correct.
+    /// Bounding rects are always in container coordinates.
+    func rangeForRect(_ rect: CGRect, performingLayout: Bool = false) -> NSRange? {
+        richTextView.rangeForRect(rect, performingLayout: performingLayout)
+    }
+
     /// Returns the caret rectangle for given position in the editor content.
     /// - Parameter position: Location to be queried within the editor content.
     /// - Note:
