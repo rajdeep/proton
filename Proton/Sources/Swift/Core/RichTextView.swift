@@ -511,6 +511,14 @@ class RichTextView: AutogrowingTextView {
         return layoutManager.boundingRect(forGlyphRange: range, in: textContainer)
     }
 
+    func rangeForRect(_ rect: CGRect, performingLayout: Bool = false) -> NSRange? {
+        let range = performingLayout
+        ? layoutManager.glyphRange(forBoundingRect: rect, in: textContainer)
+        : layoutManager.glyphRange(forBoundingRectWithoutAdditionalLayout: rect, in: textContainer)
+
+        return range == .zero ? nil : range
+    }
+
     func contents(in range: NSRange? = nil) -> AnySequence<EditorContent> {
         return self.attributedText.enumerateContents(in: range)
     }
