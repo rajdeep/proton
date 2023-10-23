@@ -275,6 +275,7 @@ class RichTextView: AutogrowingTextView {
     }
 
     func contentLinesInRange(_ range: NSRange) -> [EditorLine] {
+        guard range.isValidIn(self) else { return [] }
         var lines = [EditorLine]()
 
         var startingRange = NSRange(location: range.location, length: 0)

@@ -69,10 +69,10 @@ public extension NSRange {
     /// Checks if the range is valid in given `UITextInput`
     /// - Parameter textInput: UITextInput to validate the range in.
     func isValidIn(_ textInput: UITextInput) -> Bool {
-        guard location > 0 else { return false }
+        guard location >= 0 else { return false }
         let end = location + length
         let contentLength = textInput.offset(from: textInput.beginningOfDocument, to: textInput.endOfDocument)
-        return end < contentLength
+        return end <= contentLength
     }
 
     /// Shifts the range with given shift value
