@@ -794,6 +794,25 @@ class EditorViewTests: XCTestCase {
         XCTAssertEqual(nestedEditorsTexts[3], panel4.editor.text)
 
     }
+
+    func testContentLineAtBeginningAndEnd() {
+        let editor = EditorView()
+        let line1 = "line 1\n"
+        editor.replaceCharacters(in: .zero, with: NSAttributedString(string: line1))
+
+        let linesAtBeginning = editor.contentLinesInRange(.zero)
+
+        XCTAssertEqual(linesAtBeginning.count, 1)
+        XCTAssertEqual(linesAtBeginning[0].text.string, "line 1")
+
+        let linesAtEnd = editor.contentLinesInRange(NSRange(location: 7, length: 0))
+
+        XCTAssertEqual(linesAtEnd.count, 1)
+        XCTAssertTrue(linesAtEnd[0].text.string.isEmpty)
+
+        let linesOutsideRange = editor.contentLinesInRange(NSRange(location: 8, length: 0))
+        XCTAssertEqual(linesOutsideRange.count, 0)
+    }
 }
 
 class DummyMultiEditorAttachment: Attachment {
