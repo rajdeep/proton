@@ -208,6 +208,9 @@
                 <a href="../Protocols/EditorCommand.html">EditorCommand</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/EditorCommandExecutorDelegate.html">EditorCommandExecutorDelegate</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/EditorContentDecoding.html">EditorContentDecoding</a>
               </li>
               <li class="nav-group-task">
@@ -419,6 +422,33 @@ mat be more than when synchronous mode, ie default, is used. The perceived perfo
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">asyncAttachmentRenderingDelegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/AsyncAttachmentRenderingDelegate.html">AsyncAttachmentRenderingDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC9textInputSo06UITextE0_pvp"></a>
+                    <a name="//apple_ref/swift/Property/textInput" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC9textInputSo06UITextE0_pvp">textInput</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns <code>UITextInput</code> of current instance</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">textInput</span><span class="p">:</span> <span class="kt">UITextInput</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -756,33 +786,6 @@ restriction around some commands to be restricted in execution on certain specif
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">editorInputView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@Proton@objc(cs)EditorView(py)isFirstResponder"></a>
-                    <a name="//apple_ref/swift/Property/isFirstResponder" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@Proton@objc(cs)EditorView(py)isFirstResponder">isFirstResponder</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">isFirstResponder</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -2207,8 +2210,7 @@ default is <code>UITextAutocorrectionTypeDefault</code></p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(iOS 11.0, *)</span>
-<span class="kd">public</span> <span class="k">var</span> <span class="nv">smartQuotesType</span><span class="p">:</span> <span class="kt">UITextSmartQuotesType</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">smartQuotesType</span><span class="p">:</span> <span class="kt">UITextSmartQuotesType</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -2235,8 +2237,7 @@ default is <code>UITextAutocorrectionTypeDefault</code></p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(iOS 11.0, *)</span>
-<span class="kd">public</span> <span class="k">var</span> <span class="nv">smartDashesType</span><span class="p">:</span> <span class="kt">UITextSmartDashesType</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">smartDashesType</span><span class="p">:</span> <span class="kt">UITextSmartDashesType</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -2263,8 +2264,7 @@ default is <code>UITextAutocorrectionTypeDefault</code></p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(iOS 11.0, *)</span>
-<span class="kd">public</span> <span class="k">var</span> <span class="nv">smartInsertDeleteType</span><span class="p">:</span> <span class="kt">UITextSmartInsertDeleteType</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">smartInsertDeleteType</span><span class="p">:</span> <span class="kt">UITextSmartInsertDeleteType</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -2512,8 +2512,7 @@ This property controls the ability of the user to select content and interact wi
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(iOSApplicationExtension 11.0, *)</span>
-<span class="kd">public</span> <span class="k">var</span> <span class="nv">textDragDelegate</span><span class="p">:</span> <span class="kt">UITextDragDelegate</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">textDragDelegate</span><span class="p">:</span> <span class="kt">UITextDragDelegate</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -2540,8 +2539,7 @@ This property controls the ability of the user to select content and interact wi
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(iOSApplicationExtension 11.0, *)</span>
-<span class="kd">public</span> <span class="k">var</span> <span class="nv">textDropDelegate</span><span class="p">:</span> <span class="kt">UITextDropDelegate</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">textDropDelegate</span><span class="p">:</span> <span class="kt">UITextDropDelegate</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -2658,6 +2656,65 @@ This property controls the ability of the user to select content and interact wi
                       <div>
                         <h4>Return Value</h4>
                         <p><code>true</code> if this object is now the first-responder or <code>false</code> if it is not.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC16isFirstResponderSbyF"></a>
+                    <a name="//apple_ref/swift/Method/isFirstResponder()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC16isFirstResponderSbyF">isFirstResponder()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Denotes of the Editor is first responder</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isFirstResponder</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>true, if is first responder</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC21resetTypingAttributesyyF"></a>
+                    <a name="//apple_ref/swift/Method/resetTypingAttributes()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC21resetTypingAttributesyyF">resetTypingAttributes()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Resets typing attributes back to default text color, font and paragraph style.
+All other attributes are dropped.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">resetTypingAttributes</span><span class="p">()</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -4893,7 +4950,7 @@ existing value will be overwritten by the new value provided in the attributes.<
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-10-10)</p>
+          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-10-24)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

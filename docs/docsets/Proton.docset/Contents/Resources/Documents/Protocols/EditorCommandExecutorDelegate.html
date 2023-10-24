@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>BoundsObserving Protocol Reference</title>
+    <title>EditorCommandExecutorDelegate Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -13,8 +13,8 @@
     <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
-    <a name="//apple_ref/swift/Protocol/BoundsObserving" class="dashAnchor"></a>
-    <a title="BoundsObserving Protocol Reference"></a>
+    <a name="//apple_ref/swift/Protocol/EditorCommandExecutorDelegate" class="dashAnchor"></a>
+    <a title="EditorCommandExecutorDelegate Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">Proton Docs</a> (70% documented)</p>
@@ -30,7 +30,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">Proton Reference</a>
         <img id="carat" src="../img/carat.png" alt=""/>
-        BoundsObserving Protocol Reference
+        EditorCommandExecutorDelegate Protocol Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -344,33 +344,15 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>BoundsObserving</h1>
+            <h1>EditorCommandExecutorDelegate</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">BoundsObserving</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">EditorCommandExecutorDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
 
                 </div>
               </div>
-            <p>Describes an object interested in observing the bounds of a view. <code><a href="../Classes/Attachment.html">Attachment</a></code> is <code>BoundsObserving</code> and reacts to
-changes in the bounds of views hosted within the <code><a href="../Classes/Attachment.html">Attachment</a></code>. Any view contained in the <code><a href="../Classes/Attachment.html">Attachment</a></code> that is capable of
-changing its bounds must define and set <code>BoundsObserving</code> to <code><a href="../Classes/Attachment.html">Attachment</a></code>.</p>
-<h3 id='usage-example' class='heading'>Usage Example</h3>
-<pre class="highlight swift"><code> <span class="kd">class</span> <span class="kt">MyAttachmentView</span><span class="p">:</span> <span class="kt">UIView</span> <span class="p">{</span>
- <span class="k">weak</span> <span class="k">var</span> <span class="nv">boundsObserver</span><span class="p">:</span> <span class="kt">BoundsObserving</span><span class="p">?</span>
-
- <span class="k">override</span> <span class="k">var</span> <span class="nv">bounds</span><span class="p">:</span> <span class="kt">CGRect</span> <span class="p">{</span>
-     <span class="k">didSet</span> <span class="p">{</span>
-         <span class="k">guard</span> <span class="n">oldValue</span> <span class="o">!=</span> <span class="n">bounds</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
-         <span class="n">boundsObserver</span><span class="p">?</span><span class="o">.</span><span class="nf">didChangeBounds</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span>
-     <span class="p">}</span>
-    <span class="p">}</span>
- <span class="p">}</span>
-
- <span class="k">let</span> <span class="nv">myView</span> <span class="o">=</span> <span class="kt">MyAttachmentView</span><span class="p">()</span>
- <span class="k">let</span> <span class="nv">attachment</span> <span class="o">=</span> <span class="kt">Attachment</span><span class="p">(</span><span class="n">myView</span><span class="p">,</span> <span class="nv">size</span><span class="p">:</span> <span class="o">.</span><span class="n">matchContent</span><span class="p">)</span>
- <span class="n">myView</span><span class="o">.</span><span class="n">boundsObserver</span> <span class="o">=</span> <span class="n">attachment</span>
-</code></pre>
+            <p>Undocumented</p>
 
           </section>
           <section class="section task-group-section">
@@ -379,9 +361,9 @@ changing its bounds must define and set <code>BoundsObserving</code> to <code><a
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton15BoundsObservingP09didChangeB0_03oldB0ySo6CGRectV_AGtF"></a>
-                    <a name="//apple_ref/swift/Method/didChangeBounds(_:oldBounds:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton15BoundsObservingP09didChangeB0_03oldB0ySo6CGRectV_AGtF">didChangeBounds(_:<wbr>oldBounds:<wbr>)</a>
+                    <a name="/s:6Proton29EditorCommandExecutorDelegateP011willExecuteC0_2onyAA0bC0_p_AA0B4ViewCtF"></a>
+                    <a name="//apple_ref/swift/Method/willExecuteCommand(_:on:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton29EditorCommandExecutorDelegateP011willExecuteC0_2onyAA0bC0_p_AA0B4ViewCtF">willExecuteCommand(_:<wbr>on:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -389,35 +371,43 @@ changing its bounds must define and set <code>BoundsObserving</code> to <code><a
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Lets the observer know that bounds of current object have changed</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">didChangeBounds</span><span class="p">(</span><span class="n">_</span> <span class="nv">bounds</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">,</span> <span class="nv">oldBounds</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">willExecuteCommand</span><span class="p">(</span><span class="n">_</span> <span class="nv">command</span><span class="p">:</span> <span class="kt"><a href="../Protocols/EditorCommand.html">EditorCommand</a></span><span class="p">,</span> <span class="n">on</span> <span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>bounds</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>New bounds</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton29EditorCommandExecutorDelegateP010didExecuteC0_2onyAA0bC0_p_AA0B4ViewCtF"></a>
+                    <a name="//apple_ref/swift/Method/didExecuteCommand(_:on:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton29EditorCommandExecutorDelegateP010didExecuteC0_2onyAA0bC0_p_AA0B4ViewCtF">didExecuteCommand(_:<wbr>on:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">didExecuteCommand</span><span class="p">(</span><span class="n">_</span> <span class="nv">command</span><span class="p">:</span> <span class="kt"><a href="../Protocols/EditorCommand.html">EditorCommand</a></span><span class="p">,</span> <span class="n">on</span> <span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
