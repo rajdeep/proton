@@ -567,6 +567,9 @@ class RichTextView: AutogrowingTextView {
     }
 
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        // Check if the range is valid, as in some cases, if the range happens to be invalid, it
+        // may result in a crash with [NSBigMutableString substringWithRange:]: Range out of bounds
+        guard selectedRange.isValidIn(self) else { return false }
         guard editorView?.canPerformMenuAction(action, withSender: sender) == true else {
             return false
         }
