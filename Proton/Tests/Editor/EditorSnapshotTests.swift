@@ -1152,7 +1152,7 @@ class EditorSnapshotTests: SnapshotTestCase {
         XCTAssertNil(invalidRange)
 
         viewController.render(size: CGSize(width: 300, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: false)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     private func addCaretRect(at range: NSRange, in editor: EditorView, color: UIColor) {

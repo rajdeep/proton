@@ -523,6 +523,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
         gridView.insertRow(at: 1, configuration: GridRowConfiguration(initialHeight: 60))
+        gridView.resignFocusFromCellAt(rowIndex: 1, columnIndex: 0)
 
         let newCell11 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))
         newCell11.editor.replaceCharacters(in: .zero, with: "New cell")
@@ -563,6 +564,8 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
         gridView.insertColumn(at: 1, configuration: GridColumnConfiguration(width: .fractional(0.20)))
+        gridView.resignFocusFromCellAt(rowIndex: 0, columnIndex: 1)
+        editor.resignFocus()
 
         let newCell11 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))
         newCell11.editor.replaceCharacters(in: .zero, with: "New cell")
@@ -742,6 +745,8 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
         gridView.insertRow(at: 2, configuration: GridRowConfiguration(initialHeight: 30))
+        gridView.resignFocusFromCellAt(rowIndex: 2, columnIndex: 0)
+        
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
@@ -780,6 +785,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
         gridView.insertColumn(at: 2, configuration: GridColumnConfiguration(width: .fixed(40)))
+        gridView.resignFocusFromCellAt(rowIndex: 0, columnIndex: 2)
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
@@ -1038,7 +1044,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
         gridView.insertColumn(at: 1, configuration: GridColumnConfiguration(width: .fixed(50)))
-
+        gridView.resignFocusFromCellAt(rowIndex: 0, columnIndex: 1)
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
@@ -1080,7 +1086,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
         gridView.insertRow(at: 1, configuration: GridRowConfiguration(initialHeight: 50))
-
+        gridView.resignFocusFromCellAt(rowIndex: 1, columnIndex: 0)
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
@@ -1111,6 +1117,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
         gridView.insertRow(at: 1, configuration: GridRowConfiguration(initialHeight: 50, style: GridCellStyle(backgroundColor: .red)))
+        gridView.resignFocusFromCellAt(rowIndex: 1, columnIndex: 0)
 
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
@@ -1142,6 +1149,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
         gridView.insertColumn(at: 1, configuration: GridColumnConfiguration(width: .fixed(50), style: GridCellStyle(backgroundColor: .red)))
+        gridView.resignFocusFromCellAt(rowIndex: 0, columnIndex: 1)
 
         viewController.render(size: CGSize(width: 400, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
@@ -1582,5 +1590,12 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         }
 
         return GridViewAttachment(config: config, cells: cells)
+    }
+}
+
+extension GridView {
+    func resignFocusFromCellAt(rowIndex: Int, columnIndex: Int) {
+        let cell = cellAt(rowIndex: rowIndex, columnIndex: columnIndex)
+        cell?.editor.resignFocus()
     }
 }
