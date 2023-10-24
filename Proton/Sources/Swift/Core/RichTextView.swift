@@ -457,7 +457,7 @@ class RichTextView: AutogrowingTextView {
         if let rangeInContainer = attachment.rangeInContainer() {
             edited(range: rangeInContainer)
         }
-        scrollRangeToVisible(NSRange(location: range.location, length: 1))
+//        scrollRangeToVisible(NSRange(location: range.location, length: 1))
     }
 
     func edited(range: NSRange) {
