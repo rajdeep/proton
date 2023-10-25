@@ -7,22 +7,26 @@ on:
     branches:
     - main
 
+env: 
+  OS: 17.0
+  SIMULATOR: iPhone 15 Pro
+
 jobs:
   build:
 
     runs-on: macos-13
     strategy:
       matrix: 
-        destination: ['platform=iOS Simulator,OS=16.4,name=iPhone 14 Pro']
+        destination: ['platform=iOS Simulator,$OS,name=$SIMULATOR']
 
     steps:
     - name: Select Xcode
-      run: sudo xcode-select -switch /Applications/Xcode_14.3.1.app
+      run: sudo xcode-select -switch /Applications/Xcode_15.0.app
     - name: Xcode version
       run: /usr/bin/xcodebuild -version    
     - uses: actions/checkout@v2
     - name: Build and Test Proton
-      run: xcodebuild -resultBundlePath TestResults -scheme "Proton" -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.4" clean test
+      run: xcodebuild -resultBundlePath TestResults -scheme "Proton" -destination "platform=iOS Simulator,name=$SIMULATOR,OS=$OS" clean test
     - name: Compile Test results  
       uses: kishikawakatsumi/xcresulttool@v1
       with:
@@ -31,8 +35,8 @@ jobs:
       # ^ This is important because the action will be run
       # even if the test fails in the previous step.
     - name: Build and Test Proton as dependency in another package
-      run: xcodebuild build -destination "name=iPhone 14 Pro" -scheme "TestBuildPackage"
+      run: xcodebuild build -destination "name=$SIMULATOR" -scheme "TestBuildPackage"
     - name: Capture Proton Code Coverage
       uses: codecov/codecov-action@v3.1.0
     - name: Build Example App
-      run: xcodebuild build -destination "name=iPhone 14 Pro" -scheme "ExampleApp"
+      run: xcodebuild build -destination "name=$SIMULATOR" -scheme "ExampleApp"
