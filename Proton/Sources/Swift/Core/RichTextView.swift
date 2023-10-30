@@ -702,7 +702,7 @@ extension RichTextView: TextStorageDelegate {
     }
     
     func textStorage(_ textStorage: PRTextStorage, will deleteText: NSAttributedString, insertText insertedText: NSAttributedString, in range: NSRange) {
-        textProcessor?.textStorage(textStorage, willProcessDeletedText: deleteText, insertedText: insertedText)
+        textProcessor?.textStorage(textStorage, willProcessDeletedText: deleteText, insertedText: insertedText, range: range)
     }
     
     func textStorage(_ textStorage: PRTextStorage, edited actions: NSTextStorage.EditActions, in editedRange: NSRange, changeInLength delta: Int) {

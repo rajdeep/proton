@@ -68,4 +68,6 @@ class MarkupProcessor: TextProcessing {
             stop.pointee = true
         }
     }
+
+    func willProcess(deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) { }
 }

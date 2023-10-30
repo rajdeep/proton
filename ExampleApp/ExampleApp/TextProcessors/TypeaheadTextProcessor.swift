@@ -48,7 +48,7 @@ class TypeaheadTextProcessor: TextProcessing {
     weak var delegate: TypeaheadTextProcessorDelegate?
     var triggerDeleted = false
 
-    func willProcess(deletedText: NSAttributedString, insertedText: String) {
+    func willProcess(deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) {
         let deleted = NSMutableAttributedString(attributedString: deletedText)
         let range = deleted.mutableString.range(of: "@")
         if range.location != NSNotFound {

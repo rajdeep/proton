@@ -58,6 +58,8 @@ public class ListTextProcessor: TextProcessing {
 
     public func processInterrupted(editor: EditorView, at range: NSRange) { }
 
+    public func willProcess(deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) { }
+
     public func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int) -> Processed {
         return false
     }

@@ -53,9 +53,12 @@ class TextProcessorTests: XCTestCase {
         let name = "TextProcessorTest"
         let replacementString = NSAttributedString(string: "replacement string")
         let mockProcessor = MockTextProcessor(name: name)
-        mockProcessor.onWillProcess = { deleted, inserted in
+        let replacementRange = NSRange(location: 5, length: 4)
+
+        mockProcessor.onWillProcess = { deleted, inserted, range in
             XCTAssertEqual(deleted.string, "some")
             XCTAssertEqual(inserted.string, replacementString.string)
+            XCTAssertEqual(range, replacementRange)
             testExpectation.fulfill()
         }
 
@@ -64,7 +67,7 @@ class TextProcessorTests: XCTestCase {
 
         editor.replaceCharacters(in: .zero, with: testString)
         editor.registerProcessor(mockProcessor)
-        let replacementRange = NSRange(location: 5, length: 4)
+
         editor.replaceCharacters(in: replacementRange, with: replacementString)
         waitForExpectations(timeout: 1.0)
     }
