@@ -38,4 +38,6 @@ class TestTextProcessor: TextProcessing {
     func processInterrupted(editor: EditorView, at range: NSRange) {
         onProcessInterrupted?(editor, range)
     }
+
+    func willProcess(deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) { }
 }
