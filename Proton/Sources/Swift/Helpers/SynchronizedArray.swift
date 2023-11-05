@@ -60,6 +60,18 @@ final class SynchronizedArray<Element>: Sequence {
         queue.sync { self.array.removeAll() }
     }
 
+    func first(where predicate: (Element) throws -> Bool) rethrows -> Element? {
+        queue.sync {
+            try? self.array.first(where: predicate)
+        }
+    }
+
+    func firstIndex(where predicate: (Element) throws -> Bool) rethrows -> Int? {
+        queue.sync {
+            try? self.array.firstIndex(where: predicate)
+        }
+    }
+
     func append(_ newElement: Element) {
         queue.sync { self.array.append(newElement) }
     }

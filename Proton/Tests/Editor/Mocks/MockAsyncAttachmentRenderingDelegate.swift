@@ -26,6 +26,8 @@ import Proton
 class MockAsyncAttachmentRenderingDelegate: AsyncAttachmentRenderingDelegate {
     var onShouldRenderAsync: (Attachment) -> Bool = { _ in return true }
     var onDidRenderAttachment: ((Attachment, EditorView) -> Void)?
+    var onDidCompleteRenderingViewport: ((CGRect, EditorView) -> Void)?
+
 
     func shouldRenderAsync(attachment: Attachment) -> Bool {
         onShouldRenderAsync(attachment)
@@ -33,5 +35,9 @@ class MockAsyncAttachmentRenderingDelegate: AsyncAttachmentRenderingDelegate {
 
     func didRenderAttachment(_ attachment: Attachment, in editor: EditorView) {
         onDidRenderAttachment?(attachment, editor)
+    }
+
+    func didCompleteRenderingViewport(_ viewport: CGRect, in editor: EditorView) {
+        onDidCompleteRenderingViewport?(viewport, editor)
     }
 }

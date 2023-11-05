@@ -21,15 +21,15 @@
 import Foundation
 import UIKit
 
+public typealias AttachmentRange = (attachment: Attachment, range: NSRange)
 public extension NSAttributedString {
-
     /// Full range of this attributed string.
     var fullRange: NSRange {
         return NSRange(location: 0, length: length)
     }
 
     /// Collection of all the attachments with containing ranges in this attributed string.
-    var attachmentRanges: [(attachment: Attachment, range: NSRange)] {
+    var attachmentRanges: [AttachmentRange] {
         var ranges = [(Attachment, NSRange)]()
 
         let fullRange = NSRange(location: 0, length: self.length)

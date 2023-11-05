@@ -269,9 +269,12 @@ class RichTextView: AutogrowingTextView {
         return lineRange(from: selectedRange.location)
     }
 
-    var visibleRange: NSRange {
-        let textBounds = bounds.inset(by: textContainerInset)
-        return layoutManager.glyphRange(forBoundingRectWithoutAdditionalLayout: textBounds, in: textContainer)
+    var viewport: CGRect {
+        return bounds.inset(by: textContainerInset)
+    }
+
+    var visibleRange: NSRange? {
+        return rangeForRect(viewport)
     }
 
     func contentLinesInRange(_ range: NSRange) -> [EditorLine] {
@@ -506,6 +509,12 @@ class RichTextView: AutogrowingTextView {
 
     func glyphRange(forCharacterRange range: NSRange) -> NSRange {
         return layoutManager.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
+    }
+
+    func rects(for range: NSRange) -> [CGRect] {
+        guard let textRange = range.toTextRange(textInput: self) else { return [] }
+        let rects = selectionRects(for: textRange)
+        return rects.map { $0.rect }
     }
 
     func boundingRect(forGlyphRange range: NSRange) -> CGRect {

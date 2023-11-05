@@ -1,9 +1,9 @@
 //
-//  UIView+Render.swift
+//  MockViewportProvider.swift
 //  ProtonTests
 //
-//  Created by Rajdeep Kwatra on 3/1/20.
-//  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
+//  Created by Rajdeep Kwatra on 6/11/2023.
+//  Copyright © 2023 Rajdeep Kwatra. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -21,17 +21,12 @@
 import Foundation
 import UIKit
 
-extension UIView {
-    func render(size: CGSize? = nil) {
-        if let size {
-            frame = CGRect(origin: .zero, size: size)
-        }
-        setNeedsLayout()
-        layoutIfNeeded()
-    }
+import Proton
 
-    func addBorder(_ color: UIColor = .black) {
-        layer.borderColor = color.cgColor
-        layer.borderWidth = 1.0
+class MockViewportProvider: ViewportProvider {
+    var viewport: CGRect
+    
+    init(viewport: CGRect) {
+        self.viewport = viewport
     }
 }

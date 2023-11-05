@@ -42,6 +42,7 @@ public protocol AttachmentOffsetProviding: AnyObject {
 public protocol AsyncAttachmentRenderingDelegate: AnyObject {
     func shouldRenderAsync(attachment: Attachment) -> Bool
     func didRenderAttachment(_ attachment: Attachment, in editor: EditorView)
+    func didCompleteRenderingViewport(_ viewport: CGRect, in editor: EditorView)
 }
 
 /// Marker protocol for attachment views that may need to defer completion of rendering in asynchronous mode until the view bounds are changed. This may be
@@ -117,6 +118,11 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     public var contentEditors: [EditorView] {
         guard let contentView else { return [] }
         return contentView.subviews.compactMap{ $0 as? EditorView }
+    }
+
+    /// Determines if Attachment is rendering async but is not  yet rendered
+    public var isPendingAsyncRendering: Bool {
+        isRenderingAsync && isAsyncRendered == false
     }
 
     var isImageBasedAttachment: Bool {
