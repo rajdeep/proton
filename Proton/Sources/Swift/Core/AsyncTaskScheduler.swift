@@ -53,9 +53,7 @@ class AsyncTaskScheduler {
 
     func dequeue(_ completion: @escaping (String, VoidTask?) -> Void)  {
         if let priorityList = delegate?.getIDsToPrioritize() {
-            let pendingTasks = tasks.filter({
-                taskID, _ in priorityList.contains(where: { $0 == taskID })
-            })
+            let pendingTasks = tasks.filter({ taskID, _ in priorityList.contains(where: { $0 == taskID }) })
             if pendingTasks.isEmpty == false,
                let priorityTaskIndex = tasks.firstIndex(where: {id, _ in priorityList.first == id }),
                let task = self.tasks.remove(at: priorityTaskIndex) {

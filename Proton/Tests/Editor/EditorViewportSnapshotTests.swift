@@ -59,7 +59,7 @@ class EditorViewportSnapshotTests: SnapshotTestCase {
 
         editor.attributedText = NSAttributedString(string: text)
         var renderingNotified = false
-        asyncRenderingDelegate.onDidCompleteRenderingViewport = { viewPort, editor in
+        asyncRenderingDelegate.onDidCompleteRenderingViewport = { viewPort, _ in
             renderingNotified = true
             XCTAssertEqual(viewPort, viewportProvider.viewport)
         }
@@ -145,7 +145,6 @@ class EditorViewportSnapshotTests: SnapshotTestCase {
         editor.attributedText = text
         var expectedViewport = viewportProvider.viewport
 
-
         asyncRenderingDelegate.onDidCompleteRenderingViewport = { viewPort, editor in
             XCTAssertEqual(viewPort, expectedViewport)
             assertSnapshot(matching: viewController.view, as: .image, record: self.recordMode)
@@ -184,4 +183,3 @@ class EditorViewportSnapshotTests: SnapshotTestCase {
         return attachments
     }
 }
-

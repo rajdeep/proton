@@ -25,7 +25,7 @@ import Proton
 
 class MockViewportProvider: ViewportProvider {
     var viewport: CGRect
-    
+ 
     init(viewport: CGRect) {
         self.viewport = viewport
     }

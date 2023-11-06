@@ -775,7 +775,7 @@ open class EditorView: UIView {
         richTextView.resetTypingAttributes()
     }
 
-    public func attachmentsInRange(_ range: NSRange) ->  [AttachmentRange] {
+    public func attachmentsInRange(_ range: NSRange) -> [AttachmentRange] {
         guard range.endLocation < contentLength else { return [] }
         let substring = attributedText.attributedSubstring(from: range)
         return substring.attachmentRanges
@@ -1477,7 +1477,6 @@ extension EditorView: AsyncTaskSchedulerDelegate {
         }
         asyncAttachmentRenderingDelegate?.didCompleteRenderingViewport(viewport, in: self)
         // No attachments to render. Viewport rendering complete. Get attachments below viewport
-        // TODO: notify
         let nextRange = NSRange(location: visibleRange.endLocation, length: max(0, contentLength - visibleRange.endLocation - 1))
         let nextAttachmentIDs = attachmentsInRange(nextRange)
             .filter { $0.attachment.isPendingAsyncRendering }
