@@ -1455,6 +1455,12 @@ extension EditorView {
     }
 }
 
+/// Provides the viewport for the `Editor`. In typical cases, this would be used if the `EditorView` is made non-scrollable
+/// and hosted within another scrollable container i.e. ScrollView.
+/// - Important:
+/// `EditorView` also has a `viewport` property that depends on `ViewportProvider`
+/// Care must be taken to not to return `editor.viewport` here. Doing so will cause a stack overflow crash.
+/// An independently calculated value can safely be returned here.
 public protocol ViewportProvider: AnyObject {
     var viewport: CGRect { get }
 }

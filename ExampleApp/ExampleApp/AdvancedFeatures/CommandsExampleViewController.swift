@@ -101,7 +101,6 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         editor.layer.borderWidth = 1.0
 
         editor.listFormattingProvider = listFormattingProvider
-        editor.viewportProvider = self
 
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -470,16 +469,14 @@ class ListFormattingProvider: EditorListFormattingProvider {
 
 extension CommandsExampleViewController: AsyncAttachmentRenderingDelegate {
     func shouldRenderAsync(attachment: Proton.Attachment) -> Bool {
-        attachment.isBlockType
+        attachment is GridViewAttachment
     }
 
     func didRenderAttachment(_ attachment: Proton.Attachment, in editor: Proton.EditorView) {
         print("Render: \(attachment.id) : \(attachment.contentSize)")
     }
-}
 
-extension CommandsExampleViewController: ViewportProvider {
-    var viewport: CGRect {
-        editor.viewport
+    func didCompleteRenderingViewport(_ viewport: CGRect, in editor: EditorView) {
+        print("Rendered viewport: \(viewport)")
     }
 }
