@@ -468,7 +468,7 @@ class ListFormattingProvider: EditorListFormattingProvider {
 }
 
 extension CommandsExampleViewController: AsyncAttachmentRenderingDelegate {
-    var viewport: CGRect? { nil }
+    var prioritizedViewport: CGRect? { nil }
 
     func shouldRenderAsync(attachment: Proton.Attachment) -> Bool {
         attachment is GridViewAttachment

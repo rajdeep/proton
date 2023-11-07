@@ -24,13 +24,13 @@ import UIKit
 import Proton
 
 class MockAsyncAttachmentRenderingDelegate: AsyncAttachmentRenderingDelegate {
-    var viewport: CGRect?
+    var prioritizedViewport: CGRect?
     var onShouldRenderAsync: (Attachment) -> Bool = { _ in return true }
     var onDidRenderAttachment: ((Attachment, EditorView) -> Void)?
     var onDidCompleteRenderingViewport: ((CGRect, EditorView) -> Void)?
 
     init(viewport: CGRect? = nil) {
-        self.viewport = viewport
+        self.prioritizedViewport = viewport
     }
 
     func shouldRenderAsync(attachment: Attachment) -> Bool {
