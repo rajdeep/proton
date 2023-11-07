@@ -323,6 +323,9 @@
             <a href="../Typealiases.html">Type Aliases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Proton15AttachmentRangea">AttachmentRange</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:6Proton14AttachmentViewa">AttachmentView</a>
               </li>
               <li class="nav-group-task">
@@ -1915,9 +1918,9 @@ The value is nil if the Editor is not contained within an <code><a href="../Clas
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton10EditorViewC12visibleRangeSo8_NSRangeVvp"></a>
-                    <a name="//apple_ref/swift/Property/visibleRange" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton10EditorViewC12visibleRangeSo8_NSRangeVvp">visibleRange</a>
+                    <a name="/s:6Proton10EditorViewC8viewportSo6CGRectVvp"></a>
+                    <a name="//apple_ref/swift/Property/viewport" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC8viewportSo6CGRectVvp">viewport</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1925,14 +1928,56 @@ The value is nil if the Editor is not contained within an <code><a href="../Clas
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns the visible text range.</p>
+                        <p>Returns the visible bounds of the <code>EditorView</code> within a scrollable container.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    If <code>EditorView</code> has defined a <code>ViewportProvider</code>, the <code>viewport</code> is calculated per the provider.
+A <code>ViewportProvider</code> may be needed in cases where <code>EditorView</code> is hosted inside another <code>UIScrollView</code> and the
+viewport needs to be calculated based on the viewport of container <code>UIScrollView</code>.
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">visibleRange</span><span class="p">:</span> <span class="kt">NSRange</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">viewport</span><span class="p">:</span> <span class="kt">CGRect</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC12visibleRangeSo8_NSRangeVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/visibleRange" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC12visibleRangeSo8_NSRangeVSgvp">visibleRange</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the visible text range. In case of non-scrollable <code>EditorView</code>, entire range is <code>visibleRange</code>.
+The range may be <code>nil</code> if it is queried before layout has begun</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    If <code>EditorView</code> has defined a <code>ViewportProvider</code>, the <code>visibleRange</code> is calculated per the <code><a href="../Classes/EditorView.html#/s:6Proton10EditorViewC8viewportSo6CGRectVvp">viewport</a></code> from provider.
+A <code>ViewportProvider</code> may be needed in cases where <code>EditorView</code> is hosted inside another <code>UIScrollView</code> and the
+viewport needs to be calculated based on the viewport of container <code>UIScrollView</code>.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">visibleRange</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -2722,6 +2767,33 @@ All other attributes are dropped.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton10EditorViewC18attachmentsInRangeySayAA10AttachmentC10attachment_So8_NSRangeV5rangetGAIF"></a>
+                    <a name="//apple_ref/swift/Method/attachmentsInRange(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC18attachmentsInRangeySayAA10AttachmentC10attachment_So8_NSRangeV5rangetGAIF">attachmentsInRange(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">attachmentsInRange</span><span class="p">(</span><span class="n">_</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Typealiases.html#/s:6Proton15AttachmentRangea">AttachmentRange</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton10EditorViewC9textRange4fromSo06UITextE0CSgSo8_NSRangeV_tF"></a>
                     <a name="//apple_ref/swift/Method/textRange(from:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton10EditorViewC9textRange4fromSo06UITextE0CSgSo8_NSRangeV_tF">textRange(from:<wbr>)</a>
@@ -3325,6 +3397,76 @@ multiple rectangles may be returned.</p>
                       <div>
                         <h4>Return Value</h4>
                         <p>Array of rectangles for the given range.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton10EditorViewC12rangeForRect_16performingLayoutSo8_NSRangeVSgSo6CGRectV_SbtF"></a>
+                    <a name="//apple_ref/swift/Method/rangeForRect(_:performingLayout:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton10EditorViewC12rangeForRect_16performingLayoutSo8_NSRangeVSgSo6CGRectV_SbtF">rangeForRect(_:<wbr>performingLayout:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the range of text in the given rect.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This function returns a contiguous glyph range containing all glyphs that would need to be displayed in order to draw all glyphs that fall (even partially) within the bounding rect given.
+This range might include glyphs which do not fall into the rect at all.  At most this will return the glyph range for the whole container.
+When <code>performingLayout</code> is set to true, it will not generate glyphs or perform layout in attempting to answer, and thus may not be entirely correct.
+Bounding rects are always in container coordinates.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">rangeForRect</span><span class="p">(</span><span class="n">_</span> <span class="nv">rect</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">,</span> <span class="nv">performingLayout</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">NSRange</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>rect</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Rect to get range from</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>performingLayout</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If <code>true</code>, layout is performed before returning the range. Defaults to <code>false</code></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Range for the given rect. <code>nil</code> if range is queried before layout has begun.</p>
                       </div>
                     </section>
                   </div>
@@ -4950,7 +5092,7 @@ existing value will be overwritten by the new value provided in the attributes.<
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-10-24)</p>
+          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-11-07)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
