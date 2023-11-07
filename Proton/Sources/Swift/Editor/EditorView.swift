@@ -123,7 +123,19 @@ open class EditorView: UIView {
     let richTextView: RichTextView
     let context: RichTextViewContext
     var needsAsyncTextResolution = false
+
     private let attachmentRenderingScheduler = AsyncTaskScheduler()
+    // Used for tracking rendered viewport in async behaviour specifically to ensure calling
+    // `didCompleteRenderingViewport` only once for each viewport value.
+    private var renderedViewport: CGRect? {
+        didSet {
+            guard let renderedViewport,
+                  renderedViewport != oldValue else { return }
+
+            asyncAttachmentRenderingDelegate?.didCompleteRenderingViewport(renderedViewport, in: self)
+        }
+    }
+
 
     // Holds `attributedText` until Editor move to a window
     // Setting attributed text without Editor being fully ready
@@ -140,8 +152,6 @@ open class EditorView: UIView {
 
     /// Context for the current Editor
     public let editorViewContext: EditorViewContext
-
-    public weak var viewportProvider: ViewportProvider?
 
     /// Enables asynchronous rendering of attachments.
     /// - Note:
@@ -461,6 +471,7 @@ open class EditorView: UIView {
                 return
             }
             attachmentRenderingScheduler.cancel()
+            renderedViewport = nil
             // Clear text before setting new value to avoid issues with formatting/layout when
             // editor is hosted in a scrollable container and content is set multiple times.
             richTextView.attributedText = NSAttributedString()
@@ -544,7 +555,7 @@ open class EditorView: UIView {
     /// A `ViewportProvider` may be needed in cases where `EditorView` is hosted inside another `UIScrollView` and the
     /// viewport needs to be calculated based on the viewport of container `UIScrollView`.
     public var viewport: CGRect {
-        return viewportProvider?.viewport ?? richTextView.viewport
+        return asyncAttachmentRenderingDelegate?.viewport ?? richTextView.viewport
     }
 
     /// Returns the visible text range. In case of non-scrollable `EditorView`, entire range is `visibleRange`.
@@ -1455,16 +1466,6 @@ extension EditorView {
     }
 }
 
-/// Provides the viewport for the `Editor`. In typical cases, this would be used if the `EditorView` is made non-scrollable
-/// and hosted within another scrollable container i.e. ScrollView.
-/// - Important:
-/// `EditorView` also has a `viewport` property that depends on `ViewportProvider`
-/// Care must be taken to not to return `editor.viewport` here. Doing so will cause a stack overflow crash.
-/// An independently calculated value can safely be returned here.
-public protocol ViewportProvider: AnyObject {
-    var viewport: CGRect { get }
-}
-
 extension EditorView: AsyncTaskSchedulerDelegate {
     func getIDsToPrioritize() -> [String] {
         guard let visibleRange else { return [] }
@@ -1475,7 +1476,7 @@ extension EditorView: AsyncTaskSchedulerDelegate {
         guard attachmentIDs.isEmpty else {
             return attachmentIDs
         }
-        asyncAttachmentRenderingDelegate?.didCompleteRenderingViewport(viewport, in: self)
+        self.renderedViewport = viewport
         // No attachments to render. Viewport rendering complete. Get attachments below viewport
         let nextRange = NSRange(location: visibleRange.endLocation, length: max(0, contentLength - visibleRange.endLocation - 1))
         let nextAttachmentIDs = attachmentsInRange(nextRange)

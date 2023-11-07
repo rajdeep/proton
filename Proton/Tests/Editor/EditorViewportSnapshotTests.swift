@@ -35,16 +35,16 @@ class EditorViewportSnapshotTests: SnapshotTestCase {
 
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-        let asyncRenderingDelegate = MockAsyncAttachmentRenderingDelegate()
-        let viewportProvider = MockViewportProvider(viewport: CGRect(
+        let viewport = CGRect(
             origin: CGPoint(x: 0, y: 300),
             size: CGSize(width: 260, height: 300)
-        ))
+        )
+
+        let asyncRenderingDelegate = MockAsyncAttachmentRenderingDelegate(viewport: viewport)
 
         editor.asyncAttachmentRenderingDelegate = asyncRenderingDelegate
-        editor.viewportProvider = viewportProvider
 
-        let viewportBorderView = UIView(frame: viewportProvider.viewport)
+        let viewportBorderView = UIView(frame: viewport)
         viewportBorderView.layer.borderColor = UIColor.red.cgColor
         viewportBorderView.layer.borderWidth = 2
         viewportBorderView.backgroundColor = .clear
@@ -59,9 +59,9 @@ class EditorViewportSnapshotTests: SnapshotTestCase {
 
         editor.attributedText = NSAttributedString(string: text)
         var renderingNotified = false
-        asyncRenderingDelegate.onDidCompleteRenderingViewport = { viewPort, _ in
+        asyncRenderingDelegate.onDidCompleteRenderingViewport = { viewport, _ in
             renderingNotified = true
-            XCTAssertEqual(viewPort, viewportProvider.viewport)
+            XCTAssertEqual(viewport, asyncRenderingDelegate.viewport)
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -79,16 +79,16 @@ class EditorViewportSnapshotTests: SnapshotTestCase {
         let ex = functionExpectation()
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-        let asyncRenderingDelegate = MockAsyncAttachmentRenderingDelegate()
-        let viewportProvider = MockViewportProvider(viewport: CGRect(
+
+        let viewport = CGRect(
             origin: CGPoint(x: 0, y: 300),
             size: CGSize(width: 260, height: 300)
-        ))
+        )
+        let asyncRenderingDelegate = MockAsyncAttachmentRenderingDelegate(viewport: viewport)
 
         editor.asyncAttachmentRenderingDelegate = asyncRenderingDelegate
-        editor.viewportProvider = viewportProvider
 
-        let viewportBorderView = UIView(frame: viewportProvider.viewport)
+        let viewportBorderView = UIView(frame: viewport)
         viewportBorderView.layer.borderColor = UIColor.red.cgColor
         viewportBorderView.layer.borderWidth = 2
         viewportBorderView.backgroundColor = .clear
@@ -103,8 +103,8 @@ class EditorViewportSnapshotTests: SnapshotTestCase {
         }
         editor.attributedText = text
 
-        asyncRenderingDelegate.onDidCompleteRenderingViewport = { viewPort, editor in
-            XCTAssertEqual(viewPort, viewportProvider.viewport)
+        asyncRenderingDelegate.onDidCompleteRenderingViewport = { viewport, _ in
+            XCTAssertEqual(viewport, asyncRenderingDelegate.viewport)
             assertSnapshot(matching: viewController.view, as: .image, record: self.recordMode)
             ex.fulfill()
         }
@@ -120,16 +120,16 @@ class EditorViewportSnapshotTests: SnapshotTestCase {
         ex.expectedFulfillmentCount = 2
         let viewController = EditorTestViewController()
         let editor = viewController.editor
-        let asyncRenderingDelegate = MockAsyncAttachmentRenderingDelegate()
-        let viewportProvider = MockViewportProvider(viewport: CGRect(
+
+        let viewport = CGRect(
             origin: CGPoint(x: 0, y: 150),
             size: CGSize(width: 260, height: 200)
-        ))
+        )
+        let asyncRenderingDelegate = MockAsyncAttachmentRenderingDelegate(viewport: viewport)
 
         editor.asyncAttachmentRenderingDelegate = asyncRenderingDelegate
-        editor.viewportProvider = viewportProvider
 
-        let viewportBorderView = UIView(frame: viewportProvider.viewport)
+        let viewportBorderView = UIView(frame: viewport)
         viewportBorderView.layer.borderColor = UIColor.red.cgColor
         viewportBorderView.layer.borderWidth = 2
         viewportBorderView.backgroundColor = .clear
@@ -143,17 +143,17 @@ class EditorViewportSnapshotTests: SnapshotTestCase {
             text.append(NSAttributedString(string: "Text after panel"))
         }
         editor.attributedText = text
-        var expectedViewport = viewportProvider.viewport
+        var expectedViewport = asyncRenderingDelegate.viewport
 
-        asyncRenderingDelegate.onDidCompleteRenderingViewport = { viewPort, editor in
-            XCTAssertEqual(viewPort, expectedViewport)
+        asyncRenderingDelegate.onDidCompleteRenderingViewport = { viewport, _ in
+            XCTAssertEqual(viewport, expectedViewport)
             assertSnapshot(matching: viewController.view, as: .image, record: self.recordMode)
-            viewportProvider.viewport =  CGRect(
+            asyncRenderingDelegate.viewport =  CGRect(
                 origin: CGPoint(x: 0, y: 600),
                 size: CGSize(width: 260, height: 200)
             )
-            viewportBorderView.frame = viewportProvider.viewport
-            expectedViewport = viewportProvider.viewport
+            viewportBorderView.frame = asyncRenderingDelegate.viewport ?? viewportBorderView.frame
+            expectedViewport = asyncRenderingDelegate.viewport
             ex.fulfill()
         }
 
