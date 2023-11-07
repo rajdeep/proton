@@ -554,7 +554,7 @@ open class EditorView: UIView {
     /// If `EditorView` has defined a `ViewportProvider`, the `viewport` is calculated per the provider.
     /// A `ViewportProvider` may be needed in cases where `EditorView` is hosted inside another `UIScrollView` and the
     /// viewport needs to be calculated based on the viewport of container `UIScrollView`.
-    public var viewport: CGRect {
+    open var viewport: CGRect {
         return asyncAttachmentRenderingDelegate?.viewport ?? richTextView.viewport
     }
 
