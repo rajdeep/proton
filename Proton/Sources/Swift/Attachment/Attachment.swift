@@ -48,7 +48,7 @@ public protocol AsyncAttachmentRenderingDelegate: AnyObject {
     /// `EditorView` also has a `viewport` property that also depends on this property.
     /// Care must be taken to not to return `editor.viewport` here. Doing so will cause a stack overflow crash.
     /// An independently calculated value can safely be returned here.
-    var viewport: CGRect? { get }
+    var prioritizedViewport: CGRect? { get }
 
     /// Determines if particular attachment should be rendered asynchronously.
     /// The check may also be used to render certain types of attachments synchronously or asynchronously.

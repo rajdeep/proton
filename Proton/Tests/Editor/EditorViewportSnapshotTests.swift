@@ -61,7 +61,7 @@ class EditorViewportSnapshotTests: SnapshotTestCase {
         var renderingNotified = false
         asyncRenderingDelegate.onDidCompleteRenderingViewport = { viewport, _ in
             renderingNotified = true
-            XCTAssertEqual(viewport, asyncRenderingDelegate.viewport)
+            XCTAssertEqual(viewport, asyncRenderingDelegate.prioritizedViewport)
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -104,7 +104,7 @@ class EditorViewportSnapshotTests: SnapshotTestCase {
         editor.attributedText = text
 
         asyncRenderingDelegate.onDidCompleteRenderingViewport = { viewport, _ in
-            XCTAssertEqual(viewport, asyncRenderingDelegate.viewport)
+            XCTAssertEqual(viewport, asyncRenderingDelegate.prioritizedViewport)
             assertSnapshot(matching: viewController.view, as: .image, record: self.recordMode)
             ex.fulfill()
         }
@@ -143,17 +143,17 @@ class EditorViewportSnapshotTests: SnapshotTestCase {
             text.append(NSAttributedString(string: "Text after panel"))
         }
         editor.attributedText = text
-        var expectedViewport = asyncRenderingDelegate.viewport
+        var expectedViewport = asyncRenderingDelegate.prioritizedViewport
 
         asyncRenderingDelegate.onDidCompleteRenderingViewport = { viewport, _ in
             XCTAssertEqual(viewport, expectedViewport)
             assertSnapshot(matching: viewController.view, as: .image, record: self.recordMode)
-            asyncRenderingDelegate.viewport =  CGRect(
+            asyncRenderingDelegate.prioritizedViewport =  CGRect(
                 origin: CGPoint(x: 0, y: 600),
                 size: CGSize(width: 260, height: 200)
             )
-            viewportBorderView.frame = asyncRenderingDelegate.viewport ?? viewportBorderView.frame
-            expectedViewport = asyncRenderingDelegate.viewport
+            viewportBorderView.frame = asyncRenderingDelegate.prioritizedViewport ?? viewportBorderView.frame
+            expectedViewport = asyncRenderingDelegate.prioritizedViewport
             ex.fulfill()
         }
 

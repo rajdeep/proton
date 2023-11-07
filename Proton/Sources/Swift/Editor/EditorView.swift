@@ -555,7 +555,7 @@ open class EditorView: UIView {
     /// A `ViewportProvider` may be needed in cases where `EditorView` is hosted inside another `UIScrollView` and the
     /// viewport needs to be calculated based on the viewport of container `UIScrollView`.
     open var viewport: CGRect {
-        return asyncAttachmentRenderingDelegate?.viewport ?? richTextView.viewport
+        return asyncAttachmentRenderingDelegate?.prioritizedViewport ?? richTextView.viewport
     }
 
     /// Returns the visible text range. In case of non-scrollable `EditorView`, entire range is `visibleRange`.
