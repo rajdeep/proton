@@ -504,7 +504,8 @@ class EditorSnapshotTests: SnapshotTestCase {
         let visibleRange = editor.visibleRange
         // refer to snapshot for visible text
         let expectedText = "consectetur, from a Lorem Ipsum passage, and going through the cites of the word in "
-        let visibleText = editor.attributedText.attributedSubstring(from: visibleRange).string
+
+        let visibleText = editor.attributedText.attributedSubstring(from: visibleRange ?? .zero).string
         XCTAssertEqual(visibleText, expectedText)
     }
 

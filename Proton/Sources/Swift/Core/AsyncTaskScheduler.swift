@@ -23,13 +23,15 @@ import Foundation
 class AsyncTaskScheduler {
     typealias VoidTask = () -> Void
     private var executing = false
+    private var isCancelling = false
 
     private var tasks = SynchronizedArray<(id: String, task: VoidTask)>()
     private var scheduled = SynchronizedArray<String>()
+    weak var delegate: AsyncTaskSchedulerDelegate?
 
     var runID = UUID().uuidString
 
-    var pending = false {
+    private var pending = false {
         didSet {
             guard pending == false else { return }
             executeNext()
@@ -37,9 +39,11 @@ class AsyncTaskScheduler {
     }
 
     func cancel() {
+        isCancelling = true
         runID = UUID().uuidString
         tasks.removeAll()
         pending = false
+        isCancelling = false
     }
 
     func enqueue(id: String, task: @escaping VoidTask) {
@@ -48,8 +52,16 @@ class AsyncTaskScheduler {
     }
 
     func dequeue(_ completion: @escaping (String, VoidTask?) -> Void)  {
-        guard tasks.isEmpty == false,
-            let task = self.tasks.remove(at: 0) else {
+        if let priorityList = delegate?.getIDsToPrioritize() {
+            let pendingTasks = tasks.filter({ taskID, _ in priorityList.contains(where: { $0 == taskID }) })
+            if pendingTasks.isEmpty == false,
+               let priorityTaskIndex = tasks.firstIndex(where: {id, _ in priorityList.first == id }),
+               let task = self.tasks.remove(at: priorityTaskIndex) {
+                completion(task.id, task.task)
+                return
+            }
+        }
+        guard let task = self.tasks.remove(at: 0) else {
             completion("", nil)
             return
         }
@@ -57,7 +69,7 @@ class AsyncTaskScheduler {
     }
 
     func executeNext() {
-        guard !pending else { return }
+        guard !pending, !isCancelling else { return }
         dequeue { id, task in
             if let task {
                 self.pending = true
@@ -75,4 +87,8 @@ class AsyncTaskScheduler {
             }
         }
     }
+}
+
+protocol AsyncTaskSchedulerDelegate: AnyObject {
+    func getIDsToPrioritize() -> [String]
 }

@@ -468,11 +468,17 @@ class ListFormattingProvider: EditorListFormattingProvider {
 }
 
 extension CommandsExampleViewController: AsyncAttachmentRenderingDelegate {
+    var viewport: CGRect? { nil }
+
     func shouldRenderAsync(attachment: Proton.Attachment) -> Bool {
         attachment is GridViewAttachment
     }
 
     func didRenderAttachment(_ attachment: Proton.Attachment, in editor: Proton.EditorView) {
         print("Render: \(attachment.id) : \(attachment.contentSize)")
+    }
+
+    func didCompleteRenderingViewport(_ viewport: CGRect, in editor: EditorView) {
+        print("Rendered viewport: \(viewport)")
     }
 }

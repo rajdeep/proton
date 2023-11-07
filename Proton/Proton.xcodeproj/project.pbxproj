@@ -120,6 +120,7 @@
 		1BD185D0284D839C001F4FBC /* GridViewAttachmentSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD185CE284D8399001F4FBC /* GridViewAttachmentSnapshotTests.swift */; };
 		1BD21554246951090000BCE2 /* LayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD21553246951090000BCE2 /* LayoutManager.swift */; };
 		1BD21556246952370000BCE2 /* BackgroundStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD21555246952370000BCE2 /* BackgroundStyle.swift */; };
+		1BD90ED72AF85A6300BB31FA /* EditorViewportSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD90ED62AF85A6300BB31FA /* EditorViewportSnapshotTests.swift */; };
 		1BD9323E243CA506005E4136 /* CommandName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD9323D243CA506005E4136 /* CommandName.swift */; };
 		1BD993B123C995B000563ACB /* TextProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993B023C995B000563ACB /* TextProcessorTests.swift */; };
 		1BD993B423C9966A00563ACB /* MockTextProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993B323C9966A00563ACB /* MockTextProcessor.swift */; };
@@ -290,6 +291,7 @@
 		1BD185CE284D8399001F4FBC /* GridViewAttachmentSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewAttachmentSnapshotTests.swift; sourceTree = "<group>"; };
 		1BD21553246951090000BCE2 /* LayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManager.swift; sourceTree = "<group>"; };
 		1BD21555246952370000BCE2 /* BackgroundStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundStyle.swift; sourceTree = "<group>"; };
+		1BD90ED62AF85A6300BB31FA /* EditorViewportSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewportSnapshotTests.swift; sourceTree = "<group>"; };
 		1BD9323D243CA506005E4136 /* CommandName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandName.swift; sourceTree = "<group>"; };
 		1BD993B023C995B000563ACB /* TextProcessorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessorTests.swift; sourceTree = "<group>"; };
 		1BD993B323C9966A00563ACB /* MockTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTextProcessor.swift; sourceTree = "<group>"; };
@@ -817,6 +819,7 @@
 			children = (
 				1BFFEF1D23C3364900D2BA35 /* Mocks */,
 				1BFFEF1423C332A100D2BA35 /* EditorSnapshotTests.swift */,
+				1BD90ED62AF85A6300BB31FA /* EditorViewportSnapshotTests.swift */,
 				1BD993B523C999AF00563ACB /* EditorViewTests.swift */,
 				1B576088245ADDDA00D92AE8 /* EditorViewMenuTests.swift */,
 				1B1C3726244BE0D60028E1ED /* EditorViewContextTests.swift */,
@@ -1098,6 +1101,7 @@
 				1BFFEF1523C332A100D2BA35 /* EditorSnapshotTests.swift in Sources */,
 				1B9AF9E92851ECC300CD65C4 /* MockGridViewDelegate.swift in Sources */,
 				1B4B60C6247F692D002B63CF /* ListsSnapshotTests.swift in Sources */,
+				1BD90ED72AF85A6300BB31FA /* EditorViewportSnapshotTests.swift in Sources */,
 				1BD993C023C9EAA900563ACB /* TextTransformer.swift in Sources */,
 				1B8BE91D23C71E4B00353B17 /* EditorViewDelegateTests.swift in Sources */,
 				1BD185C6284C34CF001F4FBC /* GenericViewTestViewController.swift in Sources */,

@@ -36,6 +36,7 @@ public class CreateGridViewCommand: EditorCommand {
         timeEvent(label: "Create")
         for i in 1..<25 {
             text.append(makeGridViewAttachment(id: i, numRows: 25, numColumns: 5).string)
+//            text.append(makePanelAttachment(id: i).string)
             text.append(NSAttributedString(string: "\ntest middle\n"))
         }
 
@@ -45,6 +46,14 @@ public class CreateGridViewCommand: EditorCommand {
     public func execute(on editor: EditorView) {
         timeEvent(label: "Render")
         editor.attributedText = text
+    }
+
+    private func makePanelAttachment(id: Int) -> PanelAttachment {
+        let attachment = PanelAttachment(frame: .zero)
+        attachment.selectBeforeDelete = true
+        let panel = attachment.view
+        panel.editor.attributedText = NSAttributedString(string: "Panel \(id) - Attachment id: \(attachment.id)")
+        return attachment
     }
 
     private func makeGridViewAttachment(id: Int, numRows: Int, numColumns: Int) -> GridViewAttachment {

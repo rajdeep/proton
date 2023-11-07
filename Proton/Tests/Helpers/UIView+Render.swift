@@ -22,7 +22,10 @@ import Foundation
 import UIKit
 
 extension UIView {
-    func render() {
+    func render(size: CGSize? = nil) {
+        if let size {
+            frame = CGRect(origin: .zero, size: size)
+        }
         setNeedsLayout()
         layoutIfNeeded()
     }

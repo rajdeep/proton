@@ -123,7 +123,19 @@ open class EditorView: UIView {
     let richTextView: RichTextView
     let context: RichTextViewContext
     var needsAsyncTextResolution = false
+
     private let attachmentRenderingScheduler = AsyncTaskScheduler()
+    // Used for tracking rendered viewport in async behaviour specifically to ensure calling
+    // `didCompleteRenderingViewport` only once for each viewport value.
+    private var renderedViewport: CGRect? {
+        didSet {
+            guard let renderedViewport,
+                  renderedViewport != oldValue else { return }
+
+            asyncAttachmentRenderingDelegate?.didCompleteRenderingViewport(renderedViewport, in: self)
+        }
+    }
+
 
     // Holds `attributedText` until Editor move to a window
     // Setting attributed text without Editor being fully ready
@@ -459,6 +471,7 @@ open class EditorView: UIView {
                 return
             }
             attachmentRenderingScheduler.cancel()
+            renderedViewport = nil
             // Clear text before setting new value to avoid issues with formatting/layout when
             // editor is hosted in a scrollable container and content is set multiple times.
             richTextView.attributedText = NSAttributedString()
@@ -536,9 +549,23 @@ open class EditorView: UIView {
         return getAttachmentContentView(view: superview)?.name
     }
 
-    /// Returns the visible text range.
-    public var visibleRange: NSRange {
-        return richTextView.visibleRange
+    /// Returns the visible bounds of the `EditorView` within a scrollable container.
+    /// - Note:
+    /// If `EditorView` has defined a `ViewportProvider`, the `viewport` is calculated per the provider.
+    /// A `ViewportProvider` may be needed in cases where `EditorView` is hosted inside another `UIScrollView` and the
+    /// viewport needs to be calculated based on the viewport of container `UIScrollView`.
+    public var viewport: CGRect {
+        return asyncAttachmentRenderingDelegate?.viewport ?? richTextView.viewport
+    }
+
+    /// Returns the visible text range. In case of non-scrollable `EditorView`, entire range is `visibleRange`.
+    /// The range may be `nil` if it is queried before layout has begun
+    /// - Note:
+    /// If `EditorView` has defined a `ViewportProvider`, the `visibleRange` is calculated per the `viewport` from provider.
+    /// A `ViewportProvider` may be needed in cases where `EditorView` is hosted inside another `UIScrollView` and the
+    /// viewport needs to be calculated based on the viewport of container `UIScrollView`.
+    public var visibleRange: NSRange? {
+        rangeForRect(viewport)
     }
 
     /// Attachment containing the current Editor.
@@ -716,6 +743,8 @@ open class EditorView: UIView {
         ]
         richTextView.adjustsFontForContentSizeCategory = true
         AggregateEditorViewDelegate.editor(self, isReady: false)
+
+        attachmentRenderingScheduler.delegate = self
     }
 
     /// Subclasses can override it to perform additional actions whenever the window changes.
@@ -755,6 +784,12 @@ open class EditorView: UIView {
     ///All other attributes are dropped.
     public func resetTypingAttributes() {
         richTextView.resetTypingAttributes()
+    }
+
+    public func attachmentsInRange(_ range: NSRange) -> [AttachmentRange] {
+        guard range.endLocation < contentLength else { return [] }
+        let substring = attributedText.attributedSubstring(from: range)
+        return substring.attachmentRanges
     }
 
     /// Converts given range to `UITextRange`, if valid
@@ -902,22 +937,20 @@ open class EditorView: UIView {
     /// - Returns:
     /// Array of rectangles for the given range.
     public func rects(for range: NSRange) -> [CGRect] {
-        guard let textRange = range.toTextRange(textInput: richTextView) else { return [] }
-        let rects = richTextView.selectionRects(for: textRange)
-        return rects.map { $0.rect }
+        richTextView.rects(for: range)
     }
 
     /// Returns the range of text in the given rect.
     /// - Parameters:
     ///   - rect: Rect to get range from
     ///   - performingLayout: If `true`, layout is performed before returning the range. Defaults to `false`
-    /// - Returns: Range for the given rect
+    /// - Returns: Range for the given rect. `nil` if range is queried before layout has begun.
     /// - Note:
     /// This function returns a contiguous glyph range containing all glyphs that would need to be displayed in order to draw all glyphs that fall (even partially) within the bounding rect given.
     /// This range might include glyphs which do not fall into the rect at all.  At most this will return the glyph range for the whole container.
     /// When `performingLayout` is set to true, it will not generate glyphs or perform layout in attempting to answer, and thus may not be entirely correct.
     /// Bounding rects are always in container coordinates.
-    func rangeForRect(_ rect: CGRect, performingLayout: Bool = false) -> NSRange? {
+    public func rangeForRect(_ rect: CGRect, performingLayout: Bool = false) -> NSRange? {
         richTextView.rangeForRect(rect, performingLayout: performingLayout)
     }
 
@@ -1430,5 +1463,35 @@ extension EditorView {
 
     func clamp(range: NSRange) -> NSRange {
         range.clamped(upperBound: contentLength)
+    }
+}
+
+extension EditorView: AsyncTaskSchedulerDelegate {
+    func getIDsToPrioritize() -> [String] {
+        guard let visibleRange else { return [] }
+        let attachmentIDs = attachmentsInRange(visibleRange)
+            .filter { $0.attachment.isPendingAsyncRendering }
+            .map {  $0.attachment.id }
+
+        guard attachmentIDs.isEmpty else {
+            return attachmentIDs
+        }
+        self.renderedViewport = viewport
+        // No attachments to render. Viewport rendering complete. Get attachments below viewport
+        let nextRange = NSRange(location: visibleRange.endLocation, length: max(0, contentLength - visibleRange.endLocation - 1))
+        let nextAttachmentIDs = attachmentsInRange(nextRange)
+            .filter { $0.attachment.isPendingAsyncRendering }
+            .map {  $0.attachment.id }
+
+        guard nextAttachmentIDs.isEmpty else {
+            return nextAttachmentIDs
+        }
+
+        let previousRange = NSRange(location: 0, length: visibleRange.location)
+        let previousRangeIDs = attachmentsInRange(previousRange)
+            .filter { $0.attachment.isPendingAsyncRendering }
+            .map {  $0.attachment.id }
+
+        return previousRangeIDs.reversed()
     }
 }

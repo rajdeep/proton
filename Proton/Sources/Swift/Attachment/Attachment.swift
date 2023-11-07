@@ -40,8 +40,37 @@ public protocol AttachmentOffsetProviding: AnyObject {
 }
 
 public protocol AsyncAttachmentRenderingDelegate: AnyObject {
+    /// Provides the viewport for the `Editor`. In typical cases, this would be used if the `EditorView` is made non-scrollable
+    /// and hosted within another scrollable container i.e. ScrollView.
+    /// - Note:
+    /// To use default value, i.e. viewport of the EditorView, leave this value as `nil`
+    /// - Important:
+    /// `EditorView` also has a `viewport` property that also depends on this property.
+    /// Care must be taken to not to return `editor.viewport` here. Doing so will cause a stack overflow crash.
+    /// An independently calculated value can safely be returned here.
+    var viewport: CGRect? { get }
+
+    /// Determines if particular attachment should be rendered asynchronously.
+    /// The check may also be used to render certain types of attachments synchronously or asynchronously.
+    /// - Parameter attachment: Attachment to be rendered.
+    /// - Returns: `true` to render asynchronously.
     func shouldRenderAsync(attachment: Attachment) -> Bool
+
+    /// Notifies when an attachment is rendered asynchronously.
+    /// - Parameters:
+    ///   - attachment: Attachment that is rendered.
+    ///   - editor: Editor in which the attachment is rendered.
     func didRenderAttachment(_ attachment: Attachment, in editor: EditorView)
+
+    /// Notifies when the viewport is rendered. Value of `viewport` is governed by `viewport` property in `AsyncAttachmentRenderingDelegate`
+    /// when not nil, else from `EditorView`
+    /// - Note:
+    /// There may be more than one invocation for the same `viewport` especially when user scroll out and back to the same `viewport`. This is
+    /// invoked when all the attachments in the `viewport` are rendered or the text is laid out and there are no attachments to render.
+    /// - Parameters:
+    ///   - viewport: Viewport that is rendered.
+    ///   - editor: Editor for which the `viewport` rendering is completed.
+    func didCompleteRenderingViewport(_ viewport: CGRect, in editor: EditorView)
 }
 
 /// Marker protocol for attachment views that may need to defer completion of rendering in asynchronous mode until the view bounds are changed. This may be
@@ -117,6 +146,11 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     public var contentEditors: [EditorView] {
         guard let contentView else { return [] }
         return contentView.subviews.compactMap{ $0 as? EditorView }
+    }
+
+    /// Determines if Attachment is rendering async but is not  yet rendered
+    public var isPendingAsyncRendering: Bool {
+        isRenderingAsync && isAsyncRendered == false
     }
 
     var isImageBasedAttachment: Bool {
