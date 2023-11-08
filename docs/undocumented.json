@@ -30,70 +30,63 @@
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Attachment/Attachment.swift",
-      "line": 42,
-      "symbol": "AsyncAttachmentRenderingDelegate",
-      "symbol_kind": "source.lang.swift.decl.protocol",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Attachment/Attachment.swift",
-      "line": 117,
+      "line": 118,
       "symbol": "Attachment.needsDeferredRendering",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Attachment/Attachment.swift",
-      "line": 121,
+      "line": 122,
       "symbol": "Attachment.isBlockType",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Attachment/Attachment.swift",
-      "line": 125,
+      "line": 126,
       "symbol": "Attachment.isInlineType",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Attachment/Attachment.swift",
-      "line": 146,
+      "line": 147,
       "symbol": "Attachment.contentEditors",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Attachment/Attachment.swift",
-      "line": 210,
+      "line": 211,
       "symbol": "Attachment.contentSize",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Attachment/Attachment.swift",
-      "line": 241,
+      "line": 242,
       "symbol": "Attachment.contentView",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Attachment/Attachment.swift",
-      "line": 523,
+      "line": 524,
       "symbol": "Attachment.update(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Attachment/Attachment.swift",
-      "line": 531,
+      "line": 532,
       "symbol": "Attachment.update(_:size:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Attachment/Attachment.swift",
-      "line": 537,
+      "line": 538,
       "symbol": "Attachment.getFullTextRangeIdentificationAttributes()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

@@ -355,7 +355,7 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>Describes an object that fulfils requirements to enable  asynchronous rendering of attachments in the <code><a href="../Classes/EditorView.html">EditorView</a></code></p>
 
           </section>
           <section class="section task-group-section">
@@ -364,9 +364,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton32AsyncAttachmentRenderingDelegateP8viewportSo6CGRectVSgvp"></a>
-                    <a name="//apple_ref/swift/Property/viewport" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton32AsyncAttachmentRenderingDelegateP8viewportSo6CGRectVSgvp">viewport</a>
+                    <a name="/s:6Proton32AsyncAttachmentRenderingDelegateP19prioritizedViewportSo6CGRectVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/prioritizedViewport" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton32AsyncAttachmentRenderingDelegateP19prioritizedViewportSo6CGRectVSgvp">prioritizedViewport</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -393,7 +393,7 @@ An independently calculated value can safely be returned here.
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">viewport</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">prioritizedViewport</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -522,12 +522,12 @@ The check may also be used to render certain types of attachments synchronously 
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Notifies when the viewport is rendered. Value of <code><a href="../Protocols/AsyncAttachmentRenderingDelegate.html#/s:6Proton32AsyncAttachmentRenderingDelegateP8viewportSo6CGRectVSgvp">viewport</a></code> is governed by <code><a href="../Protocols/AsyncAttachmentRenderingDelegate.html#/s:6Proton32AsyncAttachmentRenderingDelegateP8viewportSo6CGRectVSgvp">viewport</a></code> property in <code>AsyncAttachmentRenderingDelegate</code>
+                        <p>Notifies when the viewport is rendered. Value of <code>viewport</code> is governed by <code>viewport</code> property in <code>AsyncAttachmentRenderingDelegate</code>
 when not nil, else from <code><a href="../Classes/EditorView.html">EditorView</a></code></p>
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
-    There may be more than one invocation for the same <code><a href="../Protocols/AsyncAttachmentRenderingDelegate.html#/s:6Proton32AsyncAttachmentRenderingDelegateP8viewportSo6CGRectVSgvp">viewport</a></code> especially when user scroll out and back to the same <code><a href="../Protocols/AsyncAttachmentRenderingDelegate.html#/s:6Proton32AsyncAttachmentRenderingDelegateP8viewportSo6CGRectVSgvp">viewport</a></code>. This is
-invoked when all the attachments in the <code><a href="../Protocols/AsyncAttachmentRenderingDelegate.html#/s:6Proton32AsyncAttachmentRenderingDelegateP8viewportSo6CGRectVSgvp">viewport</a></code> are rendered or the text is laid out and there are no attachments to render.
+    There may be more than one invocation for the same <code>viewport</code> especially when user scroll out and back to the same <code>viewport</code>. This is
+invoked when all the attachments in the <code>viewport</code> are rendered or the text is laid out and there are no attachments to render.
 
 </div>
 
@@ -564,7 +564,7 @@ invoked when all the attachments in the <code><a href="../Protocols/AsyncAttachm
                               </td>
                               <td>
                                 <div>
-                                  <p>Editor for which the <code><a href="../Protocols/AsyncAttachmentRenderingDelegate.html#/s:6Proton32AsyncAttachmentRenderingDelegateP8viewportSo6CGRectVSgvp">viewport</a></code> rendering is completed.</p>
+                                  <p>Editor for which the <code>viewport</code> rendering is completed.</p>
                                 </div>
                               </td>
                             </tr>
@@ -579,7 +579,7 @@ invoked when all the attachments in the <code><a href="../Protocols/AsyncAttachm
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-11-07)</p>
+          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-11-08)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

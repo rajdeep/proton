@@ -39,6 +39,7 @@ public protocol AttachmentOffsetProviding: AnyObject {
     func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint
 }
 
+/// Describes an object that fulfils requirements to enable  asynchronous rendering of attachments in the `EditorView`
 public protocol AsyncAttachmentRenderingDelegate: AnyObject {
     /// Provides the viewport for the `Editor`. In typical cases, this would be used if the `EditorView` is made non-scrollable
     /// and hosted within another scrollable container i.e. ScrollView.
