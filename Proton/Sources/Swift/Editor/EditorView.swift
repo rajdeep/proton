@@ -782,7 +782,7 @@ open class EditorView: UIView {
 
     /// Resets typing attributes back to default text color, font and paragraph style.
     ///All other attributes are dropped.
-    public func resetTypingAttributes() {
+    open func resetTypingAttributes() {
         richTextView.resetTypingAttributes()
     }
 
