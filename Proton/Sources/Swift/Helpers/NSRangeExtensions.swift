@@ -52,8 +52,9 @@ public extension NSRange {
         NSRange(location: location + length, length: 1)
     }
 
-    var previousCharacterRange: NSRange {
-        NSRange(location: location - 1, length: 1)
+    var previousCharacterRange: NSRange? {
+        guard location > 0 else { return nil }
+        return NSRange(location: location - 1, length: 1)
     }
 
     /// Converts the range to `UITextRange` in given `UITextInput`. Returns nil if the range is invalid in the `UITextInput`.
