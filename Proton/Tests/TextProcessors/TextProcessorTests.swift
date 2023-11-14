@@ -55,7 +55,8 @@ class TextProcessorTests: XCTestCase {
         let mockProcessor = MockTextProcessor(name: name)
         let replacementRange = NSRange(location: 5, length: 4)
 
-        mockProcessor.onWillProcess = { deleted, inserted, range in
+        mockProcessor.onWillProcess = { editorView, deleted, inserted, range in
+            XCTAssertEqual(editorView, editor)
             XCTAssertEqual(deleted.string, "some")
             XCTAssertEqual(inserted.string, replacementString.string)
             XCTAssertEqual(range, replacementRange)

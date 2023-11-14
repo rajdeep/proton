@@ -59,10 +59,11 @@ public protocol TextProcessing {
     /// This is fired before the text has changed in the editor. This can be helpful if any state needs to be changed based on edited text.
     /// However, it should be noted that the changes are done only in `process` and not in this function owing to the lifecycle of TextKit components.
     /// - Parameters:
+    ///   - editor:`EditorView` in which text is being changed.
     ///   - deletedText: Text that has been deleted, if any.
     ///   - insertedText: Text that is inserted, if any.
     ///   - range: Affected range
-    func willProcess(deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange)
+    func willProcess(editor: EditorView, deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange)
 
     /// Allows to change attributes and text in the `EditorView` as the text is changed.
     /// - Parameters:
