@@ -39,5 +39,5 @@ class TestTextProcessor: TextProcessing {
         onProcessInterrupted?(editor, range)
     }
 
-    func willProcess(deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) { }
+    func willProcess(editor: EditorView, deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) { }
 }

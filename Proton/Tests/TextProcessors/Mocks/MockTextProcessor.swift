@@ -27,7 +27,7 @@ class MockTextProcessor: TextProcessing {
     let name: String
     var priority: TextProcessingPriority = .medium
 
-    var onWillProcess: ((NSAttributedString, NSAttributedString, NSRange) -> Void)?
+    var onWillProcess: ((EditorView, NSAttributedString, NSAttributedString, NSRange) -> Void)?
     var onProcess: ((EditorView, NSRange, Int) -> Void)?
     var onKeyWithModifier: ((EditorView, EditorKey, UIKeyModifierFlags, NSRange) -> Void)?
     var onProcessInterrupted: ((EditorView, NSRange) -> Void)?
@@ -42,8 +42,8 @@ class MockTextProcessor: TextProcessing {
         self.processorCondition = processorCondition
     }
 
-    func willProcess(deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) {
-        onWillProcess?(deletedText, insertedText, range)
+    func willProcess(editor: EditorView, deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) {
+        onWillProcess?(editor, deletedText, insertedText, range)
     }
 
     func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int) -> Processed {

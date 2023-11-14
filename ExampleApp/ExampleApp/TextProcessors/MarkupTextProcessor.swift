@@ -69,5 +69,5 @@ class MarkupProcessor: TextProcessing {
         }
     }
 
-    func willProcess(deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) { }
+    func willProcess(editor: EditorView, deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) { }
 }

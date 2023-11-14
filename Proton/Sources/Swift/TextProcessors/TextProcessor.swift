@@ -82,8 +82,9 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
     }
 
     func textStorage(_ textStorage: NSTextStorage, willProcessDeletedText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) {
+        guard let editor else { return }
         for processor in sortedProcessors {
-            processor.willProcess(deletedText: deletedText, insertedText: insertedText, range: range)
+            processor.willProcess(editor: editor, deletedText: deletedText, insertedText: insertedText, range: range)
         }
     }
 
