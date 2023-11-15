@@ -363,7 +363,8 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     /// `BoundsObserving`
     public func didChangeBounds(_ bounds: CGRect, oldBounds: CGRect) {
         // check how view.bounds can be checked against attachment.bounds
-        guard oldBounds != .zero else { return }
+        // Check for zero bounds required so that rendering attachment does not go recursive in `relayoutAttachments`
+        guard bounds != .zero, oldBounds != .zero else { return }
         invalidateLayout()
     }
 
@@ -586,7 +587,9 @@ extension Attachment {
               let range = rangeInContainer()
         else { return }
         cachedBounds = nil
-        let needsInvalidation = bounds.integral.size != contentView?.bounds.integral.size
+        // Check for zero bounds required so that rendering attachment does not go recursive in `relayoutAttachments`
+        let needsInvalidation = bounds.integral.size != .zero
+        && bounds.integral.size != contentView?.bounds.integral.size
         editor.invalidateLayout(for: range)
 
         if containerTextView?.isScrollEnabled == false, needsInvalidation {
