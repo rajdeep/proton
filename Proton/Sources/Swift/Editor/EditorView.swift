@@ -1402,7 +1402,6 @@ extension EditorView {
                     self.delegate?.editor(self, didRenderAttachment: attachment)
                 }
             }
-
             attachment.frame = frame
         }
         attachmentRenderingScheduler.executeNext()
