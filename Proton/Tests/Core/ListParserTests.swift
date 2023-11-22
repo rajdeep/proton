@@ -306,11 +306,60 @@ class ListParserTests: XCTestCase {
         XCTAssertEqual(list[0].listItem.text.string, line1.string)
         XCTAssertEqual(list[1].listItem.text.string, line3.string)
 
+        XCTAssertEqual(list[0].listIndex, 1)
+        XCTAssertEqual(list[1].listIndex, 2)
+
 
         XCTAssertEqual(list[0].listItem.level, 1)
         XCTAssertEqual(list[1].listItem.level, 1)
 
         XCTAssertEqual(list[0].range, NSRange(location: 0, length: 63))
         XCTAssertEqual(list[1].range, NSRange(location: 80, length: 47))
+    }
+
+    func testFullCircleWithSameAttributeValue() {
+        let listItems1 = [
+            ListItem(text: NSAttributedString(string: "One"), level: 1, attributeValue: 1),
+            ListItem(text: NSAttributedString(string: "Two"), level: 1, attributeValue: 1),
+            ListItem(text: NSAttributedString(string: "Three"), level: 2, attributeValue: 1),
+            ListItem(text: NSAttributedString(string: "Four"), level: 2, attributeValue: 1),
+            ListItem(text: NSAttributedString(string: "Five"), level: 2, attributeValue: 1),
+            ListItem(text: NSAttributedString(string: "Six"), level: 1, attributeValue: 1)
+        ]
+
+        let listItems2 = [
+            ListItem(text: NSAttributedString(string: "A"), level: 1, attributeValue: 1),
+            ListItem(text: NSAttributedString(string: "B"), level: 1, attributeValue: 1),
+            ListItem(text: NSAttributedString(string: "C"), level: 2, attributeValue: 1),
+            ListItem(text: NSAttributedString(string: "D"), level: 2, attributeValue: 1),
+            ListItem(text: NSAttributedString(string: "E"), level: 2, attributeValue: 1),
+            ListItem(text: NSAttributedString(string: "F"), level: 1, attributeValue: 1)
+        ]
+
+        let string1 = ListParser.parse(list: listItems1, indent: 25)
+        let string2 = ListParser.parse(list: listItems2, indent: 25)
+
+        let string = NSMutableAttributedString()
+        string.append(string1)
+        string.append(NSAttributedString(string: "Some other text \n"))
+        string.append(string2)
+
+        let convertedItems = ListParser.parse(attributedString: string)
+        let list1 = convertedItems.filter { $0.listIndex == 1 }
+        let list2 = convertedItems.filter { $0.listIndex == 2 }
+
+        XCTAssertEqual(convertedItems.count, 12)
+        XCTAssertEqual(list1.count, 6)
+        XCTAssertEqual(list2.count, 6)
+
+        for i in 0..<list1.count {
+            XCTAssertEqual(convertedItems[i].listItem.text.string, list1[i].listItem.text.string)
+        }
+
+        var convertedIndex = list1.count
+        for i in 0..<list2.count {
+            XCTAssertEqual(convertedItems[convertedIndex].listItem.text.string, list2[i].listItem.text.string)
+            convertedIndex += 1
+        }
     }
 }

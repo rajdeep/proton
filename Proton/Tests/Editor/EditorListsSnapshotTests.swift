@@ -28,6 +28,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
     let listCommand = ListCommand()
     let listTextProcessor = ListTextProcessor()
     let listFormattingProvider = MockListFormattingProvider()
+    let mixedListFormattingProvider = MockMixedListFormattingProvider()
 
     override func setUp() {
         super.setUp()

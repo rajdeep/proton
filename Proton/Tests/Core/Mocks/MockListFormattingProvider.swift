@@ -47,3 +47,27 @@ class MockListFormattingProvider: EditorListFormattingProvider {
         return value
     }
 }
+
+class MockMixedListFormattingProvider: EditorListFormattingProvider {
+    enum ListType: String {
+        case ordered
+        case unordered
+    }
+
+    let listLineFormatting: LineFormatting
+    var onListMarkerForItem : ((EditorView, Int, Int, Int, Any) -> Void)?
+
+
+    init(listLineFormatting: LineFormatting? = nil) {
+        self.listLineFormatting = listLineFormatting ?? LineFormatting(indentation: 25, spacingBefore: 0)
+    }
+
+    func listLineMarkerFor(editor: EditorView, index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {
+        let isOrdered = (attributeValue as? String) == ListType.ordered.rawValue
+        let sequenceGenerator: SequenceGenerator = isOrdered ? NumericSequenceGenerator() : DiamondBulletSequenceGenerator()
+        let value = sequenceGenerator.value(at: index)
+
+        onListMarkerForItem?(editor, index, level, previousLevel, attributeValue ?? "*")
+        return value
+    }
+}

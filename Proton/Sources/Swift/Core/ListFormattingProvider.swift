@@ -44,4 +44,18 @@ public protocol EditorListFormattingProvider: AnyObject {
     /// - Note: This function is called multiple times for same index level based on TextKit layout cycles. It is advisable to cache
     /// the values if calculation/drawing is performance intensive.
     func listLineMarkerFor(editor: EditorView, index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker
+
+    /// Invoked before the indentation level is changed. This may be used to change the list attribute value, if needed.
+    /// - Parameters:
+    ///   - editor: Editor in which indentation is going to be changed.
+    ///   - range: Range of affected text
+    ///   - currentLevel: Current nested level of list, with first level being 1.
+    ///   - indentMode: Indentation action to be performed
+    ///   - latestAttributeValueAtProposedLevel: List item attribute value immediately preceding the current item at the new level that the current item will be indented to.
+    ///   The value is`nil` if preceding item does not exist at the new level.
+    func willChangeListIndentation(editor: EditorView, range: NSRange, currentLevel: Int, indentMode: Indentation, latestAttributeValueAtProposedLevel: Any?)
+}
+
+public extension EditorListFormattingProvider {
+    func willChangeListIndentation(editor: EditorView, range: NSRange, currentLevel: Int, indentMode: Indentation, latestAttributeValueAtProposedLevel: Any?) { }
 }

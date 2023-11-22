@@ -194,6 +194,15 @@ public class ListTextProcessor: TextProcessing {
 
         for line in lines {
             if line.text.length == 0 || line.text.attribute(.listItem, at: 0, effectiveRange: nil) == nil {
+                var paraStyle: NSParagraphStyle? = nil
+                var range = line.range
+                if let prevCharRange = line.range.previousCharacterRange,
+                   prevCharRange.isValidIn(editor.textInput) {
+                    paraStyle = editor.attributedText.attribute(.paragraphStyle, at: prevCharRange.location, effectiveRange: nil) as? NSParagraphStyle
+                    range = prevCharRange
+                }
+
+                notifyIndentationChange(editor: editor, paraStyle: paraStyle, lineRange: range, indentMode: indentMode)
                 createListItemInANewLine(editor: editor, editedRange: line.range, indentMode: indentMode, attributeValue: attributeValue)
                 continue
             }
@@ -214,6 +223,8 @@ public class ListTextProcessor: TextProcessing {
                 return
             }
 
+            notifyIndentationChange(editor: editor, paraStyle: paraStyle, lineRange: line.range, indentMode: indentMode)
+
             editor.addAttribute(.paragraphStyle, value: mutableStyle ?? editor.paragraphStyle, at: line.range)
 
             // Remove listItem attribute if indented all the way back
@@ -224,8 +235,24 @@ public class ListTextProcessor: TextProcessing {
                     editor.removeAttribute(.listItem, at: NSRange(location: previousLine.range.endLocation, length: 1))
                 }
             }
+
+
             indentChildLists(editor: editor, editedRange: line.range, originalParaStyle: paraStyle, indentMode: indentMode)
         }
+    }
+
+    private func notifyIndentationChange(editor: EditorView, paraStyle: NSParagraphStyle?, lineRange: NSRange, indentMode: Indentation) {
+        let currentLevel = Int((paraStyle ?? editor.paragraphStyle).firstLineHeadIndent/editor.listLineFormatting.indentation)
+        var latestAttributeValueAtProposedLevel: Any?
+        let newLevel = CGFloat(indentMode == .indent ? currentLevel + 1 : currentLevel - 1) * editor.listLineFormatting.indentation
+        editor.attributedText.enumerateAttribute(.listItem, in: NSRange(location: 0, length: lineRange.endLocation), options: [.reverse, .longestEffectiveRangeNotRequired]) { attrValue, range, stop in
+            if let paragraphStyle = editor.attributedText.attribute(.paragraphStyle, at: range.location, effectiveRange: nil) as? NSParagraphStyle,
+               paragraphStyle.firstLineHeadIndent == newLevel {
+                latestAttributeValueAtProposedLevel = attrValue
+                stop.pointee = true
+            }
+        }
+        editor.listFormattingProvider?.willChangeListIndentation(editor: editor, range: lineRange, currentLevel: currentLevel, indentMode: indentMode, latestAttributeValueAtProposedLevel: latestAttributeValueAtProposedLevel)
     }
 
     private func indentChildLists(editor: EditorView, editedRange: NSRange, originalParaStyle: NSParagraphStyle?, indentMode: Indentation) {

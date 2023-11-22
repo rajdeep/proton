@@ -1025,6 +1025,18 @@ open class EditorView: UIView {
         richTextView.scrollRectToVisible(rect, animated: animated)
     }
 
+    /// Invalidates the display of content at the given range.
+    /// - Parameter range: Range to invalidate.
+    public func invalidateDisplay(for range: NSRange) {
+        richTextView.invalidateDisplay(for: range)
+    }
+
+    /// Invalidates the layout of content at the given range. This will also fore layout of any `Attachment` contained in the given range.
+    /// - Parameter range: Range to invalidate.
+    public func invalidateLayout(for range: NSRange) {
+        richTextView.invalidateLayout(for: range)
+    }
+
     /// Gets the contents within the `Editor`.
     /// - Parameter range: Range to be enumerated to get the contents. If no range is specified, entire content range is
     /// enumerated.
@@ -1343,10 +1355,6 @@ extension EditorView: RichTextViewDelegate {
 }
 
 extension EditorView {
-    func invalidateLayout(for range: NSRange) {
-        richTextView.invalidateLayout(for: range)
-    }
-
     func relayoutAttachments(in range: NSRange? = nil) {
         let rangeToUse = range ?? NSRange(location: 0, length: contentLength)
         richTextView.enumerateAttribute(.attachment, in: rangeToUse, options: .longestEffectiveRangeNotRequired) { [weak self] (attach, range, _) in
