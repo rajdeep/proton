@@ -89,13 +89,17 @@ public struct ListParser {
     /// - Parameters:
     ///   - attributedString: NSAttributedString to convert to list items.
     ///   - indent: Indentation used in list representation in attributedString. This determines the level of list item.
-    /// - Returns: Array of list items with corresponding range in attributedString
+    /// - Returns: Array of list items with corresponding range in attributedString along with `listIndex` denoting the index of list in the complete text. All items in the same list will have same index.
+    ///`listIndex` may be used to distinguish items of one list from another.
     /// - Note: If NSAttributedString passed into the function is non continuous i.e. contains multiple lists, the array will contain items from all the list with the range corresponding to range of text in original attributed string.
-    public static func parse(attributedString: NSAttributedString, indent: CGFloat = 25) -> [(range: NSRange, listItem: ListItem)] {
-        var items = [(range: NSRange, listItem: ListItem)]()
+    public static func parse(attributedString: NSAttributedString, indent: CGFloat = 25) -> [(listIndex: Int, range: NSRange, listItem: ListItem)] {
+        var items = [(listIndex: Int, range: NSRange, listItem: ListItem)]()
+        var counter = 1
         attributedString.enumerateAttribute(.listItem, in: attributedString.fullRange, options: []) { (value, range, _) in
             if value != nil {
-                items.append(contentsOf: parseList(in: attributedString.attributedSubstring(from: range), rangeInOriginalString: range, indent: indent, attributeValue: value))
+                let listItems = parseList(in: attributedString.attributedSubstring(from: range), rangeInOriginalString: range, indent: indent, attributeValue: value)
+                items.append(contentsOf: listItems.map {(listIndex: counter, range: $0.range, listItem: $0.listItem)})
+                counter += 1
             }
         }
         return items
@@ -110,13 +114,13 @@ public struct ListParser {
                 let text = attributedString.attributedSubstring(from: paraRange)
                 var lines = listLinesFrom(text: text)//text.string.components(separatedBy: .newlines)
 
-                if lines.last?.string.isEmpty ?? false {
+                if lines.last?.text.string.isEmpty ?? false {
                     lines.remove(at: lines.count - 1)
                 }
-                var start = 0
+
                 for i in 0..<lines.count {
                     let line = lines[i]
-                    let itemRange = NSRange(location: start, length: line.string.count)
+                    let itemRange = line.range
                     let newlineRange = NSRange(location: max(itemRange.location - 1, 0), length: 1)
                     if newlineRange.endLocation < text.length,
                        text.attributeValue(for: .skipNextListMarker, at: newlineRange.location) != nil,
@@ -124,21 +128,20 @@ public struct ListParser {
                         lastItem.range = NSRange(location: lastItem.range.location, length: itemRange.endLocation)
                         lastItem.listItem = ListItem(text: text.attributedSubstring(from: lastItem.range), level: level, attributeValue: attributeValue as Any)
                         items.remove(at: items.count - 1)
-                        items.append((range: lastItem.range.shiftedBy(rangeInOriginalString.location), listItem: lastItem.listItem))
+                        items.append((range: lastItem.range.shiftedBy(paraRange.location + rangeInOriginalString.location), listItem: lastItem.listItem))
                     } else {
                         let listLine = text.attributedSubstring(from: itemRange)
                         let item = ListItem(text: listLine, level: level, attributeValue: attributeValue as Any)
-                        items.append((itemRange.shiftedBy(rangeInOriginalString.location), item))
+                        items.append((itemRange.shiftedBy(paraRange.location + rangeInOriginalString.location), item))
                     }
-                    start += line.string.count + 1 // + 1 to account for \n
                 }
             }
         }
         return items
     }
 
-    private static func listLinesFrom(text: NSAttributedString) -> [NSAttributedString] {
-        var listItems = [NSAttributedString]()
+    private static func listLinesFrom(text: NSAttributedString) -> [(text: NSAttributedString, range: NSRange)] {
+        var listItems = [(text: NSAttributedString, range: NSRange)]()
 
         let newlineRanges = text.rangesOf(characterSet: .newlines)
         var startIndex = 0
@@ -150,13 +153,16 @@ public struct ListParser {
                 continue
             }
 
-            let itemText = text.attributedSubstring(from: NSRange(location: startIndex, length: newlineRange.location - startIndex))
-            listItems.append(itemText)
+            let range = NSRange(location: startIndex, length: newlineRange.location - startIndex)
+            let itemText = text.attributedSubstring(from: range)
+            listItems.append((text: itemText, range: range))
             startIndex = newlineRange.endLocation
         }
 
-        let itemText = text.attributedSubstring(from: NSRange(location: startIndex, length: text.length - startIndex))
-        listItems.append(itemText)
+
+        let range = NSRange(location: startIndex, length: text.length - startIndex)
+        let itemText = text.attributedSubstring(from: range)
+        listItems.append((text: itemText, range: range))
         return listItems
     }
 }
