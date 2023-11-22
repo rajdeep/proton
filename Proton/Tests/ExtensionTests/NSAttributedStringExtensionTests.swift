@@ -164,4 +164,28 @@ class NSAttributedStringExtensionTests: XCTestCase {
         let range = attributedString.rangeOf(attribute: testAttribute, at: 0)
         XCTAssertNil(range)
     }
+
+    func testGetsReverseRangeOfText() {
+        let text = NSMutableAttributedString(string: "This is a test string")
+        let range = text.reverseRange(of: "is", startingLocation: text.length - 1)
+        XCTAssertEqual(range, NSRange(location: 5, length: 2))
+    }
+
+    func testFailsReverseRangeOfTextCaseSensitive() {
+        let text = NSMutableAttributedString(string: "This is a test string")
+        let range = text.reverseRange(of: "Is", startingLocation: text.length - 1, isCaseInsensitive: false)
+        XCTAssertNil(range)
+    }
+
+    func testGetsReverseRangeOfTextCaseSensitive() {
+        let text = NSMutableAttributedString(string: "This is a test string")
+        let range = text.reverseRange(of: "Is", startingLocation: text.length - 1)
+        XCTAssertEqual(range, NSRange(location: 5, length: 2))
+    }
+
+    func testDoesNotFindReverseRangeOfText() {
+        let text = NSMutableAttributedString(string: "This is a test string")
+        let range = text.reverseRange(of: "isx", startingLocation: text.length - 1)
+        XCTAssertNil(range)
+    }
 }

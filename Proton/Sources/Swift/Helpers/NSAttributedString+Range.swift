@@ -140,4 +140,31 @@ public extension NSAttributedString {
         }
         return (string as NSString).substring(with: range)
     }
+    
+    /// Searches for given text in string
+    /// - Parameters:
+    ///   - searchText: Text to search
+    ///   - startingLocation: Starting location from which the text should be searched backwards
+    ///   - isCaseInsensitive: Case insensitive search. Defaults to `true`
+    /// - Returns: Range of search  text, if found.
+    func reverseRange(of searchText: String, startingLocation: Int, isCaseInsensitive: Bool = true) -> NSRange? {
+        guard startingLocation <= string.utf16.count else {
+            return nil
+        }
+
+        let string = self.string as NSString
+        let cursorRange = NSRange(location: 0, length: startingLocation)
+        let text = string.substring(with: cursorRange) as NSString
+        var options: NSString.CompareOptions = [.backwards, .caseInsensitive]
+        if isCaseInsensitive == false {
+            options = [.backwards]
+        }
+        let searchTextRange = text.range(of: searchText, options: options)
+        guard searchTextRange.location != NSNotFound else {
+            return nil
+        }
+
+        let range = NSRange(location: searchTextRange.location, length: searchText.count)
+        return range
+    }
 }
