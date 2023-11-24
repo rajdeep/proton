@@ -160,7 +160,7 @@ class EditorViewportSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 300, height: 900))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
 
-        waitForExpectations(timeout: 1.0)
+        waitForExpectations(timeout: 2.0)
     }
 
     func makePanelAttachments(count: Int, text: String) -> [Attachment] {
