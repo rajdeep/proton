@@ -379,6 +379,13 @@ public class GridView: UIView {
     public func setColumnResizing(_ enabled: Bool) {
         isColumnResizingHandlesVisible = enabled
     }
+    
+    /// Gets the cell for the `EditorView` contained in the current instance
+    /// - Parameter editor: Editor for which cell needs to be queried.
+    /// - Returns: `GridCell` that contains the passed in `EditorView`, if present
+    public func cellFor(_ editor: EditorView) -> GridCell? {
+        return cells.first(where: { $0.editor == editor })
+    }
 
     /// Determines if the collection of cells can be merged. For cells to be mergable, they need to
     /// be adjacent to each other, and the shape of selection needs to be rectangular.

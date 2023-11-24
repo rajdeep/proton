@@ -168,4 +168,17 @@ class GridViewTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
 
+    func testGetsCellFromEditor() throws {
+        let gridView = GridView(config: config)
+        let delegate = MockGridViewDelegate()
+        gridView.delegate = delegate
+        gridView.gridView.willMove(toWindow: UIWindow())
+
+        let cellToQuery = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 1))
+        let editorToQuery = try XCTUnwrap(cellToQuery.editor)
+
+        let cell = gridView.cellFor(editorToQuery)
+        XCTAssertEqual(cell, cellToQuery)
+    }
+
 }
