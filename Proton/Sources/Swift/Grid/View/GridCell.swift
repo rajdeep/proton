@@ -103,7 +103,7 @@ protocol GridCellDelegate: AnyObject {
 }
 
 /// Denotes a cell in the `GridView`
-public class GridCell {
+open class GridCell {
     public typealias EditorInitializer = () -> EditorView
 
     var id: String {
