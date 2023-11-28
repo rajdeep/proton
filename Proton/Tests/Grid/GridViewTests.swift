@@ -181,4 +181,20 @@ class GridViewTests: XCTestCase {
         XCTAssertEqual(cell, cellToQuery)
     }
 
+    func testUsesCustomEditorInit() {
+        let expectation = functionExpectation()
+        expectation.expectedFulfillmentCount = config.numberOfColumns * config.numberOfRows
+
+        let editorInit = {
+            expectation.fulfill()
+            return EditorView(frame: .zero)
+        }
+
+        let gridView = GridView(config: config, cellEditorInitializer: editorInit)
+        let delegate = MockGridViewDelegate()
+        gridView.delegate = delegate
+        gridView.gridView.willMove(toWindow: UIWindow())
+
+        waitForExpectations(timeout: 1.0)
+    }
 }

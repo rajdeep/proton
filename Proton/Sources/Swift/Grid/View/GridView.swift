@@ -209,14 +209,25 @@ public class GridView: UIView {
     }
 
     /// Initializes `GridView` using the provided configuration.
-    /// - Parameter config: Configuration for `GridView`
-    public convenience init(config: GridConfiguration) {
-        let gridView = GridContentView(config: config)
+    /// - Parameter
+    ///   - config: Configuration for `GridView`
+    ///   - cellEditorInitializer: Custom initializer for `EditorView` within `GridCell`. This will also be used when creating new cells as a
+    ///   return of adding new row or column, or cells being split.
+    public convenience init(config: GridConfiguration, cellEditorInitializer: GridCell.EditorInitializer? = nil) {
+        let gridView = GridContentView(config: config, editorInitializer: cellEditorInitializer)
         self.init(config: config, gridView: gridView)
     }
 
-    public convenience init(config: GridConfiguration, cells: [GridCell]) {
-        let gridView = GridContentView(config: config, cells: cells)
+    /// Initializes `GridView` using the provided configuration.
+    /// - Parameters:
+    ///   - config: Configuration for `GridView`
+    ///   - cells: Cells contained within `GridView`
+    ///   - cellEditorInitializer: Custom initializer for `EditorView` within `GridCell`. This will also be used when creating new cells as a
+    ///   return of adding new row or column, or cells being split.
+    ///   - Important:
+    ///   Care must be taken that the number of cells are correct per the configuration provided, failing which the `GridView` rendering may be broken.
+    public convenience init(config: GridConfiguration, cells: [GridCell], cellEditorInitializer: GridCell.EditorInitializer? = nil) {
+        let gridView = GridContentView(config: config, cells: cells, editorInitializer: cellEditorInitializer)
         self.init(config: config, gridView: gridView)
     }
 

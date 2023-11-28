@@ -93,16 +93,16 @@ class GridContentView: UIScrollView {
         grid.columnWidths
     }
 
-    init(config: GridConfiguration, cells: [GridCell]) {
+    init(config: GridConfiguration, cells: [GridCell], editorInitializer: GridCell.EditorInitializer?) {
         self.config = config
-        grid = Grid(config: config, cells: cells)
+        grid = Grid(config: config, cells: cells, editorInitializer: editorInitializer)
         super.init(frame: .zero)
         grid.delegate = self
     }
 
-    convenience init(config: GridConfiguration) {
-        let cells = Self.generateCells(config: config)
-        self.init(config: config, cells: cells)
+    convenience init(config: GridConfiguration, editorInitializer: GridCell.EditorInitializer?) {
+        let cells = Self.generateCells(config: config, editorInitializer: editorInitializer)
+        self.init(config: config, cells: cells, editorInitializer: editorInitializer)
     }
 
     required init?(coder: NSCoder) {
@@ -374,7 +374,10 @@ class GridContentView: UIScrollView {
         }
     }
 
-    private static func generateCells(config: GridConfiguration) -> [GridCell] {
+    private static func generateCells(
+        config: GridConfiguration,
+        editorInitializer: GridCell.EditorInitializer?
+    ) -> [GridCell] {
         var cells = [GridCell]()
         for row in 0..<config.numberOfRows {
             let rowStyle = config.rowsConfiguration[row].style
@@ -389,7 +392,8 @@ class GridContentView: UIScrollView {
                     initialHeight: initialHeight,
                     style: mergedStyle,
                     gridStyle: config.style,
-                    ignoresOptimizedInit: config.ignoresOptimizedInit
+                    ignoresOptimizedInit: config.ignoresOptimizedInit,
+                    editorInitializer: editorInitializer
                 )
                 cells.append(cell)
             }

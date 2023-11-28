@@ -182,10 +182,8 @@ open class GridCell {
 
     let initialHeight: CGFloat
 
-
     /// Initializes the cell
     /// - Parameters:
-    ///   - editorInitializer: Closure for setting up the `EditorView` within the cell. I
     ///   - rowSpan: Array of row indexes the cells spans. For e.g. a cell with first two rows as merged, will have a value of [0, 1] denoting 0th and 1st index.
     ///   - columnSpan: Array of column indexes the cells spans. For e.g. a cell with first two columns as merged, will have a value of [0, 1] denoting 0th and 1st index.
     ///   - initialHeight: Initial height of the cell. This will be updated based on size of editor content on load,
@@ -193,18 +191,19 @@ open class GridCell {
     ///   - gridStyle: Visual style for grid containing cell border color and width
     ///   - ignoresOptimizedInit: Ignores optimization to initialize editor within the cell. With optimization, the editor is not initialized until the cell is ready to be rendered on the UI thereby not incurring any overheads when creating
     ///   attributedText containing a `GridView` in an attachment. Defaults to `false`.
+    ///   - editorInitializer: Closure for setting up the `EditorView` within the cell.
     /// - Important:
     /// Creating a `GridView` with 100s of cells can result in slow performance when creating an attributed string containing the GridView attachment. Using the closure defers the creation until the view is ready to be rendered in the UI.
     /// It is recommended to setup all the parts of editor in closure where possible, or wait until after the GridView is rendered. In case, editor must be initialized before the rendering is complete and it is not possible to configure an aspect within the closure itself,
     /// `setupEditor()` may be invoked. Use of `setupEditor()` is discouraged.
-    public init(editorInitializer: @escaping EditorInitializer,
-                rowSpan: [Int],
+    public init(rowSpan: [Int],
                 columnSpan: [Int],
                 initialHeight: CGFloat = 40,
                 style: GridCellStyle = .init(),
                 gridStyle: GridStyle = .default,
-                ignoresOptimizedInit: Bool = false) {
-        self.editorInitializer = editorInitializer
+                ignoresOptimizedInit: Bool = false,
+                editorInitializer: EditorInitializer? = nil) {
+        self.editorInitializer = editorInitializer ?? { EditorView(allowAutogrowing: false) }
         self.rowSpan = rowSpan
         self.columnSpan = columnSpan
         self.gridStyle = gridStyle
@@ -226,23 +225,6 @@ open class GridCell {
         }
 
         setup()
-    }
-
-    public convenience init(rowSpan: [Int],
-                            columnSpan: [Int],
-                            initialHeight: CGFloat = 40,
-                            style: GridCellStyle = .init(),
-                            gridStyle: GridStyle = .default,
-                            ignoresOptimizedInit: Bool = true) {
-        self.init(
-            editorInitializer: { EditorView(allowAutogrowing: false) },
-            rowSpan: rowSpan,
-            columnSpan: columnSpan,
-            initialHeight: initialHeight,
-            style: style,
-            gridStyle: gridStyle,
-            ignoresOptimizedInit: ignoresOptimizedInit
-        )
     }
 
     /// Sets the focus in the `Editor` within the cell.
