@@ -68,7 +68,7 @@ public class CreateGridViewCommand: EditorCommand {
                     editor.attributedText = NSAttributedString(string: "Table \(id) {\(row), \(col)} Text in cell")
                     return editor
                 }
-                let cell = GridCell(editorInitializer: editorInit, rowSpan: [row], columnSpan: [col], initialHeight: 20)
+                let cell = GridCell(rowSpan: [row], columnSpan: [col], initialHeight: 20, editorInitializer: editorInit)
                 cells.append(cell)
             }
         }
