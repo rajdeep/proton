@@ -49,10 +49,12 @@ class Grid {
 
     private let config: GridConfiguration
     private let cellStore: GridCellStore
+    private let editorInitializer: GridCell.EditorInitializer?
 
     var rowHeights = [GridRowDimension]()
     var columnWidths = [GridColumnDimension]()
     weak var delegate: GridDelegate?
+
 
     var currentRowHeights: [CGFloat] {
         rowHeights.map { $0.calculatedHeight }
@@ -70,8 +72,9 @@ class Grid {
         rowHeights.count
     }
 
-    init(config: GridConfiguration, cells: [GridCell]) {
+    init(config: GridConfiguration, cells: [GridCell], editorInitializer: GridCell.EditorInitializer? = nil) {
         self.config = config
+        self.editorInitializer = editorInitializer
 
         for column in config.columnsConfiguration {
             self.columnWidths.append(GridColumnDimension(width: column.width, collapsedWidth: config.collapsedColumnWidth))
@@ -216,7 +219,8 @@ class Grid {
                     rowSpan: [row],
                     columnSpan: [col],
                     initialHeight: cell.initialHeight,
-                    ignoresOptimizedInit: true
+                    ignoresOptimizedInit: true,
+                    editorInitializer: editorInitializer
                 )
                 c.delegate = cell.delegate
                 newCells.append(c)
@@ -256,7 +260,8 @@ class Grid {
                 rowSpan: [sanitizedIndex],
                 columnSpan: [c],
                 initialHeight: config.initialHeight,
-                style: config.style)
+                style: config.style,
+                editorInitializer: editorInitializer)
 
             if cellAt(rowIndex: sanitizedIndex, columnIndex: c) != nil {
                 continue
@@ -293,7 +298,9 @@ class Grid {
                 rowSpan: [r],
                 columnSpan: [sanitizedIndex],
                 initialHeight: rowHeights[r].rowConfiguration.initialHeight,
-                style: config.style)
+                style: config.style,
+                editorInitializer: editorInitializer
+            )
 
             if cellAt(rowIndex: r, columnIndex: sanitizedIndex) != nil {
                 continue

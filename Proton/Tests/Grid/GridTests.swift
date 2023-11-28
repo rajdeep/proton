@@ -51,26 +51,6 @@ class GridTests: XCTestCase {
         }
     }
 
-    func testSome() throws {
-        let config = GridConfiguration(
-            columnsConfiguration: [
-                GridColumnConfiguration(width: .fixed(100)),
-                GridColumnConfiguration(width: .fixed(100)),
-            ],
-            rowsConfiguration: [
-                GridRowConfiguration(initialHeight: 50),
-                GridRowConfiguration(initialHeight: 50),
-                GridRowConfiguration(initialHeight: 50),
-            ])
-
-        let grid = Grid(config: config, cells: generateCells(config: config))
-        let cell00 = try XCTUnwrap(grid.cellAt(rowIndex: 0, columnIndex: 0))
-        let cell01 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 0))
-
-        print(grid.frameForCell(cell00, basedOn: CGSize(width: 300, height: 300)))
-        print(grid.frameForCell(cell01, basedOn: CGSize(width: 300, height: 300)))
-    }
-
     func testGetsFrameForCell() {
         let config = GridConfiguration(
             columnsConfiguration: [
@@ -237,6 +217,36 @@ class GridTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
 
+    func testInsertRowUsesCustomEditorInit() {
+        let expectation = functionExpectation()
+
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fractional(0.25)),
+                GridColumnConfiguration(width: .fixed(100.0)),
+                GridColumnConfiguration(width: .fractional(0.50)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 50),
+                GridRowConfiguration(initialHeight: 50),
+                GridRowConfiguration(initialHeight: 50),
+            ])
+
+        expectation.expectedFulfillmentCount = config.numberOfColumns
+
+        let editorInit = {
+            expectation.fulfill()
+            return EditorView(frame: .zero)
+        }
+
+        let grid = Grid(config: config, cells: generateCells(config: config), editorInitializer: editorInit)
+        grid.insertRow(at: 1, frozenRowMaxIndex: nil, config: GridRowConfiguration(initialHeight: 20), cellDelegate: nil)
+        let newCells = grid.cells.filter { $0.rowSpan.contains(1) }
+        newCells.forEach { _ = $0.editor }
+
+        waitForExpectations(timeout: 1.0)
+    }
+
     func testInsertColumn() {
         let expectation = functionExpectation()
         expectation.expectedFulfillmentCount = 3
@@ -273,6 +283,38 @@ class GridTests: XCTestCase {
             XCTAssertEqual(frame, expectedCellFrame.frame.insetBy(borderWidth: config.style.borderWidth))
             expectation.fulfill()
         }
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testInsertColumnUsesCustomEditorInit() {
+        let expectation = functionExpectation()
+        expectation.expectedFulfillmentCount = 3
+
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fractional(0.25)),
+                GridColumnConfiguration(width: .fixed(100.0)),
+                GridColumnConfiguration(width: .fractional(0.50)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 30),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 50),
+            ])
+
+        expectation.expectedFulfillmentCount = config.numberOfColumns
+
+        let editorInit = {
+            expectation.fulfill()
+            return EditorView(frame: .zero)
+        }
+
+        let grid = Grid(config: config, cells: generateCells(config: config), editorInitializer: editorInit)
+        grid.insertColumn(at: 1, frozenColumnMaxIndex: nil, config: GridColumnConfiguration(width: .fractional(0.30)), cellDelegate: nil)
+        XCTAssertEqual(grid.numberOfColumns, 4)
+        let newCells = grid.cells.filter { $0.columnSpan.contains(1) }
+        newCells.forEach { _ = $0.editor }
+
         waitForExpectations(timeout: 1.0)
     }
 
