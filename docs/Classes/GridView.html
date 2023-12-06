@@ -17,7 +17,7 @@
     <a title="GridView Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Proton Docs</a> (70% documented)</p>
+        <p><a href="../index.html">Proton Docs</a> (71% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -753,9 +753,9 @@ Default behaviour restricts scrolling to horizontal or vertical direction at a t
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton8GridViewC6configAcA0B13ConfigurationV_tcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(config:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton8GridViewC6configAcA0B13ConfigurationV_tcfc">init(config:<wbr>)</a>
+                    <a name="/s:6Proton8GridViewC6config21cellEditorInitializerAcA0B13ConfigurationV_AA0fC0CycSgtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(config:cellEditorInitializer:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridViewC6config21cellEditorInitializerAcA0B13ConfigurationV_AA0fC0CycSgtcfc">init(config:<wbr>cellEditorInitializer:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -770,7 +770,34 @@ Default behaviour restricts scrolling to horizontal or vertical direction at a t
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">config</span><span class="p">:</span> <span class="kt"><a href="../Structs/GridConfiguration.html">GridConfiguration</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">config</span><span class="p">:</span> <span class="kt"><a href="../Structs/GridConfiguration.html">GridConfiguration</a></span><span class="p">,</span> <span class="nv">cellEditorInitializer</span><span class="p">:</span> <span class="kt"><a href="../Classes/GridCell.html">GridCell</a></span><span class="o">.</span><span class="kt">EditorInitializer</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton8GridViewC6config5cells21cellEditorInitializerAcA0B13ConfigurationV_SayAA0B4CellCGAA0gC0CycSgtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(config:cells:cellEditorInitializer:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridViewC6config5cells21cellEditorInitializerAcA0B13ConfigurationV_SayAA0B4CellCGAA0gC0CycSgtcfc">init(config:<wbr>cells:<wbr>cellEditorInitializer:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initializes <code>GridView</code> using the provided configuration.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">config</span><span class="p">:</span> <span class="kt"><a href="../Structs/GridConfiguration.html">GridConfiguration</a></span><span class="p">,</span> <span class="nv">cells</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/GridCell.html">GridCell</a></span><span class="p">],</span> <span class="nv">cellEditorInitializer</span><span class="p">:</span> <span class="kt"><a href="../Classes/GridCell.html">GridCell</a></span><span class="o">.</span><span class="kt">EditorInitializer</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -790,35 +817,45 @@ Default behaviour restricts scrolling to horizontal or vertical direction at a t
                                 </div>
                               </td>
                             </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>cells</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Cells contained within <code>GridView</code></p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>cellEditorInitializer</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Custom initializer for <code><a href="../Classes/EditorView.html">EditorView</a></code> within <code><a href="../Classes/GridCell.html">GridCell</a></code>. This will also be used when creating new cells as a
+return of adding new row or column, or cells being split.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>Important</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Care must be taken that the number of cells are correct per the configuration provided, failing which the <code>GridView</code> rendering may be broken.</p>
+                                </div>
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:6Proton8GridViewC6config5cellsAcA0B13ConfigurationV_SayAA0B4CellCGtcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(config:cells:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton8GridViewC6config5cellsAcA0B13ConfigurationV_SayAA0B4CellCGtcfc">init(config:<wbr>cells:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">config</span><span class="p">:</span> <span class="kt"><a href="../Structs/GridConfiguration.html">GridConfiguration</a></span><span class="p">,</span> <span class="nv">cells</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/GridCell.html">GridCell</a></span><span class="p">])</span></code></pre>
-
-                        </div>
                       </div>
                     </section>
                   </div>
@@ -1737,7 +1774,7 @@ If the index is out of bounds, column will be inserted at the beginning or end o
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-11-25)</p>
+          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-12-06)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

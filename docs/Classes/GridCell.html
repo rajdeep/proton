@@ -17,7 +17,7 @@
     <a title="GridCell Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Proton Docs</a> (70% documented)</p>
+        <p><a href="../index.html">Proton Docs</a> (71% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -351,7 +351,7 @@
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">GridCell</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">GridCell</span></code></pre>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">GridCell</span><span class="p">:</span> <span class="kt"><a href="../Protocols/BoundsObserving.html">BoundsObserving</a></span></code></pre>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">GridCell</span><span class="p">:</span> <span class="kt"><a href="../Protocols/EditorViewDelegate.html">EditorViewDelegate</a></span></code></pre>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">GridCell</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
@@ -385,6 +385,33 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">EditorInitializer</span> <span class="o">=</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton8GridCellC20additionalAttributesSDySSypGvp"></a>
+                    <a name="//apple_ref/swift/Property/additionalAttributes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridCellC20additionalAttributesSDySSypGvp">additionalAttributes</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Additional attributes that can be stored on Cell to identify various aspects like Header, Numbered etc.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">additionalAttributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>
@@ -691,9 +718,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Proton8GridCellC17editorInitializer7rowSpan06columnG013initialHeight5style9gridStyle20ignoresOptimizedInitAcA10EditorViewCyc_SaySiGAM14CoreFoundation7CGFloatVAA0bcM0VAA0bM0VSbtcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(editorInitializer:rowSpan:columnSpan:initialHeight:style:gridStyle:ignoresOptimizedInit:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton8GridCellC17editorInitializer7rowSpan06columnG013initialHeight5style9gridStyle20ignoresOptimizedInitAcA10EditorViewCyc_SaySiGAM14CoreFoundation7CGFloatVAA0bcM0VAA0bM0VSbtcfc">init(editorInitializer:<wbr>rowSpan:<wbr>columnSpan:<wbr>initialHeight:<wbr>style:<wbr>gridStyle:<wbr>ignoresOptimizedInit:<wbr>)</a>
+                    <a name="/s:6Proton8GridCellC7rowSpan06columnE013initialHeight5style9gridStyle20ignoresOptimizedInit17editorInitializerACSaySiG_AK14CoreFoundation7CGFloatVAA0bcK0VAA0bK0VSbAA10EditorViewCycSgtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(rowSpan:columnSpan:initialHeight:style:gridStyle:ignoresOptimizedInit:editorInitializer:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridCellC7rowSpan06columnE013initialHeight5style9gridStyle20ignoresOptimizedInit17editorInitializerACSaySiG_AK14CoreFoundation7CGFloatVAA0bcK0VAA0bK0VSbAA10EditorViewCycSgtcfc">init(rowSpan:<wbr>columnSpan:<wbr>initialHeight:<wbr>style:<wbr>gridStyle:<wbr>ignoresOptimizedInit:<wbr>editorInitializer:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -715,13 +742,13 @@ It is recommended to setup all the parts of editor in closure where possible, or
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">editorInitializer</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Classes/GridCell.html#/s:6Proton8GridCellC17EditorInitializera">EditorInitializer</a></span><span class="p">,</span>
-            <span class="nv">rowSpan</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int</span><span class="p">],</span>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">rowSpan</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int</span><span class="p">],</span>
             <span class="nv">columnSpan</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int</span><span class="p">],</span>
             <span class="nv">initialHeight</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span>
             <span class="nv">style</span><span class="p">:</span> <span class="kt"><a href="../Structs/GridCellStyle.html">GridCellStyle</a></span> <span class="o">=</span> <span class="o">.</span><span class="nf">init</span><span class="p">(),</span>
             <span class="nv">gridStyle</span><span class="p">:</span> <span class="kt"><a href="../Structs/GridStyle.html">GridStyle</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
-            <span class="nv">ignoresOptimizedInit</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span></code></pre>
+            <span class="nv">ignoresOptimizedInit</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="nv">editorInitializer</span><span class="p">:</span> <span class="kt"><a href="../Classes/GridCell.html#/s:6Proton8GridCellC17EditorInitializera">EditorInitializer</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -729,18 +756,6 @@ It is recommended to setup all the parts of editor in closure where possible, or
                         <h4>Parameters</h4>
                         <table class="graybox">
                           <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>editorInitializer</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Closure for setting up the <code><a href="../Classes/EditorView.html">EditorView</a></code> within the cell. I</p>
-                                </div>
-                              </td>
-                            </tr>
                             <tr>
                               <td>
                                 <code>
@@ -814,40 +829,20 @@ attributedText containing a <code><a href="../Classes/GridView.html">GridView</a
                                 </div>
                               </td>
                             </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>editorInitializer</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Closure for setting up the <code><a href="../Classes/EditorView.html">EditorView</a></code> within the cell.</p>
+                                </div>
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:6Proton8GridCellC7rowSpan06columnE013initialHeight5style9gridStyle20ignoresOptimizedInitACSaySiG_AJ14CoreFoundation7CGFloatVAA0bcK0VAA0bK0VSbtcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(rowSpan:columnSpan:initialHeight:style:gridStyle:ignoresOptimizedInit:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton8GridCellC7rowSpan06columnE013initialHeight5style9gridStyle20ignoresOptimizedInitACSaySiG_AJ14CoreFoundation7CGFloatVAA0bcK0VAA0bK0VSbtcfc">init(rowSpan:<wbr>columnSpan:<wbr>initialHeight:<wbr>style:<wbr>gridStyle:<wbr>ignoresOptimizedInit:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">rowSpan</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int</span><span class="p">],</span>
-                        <span class="nv">columnSpan</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int</span><span class="p">],</span>
-                        <span class="nv">initialHeight</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span>
-                        <span class="nv">style</span><span class="p">:</span> <span class="kt"><a href="../Structs/GridCellStyle.html">GridCellStyle</a></span> <span class="o">=</span> <span class="o">.</span><span class="nf">init</span><span class="p">(),</span>
-                        <span class="nv">gridStyle</span><span class="p">:</span> <span class="kt"><a href="../Structs/GridStyle.html">GridStyle</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
-                        <span class="nv">ignoresOptimizedInit</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
-
-                        </div>
                       </div>
                     </section>
                   </div>
@@ -1139,7 +1134,7 @@ attributedText containing a <code><a href="../Classes/GridView.html">GridView</a
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-11-25)</p>
+          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-12-06)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
