@@ -66,9 +66,7 @@ class GridContentView: UIScrollView {
         grid.cells
     }
 
-    var selectedCells: [GridCell] {
-        cells.filter { $0.isSelected }
-    }
+    private(set) var selectedCells: [GridCell] = [GridCell]()
 
     var numberOfColumns: Int {
         grid.numberOfColumns
@@ -277,18 +275,30 @@ class GridContentView: UIScrollView {
     @objc
     private func handleSelection(_ sender: UIPanGestureRecognizer) {
         let location = sender.location(in: self)
+        if sender.state == .began {
+            deselectCurrentSelection()
+        }
+
         if sender.state == .began ||
             sender.state == .changed {
             selectCellsInLocation(location)
             let velocity = sender.velocity(in: self)
-            contentOffset.x += (velocity.x/100)
+            let updatedOffset = contentOffset.x + (velocity.x/100)
+            if updatedOffset >= 0, // prevent out of bounds scroll to left
+               updatedOffset + bounds.width <= contentSize.width { // prevent out of bounds scroll to right
+                contentOffset.x = updatedOffset
+            }
         }
     }
 
     func selectCellsInLocation(_ location: CGPoint) {
-        let cell = cells.first { $0.frame.contains(location) }
-        cell?.isSelected = true
-        gridContentViewDelegate?.gridContentView(self, didSelectCells: selectedCells)
+        guard let cell = cells.first(where: { $0.frame.contains(location) }) else { return }
+        cell.isSelected = true
+    }
+
+    func deselectCurrentSelection() {
+        selectedCells.forEach { $0.isSelected = false }
+        selectedCells.removeAll()
     }
 
     func invalidateCellLayout() {
@@ -437,6 +447,15 @@ extension GridContentView: GridCellDelegate {
             insertRow(at: grid.numberOfRows, configuration: GridRowConfiguration(initialHeight: 60))
         }
         gridContentViewDelegate?.gridContentView(self, didReceiveKey: key, at: range, in: cell)
+    }
+
+    func cell(_ cell: GridCell, didChangeSelected isSelected: Bool) {
+        if isSelected == false {
+            selectedCells.removeAll(where: { $0.id == cell.id })
+        } else {
+            selectedCells.append(cell)
+        }
+        gridContentViewDelegate?.gridContentView(self, didSelectCells: selectedCells)
     }
 
     private func isLastCell(_ cell: GridCell) -> Bool {

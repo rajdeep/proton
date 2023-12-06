@@ -100,6 +100,7 @@ protocol GridCellDelegate: AnyObject {
     func cell(_ cell: GridCell, didTapAtLocation location: CGPoint, characterRange: NSRange?)
     func cell(_ cell: GridCell, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name)
     func cell(_ cell: GridCell, didReceiveKey key: EditorKey, at range: NSRange)
+    func cell(_ cell: GridCell, didChangeSelected isSelected: Bool)
 }
 
 /// Denotes a cell in the `GridView`
@@ -141,6 +142,7 @@ open class GridCell {
             } else {
                 selectionView?.removeFromSuperview()
             }
+            self.delegate?.cell(self, didChangeSelected: isSelected)
         }
     }
 
@@ -224,7 +226,8 @@ open class GridCell {
         contentView.addGestureRecognizer(tapGestureRecognizer)
 
         self.selectionView = SelectionView { [weak self] in
-            self?.isSelected = false
+            guard let self else { return }
+            self.isSelected = false
         }
 
         setup()
