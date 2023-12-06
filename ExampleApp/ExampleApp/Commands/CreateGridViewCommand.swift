@@ -75,6 +75,7 @@ public class CreateGridViewCommand: EditorCommand {
 
         let attachment = GridViewAttachment(config: config, cells: cells)
         attachment.view.delegate = delegate
+        attachment.view.setColumnResizing(true)
         return attachment
     }
 

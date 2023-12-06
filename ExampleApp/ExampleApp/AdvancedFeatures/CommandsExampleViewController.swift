@@ -328,6 +328,10 @@ extension CommandsExampleViewController: EditorViewDelegate {
 }
 
 extension CommandsExampleViewController: GridViewDelegate {
+    func gridView(_ gridView: Proton.GridView, selectionHandleFor cell: Proton.GridCell) -> UIButton? {
+        nil
+    }
+    
     func gridView(_ gridView: GridView, didReceiveKey key: EditorKey, at range: NSRange, in cell: GridCell) { }
 
     func gridView(_ gridView: GridView, didLayoutCell cell: GridCell) { }

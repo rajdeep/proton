@@ -90,7 +90,19 @@ public protocol GridViewDelegate: AnyObject {
     /// - Returns: `true` if column resizing should be allowed, else false.
     func gridView(_ gridView: GridView, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool
 
+    /// Notifies when `GridView` lays out a cell. This is called after the bounds calculation for the cell have been performed.
+    /// Rendering of cell may not have been completed at this time.
+    /// - Parameters:
+    ///   - gridView: GridView containing the cell.
+    ///   - cell: Cell being laid out
     func gridView(_ gridView: GridView, didLayoutCell cell: GridCell)
+
+    /// Invoked before displaying selection handles for the given cell
+    /// - Parameters:
+    ///   - gridView: GridView containing the cell.
+    ///   - cell: Cell to show selection handles for
+    /// - Returns: Button to show as drag handles when resizing a column. When nil, default drag handles are used.
+    func gridView(_ gridView: GridView, selectionHandleFor cell: GridCell) -> UIButton?
 }
 
 /// A view that provides a tabular structure where each cell is an `EditorView`.
@@ -299,8 +311,8 @@ public class GridView: UIView {
             handleView.translatesAutoresizingMaskIntoConstraints = false
             addSubview(handleView)
             NSLayoutConstraint.activate([
-                handleView.widthAnchor.constraint(equalToConstant: handleSize),
-                handleView.heightAnchor.constraint(equalTo: handleView.widthAnchor),
+                handleView.widthAnchor.constraint(equalToConstant: handleView.frame.width),
+                handleView.heightAnchor.constraint(equalToConstant: handleView.frame.height),
                 handleView.centerYAnchor.constraint(equalTo: cell.contentView.bottomAnchor),
                 handleView.centerXAnchor.constraint(equalTo: cell.contentView.trailingAnchor)
             ])
@@ -358,7 +370,7 @@ public class GridView: UIView {
     }
 
     private func makeColumnResizingHandle(cell: GridCell) -> CellHandleButton {
-        let dragHandle = CellHandleButton(cell: cell, cornerRadius: handleSize/2)
+        let dragHandle = CellHandleButton(cell: cell, size: CGSize(width: handleSize, height: handleSize))
         dragHandle.translatesAutoresizingMaskIntoConstraints = false
         dragHandle.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragHandler(gesture:))))
         return dragHandle
@@ -636,9 +648,10 @@ extension GridView: GridContentViewDelegate {
 class CellHandleButton: UIButton {
     let cell: GridCell
 
-    init(cell: GridCell, cornerRadius: CGFloat) {
+    init(cell: GridCell, size: CGSize) {
+        let cornerRadius = size.width/2
         self.cell = cell
-        super.init(frame: .zero)
+        super.init(frame: CGRect(origin: .zero, size: size))
         layer.cornerRadius = cornerRadius
         alpha = 0.4
         backgroundColor = tintColor
