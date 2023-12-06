@@ -110,6 +110,9 @@ open class GridCell {
         "{\(rowSpan),\(columnSpan)}"
     }
 
+    /// Additional attributes that can be stored on Cell to identify various aspects like Header, Numbered etc.
+    public var additionalAttributes: [String: Any] = [:]
+
     /// Row indexes spanned by the cell. In case of a merged cell, this will contain all the rows= indexes which are merged.
     public internal(set) var rowSpan: [Int]
     /// Column indexes spanned by the cell. In case of a merged cell, this will contain all the column indexes which are merged.
