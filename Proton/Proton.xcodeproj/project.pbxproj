@@ -129,6 +129,8 @@
 		1BD993C023C9EAA900563ACB /* TextTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993BF23C9EAA900563ACB /* TextTransformer.swift */; };
 		1BD993C423CACCE100563ACB /* MockAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993C323CACCE100563ACB /* MockAttachment.swift */; };
 		1BDA09422AD4B4D400674CFE /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDA09412AD4B4D400674CFE /* Logger.swift */; };
+		1BDC794A2B2026EC00B19971 /* GridCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDC79492B2026EC00B19971 /* GridCellTests.swift */; };
+		1BDC794C2B20271800B19971 /* MockGridCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDC794B2B20271800B19971 /* MockGridCellDelegate.swift */; };
 		1BF90FB4245E503E00A411A3 /* TextBlockAttributeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90FB3245E503E00A411A3 /* TextBlockAttributeTests.swift */; };
 		1BFA75A42897D52300E4A2AD /* GridViewAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFA75A32897D52300E4A2AD /* GridViewAttachment.swift */; };
 		1BFBFC892ADE34050057CCB3 /* MockEditorCommandExecutorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFBFC882ADE34050057CCB3 /* MockEditorCommandExecutorDelegate.swift */; };
@@ -300,6 +302,8 @@
 		1BD993BF23C9EAA900563ACB /* TextTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransformer.swift; sourceTree = "<group>"; };
 		1BD993C323CACCE100563ACB /* MockAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAttachment.swift; sourceTree = "<group>"; };
 		1BDA09412AD4B4D400674CFE /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		1BDC79492B2026EC00B19971 /* GridCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCellTests.swift; sourceTree = "<group>"; };
+		1BDC794B2B20271800B19971 /* MockGridCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGridCellDelegate.swift; sourceTree = "<group>"; };
 		1BE8825E250DD7B600E2CC1B /* PRTextStorage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PRTextStorage.m; sourceTree = "<group>"; };
 		1BE88263250E3ADB00E2CC1B /* PREditorContentName.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PREditorContentName.m; sourceTree = "<group>"; };
 		1BF90FB3245E503E00A411A3 /* TextBlockAttributeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBlockAttributeTests.swift; sourceTree = "<group>"; };
@@ -629,6 +633,7 @@
 			isa = PBXGroup;
 			children = (
 				1B9AF9E82851ECC300CD65C4 /* MockGridViewDelegate.swift */,
+				1BDC794B2B20271800B19971 /* MockGridCellDelegate.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -751,6 +756,7 @@
 			children = (
 				1B9AF9E72851ECB600CD65C4 /* Mocks */,
 				1BD185BE284C2A66001F4FBC /* GridTests.swift */,
+				1BDC79492B2026EC00B19971 /* GridCellTests.swift */,
 				1BD185C3284C33B0001F4FBC /* GridViewSnapshotTests.swift */,
 				1BD185CE284D8399001F4FBC /* GridViewAttachmentSnapshotTests.swift */,
 				1B9AF9E52851EC2500CD65C4 /* GridViewTests.swift */,
@@ -1091,6 +1097,7 @@
 				1B45CD9F23BEE997001EB196 /* SnapshotTestViewController.swift in Sources */,
 				1BFFEF1A23C3344A00D2BA35 /* AutogrowingTextField.swift in Sources */,
 				1BD993B423C9966A00563ACB /* MockTextProcessor.swift in Sources */,
+				1BDC794A2B2026EC00B19971 /* GridCellTests.swift in Sources */,
 				1B164F5223D2B9D400A0869A /* TestTextProcessor.swift in Sources */,
 				1BFA75A42897D52300E4A2AD /* GridViewAttachment.swift in Sources */,
 				1BFBFC892ADE34050057CCB3 /* MockEditorCommandExecutorDelegate.swift in Sources */,
@@ -1117,6 +1124,7 @@
 				1B45CDD923C0484A001EB196 /* RichTextViewTests.swift in Sources */,
 				1BC25B542448768200FF88AC /* EditorContextDelegateTests.swift in Sources */,
 				1B9AF9E62851EC2500CD65C4 /* GridViewTests.swift in Sources */,
+				1BDC794C2B20271800B19971 /* MockGridCellDelegate.swift in Sources */,
 				1B98D5B0286828EC0091C927 /* SnapshotTestCase.swift in Sources */,
 				1BFDC811254AA11F00BD83BD /* ListParserTests.swift in Sources */,
 				1B6FB18A2ABA75E7008CE69E /* MockAsyncAttachmentRenderingDelegate.swift in Sources */,
