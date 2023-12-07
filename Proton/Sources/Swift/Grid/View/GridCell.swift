@@ -137,6 +137,7 @@ open class GridCell {
     public var isSelected: Bool {
         get { selectionView?.superview != nil }
         set {
+            guard newValue != isSelected else { return }
             if newValue {
                 selectionView?.addTo(parent: contentView)
             } else {

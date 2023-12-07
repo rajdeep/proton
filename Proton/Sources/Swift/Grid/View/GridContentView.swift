@@ -182,6 +182,17 @@ class GridContentView: UIScrollView {
         self.scrollRectToVisible(frame, animated: animated)
     }
 
+    func selectCells(_ cells: [GridCell]) {
+        deselectCells()
+//        selectedCells.append(contentsOf: cells)
+        cells.forEach { $0.isSelected = true }
+    }
+
+    func deselectCells() {
+        selectedCells.forEach { $0.isSelected = false }
+        selectedCells.removeAll()
+    }
+
     func isMergeable(cells: [GridCell]) -> Bool {
         return grid.isMergeable(cells: cells)
     }

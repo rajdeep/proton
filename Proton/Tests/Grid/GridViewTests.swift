@@ -197,4 +197,26 @@ class GridViewTests: XCTestCase {
 
         waitForExpectations(timeout: 1.0)
     }
+
+    func testNotifiesOfCellSelectionChanges() throws {
+        let expectation = functionExpectation()
+        let gridView = GridView(config: config)
+        let delegate = MockGridViewDelegate()
+        gridView.delegate = delegate
+        gridView.gridView.willMove(toWindow: UIWindow())
+
+        var cellsToSelect = gridView.cells.filter { $0.rowSpan.contains(0) }
+        var column = 0
+        expectation.expectedFulfillmentCount = cellsToSelect.count
+        delegate.onDidSelectCells = { _, cells in
+            if let lastCell = cells.last {
+                XCTAssertTrue(cellsToSelect.contains(lastCell))
+                XCTAssertEqual(lastCell.columnSpan.first, column)
+                column += 1
+                expectation.fulfill()
+            }
+        }
+        gridView.selectCells(cellsToSelect)
+        waitForExpectations(timeout: 1.0)
+    }
 }

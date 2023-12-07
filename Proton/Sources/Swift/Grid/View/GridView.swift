@@ -90,6 +90,11 @@ public protocol GridViewDelegate: AnyObject {
     /// - Returns: `true` if column resizing should be allowed, else false.
     func gridView(_ gridView: GridView, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool
 
+    /// Notifies when `GridView` lays out a cell. This is called after the bounds calculation for the cell have been performed.
+    /// Rendering of cell may not have been completed at this time.
+    /// - Parameters:
+    ///   - gridView: GridView containing the cell.
+    ///   - cell: Cell being laid out
     func gridView(_ gridView: GridView, didLayoutCell cell: GridCell)
 }
 
@@ -396,6 +401,19 @@ public class GridView: UIView {
     /// - Returns: `GridCell` that contains the passed in `EditorView`, if present
     public func cellFor(_ editor: EditorView) -> GridCell? {
         return cells.first(where: { $0.editor == editor })
+    }
+
+    /// Selects given cells. Also, deselects any previously selected cells
+    /// - Parameter cells: Cells to select.
+    /// - Note:
+    /// Any combination of cells can be passed in, and will be selected, if possible.
+    public func selectCells(_ cells: [GridCell]) {
+        gridView.selectCells(cells)
+    }
+
+    /// Deselects any selected cell.
+    public func deselectCells() {
+        gridView.deselectCells()
     }
 
     /// Determines if the collection of cells can be merged. For cells to be mergable, they need to
