@@ -219,4 +219,52 @@ class GridViewTests: XCTestCase {
         gridView.selectCells(cellsToSelect)
         waitForExpectations(timeout: 1.0)
     }
+
+    func testDeselectsCellAfterMerge() {
+        let gridView = GridView(config: config)
+        let delegate = MockGridViewDelegate()
+        gridView.delegate = delegate
+        gridView.gridView.willMove(toWindow: UIWindow())
+
+        let cells = gridView.cells.filter({ $0.rowSpan.first ?? 0 < 2 && $0.columnSpan.first ?? 0 < 2 })
+        gridView.selectCells(cells)
+
+        XCTAssertEqual(gridView.selectedCells.count, 4)
+        gridView.merge(cells: cells)
+        XCTAssertEqual(gridView.selectedCells.count, 0)
+    }
+
+    func testDeselectsCellAfterSplit() {
+        let gridView = GridView(config: config)
+        let delegate = MockGridViewDelegate()
+        gridView.delegate = delegate
+        gridView.gridView.willMove(toWindow: UIWindow())
+
+        let cells = gridView.cells.filter({ $0.rowSpan.first ?? 0 < 2 && $0.columnSpan.first ?? 0 < 2 })
+        gridView.selectCells(cells)
+
+        XCTAssertEqual(gridView.selectedCells.count, 4)
+        XCTAssertEqual(gridView.cells.count, 6)
+        gridView.merge(cells: cells)
+        XCTAssertEqual(gridView.cells.count, 3)
+        gridView.selectCells([cells[0]])
+        gridView.split(cell: cells[0])
+        XCTAssertEqual(gridView.cells.count, 6)
+        XCTAssertEqual(gridView.selectedCells.count, 0)
+    }
+
+    func testIgnoresNonSelectableCellsOnSelection() {
+        let gridView = GridView(config: config)
+        let delegate = MockGridViewDelegate()
+        gridView.delegate = delegate
+        gridView.gridView.willMove(toWindow: UIWindow())
+
+        gridView.cells.filter({ $0.rowSpan.first ?? 0 < 2 && $0.columnSpan.first ?? 0 < 1 }).forEach {
+            $0.isSelectable = false
+        }
+        gridView.selectCells(gridView.cells.filter({ $0.rowSpan.first ?? 0 < 2 && $0.columnSpan.first ?? 0 < 2 }))
+        XCTAssertEqual(gridView.selectedCells.count, 2)
+        XCTAssertEqual(gridView.selectedCells[0].id, "{[0],[1]}")
+        XCTAssertEqual(gridView.selectedCells[1].id, "{[1],[1]}")
+    }
 }

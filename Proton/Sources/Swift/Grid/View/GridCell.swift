@@ -137,7 +137,8 @@ open class GridCell {
     public var isSelected: Bool {
         get { selectionView?.superview != nil }
         set {
-            guard newValue != isSelected else { return }
+            guard isSelectable,
+                newValue != isSelected else { return }
             if newValue {
                 selectionView?.addTo(parent: contentView)
             } else {
@@ -146,6 +147,9 @@ open class GridCell {
             self.delegate?.cell(self, didChangeSelected: isSelected)
         }
     }
+
+    /// Controls if the cell can be selected or not.
+    public var isSelectable: Bool = true
 
     private(set) var editorSetupComplete = false
     private var _editor: EditorView?
