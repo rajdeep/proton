@@ -185,6 +185,7 @@ class GridContentView: UIScrollView {
     func selectCells(_ cells: [GridCell]) {
         deselectCells()
 //        selectedCells.append(contentsOf: cells)
+        cells.first?.editor.setFocus()
         cells.forEach { $0.isSelected = true }
     }
 
@@ -200,12 +201,15 @@ class GridContentView: UIScrollView {
     func merge(cells: [GridCell]) -> GridCell? {
         let mergedCell = grid.merge(cells: cells)
         invalidateCellLayout()
+        deselectCells()
         return mergedCell
     }
 
     func split(cell: GridCell) -> [GridCell] {
         let cells = grid.split(cell: cell)
         invalidateCellLayout()
+        // First cell is the existing merged cell. Others are added as new.
+        deselectCells()
         return cells
     }
 
@@ -290,9 +294,11 @@ class GridContentView: UIScrollView {
             deselectCurrentSelection()
         }
 
-        if sender.state == .began ||
-            sender.state == .changed {
-            selectCellsInLocation(location)
+        if sender.state == .began || sender.state == .changed {
+            let cell = selectCellsInLocation(location)
+            if sender.state == .began {
+                cell?.editor.setFocus()
+            }
             let velocity = sender.velocity(in: self)
             let updatedOffset = contentOffset.x + (velocity.x/100)
             if updatedOffset >= 0, // prevent out of bounds scroll to left
@@ -302,9 +308,10 @@ class GridContentView: UIScrollView {
         }
     }
 
-    func selectCellsInLocation(_ location: CGPoint) {
-        guard let cell = cells.first(where: { $0.frame.contains(location) }) else { return }
+    func selectCellsInLocation(_ location: CGPoint) -> GridCell? {
+        guard let cell = cells.first(where: { $0.frame.contains(location) }) else { return nil }
         cell.isSelected = true
+        return cell
     }
 
     func deselectCurrentSelection() {
