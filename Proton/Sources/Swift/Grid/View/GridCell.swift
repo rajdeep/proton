@@ -169,8 +169,9 @@ open class GridCell {
             return _editor
         }
         let editor = editorInitializer()
-        onEditorInitialized?(self, editor)
+        // backing var needs to be set before invoking onEditorInitialized
         _editor = editor
+        onEditorInitialized?(self, editor)
         return editor
     }
 
