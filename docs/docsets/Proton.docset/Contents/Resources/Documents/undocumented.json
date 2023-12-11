@@ -835,21 +835,21 @@
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/Core/Grid.swift",
-      "line": 401,
+      "line": 408,
       "symbol": "GridViewError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/Core/Grid.swift",
-      "line": 402,
+      "line": 409,
       "symbol": "GridViewError.failedToInsertInFrozenRows",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/Core/Grid.swift",
-      "line": 403,
+      "line": 410,
       "symbol": "GridViewError.failedToInsertInFrozenColumns",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
@@ -1080,42 +1080,35 @@
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridCell.swift",
-      "line": 107,
+      "line": 108,
       "symbol": "GridCell.EditorInitializer",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridCell.swift",
-      "line": 171,
+      "line": 176,
       "symbol": "GridCell.gridStyle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridCell.swift",
-      "line": 172,
+      "line": 177,
       "symbol": "GridCell.style",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridCell.swift",
-      "line": 173,
+      "line": 178,
       "symbol": "GridCell.ignoresOptimizedInit",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridCell.swift",
-      "line": 231,
-      "symbol": "GridCell.init(rowSpan:columnSpan:initialHeight:style:gridStyle:ignoresOptimizedInit:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridContentView.swift",
-      "line": 444,
+      "line": 467,
       "symbol": "GridContentView.sizeFor(attachment:containerSize:lineRect:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -1136,35 +1129,28 @@
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridView.swift",
-      "line": 218,
-      "symbol": "GridView.init(config:cells:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridView.swift",
-      "line": 463,
+      "line": 474,
       "symbol": "GridView.unfreezeColumns()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridView.swift",
-      "line": 467,
+      "line": 478,
       "symbol": "GridView.unfreezeRows()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridView.swift",
-      "line": 471,
+      "line": 482,
       "symbol": "GridView.collapseRow(at:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Grid/View/GridView.swift",
-      "line": 552,
+      "line": 563,
       "symbol": "GridView.scrollViewDidScroll(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

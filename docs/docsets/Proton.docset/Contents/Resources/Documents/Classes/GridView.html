@@ -395,6 +395,33 @@ including another <code>GridView</code> as an attachment.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Proton8GridViewC19containerAttachmentAA0E0CSgvp"></a>
+                    <a name="//apple_ref/swift/Property/containerAttachment" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridViewC19containerAttachmentAA0E0CSgvp">containerAttachment</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets the attachment containing the <code>GridView</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">containerAttachment</span><span class="p">:</span> <span class="kt"><a href="../Classes/Attachment.html">Attachment</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Proton8GridViewC30isColumnResizingHandlesVisibleSbvp"></a>
                     <a name="//apple_ref/swift/Property/isColumnResizingHandlesVisible" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Proton8GridViewC30isColumnResizingHandlesVisibleSbvp">isColumnResizingHandlesVisible</a>
@@ -952,6 +979,84 @@ return of adding new row or column, or cells being split.</p>
                       <div>
                         <h4>Return Value</h4>
                         <p><code><a href="../Classes/GridCell.html">GridCell</a></code> that contains the passed in <code><a href="../Classes/EditorView.html">EditorView</a></code>, if present</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton8GridViewC11selectCellsyySayAA0B4CellCGF"></a>
+                    <a name="//apple_ref/swift/Method/selectCells(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridViewC11selectCellsyySayAA0B4CellCGF">selectCells(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Selects given cells. Also, deselects any previously selected cells</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Any combination of cells can be passed in, and will be selected, if possible.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">selectCells</span><span class="p">(</span><span class="n">_</span> <span class="nv">cells</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/GridCell.html">GridCell</a></span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>cells</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Cells to select.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton8GridViewC13deselectCellsyyF"></a>
+                    <a name="//apple_ref/swift/Method/deselectCells()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton8GridViewC13deselectCellsyyF">deselectCells()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Deselects any selected cell.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">deselectCells</span><span class="p">()</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -1774,7 +1879,7 @@ If the index is out of bounds, column will be inserted at the beginning or end o
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-12-06)</p>
+          <p>&copy; 2023 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2023-12-12)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
