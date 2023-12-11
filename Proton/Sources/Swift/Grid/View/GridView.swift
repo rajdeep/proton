@@ -135,6 +135,11 @@ public class GridView: UIView {
     /// Delegate for `GridView` which can be used to handle cell specific `EditorView` events
     public weak var delegate: GridViewDelegate?
 
+    /// Gets the attachment containing the `GridView`
+    public var containerAttachment: Attachment? {
+        attachmentContentView?.attachment
+    }
+
     /// Determines if column resizing handles are visible or not.
     public private(set) var isColumnResizingHandlesVisible = false {
         didSet {
