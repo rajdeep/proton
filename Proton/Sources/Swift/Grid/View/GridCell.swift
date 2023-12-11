@@ -151,6 +151,14 @@ open class GridCell {
     /// Controls if the cell can be selected or not.
     public var isSelectable: Bool = true
 
+    /// Invoked when Editor in contained in the Cell is initialized. Only applicable when deferred `editorInitializer` is passed in `init`.
+    public var onEditorInitialized: ((GridCell, EditorView) -> Void)?
+
+    /// Confirms if Editor within Cell has been initialized or not. Only applicable when deferred `editorInitializer` is passed in `init`.
+    public var isEditorInitialized: Bool {
+        _editor != nil
+    }
+
     private(set) var editorSetupComplete = false
     private var _editor: EditorView?
     /// Editor within the cell
@@ -161,6 +169,7 @@ open class GridCell {
             return _editor
         }
         let editor = editorInitializer()
+        onEditorInitialized?(self, editor)
         _editor = editor
         return editor
     }
