@@ -496,7 +496,7 @@ open class EditorView: UIView {
     }
 
     public var selectedRange: NSRange {
-        get { richTextView.selectedRange }
+        get { richTextView.selectedRange.clamped(upperBound: richTextView.attributedText.length) }
         set { richTextView.selectedRange = newValue }
     }
 
