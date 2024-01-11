@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.9
 //
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
@@ -21,13 +21,14 @@ let package = Package(
     name: "Proton",
     platforms: [
         .iOS(.v14),
+        .visionOS(.v1)
     ],
     products: [
         .library(name: "Proton", targets: ["Proton"]),
         .library(name: "ProtonCore", targets: ["ProtonCore"])
     ],
     dependencies: [
-        .package(name: "SnapshotTesting", url: "https://github.com/pointfreeco/swift-snapshot-testing.git", .branch("master"))
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.15.2")
     ],
     targets: [
         .target(
@@ -42,7 +43,7 @@ let package = Package(
         ),
         .testTarget(
             name: "ProtonTests",
-            dependencies: ["Proton", "SnapshotTesting"],
+            dependencies: ["Proton", .product(name: "SnapshotTesting", package: "swift-snapshot-testing")],
             path: "Proton/Tests"
         )
     ]
