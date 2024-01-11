@@ -245,13 +245,19 @@ open class EditorView: UIView {
 
     /// Input accessory view to be used
     open var editorInputAccessoryView: UIView? {
-#if os(visionOS)
-        return nil
+        get {
+#if !os(visionOS)
+            return richTextView.inputAccessoryView
 #else
-        get { richTextView.inputAccessoryView }
-        set { richTextView.inputAccessoryView = newValue }
-
+            return nil
 #endif
+        } set {
+#if os(visionOS)
+            return
+#else
+            richTextView.inputAccessoryView = newValue
+#endif
+        }
     }
 
     /// Input view to be used
