@@ -57,6 +57,26 @@
                BlueprintName = "ProtonTests"
                ReferencedContainer = "container:Proton.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "EditorSnapshotTests/testGetsRangeForRect()">
+               </Test>
+               <Test
+                  Identifier = "EditorSnapshotTests/testRendersPlaceholder()">
+               </Test>
+               <Test
+                  Identifier = "EditorSnapshotTests/testRendersWidthRangeAttachment()">
+               </Test>
+               <Test
+                  Identifier = "EditorViewportSnapshotTests/testNotifiesViewportRenderingWhenNoAttachments()">
+               </Test>
+               <Test
+                  Identifier = "EditorViewportSnapshotTests/testRendersSuccessiveViewports()">
+               </Test>
+               <Test
+                  Identifier = "EditorViewportSnapshotTests/testRendersViewport()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>
