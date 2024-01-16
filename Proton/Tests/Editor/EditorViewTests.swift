@@ -823,6 +823,14 @@ class EditorViewTests: XCTestCase {
         XCTAssertTrue(editor.richTextView.selectedRange.isValidIn(editor.richTextView))
         XCTAssertEqual(editor.selectedRange, NSRange(location: 3, length: 0))
     }
+
+    func testAttachmentsInRangeWithInvalidRange() {
+        let editor = EditorView()
+        editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Test"))
+        editor.attributedText = NSAttributedString(string: "In")
+        _ = editor.attachmentsInRange(NSRange(location: 2, length: 1))
+        XCTAssertEqual(editor.attributedText.length, 2)
+    }
 }
 
 class DummyMultiEditorAttachment: Attachment {
