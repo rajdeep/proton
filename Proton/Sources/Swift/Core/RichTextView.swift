@@ -477,11 +477,21 @@ class RichTextView: AutogrowingTextView {
         let newLineRanges = string.rangesOf(characterSet: .newlines)
         newLineRanges.forEach { string.addAttributes([.blockContentType: EditorContentName.newline()], range: $0)}
         textStorage.replaceCharacters(in: range, with: string)
+        ensuringValidSelectedRange()
     }
 
     func replaceCharacters(in range: NSRange, with string: String) {
         // Delegate to function with attrString so that default attributes are automatically applied
         textStorage.replaceCharacters(in: range, with: NSAttributedString(string: string))
+    }
+
+    @discardableResult
+    func ensuringValidSelectedRange() -> NSRange {
+        let clamped = selectedRange.clamped(upperBound: attributedText.length)
+        if clamped != selectedRange {
+            selectedRange = clamped
+        }
+        return selectedRange
     }
 
     private func updatePlaceholderVisibility() {
