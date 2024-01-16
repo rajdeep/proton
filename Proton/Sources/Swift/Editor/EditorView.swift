@@ -153,6 +153,12 @@ open class EditorView: UIView {
     /// Context for the current Editor
     public let editorViewContext: EditorViewContext
 
+    /// Returns if `attributedText` change is pending. `AttributedText` may not have been applied if the `EditorView` is not already on
+    /// `window` and `forceApplyAttributedText` is not set to `true`.
+    public var isAttributedTextPending: Bool {
+        pendingAttributedText != nil
+    }
+
     /// Enables asynchronous rendering of attachments.
     /// - Note:
     /// Since attachments must me rendered on main thread, the rendering only continues when there is no user interaction. By default, rendering starts
@@ -355,6 +361,7 @@ open class EditorView: UIView {
     /// An attachment is only counted as a single character. Content length does not include
     /// length of content within the Attachment that is hosting another `EditorView`.
     public var contentLength: Int {
+        guard pendingAttributedText == nil else { return attributedText.length }
         return richTextView.contentLength
     }
 
@@ -475,6 +482,11 @@ open class EditorView: UIView {
     public var forceApplyAttributedText = false
 
     /// Text to be set in the `EditorView`
+    /// - Important: `attributedText` is not set for rendering in `EditorView` if the `EditorView` is not already in a `Window`. Value of `true`
+    /// for `isAttributedTextPending` confirms that the text has not yet been rendered even though it is set in the `EditorView`.
+    /// Notification of text being set can be observed by subscribing to `didSetAttributedText` in `EditorViewDelegate`.
+    /// Alternatively, `forceApplyAttributedText` may be set to `true` to always apply `attributedText` irrespective of `EditorView` being
+    /// in a `Window` or not.
     public var attributedText: NSAttributedString {
         get {
             pendingAttributedText ?? richTextView.attributedText
@@ -510,7 +522,7 @@ open class EditorView: UIView {
     }
 
     public var selectedRange: NSRange {
-        get { richTextView.selectedRange.clamped(upperBound: richTextView.attributedText.length) }
+        get { richTextView.ensuringValidSelectedRange() }
         set { richTextView.selectedRange = newValue }
     }
 
@@ -801,7 +813,7 @@ open class EditorView: UIView {
     }
 
     public func attachmentsInRange(_ range: NSRange) -> [AttachmentRange] {
-        guard range.endLocation < contentLength else { return [] }
+        guard range.endLocation < attributedText.length else { return [] }
         let substring = attributedText.attributedSubstring(from: range)
         return substring.attachmentRanges
     }
