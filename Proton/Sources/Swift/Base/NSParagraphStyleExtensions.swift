@@ -31,6 +31,8 @@ public extension NSParagraphStyle {
 
     /// Returns `LineFormatting` based on current style
     var lineFormatting: LineFormatting {
-        return LineFormatting(indentation: firstLineHeadIndent, spacingBefore: paragraphSpacingBefore)
+        return LineFormatting(indentation: firstLineHeadIndent,
+                              spacingBefore: paragraphSpacingBefore,
+                              spacingAfter: paragraphSpacing)
     }
 }

@@ -117,6 +117,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
         editor.registerProcessor(ListTextProcessor())
 //        editor.paragraphStyle.paragraphSpacingBefore = 20
+        editor.paragraphStyle.paragraphSpacing = 15
 
         self.buttons = makeCommandButtons()
         for button in buttons {
@@ -455,7 +456,7 @@ extension CommandsExampleViewController: GridViewDelegate {
 }
 
 class ListFormattingProvider: EditorListFormattingProvider {
-    let listLineFormatting: LineFormatting = LineFormatting(indentation: 25, spacingBefore: 0)
+    let listLineFormatting: LineFormatting = LineFormatting(indentation: 25, spacingBefore: 0, spacingAfter: 5)
     let sequenceGenerators: [SequenceGenerator] =
         [NumericSequenceGenerator(),
          DiamondBulletSequenceGenerator(),

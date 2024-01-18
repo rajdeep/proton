@@ -1042,4 +1042,38 @@ class EditorListsSnapshotTests: SnapshotTestCase {
 
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+    func testResetsParagraphStyleOnExitingList() {
+        let text = """
+           This is line 1. This is line 1. This is line 1. This is line 1.
+           This is line 2.
+           This is line 3. This is line 3. This is line 3. This is line 3.
+           Para spacing between 2 paras and list is different because of different before and after spacing for default para style and list para style.
+           """
+
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        editor.paragraphStyle.paragraphSpacing = 10
+        editor.paragraphStyle.paragraphSpacingBefore = 15
+
+        let listLineFormatting = LineFormatting(indentation: 25, spacingBefore: 0, spacingAfter: 5)
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()], listLineFormatting: listLineFormatting)
+        editor.listFormattingProvider = listFormattingProvider
+        editor.attributedText = NSAttributedString(string: text)
+        editor.selectedRange = NSRange(location: 0, length: 90)
+        listCommand.execute(on: editor)
+        viewController.render(size: CGSize(width: 300, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        let secondLine = editor.contentLinesInRange(editor.attributedText.fullRange)[2]
+        let rangeToSet = NSRange(location: secondLine.range.location, length: 4)
+        editor.selectedRange = rangeToSet
+
+        // Outdent second line
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [.shift], range: editor.selectedRange)
+        viewController.render(size: CGSize(width: 300, height: 320))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
 }

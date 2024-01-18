@@ -208,7 +208,7 @@ public class ListTextProcessor: TextProcessing {
             }
 
             let paraStyle = line.text.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle
-            let mutableStyle = updatedParagraphStyle(paraStyle: paraStyle,  listLineFormatting: editor.listLineFormatting, indentMode: indentMode)
+            let mutableStyle = updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: indentMode, defaultParaStyle: editor.paragraphStyle)
 
             let previousLine = editor.previousContentLine(from: line.range.location)
             if let previousLine = previousLine,
@@ -265,7 +265,7 @@ public class ListTextProcessor: TextProcessing {
         editor.attributedText.enumerateAttribute(.paragraphStyle, in: subListRange, options: []) { value, range, stop in
             if let style = value as? NSParagraphStyle {
                 if style.firstLineHeadIndent >= originalParaStyle.firstLineHeadIndent + editor.listLineFormatting.indentation {
-                    let mutableStyle = updatedParagraphStyle(paraStyle: style, listLineFormatting: editor.listLineFormatting, indentMode: indentMode)
+                    let mutableStyle = updatedParagraphStyle(paraStyle: style, listLineFormatting: editor.listLineFormatting, indentMode: indentMode, defaultParaStyle: editor.paragraphStyle)
                     editor.addAttribute(.paragraphStyle, value: mutableStyle ?? editor.paragraphStyle, at: range)
                 } else {
                     stop.pointee = true
@@ -283,7 +283,7 @@ public class ListTextProcessor: TextProcessing {
 
         var attrs = editor.typingAttributes
         let paraStyle = attrs[.paragraphStyle] as? NSParagraphStyle
-        let updatedStyle = updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: indentMode)
+        let updatedStyle = updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: indentMode, defaultParaStyle: editor.paragraphStyle)
         attrs[.paragraphStyle] = updatedStyle
         attrs[.listItem] = updatedStyle?.firstLineHeadIndent ?? 0 > 0.0 ? listAttributeValue : nil
         let marker = NSAttributedString(string: ListTextProcessor.blankLineFiller, attributes: attrs)
@@ -291,7 +291,7 @@ public class ListTextProcessor: TextProcessing {
         editor.selectedRange = editedRange.nextPosition
     }
 
-    func updatedParagraphStyle(paraStyle: NSParagraphStyle?, listLineFormatting: LineFormatting, indentMode: Indentation) -> NSParagraphStyle? {
+    func updatedParagraphStyle(paraStyle: NSParagraphStyle?, listLineFormatting: LineFormatting, indentMode: Indentation, defaultParaStyle: NSParagraphStyle) -> NSParagraphStyle? {
         let mutableStyle = paraStyle?.mutableCopy() as? NSMutableParagraphStyle
         let indent = listLineFormatting.indentation
         if indentMode == .indent {
@@ -302,9 +302,13 @@ public class ListTextProcessor: TextProcessing {
             mutableStyle?.headIndent = mutableStyle?.firstLineHeadIndent ?? 0
         }
         mutableStyle?.paragraphSpacingBefore = listLineFormatting.spacingBefore
+        if let spacingAfter = listLineFormatting.spacingAfter {
+            mutableStyle?.paragraphSpacing = spacingAfter
+        }
 
         if mutableStyle?.firstLineHeadIndent == 0, indentMode == .outdent {
-            mutableStyle?.paragraphSpacingBefore = paraStyle?.lineFormatting.spacingBefore ?? 0
+            mutableStyle?.paragraphSpacingBefore = defaultParaStyle.lineFormatting.spacingBefore
+            mutableStyle?.paragraphSpacing = defaultParaStyle.lineFormatting.spacingAfter ?? 0
         }
 
         return mutableStyle
