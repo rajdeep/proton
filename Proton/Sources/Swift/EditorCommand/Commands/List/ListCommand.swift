@@ -36,13 +36,18 @@ public struct LineFormatting {
     /// Vertical spacing before the line
     public let spacingBefore: CGFloat
 
+    /// Vertical spacing after the line
+    public let spacingAfter: CGFloat?
+
     /// Initializes
     /// - Parameters:
     ///   - indentation: Indentation for each line of text
     ///   - spacingBefore: Vertical spacing before line of text
-    public init(indentation: CGFloat, spacingBefore: CGFloat) {
+    ///   - spacingAfter: Vertical spacing after line of text
+    public init(indentation: CGFloat, spacingBefore: CGFloat, spacingAfter: CGFloat? = nil) {
         self.indentation = indentation
         self.spacingBefore = spacingBefore
+        self.spacingAfter = spacingAfter
     }
 }
 
@@ -111,7 +116,7 @@ public class ListCommand: EditorCommand {
 
         editor.attributedText.enumerateAttribute(.paragraphStyle, in: selectedRange, options: []) { (value, range, _) in
             let paraStyle = value as? NSParagraphStyle
-            let mutableStyle = ListTextProcessor().updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: .indent)
+            let mutableStyle = ListTextProcessor().updatedParagraphStyle(paraStyle: paraStyle, listLineFormatting: editor.listLineFormatting, indentMode: .indent, defaultParaStyle: editor.paragraphStyle)
             editor.addAttribute(.paragraphStyle, value: mutableStyle ?? editor.paragraphStyle, at: range)
         }
         editor.addAttribute(.listItem, value: attrValue, at: selectedRange)
