@@ -251,8 +251,19 @@ open class EditorView: UIView {
 
     /// Input accessory view to be used
     open var editorInputAccessoryView: UIView? {
-        get { richTextView.inputAccessoryView }
-        set { richTextView.inputAccessoryView = newValue }
+        get {
+#if !os(visionOS)
+            return richTextView.inputAccessoryView
+#else
+            return nil
+#endif
+        } set {
+#if os(visionOS)
+            return
+#else
+            richTextView.inputAccessoryView = newValue
+#endif
+        }
     }
 
     /// Input view to be used
@@ -320,10 +331,13 @@ open class EditorView: UIView {
         set { richTextView.verticalScrollIndicatorInsets = newValue }
     }
     
+#if !os(visionOS)
     public var keyboardDismissMode: UIScrollView.KeyboardDismissMode {
         get { richTextView.keyboardDismissMode }
         set { richTextView.keyboardDismissMode = newValue }
     }
+#endif
+
     
     public var isScrollEnabled: Bool {
         get { richTextView.isScrollEnabled }

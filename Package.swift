@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.9
 //
 //  Copyright © 2020 Rajdeep Kwatra. All rights reserved.
 //
@@ -21,6 +21,7 @@ let package = Package(
     name: "Proton",
     platforms: [
         .iOS(.v14),
+        .visionOS(.v1)
     ],
     products: [
         .library(name: "Proton", targets: ["Proton"]),

@@ -62,6 +62,9 @@
                   Identifier = "EditorSnapshotTests/testGetsRangeForRect()">
                </Test>
                <Test
+                  Identifier = "EditorSnapshotTests/testRendersAsyncAttachments()">
+               </Test>
+               <Test
                   Identifier = "EditorSnapshotTests/testRendersPlaceholder()">
                </Test>
                <Test
