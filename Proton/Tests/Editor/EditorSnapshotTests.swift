@@ -1180,7 +1180,45 @@ class EditorSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 300, height: 125))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
-    
+
+    func testLineNumbersWithLineSpacing() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.paragraphStyle.lineSpacing = 30
+
+        editor.isLineNumbersEnabled = true
+        let text = """
+           Test line 1 Test line 1 Test line 1 Test line 1
+           Test line 2 Test line 1 Test line 1 Test line 1
+           Test line 3 Test line 1 Test line 1
+           Test line 4
+           """
+
+        editor.appendCharacters(NSAttributedString(string: text))
+
+        viewController.render(size: CGSize(width: 300, height: 400))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testLineNumbersWithParagraphSpacing() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.paragraphStyle.paragraphSpacing = 30
+        editor.lineNumberProvider = mockLineNumberProvider
+        editor.isLineNumbersEnabled = true
+        let text = """
+           Test line 1 Test line 1 Test line 1 Test line 1
+           Test line 2 Test line 1 Test line 1 Test line 1
+           Test line 3 Test line 1 Test line 1
+           Test line 4
+           """
+
+        editor.appendCharacters(NSAttributedString(string: text))
+
+        viewController.render(size: CGSize(width: 300, height: 400))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     func testLineNumbersEnableDisable() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
@@ -1248,7 +1286,6 @@ class EditorSnapshotTests: SnapshotTestCase {
     }
     
     func testCustomLineNumbersWithWrappedText() {
-        recordMode = true
         let viewController = EditorTestViewController()
         let editor = viewController.editor
         editor.lineNumberProvider = mockLineNumberProvider

@@ -287,7 +287,7 @@ class LayoutManager: NSLayoutManager {
         }
 
         let trailingPadding: CGFloat = 2
-        let yPos = (spacerRect.height - markerSize.height)/2 + topInset + rect.minY
+        let yPos = topInset + rect.minY
         let stringRect = CGRect(origin: CGPoint(x: spacerRect.maxX - markerSizeToUse.width - trailingPadding, y: yPos), size: markerSizeToUse)
 
         //        debugRect(rect: spacerRect, color: .blue)
@@ -358,11 +358,10 @@ class LayoutManager: NSLayoutManager {
               let lineNumberFormatting = layoutManagerDelegate?.lineNumberFormatting else { return }
 
         let lineNumberWrappingMarker = layoutManagerDelegate?.lineNumberWrappingMarker
-        enumerateLineFragments(forGlyphRange: textStorage.fullRange) { [weak self] rect, _, _, range, _ in
+        enumerateLineFragments(forGlyphRange: textStorage.fullRange) { [weak self] rect, usedRect, _, range, _ in
             guard let self else { return }
             let paraRange = self.textStorage?.mutableString.paragraphRange(for: range).firstCharacterRange
             let lineNumberToDisplay = layoutManagerDelegate?.lineNumberString(for: lineNumber) ?? "\(lineNumber)"
-
 
             if range.location == paraRange?.location {
                 self.drawLineNumber(lineNumber: lineNumberToDisplay, rect: rect.integral, lineNumberFormatting: lineNumberFormatting, currentCGContext: currentCGContext)
@@ -381,7 +380,7 @@ class LayoutManager: NSLayoutManager {
         let attributes = lineNumberAttributes(lineNumberFormatting: lineNumberFormatting)
         let text = NSAttributedString(string: "\(lineNumber)", attributes: attributes)
         let markerSize = text.boundingRect(with: .zero, options: [], context: nil).integral.size
-        let markerRect = self.rectForLineNumbers(markerSize: markerSize, rect: rect, width: gutterWidth)
+        var markerRect = self.rectForLineNumbers(markerSize: markerSize, rect: rect, width: gutterWidth)
         let listMarkerImage = self.generateBitmap(string: text, rect: markerRect)
         listMarkerImage.draw(at: markerRect.origin)
     }
