@@ -1159,7 +1159,6 @@ class EditorSnapshotTests: SnapshotTestCase {
     }
 
     func testLineNumbersBlank() {
-        // TODO: Fix the rendering of line numbers when editor is empty
         let viewController = EditorTestViewController()
         let editor = viewController.editor
         editor.isLineNumbersEnabled = true
