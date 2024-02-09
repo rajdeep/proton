@@ -25,8 +25,9 @@ import Proton
 
 class MockLineNumberProvider: LineNumberProvider {
     var lineNumberWrappingMarker: String? { "- " }
+    var indexOffSet = 0
 
     func lineNumberString(for index: Int) -> String? {
-        "\(index)."
+        "\(index + indexOffSet)."
     }
 }

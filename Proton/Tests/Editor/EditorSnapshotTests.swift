@@ -30,6 +30,7 @@ class EditorSnapshotTests: SnapshotTestCase {
     override func setUp() {
         super.setUp()
         recordMode = false
+        mockLineNumberProvider.indexOffSet = 0
     }
 
     func testRendersPlaceholder() {
@@ -1205,6 +1206,26 @@ class EditorSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         editor.paragraphStyle.paragraphSpacing = 30
         editor.lineNumberProvider = mockLineNumberProvider
+        editor.isLineNumbersEnabled = true
+        let text = """
+           Test line 1 Test line 1 Test line 1 Test line 1
+           Test line 2 Test line 1 Test line 1 Test line 1
+           Test line 3 Test line 1 Test line 1
+           Test line 4
+           """
+
+        editor.appendCharacters(NSAttributedString(string: text))
+
+        viewController.render(size: CGSize(width: 300, height: 400))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func FIXME_testLongLineNumbers() {
+        recordMode = true
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.lineNumberProvider = mockLineNumberProvider
+        mockLineNumberProvider.indexOffSet = 888
         editor.isLineNumbersEnabled = true
         let text = """
            Test line 1 Test line 1 Test line 1 Test line 1
