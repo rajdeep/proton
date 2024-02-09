@@ -831,6 +831,28 @@ class EditorViewTests: XCTestCase {
         _ = editor.attachmentsInRange(NSRange(location: 2, length: 1))
         XCTAssertEqual(editor.attributedText.length, 2)
     }
+
+    func testRemovesContainerEditorOnDeletingAttachment() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let dummyAttachment1 = DummyMultiEditorAttachment(numberOfEditors: 1)
+        editor.insertAttachment(in: .zero, attachment: dummyAttachment1)
+
+        let dummyAttachment2 = DummyMultiEditorAttachment(numberOfEditors: 2)
+        editor.insertAttachment(in: editor.textEndRange, attachment: dummyAttachment2)
+
+        viewController.render()
+
+        XCTAssertEqual(dummyAttachment1.containerEditorView, editor)
+        XCTAssertEqual(dummyAttachment2.containerEditorView, editor)
+
+        editor.replaceCharacters(in: NSRange(location: 0, length: 1), with: NSAttributedString())
+        dummyAttachment2.removeFromContainer()
+
+        XCTAssertNil(dummyAttachment1.containerEditorView)
+        XCTAssertNil(dummyAttachment2.containerEditorView)
+    }
 }
 
 class DummyMultiEditorAttachment: Attachment {

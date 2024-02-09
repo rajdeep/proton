@@ -355,6 +355,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     @objc
     func removeFromSuperview() {
         view?.removeFromSuperview()
+        containerEditorView = nil
     }
 
     /// Causes invalidation of layout of the attachment when the containing view bounds are changed
