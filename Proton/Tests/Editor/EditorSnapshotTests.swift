@@ -25,9 +25,12 @@ import SnapshotTesting
 @testable import Proton
 
 class EditorSnapshotTests: SnapshotTestCase {
+    let mockLineNumberProvider = MockLineNumberProvider()
+
     override func setUp() {
         super.setUp()
         recordMode = false
+        mockLineNumberProvider.indexOffSet = 0
     }
 
     func testRendersPlaceholder() {
@@ -1154,6 +1157,170 @@ class EditorSnapshotTests: SnapshotTestCase {
 
         viewController.render(size: CGSize(width: 300, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: false)
+    }
+
+    func testLineNumbersBlank() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.isLineNumbersEnabled = true
+        viewController.render(size: CGSize(width: 300, height: 75))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+    
+    func testLineNumbersDefault() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.isLineNumbersEnabled = true
+        let text = """
+           Test line 1
+           Test line 2
+           """
+        
+        editor.appendCharacters(NSAttributedString(string: text))
+        
+        viewController.render(size: CGSize(width: 300, height: 125))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testLineNumbersWithLineSpacing() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.paragraphStyle.lineSpacing = 30
+
+        editor.isLineNumbersEnabled = true
+        let text = """
+           Test line 1 Test line 1 Test line 1 Test line 1
+           Test line 2 Test line 1 Test line 1 Test line 1
+           Test line 3 Test line 1 Test line 1
+           Test line 4
+           """
+
+        editor.appendCharacters(NSAttributedString(string: text))
+
+        viewController.render(size: CGSize(width: 300, height: 400))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testLineNumbersWithParagraphSpacing() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.paragraphStyle.paragraphSpacing = 30
+        editor.lineNumberProvider = mockLineNumberProvider
+        editor.isLineNumbersEnabled = true
+        let text = """
+           Test line 1 Test line 1 Test line 1 Test line 1
+           Test line 2 Test line 1 Test line 1 Test line 1
+           Test line 3 Test line 1 Test line 1
+           Test line 4
+           """
+
+        editor.appendCharacters(NSAttributedString(string: text))
+
+        viewController.render(size: CGSize(width: 300, height: 400))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func FIXME_testLongLineNumbers() {
+        recordMode = true
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.lineNumberProvider = mockLineNumberProvider
+        mockLineNumberProvider.indexOffSet = 888
+        editor.isLineNumbersEnabled = true
+        let text = """
+           Test line 1 Test line 1 Test line 1 Test line 1
+           Test line 2 Test line 1 Test line 1 Test line 1
+           Test line 3 Test line 1 Test line 1
+           Test line 4
+           """
+
+        editor.appendCharacters(NSAttributedString(string: text))
+
+        viewController.render(size: CGSize(width: 300, height: 400))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testLineNumbersEnableDisable() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        
+        let text = """
+           Test line 1
+           Test line 2
+           """
+        
+        editor.appendCharacters(NSAttributedString(string: text))
+        
+        editor.isLineNumbersEnabled = false
+        viewController.render(size: CGSize(width: 300, height: 125))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        
+        editor.isLineNumbersEnabled = true
+        viewController.render(size: CGSize(width: 300, height: 125))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        
+        editor.isLineNumbersEnabled = false
+        viewController.render(size: CGSize(width: 300, height: 125))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+    
+    func testLineNumbersWithFormatting() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.isLineNumbersEnabled = true
+        editor.lineNumberFormatting = LineNumberFormatting(
+            textColor: .white,
+            font: UIFont.italicSystemFont(ofSize: 17),
+            gutter: Gutter(
+                width: 20,
+                backgroundColor: .black,
+                lineColor: .red,
+                lineWidth: 2
+            ))
+        
+        let text = """
+           Test line 1
+           Test line 2
+           """
+        
+        editor.appendCharacters(NSAttributedString(string: text))
+        
+        viewController.render(size: CGSize(width: 300, height: 125))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+    
+    
+    func testLineNumbersWithWrappedText() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.isLineNumbersEnabled = true
+        let text = """
+           Test line 1 Test line 1 Test line 1 Test line 1 Test line 1 Test line 1
+           Test line 2 Test line 2
+           Test line 3 Test line 3
+           """
+        
+        editor.appendCharacters(NSAttributedString(string: text))
+        
+        viewController.render(size: CGSize(width: 300, height: 220))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+    
+    func testCustomLineNumbersWithWrappedText() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.lineNumberProvider = mockLineNumberProvider
+        editor.isLineNumbersEnabled = true
+        let text = """
+           Test line 1 Test line 1 Test line 1 Test line 1 Test line 1 Test line 1
+           Test line 2 Test line 2
+           Test line 3 Test line 3
+           """
+        
+        editor.appendCharacters(NSAttributedString(string: text))
+        
+        viewController.render(size: CGSize(width: 300, height: 220))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     private func addCaretRect(at range: NSRange, in editor: EditorView, color: UIColor) {

@@ -43,6 +43,8 @@ class AutogrowingTextView: UITextView {
                 heightAnchorConstraint
             ])
         }
+        //TODO: enable only when line numbering is turned on
+        contentMode = .redraw
     }
 
     required init?(coder: NSCoder) {

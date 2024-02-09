@@ -31,6 +31,7 @@ class RichTextView: AutogrowingTextView {
     weak var richTextViewDelegate: RichTextViewDelegate?
     weak var richTextViewListDelegate: RichTextViewListDelegate?
     weak var richTextScrollViewDelegate: UIScrollViewDelegate?
+    weak var lineNumberProvider: LineNumberProvider?
 
     private var delegateOverrides = [GestureRecognizerDelegateOverride]()
 
@@ -83,6 +84,87 @@ class RichTextView: AutogrowingTextView {
             // Remove all attachment subviews else we may run into PRTextStorage "in middle of editing" crash
             subviews.filter { $0 is AttachmentContentView }.forEach { $0.removeFromSuperview() }
         }
+    }
+
+    var lineNumberFormatting = LineNumberFormatting.default {
+        didSet {
+            let gutterOffset = lineNumberFormatting.gutter.width + lineNumberFormatting.gutter.lineWidth
+            let adjustedLeftInset = isLineNumbersEnabled ? (gutterOffset + textContainerInset.left - oldValue.gutter.width): nil
+
+            textContainerInset = UIEdgeInsets(
+                top: textContainerInset.top,
+                left: adjustedLeftInset ?? textContainerInset.left,
+                bottom: textContainerInset.bottom,
+                right: textContainerInset.right
+            )
+            setNeedsDisplay()
+        }
+    }
+
+    var isLineNumbersEnabled = false {
+        didSet {
+            let gutterOffset = lineNumberFormatting.gutter.width + lineNumberFormatting.gutter.lineWidth
+
+            let adjustedLeftInset: CGFloat
+            switch (oldValue, isLineNumbersEnabled) {
+            case (false, true):
+                adjustedLeftInset = gutterOffset + textContainerInset.left
+            case (true, false):
+                adjustedLeftInset = textContainerInset.left - gutterOffset
+            default:
+                adjustedLeftInset = textContainerInset.left
+            }
+
+            textContainerInset = UIEdgeInsets(
+                top: textContainerInset.top,
+                left: adjustedLeftInset,
+                bottom: textContainerInset.bottom,
+                right: textContainerInset.right
+            )
+            setNeedsDisplay()
+        }
+    }
+
+    override func draw(_ rect: CGRect) {
+        guard isLineNumbersEnabled,
+              let currentCGContext = UIGraphicsGetCurrentContext() else {
+            super.draw(rect)
+            return
+        }
+
+        let height = max(contentSize.height, bounds.height)
+        let rect = CGRect(x: 0, y: 0, width: lineNumberFormatting.gutter.width, height: height)
+        let rectanglePath = UIBezierPath(rect: rect)
+
+        currentCGContext.saveGState()
+        currentCGContext.addPath(rectanglePath.cgPath)
+
+        if let lineColor = lineNumberFormatting.gutter.lineColor {
+            currentCGContext.setStrokeColor(lineColor.cgColor)
+            currentCGContext.setLineWidth(lineNumberFormatting.gutter.lineWidth)
+            currentCGContext.drawPath(using: .stroke)
+        }
+
+        currentCGContext.setFillColor(lineNumberFormatting.gutter.backgroundColor.cgColor)
+        currentCGContext.fill(rect)
+
+        // Draw line number if textView is empty
+        if let layoutManager = layoutManager as? LayoutManager,
+           attributedText.length == 0 {
+            let lineNumberToDisplay = lineNumberString(for: 1) ?? "1"
+            let width = lineNumberFormatting.gutter.width
+            let height = defaultFont.lineHeight
+            layoutManager.drawLineNumber(lineNumber: lineNumberToDisplay, rect: CGRect(origin: .zero, size: CGSize(width: width, height: height)), lineNumberFormatting: lineNumberFormatting, currentCGContext: currentCGContext)
+        }
+
+        currentCGContext.restoreGState()
+
+        super.draw(rect)
+    }
+
+    func drawDefaultLineNumberIfRequired() {
+        guard isLineNumbersEnabled else { return }
+        draw(CGRect(origin: .zero, size: contentSize))
     }
 
     override var selectedTextRange: UITextRange? {
@@ -503,6 +585,10 @@ class RichTextView: AutogrowingTextView {
             return
         }
         setupPlaceholder()
+        if isLineNumbersEnabled {
+            //TODO: else use default
+            contentMode = .redraw
+        }
     }
 
     func attributeValue(at location: CGPoint, for attribute: NSAttributedString.Key) -> Any? {
@@ -725,16 +811,25 @@ extension RichTextView: TextStorageDelegate {
     
     func textStorage(_ textStorage: PRTextStorage, edited actions: NSTextStorage.EditActions, in editedRange: NSRange, changeInLength delta: Int) {
         updatePlaceholderVisibility()
+        drawDefaultLineNumberIfRequired()
     }
 }
 
 extension RichTextView: LayoutManagerDelegate {
+    var lineNumberWrappingMarker: String? {
+        lineNumberProvider?.lineNumberWrappingMarker
+    }
+
     var listLineFormatting: LineFormatting {
         return richTextViewListDelegate?.listLineFormatting ?? RichTextView.defaultListLineFormatting
     }
 
     var paragraphStyle: NSMutableParagraphStyle? {
         return defaultTextFormattingProvider?.paragraphStyle
+    }
+
+    func lineNumberString(for index: Int) -> String? {
+        lineNumberProvider?.lineNumberString(for: index)
     }
 
     func listMarkerForItem(at index: Int, level: Int, previousLevel: Int, attributeValue: Any?) -> ListLineMarker {

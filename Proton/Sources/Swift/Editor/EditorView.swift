@@ -188,6 +188,23 @@ open class EditorView: UIView {
         set { richTextView.textDragInteraction?.isEnabled = newValue }
     }
 
+    /// Line number provider to be used to show custom line numbers in gutter.
+    /// - Note: Only applicable when `isLineNumbersEnabled` is set to `true`
+    public var lineNumberProvider: LineNumberProvider? {
+        get { richTextView.lineNumberProvider }
+        set { richTextView.lineNumberProvider = newValue }
+    }
+
+    public var isLineNumbersEnabled: Bool {
+        get { richTextView.isLineNumbersEnabled }
+        set { richTextView.isLineNumbersEnabled = newValue }
+    }
+    
+    public var lineNumberFormatting: LineNumberFormatting {
+        get { richTextView.lineNumberFormatting }
+        set { richTextView.lineNumberFormatting = newValue }
+    }
+
     public override var bounds: CGRect {
         didSet {
             guard oldValue != bounds else { return }
