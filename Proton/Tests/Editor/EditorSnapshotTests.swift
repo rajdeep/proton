@@ -29,7 +29,6 @@ class EditorSnapshotTests: SnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        recordMode = false
         mockLineNumberProvider.indexOffSet = 0
     }
 
@@ -1041,6 +1040,63 @@ class EditorSnapshotTests: SnapshotTestCase {
         ], at: rangeToUpdate)
 
         viewController.render(size: CGSize(width: 300, height: 150))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testBackgroundStyleWithParagraphAndLineSpacing() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.paragraphStyle.paragraphSpacing = 13
+        editor.paragraphStyle.lineSpacing = 4
+//        editor.font = UIFont.systemFont(ofSize: 30, weight: .medium)
+
+        let text =
+        """
+        Line 1 text Line 1 text Line 1 text Line 2 text Line 2 text Line 2 text Line 3 text Line 3
+        """
+
+        let rangeToUpdate = NSRange(location: 20, length: 58)
+
+        editor.appendCharacters(NSAttributedString(string: text))
+
+        let textField = AutogrowingTextField()
+        textField.backgroundColor = .cyan
+        textField.addBorder()
+        textField.font = editor.font
+        textField.text = "in1"
+
+        let offsetProvider = MockAttachmentOffsetProvider()
+        offsetProvider.offset = CGPoint(x: 0, y: -4)
+
+        let attachment = Attachment(textField, size: .matchContent)
+        attachment.offsetProvider = offsetProvider
+        textField.boundsObserver = attachment
+
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+
+
+        let textField1 = AutogrowingTextField()
+        textField1.backgroundColor = .cyan
+        textField1.addBorder()
+        textField1.font = editor.font
+        textField1.text = "in2"
+
+        let attachment1 = Attachment(textField1, size: .matchContent)
+        attachment1.offsetProvider = offsetProvider
+        textField1.boundsObserver = attachment1
+
+        editor.insertAttachment(in: NSRange(location: 52, length: 0), attachment: attachment1)
+
+        viewController.render(size: CGSize(width: 300, height: 350))
+        let backgroundStyle = BackgroundStyle(color: .cyan,
+                                              roundedCornerStyle: .absolute(value: 5),
+                                              border: BorderStyle(lineWidth: 1, color: .blue),
+                                              heightMode: .matchTextExact, insets: UIEdgeInsets(top: -5, left: -2, bottom: -5, right: -2))
+        editor.addAttributes([
+            .backgroundStyle: backgroundStyle
+        ], at: rangeToUpdate)
+
+        viewController.render(size: CGSize(width: 300, height: 350))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
