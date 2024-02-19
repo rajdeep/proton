@@ -296,6 +296,22 @@ class LayoutManager: NSLayoutManager {
         return stringRect
     }
 
+    override func drawsOutsideLineFragment(forGlyphAt glyphIndex: Int) -> Bool {
+        true
+    }
+
+    var hasLineSpacing: Bool {
+        var lineCount = 0
+        guard let textStorage else { return false}
+        enumerateLineFragments(forGlyphRange: textStorage.fullRange, using: { _, _, _, _, stop in
+            lineCount += 1
+            if lineCount > 1 {
+                stop.pointee = true
+            }
+        })
+        return lineCount > 1 || (lineCount > 0 && extraLineFragmentRect.height > 0)
+    }
+
     override func drawBackground(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
         super.drawBackground(forGlyphRange: glyphsToShow, at: origin)
         guard let textStorage = textStorage,
@@ -308,13 +324,12 @@ class LayoutManager: NSLayoutManager {
             var rects = [CGRect]()
             if let backgroundStyle = attr as? BackgroundStyle {
                 let bgStyleGlyphRange = self.glyphRange(forCharacterRange: bgStyleRange, actualCharacterRange: nil)
-                enumerateLineFragments(forGlyphRange: bgStyleGlyphRange) { _, usedRect, textContainer, lineRange, _ in
-                    let usedRect = usedRect.integral
+                enumerateLineFragments(forGlyphRange: bgStyleGlyphRange) { rect1, usedRect, textContainer, lineRange, _ in
                     let rangeIntersection = NSIntersectionRange(bgStyleGlyphRange, lineRange)
                     let paragraphStyle = textStorage.attribute(.paragraphStyle, at: rangeIntersection.location, effectiveRange: nil) as? NSParagraphStyle ?? self.defaultParagraphStyle
                     let font = textStorage.attribute(.font, at: rangeIntersection.location, effectiveRange: nil) as? UIFont ?? self.defaultFont
                     let lineHeightMultiple = max(paragraphStyle.lineHeightMultiple, 1)
-                    var rect = self.boundingRect(forGlyphRange: rangeIntersection, in: textContainer).integral
+                    var rect = self.boundingRect(forGlyphRange: rangeIntersection, in: textContainer)
                     let lineHeightMultipleOffset = (rect.size.height - rect.size.height/lineHeightMultiple)
                     let lineSpacing = paragraphStyle.lineSpacing
                     if backgroundStyle.widthMode == .matchText {
@@ -323,12 +338,25 @@ class LayoutManager: NSLayoutManager {
                             rect.size.width = contentWidth
                     }
 
-                    let inset = self.layoutManagerDelegate?.textContainerInset ?? .zero
                     switch backgroundStyle.heightMode {
                     case .matchTextExact:
-                        rect.origin.y = usedRect.origin.y - (font.pointSize - font.ascender)
-                        rect.origin.y += (font.ascender - font.capHeight)
-                        rect.size.height =  font.capHeight + abs(font.descender)
+                        let styledText = textStorage.attributedSubstring(from: bgStyleGlyphRange)
+                        var textRect = styledText.boundingRect(with: rect.size, options: [.usesFontLeading, .usesDeviceMetrics], context: nil)
+                        textRect.origin = rect.origin
+                        textRect.size.width = rect.width
+
+                        textRect.origin.y += abs(font.descender)
+
+                        let delta = usedRect.height - (font.lineHeight + font.leading)
+                        textRect.origin.y += delta
+                        let hasLineSpacing = (usedRect.height - font.lineHeight) == paragraphStyle.lineSpacing
+                        let isExtraLineHeight = ((usedRect.height - font.lineHeight) - font.leading) > 0.001
+
+                        if hasLineSpacing || isExtraLineHeight {
+                            textRect.origin.y -= (paragraphStyle.lineSpacing - font.leading)
+                        }
+
+                        rect = textRect
                     case .matchText:
                         let styledText = textStorage.attributedSubstring(from: bgStyleGlyphRange)
                         let textRect = styledText.boundingRect(with: rect.size, options: .usesFontLeading, context: nil)
@@ -342,8 +370,10 @@ class LayoutManager: NSLayoutManager {
                         rect.size.height = usedRect.height
                     }
 
-
-                    rects.append(rect.offsetBy(dx: inset.left, dy: inset.top))
+//                    if lineRange.endLocation == textStorage.length, font.leading == 0 {
+//                        rect.origin.y += abs(font.descender/2)
+//                    }
+                    rects.append(rect.offsetBy(dx: origin.x, dy: origin.y))
                 }
                 drawBackground(backgroundStyle: backgroundStyle, rects: rects, currentCGContext: currentCGContext)
             }
