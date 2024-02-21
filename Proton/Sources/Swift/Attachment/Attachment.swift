@@ -84,6 +84,16 @@ public protocol AsyncAttachmentRenderingDelegate: AnyObject {
 /// sooner than the layout of view within the `Attachment` is able to complete.
 public protocol AsyncDeferredRenderable { }
 
+public struct AttachmentSelectionStyle {
+    public var cornerRadius: CGFloat
+    public var alpha: CGFloat
+
+    public init(cornerRadius: CGFloat, alpha: CGFloat) {
+        self.cornerRadius = cornerRadius
+        self.alpha = alpha
+    }
+}
+
 /// An attachment can be used as a container for any view object. Based on the `AttachmentSize` provided, the attachment automatically renders itself alongside the text in `EditorView`.
 /// `Attachment` also provides helper functions like `deleteFromContainer` and `rangeInContainer`
 open class Attachment: NSTextAttachment, BoundsObserving {
@@ -117,6 +127,19 @@ open class Attachment: NSTextAttachment, BoundsObserving {
 
     public var needsDeferredRendering: Bool {
         contentView is AsyncDeferredRenderable
+    }
+
+    /// Determines if attachment should be selected on tap or not. Defaults to `false`.
+    /// - Note: Selection only takes place if the view in attachment does not handle touch i.e. if a button in AttachmentView is tapped,
+    /// `selectOnTap` will not work as the tap will be handled by the button.
+    public var selectOnTap = false
+
+    /// Determines the appearance for the selection rectangle of the attachment
+    public var selectionStyle = AttachmentSelectionStyle(cornerRadius: 0, alpha: 0.5) {
+        didSet {
+            selectionView.alpha = selectionStyle.alpha
+            selectionView.layer.cornerRadius = selectionStyle.cornerRadius
+        }
     }
 
     public var isBlockType: Bool {
@@ -356,6 +379,23 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     func removeFromSuperview() {
         view?.removeFromSuperview()
         containerEditorView = nil
+    }
+
+    /// Selects the attachment in Editor.
+    /// - Parameter isSelected: `true` to set selected, else `false`
+    public func setSelected(_ isSelected: Bool) {
+        guard let containerEditor = containerEditorView,
+              let range = rangeInContainer() else { return }
+
+        self.isSelected = isSelected
+
+        if isSelected {
+            containerEditor.setFocus()
+            containerEditor.selectedRange = range
+        } else {
+            containerEditor.setFocus()
+            containerEditor.selectedRange = NSRange(location: range.endLocation, length: 0)
+        }
     }
 
     /// Causes invalidation of layout of the attachment when the containing view bounds are changed
