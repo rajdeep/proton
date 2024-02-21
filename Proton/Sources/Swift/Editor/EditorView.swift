@@ -1047,7 +1047,10 @@ open class EditorView: UIView {
     }
 
     /// Sets the focus in the `EditorView`
-    public func setFocus() {
+    public func setFocus(at range: NSRange? = nil) {
+        if let range {
+            selectedRange = range
+        }
         richTextView.becomeFirstResponder()
     }
 
@@ -1394,6 +1397,10 @@ extension EditorView: RichTextViewDelegate {
 
     func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {
         AggregateEditorViewDelegate.editor(self, didTapAtLocation: location, characterRange: characterRange)
+    }
+
+    func richTextView(_ richTextView: RichTextView, shouldSelectAttachmentOnBackspace attachment: Attachment) -> Bool {
+        AggregateEditorViewDelegate.editor(self, shouldSelectAttachmentOnBackspace: attachment)
     }
 }
 

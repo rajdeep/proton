@@ -82,7 +82,9 @@ class RichTextEditorContext: RichTextViewContext {
                 range.length == 1, // Hit backspace with nothing selected
                 range.location <= attributedText.length, // ... within bounds
                 let attachment = attributedText.attribute(.attachment, at: range.location, effectiveRange: nil) as? Attachment,
-                attachment.selectBeforeDelete, // ...should be selected
+                let delegate = richTextView.richTextViewDelegate,
+                (delegate.richTextView(richTextView, shouldSelectAttachmentOnBackspace: attachment) ||
+                attachment.selectBeforeDelete), // ...should be selected
                 !attachment.isSelected // ... but isn't.
             {
                 attachment.isSelected = true // Select it

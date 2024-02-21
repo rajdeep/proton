@@ -135,6 +135,55 @@ class RichTextViewContextTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
 
+    func testSelectsAttachmentOnBackspace() {
+        let mockTextViewDelegate = MockRichTextViewDelegate()
+        let context = RichTextEditorContext.default
+        let textView = RichTextView(context: context)
+        textView.richTextViewDelegate = mockTextViewDelegate
+        context.textViewDidBeginEditing(textView)
+        textView.text = "Sample text"
+
+        let panelAttachment = Attachment(PanelView(), size: .fullWidth)
+        panelAttachment.selectBeforeDelete = true
+        textView.insertAttachment(in: textView.textEndRange, attachment: panelAttachment)
+        textView.replaceCharacters(in: textView.textEndRange, with: NSAttributedString(string: " "))
+
+        textView.selectedRange = NSRange(location: 12, length: 0)
+
+        XCTAssertFalse(panelAttachment.isSelected)
+        _ = context.textView(textView, shouldChangeTextIn: NSRange(location: 11, length: 1), replacementText: "")
+
+        XCTAssertTrue(panelAttachment.isSelected)
+        XCTAssertEqual(textView.selectedRange, panelAttachment.rangeInContainer())
+    }
+
+    func testInvokesShouldSelectsAttachmentOnBackspace() throws {
+        let mockTextViewDelegate = MockRichTextViewDelegate()
+        let context = RichTextEditorContext.default
+        let textView = RichTextView(context: context)
+        textView.richTextViewDelegate = mockTextViewDelegate
+        context.textViewDidBeginEditing(textView)
+        textView.text = "Sample text"
+
+        let panelView = PanelView()
+        panelView.editor.attributedText = NSAttributedString(string: "Text in panel")
+        let panelAttachment = Attachment(panelView, size: .fullWidth)
+        panelAttachment.selectBeforeDelete = false
+        textView.insertAttachment(in: textView.textEndRange, attachment: panelAttachment)
+        textView.replaceCharacters(in: textView.textEndRange, with: NSAttributedString(string: " "))
+        textView.render()
+        textView.selectedRange = NSRange(location: 12, length: 0)
+
+        mockTextViewDelegate.onShouldSelectAttachmentOnBackspace = { _, attachment in
+            XCTAssertEqual(attachment, panelAttachment)
+            return true
+        }
+
+        XCTAssertFalse(panelAttachment.isSelected)
+        _ = context.textView(textView, shouldChangeTextIn: NSRange(location: 11, length: 1), replacementText: "")
+        XCTAssertTrue(panelAttachment.isSelected)
+    }
+
     func testReceiveBackspaceKeyInEmptyTextView() {
         let testExpectation = expectation(description: #function)
         let mockTextViewDelegate = MockRichTextViewDelegate()
