@@ -30,6 +30,7 @@ class ExpandableAttachment: Attachment {
         view = ExpandableView(frame: frame)
         super.init(view, size: .fullWidth)
         view.boundsObserver = self
+        selectOnTap = true
     }
 
     var attributedText: NSAttributedString {

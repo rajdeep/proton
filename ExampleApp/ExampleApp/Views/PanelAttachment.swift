@@ -31,6 +31,7 @@ class PanelAttachment: Attachment {
         super.init(view, size: .fullWidth)
         view.delegate = self
         view.boundsObserver = self
+        selectOnTap = true
     }
 
     var attributedText: NSAttributedString {
