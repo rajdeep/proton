@@ -55,7 +55,8 @@ class AttachmentContentView: UIView {
     }
 
     func onContentViewTapped() {
-        guard attachment?.selectOnTap == true else { return }
+        guard attachment?.containerEditorView?.isEditable == true,
+            attachment?.selectOnTap == true else { return }
          attachment?.setSelected(true)
     }
 }

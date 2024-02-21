@@ -1413,6 +1413,39 @@ class EditorSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testSelectOnTapInNonEditableEditor() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let offsetProvider = MockAttachmentOffsetProvider()
+        offsetProvider.offset = CGPoint(x: 0, y: -4)
+
+        editor.font = UIFont.systemFont(ofSize: 12)
+
+        var panel = PanelView()
+        panel.editor.forceApplyAttributedText = true
+        panel.backgroundColor = .cyan
+        panel.layer.borderWidth = 1.0
+        panel.layer.cornerRadius = 4.0
+        panel.layer.borderColor = UIColor.black.cgColor
+
+        let attachment = Attachment(panel, size: .fullWidth)
+        panel.boundsObserver = attachment
+        panel.editor.font = editor.font
+
+        panel.attributedText = NSAttributedString(string: "In full-width attachment")
+
+        editor.replaceCharacters(in: .zero, with: "This text is in Editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+
+        editor.isEditable = false
+        let touch = UITouch()
+        attachment.selectOnTap = true
+        (attachment.contentView?.superview as? AttachmentContentView)?.onContentViewTapped()
+
+        viewController.render()
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     private func addCaretRect(at range: NSRange, in editor: EditorView, color: UIColor) {
         let rect = editor.caretRect(for: range.location)
         let view = UIView(frame: rect)
