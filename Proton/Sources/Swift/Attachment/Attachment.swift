@@ -185,6 +185,9 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         return view?.superview != nil
     }
 
+    /// Determines if attachment is in selected range in the container `EditorView`
+    public var isInSelectedRange: Bool { isSelected }
+
     var isSelected: Bool = false {
         didSet {
             guard let view = self.view else { return }

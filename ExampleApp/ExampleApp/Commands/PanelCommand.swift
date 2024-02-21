@@ -29,7 +29,7 @@ class PanelCommand: EditorCommand {
         let selectedText = editor.selectedText
 
         let attachment = PanelAttachment(frame: .zero)
-        attachment.selectBeforeDelete = true
+//        attachment.selectBeforeDelete = true
         editor.insertAttachment(in: editor.selectedRange, attachment: attachment)
 
         let panel = attachment.view
