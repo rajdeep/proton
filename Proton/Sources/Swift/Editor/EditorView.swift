@@ -146,7 +146,7 @@ open class EditorView: UIView {
         get { editorViewContext.delegate }
     }
 
-    var scrollView: UIScrollView {
+    public var scrollView: UIScrollView {
         richTextView as UIScrollView
     }
 
