@@ -1552,3 +1552,13 @@ extension EditorView: AsyncTaskSchedulerDelegate {
         return previousRangeIDs.reversed()
     }
 }
+
+extension EditorView {
+    open override var forFirstBaselineLayout: UIView {
+        richTextView
+    }
+
+    open override var forLastBaselineLayout: UIView {
+        richTextView
+    }
+}
