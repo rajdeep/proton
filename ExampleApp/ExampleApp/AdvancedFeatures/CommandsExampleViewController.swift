@@ -327,7 +327,7 @@ extension CommandsExampleViewController: EditorViewDelegate {
         print("Key: \(key)")
     }
 
-    func editor(_ editor: EditorView, shouldSelectAttachmentOnBackspace attachment: Attachment) -> Bool {
+    func editor(_ editor: EditorView, shouldSelectAttachmentOnBackspace attachment: Attachment) -> Bool? {
         guard let panel = attachment as? PanelAttachment, panel.isInSelectedRange == false else { return false }
 
         panel.view.editor.setFocus()

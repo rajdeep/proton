@@ -1399,7 +1399,7 @@ extension EditorView: RichTextViewDelegate {
         AggregateEditorViewDelegate.editor(self, didTapAtLocation: location, characterRange: characterRange)
     }
 
-    func richTextView(_ richTextView: RichTextView, shouldSelectAttachmentOnBackspace attachment: Attachment) -> Bool {
+    func richTextView(_ richTextView: RichTextView, shouldSelectAttachmentOnBackspace attachment: Attachment) -> Bool? {
         AggregateEditorViewDelegate.editor(self, shouldSelectAttachmentOnBackspace: attachment)
     }
 }

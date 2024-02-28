@@ -99,7 +99,7 @@ class AggregateEditorViewDelegate: EditorViewDelegate {
         editor.editorContextDelegate?.editor(editor, didRenderAttachment: attachment)
     }
 
-    static func editor(_ editor: EditorView, shouldSelectAttachmentOnBackspace attachment: Attachment) -> Bool {
+    static func editor(_ editor: EditorView, shouldSelectAttachmentOnBackspace attachment: Attachment) -> Bool? {
         return editor.delegate?.editor(editor, shouldSelectAttachmentOnBackspace: attachment) ??
         editor.editorContextDelegate?.editor(editor, shouldSelectAttachmentOnBackspace: attachment) ??
         attachment.selectBeforeDelete
