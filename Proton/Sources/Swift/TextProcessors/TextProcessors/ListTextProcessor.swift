@@ -31,7 +31,7 @@ import UIKit
 /// 3. Tab: Indents the current level to next indentation level. A level may only be indented 1 level deeper than previous level.
 /// First level items cannot be indented.
 /// 4. Shift-Tab: Outdents text in list by one level each time. Using this on first level exits the list formatting for given text.
-public class ListTextProcessor: TextProcessing {
+open class ListTextProcessor: TextProcessing {
     public let name = "listProcessor"
 
     // Zero width space - used for laying out the list bullet/number in an empty line.
@@ -46,7 +46,7 @@ public class ListTextProcessor: TextProcessing {
 
     var executeOnDidProcess: ((EditorView) -> Void)?
 
-    public func shouldProcess(_ editorView: EditorView, shouldProcessTextIn range: NSRange, replacementText text: String) -> Bool {
+    open func shouldProcess(_ editorView: EditorView, shouldProcessTextIn range: NSRange, replacementText text: String) -> Bool {
         let rangeToCheck = max(0, min(range.endLocation, editorView.contentLength) - 1)
         if editorView.contentLength > 0,
            let value = editorView.attributedText.attribute(.listItem, at: rangeToCheck, effectiveRange: nil),
@@ -56,15 +56,26 @@ public class ListTextProcessor: TextProcessing {
         return true
     }
 
-    public func processInterrupted(editor: EditorView, at range: NSRange) { }
+    open func processInterrupted(editor: EditorView, at range: NSRange) { }
 
-    public func willProcess(editor: EditorView, deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) { }
+    open func willProcess(editor: EditorView, deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) { }
 
-    public func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int) -> Processed {
+    open func process(editor: EditorView, range editedRange: NSRange, changeInLength delta: Int) -> Processed {
         return false
     }
 
-    public func handleKeyWithModifiers(editor: EditorView, key: EditorKey, modifierFlags: UIKeyModifierFlags, range editedRange: NSRange)  {
+    open func didProcess(editor: EditorView) {
+        executeOnDidProcess?(editor)
+        executeOnDidProcess = nil
+        guard editor.selectedRange.endLocation < editor.contentLength else { return }
+        let lastChar = editor.attributedText.substring(from: NSRange(location: editor.selectedRange.location, length: 1))
+        if lastChar == ListTextProcessor.blankLineFiller {
+            editor.selectedRange = editor.selectedRange.nextPosition
+        }
+        editor.typingAttributes[.skipNextListMarker] = nil
+    }
+    
+    open func handleKeyWithModifiers(editor: EditorView, key: EditorKey, modifierFlags: UIKeyModifierFlags, range editedRange: NSRange)  {
         guard editedRange != .zero else { return }
         switch key {
         case .tab:
@@ -176,17 +187,6 @@ public class ListTextProcessor: TextProcessing {
                 self?.terminateList(editor: editor, editedRange: currentLine.range)
             }
         }
-    }
-
-    public func didProcess(editor: EditorView) {
-        executeOnDidProcess?(editor)
-        executeOnDidProcess = nil
-        guard editor.selectedRange.endLocation < editor.contentLength else { return }
-        let lastChar = editor.attributedText.substring(from: NSRange(location: editor.selectedRange.location, length: 1))
-        if lastChar == ListTextProcessor.blankLineFiller {
-            editor.selectedRange = editor.selectedRange.nextPosition
-        }
-        editor.typingAttributes[.skipNextListMarker] = nil
     }
 
     private func updateListItemIfRequired(editor: EditorView, editedRange: NSRange, indentMode: Indentation, attributeValue: Any?) {
