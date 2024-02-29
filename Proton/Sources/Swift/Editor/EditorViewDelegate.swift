@@ -133,7 +133,7 @@ public protocol EditorViewDelegate: AnyObject {
     ///   - attachment: Attachment at the range where backspace is received
     /// - Returns: `true` to delete, else `false`
     /// - Note: If either this or`Attachment`s property of `selectBeforeDelete` is `true`, the attachment will be shown as selected on backspace.
-    func editor(_ editor: EditorView, shouldSelectAttachmentOnBackspace attachment: Attachment) -> Bool
+    func editor(_ editor: EditorView, shouldSelectAttachmentOnBackspace attachment: Attachment) -> Bool?
 }
 
 public extension EditorViewDelegate {
@@ -152,7 +152,7 @@ public extension EditorViewDelegate {
     func editor(_ editor: EditorView, isReady: Bool) { }
     func editor(_ editor: EditorView, didChangeEditable isEditable: Bool) { }
     func editor(_ editor: EditorView, didRenderAttachment attachment: Attachment) { }
-    func editor(_ editor: EditorView, shouldSelectAttachmentOnBackspace attachment: Attachment) -> Bool {
-        attachment.selectBeforeDelete
+    func editor(_ editor: EditorView, shouldSelectAttachmentOnBackspace attachment: Attachment) -> Bool? {
+        return nil
     }
 }

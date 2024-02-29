@@ -71,7 +71,7 @@ class MockRichTextViewDelegate: RichTextViewDelegate {
         onSelectedRangeChanged?(richTextView, oldRange, newRange)
     }
 
-    func richTextView(_ richTextView: RichTextView, shouldSelectAttachmentOnBackspace attachment: Attachment) -> Bool {
+    func richTextView(_ richTextView: RichTextView, shouldSelectAttachmentOnBackspace attachment: Attachment) -> Bool? {
         onShouldSelectAttachmentOnBackspace?(richTextView, attachment) ?? false
     }
 }
