@@ -795,6 +795,15 @@ extension RichTextView: NSLayoutManagerDelegate {
     func layoutManager(_ layoutManager: NSLayoutManager, didCompleteLayoutFor textContainer: NSTextContainer?, atEnd layoutFinishedFlag: Bool) {
         richTextViewDelegate?.richTextView(self, didFinishLayout: layoutFinishedFlag)
     }
+
+    func layoutManager(_ layoutManager: NSLayoutManager, shouldBreakLineByHyphenatingBeforeCharacterAt charIndex: Int) -> Bool {
+        // Disable hyphenation for backgroundStyle as otherwise, in some cases, with hyphenations,
+        // layoutManager.glyphRange(forCharacterRange:) returns range with hyphenation and textstorage has
+        // corresponding ranges without hyphenation
+        // This will likely be revised in a future version to enable back hyphenation
+        return false
+    }
+
 }
 
 extension RichTextView: TextStorageDelegate {
