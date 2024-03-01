@@ -21,6 +21,11 @@
 import Foundation
 import UIKit
 
+public enum ListMarkerDebugOption {
+    case `default`
+    case replace(with: String)
+}
+
 /// Text process capable of processing keyboard inputs specific to lists. `ListTextProcessor` only works after a range of text
 /// has been converted to list using `ListCommand`.
 ///
@@ -34,9 +39,19 @@ import UIKit
 open class ListTextProcessor: TextProcessing {
     public let name = "listProcessor"
 
+
+    public static var markerDebugOptions: ListMarkerDebugOption = .default
+
     // Zero width space - used for laying out the list bullet/number in an empty line.
     // This is required when using tab on a blank bullet line. Without this, layout calculations are not performed.
-    static let blankLineFiller = "\u{200B}"
+    static var blankLineFiller: String {
+        switch markerDebugOptions {
+        case .default:
+            return "\u{200B}"
+        case .replace(let string):
+            return string
+        }
+    }
 
     /// Initializes text processor.
     public init() { }
