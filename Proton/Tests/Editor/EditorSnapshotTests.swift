@@ -1161,6 +1161,39 @@ class EditorSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testWrappedBackgroundInNestedEditor() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(60)),
+                GridColumnConfiguration(width: .fractional(0.30)),
+                GridColumnConfiguration(width: .fractional(0.30)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = GridViewAttachment(config: config)
+
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+
+        XCTAssertEqual(attachment.view.containerAttachment, attachment)
+
+        viewController.render(size: CGSize(width: 300, height: 225))
+
+        let backgroundStyle = BackgroundStyle(color: .red,
+                                              roundedCornerStyle: .absolute(value: 6),
+                                              border: BorderStyle(lineWidth: 1, color: .yellow),
+                                              shadow: ShadowStyle(color: .blue, offset: CGSize(width: 2, height: 2), blur: 2),
+                                              widthMode: .matchTextExact)
+
+        let cell01 = attachment.view.cellAt(rowIndex: 0, columnIndex: 1)
+        cell01?.editor.attributedText = NSAttributedString(string: "testLongString ThatWrapsToMultiple Lines", attributes: [.backgroundStyle: backgroundStyle, .textBlock: 1])
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     func testEditorWithArabicText() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
