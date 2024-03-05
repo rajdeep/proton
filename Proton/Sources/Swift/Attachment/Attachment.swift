@@ -322,6 +322,11 @@ open class Attachment: NSTextAttachment, BoundsObserving {
             self.isAsyncRendered = true
             self.containerEditorView?.asyncAttachmentRenderingDelegate?.didRenderAttachment(self, in: containerEditorView)
         }
+        selectionView.onRemoveFromSuperview = { [weak self] in
+            guard let self,
+                  let range = rangeInContainer()?.nextPosition else { return }
+            self.containerEditorView?.selectedRange = range
+        }
     }
 
     private func setup(image: AttachmentImage) {
