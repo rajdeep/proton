@@ -543,6 +543,10 @@ open class EditorView: UIView {
         set { richTextView.selectedRange = newValue }
     }
 
+    public var lineFragmentPadding: CGFloat {
+        richTextView.textContainer.lineFragmentPadding
+    }
+
     /// Typing attributes to be used. Automatically resets when the selection changes.
     /// To apply an attribute in the current position such that it is applied as text is typed,
     /// the attribute must be added to `typingAttributes` collection.
@@ -1406,6 +1410,7 @@ extension EditorView: RichTextViewDelegate {
 
 extension EditorView {
     func relayoutAttachments(in range: NSRange? = nil) {
+        guard self.window != nil else { return }
         let rangeToUse = range ?? NSRange(location: 0, length: contentLength)
         richTextView.enumerateAttribute(.attachment, in: rangeToUse, options: .longestEffectiveRangeNotRequired) { [weak self] (attach, range, _) in
             guard let self,

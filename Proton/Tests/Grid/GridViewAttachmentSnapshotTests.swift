@@ -50,6 +50,69 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testRendersGridViewAttachmentWithViewportConstraints() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .viewport(padding: 0)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = GridViewAttachment(config: config)
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        XCTAssertEqual(attachment.view.containerAttachment, attachment)
+
+        viewController.render(size: CGSize(width: 400, height: 175))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        let cell = attachment.view.cellAt(rowIndex: 0, columnIndex: 0)
+        let lineFragmentPadding = editor.lineFragmentPadding
+        XCTAssertEqual(cell?.frame.width, editor.frame.width - (lineFragmentPadding * 2))
+
+        viewController.render(size: CGSize(width: 700, height: 175))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testRendersNestedGridViewAttachmentWithViewportConstraints() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .viewport(padding: 0)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let gridAttachment = GridViewAttachment(config: config)
+        var panel = PanelView()
+        panel.editor.forceApplyAttributedText = true
+        panel.backgroundColor = .cyan
+        panel.layer.borderWidth = 1.0
+        panel.layer.cornerRadius = 4.0
+        panel.layer.borderColor = UIColor.black.cgColor
+
+        let panelAttachment = Attachment(panel, size: .fullWidth)
+        panel.boundsObserver = panelAttachment
+        panel.editor.font = editor.font
+
+        panel.attributedText = NSAttributedString(string: "Text in panel\n")
+        panel.editor.replaceCharacters(in: panel.editor.textEndRange, with: gridAttachment.string)
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: panelAttachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 225))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     func testRendersGridViewAttachmentWithFractionalWidth() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor

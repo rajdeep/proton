@@ -32,22 +32,26 @@ class GridColumnDimension {
         self.collapsedWidth = collapsedWidth
     }
 
-    func value(basedOn total: CGFloat) -> CGFloat {
+    func value(basedOn total: CGFloat, viewportWidth: CGFloat) -> CGFloat {
         guard !isCollapsed else { return collapsedWidth }
-        return width.value(basedOn: total)
+        return width.value(basedOn: total, viewportWidth: viewportWidth)
     }
 }
 
 public enum GridColumnWidth {
     case fixed(CGFloat)
     case fractional(CGFloat)
+    case viewport(padding: CGFloat)
 
-    public func value(basedOn total: CGFloat) -> CGFloat {
+    public func value(basedOn total: CGFloat, viewportWidth: CGFloat) -> CGFloat {
         switch self {
         case .fixed(let value):
             return value
         case .fractional(let value):
             return value * total
+        case .viewport(let padding):
+            let cellOverlapPixels: CGFloat = 1
+            return viewportWidth - (padding + cellOverlapPixels)
         }
     }
 }

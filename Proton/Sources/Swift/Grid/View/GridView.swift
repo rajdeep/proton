@@ -569,7 +569,8 @@ public class GridView: UIView {
     private func resetShadows() {
         if let frozenColumnMaxIndex {
             let frozenColumnWidth = gridView.columnWidths.prefix(upTo: frozenColumnMaxIndex + 1).reduce(0) { partialResult, dimension in
-                partialResult + dimension.value(basedOn: frame.size.width)
+                let viewport = gridView.bounds
+                return partialResult + dimension.value(basedOn: frame.size.width, viewportWidth: viewport.width)
             }
             let borderOffSet = self.config.style.borderWidth
             leadingShadowConstraint.constant = frozenColumnWidth + borderOffSet

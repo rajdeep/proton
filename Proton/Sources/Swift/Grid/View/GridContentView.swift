@@ -495,6 +495,8 @@ extension GridContentView: UIGestureRecognizerDelegate {
 }
 
 extension GridContentView: GridDelegate {
+    var viewport: CGRect { bounds }
+
     func grid(_ grid: Grid, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool {
         gridContentViewDelegate?.gridContentView(self, shouldChangeColumnWidth: proposedWidth, for: columnIndex) ?? true
     }
