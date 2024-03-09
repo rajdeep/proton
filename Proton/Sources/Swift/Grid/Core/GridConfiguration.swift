@@ -40,18 +40,27 @@ class GridColumnDimension {
 
 public enum GridColumnWidth {
     case fixed(CGFloat)
-    case fractional(CGFloat)
+    case fractional(CGFloat, min: CGFloat? = nil, max: CGFloat? = nil)
     case viewport(padding: CGFloat)
 
     public func value(basedOn total: CGFloat, viewportWidth: CGFloat) -> CGFloat {
+        let cellOverlapPixels: CGFloat = 1
         switch self {
-        case .fixed(let value):
+        case let .fixed(value):
             return value
-        case .fractional(let value):
-            return value * total
-        case .viewport(let padding):
-            let cellOverlapPixels: CGFloat = 1
-            return viewportWidth - (padding + cellOverlapPixels)
+        case let .fractional(value, min, max):
+            let fractionalValue = value * total
+            if let min,
+               fractionalValue < min {
+                return min - cellOverlapPixels
+            }
+            if let max,
+               fractionalValue > max {
+                return max - cellOverlapPixels
+            }
+            return fractionalValue - cellOverlapPixels
+        case let .viewport(padding):
+            return viewportWidth - padding - cellOverlapPixels
         }
     }
 }
