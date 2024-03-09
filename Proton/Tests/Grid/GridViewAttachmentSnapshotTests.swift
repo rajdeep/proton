@@ -143,9 +143,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(width: .fractional(0.15, min: 30)),
-                GridColumnConfiguration(width: .fractional(0.15, min: 45)),
-                GridColumnConfiguration(width: .fractional(0.15, min: 60)),
+                GridColumnConfiguration(width: .fractional(0.15, min: { 30 })),
+                GridColumnConfiguration(width: .fractional(0.15, min: { 45 })),
+                GridColumnConfiguration(width: .fractional(0.15, min: { 60 })),
                 GridColumnConfiguration(width: .fixed(20))
             ],
             rowsConfiguration: [
@@ -177,9 +177,9 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let editor = viewController.editor
         let config = GridConfiguration(
             columnsConfiguration: [
-                GridColumnConfiguration(width: .fractional(0.30, max: 50)),
-                GridColumnConfiguration(width: .fractional(0.30, max: 75)),
-                GridColumnConfiguration(width: .fractional(0.30, max: 100)),
+                GridColumnConfiguration(width: .fractional(0.30, max: { 50 })),
+                GridColumnConfiguration(width: .fractional(0.30, max: { 75 })),
+                GridColumnConfiguration(width: .fractional(0.30, max: { 100 })),
                 GridColumnConfiguration(width: .fixed(40))
             ],
             rowsConfiguration: [
