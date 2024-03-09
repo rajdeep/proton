@@ -73,7 +73,8 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
         let cell = attachment.view.cellAt(rowIndex: 0, columnIndex: 0)
         let lineFragmentPadding = editor.lineFragmentPadding
-        XCTAssertEqual(cell?.frame.width, editor.frame.width - (lineFragmentPadding * 2))
+        let cellOverlapPixels: CGFloat = 1
+        XCTAssertEqual((cell?.frame.width ?? 0) - cellOverlapPixels, editor.frame.width - (lineFragmentPadding * 2))
 
         viewController.render(size: CGSize(width: 700, height: 175))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
@@ -167,9 +168,10 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
 
         let lineFragmentPadding = editor.lineFragmentPadding
         let initialCellWidth = (editor.frame.width - (lineFragmentPadding * 2)) * 0.15
-        XCTAssertEqual(cell00?.frame.width, initialCellWidth)
-        XCTAssertEqual(cell01?.frame.width, 45)
-        XCTAssertEqual(cell02?.frame.width, 60)
+        let cellOverlapPixels: CGFloat = 1
+        XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, initialCellWidth)
+        XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, 45)
+        XCTAssertEqual((cell02?.frame.width ?? 0) - cellOverlapPixels, 60)
     }
 
     func testRendersGridViewAttachmentWithFractionalWidthMax() {
@@ -199,9 +201,10 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let cell01 = attachment.view.cellAt(rowIndex: 0, columnIndex: 1)
         let cell02 = attachment.view.cellAt(rowIndex: 0, columnIndex: 2)
 
-        XCTAssertEqual(cell00?.frame.width, 50)
-        XCTAssertEqual(cell01?.frame.width, 75)
-        XCTAssertEqual(cell02?.frame.width, 75)
+        let cellOverlapPixels: CGFloat = 1
+        XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, 50)
+        XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, 75)
+        XCTAssertEqual((cell02?.frame.width ?? 0) - cellOverlapPixels, 75)
     }
 
 

@@ -63,7 +63,6 @@ public enum GridColumnWidth {
     case viewport(padding: CGFloat)
 
     func value(basedOn total: CGFloat, viewportWidth: CGFloat) -> CGFloat {
-        let cellOverlapPixels: CGFloat = 1
         switch self {
         case let .fixed(value):
             return value
@@ -71,15 +70,15 @@ public enum GridColumnWidth {
             let fractionalValue = value * total
             if let min = min?(),
                fractionalValue < min {
-                return min - cellOverlapPixels
+                return min
             }
             if let max = max?(),
                fractionalValue > max {
-                return max - cellOverlapPixels
+                return max
             }
-            return fractionalValue - cellOverlapPixels
+            return fractionalValue
         case let .viewport(padding):
-            return viewportWidth - padding - cellOverlapPixels
+            return viewportWidth - padding
         }
     }
 }
