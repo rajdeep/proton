@@ -109,7 +109,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.insertAttachment(in: editor.textEndRange, attachment: panelAttachment)
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
-        viewController.render(size: CGSize(width: 400, height: 225))
+        viewController.render(size: CGSize(width: 400, height: 240))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 

@@ -1410,7 +1410,6 @@ extension EditorView: RichTextViewDelegate {
 
 extension EditorView {
     func relayoutAttachments(in range: NSRange? = nil) {
-        guard self.window != nil else { return }
         let rangeToUse = range ?? NSRange(location: 0, length: contentLength)
         richTextView.enumerateAttribute(.attachment, in: rangeToUse, options: .longestEffectiveRangeNotRequired) { [weak self] (attach, range, _) in
             guard let self,
