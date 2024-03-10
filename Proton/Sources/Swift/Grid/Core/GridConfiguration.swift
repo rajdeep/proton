@@ -46,6 +46,11 @@ class GridColumnDimension {
 
 /// Defines how Grid Column width should be calculated
 public enum GridColumnWidth {
+    public enum FractionalWidth {
+        case absolute(CGFloat)
+        case viewport(padding: CGFloat)
+    }
+
     /// Defines a fixed with for column
     /// - Parameter : `CGFloat` value for width.
     case fixed(CGFloat)
@@ -55,7 +60,7 @@ public enum GridColumnWidth {
     ///     - min: Closure providing minimum value for column. If computed fractional value is less than min, min is used.
     ///     - max: Closure providing maximum value for column. If computed fractional value is more than max, max is used.
     /// - Note: Percentage is calculated based on total available width for GridView, typically, width of containing `EditorView`
-    case fractional(CGFloat, min: (() -> CGFloat)? = nil, max: (() -> CGFloat)? = nil)
+    case fractional(CGFloat, min: (() -> FractionalWidth)? = nil, max: (() -> FractionalWidth)? = nil)
 
     /// Defines width based on available viewport.
     /// - Parameter padding: Padding for adjusting width with respect to viewport. Positive values decreases column width from viewport width and negative
@@ -66,15 +71,23 @@ public enum GridColumnWidth {
         switch self {
         case let .fixed(value):
             return value
-        case let .fractional(value, min, max):
+        case let .fractional(value, minVal, maxVal):
             let fractionalValue = value * total
-            if let min = min?(),
-               fractionalValue < min {
-                return min
+            if let minVal = minVal?() {
+                switch minVal {
+                case .absolute(let value):
+                    return max(value, fractionalValue)
+                case .viewport(let padding):
+                    return max(viewportWidth - padding, fractionalValue)
+                }
             }
-            if let max = max?(),
-               fractionalValue > max {
-                return max
+            if let maxVal = maxVal?() {
+                switch maxVal {
+                case .absolute(let value):
+                    return min(value, fractionalValue)
+                case .viewport(let padding):
+                    return min(viewportWidth - padding, fractionalValue)
+                }
             }
             return fractionalValue
         case let .viewport(padding):
