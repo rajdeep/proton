@@ -543,6 +543,10 @@ open class EditorView: UIView {
         set { richTextView.selectedRange = newValue }
     }
 
+    public var lineFragmentPadding: CGFloat {
+        richTextView.textContainer.lineFragmentPadding
+    }
+
     /// Typing attributes to be used. Automatically resets when the selection changes.
     /// To apply an attribute in the current position such that it is applied as text is typed,
     /// the attribute must be added to `typingAttributes` collection.

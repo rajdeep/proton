@@ -42,6 +42,7 @@ class GridRowDimension {
 }
 
 protocol GridDelegate: AnyObject {
+    var viewport: CGRect { get  }
     func grid(_ grid: Grid, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool
 }
 
@@ -72,6 +73,10 @@ class Grid {
         rowHeights.count
     }
 
+    var viewport: CGRect? {
+        delegate?.viewport
+    }
+
     init(config: GridConfiguration, cells: [GridCell], editorInitializer: GridCell.EditorInitializer? = nil) {
         self.config = config
         self.editorInitializer = editorInitializer
@@ -99,8 +104,10 @@ class Grid {
             return .zero
         }
 
+        let viewportWidth = viewport?.width ?? size.width
+
         if minColumnSpan > 0 {
-            x = columnWidths[0..<minColumnSpan].reduce(0.0) { $0 + $1.value(basedOn: size.width)}
+            x = columnWidths[0..<minColumnSpan].reduce(0.0) { $0 + $1.value(basedOn: size.width, viewportWidth: viewportWidth)}
         }
 
         if minRowSpan > 0 {
@@ -109,7 +116,7 @@ class Grid {
 
         var width: CGFloat = 0
         for col in cell.columnSpan {
-            width += columnWidths[col].value(basedOn: size.width)
+            width += columnWidths[col].value(basedOn: size.width, viewportWidth: viewportWidth)
         }
 
         var height: CGFloat = 0
@@ -125,7 +132,8 @@ class Grid {
     }
 
     func sizeThatFits(size: CGSize) -> CGSize {
-        let width = columnWidths.reduce(0.0) { $0 + $1.value(basedOn: size.width)} + config.style.borderWidth
+        let viewportWidth = viewport?.width ?? size.width
+        let width = columnWidths.reduce(0.0) { $0 + $1.value(basedOn: size.width, viewportWidth: viewportWidth)} + config.style.borderWidth
         // Account for additional height equal to borders from inset created when calculating the fames for cells
         let height = currentRowHeights.reduce(0.0, +) + config.style.borderWidth
         return CGSize(width: width, height: height)
@@ -161,10 +169,11 @@ class Grid {
 
 
     func changeColumnWidth(index: Int, totalWidth: CGFloat, delta: CGFloat) {
-        let proposedWidth = columnWidths[index].value(basedOn: totalWidth) + delta
+        let viewportWidth = viewport?.width ?? totalWidth
+        let proposedWidth = columnWidths[index].value(basedOn: totalWidth, viewportWidth: viewportWidth) + delta
         guard index < columnWidths.count,
               delegate?.grid(self, shouldChangeColumnWidth: proposedWidth, for: index) ?? true else { return }
-        columnWidths[index].width = .fixed(columnWidths[index].value(basedOn: totalWidth) + delta)
+        columnWidths[index].width = .fixed(columnWidths[index].value(basedOn: totalWidth, viewportWidth: viewportWidth) + delta)
     }
 
     func changeRowHeight(index: Int, delta: CGFloat) {
