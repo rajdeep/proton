@@ -73,7 +73,8 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
         let cell = attachment.view.cellAt(rowIndex: 0, columnIndex: 0)
         let lineFragmentPadding = editor.lineFragmentPadding
-        XCTAssertEqual(cell?.frame.width, editor.frame.width - (lineFragmentPadding * 2))
+        let cellOverlapPixels: CGFloat = 1
+        XCTAssertEqual((cell?.frame.width ?? 0) - cellOverlapPixels, editor.frame.width - (lineFragmentPadding * 2))
 
         viewController.render(size: CGSize(width: 700, height: 175))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
@@ -137,6 +138,138 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 400, height: 350))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+    func testRendersGridViewAttachmentWithFractionalWidthMin() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fractional(0.15, min: { .absolute(30) })),
+                GridColumnConfiguration(width: .fractional(0.15, min: { .absolute(45) })),
+                GridColumnConfiguration(width: .fractional(0.15, min: { .absolute(60) })),
+                GridColumnConfiguration(width: .fixed(20))
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = GridViewAttachment(config: config)
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 300, height: 200))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        let cell00 = attachment.view.cellAt(rowIndex: 0, columnIndex: 0)
+        let cell01 = attachment.view.cellAt(rowIndex: 0, columnIndex: 1)
+        let cell02 = attachment.view.cellAt(rowIndex: 0, columnIndex: 2)
+
+        let lineFragmentPadding = editor.lineFragmentPadding
+        let initialCellWidth = (editor.frame.width - (lineFragmentPadding * 2)) * 0.15
+        let cellOverlapPixels: CGFloat = 1
+        XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, initialCellWidth)
+        XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, 45)
+        XCTAssertEqual((cell02?.frame.width ?? 0) - cellOverlapPixels, 60)
+    }
+
+    func testRendersGridViewAttachmentWithFractionalWidthMinViewport() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fractional(0.15, min: { .absolute(30) })),
+                GridColumnConfiguration(width: .fractional(0.15, min: { .viewport(padding: 10)})),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = GridViewAttachment(config: config)
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 300, height: 200))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        let cell00 = attachment.view.cellAt(rowIndex: 0, columnIndex: 0)
+        let cell01 = attachment.view.cellAt(rowIndex: 0, columnIndex: 1)
+
+        let lineFragmentPadding = editor.lineFragmentPadding
+        let initialCellWidth = (editor.frame.width - (lineFragmentPadding * 2)) * 0.15
+        let cellOverlapPixels: CGFloat = 1
+        XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, initialCellWidth)
+        XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, editor.frame.width - 10 - (2 * editor.lineFragmentPadding))
+    }
+
+    func testRendersGridViewAttachmentWithFractionalWidthMaxViewport() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fractional(0.15, min: { .absolute(30) })),
+                GridColumnConfiguration(width: .fractional(2.0, max: { .viewport(padding: 10)})),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = GridViewAttachment(config: config)
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 300, height: 200))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        let cell00 = attachment.view.cellAt(rowIndex: 0, columnIndex: 0)
+        let cell01 = attachment.view.cellAt(rowIndex: 0, columnIndex: 1)
+
+        let lineFragmentPadding = editor.lineFragmentPadding
+        let initialCellWidth = (editor.frame.width - (lineFragmentPadding * 2)) * 0.15
+        let cellOverlapPixels: CGFloat = 1
+        XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, initialCellWidth)
+        XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, editor.frame.width - 10 - (2 * editor.lineFragmentPadding))
+    }
+
+
+    func testRendersGridViewAttachmentWithFractionalWidthMax() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fractional(0.30, max: { .absolute(50) })),
+                GridColumnConfiguration(width: .fractional(0.30, max: { .absolute(75) })),
+                GridColumnConfiguration(width: .fractional(0.30, max: { .absolute(100) })),
+                GridColumnConfiguration(width: .fixed(40))
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = GridViewAttachment(config: config)
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 300, height: 200))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        let cell00 = attachment.view.cellAt(rowIndex: 0, columnIndex: 0)
+        let cell01 = attachment.view.cellAt(rowIndex: 0, columnIndex: 1)
+        let cell02 = attachment.view.cellAt(rowIndex: 0, columnIndex: 2)
+
+        let cellOverlapPixels: CGFloat = 1
+        XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, 50)
+        XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, 75)
+        XCTAssertEqual((cell02?.frame.width ?? 0) - cellOverlapPixels, 75)
+    }
+
 
     func testUpdatesCellSizeBasedOnContent() {
         let viewController = EditorTestViewController()
