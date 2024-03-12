@@ -266,7 +266,7 @@ open class ListTextProcessor: TextProcessing {
             }
 
 
-            indentChildLists(editor: editor, editedRange: line.range, originalParaStyle: paraStyle, indentMode: indentMode)
+//            indentChildLists(editor: editor, editedRange: line.range, originalParaStyle: paraStyle, indentMode: indentMode)
         }
     }
 
@@ -286,7 +286,7 @@ open class ListTextProcessor: TextProcessing {
 
     private func indentChildLists(editor: EditorView, editedRange: NSRange, originalParaStyle: NSParagraphStyle?, indentMode: Indentation) {
         var subListRange = NSRange.zero
-        guard let nextLine = editor.nextContentLine(from: editedRange.location),
+        guard let nextLine = editor.nextContentLine(from: editedRange.nextPosition.location),
               let originalParaStyle = originalParaStyle,
               editor.attributedText.attribute(.listItem, at: nextLine.range.location, longestEffectiveRange: &subListRange, in: NSRange(location: nextLine.range.location, length: editor.contentLength - nextLine.range.location)) != nil
         else { return }
