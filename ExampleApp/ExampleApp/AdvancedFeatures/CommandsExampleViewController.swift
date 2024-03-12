@@ -105,6 +105,8 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
 
+        ListTextProcessor.markerDebugOptions = .replace(with: "♥")
+
         stackView.axis = .horizontal
         stackView.distribution = .equalCentering
         stackView.alignment = .center

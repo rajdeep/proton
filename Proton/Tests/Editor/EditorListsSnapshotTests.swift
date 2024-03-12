@@ -1076,4 +1076,44 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testIndentCurrentItemWithEmptyNextItem() {
+        recordMode = true
+        let size = CGSize(width: 300, height: 175)
+        let text = """
+        A
+        """
+
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.listFormattingProvider = listFormattingProvider
+        editor.attributedText = NSAttributedString(string: text)
+        editor.selectedRange = editor.attributedText.fullRange
+        listCommand.execute(on: editor)
+
+        processEditorInput(editor: editor) {
+            editor.replaceCharacters(in: editor.textEndRange, with: NSAttributedString(string: "\n"))
+        }
+
+        processEditorInput(editor: editor) {
+            editor.replaceCharacters(in: editor.textEndRange, with: NSAttributedString(string: "B"))
+        }
+
+        viewController.render(size: size)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        ListTextProcessor().handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: NSRange(location: 2, length: 0))
+
+        viewController.render(size: size)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        ListTextProcessor().handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: NSRange(location: 4, length: 0))
+
+        viewController.render(size: size)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    private func processEditorInput(editor: EditorView, input: (() -> Void)) {
+        input()
+        listTextProcessor.didProcess(editor: editor)
+    }
 }

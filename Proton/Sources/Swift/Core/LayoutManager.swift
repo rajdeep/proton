@@ -205,7 +205,7 @@ class LayoutManager: NSLayoutManager {
         previousLevel = level
 
         let font = lastLayoutFont ?? defaultFont
-        drawListItem(level: level, previousLevel: previousLevel, index: index, rect: newLineRect.integral, paraStyle: paraStyle, font: font, attributeValue: attributeValue)
+//        drawListItem(level: level, previousLevel: previousLevel, index: index, rect: newLineRect.integral, paraStyle: paraStyle, font: font, attributeValue: attributeValue)
     }
 
     private func drawListItem(level: Int, previousLevel: Int, index: Int, rect: CGRect, paraStyle: NSParagraphStyle, font: UIFont, attributeValue: Any?) {

@@ -82,7 +82,21 @@ open class ListTextProcessor: TextProcessing {
     open func didProcess(editor: EditorView) {
         executeOnDidProcess?(editor)
         executeOnDidProcess = nil
-        guard editor.selectedRange.endLocation < editor.contentLength else { return }
+        guard editor.selectedRange.endLocation < editor.contentLength else {
+            let previousCharLocation = editor.selectedRange.previousPosition.location
+            guard previousCharLocation < editor.contentLength else { return }
+            let lastChar = editor.attributedText.attributedSubstring(from: NSRange(location: previousCharLocation, length: 1))
+            if lastChar.string.rangeOfCharacter(from: .newlines) != nil,
+               let listAttr = lastChar.attribute(.listItem, at: 0, effectiveRange: nil) {
+                let lastRange = editor.selectedRange
+                var attrs = editor.typingAttributes
+                attrs[.listItem] = listAttr
+                let marker = NSAttributedString(string: ListTextProcessor.blankLineFiller, attributes: attrs)
+                editor.replaceCharacters(in: lastRange, with: marker)
+                editor.selectedRange = editor.selectedRange.nextPosition
+            }
+            return
+        }
         let lastChar = editor.attributedText.substring(from: NSRange(location: editor.selectedRange.location, length: 1))
         if lastChar == ListTextProcessor.blankLineFiller {
             editor.selectedRange = editor.selectedRange.nextPosition
