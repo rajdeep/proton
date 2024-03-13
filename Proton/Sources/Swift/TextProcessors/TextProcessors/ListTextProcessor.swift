@@ -81,6 +81,8 @@ open class ListTextProcessor: TextProcessing {
     }
 
     open func didProcess(editor: EditorView) {
+        guard isProcessingList(editor: editor) else { return }
+
         executeOnDidProcess?(editor)
         executeOnDidProcess = nil
 
@@ -116,7 +118,9 @@ open class ListTextProcessor: TextProcessing {
     }
     
     open func handleKeyWithModifiers(editor: EditorView, key: EditorKey, modifierFlags: UIKeyModifierFlags, range editedRange: NSRange)  {
-        guard editedRange != .zero else { return }
+        guard editedRange != .zero,
+              isProcessingList(editor: editor) else { return }
+
         switch key {
         case .tab:
             // Indent only if previous character is a listItem
@@ -166,6 +170,15 @@ open class ListTextProcessor: TextProcessing {
         else { return }
 
         terminateList(editor: editor, editedRange: currentContentLineRange)
+    }
+
+    private func isProcessingList(editor: EditorView) -> Bool {
+        guard editor.selectedRange != .zero else { return false }
+        if editor.selectedRange.length == 0 {
+            return editor.attributedText.hasAttribute(.listItem, at: editor.selectedRange.location - 1)
+        } else {
+            return editor.attributedText.hasAttribute(.listItem, at: editor.selectedRange.location)
+        }
     }
 
     private func terminateList(editor: EditorView, editedRange: NSRange) {

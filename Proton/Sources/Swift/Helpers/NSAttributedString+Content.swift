@@ -54,6 +54,11 @@ public extension NSAttributedString {
         }
         return string.makeNSRange(from: range)
     }
+
+    func hasAttribute(_ attribute: NSAttributedString.Key, at location: Int) -> Bool {
+        guard location < length else { return false }
+        return self.attribute(attribute, at: location, effectiveRange: nil) != nil
+    }
 }
 
 extension NSAttributedString {
