@@ -490,10 +490,11 @@ class RichTextView: AutogrowingTextView {
     }
 
     func invalidateLayout(for range: NSRange) {
-        layoutManager.invalidateLayout(forCharacterRange: range, actualCharacterRange: nil)
+        layoutManager.invalidateLayout(forCharacterRange: range.clamped(upperBound: textStorage.length), actualCharacterRange: nil)
     }
 
     func invalidateDisplay(for range: NSRange) {
+        // invalidateDisplay does not need clamping like required by invalidateLayout
         layoutManager.invalidateDisplay(forCharacterRange: range)
     }
 

@@ -147,6 +147,20 @@ class RichTextViewTests: XCTestCase {
         XCTAssertEqual(textView.attributedText.string, "")
     }
 
+    func testUsesValidRangeForInvalidatingLayout() {
+        let text = NSAttributedString(string: "test")
+        let textView = RichTextView(context: RichTextViewContext())
+        textView.attributedText = text
+        textView.invalidateLayout(for: NSRange(location: 20, length: 4))
+    }
+
+    func testUsesValidRangeForInvalidatingDisplay() {
+        let text = NSAttributedString(string: "test")
+        let textView = RichTextView(context: RichTextViewContext())
+        textView.attributedText = text
+        textView.invalidateDisplay(for: NSRange(location: 20, length: 4))
+    }
+
     private func assertKeyCommand(input: String, modifierFlags: UIKeyModifierFlags, assertions: @escaping ((EditorKey, UIKeyModifierFlags) -> Void), file: StaticString = #file, line: UInt = #line) {
         let funcExpectation = functionExpectation()
         let textView = RichTextView(context: RichTextViewContext())
