@@ -82,6 +82,15 @@ open class ListTextProcessor: TextProcessing {
     open func didProcess(editor: EditorView) {
         executeOnDidProcess?(editor)
         executeOnDidProcess = nil
+
+        if let currentLine = editor.contentLinesInRange(editor.selectedRange).first,
+           let rangeToReplace = currentLine.text.string.range(of: ListTextProcessor.blankLineFiller) {
+            let range = currentLine.text.string.makeNSRange(from: rangeToReplace)
+            let adjustedRange = NSRange(location: range.location + currentLine.range.location, length: range.length)
+            editor.replaceCharacters(in: adjustedRange, with: NSAttributedString())
+//            editor.selectedRange = editor.selectedRange.previousPosition
+        }
+
         guard editor.selectedRange.endLocation < editor.contentLength else {
             let previousCharLocation = editor.selectedRange.previousPosition.location
             guard previousCharLocation < editor.contentLength else { return }
