@@ -39,6 +39,7 @@ public enum ListMarkerDebugOption {
 open class ListTextProcessor: TextProcessing {
     public let name = "listProcessor"
 
+    typealias ContinueExecution = Bool
 
     public static var markerDebugOptions: ListMarkerDebugOption = .default
 
@@ -84,7 +85,8 @@ open class ListTextProcessor: TextProcessing {
         executeOnDidProcess = nil
 
         if let currentLine = editor.contentLinesInRange(editor.selectedRange).first,
-           let rangeToReplace = currentLine.text.string.range(of: ListTextProcessor.blankLineFiller) {
+           let rangeToReplace = currentLine.text.string.range(of: ListTextProcessor.blankLineFiller),
+           currentLine.text.length > 1 {
             let range = currentLine.text.string.makeNSRange(from: rangeToReplace)
             let adjustedRange = NSRange(location: range.location + currentLine.range.location, length: range.length)
             editor.replaceCharacters(in: adjustedRange, with: NSAttributedString())
@@ -267,7 +269,8 @@ open class ListTextProcessor: TextProcessing {
 
             // Remove listItem attribute if indented all the way back
             if mutableStyle?.firstLineHeadIndent == 0 {
-                editor.removeAttribute(.listItem, at: line.range)
+//                editor.removeAttribute(.listItem, at: line.range)
+                editor.replaceCharacters(in: line.range, with: "")
                 // remove list attribute from new line char in the previous line
                 if let previousLine = previousLine {
                     editor.removeAttribute(.listItem, at: NSRange(location: previousLine.range.endLocation, length: 1))
