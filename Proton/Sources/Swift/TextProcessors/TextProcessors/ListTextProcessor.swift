@@ -270,7 +270,8 @@ open class ListTextProcessor: TextProcessing {
             // Remove listItem attribute if indented all the way back
             if mutableStyle?.firstLineHeadIndent == 0 {
 //                editor.removeAttribute(.listItem, at: line.range)
-                editor.replaceCharacters(in: line.range, with: "")
+                editor.replaceCharacters(in: NSRange(location: line.range.location, length: 2), with: "")
+                editor.typingAttributes[.paragraphStyle] = editor.paragraphStyle
                 // remove list attribute from new line char in the previous line
                 if let previousLine = previousLine {
                     editor.removeAttribute(.listItem, at: NSRange(location: previousLine.range.endLocation, length: 1))
