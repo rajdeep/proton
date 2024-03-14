@@ -87,18 +87,24 @@ open class ListTextProcessor: TextProcessing {
         executeOnDidProcess = nil
 
         if let currentLine = editor.contentLinesInRange(editor.selectedRange).first,
-           let rangeToReplace = currentLine.text.string.range(of: ListTextProcessor.blankLineFiller),
+           let rangeToReplace = currentLine.text.rangeOfCharacter(from: CharacterSet(charactersIn: ListTextProcessor.blankLineFiller)),
            currentLine.text.length > 1 {
-            let range = currentLine.text.string.makeNSRange(from: rangeToReplace)
-            let adjustedRange = NSRange(location: range.location + currentLine.range.location, length: range.length)
+            let adjustedRange = NSRange(location: rangeToReplace.location + currentLine.range.location, length: rangeToReplace.length)
+            let proposedSelectedLocation = editor.selectedRange.location - 1
             editor.replaceCharacters(in: adjustedRange, with: NSAttributedString())
-//            editor.selectedRange = editor.selectedRange.previousPosition
+            // Resetting selected range may not be required if the replace operation results in changing that
+            // automatically, i.e. in case the list item is last item in the editor and deleting the marker character
+            // results in editor selected range to adjust as it happens to be outside editor content length
+            if proposedSelectedLocation != editor.selectedRange.location {
+                editor.selectedRange = NSRange(location: proposedSelectedLocation, length: editor.selectedRange.length)
+            }
         }
 
-        guard editor.selectedRange.endLocation < editor.contentLength else {
-            let previousCharLocation = editor.selectedRange.previousPosition.location
-            guard previousCharLocation < editor.contentLength else { return }
-            let lastChar = editor.attributedText.attributedSubstring(from: NSRange(location: previousCharLocation, length: 1))
+//        guard editor.selectedRange.endLocation < editor.contentLength else {
+//            let previousCharLocation = editor.selectedRange.previousPosition.location
+//            guard previousCharLocation < editor.contentLength else { return }
+        guard let previousCharacterRange = editor.selectedRange.previousCharacterRange else { return }
+            let lastChar = editor.attributedText.attributedSubstring(from: previousCharacterRange)
             if lastChar.string.rangeOfCharacter(from: .newlines) != nil,
                let listAttr = lastChar.attribute(.listItem, at: 0, effectiveRange: nil) {
                 let lastRange = editor.selectedRange
@@ -108,12 +114,12 @@ open class ListTextProcessor: TextProcessing {
                 editor.replaceCharacters(in: lastRange, with: marker)
                 editor.selectedRange = editor.selectedRange.nextPosition
             }
-            return
-        }
-        let lastChar = editor.attributedText.substring(from: NSRange(location: editor.selectedRange.location, length: 1))
-        if lastChar == ListTextProcessor.blankLineFiller {
-            editor.selectedRange = editor.selectedRange.nextPosition
-        }
+//            return
+//        }
+//        let lastChar = editor.attributedText.substring(from: NSRange(location: editor.selectedRange.location, length: 1))
+//        if lastChar == ListTextProcessor.blankLineFiller {
+//            editor.selectedRange = editor.selectedRange.nextPosition
+//        }
         editor.typingAttributes[.skipNextListMarker] = nil
     }
     
