@@ -50,6 +50,40 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testRendersGridViewAttachmentWithConstrainedFixedWidth() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(40)),
+                GridColumnConfiguration(width: .fixed(50, min: { .absolute(60) })),
+                GridColumnConfiguration(width: .fixed(500, max: { .viewport(padding: 0) })),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = GridViewAttachment(config: config)
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        XCTAssertEqual(attachment.view.containerAttachment, attachment)
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        let cell00 = attachment.view.cellAt(rowIndex: 0, columnIndex: 0)
+        let cell01 = attachment.view.cellAt(rowIndex: 0, columnIndex: 1)
+        let cell02 = attachment.view.cellAt(rowIndex: 0, columnIndex: 2)
+
+        let cellOverlapPixels: CGFloat = 1
+        XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, 40)
+        XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, 60)
+        XCTAssertEqual((cell02?.frame.width ?? 0) - cellOverlapPixels, 350)
+    }
+
     func testRendersGridViewAttachmentWithViewportConstraints() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
