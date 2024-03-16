@@ -53,8 +53,8 @@ public enum GridColumnWidth {
 
     /// Defines a fixed with for column
     /// - Parameter : `CGFloat` value for width.
-    ///     - min: Closure providing minimum value for column. If computed fractional value is less than min, min is used.
-    ///     - max: Closure providing maximum value for column. If computed fractional value is more than max, max is used.
+    ///     - min: Closure providing minimum value for column. If fixed value is less than min, min is used.
+    ///     - max: Closure providing maximum value for column. If fixed value is more than max, max is used.
     case fixed(CGFloat, min: (() -> ConstrainedWidth)? = nil, max: (() -> ConstrainedWidth)? = nil)
     /// Defines a fixed with for column
     /// - Parameters :

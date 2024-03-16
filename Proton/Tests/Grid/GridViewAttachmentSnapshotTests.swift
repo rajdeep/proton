@@ -78,14 +78,11 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let cell01 = attachment.view.cellAt(rowIndex: 0, columnIndex: 1)
         let cell02 = attachment.view.cellAt(rowIndex: 0, columnIndex: 2)
 
-        let lineFragmentPadding = editor.lineFragmentPadding
         let cellOverlapPixels: CGFloat = 1
-
         XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, 40)
         XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, 60)
         XCTAssertEqual((cell02?.frame.width ?? 0) - cellOverlapPixels, 350)
     }
-
 
     func testRendersGridViewAttachmentWithViewportConstraints() {
         let viewController = EditorTestViewController()
