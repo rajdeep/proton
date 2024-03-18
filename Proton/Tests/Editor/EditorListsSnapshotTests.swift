@@ -227,6 +227,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
 
         var editedRange = NSRange(location: editor.contentLength - 1, length: 1)
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: editedRange)
+        editor.selectedRange = editor.textEndRange
         listTextProcessor.didProcess(editor: editor) // invoke lifecycle event manually
         viewController.render(size: CGSize(width: 300, height: 175))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
@@ -304,6 +305,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
 
         var editedRange = NSRange(location: location, length: 1)
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: editedRange)
+        editor.selectedRange = NSRange(location: editedRange.endLocation, length: 0)
         listTextProcessor.didProcess(editor: editor) // invoke lifecycle event manually
         viewController.render(size: CGSize(width: 300, height: 175))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
@@ -332,7 +334,11 @@ class EditorListsSnapshotTests: SnapshotTestCase {
             var range = NSRange(location: editor.contentLength - 1, length: 1)
             listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: range)
             range = editor.textEndRange//NSRange(location: editor.contentLength - 1, length: 1)
+            editor.selectedRange = editor.textEndRange
+            listTextProcessor.didProcess(editor: editor) // invoke lifecycle event manually
             listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: range)
+            editor.selectedRange = editor.textEndRange
+            listTextProcessor.didProcess(editor: editor) // invoke lifecycle event manually
             let attrs = editor.attributedText.attributes(at: editor.contentLength - 1, effectiveRange: nil)
             editor.appendCharacters(NSAttributedString(string: "Line \(i): \(text)", attributes: attrs))
         }
