@@ -80,7 +80,7 @@
         _isEditingAttributedText = NO;
     }
     _isEditingAttributedText = YES;
-    [self beginEditing];
+//    [self beginEditing];
     // TODO: Add undo behaviour
     
     // Handles the crash when nested list receives enter key in quick succession that unindents the list item.
@@ -112,11 +112,11 @@
     NSAttributedString *deletedText = [_storage attributedSubstringFromRange:range];
     [_textStorageDelegate textStorage:self will:deletedText insertText:replacementString in:range];
     NSArray<NSTextAttachment *> *attachmentsToDelete = [self attachmentsForRange:range];
-//    [super replaceCharactersInRange:range withAttributedString:replacementString];
-    [_storage replaceCharactersInRange:range withAttributedString:replacementString];
-
-    [self edited:NSTextStorageEditedCharacters & NSTextStorageEditedAttributes range: range changeInLength: replacementString.length - range.length ];
-    [self endEditing];
+//    [_storage replaceCharactersInRange:range withAttributedString:replacementString];
+    [super replaceCharactersInRange:range withAttributedString:replacementString];
+//    [_storage fixAttributesInRange:NSMakeRange(0, _storage.length)];
+//    [self edited:NSTextStorageEditedCharacters & NSTextStorageEditedAttributes range: range changeInLength: replacementString.length - range.length ];
+//    [self endEditing];
     _isEditingAttributedText = NO;
     // Deleting of Attachment needs to happen after editing has ended. If invoked while textStorage editing is
     // taking place, this may sometimes result in a crash(_fillLayoutHoleForCharacterRange).
