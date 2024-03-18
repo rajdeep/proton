@@ -921,6 +921,20 @@ open class EditorView: UIView {
         return richTextView.rangeOfCharacter(at: location)
     }
 
+    public func convertToLineWithNewlines(_ line: EditorLine) -> EditorLine {
+        guard line.range.isValidIn(textInput) else { return line }
+        let nextCharRange = line.range.nextCharacterRange
+        guard nextCharRange.isValidIn(textInput) else { return line }
+        
+        let nextChar = attributedText.attributedSubstring(from: nextCharRange)
+        guard nextChar.string.rangeOfCharacter(from: .newlines) != nil else { return line }
+
+        let text = NSMutableAttributedString(attributedString: line.text)
+        text.append(nextChar)
+        let range = NSRange(location: line.range.location, length: line.range.length + 1)
+        return EditorLine(text: text, range: range)
+    }
+
     /// Gets the lines separated by newline characters from the given range.
     /// - Parameter range: Range to get lines from.
     /// - Returns: Array of `EditorLine` from the given content range.
