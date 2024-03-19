@@ -31,6 +31,9 @@ public struct ListItem {
     /// Level of the list item. This is used with indent to get `paragraphStyle` to be applied with appropriate indentation of the list items.
     public let level: Int
 
+    /// Individually identifies a list item as part of a sublist. All items in a sublist will have same list ID. `listID` starts with 1 and is always a multiple of `level`
+    public let listID: Int
+
     /// Attribute value of the list item.
     public let attributeValue: Any
 
@@ -39,10 +42,11 @@ public struct ListItem {
     ///   - text: Attributed value for text in `ListItem`
     ///   - level: Indentation level of `ListItem`.
     ///   - attributeValue: Attribute value to be applied to entire text range of `ListItem`
-    public init(text: NSAttributedString, level: Int, attributeValue: Any) {
+    public init(text: NSAttributedString, level: Int, attributeValue: Any, listID: Int) {
         self.text = text
         self.level = level
         self.attributeValue = attributeValue
+        self.listID = listID
     }
 }
 
@@ -107,10 +111,19 @@ public struct ListParser {
 
     private static func parseList(in attributedString: NSAttributedString, rangeInOriginalString: NSRange, indent: CGFloat, attributeValue: Any?) -> [(range: NSRange, listItem: ListItem)] {
         var items = [(range: NSRange, listItem: ListItem)]()
+        var previousListLevel = 1
+        var usedListIDs: [Int: Int] = [:]
 
         attributedString.enumerateAttribute(.paragraphStyle, in: attributedString.fullRange, options: []) { paraAttribute, paraRange, _ in
             if let paraStyle = paraAttribute as? NSParagraphStyle {
                 let level = Int(paraStyle.headIndent/indent)
+
+                if level > previousListLevel {
+                    usedListIDs[level] = (usedListIDs[level] ?? 0) + 1
+                }
+
+                previousListLevel = level
+
                 let text = attributedString.attributedSubstring(from: paraRange)
                 var lines = listLinesFrom(text: text)//text.string.components(separatedBy: .newlines)
 
@@ -126,12 +139,15 @@ public struct ListParser {
                        text.attributeValue(for: .skipNextListMarker, at: newlineRange.location) != nil,
                        var lastItem = items.last {
                         lastItem.range = NSRange(location: lastItem.range.location, length: itemRange.endLocation)
-                        lastItem.listItem = ListItem(text: text.attributedSubstring(from: lastItem.range), level: level, attributeValue: attributeValue as Any)
+                        // listID for root level is always 1. For all other levels, the value changes for individual sublists at same level.
+                        let listIDToUse = level == 1 ? 1 : (usedListIDs[level] ?? 1) * level
+                        lastItem.listItem = ListItem(text: text.attributedSubstring(from: lastItem.range), level: level, attributeValue: attributeValue as Any, listID: listIDToUse)
                         items.remove(at: items.count - 1)
                         items.append((range: lastItem.range.shiftedBy(paraRange.location + rangeInOriginalString.location), listItem: lastItem.listItem))
                     } else {
                         let listLine = text.attributedSubstring(from: itemRange)
-                        let item = ListItem(text: listLine, level: level, attributeValue: attributeValue as Any)
+                        let listIDToUse = level == 1 ? 1 : (usedListIDs[level] ?? 1) * level
+                        let item = ListItem(text: listLine, level: level, attributeValue: attributeValue as Any, listID: listIDToUse)
                         items.append((itemRange.shiftedBy(paraRange.location + rangeInOriginalString.location), item))
                     }
                 }

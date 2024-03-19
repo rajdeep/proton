@@ -50,6 +50,10 @@ class ListParserTests: XCTestCase {
         XCTAssertEqual(list[1].listItem.level, 1)
         XCTAssertEqual(list[2].listItem.level, 1)
 
+        XCTAssertEqual(list[0].listItem.listID, 1)
+        XCTAssertEqual(list[1].listItem.listID, 1)
+        XCTAssertEqual(list[2].listItem.listID, 1)
+
         XCTAssertEqual(list[0].range, NSRange(location: 0, length: 63))
         XCTAssertEqual(list[1].range, NSRange(location: 64, length: 15))
         XCTAssertEqual(list[2].range, NSRange(location: 80, length: 63))
@@ -75,6 +79,11 @@ class ListParserTests: XCTestCase {
         XCTAssertEqual(list[1].listItem.text.string, "")
         XCTAssertEqual(list[2].listItem.text.string, "")
         XCTAssertEqual(list[3].listItem.text.string, line2)
+
+        XCTAssertEqual(list[0].listItem.listID, 1)
+        XCTAssertEqual(list[1].listItem.listID, 1)
+        XCTAssertEqual(list[2].listItem.listID, 1)
+        XCTAssertEqual(list[3].listItem.listID, 1)
 
         XCTAssertEqual(list[0].range, NSRange(location: 0, length: 63))
         XCTAssertEqual(list[1].range, NSRange(location: 64, length: 0))
@@ -104,6 +113,11 @@ class ListParserTests: XCTestCase {
         XCTAssertEqual(list[1].listItem.level, 2)
         XCTAssertEqual(list[2].listItem.level, 2)
         XCTAssertEqual(list[3].listItem.level, 1)
+
+        XCTAssertEqual(list[0].listItem.listID, 1)
+        XCTAssertEqual(list[1].listItem.listID, 2)
+        XCTAssertEqual(list[2].listItem.listID, 2)
+        XCTAssertEqual(list[3].listItem.listID, 1)
 
         XCTAssertEqual(list[0].listItem.text.string, String(text1.prefix(text1.count - 1)))
         XCTAssertEqual(list[1].listItem.text.string, String(text1a.prefix(text1a.count - 1)))
@@ -142,7 +156,65 @@ class ListParserTests: XCTestCase {
         XCTAssertEqual(list[9].listItem.level, 2)
         XCTAssertEqual(list[10].listItem.level, 3)
         XCTAssertEqual(list[11].listItem.level, 3)
+
+        XCTAssertEqual(list[0].listItem.listID, 1)
+        XCTAssertEqual(list[1].listItem.listID, 1)
+        XCTAssertEqual(list[2].listItem.listID, 2)
+        XCTAssertEqual(list[3].listItem.listID, 2)
+        XCTAssertEqual(list[4].listItem.listID, 3)
+        XCTAssertEqual(list[5].listItem.listID, 3)
+        XCTAssertEqual(list[6].listItem.listID, 1)
+        XCTAssertEqual(list[7].listItem.listID, 1)
+        XCTAssertEqual(list[8].listItem.listID, 4)
+        XCTAssertEqual(list[9].listItem.listID, 4)
+        XCTAssertEqual(list[10].listItem.listID, 6)
+        XCTAssertEqual(list[11].listItem.listID, 6)
     }
+
+    func testListIndexesAtDifferentLevels() {
+        let levels = 3
+        let paraStyles = (1...levels).map { NSMutableParagraphStyle.forListLevel($0) }
+
+        let text = """
+        A
+        B
+        C
+        D
+        E
+        F
+        G
+        """
+        let string = NSString(string: text)
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttributes([.paragraphStyle: paraStyles[0], .listItem: 1], range: string.range(of: "A"))
+        attributedString.addAttributes([.paragraphStyle: paraStyles[1], .listItem: 1], range: string.range(of: "B"))
+        attributedString.addAttributes([.paragraphStyle: paraStyles[2], .listItem: 1], range: string.range(of: "C"))
+        attributedString.addAttributes([.paragraphStyle: paraStyles[2], .listItem: 1], range: string.range(of: "D"))
+        attributedString.addAttributes([.paragraphStyle: paraStyles[2], .listItem: 1], range: string.range(of: "E"))
+        attributedString.addAttributes([.paragraphStyle: paraStyles[1], .listItem: 1], range: string.range(of: "F"))
+        attributedString.addAttributes([.paragraphStyle: paraStyles[0], .listItem: 1], range: string.range(of: "G"))
+
+        let list = ListParser.parse(attributedString: attributedString)
+        XCTAssertEqual(list.count, 7)
+
+        XCTAssertEqual(list[0].listItem.level, 1)
+        XCTAssertEqual(list[1].listItem.level, 2)
+        XCTAssertEqual(list[2].listItem.level, 3)
+        XCTAssertEqual(list[3].listItem.level, 3)
+        XCTAssertEqual(list[4].listItem.level, 3)
+        XCTAssertEqual(list[5].listItem.level, 2)
+        XCTAssertEqual(list[6].listItem.level, 1)
+
+
+        XCTAssertEqual(list[0].listItem.listID, 1)
+        XCTAssertEqual(list[1].listItem.listID, 2)
+        XCTAssertEqual(list[2].listItem.listID, 3)
+        XCTAssertEqual(list[3].listItem.listID, 3)
+        XCTAssertEqual(list[4].listItem.listID, 3)
+        XCTAssertEqual(list[5].listItem.listID, 2)
+        XCTAssertEqual(list[6].listItem.listID, 1)
+    }
+
 
     func testParsesSingleLevelListWithSkipNewLineFromString() {
         let line1 = "This is line 1. This is line 1. This is line 1. This is line 1."
@@ -177,9 +249,9 @@ class ListParserTests: XCTestCase {
     func testParsesSingleLevelListToString() {
         var list = [ListItem]()
         let paraStyle = NSMutableParagraphStyle.forListLevel(1)
-        list.append(ListItem(text: NSAttributedString(string: "Item 1"), level: 1, attributeValue: 1))
-        list.append(ListItem(text: NSAttributedString(string: "Item 2"), level: 1, attributeValue: 1))
-        list.append(ListItem(text: NSAttributedString(string: "Item 3"), level: 1, attributeValue: 1))
+        list.append(ListItem(text: NSAttributedString(string: "Item 1"), level: 1, attributeValue: 1, listID: 0))
+        list.append(ListItem(text: NSAttributedString(string: "Item 2"), level: 1, attributeValue: 1, listID: 0))
+        list.append(ListItem(text: NSAttributedString(string: "Item 3"), level: 1, attributeValue: 1, listID: 0))
 
         let text = ListParser.parse(list: list, indent: 25)
         let expectedString = NSMutableAttributedString(string: "Item 1", attributes: [NSAttributedString.Key.paragraphStyle: paraStyle])
@@ -203,10 +275,10 @@ class ListParserTests: XCTestCase {
         let paraStyle2 = NSMutableParagraphStyle.forListLevel(2)
         let paraStyle3 = NSMutableParagraphStyle.forListLevel(3)
 
-        list.append(ListItem(text: NSAttributedString(string: "Item 1"), level: 1, attributeValue: 1))
-        list.append(ListItem(text: NSAttributedString(string: "Item 2"), level: 2, attributeValue: 2))
-        list.append(ListItem(text: NSAttributedString(string: "Item 3"), level: 3, attributeValue: 3))
-        list.append(ListItem(text: NSAttributedString(string: "Item 4"), level: 1, attributeValue: 4))
+        list.append(ListItem(text: NSAttributedString(string: "Item 1"), level: 1, attributeValue: 1, listID: 0))
+        list.append(ListItem(text: NSAttributedString(string: "Item 2"), level: 2, attributeValue: 2, listID: 1))
+        list.append(ListItem(text: NSAttributedString(string: "Item 3"), level: 3, attributeValue: 3, listID: 2))
+        list.append(ListItem(text: NSAttributedString(string: "Item 4"), level: 1, attributeValue: 4, listID: 0))
 
         let text = ListParser.parse(list: list, indent: 25)
         let expectedString = NSMutableAttributedString(string: "Item 1", attributes: [
@@ -247,8 +319,8 @@ class ListParserTests: XCTestCase {
     func testParsesListWithSkipListMarkerToString() {
         var list = [ListItem]()
         let paraStyle = NSMutableParagraphStyle.forListLevel(1)
-        list.append(ListItem(text: NSAttributedString(string: "Item 1\nItem2"), level: 1, attributeValue: 1))
-        list.append(ListItem(text: NSAttributedString(string: "Item 3"), level: 1, attributeValue: 1))
+        list.append(ListItem(text: NSAttributedString(string: "Item 1\nItem2"), level: 1, attributeValue: 1, listID: 0))
+        list.append(ListItem(text: NSAttributedString(string: "Item 3"), level: 1, attributeValue: 1, listID: 0))
 
         let text = ListParser.parse(list: list, indent: 25)
         let expectedString = NSMutableAttributedString(string: "Item 1\nItem2", attributes: [NSAttributedString.Key.paragraphStyle: paraStyle])
@@ -267,9 +339,9 @@ class ListParserTests: XCTestCase {
 
         let indent: CGFloat = 50
 
-        list.append(ListItem(text: NSAttributedString(string: "Item 1\nItem2"), level: 1, attributeValue: 1))
-        list.append(ListItem(text: NSAttributedString(string: "Item 3"), level: 1, attributeValue: 1))
-        list.append(ListItem(text: NSAttributedString(string: "Item 31"), level: 2, attributeValue: 2))
+        list.append(ListItem(text: NSAttributedString(string: "Item 1\nItem2"), level: 1, attributeValue: 1, listID: 0))
+        list.append(ListItem(text: NSAttributedString(string: "Item 3"), level: 1, attributeValue: 1, listID: 0))
+        list.append(ListItem(text: NSAttributedString(string: "Item 31"), level: 2, attributeValue: 2, listID: 1))
 
         let text = ListParser.parse(list: list, indent: indent)
         let parsedList = ListParser.parse(attributedString: text, indent: 50)
@@ -319,21 +391,21 @@ class ListParserTests: XCTestCase {
 
     func testFullCircleWithSameAttributeValue() {
         let listItems1 = [
-            ListItem(text: NSAttributedString(string: "One"), level: 1, attributeValue: 1),
-            ListItem(text: NSAttributedString(string: "Two"), level: 1, attributeValue: 1),
-            ListItem(text: NSAttributedString(string: "Three"), level: 2, attributeValue: 1),
-            ListItem(text: NSAttributedString(string: "Four"), level: 2, attributeValue: 1),
-            ListItem(text: NSAttributedString(string: "Five"), level: 2, attributeValue: 1),
-            ListItem(text: NSAttributedString(string: "Six"), level: 1, attributeValue: 1)
+            ListItem(text: NSAttributedString(string: "One"), level: 1, attributeValue: 1, listID: 0),
+            ListItem(text: NSAttributedString(string: "Two"), level: 1, attributeValue: 1, listID: 0),
+            ListItem(text: NSAttributedString(string: "Three"), level: 2, attributeValue: 1, listID: 1),
+            ListItem(text: NSAttributedString(string: "Four"), level: 2, attributeValue: 1, listID: 1),
+            ListItem(text: NSAttributedString(string: "Five"), level: 2, attributeValue: 1, listID: 1),
+            ListItem(text: NSAttributedString(string: "Six"), level: 1, attributeValue: 1, listID: 0)
         ]
 
         let listItems2 = [
-            ListItem(text: NSAttributedString(string: "A"), level: 1, attributeValue: 1),
-            ListItem(text: NSAttributedString(string: "B"), level: 1, attributeValue: 1),
-            ListItem(text: NSAttributedString(string: "C"), level: 2, attributeValue: 1),
-            ListItem(text: NSAttributedString(string: "D"), level: 2, attributeValue: 1),
-            ListItem(text: NSAttributedString(string: "E"), level: 2, attributeValue: 1),
-            ListItem(text: NSAttributedString(string: "F"), level: 1, attributeValue: 1)
+            ListItem(text: NSAttributedString(string: "A"), level: 1, attributeValue: 1, listID: 0),
+            ListItem(text: NSAttributedString(string: "B"), level: 1, attributeValue: 1, listID: 0),
+            ListItem(text: NSAttributedString(string: "C"), level: 2, attributeValue: 1, listID: 1),
+            ListItem(text: NSAttributedString(string: "D"), level: 2, attributeValue: 1, listID: 1),
+            ListItem(text: NSAttributedString(string: "E"), level: 2, attributeValue: 1, listID: 1),
+            ListItem(text: NSAttributedString(string: "F"), level: 1, attributeValue: 1, listID: 0)
         ]
 
         let string1 = ListParser.parse(list: listItems1, indent: 25)

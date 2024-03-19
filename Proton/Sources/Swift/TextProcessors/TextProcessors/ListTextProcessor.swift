@@ -249,7 +249,7 @@ open class ListTextProcessor: TextProcessing {
     }
 
     private func updateListItemIfRequired(editor: EditorView, editedRange: NSRange, indentMode: Indentation, attributeValue: Any?) {
-        let lines = editor.contentLinesInRange(editedRange)
+        let lines = editor.contentLinesInRange(editedRange).map { editor.convertToLineWithNewlines($0) }
 
         for line in lines {
             if line.text.length == 0 || line.text.attribute(.listItem, at: 0, effectiveRange: nil) == nil {
