@@ -74,10 +74,8 @@ public extension NSAttributedString {
         guard location < length else { return nil }
 
         let range = reverseLookup ? NSRange(location: 0, length: location) : NSRange(location: location, length: length - location)
-        let options = reverseLookup ? EnumerationOptions.reverse : []
-
         var attributeRange: NSRange? = nil
-        enumerateAttribute(attribute, in: range, options: options) { val, attrRange, stop in
+        enumerateAttribute(attribute, in: range, options: []) { val, attrRange, stop in
             if val != nil {
                 if ignoringValue {
                     if let cumulativeRange = attributeRange {
