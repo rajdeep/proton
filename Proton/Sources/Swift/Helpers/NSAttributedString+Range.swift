@@ -69,7 +69,8 @@ public extension NSAttributedString {
     ///   - attribute: Name of the attribute to look up
     ///   - location: Starting location
     ///   - reverseLookup: When true, look up is carried out in reverse direction. Default is false.
-    func rangeOf(attribute: NSAttributedString.Key, startingLocation location: Int, reverseLookup: Bool = false) -> NSRange? {
+    ///   -  ignoringValue: When true, ignores the value of attribute and  provides range based only on presence of attribute, Default is false
+    func rangeOf(attribute: NSAttributedString.Key, startingLocation location: Int, reverseLookup: Bool = false, ignoringValue: Bool = false) -> NSRange? {
         guard location < length else { return nil }
 
         let range = reverseLookup ? NSRange(location: 0, length: location) : NSRange(location: location, length: length - location)
@@ -78,7 +79,18 @@ public extension NSAttributedString {
         var attributeRange: NSRange? = nil
         enumerateAttribute(attribute, in: range, options: options) { val, attrRange, stop in
             if val != nil {
-                attributeRange = attrRange
+                if ignoringValue {
+                    if let cumulativeRange = attributeRange {
+                        attributeRange = NSRange(location: cumulativeRange.location, length: cumulativeRange.length + attrRange.length)
+                    } else {
+                        attributeRange = attrRange
+                    }
+                } else {
+                    attributeRange = attrRange
+                    stop.pointee = true
+                }
+            } else if ignoringValue,
+                      attributeRange != nil {
                 stop.pointee = true
             }
         }
@@ -91,13 +103,14 @@ public extension NSAttributedString {
     /// - Parameters:
     ///   - attribute: Attribute to search
     ///   - location: Location to inspect
-    func rangeOf(attribute: NSAttributedString.Key, at location: Int) -> NSRange? {
+    ///   -  ignoringValue: When true, ignores the value of attribute and  provides range based only on presence of attribute, Default is false
+    func rangeOf(attribute: NSAttributedString.Key, at location: Int, ignoringValue: Bool = false) -> NSRange? {
         guard location < length,
               self.attribute(attribute, at: location, effectiveRange: nil) != nil
         else { return nil }
 
-        var forwardRange = rangeOf(attribute: attribute, startingLocation: location, reverseLookup: false)
-        var reverseRange = rangeOf(attribute: attribute, startingLocation: location, reverseLookup: true)
+        var forwardRange = rangeOf(attribute: attribute, startingLocation: location, reverseLookup: false, ignoringValue: ignoringValue)
+        var reverseRange = rangeOf(attribute: attribute, startingLocation: location, reverseLookup: true, ignoringValue: ignoringValue)
 
         if forwardRange?.contains(location) == false {
             forwardRange = nil
