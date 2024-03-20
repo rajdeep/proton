@@ -50,4 +50,8 @@ extension GridView: AttachmentViewIdentifying {
     public var type: AttachmentType { .block }
 }
 
-extension GridViewAttachment: BackgroundColorInheriting { }
+extension GridView: BackgroundColorObserving {
+    public func containerEditor(_ editor: EditorView, backgroundColorUpdated color: UIColor?, oldColor: UIColor?) {
+        backgroundColor = color
+    }
+}

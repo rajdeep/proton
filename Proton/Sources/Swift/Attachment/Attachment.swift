@@ -27,8 +27,10 @@ public protocol DynamicBoundsProviding: AnyObject {
     func sizeFor(attachment: Attachment, containerSize: CGSize, lineRect: CGRect) -> CGSize
 }
 
-/// Denotes an `Attachment` that inherits background color from `containerEditorView`
-public protocol BackgroundColorInheriting { }
+/// Denotes an `Attachment`content view  that observes  background color changes in `containerEditorView`
+public protocol BackgroundColorObserving where Self: UIView {
+    func containerEditor(_ editor: EditorView, backgroundColorUpdated color: UIColor?, oldColor: UIColor?)
+}
 
 /// Describes an object capable of providing offsets for the `Attachment`. The value is used to offset the `Attachment` when rendered alongside the text. This may
 /// be used to align the content baselines in `Attachment` content to that of it's container's content baselines.
@@ -601,8 +603,9 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         guard let view = view,
             view.superview == nil else { return }
         editorView.richTextView.addSubview(view)
-        if self is BackgroundColorInheriting {
-            contentView?.backgroundColor = editorView.backgroundColor
+        if let backgroundColorInheriting = self.contentView as? BackgroundColorObserving,
+           editorView.backgroundColor != nil {
+            backgroundColorInheriting.containerEditor(editorView, backgroundColorUpdated: editorView.backgroundColor, oldColor: nil)
         }
 
         if var editorContentView = contentView as? EditorContentView,
