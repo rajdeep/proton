@@ -101,6 +101,7 @@ protocol GridCellDelegate: AnyObject {
     func cell(_ cell: GridCell, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name)
     func cell(_ cell: GridCell, didReceiveKey key: EditorKey, at range: NSRange)
     func cell(_ cell: GridCell, didChangeSelected isSelected: Bool)
+    func cell(_ cell: GridCell, didChangeBackgroundColor color: UIColor?, oldColor: UIColor?)
 }
 
 /// Denotes a cell in the `GridView`
@@ -121,6 +122,13 @@ open class GridCell {
 
     /// Frame of the cell within `GridView`
     public internal(set) var frame: CGRect = .zero
+
+    public var backgroundColor: UIColor? = nil {
+        didSet {
+            contentView.backgroundColor = backgroundColor
+            editor.backgroundColor = backgroundColor
+        }
+    }
 
     private var selectionView: SelectionView?
     private let editorInitializer: EditorInitializer
@@ -280,6 +288,13 @@ open class GridCell {
         }
     }
 
+    func updateBackgroundColorFromParent(color: UIColor?, oldColor: UIColor?) {
+        // check for same color is required. In absence of that, the rendering causes
+        // collapsed cells to still show text even though cell is collapsed
+        guard backgroundColor == oldColor, backgroundColor != color else { return }
+        backgroundColor = color
+    }
+
     private func assertEditorSetupCompleted() {
         guard editorSetupComplete == false,
               ignoresOptimizedInit == false else {
@@ -322,6 +337,7 @@ open class GridCell {
         editor.translatesAutoresizingMaskIntoConstraints = false
         editor.boundsObserver = self
         editor.delegate = self
+
         contentView.addSubview(editor)
 
         NSLayoutConstraint.activate([
@@ -366,6 +382,11 @@ extension GridCell: EditorViewDelegate {
 
     public func editor(_ editor: EditorView, didReceiveKey key: EditorKey, at range: NSRange) {
         delegate?.cell(self, didReceiveKey: key, at: range)
+    }
+
+    public func editor(_ editor: EditorView, didChangeBackgroundColor color: UIColor?, oldColor: UIColor?) {
+        contentView.backgroundColor = color
+        delegate?.cell(self, didChangeBackgroundColor: color, oldColor: oldColor)
     }
 }
 
