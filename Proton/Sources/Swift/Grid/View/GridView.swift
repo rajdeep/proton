@@ -683,3 +683,9 @@ class CellHandleButton: UIButton {
 }
 
 extension GridView: AsyncDeferredRenderable { }
+
+extension GridView: BackgroundColorObserving {
+    public func containerEditor(_ editor: EditorView, backgroundColorUpdated color: UIColor?, oldColor: UIColor?) {
+        backgroundColor = color
+    }
+}
