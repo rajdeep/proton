@@ -68,6 +68,30 @@ class NSAttributedStringExtensionTests: XCTestCase {
         XCTAssertNil(substring)
     }
 
+    func testReturnsNilForInvalidNegativeReverseRange() {
+        let text = NSAttributedString(string: "test")
+        let substring = text.reverseAttributedSubstring(from: NSRange(location: -2, length: 2))
+        XCTAssertNil(substring)
+    }
+
+    func testReturnsReverseRange() {
+        let text = NSAttributedString(string: "test")
+        let range = text.reverseRange(of: "tE", startingLocation: 3)
+        XCTAssertEqual(range, NSRange(location: 0, length: 2))
+    }
+
+    func testReturnsNilReverseRangeOnOutOfBoundsLocation() {
+        let text = NSAttributedString(string: "test")
+        let range = text.reverseRange(of: "tE", startingLocation: 10)
+        XCTAssertNil(range)
+    }
+
+    func testReturnsNilReverseRangeOnNegativeLocation() {
+        let text = NSAttributedString(string: "test")
+        let range = text.reverseRange(of: "tE", startingLocation: -1)
+        XCTAssertNil(range)
+    }
+
     func testReturnsAttributedStringForReverseRange() {
         let text = NSAttributedString(string: "This is a test string")
         let substring = text.reverseAttributedSubstring(from: NSRange(location: 9, length: 4))
