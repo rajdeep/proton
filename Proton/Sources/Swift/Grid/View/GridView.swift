@@ -269,8 +269,6 @@ public class GridView: UIView {
     }
 
     private func setup() {
-        backgroundColor = .red
-
         gridView.translatesAutoresizingMaskIntoConstraints = false
         leadingShadowView.translatesAutoresizingMaskIntoConstraints = false
         trailingShadowView.translatesAutoresizingMaskIntoConstraints = false

@@ -289,7 +289,9 @@ open class GridCell {
     }
 
     func updateBackgroundColorFromParent(color: UIColor?, oldColor: UIColor?) {
-        guard backgroundColor == oldColor else { return }
+        // check for same color is required. In absence of that, the rendering causes
+        // collapsed cells to still show text even though cell is collapsed
+        guard backgroundColor == oldColor, backgroundColor != color else { return }
         backgroundColor = color
     }
 
