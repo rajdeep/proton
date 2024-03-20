@@ -48,3 +48,5 @@ extension GridView: AttachmentViewIdentifying {
 
     public var type: AttachmentType { .block }
 }
+
+extension GridViewAttachment: BackgroundColorInheriting { }

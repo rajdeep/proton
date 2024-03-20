@@ -262,7 +262,15 @@ public class GridView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    public override var backgroundColor: UIColor? {
+        didSet {
+            gridView.backgroundColor = backgroundColor
+        }
+    }
+
     private func setup() {
+        backgroundColor = .red
+
         gridView.translatesAutoresizingMaskIntoConstraints = false
         leadingShadowView.translatesAutoresizingMaskIntoConstraints = false
         trailingShadowView.translatesAutoresizingMaskIntoConstraints = false
@@ -654,6 +662,9 @@ extension GridView: GridContentViewDelegate {
 
     func gridContentView(_ gridContentView: GridContentView, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool {
         delegate?.gridView(self, shouldChangeColumnWidth: proposedWidth, for: columnIndex) ?? true
+    }
+
+    func gridContentView(_ gridContentView: GridContentView, cell: GridCell, didChangeBackgroundColor color: UIColor?, oldColor: UIColor?) {
     }
 }
 

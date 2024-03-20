@@ -50,6 +50,37 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testRendersGridViewAttachmentWithContainerBackgroundColor() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fractional(100))
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = GridViewAttachment(config: config)
+
+        editor.backgroundColor = .lightGray
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let cell = attachment.view.cellAt(rowIndex: 0, columnIndex: 0)
+        cell?.editor.attributedText = NSAttributedString(string: "Test\nNew line\nMore text")
+        cell?.backgroundColor = .white
+
+        viewController.render(size: CGSize(width: 300, height: 225))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        editor.backgroundColor = .darkGray
+        viewController.render(size: CGSize(width: 300, height: 225))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     func testRendersGridViewAttachmentWithConstrainedFixedWidth() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor

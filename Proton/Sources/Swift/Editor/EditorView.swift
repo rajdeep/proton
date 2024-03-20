@@ -440,6 +440,8 @@ open class EditorView: UIView {
     public override var backgroundColor: UIColor? {
         didSet {
             richTextView.backgroundColor = backgroundColor
+            updateGridViewBackground()
+            delegate?.editor(self, didChangeBackgroundColor: backgroundColor, oldColor: oldValue)
         }
     }
 
@@ -1277,6 +1279,13 @@ open class EditorView: UIView {
 
         textViewDelegate.textViewDidChange?(richTextView)
         return true
+    }
+
+    private func updateGridViewBackground() {
+        let gridAttachments = attributedText.attachmentRanges.filter{ $0.attachment is BackgroundColorInheriting }
+        gridAttachments.forEach {
+            $0.attachment.contentView?.backgroundColor = backgroundColor
+        }
     }
 }
 

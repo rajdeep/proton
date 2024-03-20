@@ -30,6 +30,7 @@ class MockGridCellDelegate: GridCellDelegate {
     var onDidChangeSelection: ((GridCell, NSRange, [NSAttributedString.Key : Any], EditorContent.Name) -> Void)?
     var onDidReceiveKey: ((GridCell, EditorKey, NSRange) -> Void)?
     var onDidChangeSelected: ((GridCell, Bool) -> Void)?
+    var onDidChangeBackgroundColor: ((GridCell, UIColor?, UIColor?) -> Void)?
 
 
     func cell(_ cell: GridCell, didChangeBounds bounds: CGRect) {
@@ -58,5 +59,9 @@ class MockGridCellDelegate: GridCellDelegate {
 
     func cell(_ cell: GridCell, didChangeSelected isSelected: Bool) {
         onDidChangeSelected?(cell, isSelected)
+    }
+
+    func cell(_ cell: GridCell, didChangeBackgroundColor color: UIColor?, oldColor: UIColor?) {
+        onDidChangeBackgroundColor?(cell, color, oldColor)
     }
 }
