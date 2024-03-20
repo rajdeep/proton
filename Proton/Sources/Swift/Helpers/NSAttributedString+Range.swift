@@ -58,6 +58,7 @@ public extension NSAttributedString {
     /// specified in range.
     func reverseAttributedSubstring(from range: NSRange) -> NSAttributedString? {
         guard length > 0,
+              range.location >= 0,
               range.location + range.length < length
         else { return nil }
         
@@ -70,7 +71,8 @@ public extension NSAttributedString {
     ///   - location: Starting location
     ///   - reverseLookup: When true, look up is carried out in reverse direction. Default is false.
     func rangeOf(attribute: NSAttributedString.Key, startingLocation location: Int, reverseLookup: Bool = false) -> NSRange? {
-        guard location < length else { return nil }
+        guard location >= 0,
+              location < length else { return nil }
 
         let range = reverseLookup ? NSRange(location: 0, length: location) : NSRange(location: location, length: length - location)
         let options = reverseLookup ? EnumerationOptions.reverse : []
@@ -92,7 +94,8 @@ public extension NSAttributedString {
     ///   - attribute: Attribute to search
     ///   - location: Location to inspect
     func rangeOf(attribute: NSAttributedString.Key, at location: Int) -> NSRange? {
-        guard location < length,
+        guard location >= 0,
+              location < length,
               self.attribute(attribute, at: location, effectiveRange: nil) != nil
         else { return nil }
 
@@ -127,14 +130,16 @@ public extension NSAttributedString {
     ///   - attributeKey: Name of the attribute
     ///   - location: Location to check
     func attributeValue<T>(for attributeKey: NSAttributedString.Key, at location: Int) -> T? {
-        guard location < length else { return nil }
+        guard location >= 0,
+              location < length else { return nil }
         return attribute(attributeKey, at: location, effectiveRange: nil) as? T
     }
     
     /// Alternative to `attributedSubstring(from:_).string`
     /// Avoids allocating `NSAttributedString` and all the attributes for that range, only to ignore the range.
     func substring(from range: NSRange) -> String {
-        guard range.upperBound <= length else {
+        guard range.location >= 0,
+              range.upperBound <= length else {
             assertionFailure("Substring is out of bounds")
             return ""
         }
@@ -148,7 +153,8 @@ public extension NSAttributedString {
     ///   - isCaseInsensitive: Case insensitive search. Defaults to `true`
     /// - Returns: Range of search  text, if found.
     func reverseRange(of searchText: String, startingLocation: Int, isCaseInsensitive: Bool = true) -> NSRange? {
-        guard startingLocation <= string.utf16.count else {
+        guard startingLocation >= 0,
+              startingLocation <= string.utf16.count else {
             return nil
         }
 
