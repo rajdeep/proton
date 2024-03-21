@@ -247,6 +247,11 @@ class RichTextView: AutogrowingTextView {
               textBlockRange.contains(location)
         else { return nil }
 
+        // return textblock range if new range is entirely contained within textblock range
+        if textBlockRange.intersection(new) == new {
+            return textBlockRange
+        }
+
         if isReverseTraversal {
             return adjustedTextBlockRangeReverse(new: new, old: old, textBlockRange: textBlockRange)
         } else {

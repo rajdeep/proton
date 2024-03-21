@@ -30,6 +30,12 @@ class NSAttributedStringExtensionTests: XCTestCase {
         XCTAssertEqual(range, NSRange(location: 0, length: text.length))
     }
 
+    func testGetsSubstring() {
+        let text = NSAttributedString(string: "This is a test string")
+        let substring = text.substring(from: NSRange(location: 5, length: 2))
+        XCTAssertEqual(substring, "is")
+    }
+
     func testGetRangeForAttachment() {
         let string = "This is a test string"
         let text = NSMutableAttributedString(string: string)

@@ -39,6 +39,17 @@ class TextBlockAttributeTests: XCTestCase {
         XCTAssertEqual(textView.selectedRange, NSRange(location: 8, length: 0))
     }
 
+    func testDoubleTapOnTextBlock() {
+        let textView = RichTextView(context: RichTextViewContext())
+        let text = NSMutableAttributedString(string: "01234", attributes: [.textBlock: true])
+        textView.attributedText = text
+
+        textView.selectedRange = text.fullRange
+        let range = NSRange(location: 0, length: 1).toTextRange(textInput: textView)
+        textView.selectedTextRange = range
+        XCTAssertEqual(textView.selectedRange, text.fullRange)
+    }
+
     func testSetsFocusBeforeForNonFocusableText() {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "0123")
@@ -147,7 +158,7 @@ class TextBlockAttributeTests: XCTestCase {
         XCTAssertEqual(range, NSRange(location: 12, length: 7))
     }
 
-    func testUnselectsSelectedTextBlockForward() {
+    func testRetainsSelectedTextBlockForward() {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "This is test string")
         textView.attributedText = text
@@ -157,10 +168,10 @@ class TextBlockAttributeTests: XCTestCase {
         textView.selectedTextRange = NSRange(location: 9, length: 3).toTextRange(textInput: textView) // "est"
         let range = textView.selectedRange
 
-        XCTAssertEqual(range, NSRange(location: 12, length: 0))
+        XCTAssertEqual(range, NSRange(location: 8, length: 4))
     }
 
-    func testUnselectsSelectedTextBlockReverse() {
+    func testRetainsSelectedTextBlockReverse() {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "This is test string")
         textView.attributedText = text
@@ -170,7 +181,7 @@ class TextBlockAttributeTests: XCTestCase {
         textView.selectedTextRange = NSRange(location: 8, length: 3).toTextRange(textInput: textView) // "tes"
         let range = textView.selectedRange
 
-        XCTAssertEqual(range, NSRange(location: 8, length: 0))
+        XCTAssertEqual(range, NSRange(location: 8, length: 4))
     }
 
     func testUnselectsTextSelectedWithTextBlockReverse() {
