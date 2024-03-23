@@ -17,7 +17,7 @@
     <a title="ListTextProcessor Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Proton Docs</a> (70% documented)</p>
+        <p><a href="../index.html">Proton Docs</a> (69% documented)</p>
         <p class="header-right"><a href="https://github.com/rajdeep/proton"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -129,6 +129,9 @@
                 <a href="../Enums/GridColumnWidth.html">GridColumnWidth</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Enums/GridColumnWidth/ConstrainedWidth.html">– ConstrainedWidth</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/GridViewError.html">GridViewError</a>
               </li>
               <li class="nav-group-task">
@@ -136,6 +139,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/ListLineMarker.html">ListLineMarker</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ListMarkerDebugOption.html">ListMarkerDebugOption</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/RoundedCornerStyle.html">RoundedCornerStyle</a>
@@ -197,6 +203,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/AttributesDecoding.html">AttributesDecoding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/BackgroundColorObserving.html">BackgroundColorObserving</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/BoundsObserving.html">BoundsObserving</a>
@@ -363,7 +372,7 @@
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ListTextProcessor</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/TextProcessing.html">TextProcessing</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">ListTextProcessor</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/TextProcessing.html">TextProcessing</a></span></code></pre>
 
                 </div>
               </div>
@@ -405,6 +414,33 @@ First level items cannot be indented.</li>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton17ListTextProcessorC18markerDebugOptionsAA0b6MarkerF6OptionOvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/markerDebugOptions" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton17ListTextProcessorC18markerDebugOptionsAA0b6MarkerF6OptionOvpZ">markerDebugOptions</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">markerDebugOptions</span><span class="p">:</span> <span class="kt"><a href="../Enums/ListMarkerDebugOption.html">ListMarkerDebugOption</a></span></code></pre>
 
                         </div>
                       </div>
@@ -484,7 +520,7 @@ First level items cannot be indented.</li>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">shouldProcess</span><span class="p">(</span><span class="n">_</span> <span class="nv">editorView</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="n">shouldProcessTextIn</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">,</span> <span class="n">replacementText</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">shouldProcess</span><span class="p">(</span><span class="n">_</span> <span class="nv">editorView</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="n">shouldProcessTextIn</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">,</span> <span class="n">replacementText</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -510,7 +546,7 @@ First level items cannot be indented.</li>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">processInterrupted</span><span class="p">(</span><span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="n">at</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">processInterrupted</span><span class="p">(</span><span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="n">at</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -536,7 +572,7 @@ First level items cannot be indented.</li>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">willProcess</span><span class="p">(</span><span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="nv">deletedText</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="p">,</span> <span class="nv">insertedText</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="p">,</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">willProcess</span><span class="p">(</span><span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="nv">deletedText</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="p">,</span> <span class="nv">insertedText</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="p">,</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -562,33 +598,7 @@ First level items cannot be indented.</li>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">process</span><span class="p">(</span><span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="n">range</span> <span class="nv">editedRange</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">,</span> <span class="n">changeInLength</span> <span class="nv">delta</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Proton9Processeda">Processed</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:6Proton14TextProcessingP22handleKeyWithModifiers6editor3key13modifierFlags5rangeyAA10EditorViewC_AA0mE0OSo013UIKeyModifierK0VSo8_NSRangeVtF"></a>
-                    <a name="//apple_ref/swift/Method/handleKeyWithModifiers(editor:key:modifierFlags:range:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Proton14TextProcessingP22handleKeyWithModifiers6editor3key13modifierFlags5rangeyAA10EditorViewC_AA0mE0OSo013UIKeyModifierK0VSo8_NSRangeVtF">handleKeyWithModifiers(editor:<wbr>key:<wbr>modifierFlags:<wbr>range:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">handleKeyWithModifiers</span><span class="p">(</span><span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="nv">key</span><span class="p">:</span> <span class="kt"><a href="../Enums/EditorKey.html">EditorKey</a></span><span class="p">,</span> <span class="nv">modifierFlags</span><span class="p">:</span> <span class="kt">UIKeyModifierFlags</span><span class="p">,</span> <span class="n">range</span> <span class="nv">editedRange</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">process</span><span class="p">(</span><span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="n">range</span> <span class="nv">editedRange</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">,</span> <span class="n">changeInLength</span> <span class="nv">delta</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Proton9Processeda">Processed</a></span></code></pre>
 
                         </div>
                       </div>
@@ -614,7 +624,33 @@ First level items cannot be indented.</li>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">didProcess</span><span class="p">(</span><span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">didProcess</span><span class="p">(</span><span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Proton14TextProcessingP22handleKeyWithModifiers6editor3key13modifierFlags5rangeyAA10EditorViewC_AA0mE0OSo013UIKeyModifierK0VSo8_NSRangeVtF"></a>
+                    <a name="//apple_ref/swift/Method/handleKeyWithModifiers(editor:key:modifierFlags:range:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Proton14TextProcessingP22handleKeyWithModifiers6editor3key13modifierFlags5rangeyAA10EditorViewC_AA0mE0OSo013UIKeyModifierK0VSo8_NSRangeVtF">handleKeyWithModifiers(editor:<wbr>key:<wbr>modifierFlags:<wbr>range:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">handleKeyWithModifiers</span><span class="p">(</span><span class="nv">editor</span><span class="p">:</span> <span class="kt"><a href="../Classes/EditorView.html">EditorView</a></span><span class="p">,</span> <span class="nv">key</span><span class="p">:</span> <span class="kt"><a href="../Enums/EditorKey.html">EditorKey</a></span><span class="p">,</span> <span class="nv">modifierFlags</span><span class="p">:</span> <span class="kt">UIKeyModifierFlags</span><span class="p">,</span> <span class="n">range</span> <span class="nv">editedRange</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -626,7 +662,7 @@ First level items cannot be indented.</li>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2024 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2024-02-21)</p>
+          <p>&copy; 2024 <a class="link" href="" target="_blank" rel="external noopener">Rajdeep Kwatra</a>. All rights reserved. (Last updated: 2024-03-22)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
