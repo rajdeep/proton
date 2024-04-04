@@ -23,6 +23,10 @@ import UIKit
 
 /// An object capable of handing `GridView` events
 public protocol GridViewDelegate: AnyObject {
+    var containerScrollView: UIScrollView? { get }
+
+    var viewport: CGRect? { get }
+
     /// Invoked when `EditorView` within the cell receives focus
     /// - Parameters:
     ///   - gridView: GridView containing cell
@@ -112,6 +116,8 @@ public class GridView: UIView {
     private var resizingDragHandleLastLocation: CGPoint? = nil
     private var leadingShadowConstraint: NSLayoutConstraint!
 
+    private var observation: NSKeyValueObservation?
+
     private lazy var columnRightBorderView: UIView = {
         makeSelectionBorderView()
     }()
@@ -133,7 +139,11 @@ public class GridView: UIView {
     }
 
     /// Delegate for `GridView` which can be used to handle cell specific `EditorView` events
-    public weak var delegate: GridViewDelegate?
+    public weak var delegate: GridViewDelegate? {
+        didSet {
+            (delegate != nil) ? setupScrollObserver() : removeScrollObserver()
+        }
+    }
 
     /// Gets the attachment containing the `GridView`
     public var containerAttachment: Attachment? {
@@ -296,6 +306,61 @@ public class GridView: UIView {
             trailingShadowView.topAnchor.constraint(equalTo: topAnchor),
             trailingShadowView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+    }
+
+    private func setupScrollObserver() {
+        observation = delegate?.containerScrollView?.observe(\.bounds, options: [.new, .old]) { [weak self] container, change in
+//            self?.containerViewportChanged(container: container, oldBounds: change.oldValue)
+            self?.viewportChanged()
+        }
+    }
+
+    private func removeScrollObserver() {
+        observation?.invalidate()
+    }
+
+    deinit {
+        removeScrollObserver()
+    }
+
+    private func viewportChanged() {
+        guard self.bounds != .zero,
+              let container = delegate?.containerScrollView else { return }
+        let containerViewport = delegate?.viewport ?? container.bounds
+        let gridViewport = gridView.bounds
+
+        let x = max(gridViewport.minX, containerViewport.minX)
+        let y = max(gridViewport.minY, containerViewport.minY)
+
+        let width = min(gridViewport.width, containerViewport.width)
+        let height = min(gridViewport.height, containerViewport.height)
+
+        let viewport = CGRect(x: x, y: y, width: width, height: height)
+
+        let cellsInViewport = gridView.cells.filter{ $0.frame.intersects(viewport) }
+        let cellsToDisplay = cellsInViewport.reduce("") { partialResult, cell in
+            "\(partialResult)\n\(cell.id)"
+        }
+        print(cellsToDisplay)
+    }
+
+    private func debugRect(rect: CGRect, color: UIColor) {
+        let path = UIBezierPath(rect: rect).cgPath
+        debugPath(path: path, color: color)
+    }
+
+    private func debugPath(path: CGPath, color: UIColor) {
+        let existingLayer = layer.sublayers?.first(where: { $0.name == "border_layer"}) as? CAShapeLayer
+        let shapeLayer = existingLayer ?? CAShapeLayer()
+        shapeLayer.path = path
+        shapeLayer.strokeColor = color.cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.lineWidth = 1.0
+        shapeLayer.name = "border_layer"
+
+        if existingLayer == nil {
+            layer.addSublayer(shapeLayer)
+        }
     }
 
     private func makeSelectionBorderView() -> UIView {
@@ -592,10 +657,19 @@ public class GridView: UIView {
 extension GridView: UIScrollViewDelegate {
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         resetShadows()
+        viewportChanged()
     }
 }
 
 extension GridView: GridContentViewDelegate {
+    var containerScrollView: UIScrollView? {
+        delegate?.containerScrollView
+    }
+
+    var viewport: CGRect? {
+        self.delegate?.viewport
+    }
+
     func gridContentView(_ gridContentView: GridContentView, didCompleteLayoutWithBounds bounds: CGRect) {
         resetShadows()
     }

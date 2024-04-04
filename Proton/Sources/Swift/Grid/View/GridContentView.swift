@@ -22,6 +22,9 @@ import Foundation
 import UIKit
 
 protocol GridContentViewDelegate: AnyObject {
+    var viewport: CGRect? { get }
+    var containerScrollView: UIScrollView? { get }
+
     func gridContentView(_ gridContentView: GridContentView, didCompleteLayoutWithBounds bounds: CGRect)
     func gridContentView(_ gridContentView: GridContentView, didLayoutCell cell: GridCell)
     

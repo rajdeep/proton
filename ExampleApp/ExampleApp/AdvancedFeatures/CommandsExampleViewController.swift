@@ -338,6 +338,14 @@ extension CommandsExampleViewController: EditorViewDelegate {
 }
 
 extension CommandsExampleViewController: GridViewDelegate {
+    var viewport: CGRect? {
+        editor.scrollView.bounds
+    }
+
+    var containerScrollView: UIScrollView? {
+        editor.scrollView
+    }
+
     func gridView(_ gridView: GridView, didReceiveKey key: EditorKey, at range: NSRange, in cell: GridCell) { }
 
     func gridView(_ gridView: GridView, didLayoutCell cell: GridCell) { }

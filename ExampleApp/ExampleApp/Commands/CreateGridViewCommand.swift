@@ -35,7 +35,7 @@ public class CreateGridViewCommand: EditorCommand {
         text.append(NSAttributedString(string: "Text before Grid"))
         timeEvent(label: "Create")
         for i in 1..<2 {
-            text.append(makeGridViewAttachment(id: i, numRows: 25, numColumns: 5).string)
+            text.append(makeGridViewAttachment(id: i, numRows: 7, numColumns: 7).string)
 //            text.append(makePanelAttachment(id: i).string)
             text.append(NSAttributedString(string: "\ntest middle\n"))
         }
@@ -58,7 +58,7 @@ public class CreateGridViewCommand: EditorCommand {
 
     private func makeGridViewAttachment(id: Int, numRows: Int, numColumns: Int) -> GridViewAttachment {
         let config = GridConfiguration(columnsConfiguration: [GridColumnConfiguration](repeating: GridColumnConfiguration(width: .fixed(100)), count: numColumns),
-                                       rowsConfiguration: [GridRowConfiguration](repeating: GridRowConfiguration(initialHeight: 40), count: numRows))
+                                       rowsConfiguration: [GridRowConfiguration](repeating: GridRowConfiguration(initialHeight: 100), count: numRows))
 
         var cells = [GridCell]()
         for row in 0..<numRows {
