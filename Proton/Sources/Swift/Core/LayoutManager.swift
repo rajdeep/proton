@@ -43,6 +43,7 @@ class LayoutManager: NSLayoutManager {
 
     private let defaultBulletColor = UIColor.black
     private var counters = [Int: Int]()
+    private var imagecache = [UIImage: NSCache<NSString, UIImage>]()
 
     weak var layoutManagerDelegate: LayoutManagerDelegate?
 
@@ -226,7 +227,7 @@ class LayoutManager: NSLayoutManager {
             listMarkerImage = self.generateBitmap(string: text, rect: markerRect)
         case let .image(image, size):
             markerRect = rectForBullet(markerSize: size, rect: rect, indent: paraStyle.firstLineHeadIndent, yOffset: paraStyle.paragraphSpacingBefore)
-            listMarkerImage = image.resizeImage(to: markerRect.size)
+            listMarkerImage = resizedImage(image: image, size: markerRect.size)
         }
 
 //        let lineSpacing = paraStyle.lineSpacing
@@ -241,6 +242,22 @@ class LayoutManager: NSLayoutManager {
             string.draw(at: .zero)
         }
         return image
+    }
+
+    private func resizedImage(image: UIImage, size: CGSize) -> UIImage {
+        let result: UIImage
+
+        let sizeCache = imagecache[image, default: .init()]
+        imagecache.updateValue(sizeCache, forKey: image)
+
+        let key = size.debugDescription as NSString
+        if let cachedImage = sizeCache.object(forKey: key) {
+            result = cachedImage
+        } else {
+            result = image.resizeImage(to: size)
+            sizeCache.setObject(result, forKey: key)
+        }
+        return result
     }
 
     private func rectForBullet(markerSize: CGSize, rect: CGRect, indent: CGFloat, yOffset: CGFloat) -> CGRect {
@@ -410,7 +427,7 @@ class LayoutManager: NSLayoutManager {
         let attributes = lineNumberAttributes(lineNumberFormatting: lineNumberFormatting)
         let text = NSAttributedString(string: "\(lineNumber)", attributes: attributes)
         let markerSize = text.boundingRect(with: .zero, options: [], context: nil).integral.size
-        var markerRect = self.rectForLineNumbers(markerSize: markerSize, rect: rect, width: gutterWidth)
+        let markerRect = self.rectForLineNumbers(markerSize: markerSize, rect: rect, width: gutterWidth)
         let listMarkerImage = self.generateBitmap(string: text, rect: markerRect)
         listMarkerImage.draw(at: markerRect.origin)
     }
