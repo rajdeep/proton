@@ -131,4 +131,13 @@ class TextStorageTests: XCTestCase {
         XCTAssertEqual(attrs[NSAttributedString.Key("attr2")] as? Int, 2)
         XCTAssertEqual(attrs[NSAttributedString.Key("attr3")] as? Int, 3)
     }
+
+    func testReturnsSubstringWithClampedRange() {
+        let textStorage = PRTextStorage()
+        let testString = NSAttributedString(string: "test string")
+        textStorage.replaceCharacters(in: .zero, with: testString)
+
+        let substring = textStorage.attributedSubstring(from: NSRange(location: 5, length: 50))
+        XCTAssertEqual(substring.string, "string")
+    }
 }
