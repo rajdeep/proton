@@ -73,6 +73,17 @@
     [self.textStorageDelegate textStorage:self edited:editedMask in:editedRange changeInLength:delta];
 }
 
+- (NSAttributedString *)attributedSubstringFromRange:(NSRange)range {
+    NSRange rangeToUse =[self clampedWithUpperBound:self.length location:range.location length:range.length];
+    return [super attributedSubstringFromRange: rangeToUse];
+}
+
+- (NSRange)clampedWithUpperBound:(NSInteger)upperBound location:(NSInteger)location length:(NSInteger)length {
+    NSInteger clampedLocation = MAX(MIN(location, upperBound), 0);
+    NSInteger clampedLength = MAX(MIN(length, upperBound - clampedLocation), 0);
+    return NSMakeRange(clampedLocation, clampedLength);
+}
+
 - (void)replaceCharactersInRange:(NSRange)range withAttributedString:(NSAttributedString *)attrString {
     // Handles the crash when nested list receives enter key in quick succession that unindents the list item.
     // Check only required with Obj-C based TextStorage
