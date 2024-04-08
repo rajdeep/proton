@@ -395,3 +395,9 @@ extension GridCell: Equatable {
         return lhs.id == rhs.id
     }
 }
+
+extension GridCell: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}

@@ -323,6 +323,28 @@ public class GridView: UIView {
         removeScrollObserver()
     }
 
+    var cellsInViewport: [GridCell] = [] {
+        didSet {
+            guard oldValue != cellsInViewport else { return }
+
+            let oldCells = Set(oldValue)
+            let newCells = Set(cellsInViewport)
+            let toGenerate = newCells.subtracting(oldCells)
+            let toReclaim = oldCells.subtracting(newCells)
+
+            let cellsToGenerate = toGenerate.reduce("Generate: ") { partialResult, cell in
+                "\(partialResult)\n\(cell.id)"
+            }
+
+            let cellsToReclaim = toReclaim.reduce("Reclaim: ") { partialResult, cell in
+                "\(partialResult)\n\(cell.id)"
+            }
+
+            print(cellsToGenerate)
+            print(cellsToReclaim)
+        }
+    }
+
     private func viewportChanged() {
         guard self.bounds != .zero,
               let container = delegate?.containerScrollView else { return }
@@ -337,11 +359,7 @@ public class GridView: UIView {
 
         let viewport = CGRect(x: x, y: y, width: width, height: height)
 
-        let cellsInViewport = gridView.cells.filter{ $0.frame.intersects(viewport) }
-        let cellsToDisplay = cellsInViewport.reduce("") { partialResult, cell in
-            "\(partialResult)\n\(cell.id)"
-        }
-        print(cellsToDisplay)
+        cellsInViewport = gridView.cells.filter{ $0.frame.intersects(viewport) }
     }
 
     private func debugRect(rect: CGRect, color: UIColor) {
