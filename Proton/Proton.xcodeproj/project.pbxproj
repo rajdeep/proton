@@ -104,6 +104,11 @@
 		1BB4AAF52606DA37000D7584 /* PRTextStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B9AED8A26059D1A00660B99 /* PRTextStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1BB4AAFA2606DA3E000D7584 /* PRTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE8825E250DD7B600E2CC1B /* PRTextStorage.m */; };
 		1BB4AAFB2606DA3E000D7584 /* PREditorContentName.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE88263250E3ADB00E2CC1B /* PREditorContentName.m */; };
+		1BBA674A2BC39ECB007FD95D /* TableCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBA67492BC39ECB007FD95D /* TableCellContentView.swift */; };
+		1BBA674D2BC3ACB5007FD95D /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBA674C2BC3ACB5007FD95D /* TableCell.swift */; };
+		1BBA674F2BC3B2FA007FD95D /* TableContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBA674E2BC3B2F9007FD95D /* TableContentView.swift */; };
+		1BBA67542BC3BD57007FD95D /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBA67532BC3BD56007FD95D /* Table.swift */; };
+		1BBA67562BC3BDC7007FD95D /* TableCellStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBA67552BC3BDC7007FD95D /* TableCellStore.swift */; };
 		1BBAC3CF23CD5A1B0088A1C8 /* UITextRangeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBAC3CE23CD5A1B0088A1C8 /* UITextRangeExtensions.swift */; };
 		1BBD529F2608713C00EB5DA8 /* ProtonCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB4AAE72606DA2D000D7584 /* ProtonCore.framework */; };
 		1BBE4EFC248CB15E00D1C788 /* ListCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */; };
@@ -281,6 +286,11 @@
 		1BB4AAE72606DA2D000D7584 /* ProtonCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ProtonCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BB4AAE92606DA2D000D7584 /* ProtonCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProtonCore.h; sourceTree = "<group>"; };
 		1BB4AAEA2606DA2D000D7584 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1BBA67492BC39ECB007FD95D /* TableCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCellContentView.swift; sourceTree = "<group>"; };
+		1BBA674C2BC3ACB5007FD95D /* TableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
+		1BBA674E2BC3B2F9007FD95D /* TableContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableContentView.swift; sourceTree = "<group>"; };
+		1BBA67532BC3BD56007FD95D /* Table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Table.swift; sourceTree = "<group>"; };
+		1BBA67552BC3BDC7007FD95D /* TableCellStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCellStore.swift; sourceTree = "<group>"; };
 		1BBAC3CE23CD5A1B0088A1C8 /* UITextRangeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextRangeExtensions.swift; sourceTree = "<group>"; };
 		1BBE4EFB248CB15E00D1C788 /* ListCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCommandTests.swift; sourceTree = "<group>"; };
 		1BC021D528588DDD00796585 /* GridCellStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCellStore.swift; sourceTree = "<group>"; };
@@ -717,6 +727,26 @@
 			path = ProtonCore;
 			sourceTree = "<group>";
 		};
+		1BBA674B2BC3AC8B007FD95D /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				1BBA67522BC3BD43007FD95D /* Core */,
+				1BBA67492BC39ECB007FD95D /* TableCellContentView.swift */,
+				1BBA674C2BC3ACB5007FD95D /* TableCell.swift */,
+				1BBA674E2BC3B2F9007FD95D /* TableContentView.swift */,
+			);
+			path = Table;
+			sourceTree = "<group>";
+		};
+		1BBA67522BC3BD43007FD95D /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				1BBA67532BC3BD56007FD95D /* Table.swift */,
+				1BBA67552BC3BDC7007FD95D /* TableCellStore.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
 		1BC0AA65284DF933004B8862 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -813,6 +843,7 @@
 		1BE3305B26057E1100B15E67 /* Swift */ = {
 			isa = PBXGroup;
 			children = (
+				1BBA674B2BC3AC8B007FD95D /* Table */,
 				1B140B162A269984006CF4C3 /* AsyncTextResolver */,
 				1BD185B8284C29DB001F4FBC /* Grid */,
 				1B2BC0DA23CF18A900407DEE /* Decoding */,
@@ -1041,7 +1072,9 @@
 				1B7C76AB2608A489006618AC /* BoldCommand.swift in Sources */,
 				1B7C188C2AB17621005457D9 /* SynchronizedArray.swift in Sources */,
 				1B21AD052B74604C00EBC0BF /* EditorLineNumberProvider.swift in Sources */,
+				1BBA674F2BC3B2FA007FD95D /* TableContentView.swift in Sources */,
 				1BBAC3CF23CD5A1B0088A1C8 /* UITextRangeExtensions.swift in Sources */,
+				1BBA674D2BC3ACB5007FD95D /* TableCell.swift in Sources */,
 				1BFDC80F254A9BFC00BD83BD /* ListParser.swift in Sources */,
 				1B7C76AC2608A489006618AC /* ItalicsCommand.swift in Sources */,
 				1B183D8E23CEE9BA00AE83E5 /* AttributesEncoding.swift in Sources */,
@@ -1053,6 +1086,7 @@
 				1B91F4B323C72DC3003F9B55 /* TextProcessing.swift in Sources */,
 				1BD185C2284C3082001F4FBC /* GridView.swift in Sources */,
 				1BD185BA284C29E6001F4FBC /* Grid.swift in Sources */,
+				1BBA674A2BC39ECB007FD95D /* TableCellContentView.swift in Sources */,
 				1B45CDDD23C05340001EB196 /* Attachment.swift in Sources */,
 				1B45CDD023C007AF001EB196 /* RichTextView.swift in Sources */,
 				1B004EC723C1C287007893AA /* EditorView.swift in Sources */,
@@ -1067,6 +1101,8 @@
 				1B45CDC523BF13D4001EB196 /* NSRangeExtensions.swift in Sources */,
 				1BC0AA69284F59B8004B8862 /* GridContentView.swift in Sources */,
 				1B45014F247E5AD9007B3EE9 /* SequenceGenerator.swift in Sources */,
+				1BBA67562BC3BDC7007FD95D /* TableCellStore.swift in Sources */,
+				1BBA67542BC3BD57007FD95D /* Table.swift in Sources */,
 				1BD993B823C9AE4200563ACB /* NSAttributedString+Content.swift in Sources */,
 				1B45014F247E5AD9007B3EE9 /* SequenceGenerator.swift in Sources */,
 				1BD993B823C9AE4200563ACB /* NSAttributedString+Content.swift in Sources */,
