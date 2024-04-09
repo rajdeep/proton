@@ -90,7 +90,7 @@ class CommandsExampleViewController: ExamplesBaseViewController {
     override func setup() {
         super.setup()
 
-        commands.insert((title: "Table", command: CreateGridViewCommand(delegate: self), highlightOnTouch: false), at: 2)
+        commands.insert((title: "Table", command: TableViewCommand(delegate: self), highlightOnTouch: false), at: 2)
 
         buttons.first(where: { $0.titleLabel?.text == "Merge" })?.isSelected = false
 
@@ -337,7 +337,142 @@ extension CommandsExampleViewController: EditorViewDelegate {
     }
 }
 
-extension CommandsExampleViewController: GridViewDelegate {
+//extension CommandsExampleViewController: GridViewDelegate {
+//    var viewport: CGRect? {
+//        editor.scrollView.bounds
+//    }
+//
+//    var containerScrollView: UIScrollView? {
+//        editor.scrollView
+//    }
+//
+//    func gridView(_ gridView: GridView, didReceiveKey key: EditorKey, at range: NSRange, in cell: GridCell) { }
+//
+//    func gridView(_ gridView: GridView, didLayoutCell cell: GridCell) { }
+//
+//    func gridView(_ gridView: GridView, didReceiveFocusAt range: NSRange, in cell: GridCell) {
+//        let columnCount = gridView.numberOfColumns
+//        let columnActions = [
+//            UIAction(title: "Add column right", image: UIImage(systemName: "arrow.right"),
+//                     handler: { (_) in
+//                         let result = gridView.insertColumn(at: cell.columnSpan.max()! + 1, configuration: GridColumnConfiguration(width: .fixed(100)))
+//                         if case let Result.failure(error) = result {
+//                             print("Failed to insert: \(error)")
+//                         }
+//                     }),
+////            UIAction(title: "Add column left", image: UIImage(systemName: "arrow.left"),
+////                     handler: { (_) in
+////                         gridView.insertColumn(at: cell.columnSpan.min()!, configuration: GridColumnConfiguration(dimension: .fixed(100)))
+////                     }),
+////            UIAction(title: "Delete Column", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
+////                gridView.deleteColumn(at: cell.columnSpan.max()!)
+////            }),
+////            UIAction(title: "Freeze Columns", image: UIImage(systemName: "arrow.up"), handler: { (_) in
+////                gridView.freezeColumns(upTo: cell.columnSpan.max()!)
+////            }),
+////
+////            UIAction(title: "Unfreeze Columns", image: UIImage(systemName: "trash"), attributes: gridView.containsFrozenColumns ? [] : .disabled, handler: { (_) in
+////                gridView.unfreezeColumns()
+////            })
+//        ]
+//
+//        let rowActions = [
+//            UIAction(title: "Add row above", image: UIImage(systemName: "arrow.up"), handler: { (_) in
+//                gridView.insertRow(at: cell.rowSpan.min()!, configuration: GridRowConfiguration(initialHeight: 40))
+//            }),
+//            UIAction(title: "Add row below", image: UIImage(systemName: "arrow.down"), handler: { (_) in
+//                gridView.insertRow(at: cell.rowSpan.max()! + 1, configuration: GridRowConfiguration(initialHeight: 40))
+//            }),
+//            UIAction(title: "Delete Row", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
+//                gridView.deleteRow(at: cell.rowSpan.max()!)
+//            })
+////            UIAction(title: "Freeze Rows", image: UIImage(systemName: "arrow.up"), handler: { (_) in
+////                gridView.freezeRows(upTo: cell.rowSpan.max()!)
+////                for i in 0...cell.rowSpan.max()! {
+////                    if i%2 == 0 {
+////                        gridView.applyStyle(GridCellStyle(backgroundColor: .systemGray, textColor: .white, font: UIFont.boldSystemFont(ofSize: 17), borderStyle: GridCellStyle.BorderStyle(color: .white, width: 1)), toRow: i)
+////                    } else {
+////                        gridView.applyStyle(GridCellStyle(backgroundColor: .lightGray, textColor: .black, font: UIFont.boldSystemFont(ofSize: 17), borderStyle: GridCellStyle.BorderStyle(color: .white, width: 1)), toRow: i)
+////                    }
+////                }
+////            }),
+////
+////            UIAction(title: "Unfreeze Rows", image: UIImage(systemName: "trash"), attributes: gridView.containsFrozenRows ? [] : .disabled, handler: { (_) in
+////                if let index = gridView.frozenRowMaxIndex {
+////                    gridView.unfreezeRows()
+////                    for i in 0...index {
+////                        gridView.applyStyle(GridCellStyle(backgroundColor: .white, textColor: .black, font: UIFont.systemFont(ofSize: 17)), toRow: i)
+////                    }
+////                }
+////            })
+//        ]
+//
+//        let cellActions = [
+//            UIAction(title: "Color cell", image: UIImage(systemName: "paintpalette"), handler: { (_) in
+//                let style = GridCellStyle(backgroundColor: .systemGray3, textColor: .red, font: UIFont.boldSystemFont(ofSize: 14))
+//                cell.applyStyle(style)
+//            }),
+//        ]
+//
+//        let columnMenu = UIMenu(title: "Column Options", options: .displayInline, children: columnActions)
+//        let rowMenu = UIMenu(title: "Row Options", options: .displayInline, children: rowActions)
+//        let cellMenu = UIMenu(title: "Cell Options", options: .displayInline, children: cellActions)
+//
+//        let menu = UIMenu(title: "Cell Options", children: [columnMenu, rowMenu, cellMenu])
+//
+//        let button = actionButton
+//        if #available(iOS 14.0, *) {
+//            button.menu = menu
+//            button.showsMenuAsPrimaryAction = true
+//        }
+//
+//        cell.contentView.addSubview(button)
+//        NSLayoutConstraint.activate([
+//            button.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -5),
+//            button.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 5),
+//            button.widthAnchor.constraint(equalToConstant: 20),
+//            button.heightAnchor.constraint(equalTo: button.widthAnchor),
+//        ])
+//    }
+//
+//    func gridView(_ gridView: GridView, didLoseFocusFrom range: NSRange, in cell: GridCell) {
+//        actionButton.removeFromSuperview()
+//    }
+//
+//    func gridView(_ gridView: GridView, didTapAtLocation location: CGPoint, characterRange: NSRange?, in cell: GridCell) {
+//
+//    }
+//
+//    func gridView(_ gridView: GridView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name, in cell: GridCell) {
+//
+//    }
+//
+//    func gridView(_ gridView: GridView, didChangeBounds bounds: CGRect, in cell: GridCell) {
+//
+//    }
+//
+//    func gridView(_ gridView: GridView, didSelectCells cells: [GridCell]) {
+//        selectedGrid = gridView
+//        selectedCells = cells
+//        mergeButton?.isEnabled = gridView.isCellSelectionMergeable(cells)
+//
+//        if cells.count == 1, cells[0].isSplittable {
+//            splitButton?.isEnabled = true
+//        } else {
+//            splitButton?.isEnabled = false
+//        }
+//    }
+//
+//    func gridView(_ gridView: GridView, didUnselectCells cells: [GridCell]) {
+//
+//    }
+//
+//    func gridView(_ gridView: GridView, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool {
+//        return proposedWidth > 50
+//    }
+//}
+
+extension CommandsExampleViewController: TableViewDelegate {
     var viewport: CGRect? {
         editor.scrollView.bounds
     }
@@ -346,128 +481,39 @@ extension CommandsExampleViewController: GridViewDelegate {
         editor.scrollView
     }
 
-    func gridView(_ gridView: GridView, didReceiveKey key: EditorKey, at range: NSRange, in cell: GridCell) { }
+    func tableView(_ tableView: TableView, didReceiveKey key: EditorKey, at range: NSRange, in cell: TableCell) { }
 
-    func gridView(_ gridView: GridView, didLayoutCell cell: GridCell) { }
+    func tableView(_ tableView: TableView, didLayoutCell cell: TableCell) { }
 
-    func gridView(_ gridView: GridView, didReceiveFocusAt range: NSRange, in cell: GridCell) {
-        let columnCount = gridView.numberOfColumns
-        let columnActions = [
-            UIAction(title: "Add column right", image: UIImage(systemName: "arrow.right"),
-                     handler: { (_) in
-                         let result = gridView.insertColumn(at: cell.columnSpan.max()! + 1, configuration: GridColumnConfiguration(width: .fixed(100)))
-                         if case let Result.failure(error) = result {
-                             print("Failed to insert: \(error)")
-                         }
-                     }),
-//            UIAction(title: "Add column left", image: UIImage(systemName: "arrow.left"),
-//                     handler: { (_) in
-//                         gridView.insertColumn(at: cell.columnSpan.min()!, configuration: GridColumnConfiguration(dimension: .fixed(100)))
-//                     }),
-//            UIAction(title: "Delete Column", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
-//                gridView.deleteColumn(at: cell.columnSpan.max()!)
-//            }),
-//            UIAction(title: "Freeze Columns", image: UIImage(systemName: "arrow.up"), handler: { (_) in
-//                gridView.freezeColumns(upTo: cell.columnSpan.max()!)
-//            }),
-//
-//            UIAction(title: "Unfreeze Columns", image: UIImage(systemName: "trash"), attributes: gridView.containsFrozenColumns ? [] : .disabled, handler: { (_) in
-//                gridView.unfreezeColumns()
-//            })
-        ]
+    func tableView(_ tableView: TableView, didReceiveFocusAt range: NSRange, in cell: TableCell) {
 
-        let rowActions = [
-            UIAction(title: "Add row above", image: UIImage(systemName: "arrow.up"), handler: { (_) in
-                gridView.insertRow(at: cell.rowSpan.min()!, configuration: GridRowConfiguration(initialHeight: 40))
-            }),
-            UIAction(title: "Add row below", image: UIImage(systemName: "arrow.down"), handler: { (_) in
-                gridView.insertRow(at: cell.rowSpan.max()! + 1, configuration: GridRowConfiguration(initialHeight: 40))
-            }),
-            UIAction(title: "Delete Row", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
-                gridView.deleteRow(at: cell.rowSpan.max()!)
-            })
-//            UIAction(title: "Freeze Rows", image: UIImage(systemName: "arrow.up"), handler: { (_) in
-//                gridView.freezeRows(upTo: cell.rowSpan.max()!)
-//                for i in 0...cell.rowSpan.max()! {
-//                    if i%2 == 0 {
-//                        gridView.applyStyle(GridCellStyle(backgroundColor: .systemGray, textColor: .white, font: UIFont.boldSystemFont(ofSize: 17), borderStyle: GridCellStyle.BorderStyle(color: .white, width: 1)), toRow: i)
-//                    } else {
-//                        gridView.applyStyle(GridCellStyle(backgroundColor: .lightGray, textColor: .black, font: UIFont.boldSystemFont(ofSize: 17), borderStyle: GridCellStyle.BorderStyle(color: .white, width: 1)), toRow: i)
-//                    }
-//                }
-//            }),
-//
-//            UIAction(title: "Unfreeze Rows", image: UIImage(systemName: "trash"), attributes: gridView.containsFrozenRows ? [] : .disabled, handler: { (_) in
-//                if let index = gridView.frozenRowMaxIndex {
-//                    gridView.unfreezeRows()
-//                    for i in 0...index {
-//                        gridView.applyStyle(GridCellStyle(backgroundColor: .white, textColor: .black, font: UIFont.systemFont(ofSize: 17)), toRow: i)
-//                    }
-//                }
-//            })
-        ]
-
-        let cellActions = [
-            UIAction(title: "Color cell", image: UIImage(systemName: "paintpalette"), handler: { (_) in
-                let style = GridCellStyle(backgroundColor: .systemGray3, textColor: .red, font: UIFont.boldSystemFont(ofSize: 14))
-                cell.applyStyle(style)
-            }),
-        ]
-
-        let columnMenu = UIMenu(title: "Column Options", options: .displayInline, children: columnActions)
-        let rowMenu = UIMenu(title: "Row Options", options: .displayInline, children: rowActions)
-        let cellMenu = UIMenu(title: "Cell Options", options: .displayInline, children: cellActions)
-
-        let menu = UIMenu(title: "Cell Options", children: [columnMenu, rowMenu, cellMenu])
-
-        let button = actionButton
-        if #available(iOS 14.0, *) {
-            button.menu = menu
-            button.showsMenuAsPrimaryAction = true
-        }
-
-        cell.contentView.addSubview(button)
-        NSLayoutConstraint.activate([
-            button.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -5),
-            button.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 5),
-            button.widthAnchor.constraint(equalToConstant: 20),
-            button.heightAnchor.constraint(equalTo: button.widthAnchor),
-        ])
     }
 
-    func gridView(_ gridView: GridView, didLoseFocusFrom range: NSRange, in cell: GridCell) {
+    func tableView(_ tableView: TableView, didLoseFocusFrom range: NSRange, in cell: TableCell) {
         actionButton.removeFromSuperview()
     }
 
-    func gridView(_ gridView: GridView, didTapAtLocation location: CGPoint, characterRange: NSRange?, in cell: GridCell) {
+    func tableView(_ tableView: TableView, didTapAtLocation location: CGPoint, characterRange: NSRange?, in cell: TableCell) {
 
     }
 
-    func gridView(_ gridView: GridView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name, in cell: GridCell) {
+    func tableView(_ tableView: TableView, didChangeSelectionAt range: NSRange, attributes: [NSAttributedString.Key : Any], contentType: EditorContent.Name, in cell: TableCell) {
 
     }
 
-    func gridView(_ gridView: GridView, didChangeBounds bounds: CGRect, in cell: GridCell) {
+    func tableView(_ tableView: TableView, didChangeBounds bounds: CGRect, in cell: TableCell) {
 
     }
 
-    func gridView(_ gridView: GridView, didSelectCells cells: [GridCell]) {
-        selectedGrid = gridView
-        selectedCells = cells
-        mergeButton?.isEnabled = gridView.isCellSelectionMergeable(cells)
-
-        if cells.count == 1, cells[0].isSplittable {
-            splitButton?.isEnabled = true
-        } else {
-            splitButton?.isEnabled = false
-        }
+    func tableView(_ tableView: TableView, didSelectCells cells: [TableCell]) {
+      
     }
 
-    func gridView(_ gridView: GridView, didUnselectCells cells: [GridCell]) {
+    func tableView(_ tableView: TableView, didUnselectCells cells: [TableCell]) {
 
     }
 
-    func gridView(_ gridView: GridView, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool {
+    func tableView(_ tableView: TableView, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool {
         return proposedWidth > 50
     }
 }

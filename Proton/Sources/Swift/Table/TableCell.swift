@@ -153,3 +153,15 @@ public class TableCell {
         self.contentView = contentView
     }
 }
+
+extension TableCell: Equatable {
+    public static func ==(lhs: TableCell, rhs: TableCell) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
+extension TableCell: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}

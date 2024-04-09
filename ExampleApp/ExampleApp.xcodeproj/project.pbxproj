@@ -53,6 +53,8 @@
 		1BB8904223C5A74700F087AE /* Proton.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1BFFEF0223C3048E00D2BA35 /* Proton.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1BD1BE72289745D800FA8AE4 /* GridViewAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1BE71289745D800FA8AE4 /* GridViewAttachment.swift */; };
 		1BD1BE78289746C900FA8AE4 /* CreateGridViewCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD1BE77289746C900FA8AE4 /* CreateGridViewCommand.swift */; };
+		1BD424002BC4C8560046F0C7 /* TableViewAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD423FF2BC4C8560046F0C7 /* TableViewAttachment.swift */; };
+		1BD424032BC4C8DD0046F0C7 /* TableViewCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD424022BC4C8DD0046F0C7 /* TableViewCommand.swift */; };
 		1BD993C223CA8FD200563ACB /* PanelAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993C123CA8FD200563ACB /* PanelAttachment.swift */; };
 		1BFFEEFE23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEEFD23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift */; };
 		1BFFEF0023C303F100D2BA35 /* AutogrowingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFEEFF23C303F100D2BA35 /* AutogrowingTextField.swift */; };
@@ -149,6 +151,8 @@
 		1B91F4B923C73D96003F9B55 /* TextProcessorExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessorExampleViewController.swift; sourceTree = "<group>"; };
 		1BD1BE71289745D800FA8AE4 /* GridViewAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewAttachment.swift; sourceTree = "<group>"; };
 		1BD1BE77289746C900FA8AE4 /* CreateGridViewCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGridViewCommand.swift; sourceTree = "<group>"; };
+		1BD423FF2BC4C8560046F0C7 /* TableViewAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewAttachment.swift; sourceTree = "<group>"; };
+		1BD424022BC4C8DD0046F0C7 /* TableViewCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCommand.swift; sourceTree = "<group>"; };
 		1BD993C123CA8FD200563ACB /* PanelAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelAttachment.swift; sourceTree = "<group>"; };
 		1BFFEEFD23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchContentAttachmentExampleViewController.swift; sourceTree = "<group>"; };
 		1BFFEEFF23C303F100D2BA35 /* AutogrowingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutogrowingTextField.swift; sourceTree = "<group>"; };
@@ -349,6 +353,7 @@
 				1B2DA74C23F0C39B00F7EC52 /* DummyCollabCommand.swift */,
 				1B275F352463809200D5C377 /* TextBlockCommand.swift */,
 				1B26BD892868325D00E45C16 /* HighlightTextCommand.swift */,
+				1BD424022BC4C8DD0046F0C7 /* TableViewCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -402,6 +407,7 @@
 				1B617A9B2838874F00095FEE /* ExpandableView.swift */,
 				1B617A9D28388A1900095FEE /* ExpandableViewAttachment.swift */,
 				1BD1BE71289745D800FA8AE4 /* GridViewAttachment.swift */,
+				1BD423FF2BC4C8560046F0C7 /* TableViewAttachment.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -539,6 +545,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BD424002BC4C8560046F0C7 /* TableViewAttachment.swift in Sources */,
 				1B183DA223CEF7D600AE83E5 /* PanelEncoder.swift in Sources */,
 				1B872B9F23EE73170070A92A /* UIViewExtensions.swift in Sources */,
 				1B617A9E28388A1900095FEE /* ExpandableViewAttachment.swift in Sources */,
@@ -554,6 +561,7 @@
 				1BFFEEFE23C2D3E500D2BA35 /* MatchContentAttachmentExampleViewController.swift in Sources */,
 				1B91F4B823C73D3C003F9B55 /* MarkupTextProcessor.swift in Sources */,
 				1B164F4323D2A5A000A0869A /* ResetCommand.swift in Sources */,
+				1BD424032BC4C8DD0046F0C7 /* TableViewCommand.swift in Sources */,
 				1B164F2E23D282A500A0869A /* JSONDecoder.swift in Sources */,
 				1B6DE9DE23C598F1007F9859 /* CommandsExampleViewController.swift in Sources */,
 				1B6D2FD323BD46ED0019CE40 /* MasterViewController.swift in Sources */,
