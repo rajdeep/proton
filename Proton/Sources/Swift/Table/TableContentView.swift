@@ -2,8 +2,20 @@
 //  TableContentView.swift
 //  Proton
 //
-//  Created by Rajdeep Kwatra on 4/8/24.
+//  Created by Rajdeep Kwatra on 8/4/2024.
 //  Copyright © 2024 Rajdeep Kwatra. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 import Foundation
@@ -37,6 +49,8 @@ protocol TableContentViewDelegate: AnyObject {
     func tableContentView(_ tableContentView: TableContentView, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool
 
     func tableContentView(_ tableContentView: TableContentView, cell: TableCell, didChangeBackgroundColor color: UIColor?, oldColor: UIColor?)
+
+    func tableContentView(_ tableContentView: TableContentView, didUpdateCells cells: [TableCell])
 }
 
 class TableContentView: UIScrollView {
@@ -57,7 +71,7 @@ class TableContentView: UIScrollView {
     var isRendered = false
 
     var cells: [TableCell] {
-        table.cells.compactMap { $0 as? TableCell }
+        table.cells
     }
 
     private(set) var selectedCells: [TableCell] = [TableCell]()
@@ -130,6 +144,7 @@ class TableContentView: UIScrollView {
     private func setup() {
         makeCells()
         setupSelectionGesture()
+        tableContentViewDelegate?.tableContentView(self, didUpdateCells: cells)
     }
 
     public override func willMove(toWindow newWindow: UIWindow?) {
@@ -143,8 +158,9 @@ class TableContentView: UIScrollView {
 
     private func makeCells() {
         for cell in cells {
-            let frame = table.frameForCell(cell, basedOn: initialSize)
+            let frame = table.frameForCell(cell, basedOn: bounds.size)
             cell.frame = frame
+            cell.delegate = self
         }
     }
 
@@ -412,6 +428,14 @@ class TableContentView: UIScrollView {
 }
 
 extension TableContentView: TableCellDelegate {
+    func cell(_ cell: TableCell, didAddContentView view: TableCellContentView) {
+        addSubview(view)
+    }
+
+    func cell(_ cell: TableCell, didRemoveContentView view: TableCellContentView?) {
+        view?.removeFromSuperview()
+    }
+
     func cell(_ cell: TableCell, didReceiveFocusAt range: NSRange) {
         tableContentViewDelegate?.tableContentView(self, didReceiveFocusAt: range, in: cell)
     }

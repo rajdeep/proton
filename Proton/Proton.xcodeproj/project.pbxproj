@@ -129,6 +129,11 @@
 		1BD21554246951090000BCE2 /* LayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD21553246951090000BCE2 /* LayoutManager.swift */; };
 		1BD21556246952370000BCE2 /* BackgroundStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD21555246952370000BCE2 /* BackgroundStyle.swift */; };
 		1BD423FE2BC4C5C60046F0C7 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD423FD2BC4C5C60046F0C7 /* TableView.swift */; };
+		1BD424072BC4E69B0046F0C7 /* TableViewAttachmentSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD424052BC4E6890046F0C7 /* TableViewAttachmentSnapshotTests.swift */; };
+		1BD424092BC4E6D70046F0C7 /* TableViewAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD424082BC4E6D70046F0C7 /* TableViewAttachment.swift */; };
+		1BD4240C2BC4E95E0046F0C7 /* MockTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4240B2BC4E95E0046F0C7 /* MockTableViewDelegate.swift */; };
+		1BD4240E2BC4ECB30046F0C7 /* TableCellRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4240D2BC4ECB30046F0C7 /* TableCellRepository.swift */; };
+		1BD424102BC509E60046F0C7 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4240F2BC509E60046F0C7 /* Utility.swift */; };
 		1BD90ED72AF85A6300BB31FA /* EditorViewportSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD90ED62AF85A6300BB31FA /* EditorViewportSnapshotTests.swift */; };
 		1BD9323E243CA506005E4136 /* CommandName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD9323D243CA506005E4136 /* CommandName.swift */; };
 		1BD993B123C995B000563ACB /* TextProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD993B023C995B000563ACB /* TextProcessorTests.swift */; };
@@ -311,6 +316,11 @@
 		1BD21553246951090000BCE2 /* LayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManager.swift; sourceTree = "<group>"; };
 		1BD21555246952370000BCE2 /* BackgroundStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundStyle.swift; sourceTree = "<group>"; };
 		1BD423FD2BC4C5C60046F0C7 /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
+		1BD424052BC4E6890046F0C7 /* TableViewAttachmentSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewAttachmentSnapshotTests.swift; sourceTree = "<group>"; };
+		1BD424082BC4E6D70046F0C7 /* TableViewAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewAttachment.swift; sourceTree = "<group>"; };
+		1BD4240B2BC4E95E0046F0C7 /* MockTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTableViewDelegate.swift; sourceTree = "<group>"; };
+		1BD4240D2BC4ECB30046F0C7 /* TableCellRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCellRepository.swift; sourceTree = "<group>"; };
+		1BD4240F2BC509E60046F0C7 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		1BD90ED62AF85A6300BB31FA /* EditorViewportSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewportSnapshotTests.swift; sourceTree = "<group>"; };
 		1BD9323D243CA506005E4136 /* CommandName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandName.swift; sourceTree = "<group>"; };
 		1BD993B023C995B000563ACB /* TextProcessorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextProcessorTests.swift; sourceTree = "<group>"; };
@@ -512,6 +522,7 @@
 				1B44165228E5706A00836C71 /* GradientView.swift */,
 				1B7C188B2AB17621005457D9 /* SynchronizedArray.swift */,
 				1BDA09412AD4B4D400674CFE /* Logger.swift */,
+				1BD4240F2BC509E60046F0C7 /* Utility.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -561,6 +572,7 @@
 				1B45CDEA23C16829001EB196 /* ViewAttachmentSnapshotTests.swift */,
 				1B617A97283711D700095FEE /* AttachmentUpdateSnapshotTests.swift */,
 				1BFA75A32897D52300E4A2AD /* GridViewAttachment.swift */,
+				1BD424082BC4E6D70046F0C7 /* TableViewAttachment.swift */,
 			);
 			path = Attachments;
 			sourceTree = "<group>";
@@ -692,6 +704,7 @@
 		1BB214D323BB2778008B84A0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				1BD424042BC4E6690046F0C7 /* Table */,
 				1B0861CE2A2D5AA900A84934 /* AsyncTextResolver */,
 				1BD185BD284C2A51001F4FBC /* Grid */,
 				1B5E2581240F5AED00163E74 /* ExtensionTests */,
@@ -736,6 +749,7 @@
 				1BBA67492BC39ECB007FD95D /* TableCellContentView.swift */,
 				1BBA674C2BC3ACB5007FD95D /* TableCell.swift */,
 				1BD423FD2BC4C5C60046F0C7 /* TableView.swift */,
+				1BD4240D2BC4ECB30046F0C7 /* TableCellRepository.swift */,
 				1BBA674E2BC3B2F9007FD95D /* TableContentView.swift */,
 			);
 			path = Table;
@@ -813,6 +827,23 @@
 				1BC0AA68284F59B8004B8862 /* GridContentView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		1BD424042BC4E6690046F0C7 /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				1BD4240A2BC4E94B0046F0C7 /* Mocks */,
+				1BD424052BC4E6890046F0C7 /* TableViewAttachmentSnapshotTests.swift */,
+			);
+			path = Table;
+			sourceTree = "<group>";
+		};
+		1BD4240A2BC4E94B0046F0C7 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				1BD4240B2BC4E95E0046F0C7 /* MockTableViewDelegate.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		1BD993AE23C9955800563ACB /* TextProcessors */ = {
@@ -1078,6 +1109,7 @@
 				1BBA674F2BC3B2FA007FD95D /* TableContentView.swift in Sources */,
 				1BBAC3CF23CD5A1B0088A1C8 /* UITextRangeExtensions.swift in Sources */,
 				1BBA674D2BC3ACB5007FD95D /* TableCell.swift in Sources */,
+				1BD424102BC509E60046F0C7 /* Utility.swift in Sources */,
 				1BFDC80F254A9BFC00BD83BD /* ListParser.swift in Sources */,
 				1B7C76AC2608A489006618AC /* ItalicsCommand.swift in Sources */,
 				1B183D8E23CEE9BA00AE83E5 /* AttributesEncoding.swift in Sources */,
@@ -1100,6 +1132,7 @@
 				1B36192D2A68D89A00323BBF /* AggregateEditorViewDelegate.swift in Sources */,
 				1BD18583284863A6001F4FBC /* ListOutdentCommand.swift in Sources */,
 				1BD21556246952370000BCE2 /* BackgroundStyle.swift in Sources */,
+				1BD4240E2BC4ECB30046F0C7 /* TableCellRepository.swift in Sources */,
 				1B91F4B123C72D87003F9B55 /* TextProcessor.swift in Sources */,
 				1B2BC0DD23CF18C700407DEE /* EditorContentDecoding.swift in Sources */,
 				1B45CDC523BF13D4001EB196 /* NSRangeExtensions.swift in Sources */,
@@ -1147,6 +1180,7 @@
 				1B840F612401E63100D5E8F7 /* MockEditorCommand.swift in Sources */,
 				1B45CD9F23BEE997001EB196 /* SnapshotTestViewController.swift in Sources */,
 				1BFFEF1A23C3344A00D2BA35 /* AutogrowingTextField.swift in Sources */,
+				1BD424072BC4E69B0046F0C7 /* TableViewAttachmentSnapshotTests.swift in Sources */,
 				1BD993B423C9966A00563ACB /* MockTextProcessor.swift in Sources */,
 				1BDC794A2B2026EC00B19971 /* GridCellTests.swift in Sources */,
 				1B164F5223D2B9D400A0869A /* TestTextProcessor.swift in Sources */,
@@ -1176,8 +1210,10 @@
 				1BC25B542448768200FF88AC /* EditorContextDelegateTests.swift in Sources */,
 				1B9AF9E62851EC2500CD65C4 /* GridViewTests.swift in Sources */,
 				1BDC794C2B20271800B19971 /* MockGridCellDelegate.swift in Sources */,
+				1BD424092BC4E6D70046F0C7 /* TableViewAttachment.swift in Sources */,
 				1B98D5B0286828EC0091C927 /* SnapshotTestCase.swift in Sources */,
 				1BFDC811254AA11F00BD83BD /* ListParserTests.swift in Sources */,
+				1BD4240C2BC4E95E0046F0C7 /* MockTableViewDelegate.swift in Sources */,
 				1B6FB18A2ABA75E7008CE69E /* MockAsyncAttachmentRenderingDelegate.swift in Sources */,
 				1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */,
 				1B82570423C48C350033A0A9 /* MockRichTextViewDelegate.swift in Sources */,

@@ -118,6 +118,8 @@ public class TableView: UIView {
 
     private var observation: NSKeyValueObservation?
 
+    private let repository = TableCellRepository()
+
     private lazy var columnRightBorderView: UIView = {
         makeSelectionBorderView()
     }()
@@ -310,7 +312,6 @@ public class TableView: UIView {
 
     private func setupScrollObserver() {
         observation = delegate?.containerScrollView?.observe(\.bounds, options: [.new, .old]) { [weak self] container, change in
-//            self?.containerViewportChanged(container: container, oldBounds: change.oldValue)
             self?.viewportChanged()
         }
     }
@@ -332,16 +333,13 @@ public class TableView: UIView {
             let toGenerate = newCells.subtracting(oldCells)
             let toReclaim = oldCells.subtracting(newCells)
 
-            let cellsToGenerate = toGenerate.reduce("Generate: ") { partialResult, cell in
-                "\(partialResult)\n\(cell.id)"
+            toGenerate.forEach { [weak self] in
+                self?.repository.dequeue(for: $0)
             }
 
-            let cellsToReclaim = toReclaim.reduce("Reclaim: ") { partialResult, cell in
-                "\(partialResult)\n\(cell.id)"
+            toReclaim.forEach { [weak self] in
+                self?.repository.enqueue(cell: $0)
             }
-
-            print(cellsToGenerate)
-            print(cellsToReclaim)
         }
     }
 
@@ -359,26 +357,7 @@ public class TableView: UIView {
 
         let viewport = CGRect(x: x, y: y, width: width, height: height)
 
-        cellsInViewport = tableView.cells.filter{ $0.frame.intersects(viewport) }
-    }
-
-    private func debugRect(rect: CGRect, color: UIColor) {
-        let path = UIBezierPath(rect: rect).cgPath
-        debugPath(path: path, color: color)
-    }
-
-    private func debugPath(path: CGPath, color: UIColor) {
-        let existingLayer = layer.sublayers?.first(where: { $0.name == "border_layer"}) as? CAShapeLayer
-        let shapeLayer = existingLayer ?? CAShapeLayer()
-        shapeLayer.path = path
-        shapeLayer.strokeColor = color.cgColor
-        shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.lineWidth = 1.0
-        shapeLayer.name = "border_layer"
-
-        if existingLayer == nil {
-            layer.addSublayer(shapeLayer)
-        }
+        cellsInViewport = tableView.cells.filter{ $0.frame != .zero && $0.frame.intersects(viewport) }
     }
 
     private func makeSelectionBorderView() -> UIView {
@@ -735,6 +714,10 @@ extension TableView: TableContentViewDelegate {
             cell.setFocus()
             tableView.scrollTo(cell: cell)
         }
+    }
+
+    func tableContentView(_ tableContentView: TableContentView, didUpdateCells cells: [TableCell]) {
+        viewportChanged()
     }
 
     func tableContentView(_ tableContentView: TableContentView, didAddNewColumnAt index: Int) {

@@ -24,6 +24,9 @@ import OSLog
 
 
 protocol TableCellDelegate: AnyObject {
+    func cell(_ cell: TableCell, didAddContentView view: TableCellContentView)
+    func cell(_ cell: TableCell, didRemoveContentView view: TableCellContentView?)
+
     func cell(_ cell: TableCell, didChangeBounds bounds: CGRect)
     func cell(_ cell: TableCell, didReceiveFocusAt range: NSRange)
     func cell(_ cell: TableCell, didLoseFocusFrom range: NSRange)
@@ -59,7 +62,7 @@ public class TableCell {
         }
     }
 
-    private let editorInitializer: EditorInitializer
+    let editorInitializer: EditorInitializer
 
     /// Controls if the cell can be selected or not.
     public var isSelectable: Bool {
@@ -139,7 +142,8 @@ public class TableCell {
     }
 
     func removeContentView() {
-        contentView?.removeFromSuperview()
+        delegate?.cell(self, didRemoveContentView: contentView)
+        contentView = nil
     }
 
     func updateBackgroundColorFromParent(color: UIColor?, oldColor: UIColor?) {
@@ -151,6 +155,7 @@ public class TableCell {
 
     func addContentView(_ contentView: TableCellContentView) {
         self.contentView = contentView
+        delegate?.cell(self, didAddContentView: contentView)
     }
 }
 
