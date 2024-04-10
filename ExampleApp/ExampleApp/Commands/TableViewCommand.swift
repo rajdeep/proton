@@ -35,7 +35,7 @@ public class TableViewCommand: EditorCommand {
         text.append(NSAttributedString(string: "Text before Grid"))
         timeEvent(label: "Create")
         for i in 1..<2 {
-            text.append(makeGridViewAttachment(id: i, numRows: 2000, numColumns: 7).string)
+            text.append(makeGridViewAttachment(id: i, numRows: 200, numColumns: 70).string)
 //            text.append(makePanelAttachment(id: i).string)
             text.append(NSAttributedString(string: "\ntest middle\n"))
         }

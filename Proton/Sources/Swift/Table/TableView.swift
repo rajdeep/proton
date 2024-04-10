@@ -667,6 +667,10 @@ extension TableView: TableContentViewDelegate {
         self.delegate?.viewport
     }
 
+    func tableContentView(_ tableContentView: TableContentView, didChangeBounds bounds: CGRect, oldBounds: CGRect) {
+        viewportChanged()
+    }
+
     func tableContentView(_ tableContentView: TableContentView, didCompleteLayoutWithBounds bounds: CGRect) {
         resetShadows()
     }

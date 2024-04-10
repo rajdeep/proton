@@ -91,4 +91,31 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 400, height: 700))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+    func testRendersTableViewAttachmentInViewportRotation() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        delegate.containerScrollView = editor.scrollView
+
+        var viewport = CGRect(x: 0, y: 100, width: 350, height: 200)
+        delegate.viewport = viewport
+
+        Utility.drawRect(rect: viewport, color: .red, in: editor)
+
+        let attachment = AttachmentGenerator.makeTableViewAttachment(id: 1, numRows: 20, numColumns: 10)
+        attachment.view.delegate = delegate
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 700))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        viewport = CGRect(x: 0, y: 100, width: 650, height: 200)
+        delegate.viewport = viewport
+
+        Utility.drawRect(rect: viewport, color: .red, in: editor)
+        viewController.render(size: CGSize(width: 700, height: 400))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 }
