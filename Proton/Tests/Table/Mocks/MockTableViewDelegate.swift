@@ -23,7 +23,7 @@ import UIKit
 import Proton
 
 class MockTableViewDelegate: TableViewDelegate {
-    var containerScrollView: UIScrollView?w
+    var containerScrollView: UIScrollView?
     var viewport: CGRect?
 
     var onDidReceiveFocus: ((_ tableView: TableView, _ range: NSRange, _ cell: TableCell) -> Void)?

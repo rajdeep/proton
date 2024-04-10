@@ -333,12 +333,12 @@ public class TableView: UIView {
             let toGenerate = newCells.subtracting(oldCells)
             let toReclaim = oldCells.subtracting(newCells)
 
-            toGenerate.forEach { [weak self] in
-                self?.repository.dequeue(for: $0)
-            }
-
             toReclaim.forEach { [weak self] in
                 self?.repository.enqueue(cell: $0)
+            }
+
+            toGenerate.forEach { [weak self] in
+                self?.repository.dequeue(for: $0)
             }
         }
     }

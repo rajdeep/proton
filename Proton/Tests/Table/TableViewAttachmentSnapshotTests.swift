@@ -1,9 +1,9 @@
 //
-//  GridViewAttachmentTests.swift
+//  TableViewAttachmentSnapshotTests.swift
 //  Proton
 //
-//  Created by Rajdeep Kwatra on 9/4/2022.
-//  Copyright © 2022 Rajdeep Kwatra. All rights reserved.
+//  Created by Rajdeep Kwatra on 9/4/2024.
+//  Copyright © 2024 Rajdeep Kwatra. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -72,7 +72,7 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
 
         Utility.drawRect(rect: viewport, color: .red, in: editor)
 
-        let attachment = makeTableViewAttachment(id: 1, numRows: 20, numColumns: 5)
+        let attachment = AttachmentGenerator.makeTableViewAttachment(id: 1, numRows: 20, numColumns: 5)
         attachment.view.delegate = delegate
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -91,36 +91,4 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 400, height: 700))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
-
-    private func makeTableViewAttachment(id: Int, numRows: Int, numColumns: Int) -> TableViewAttachment {
-        let config = GridConfiguration(
-            columnsConfiguration: [GridColumnConfiguration](repeating: GridColumnConfiguration(width: .fixed(100)),
-            count: numColumns),
-            rowsConfiguration: [GridRowConfiguration](repeating: GridRowConfiguration(initialHeight: 100),
-            count: numRows)
-        )
-
-        var cells = [TableCell]()
-        for row in 0..<numRows {
-            for col in 0..<numColumns {
-                let editorInit = {
-                    let editor = EditorView(allowAutogrowing: false)
-                    editor.attributedText = NSAttributedString(string: "Table \(id) {\(row), \(col)} Text in cell")
-                    return editor
-                }
-                let cell = TableCell(
-                    rowSpan: [row],
-                    columnSpan: [col],
-                    initialHeight: 20,
-                    editorInitializer: editorInit
-                )
-                cells.append(cell)
-            }
-        }
-
-        let attachment = TableViewAttachment(config: config, cells: cells)
-        attachment.view.delegate = delegate
-        return attachment
-    }
-
 }

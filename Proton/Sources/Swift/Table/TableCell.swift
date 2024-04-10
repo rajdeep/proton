@@ -48,6 +48,8 @@ public class TableCell {
     /// Additional attributes that can be stored on Cell to identify various aspects like Header, Numbered etc.
     public var additionalAttributes: [String: Any] = [:]
 
+    public private(set) var attributedText: NSAttributedString?
+
     /// Row indexes spanned by the cell. In case of a merged cell, this will contain all the rows= indexes which are merged.
     public internal(set) var rowSpan: [Int]
     /// Column indexes spanned by the cell. In case of a merged cell, this will contain all the column indexes which are merged.
@@ -86,7 +88,14 @@ public class TableCell {
     }
 
     /// Content view for the cell
-    public private(set) var contentView: TableCellContentView?
+    public private(set) var contentView: TableCellContentView? {
+        didSet {
+            guard oldValue != contentView else { return }
+            contentView?.frame = frame
+            //TODO: get rid of editorInitializer in favor of delegate callback for editor
+            contentView?.editor.attributedText = attributedText ?? editorInitializer().attributedText
+        }
+    }
 
     public let gridStyle: GridStyle
     public let style: GridCellStyle
@@ -142,6 +151,7 @@ public class TableCell {
     }
 
     func removeContentView() {
+        attributedText = contentView?.editor.attributedText
         delegate?.cell(self, didRemoveContentView: contentView)
         contentView = nil
     }

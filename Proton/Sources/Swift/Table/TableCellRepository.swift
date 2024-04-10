@@ -32,8 +32,10 @@ class TableCellRepository {
     }
 
     func dequeue(for cell: TableCell) {
-        let contentView = contentViews.first ??
-        TableCellContentView(frame: cell.frame, editor: cell.editorInitializer(), initialHeight: cell.initialHeight, containerCell: cell)
+        let contentView = contentViews.isEmpty
+        ? TableCellContentView(containerCell: cell)
+        : contentViews.removeFirst()
+
         cell.addContentView(contentView)
     }
 }

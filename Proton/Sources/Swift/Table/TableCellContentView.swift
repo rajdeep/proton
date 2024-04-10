@@ -59,13 +59,13 @@ public class TableCellContentView: UIView {
         }
     }
 
-    init(frame: CGRect, editor: EditorView, initialHeight: CGFloat, containerCell: TableCell) {
-        self.editor = editor
-        self.initialHeight = initialHeight
+    init(containerCell: TableCell) {
+        self.editor = containerCell.editorInitializer()
+        self.initialHeight = containerCell.initialHeight
         self.containerCell = containerCell
         self.style = containerCell.style
         self.gridStyle = containerCell.gridStyle
-        super.init(frame: frame)
+        super.init(frame: containerCell.frame)
 
         self.layoutMargins = .zero
 

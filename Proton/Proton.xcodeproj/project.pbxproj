@@ -98,6 +98,8 @@
 		1B9AF9E62851EC2500CD65C4 /* GridViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9AF9E52851EC2500CD65C4 /* GridViewTests.swift */; };
 		1B9AF9E92851ECC300CD65C4 /* MockGridViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9AF9E82851ECC300CD65C4 /* MockGridViewDelegate.swift */; };
 		1B9B744D2A8B09EF00FF4E92 /* GestureRegognizerDelegateOverride.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B744C2A8B09EF00FF4E92 /* GestureRegognizerDelegateOverride.swift */; };
+		1BABD7902BC64786004E52A5 /* TableViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BABD78F2BC64786004E52A5 /* TableViewTests.swift */; };
+		1BABD7922BC64839004E52A5 /* AttachmentGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BABD7912BC64839004E52A5 /* AttachmentGenerator.swift */; };
 		1BB214D023BB2778008B84A0 /* Proton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB214C623BB2778008B84A0 /* Proton.framework */; };
 		1BB4AAEB2606DA2D000D7584 /* ProtonCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BB4AAE92606DA2D000D7584 /* ProtonCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1BB4AAF42606DA37000D7584 /* PREditorContentName.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B9AED8B26059D1A00660B99 /* PREditorContentName.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -285,6 +287,8 @@
 		1B9AF9E52851EC2500CD65C4 /* GridViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewTests.swift; sourceTree = "<group>"; };
 		1B9AF9E82851ECC300CD65C4 /* MockGridViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGridViewDelegate.swift; sourceTree = "<group>"; };
 		1B9B744C2A8B09EF00FF4E92 /* GestureRegognizerDelegateOverride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureRegognizerDelegateOverride.swift; sourceTree = "<group>"; };
+		1BABD78F2BC64786004E52A5 /* TableViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewTests.swift; sourceTree = "<group>"; };
+		1BABD7912BC64839004E52A5 /* AttachmentGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentGenerator.swift; sourceTree = "<group>"; };
 		1BB214C623BB2778008B84A0 /* Proton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Proton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BB214CA23BB2778008B84A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BB214CF23BB2778008B84A0 /* ProtonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -458,6 +462,7 @@
 				1BFFEF1623C333B400D2BA35 /* EditorTestViewController.swift */,
 				1BD185C5284C34CF001F4FBC /* GenericViewTestViewController.swift */,
 				1B98D5AF286828EC0091C927 /* SnapshotTestCase.swift */,
+				1BABD7912BC64839004E52A5 /* AttachmentGenerator.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -834,6 +839,7 @@
 			children = (
 				1BD4240A2BC4E94B0046F0C7 /* Mocks */,
 				1BD424052BC4E6890046F0C7 /* TableViewAttachmentSnapshotTests.swift */,
+				1BABD78F2BC64786004E52A5 /* TableViewTests.swift */,
 			);
 			path = Table;
 			sourceTree = "<group>";
@@ -1213,6 +1219,7 @@
 				1BD424092BC4E6D70046F0C7 /* TableViewAttachment.swift in Sources */,
 				1B98D5B0286828EC0091C927 /* SnapshotTestCase.swift in Sources */,
 				1BFDC811254AA11F00BD83BD /* ListParserTests.swift in Sources */,
+				1BABD7902BC64786004E52A5 /* TableViewTests.swift in Sources */,
 				1BD4240C2BC4E95E0046F0C7 /* MockTableViewDelegate.swift in Sources */,
 				1B6FB18A2ABA75E7008CE69E /* MockAsyncAttachmentRenderingDelegate.swift in Sources */,
 				1BD1791E23C589340066DC13 /* EditorCommandExecutorTests.swift in Sources */,
@@ -1234,6 +1241,7 @@
 				1B0861D12A2D5AC000A84934 /* AsyncTextResolverSnapshotTests.swift in Sources */,
 				1B45CDF123C16EF4001EB196 /* RichTextAttachmentView.swift in Sources */,
 				1BFFEF1F23C3366200D2BA35 /* MockAttachmentOffsetProvider.swift in Sources */,
+				1BABD7922BC64839004E52A5 /* AttachmentGenerator.swift in Sources */,
 				1B45CD9423BECFAF001EB196 /* AutogrowingTextViewSnapshotTests.swift in Sources */,
 				1B82570623C48FEC0033A0A9 /* RichTextViewContextTests.swift in Sources */,
 				1B45CDEC23C1682C001EB196 /* ViewAttachmentSnapshotTests.swift in Sources */,
