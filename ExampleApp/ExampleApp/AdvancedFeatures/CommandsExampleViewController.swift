@@ -148,8 +148,9 @@ class CommandsExampleViewController: ExamplesBaseViewController {
             editor.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20),
             editor.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             editor.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
-            editor.heightAnchor.constraint(lessThanOrEqualToConstant: 300),
+//            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
+//            editor.heightAnchor.constraint(lessThanOrEqualToConstant: 300),
+            editor.heightAnchor.constraint(equalToConstant: 600)
         ])
 
         mergeButton?.isEnabled = false
@@ -474,7 +475,12 @@ extension CommandsExampleViewController: EditorViewDelegate {
 
 extension CommandsExampleViewController: TableViewDelegate {
     var viewport: CGRect? {
-        editor.scrollView.bounds
+        var viewport = editor.scrollView.bounds
+        let offset: CGFloat = 100
+        viewport.origin.y += offset
+        viewport.size.height -= (offset * 2)
+        Utility.drawRect(rect: CGRect(origin: CGPoint(x: 0, y: offset), size: viewport.size), color: .red, in: editor)
+        return viewport
     }
 
     var containerScrollView: UIScrollView? {
