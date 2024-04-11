@@ -95,6 +95,26 @@ class Grid {
         return cellStore.cellAt(rowIndex: rowIndex, columnIndex: columnIndex)
     }
 
+    var cellXPositions = [Int: CGFloat]()
+    var cellYPositions = [Int: CGFloat]()
+
+    func calculateTableDimensions(basedOn size: CGSize) {
+        let viewportWidth = viewport?.width ?? size.width
+        var cumulativeX: CGFloat = 0
+
+        for (i, colWidth) in columnWidths.enumerated() {
+            let width = colWidth.value(basedOn: size.width, viewportWidth: viewportWidth)
+            cellXPositions[i] = cumulativeX
+            cumulativeX += width
+        }
+
+        var cumulativeY: CGFloat = 0
+        for (i, rowHeight) in currentRowHeights.enumerated() {
+            cellYPositions[i] = cumulativeY
+            cumulativeY += rowHeight
+        }
+    }
+
     func frameForCell(_ cell: GridCell, basedOn size: CGSize) -> CGRect {
         var x: CGFloat = 0
         var y: CGFloat = 0
@@ -107,11 +127,11 @@ class Grid {
         let viewportWidth = viewport?.width ?? size.width
 
         if minColumnSpan > 0 {
-            x = columnWidths[0..<minColumnSpan].reduce(0.0) { $0 + $1.value(basedOn: size.width, viewportWidth: viewportWidth)}
+            x = cellXPositions[minColumnSpan] ?? 0//  columnWidths[0..<minColumnSpan].reduce(0.0) { $0 + $1.value(basedOn: size.width, viewportWidth: viewportWidth)}
         }
 
         if minRowSpan > 0 {
-            y = currentRowHeights[0..<minRowSpan].reduce(0.0, +)
+            y = cellYPositions[minRowSpan] ?? 0// currentRowHeights[0..<minRowSpan].reduce(0.0, +)
         }
 
         var width: CGFloat = 0
@@ -121,7 +141,7 @@ class Grid {
 
         var height: CGFloat = 0
         for row in cell.rowSpan {
-            height += currentRowHeights[row]
+            height += rowHeights[row].currentHeight
         }
         // Inset is required to create overlapping borders for cells
         // In absence of this code, the internal border appears twice as thick as outer as

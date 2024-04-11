@@ -64,10 +64,12 @@ class GridTests: XCTestCase {
                 GridRowConfiguration(initialHeight: 50),
             ])
 
+        let size = CGSize(width: 300, height: 150)
         let grid = Grid(config: config, cells: generateCells(config: config))
+        grid.calculateTableDimensions(basedOn: size)
         let cells = grid.cells
 
-        let size = CGSize(width: 300, height: 150)
+
         let cellTopLeft = grid.frameForCell(cells[0], basedOn: size)
         let cellMiddle = grid.frameForCell(cells[4], basedOn: size)
         let cellBottomRight = grid.frameForCell(cells[8], basedOn: size)
@@ -90,13 +92,13 @@ class GridTests: XCTestCase {
                 GridRowConfiguration(initialHeight: 50),
                 GridRowConfiguration(initialHeight: 50),
             ])
-
+        let size = CGSize(width: 300, height: 150)
         let grid = Grid(config: config, cells: generateCells(config: config))
+        grid.calculateTableDimensions(basedOn: size)
 
         let cell11 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 1))
         let cell21 = try XCTUnwrap(grid.cellAt(rowIndex: 2, columnIndex: 1))
 
-        let size = CGSize(width: 300, height: 150)
         grid.merge(cells:[cell11, cell21])
 
         let cellFrame = grid.frameForCell(cell11, basedOn: size)
@@ -117,11 +119,12 @@ class GridTests: XCTestCase {
             ])
 
         let grid = Grid(config: config, cells: generateCells(config: config))
+        let size = CGSize(width: 300, height: 150)
+        grid.calculateTableDimensions(basedOn: size)
 
         let cell11 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 1))
         let cell12 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 2))
 
-        let size = CGSize(width: 300, height: 150)
         grid.merge(cells: [cell11, cell12])
 
         let cellFrame = grid.frameForCell(cell11, basedOn: size)
@@ -142,11 +145,12 @@ class GridTests: XCTestCase {
             ])
 
         let grid = Grid(config: config, cells: generateCells(config: config))
+        let size = CGSize(width: 300, height: 150)
+        grid.calculateTableDimensions(basedOn: size)
 
         let cell00 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 1))
         let cell10 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 2))
 
-        let size = CGSize(width: 300, height: 150)
         grid.merge(cells: [cell00, cell10])
 
         let cellFrame = grid.frameForCell(cell00, basedOn: size)
@@ -167,11 +171,12 @@ class GridTests: XCTestCase {
             ])
 
         let grid = Grid(config: config, cells: generateCells(config: config))
+        let size = CGSize(width: 300, height: 150)
+        grid.calculateTableDimensions(basedOn: size)
 
         let cell00 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 1))
         let cell10 = try XCTUnwrap(grid.cellAt(rowIndex: 1, columnIndex: 2))
 
-        let size = CGSize(width: 300, height: 150)
         grid.merge(cells: [cell00, cell10])
 
         let cellFrame = grid.frameForCell(cell00, basedOn: size)
@@ -195,6 +200,9 @@ class GridTests: XCTestCase {
             ])
 
         let grid = Grid(config: config, cells: generateCells(config: config))
+        let size = CGSize(width: 300, height: 400)
+        grid.calculateTableDimensions(basedOn: size)
+
         grid.insertRow(at: 1, frozenRowMaxIndex: nil, config: GridRowConfiguration(initialHeight: 20), cellDelegate: nil)
         XCTAssertEqual(grid.numberOfRows, 4)
         let newCells = grid.cells.filter { $0.rowSpan.contains(1) }
@@ -208,7 +216,7 @@ class GridTests: XCTestCase {
 
         for i in 0..<newCells.count {
             let cell = newCells[i]
-            let frame = grid.frameForCell(cell, basedOn: CGSize(width: 300, height: 400))
+            let frame = grid.frameForCell(cell, basedOn: size)
             let expectedCellFrame = expectedCellFrames[i]
             XCTAssertEqual(cell.id, expectedCellFrame.id)
             XCTAssertEqual(frame, expectedCellFrame.frame.insetBy(borderWidth: config.style.borderWidth))
@@ -264,6 +272,9 @@ class GridTests: XCTestCase {
             ])
 
         let grid = Grid(config: config, cells: generateCells(config: config))
+        let size = CGSize(width: 300, height: 400)
+        grid.calculateTableDimensions(basedOn: size)
+
         grid.insertColumn(at: 1, frozenColumnMaxIndex: nil, config: GridColumnConfiguration(width: .fractional(0.30)), cellDelegate: nil)
         XCTAssertEqual(grid.numberOfColumns, 4)
         let newCells = grid.cells.filter { $0.columnSpan.contains(1) }
@@ -277,7 +288,7 @@ class GridTests: XCTestCase {
 
         for i in 0..<newCells.count {
             let cell = newCells[i]
-            let frame = grid.frameForCell(cell, basedOn: CGSize(width: 300, height: 400))
+            let frame = grid.frameForCell(cell, basedOn: size)
             let expectedCellFrame = expectedCellFrames[i]
             XCTAssertEqual(cell.id, expectedCellFrame.id)
             XCTAssertEqual(frame, expectedCellFrame.frame.insetBy(borderWidth: config.style.borderWidth))
@@ -335,6 +346,9 @@ class GridTests: XCTestCase {
             ])
 
         let grid = Grid(config: config, cells: generateCells(config: config))
+        let size = CGSize(width: 300, height: 400)
+        grid.calculateTableDimensions(basedOn: size)
+
         grid.deleteRow(at: 1)
         XCTAssertEqual(grid.numberOfRows, 2)
         let movedCells = grid.cells.filter { $0.rowSpan.contains(1) }
@@ -347,7 +361,7 @@ class GridTests: XCTestCase {
 
         for i in 0..<movedCells.count {
             let cell = movedCells[i]
-            let frame = grid.frameForCell(cell, basedOn: CGSize(width: 300, height: 400))
+            let frame = grid.frameForCell(cell, basedOn: size)
             let expectedCellFrame = expectedCellFrames[i]
             XCTAssertEqual(cell.id, expectedCellFrame.id)
             XCTAssertEqual(frame, expectedCellFrame.frame.insetBy(borderWidth: config.style.borderWidth))
@@ -373,6 +387,9 @@ class GridTests: XCTestCase {
             ])
 
         let grid = Grid(config: config, cells: generateCells(config: config))
+        let size = CGSize(width: 300, height: 400)
+        grid.calculateTableDimensions(basedOn: size)
+
         grid.deleteColumn(at: 1)
         XCTAssertEqual(grid.numberOfColumns, 2)
         let movedCells = grid.cells.filter { $0.columnSpan.contains(1) }
@@ -386,7 +403,7 @@ class GridTests: XCTestCase {
 
         for i in 0..<movedCells.count {
             let cell = movedCells[i]
-            let frame = grid.frameForCell(cell, basedOn: CGSize(width: 300, height: 400))
+            let frame = grid.frameForCell(cell, basedOn: size)
             let expectedCellFrame = expectedCellFrames[i]
             XCTAssertEqual(cell.id, expectedCellFrame.id)
             XCTAssertEqual(frame, expectedCellFrame.frame.insetBy(borderWidth: config.style.borderWidth))
@@ -695,6 +712,56 @@ class GridTests: XCTestCase {
             }
         }
         return cells
+    }
+
+    func testGetsPerfFrameForCell() {
+        let generated = generateCells(numRows: 200, numColumns: 70)
+        let table = Grid(config: generated.config, cells: generated.cells)
+        let cells = table.cells
+
+        let size = CGSize(width: 300, height: 150)
+
+
+        measure {
+            table.calculateTableDimensions(basedOn: size)
+            makeCells(table, size: size)
+        }
+    }
+
+
+    private func makeCells(_ table: Grid, size: CGSize) {
+        for cell in table.cells {
+            let frame = table.frameForCell(cell, basedOn: size)
+            cell.frame = frame
+        }
+    }
+
+    private func generateCells(numRows: Int,
+                               numColumns: Int,
+                               columnConfig: GridColumnConfiguration? = nil,
+                               rowConfig: GridRowConfiguration? = nil) -> (config: GridConfiguration, cells: [GridCell]) {
+
+        let columnConfiguration = columnConfig ?? GridColumnConfiguration(width: .fixed(100))
+        let rowConfiguration = rowConfig ?? GridRowConfiguration(initialHeight: 50)
+
+        let config = GridConfiguration(
+            columnsConfiguration: [GridColumnConfiguration](repeating: columnConfiguration, count: numColumns),
+            rowsConfiguration: [GridRowConfiguration](repeating: rowConfiguration, count: numRows)
+        )
+        var cells = [GridCell]()
+        for row in 0..<config.numberOfRows {
+            for column in 0..<config.numberOfColumns {
+                let rowConfig = config.rowsConfiguration[row]
+                let cell = GridCell(
+                    rowSpan: [row],
+                    columnSpan: [column],
+                    initialHeight: rowConfig.initialHeight
+                )
+                cells.append(cell)
+            }
+        }
+
+        return (config: config, cells: cells)
     }
 }
 

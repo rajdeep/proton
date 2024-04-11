@@ -126,6 +126,7 @@ class GridContentView: UIScrollView {
     override var bounds: CGRect {
         didSet {
             guard oldValue.size != bounds.size else { return }
+            grid.calculateTableDimensions(basedOn: bounds.size)
             recalculateCellBounds()
         }
     }
