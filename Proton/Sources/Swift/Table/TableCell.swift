@@ -48,7 +48,7 @@ public class TableCell {
     /// Additional attributes that can be stored on Cell to identify various aspects like Header, Numbered etc.
     public var additionalAttributes: [String: Any] = [:]
 
-    public private(set) var attributedText: NSAttributedString?
+    public var attributedText: NSAttributedString?
 
     /// Row indexes spanned by the cell. In case of a merged cell, this will contain all the rows= indexes which are merged.
     public internal(set) var rowSpan: [Int]
@@ -56,7 +56,12 @@ public class TableCell {
     public internal(set) var columnSpan: [Int]
 
     /// Frame of the cell within `GridView`
-    public internal(set) var frame: CGRect = .zero
+    public internal(set) var frame: CGRect = .zero {
+        didSet {
+            guard oldValue != frame else { return }
+            contentView?.frame = frame
+        }
+    }
 
     public var backgroundColor: UIColor? = nil {
         didSet {
@@ -95,6 +100,10 @@ public class TableCell {
             //TODO: get rid of editorInitializer in favor of delegate callback for editor
             contentView?.editor.attributedText = attributedText ?? editorInitializer().attributedText
         }
+    }
+
+    public var editor: EditorView? {
+        contentView?.editor
     }
 
     public let gridStyle: GridStyle

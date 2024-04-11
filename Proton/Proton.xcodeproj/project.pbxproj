@@ -100,6 +100,7 @@
 		1B9B744D2A8B09EF00FF4E92 /* GestureRegognizerDelegateOverride.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9B744C2A8B09EF00FF4E92 /* GestureRegognizerDelegateOverride.swift */; };
 		1BABD7902BC64786004E52A5 /* TableViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BABD78F2BC64786004E52A5 /* TableViewTests.swift */; };
 		1BABD7922BC64839004E52A5 /* AttachmentGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BABD7912BC64839004E52A5 /* AttachmentGenerator.swift */; };
+		1BABD7942BC78990004E52A5 /* TableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BABD7932BC78990004E52A5 /* TableTests.swift */; };
 		1BB214D023BB2778008B84A0 /* Proton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB214C623BB2778008B84A0 /* Proton.framework */; };
 		1BB4AAEB2606DA2D000D7584 /* ProtonCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BB4AAE92606DA2D000D7584 /* ProtonCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1BB4AAF42606DA37000D7584 /* PREditorContentName.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B9AED8B26059D1A00660B99 /* PREditorContentName.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -289,6 +290,7 @@
 		1B9B744C2A8B09EF00FF4E92 /* GestureRegognizerDelegateOverride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureRegognizerDelegateOverride.swift; sourceTree = "<group>"; };
 		1BABD78F2BC64786004E52A5 /* TableViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewTests.swift; sourceTree = "<group>"; };
 		1BABD7912BC64839004E52A5 /* AttachmentGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentGenerator.swift; sourceTree = "<group>"; };
+		1BABD7932BC78990004E52A5 /* TableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTests.swift; sourceTree = "<group>"; };
 		1BB214C623BB2778008B84A0 /* Proton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Proton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BB214CA23BB2778008B84A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BB214CF23BB2778008B84A0 /* ProtonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -840,6 +842,7 @@
 				1BD4240A2BC4E94B0046F0C7 /* Mocks */,
 				1BD424052BC4E6890046F0C7 /* TableViewAttachmentSnapshotTests.swift */,
 				1BABD78F2BC64786004E52A5 /* TableViewTests.swift */,
+				1BABD7932BC78990004E52A5 /* TableTests.swift */,
 			);
 			path = Table;
 			sourceTree = "<group>";
@@ -1194,6 +1197,7 @@
 				1BFBFC892ADE34050057CCB3 /* MockEditorCommandExecutorDelegate.swift in Sources */,
 				1BD993B123C995B000563ACB /* TextProcessorTests.swift in Sources */,
 				1B30A3642489E11F00FA1D48 /* MockRichTextViewListDelegate.swift in Sources */,
+				1BABD7942BC78990004E52A5 /* TableTests.swift in Sources */,
 				1BF90FB4245E503E00A411A3 /* TextBlockAttributeTests.swift in Sources */,
 				1B7C76B32608A4FF006618AC /* FontTraitToggleCommandTests.swift in Sources */,
 				1BFFEF1523C332A100D2BA35 /* EditorSnapshotTests.swift in Sources */,

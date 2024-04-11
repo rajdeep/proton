@@ -33,7 +33,7 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
     }
 
     // This test is failing on every alternate run after recording
-    // Issue seems to be with z-index of the cells. Needs to be revisited
+    // Issue is likely because of precision of fractional widths calculations
     func X_testRendersTableViewAttachment() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
@@ -116,6 +116,43 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
 
         Utility.drawRect(rect: viewport, color: .red, in: editor)
         viewController.render(size: CGSize(width: 700, height: 400))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testRendersTableViewWithVaryingContentHeight() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        delegate.containerScrollView = editor.scrollView
+
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fixed(150)),
+                GridColumnConfiguration(width: .fixed(200)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let text = "Text in cell "
+
+        viewController.render(size: CGSize(width: 400, height: 250))
+
+        table.cells[1].attributedText = NSAttributedString(string: String(repeating: text, count: 3))
+        table.cells[4].attributedText = NSAttributedString(string: String(repeating: text, count: 4))
+        table.cells[5].attributedText = NSAttributedString(string: String(repeating: text, count: 5))
+
+        XCTAssertEqual(attachment.view.containerAttachment, attachment)
+
+        viewController.render(size: CGSize(width: 400, height: 250))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 }

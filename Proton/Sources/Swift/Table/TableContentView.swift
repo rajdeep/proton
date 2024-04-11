@@ -26,6 +26,8 @@ protocol TableContentViewDelegate: AnyObject {
     var viewport: CGRect? { get }
     var containerScrollView: UIScrollView? { get }
 
+    var cellsInViewport: [TableCell] { get }
+
     func tableContentView(_ tableContentView: TableContentView, didChangeBounds bounds: CGRect, oldBounds: CGRect)
     func tableContentView(_ tableContentView: TableContentView, didCompleteLayoutWithBounds bounds: CGRect)
     func tableContentView(_ tableContentView: TableContentView, didLayoutCell cell: TableCell)
@@ -106,11 +108,22 @@ class TableContentView: UIScrollView {
         table.columnWidths
     }
 
+    var widthAnchorConstraint: NSLayoutConstraint!
+    var heightAnchorConstraint: NSLayoutConstraint!
+
     init(config: GridConfiguration, cells: [TableCell], editorInitializer: TableCell.EditorInitializer?) {
         self.config = config
         table = Table(config: config, cells: cells, editorInitializer: editorInitializer)
         super.init(frame: .zero)
+
+        self.widthAnchorConstraint = widthAnchor.constraint(equalToConstant: 350)
+        self.heightAnchorConstraint = heightAnchor.constraint(equalToConstant: 100)
         table.delegate = self
+
+        NSLayoutConstraint.activate([
+            widthAnchorConstraint,
+            heightAnchorConstraint
+        ])
     }
 
     convenience init(config: GridConfiguration, editorInitializer: TableCell.EditorInitializer?) {
@@ -320,6 +333,22 @@ class TableContentView: UIScrollView {
         recalculateCellBounds()
     }
 
+    private func recalculateCellBounds(cell: TableCell) {
+        //TODO: Update frame for all affected cells and based on current cell
+        tableContentViewDelegate?.cellsInViewport.forEach{ cell in
+            let frame = table.frameForCell(cell, basedOn: bounds.size)
+            cell.frame = frame
+        }
+
+        self.frame = CGRect(origin: self.frame.origin, size: CGSize(width: self.frame.width, height: table.size.height))
+
+        widthAnchorConstraint.constant = self.frame.width
+        heightAnchorConstraint.constant = self.frame.height
+
+        superview?.layoutIfNeeded()
+        boundsObserver?.didChangeBounds(CGRect(origin: bounds.origin, size: frame.size), oldBounds: bounds)
+    }
+
     private func recalculateCellBounds(initiatingCell: TableCell? = nil) {
         //TODO: fix
 //        frozenRowsConstraints.forEach { $0.isActive = false }
@@ -466,8 +495,8 @@ extension TableContentView: TableCellDelegate {
         } else {
             table.rowHeights[row].currentHeight = table.maxContentHeightCellForRow(at: row)?.contentSize.height ?? 0
         }
-
-        recalculateCellBounds(initiatingCell: cell)
+        table.calculateTableDimensions(basedOn: bounds.size)
+        recalculateCellBounds(cell: cell)
         tableContentViewDelegate?.tableContentView(self, didChangeBounds: cell.frame, in: cell)
     }
 

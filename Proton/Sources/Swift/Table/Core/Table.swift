@@ -32,11 +32,12 @@ class Table {
     private let config: GridConfiguration
     private let cellStore: TableCellStore
     private let editorInitializer: TableCell.EditorInitializer?
+    private var cellXPositions = [Int: CGFloat]()
+    private var cellYPositions = [Int: CGFloat]()
 
     var rowHeights = [GridRowDimension]()
     var columnWidths = [GridColumnDimension]()
     weak var delegate: TableDelegate?
-
 
     var currentRowHeights: [CGFloat] {
         rowHeights.map { $0.calculatedHeight }
@@ -58,6 +59,15 @@ class Table {
         delegate?.viewport
     }
 
+    var size: CGSize {
+        guard let lastCell = cellAt(rowIndex: numberOfRows - 1, columnIndex: numberOfColumns - 1) else {
+            return .zero
+        }
+        let width = lastCell.frame.maxX
+        let height = lastCell.frame.maxY
+        return CGSize(width: width, height: height)
+    }
+
     init(config: GridConfiguration, cells: [TableCell], editorInitializer: TableCell.EditorInitializer? = nil) {
         self.config = config
         self.editorInitializer = editorInitializer
@@ -76,6 +86,23 @@ class Table {
         return cellStore.cellAt(rowIndex: rowIndex, columnIndex: columnIndex)
     }
 
+    func calculateTableDimensions(basedOn size: CGSize) {
+        let viewportWidth = viewport?.width ?? size.width
+        var cumulativeX: CGFloat = 0
+
+        for (i, colWidth) in columnWidths.enumerated() {
+            let width = colWidth.value(basedOn: size.width, viewportWidth: viewportWidth)
+            cellXPositions[i] = cumulativeX
+            cumulativeX += width
+        }
+
+        var cumulativeY: CGFloat = 0
+        for (i, rowHeight) in currentRowHeights.enumerated() {
+            cellYPositions[i] = cumulativeY
+            cumulativeY += rowHeight
+        }
+    }
+
     func frameForCell(_ cell: TableCell, basedOn size: CGSize) -> CGRect {
         var x: CGFloat = 0
         var y: CGFloat = 0
@@ -88,27 +115,27 @@ class Table {
         let viewportWidth = viewport?.width ?? size.width
 
         if minColumnSpan > 0 {
-            x = columnWidths[0..<minColumnSpan].reduce(0.0) { $0 + $1.value(basedOn: size.width, viewportWidth: viewportWidth)}
+            x = cellXPositions[minColumnSpan] ?? 0
         }
 
         if minRowSpan > 0 {
-            y = currentRowHeights[0..<minRowSpan].reduce(0.0, +)
+            y = cellYPositions[minRowSpan] ?? 0
         }
 
-        var width: CGFloat = 0
-        for col in cell.columnSpan {
-            width += columnWidths[col].value(basedOn: size.width, viewportWidth: viewportWidth)
+        let width = cell.columnSpan.reduce(into: 0.0) { result, col in
+            result += columnWidths[col].value(basedOn: size.width, viewportWidth: viewportWidth)
         }
 
-        var height: CGFloat = 0
-        for row in cell.rowSpan {
-            height += currentRowHeights[row]
+        let height = cell.rowSpan.reduce(into: 0.0) { result, row in
+            result += rowHeights[row].currentHeight 
         }
+
         // Inset is required to create overlapping borders for cells
         // In absence of this code, the internal border appears twice as thick as outer as
         // the layer borders do not perfectly overlap
         let inset = -config.style.borderWidth
         let frame = CGRect(x: x, y: y, width: width, height: height).inset(by: UIEdgeInsets(top: 0, left: 0, bottom: inset, right: inset))
+
         return frame
     }
 

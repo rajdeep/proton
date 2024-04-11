@@ -25,12 +25,19 @@ import Proton
 struct AttachmentGenerator {
     private init() { }
 
-    static func makeTableViewAttachment(id: Int, numRows: Int, numColumns: Int) -> TableViewAttachment {
+    static func makeTableViewAttachment(
+        id: Int,
+        numRows: Int,
+        numColumns: Int,
+        columnConfig: GridColumnConfiguration? = nil,
+        rowConfig: GridRowConfiguration? = nil
+    ) -> TableViewAttachment {
+        let columnConfiguration = columnConfig ?? GridColumnConfiguration(width: .fixed(100))
+        let rowConfiguration = rowConfig ?? GridRowConfiguration(initialHeight: 100)
+
         let config = GridConfiguration(
-            columnsConfiguration: [GridColumnConfiguration](repeating: GridColumnConfiguration(width: .fixed(100)),
-            count: numColumns),
-            rowsConfiguration: [GridRowConfiguration](repeating: GridRowConfiguration(initialHeight: 100),
-            count: numRows)
+            columnsConfiguration: [GridColumnConfiguration](repeating: columnConfiguration, count: numColumns),
+            rowsConfiguration: [GridRowConfiguration](repeating: rowConfiguration, count: numRows)
         )
 
         var cells = [TableCell]()

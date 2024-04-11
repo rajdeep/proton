@@ -30,7 +30,9 @@ public class TableCellContentView: UIView {
     private let initialHeight: CGFloat
     private unowned var containerCell: TableCell
 
-    weak var delegate: TableCellDelegate?
+    var delegate: TableCellDelegate? {
+        containerCell.delegate
+    }
 
     public var isSelectable: Bool = true
 
@@ -38,6 +40,10 @@ public class TableCellContentView: UIView {
         didSet {
             editor.backgroundColor = backgroundColor
         }
+    }
+
+    public override var intrinsicContentSize: CGSize {
+        containerCell.frame.size
     }
 
     public var contentSize: CGSize {

@@ -35,7 +35,7 @@ public class TableViewCommand: EditorCommand {
         text.append(NSAttributedString(string: "Text before Grid"))
         timeEvent(label: "Create")
         for i in 1..<2 {
-            text.append(makeGridViewAttachment(id: i, numRows: 200, numColumns: 70).string)
+            text.append(makeGridViewAttachment(id: i, numRows: 20, numColumns: 2).string)
 //            text.append(makePanelAttachment(id: i).string)
             text.append(NSAttributedString(string: "\ntest middle\n"))
         }
@@ -63,9 +63,10 @@ public class TableViewCommand: EditorCommand {
         var cells = [TableCell]()
         for row in 0..<numRows {
             for col in 0..<numColumns {
+                let text = generateRandomString(from: "Text in cell ")
                 let editorInit = {
                     let editor = EditorView(allowAutogrowing: false)
-                    editor.attributedText = NSAttributedString(string: "Table \(id) {\(row), \(col)} Text in cell")
+                    editor.attributedText = NSAttributedString(string: "Table \(id) {\(row), \(col)} \(text)")
                     return editor
                 }
                 let cell = TableCell(rowSpan: [row], columnSpan: [col], initialHeight: 20, editorInitializer: editorInit)
@@ -76,6 +77,12 @@ public class TableViewCommand: EditorCommand {
         let attachment = TableViewAttachment(config: config, cells: cells)
         attachment.view.delegate = delegate
         return attachment
+    }
+
+    func generateRandomString(from text: String) -> String {
+        let repetitionCount = Int.random(in: 1...10)
+        let randomString = String(repeating: text, count: repetitionCount)
+        return randomString
     }
 
     func timeEvent(label: String) {

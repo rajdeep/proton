@@ -294,9 +294,12 @@ public class TableView: UIView {
 
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+//            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+//            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+
+            heightAnchor.constraint(equalTo: tableView.heightAnchor),
+            widthAnchor.constraint(equalTo: tableView.widthAnchor),
 
             leadingShadowView.widthAnchor.constraint(equalToConstant: shadowWidth),
             leadingShadowConstraint,
