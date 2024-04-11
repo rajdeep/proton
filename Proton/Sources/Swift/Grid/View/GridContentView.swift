@@ -329,6 +329,7 @@ class GridContentView: UIScrollView {
     }
 
     func invalidateCellLayout() {
+        grid.calculateTableDimensions(basedOn: bounds.size)
         recalculateCellBounds()
     }
 

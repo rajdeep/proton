@@ -89,6 +89,7 @@ class GridViewTests: XCTestCase {
         expectation.expectedFulfillmentCount = 2
 
         let gridView = GridView(config: config)
+        gridView.frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 200))
         let delegate = MockGridViewDelegate()
         gridView.delegate = delegate
         gridView.gridView.willMove(toWindow: UIWindow())
