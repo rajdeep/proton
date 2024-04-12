@@ -96,6 +96,7 @@ public class TableCell {
     public private(set) var contentView: TableCellContentView? {
         didSet {
             guard oldValue != contentView else { return }
+            contentView?.containerCell = self
             contentView?.frame = frame
             //TODO: get rid of editorInitializer in favor of delegate callback for editor
             contentView?.editor.attributedText = attributedText ?? editorInitializer().attributedText

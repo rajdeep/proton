@@ -28,7 +28,7 @@ public class TableCellContentView: UIView {
     private let gridStyle: GridStyle
     private var selectionView: SelectionView?
     private let initialHeight: CGFloat
-    private unowned var containerCell: TableCell
+    unowned var containerCell: TableCell
 
     var delegate: TableCellDelegate? {
         containerCell.delegate
@@ -43,13 +43,13 @@ public class TableCellContentView: UIView {
     }
 
     public override var intrinsicContentSize: CGSize {
-        containerCell.frame.size
+        frame.size
     }
 
     public var contentSize: CGSize {
         editor.frame.size
     }
-    
+
     /// Sets the cell selected
     public var isSelected: Bool {
         get { selectionView?.superview != nil }
@@ -102,7 +102,7 @@ public class TableCellContentView: UIView {
             editor.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor),
             editor.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
             editor.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: initialHeight)
+//            editor.heightAnchor.constraint(greaterThanOrEqualToConstant: initialHeight)
         ])
     }
 

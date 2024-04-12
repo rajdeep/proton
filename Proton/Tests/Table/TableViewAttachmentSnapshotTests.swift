@@ -155,4 +155,39 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 400, height: 250))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
+
+    func testRendersViewportChangesWithVaryingContentHeight() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        delegate.containerScrollView = editor.scrollView
+
+        let containerSize = CGSize(width: 400, height: 400)
+
+        let attachment = AttachmentGenerator.makeTableViewAttachment(id: 1, numRows: 100, numColumns: 10)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let text = "Text in cell "
+
+        viewController.render(size: containerSize)
+
+        table.cellAt(rowIndex: 1, columnIndex: 0)?.attributedText = NSAttributedString(string: String(repeating: text, count: 6))
+        table.cellAt(rowIndex: 3, columnIndex: 0)?.attributedText = NSAttributedString(string: String(repeating: text, count: 5))
+
+        viewController.render(size: containerSize)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        editor.scrollView.contentOffset = CGPoint(x: 0, y: 600)
+
+        viewController.render(size: containerSize)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        editor.scrollView.contentOffset = CGPoint(x: 0, y: 0)
+
+        viewController.render(size: containerSize)
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
 }

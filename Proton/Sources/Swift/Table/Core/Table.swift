@@ -150,13 +150,15 @@ class Table {
     func maxContentHeightCellForRow(at index: Int) -> TableCell? {
         //TODO: account for merged rows
         let cells = cellStore.cells.filter { $0.rowSpan.contains(index) }
-        var maxHeightCell: TableCell?
-        for cell in cells {
-            if cell.contentSize.height > maxHeightCell?.contentSize.height ?? 0 {
-                maxHeightCell = cell
-            }
-        }
-        return maxHeightCell
+        return cells.max(by: {$0.contentSize.height < $1.contentSize.height })
+
+//        var maxHeightCell: TableCell?
+//        for cell in cells {
+//            if cell.contentSize.height > maxHeightCell?.contentSize.height ?? 0 {
+//                maxHeightCell = cell
+//            }
+//        }
+//        return maxHeightCell
     }
 
     func isMergeable(cells: [TableCell]) -> Bool {
