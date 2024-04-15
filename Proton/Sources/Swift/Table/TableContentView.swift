@@ -337,7 +337,13 @@ class TableContentView: UIScrollView {
     private func recalculateCellBounds(cell: TableCell) {
         //TODO: Update frame for all affected cells and based on current cell
 
-        let cellsInCurrentRow = cells.filter { Set($0.rowSpan).intersection(Set(cell.rowSpan)).isEmpty == false }
+//        let cellsInCurrentRow = cells.filter { Set($0.rowSpan).intersection(Set(cell.rowSpan)).isEmpty == false }
+
+        let cellRowSpanSet = Set(cell.rowSpan)
+        let cellsInCurrentRow = cells.filter { c in
+            !c.rowSpan.allSatisfy { !cellRowSpanSet.contains($0) }
+        }
+
         var diff: CGFloat = 0
         cellsInCurrentRow.forEach { cell in
             let height = cell.rowSpan.reduce(into: 0.0) { partialResult, index in
