@@ -57,7 +57,7 @@ protocol TableContentViewDelegate: AnyObject {
 }
 
 class TableContentView: UIScrollView {
-    private let table: Table
+    internal let table: Table
     private let config: GridConfiguration
 
     // Render with a high number for width/height to initialize
@@ -336,13 +336,28 @@ class TableContentView: UIScrollView {
 
     private func recalculateCellBounds(cell: TableCell) {
         //TODO: Update frame for all affected cells and based on current cell
-//        tableContentViewDelegate?.cellsInViewport.forEach{ cell in
-//            let frame = table.frameForCell(cell, basedOn: bounds.size)
-//            cell.frame = frame
-//        }
 
-        cells.forEach {
-            $0.frame = table.frameForCell($0, basedOn: bounds.size)
+        let cellsInCurrentRow = cells.filter { Set($0.rowSpan).intersection(Set(cell.rowSpan)).isEmpty == false }
+        var diff: CGFloat = 0
+        cellsInCurrentRow.forEach { cell in
+            let height = cell.rowSpan.reduce(into: 0.0) { partialResult, index in
+                partialResult += table.rowHeights[index].currentHeight
+            }
+            var frame = cell.frame
+            diff = height - frame.size.height
+            frame.size.height = height
+            cell.frame = frame
+        }
+
+        let maxRow = cell.rowSpan.max() ?? 0
+        let cellsToUpdate = cells.filter { c in
+            c.rowSpan.allSatisfy { row in row > maxRow }
+        }
+
+        cellsToUpdate.forEach { cell in
+            var frame = cell.frame
+            frame.origin.y += diff
+            cell.frame = frame
         }
 
         self.frame = CGRect(origin: self.frame.origin, size: CGSize(width: self.frame.width, height: table.size.height))
@@ -498,12 +513,18 @@ extension TableContentView: TableCellDelegate {
 
     func cell(_ cell: TableCell, didChangeBounds bounds: CGRect) {
         guard  let row = cell.rowSpan.first else { return }
-        if table.rowHeights.count > row,
-           table.maxContentHeightCellForRow(at: row)?.id == cell.id {
-            table.rowHeights[row].currentHeight = bounds.height
-        } else {
-            table.rowHeights[row].currentHeight = table.maxContentHeightCellForRow(at: row)?.contentSize.height ?? 0
+//        if table.rowHeights.count > row,
+//           table.maxContentHeightCellForRow(at: row)?.id == cell.id {
+//            table.rowHeights[row].currentHeight = bounds.height
+//        } else {
+//            table.rowHeights[row].currentHeight = table.maxContentHeightCellForRow(at: row)?.contentSize.height ?? 0
+//        }
+
+        guard bounds.height > table.rowHeights[row].currentHeight else {
+            return
         }
+
+        table.rowHeights[row].currentHeight = bounds.height
         //TODO: only update affected row/column onwards
         table.calculateTableDimensions(basedOn: bounds.size)
         recalculateCellBounds(cell: cell)

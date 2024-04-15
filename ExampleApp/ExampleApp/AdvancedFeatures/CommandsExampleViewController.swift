@@ -476,10 +476,10 @@ extension CommandsExampleViewController: EditorViewDelegate {
 extension CommandsExampleViewController: TableViewDelegate {
     var viewport: CGRect? {
         var viewport = editor.scrollView.bounds
-        let offset: CGFloat = 100
-        viewport.origin.y += offset
-        viewport.size.height -= (offset * 2)
-        Utility.drawRect(rect: CGRect(origin: CGPoint(x: 0, y: offset), size: viewport.size), color: .red, in: editor)
+//        let offset: CGFloat = 100
+//        viewport.origin.y += offset
+//        viewport.size.height -= (offset * 2)
+//        Utility.drawRect(rect: CGRect(origin: CGPoint(x: 0, y: offset), size: viewport.size), color: .red, in: editor)
         return viewport
     }
 
@@ -545,10 +545,10 @@ extension CommandsExampleViewController: AsyncAttachmentRenderingDelegate {
     }
 
     func didRenderAttachment(_ attachment: Proton.Attachment, in editor: Proton.EditorView) {
-        print("Render: \(attachment.id) : \(attachment.contentSize)")
+//        print("Render: \(attachment.id) : \(attachment.contentSize)")
     }
 
     func didCompleteRenderingViewport(_ viewport: CGRect, in editor: EditorView) {
-        print("Rendered viewport: \(viewport)")
+//        print("Rendered viewport: \(viewport)")
     }
 }

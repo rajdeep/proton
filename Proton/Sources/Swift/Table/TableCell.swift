@@ -24,6 +24,8 @@ import OSLog
 
 
 protocol TableCellDelegate: AnyObject {
+    var table: Table { get }
+
     func cell(_ cell: TableCell, didAddContentView view: TableCellContentView)
     func cell(_ cell: TableCell, didRemoveContentView view: TableCellContentView?)
 
@@ -162,6 +164,7 @@ public class TableCell {
 
     func removeContentView() {
         attributedText = contentView?.editor.attributedText
+        frame = contentView?.frame ?? frame
         delegate?.cell(self, didRemoveContentView: contentView)
         contentView = nil
     }
