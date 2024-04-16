@@ -146,7 +146,7 @@ class TableContentView: UIScrollView {
     override var bounds: CGRect {
         didSet {
             guard oldValue.size != bounds.size else { return }
-            recalculateCellBounds()
+            updateCellFrames()
             tableContentViewDelegate?.tableContentView(self, didChangeBounds: bounds, oldBounds: oldValue)
         }
     }
@@ -157,7 +157,6 @@ class TableContentView: UIScrollView {
     }
 
     private func setup() {
-        makeCells()
         setupSelectionGesture()
         tableContentViewDelegate?.tableContentView(self, didUpdateCells: cells)
     }
@@ -171,7 +170,7 @@ class TableContentView: UIScrollView {
         setup()
     }
 
-    private func makeCells() {
+    private func updateCellFrames() {
         table.calculateTableDimensions(basedOn: bounds.size)
         for cell in cells {
             let frame = table.frameForCell(cell, basedOn: bounds.size)
