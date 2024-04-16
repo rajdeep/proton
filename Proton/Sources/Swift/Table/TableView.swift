@@ -351,6 +351,7 @@ public class TableView: UIView {
               tableView.bounds != .zero,
               let container = delegate?.containerScrollView,
               let containerEditorView = containerAttachment?.containerEditorView,
+              //TODO: map attachmentContentView frame w.r.t container
               (delegate?.viewport ?? container.bounds).intersects(attachmentContentView.frame) else {
             cellsInViewport = []
             return
