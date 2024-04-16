@@ -357,10 +357,11 @@ public class TableView: UIView {
 
         let rootOrigin = attachmentContentView.frame.origin
         let containerViewport = delegate?.viewport ?? container.bounds
+        let adjustedViewport = containerViewport.offsetBy(dx: tableView.bounds.origin.x, dy: tableView.bounds.origin.y)
 
         cellsInViewport = tableView.cells.filter{
             $0.frame != .zero
-            && $0.frame.offsetBy(dx: rootOrigin.x, dy: rootOrigin.y).intersects(containerViewport) }
+            && $0.frame.offsetBy(dx: rootOrigin.x, dy: rootOrigin.y).intersects(adjustedViewport) }
     }
 
     private func makeSelectionBorderView() -> UIView {
