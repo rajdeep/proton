@@ -1468,6 +1468,7 @@ extension EditorView {
                         }
                     }
                 } else {
+                    self.delegate?.editor(self, willRenderAttachment: attachment)
                     attachment.render(in: self)
                     if !self.isSettingAttributedText, let focusable = attachment.contentView as? Focusable {
                         focusable.setFocus()
