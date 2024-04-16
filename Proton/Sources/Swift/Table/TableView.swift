@@ -350,14 +350,23 @@ public class TableView: UIView {
         guard let attachmentContentView = tableView.attachmentContentView,
               tableView.bounds != .zero,
               let container = delegate?.containerScrollView,
+              let containerEditorView = containerAttachment?.containerEditorView,
               (delegate?.viewport ?? container.bounds).intersects(attachmentContentView.frame) else {
             cellsInViewport = []
             return
         }
 
-        let rootOrigin = attachmentContentView.frame.origin
+        let rootOrigin: CGPoint
+        if container == containerEditorView.richTextView {
+            rootOrigin = attachmentContentView.frame.origin
+        } else {
+            let attachmentFrame = containerEditorView.convert(attachmentContentView.frame, to: container)
+            rootOrigin = attachmentFrame.origin
+        }
         let containerViewport = delegate?.viewport ?? container.bounds
         let adjustedViewport = containerViewport.offsetBy(dx: tableView.bounds.origin.x, dy: tableView.bounds.origin.y)
+
+//        Utility.drawRect(rect: adjustedViewport, color: .green, in: container, name: "attachmentContentView")
 
         cellsInViewport = tableView.cells.filter{
             $0.frame != .zero
