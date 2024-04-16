@@ -347,20 +347,20 @@ public class TableView: UIView {
     }
 
     private func viewportChanged() {
-        guard tableView.bounds != .zero,
-              let container = delegate?.containerScrollView else { return }
+        guard let attachmentContentView = tableView.attachmentContentView,
+              tableView.bounds != .zero,
+              let container = delegate?.containerScrollView,
+              (delegate?.viewport ?? container.bounds).intersects(attachmentContentView.frame) else {
+            cellsInViewport = []
+            return
+        }
+
+        let rootOrigin = attachmentContentView.frame.origin
         let containerViewport = delegate?.viewport ?? container.bounds
-        let tableViewport = tableView.bounds
 
-        let x = max(tableViewport.minX, containerViewport.minX)
-        let y = max(tableViewport.minY, containerViewport.minY)
-
-        let width = min(tableViewport.width, containerViewport.width)
-        let height = min(tableViewport.height, containerViewport.height)
-
-        let viewport = CGRect(x: x, y: y, width: width, height: height)
-
-        cellsInViewport = tableView.cells.filter{ $0.frame != .zero && $0.frame.intersects(viewport) }
+        cellsInViewport = tableView.cells.filter{
+            $0.frame != .zero
+            && $0.frame.offsetBy(dx: rootOrigin.x, dy: rootOrigin.y).intersects(containerViewport) }
     }
 
     private func makeSelectionBorderView() -> UIView {
@@ -668,6 +668,10 @@ extension TableView: TableContentViewDelegate {
 
     var viewport: CGRect? {
         self.delegate?.viewport
+    }
+
+    func tableContentView(_ tableContentView: TableContentView, needsUpdateViewport delta: CGPoint) {
+        viewportChanged()
     }
 
     func tableContentView(_ tableContentView: TableContentView, didChangeBounds bounds: CGRect, oldBounds: CGRect) {

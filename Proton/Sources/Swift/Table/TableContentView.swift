@@ -54,6 +54,8 @@ protocol TableContentViewDelegate: AnyObject {
     func tableContentView(_ tableContentView: TableContentView, cell: TableCell, didChangeBackgroundColor color: UIColor?, oldColor: UIColor?)
 
     func tableContentView(_ tableContentView: TableContentView, didUpdateCells cells: [TableCell])
+
+    func tableContentView(_ tableContentView: TableContentView, needsUpdateViewport delta: CGPoint)
 }
 
 class TableContentView: UIScrollView {
@@ -376,6 +378,10 @@ class TableContentView: UIScrollView {
         contentSize = table.size
         superview?.layoutIfNeeded()
         boundsObserver?.didChangeBounds(CGRect(origin: bounds.origin, size: frame.size), oldBounds: bounds)
+
+        if diff > 0 {
+//            tableContentViewDelegate?.tableContentView(self, needsUpdateViewport: CGPoint(x: 0, y: diff))
+        }
     }
 
     private func recalculateCellBounds(initiatingCell: TableCell? = nil) {
