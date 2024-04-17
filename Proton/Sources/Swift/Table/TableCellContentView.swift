@@ -37,6 +37,7 @@ public class TableCellContentView: UIView {
 
     public override var backgroundColor: UIColor? {
         didSet {
+            guard oldValue != backgroundColor else { return }
             editor.backgroundColor = backgroundColor
         }
     }
