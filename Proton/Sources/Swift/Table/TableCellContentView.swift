@@ -24,7 +24,6 @@ import UIKit
 public class TableCellContentView: UIView {
     public let editor: EditorView
 
-    private let style: GridCellStyle
     private let gridStyle: GridStyle
     private var selectionView: SelectionView?
     private let initialHeight: CGFloat
@@ -69,7 +68,6 @@ public class TableCellContentView: UIView {
         self.editor = containerCell.editorInitializer()
         self.initialHeight = containerCell.initialHeight
         self.containerCell = containerCell
-        self.style = containerCell.style
         self.gridStyle = containerCell.gridStyle
         super.init(frame: containerCell.frame)
 
@@ -91,7 +89,6 @@ public class TableCellContentView: UIView {
     }
 
     private func setupEditor() {
-        applyStyle(style)
         editor.translatesAutoresizingMaskIntoConstraints = false
         editor.boundsObserver = self
         editor.delegate = self
@@ -117,9 +114,15 @@ public class TableCellContentView: UIView {
         if let textColor = style.textColor {
             editor.textColor = textColor
         }
+
         if let backgroundColor = style.backgroundColor {
-            editor.backgroundColor = backgroundColor
             self.backgroundColor = backgroundColor
+        } else {
+            // When cell is reused, it assumes the color from the previously rendered state.
+            // Setting the value to nil has no effect and it still show old color.
+            // Setting explicitly to .clear fixes this issue.
+            // TODO: Needs further investigation
+            self.backgroundColor = .clear
         }
     }
 

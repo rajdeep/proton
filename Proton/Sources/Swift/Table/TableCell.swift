@@ -47,6 +47,8 @@ public class TableCell {
         "{\(rowSpan),\(columnSpan)}"
     }
 
+    public var onEditorInitialized: ((TableCell, EditorView) -> Void)?
+
     /// Additional attributes that can be stored on Cell to identify various aspects like Header, Numbered etc.
     public var additionalAttributes: [String: Any] = [:]
 
@@ -67,6 +69,7 @@ public class TableCell {
 
     public var backgroundColor: UIColor? = nil {
         didSet {
+            guard oldValue != backgroundColor else { return }
             contentView?.backgroundColor = backgroundColor
         }
     }
@@ -101,7 +104,11 @@ public class TableCell {
             contentView?.containerCell = self
             contentView?.frame = frame
             //TODO: get rid of editorInitializer in favor of delegate callback for editor
-            contentView?.editor.attributedText = attributedText ?? editorInitializer().attributedText
+            if let editor = contentView?.editor {
+                editor.attributedText = attributedText ?? editorInitializer().attributedText
+                onEditorInitialized?(self, editor)
+            }
+            contentView?.applyStyle(style)
         }
     }
 

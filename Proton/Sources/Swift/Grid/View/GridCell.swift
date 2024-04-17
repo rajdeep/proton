@@ -401,3 +401,18 @@ extension GridCell: Hashable {
         hasher.combine(id)
     }
 }
+
+extension GridCellStyle.BorderStyle: Equatable {
+    public static func == (lhs: GridCellStyle.BorderStyle, rhs: GridCellStyle.BorderStyle) -> Bool {
+        return lhs.color == rhs.color && lhs.width == rhs.width
+    }
+}
+
+extension GridCellStyle: Equatable {
+    public static func == (lhs: GridCellStyle, rhs: GridCellStyle) -> Bool {
+        return lhs.backgroundColor == rhs.backgroundColor &&
+            lhs.textColor == rhs.textColor &&
+            lhs.font == rhs.font &&
+            lhs.borderStyle == rhs.borderStyle
+    }
+}
