@@ -350,9 +350,7 @@ public class TableView: UIView {
         guard let attachmentContentView = tableView.attachmentContentView,
               tableView.bounds != .zero,
               let container = delegate?.containerScrollView,
-              let containerEditorView = containerAttachment?.containerEditorView,
-              //TODO: map attachmentContentView frame w.r.t container
-              (delegate?.viewport ?? container.bounds).intersects(attachmentContentView.frame) else {
+              let containerEditorView = containerAttachment?.containerEditorView else {
             cellsInViewport = []
             return
         }
@@ -367,7 +365,11 @@ public class TableView: UIView {
         let containerViewport = delegate?.viewport ?? container.bounds
         let adjustedViewport = containerViewport.offsetBy(dx: tableView.bounds.origin.x, dy: tableView.bounds.origin.y)
 
-//        Utility.drawRect(rect: adjustedViewport, color: .green, in: container, name: "attachmentContentView")
+        let adjustedAttachmentContentViewFrame = CGRect(origin: rootOrigin, size: attachmentContentView.frame.size)
+        guard adjustedViewport.intersects(adjustedAttachmentContentViewFrame) else {
+            cellsInViewport = []
+            return
+        }
 
         cellsInViewport = tableView.cells.filter{
             $0.frame != .zero
