@@ -365,8 +365,10 @@ public class TableView: UIView {
         let containerViewport = delegate?.viewport ?? container.bounds
         let adjustedViewport = containerViewport.offsetBy(dx: tableView.bounds.origin.x, dy: tableView.bounds.origin.y)
 
-        let adjustedAttachmentContentViewFrame = CGRect(origin: rootOrigin, size: attachmentContentView.frame.size)
-        guard adjustedViewport.intersects(adjustedAttachmentContentViewFrame) else {
+        let origin = tableView.bounds.offsetBy(dx: rootOrigin.x, dy: rootOrigin.y).origin
+        let adjustedAttachmentViewport = CGRect(origin: origin, size: attachmentContentView.frame.size)
+
+        guard adjustedViewport.intersects(adjustedAttachmentViewport) else {
             cellsInViewport = []
             return
         }
