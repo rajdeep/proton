@@ -103,6 +103,15 @@ class Table {
         }
     }
 
+    func updateCellFrames(size: CGSize, onCellFrameUpdate: ((TableCell) -> Void)) {
+        calculateTableDimensions(basedOn: size)
+        for cell in cells {
+            let frame = frameForCell(cell, basedOn: size)
+            cell.frame = frame
+            onCellFrameUpdate(cell)
+        }
+    }
+
     func frameForCell(_ cell: TableCell, basedOn size: CGSize) -> CGRect {
         var x: CGFloat = 0
         var y: CGFloat = 0

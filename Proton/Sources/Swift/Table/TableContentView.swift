@@ -172,11 +172,16 @@ class TableContentView: UIScrollView {
         setup()
     }
 
-    private func updateCellFrames() {
-        table.calculateTableDimensions(basedOn: bounds.size)
-        for cell in cells {
-            let frame = table.frameForCell(cell, basedOn: bounds.size)
-            cell.frame = frame
+    func updateCellFrames() {
+        //        table.calculateTableDimensions(basedOn: bounds.size)
+        //        for cell in cells {
+        //            let frame = table.frameForCell(cell, basedOn: bounds.size)
+        //            cell.frame = frame
+        //            cell.delegate = self
+        //            tableContentViewDelegate?.tableContentView(self, didLayoutCell: cell)
+        //        }
+        table.updateCellFrames(size: bounds.size) { [weak self] cell in
+            guard let self else { return }
             cell.delegate = self
             tableContentViewDelegate?.tableContentView(self, didLayoutCell: cell)
         }

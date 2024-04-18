@@ -31,6 +31,17 @@ class TableViewTests: XCTestCase {
     var viewController: EditorTestViewController!
     var editor: EditorView!
 
+    var config = GridConfiguration(
+        columnsConfiguration: [
+            GridColumnConfiguration(width: .fixed(100)),
+            GridColumnConfiguration(width: .fixed(100)),
+        ],
+        rowsConfiguration: [
+            GridRowConfiguration(initialHeight: 50),
+            GridRowConfiguration(initialHeight: 50),
+            GridRowConfiguration(initialHeight: 50),
+        ])
+
     override func setUp() {
         super.setUp()
         delegate = MockTableViewDelegate()
@@ -87,6 +98,39 @@ class TableViewTests: XCTestCase {
             {[0],[0]} {[0],[1]} {[0],[2]} {[0],[3]} {[1],[0]} {[1],[1]} {[1],[2]} {[1],[3]} {[3],[0]} {[3],[1]} {[3],[2]} {[3],[3]} {[4],[0]} {[4],[1]} {[4],[2]} {[4],[3]}
             """,
             try cellIDString(from: tableView.cells, filter: filter))
+    }
+
+    func FIXME_testChangesBoundsOfCell() {
+        let expectation = functionExpectation()
+        expectation.expectedFulfillmentCount = 2
+
+        let tableView = TableView(config: config)
+        let delegate = MockTableViewDelegate()
+        tableView.delegate = delegate
+        tableView.tableView.willMove(toWindow: UIWindow())
+        tableView.tableView.updateCellFrames()
+        let focusedCell = tableView.cellAt(rowIndex: 2, columnIndex: 1)
+        var affectedCells = [
+            (focusedCell, CGRect(x: 100.0, y: 100.0, width: 100.0, height: 60.0)),
+            (tableView.cellAt(rowIndex: 2, columnIndex: 0), CGRect(x: 0.0, y: 100.0, width: 100.0, height: 60.0))
+        ]
+
+        delegate.onDidChangeBounds = { grid, bounds, cell in
+            if let affectedIndex = affectedCells.firstIndex(where: {c, _ in c == cell }) {
+                let (expectedCell, expectedFrame) = affectedCells.remove(at: affectedIndex)
+                XCTAssertEqual(grid, tableView)
+                XCTAssertEqual(bounds, expectedFrame.insetBy(borderWidth: self.config.style.borderWidth))
+                XCTAssertEqual(expectedCell, cell)
+                print(cell.id)
+                print(bounds)
+                expectation.fulfill()
+            }
+        }
+        XCTAssertEqual(focusedCell?.frame, CGRect(x: 100, y: 100, width: 100, height: 50).insetBy(borderWidth: config.style.borderWidth))
+//        focusedCell?.editor.replaceCharacters(in: .zero, with: "This is a test string")
+        tableView.render()
+
+        waitForExpectations(timeout: 1.0)
     }
 
     private func cellIDString(from cells: [TableCell], filter: ((TableCell) throws -> Bool)) throws -> String {
