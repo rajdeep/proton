@@ -178,7 +178,9 @@ class TableContentView: UIScrollView {
             let frame = table.frameForCell(cell, basedOn: bounds.size)
             cell.frame = frame
             cell.delegate = self
+            tableContentViewDelegate?.tableContentView(self, didLayoutCell: cell)
         }
+        contentSize = table.size
     }
 
     private func setupSelectionGesture() {
@@ -379,6 +381,7 @@ class TableContentView: UIScrollView {
         superview?.layoutIfNeeded()
         boundsObserver?.didChangeBounds(CGRect(origin: bounds.origin, size: frame.size), oldBounds: bounds)
 
+        tableContentViewDelegate?.tableContentView(self, didLayoutCell: cell)
         if diff > 0 {
 //            tableContentViewDelegate?.tableContentView(self, needsUpdateViewport: CGPoint(x: 0, y: diff))
         }
