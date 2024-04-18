@@ -1461,6 +1461,7 @@ extension EditorView {
                         // Because of async nature the attachment may get scheduled again to be rendered.
                         // ignore the attachments that are already rendered
                         guard attachment.isRendered == false else { return }
+                        self.delegate?.editor(self, willRenderAttachment: attachment)
                         attachment.render(in: self)
                         if attachment.needsDeferredRendering == false {
                             attachment.isAsyncRendered = true
