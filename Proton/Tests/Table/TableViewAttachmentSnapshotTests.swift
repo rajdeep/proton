@@ -32,9 +32,7 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         delegate = MockTableViewDelegate()
     }
 
-    // This test is failing on every alternate run after recording
-    // Issue is likely because of precision of fractional widths calculations
-    func X_testRendersTableViewAttachment() {
+    func testRendersTableViewAttachment() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
         delegate.containerScrollView = editor.scrollView
@@ -146,9 +144,9 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
 
         viewController.render(size: CGSize(width: 400, height: 250))
 
-        table.cells[1].attributedText = NSAttributedString(string: String(repeating: text, count: 3))
-        table.cells[4].attributedText = NSAttributedString(string: String(repeating: text, count: 4))
-        table.cells[5].attributedText = NSAttributedString(string: String(repeating: text, count: 5))
+        table.cells[1].editor?.attributedText = NSAttributedString(string: String(repeating: text, count: 3))
+        table.cells[4].editor?.attributedText = NSAttributedString(string: String(repeating: text, count: 4))
+        table.cells[5].editor?.attributedText = NSAttributedString(string: String(repeating: text, count: 5))
 
         XCTAssertEqual(attachment.view.containerAttachment, attachment)
 
@@ -174,8 +172,8 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
 
         viewController.render(size: containerSize)
 
-        table.cellAt(rowIndex: 1, columnIndex: 0)?.attributedText = NSAttributedString(string: String(repeating: text, count: 6))
-        table.cellAt(rowIndex: 3, columnIndex: 0)?.attributedText = NSAttributedString(string: String(repeating: text, count: 5))
+        table.cellAt(rowIndex: 1, columnIndex: 0)?.editor?.attributedText = NSAttributedString(string: String(repeating: text, count: 6))
+        table.cellAt(rowIndex: 3, columnIndex: 0)?.editor?.attributedText = NSAttributedString(string: String(repeating: text, count: 5))
 
         viewController.render(size: containerSize)
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
