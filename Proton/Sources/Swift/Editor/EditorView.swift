@@ -1461,7 +1461,7 @@ extension EditorView {
                         // Because of async nature the attachment may get scheduled again to be rendered.
                         // ignore the attachments that are already rendered
                         guard attachment.isRendered == false else { return }
-                        self.delegate?.editor(self, willRenderAttachment: attachment)
+                        AggregateEditorViewDelegate.editor(self, willRenderAttachment: attachment)
                         attachment.render(in: self)
                         if attachment.needsDeferredRendering == false {
                             attachment.isAsyncRendered = true
@@ -1469,12 +1469,12 @@ extension EditorView {
                         }
                     }
                 } else {
-                    self.delegate?.editor(self, willRenderAttachment: attachment)
+                    AggregateEditorViewDelegate.editor(self, willRenderAttachment: attachment)
                     attachment.render(in: self)
                     if !self.isSettingAttributedText, let focusable = attachment.contentView as? Focusable {
                         focusable.setFocus()
                     }
-                    self.delegate?.editor(self, didRenderAttachment: attachment)
+                    AggregateEditorViewDelegate.editor(self, didRenderAttachment: attachment)
                 }
             }
             attachment.frame = frame

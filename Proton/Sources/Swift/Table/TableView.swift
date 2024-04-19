@@ -350,7 +350,7 @@ public class TableView: UIView {
         guard let attachmentContentView = tableView.attachmentContentView,
               tableView.bounds != .zero,
               let container = delegate?.containerScrollView,
-              let containerEditorView = containerAttachment?.containerEditorView else {
+              let containerEditorView = containerAttachment?.containerEditorView?.rootEditor else {
             cellsInViewport = []
             return
         }
@@ -360,7 +360,11 @@ public class TableView: UIView {
             rootOrigin = attachmentContentView.frame.origin
         } else {
             let attachmentFrame = containerEditorView.convert(attachmentContentView.frame, to: container)
-            rootOrigin = attachmentFrame.origin
+            if containerAttachment?.containerEditorView?.isRootEditor == true {
+                rootOrigin = attachmentFrame.origin
+            } else {
+                rootOrigin = attachmentContentView.convert(attachmentFrame.origin, to: containerEditorView)
+            }
         }
         let containerViewport = delegate?.viewport ?? container.bounds
         let adjustedViewport = containerViewport.offsetBy(dx: tableView.bounds.origin.x, dy: tableView.bounds.origin.y)
