@@ -339,7 +339,7 @@ class TableContentView: UIScrollView {
     }
 
     func invalidateCellLayout() {
-        recalculateCellBounds()
+        //TODO: Fix
     }
 
     private func recalculateCellBounds(cell: TableCell) {
@@ -390,52 +390,6 @@ class TableContentView: UIScrollView {
         if diff > 0 {
 //            tableContentViewDelegate?.tableContentView(self, needsUpdateViewport: CGPoint(x: 0, y: diff))
         }
-    }
-
-    private func recalculateCellBounds(initiatingCell: TableCell? = nil) {
-        //TODO: fix
-//        frozenRowsConstraints.forEach { $0.isActive = false }
-//        frozenColumnsConstraints.forEach { $0.isActive = false }
-//        removeConstraints(frozenRowsConstraints + frozenColumnsConstraints)
-//
-//        var cells = table.cells
-//        if let initiatingCell {
-//            cells = [initiatingCell]
-//        }
-//
-//        for cell in cells {
-//            // TODO: Optimize to recalculate frames for affected cells only i.e. row>=current
-//
-//            // Set the frame of the cell before adding to superview
-//            // This is required to avoid breaking layout constraints
-//            // as default size is 0
-//            let frame = table.frameForCell(cell, basedOn: bounds.size)
-//            cell.frame = frame
-//            cell.contentView.frame = frame
-//            cell.widthAnchorConstraint.constant = frame.width
-//            cell.heightAnchorConstraint.constant = frame.height
-//
-//            // Add to grid if this is a newly inserted cell after initial setup.
-//            // A new cell may exist as a result of inserting a new row/column
-//            // or splitting an existing merged cell
-//            if cell.contentView.superview == nil {
-//                addSubview(cell.contentView)
-//                if window != nil, cell.editorSetupComplete == false {
-//                    cell.setupEditor()
-//                }
-//                cell.topAnchorConstraint = cell.contentView.topAnchor.constraint(equalTo: topAnchor, constant: frame.minY)
-//                cell.leadingAnchorConstraint = cell.contentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: frame.minX)
-//            } else {
-//                cell.topAnchorConstraint?.constant = frame.minY
-//                cell.leadingAnchorConstraint?.constant = frame.minX
-//            }
-//            freezeColumnCellIfRequired(cell)
-//            freezeRowCellIfRequired(cell)
-//            tableContentViewDelegate?.tableContentView(self, didLayoutCell: cell)
-//        }
-//
-//        boundsObserver?.didChangeBounds(CGRect(origin: bounds.origin, size: frame.size), oldBounds: bounds)
-//        invalidateIntrinsicContentSize()
     }
 
     private func freezeColumnCellIfRequired(_ cell: TableCell) {
