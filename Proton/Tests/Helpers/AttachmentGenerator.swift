@@ -30,10 +30,11 @@ struct AttachmentGenerator {
         numRows: Int,
         numColumns: Int,
         columnConfig: GridColumnConfiguration? = nil,
-        rowConfig: GridRowConfiguration? = nil
+        rowConfig: GridRowConfiguration? = nil,
+        initialRowHeight: CGFloat = 50
     ) -> TableViewAttachment {
         let columnConfiguration = columnConfig ?? GridColumnConfiguration(width: .fixed(100))
-        let rowConfiguration = rowConfig ?? GridRowConfiguration(initialHeight: 50)
+        let rowConfiguration = rowConfig ?? GridRowConfiguration(initialHeight: initialRowHeight)
 
         let config = GridConfiguration(
             columnsConfiguration: [GridColumnConfiguration](repeating: columnConfiguration, count: numColumns),

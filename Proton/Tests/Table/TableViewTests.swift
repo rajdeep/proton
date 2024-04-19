@@ -58,7 +58,12 @@ class TableViewTests: XCTestCase {
         var viewport = CGRect(x: 0, y: 100, width: 350, height: 200)
         delegate.viewport = viewport
 
-        let attachment = AttachmentGenerator.makeTableViewAttachment(id: 1, numRows: 20, numColumns: 5)
+        let attachment = AttachmentGenerator.makeTableViewAttachment(
+            id: 1,
+            numRows: 20,
+            numColumns: 5,
+            initialRowHeight: 100
+        )
         let tableView = attachment.view
 
         let filter: ((TableCell) throws -> Bool) = { $0.attributedText?.length ?? 0 > 0}
