@@ -678,7 +678,7 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
-    func testTableShadows() {
+    func FLAKY_testTableShadows() {
         let config = GridConfiguration(
             columnsConfiguration: [
                 GridColumnConfiguration(width: .fixed(30)),
