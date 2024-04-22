@@ -377,6 +377,8 @@ public class TableView: UIView {
             return
         }
 
+//        cellsInViewport = tableView.table.cellsIn(rect: adjustedViewport, offset: rootOrigin)
+
         cellsInViewport = tableView.cells.filter{
             $0.frame != .zero
             && $0.frame.offsetBy(dx: rootOrigin.x, dy: rootOrigin.y).intersects(adjustedViewport) }

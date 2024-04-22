@@ -112,6 +112,26 @@ class Table {
         }
     }
 
+    func cellsIn(rect: CGRect, offset: CGPoint) -> [TableCell] {
+        let sortedKeysX = cellXPositions.sorted { $0.value < $1.value }.map { $0.key }
+        let sortedKeysY = cellYPositions.sorted { $0.value < $1.value }.map { $0.key }
+
+        guard let colMin = sortedKeysX.last(where: { cellXPositions[$0] ?? 0 <= rect.minX }),
+              let colMax = sortedKeysX.first(where: { cellXPositions[$0] ?? 0 >= rect.maxX }),
+              let rowMin = sortedKeysY.last(where: { cellYPositions[$0] ?? 0 <= rect.minY }),
+              let rowMax = sortedKeysY.first(where: { cellYPositions[$0] ?? 0 >= rect.maxY }) else {
+            return []
+        }
+
+        let columns = Array(colMin...colMax)
+        let rows = Array((rowMin - 1)..<rowMax)
+
+        return cells.filter({
+            $0.rowSpan.contains { rows.contains($0) }
+            && $0.columnSpan.contains { columns.contains($0) }
+        })
+    }
+
     func frameForCell(_ cell: TableCell, basedOn size: CGSize) -> CGRect {
         var x: CGFloat = 0
         var y: CGFloat = 0

@@ -128,6 +128,12 @@ class TableContentView: UIScrollView {
 //        ])
     }
 
+    override var contentSize: CGSize {
+        didSet {
+            self.frame = CGRect(origin: self.frame.origin, size: CGSize(width: self.frame.width, height: contentSize.height))
+        }
+    }
+
     convenience init(config: GridConfiguration, editorInitializer: TableCell.EditorInitializer?) {
         let cells = Self.generateCells(config: config, editorInitializer: editorInitializer)
         self.init(config: config, cells: cells, editorInitializer: editorInitializer)
@@ -343,53 +349,38 @@ class TableContentView: UIScrollView {
     }
 
     private func recalculateCellBounds(cell: TableCell) {
-        //TODO: Update frame for all affected cells and based on current cell
-
-//        let cellsInCurrentRow = cells.filter { Set($0.rowSpan).intersection(Set(cell.rowSpan)).isEmpty == false }
-
         let cellRowSpanSet = Set(cell.rowSpan)
-        let cellsInCurrentRow = cells.filter { c in
-            !c.rowSpan.allSatisfy { !cellRowSpanSet.contains($0) }
-        }
-
         var diff: CGFloat = 0
-        cellsInCurrentRow.forEach { cell in
-            let height = cell.rowSpan.reduce(into: 0.0) { partialResult, index in
-                partialResult += table.rowHeights[index].currentHeight
-            }
-            var frame = cell.frame
-            diff = height - frame.size.height
-            frame.size.height = height
-            cell.frame = frame
-        }
-
         let maxRow = cell.rowSpan.max() ?? 0
-        let cellsToUpdate = cells.filter { c in
-            c.rowSpan.allSatisfy { row in row > maxRow }
+
+        cells.forEach { c in
+            if !c.rowSpan.allSatisfy({ !cellRowSpanSet.contains($0) }) {
+                let height = c.rowSpan.reduce(into: 0.0) { partialResult, index in
+                    partialResult += table.rowHeights[index].currentHeight
+                }
+                var frame = c.frame
+                diff = height - frame.size.height
+                frame.size.height = height
+                c.frame = frame
+            }
+
+            if c.rowSpan.allSatisfy({ row in row > maxRow }) {
+                var frame = c.frame
+                frame.origin.y += diff
+                c.frame = frame
+            }
         }
 
-        cellsToUpdate.forEach { cell in
-            var frame = cell.frame
-            frame.origin.y += diff
-            cell.frame = frame
-        }
+        contentSize = table.size
 
-        self.frame = CGRect(origin: self.frame.origin, size: CGSize(width: self.frame.width, height: table.size.height))
-
-//        widthAnchorConstraint.constant = self.frame.width
         heightAnchorConstraint.constant = self.frame.height
         if heightAnchorConstraint.isActive == false {
             heightAnchorConstraint.isActive = true
         }
 
-        contentSize = table.size
         superview?.layoutIfNeeded()
         boundsObserver?.didChangeBounds(CGRect(origin: bounds.origin, size: frame.size), oldBounds: bounds)
-
         tableContentViewDelegate?.tableContentView(self, didLayoutCell: cell)
-        if diff > 0 {
-//            tableContentViewDelegate?.tableContentView(self, needsUpdateViewport: CGPoint(x: 0, y: diff))
-        }
     }
 
     private func freezeColumnCellIfRequired(_ cell: TableCell) {

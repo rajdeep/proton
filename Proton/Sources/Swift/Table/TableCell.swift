@@ -117,7 +117,7 @@ public class TableCell {
     }
 
     public let gridStyle: GridStyle
-    public let style: GridCellStyle
+    public var style: GridCellStyle
 
     weak var delegate: TableCellDelegate?
 
