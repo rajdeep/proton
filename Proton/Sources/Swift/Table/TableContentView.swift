@@ -484,13 +484,14 @@ extension TableContentView: TableCellDelegate {
 //            table.rowHeights[row].currentHeight = table.maxContentHeightCellForRow(at: row)?.contentSize.height ?? 0
 //        }
 
+        //TODO: revisit for when height of entire row gets shorter
         guard bounds.height > table.rowHeights[row].currentHeight else {
             return
         }
 
         table.rowHeights[row].currentHeight = bounds.height
         //TODO: only update affected row/column onwards
-        table.calculateTableDimensions(basedOn: bounds.size)
+        table.calculateTableDimensions(basedOn: self.bounds.size)
         recalculateCellBounds(cell: cell)
         tableContentViewDelegate?.tableContentView(self, didChangeBounds: cell.frame, in: cell)
     }
