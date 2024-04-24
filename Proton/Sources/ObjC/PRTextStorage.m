@@ -112,10 +112,7 @@
 
     NSAttributedString *deletedText = [_storage attributedSubstringFromRange:range];
     [_textStorageDelegate textStorage:self will:deletedText insertText:replacementString in:range];
-    [super replaceCharactersInRange:range withAttributedString: replacementString];
-}
 
-- (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)str {
     // Capture any attachments in the original range to be deleted after editing is complete
     NSArray<NSTextAttachment *> *attachmentsToDelete = [self attachmentsForRange:range];
     // Deleting of Attachment needs to happen outside editing flow. If invoked while textStorage editing is
@@ -123,6 +120,11 @@
     // If invoked after, it may still cause a crash as caret location is queried which may cause editor layout again
     // resulting in the crash.
     [self deleteAttachments:attachmentsToDelete];
+
+    [super replaceCharactersInRange:range withAttributedString: replacementString];
+}
+
+- (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)str {
     [self beginEditing];
 
     NSInteger delta = str.length - range.length;
