@@ -118,7 +118,9 @@
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)str {
     // Capture any attachments in the original range to be deleted after editing is complete
     NSArray<NSTextAttachment *> *attachmentsToDelete = [self attachmentsForRange:range];
-
+    // Deleting of Attachment needs to happen after editing has ended. If invoked while textStorage editing is
+    // taking place, this may sometimes result in a crash(_fillLayoutHoleForCharacterRange).
+    [self deleteAttachments:attachmentsToDelete];
     [self beginEditing];
 
     NSInteger delta = str.length - range.length;
@@ -127,9 +129,6 @@
     [self edited:NSTextStorageEditedCharacters & NSTextStorageEditedAttributes range:range changeInLength:delta];
 
     [self endEditing];
-    // Deleting of Attachment needs to happen after editing has ended. If invoked while textStorage editing is
-    // taking place, this may sometimes result in a crash(_fillLayoutHoleForCharacterRange).
-    [self deleteAttachments:attachmentsToDelete];
 }
 
 -(void)deleteAttachments:(NSArray<NSTextAttachment *>*) attachments {
