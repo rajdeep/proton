@@ -113,18 +113,13 @@
     NSAttributedString *deletedText = [_storage attributedSubstringFromRange:range];
     [_textStorageDelegate textStorage:self will:deletedText insertText:replacementString in:range];
 
-    // Capture any attachments in the original range to be deleted after editing is complete
-    NSArray<NSTextAttachment *> *attachmentsToDelete = [self attachmentsForRange:range];
-    // Deleting of Attachment needs to happen outside editing flow. If invoked while textStorage editing is
-    // taking place, this may sometimes result in a crash(_fillLayoutHoleForCharacterRange).
-    // If invoked after, it may still cause a crash as caret location is queried which may cause editor layout again
-    // resulting in the crash.
-    [self deleteAttachments:attachmentsToDelete];
 
+    [self deleteAttachmentsInRange: range];
     [super replaceCharactersInRange:range withAttributedString: replacementString];
 }
 
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)str {
+    [self deleteAttachmentsInRange: range];
     [self beginEditing];
 
     NSInteger delta = str.length - range.length;
@@ -135,10 +130,14 @@
     [self endEditing];
 }
 
--(void)deleteAttachments:(NSArray<NSTextAttachment *>*) attachments {
-    // Deleting of Attachment needs to happen after editing has ended. If invoked while textStorage editing is
+-(void)deleteAttachmentsInRange:(NSRange) range {
+    // Capture any attachments in the original range to be deleted after editing is complete
+    NSArray<NSTextAttachment *> *attachmentsToDelete = [self attachmentsForRange:range];
+    // Deleting of Attachment needs to happen outside editing flow. If invoked while textStorage editing is
     // taking place, this may sometimes result in a crash(_fillLayoutHoleForCharacterRange).
-    for (NSTextAttachment *attachment in attachments) {
+    // If invoked after, it may still cause a crash as caret location is queried which may cause editor layout again
+    // resulting in the crash.
+    for (NSTextAttachment *attachment in attachmentsToDelete) {
         [_textStorageDelegate textStorage:self didDelete:attachment];
     }
 }
