@@ -73,6 +73,17 @@
     [self.textStorageDelegate textStorage:self edited:editedMask in:editedRange changeInLength:delta];
 }
 
+- (NSAttributedString *)attributedSubstringFromRange:(NSRange)range {
+    NSRange rangeToUse =[self clampedWithUpperBound:self.length location:range.location length:range.length];
+    return [super attributedSubstringFromRange: rangeToUse];
+}
+
+- (NSRange)clampedWithUpperBound:(NSInteger)upperBound location:(NSInteger)location length:(NSInteger)length {
+    NSInteger clampedLocation = MAX(MIN(location, upperBound), 0);
+    NSInteger clampedLength = MAX(MIN(length, upperBound - clampedLocation), 0);
+    return NSMakeRange(clampedLocation, clampedLength);
+}
+
 - (void)replaceCharactersInRange:(NSRange)range withAttributedString:(NSAttributedString *)attrString {
     // Handles the crash when nested list receives enter key in quick succession that unindents the list item.
     // Check only required with Obj-C based TextStorage
@@ -101,13 +112,14 @@
 
     NSAttributedString *deletedText = [_storage attributedSubstringFromRange:range];
     [_textStorageDelegate textStorage:self will:deletedText insertText:replacementString in:range];
+
+
+    [self deleteAttachmentsInRange: range];
     [super replaceCharactersInRange:range withAttributedString: replacementString];
 }
 
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)str {
-    // Capture any attachments in the original range to be deleted after editing is complete
-    NSArray<NSTextAttachment *> *attachmentsToDelete = [self attachmentsForRange:range];
-
+    [self deleteAttachmentsInRange: range];
     [self beginEditing];
 
     NSInteger delta = str.length - range.length;
@@ -116,15 +128,16 @@
     [self edited:NSTextStorageEditedCharacters & NSTextStorageEditedAttributes range:range changeInLength:delta];
 
     [self endEditing];
-    // Deleting of Attachment needs to happen after editing has ended. If invoked while textStorage editing is
-    // taking place, this may sometimes result in a crash(_fillLayoutHoleForCharacterRange).
-    [self deleteAttachments:attachmentsToDelete];
 }
 
--(void)deleteAttachments:(NSArray<NSTextAttachment *>*) attachments {
-    // Deleting of Attachment needs to happen after editing has ended. If invoked while textStorage editing is
+-(void)deleteAttachmentsInRange:(NSRange) range {
+    // Capture any attachments in the original range to be deleted after editing is complete
+    NSArray<NSTextAttachment *> *attachmentsToDelete = [self attachmentsForRange:range];
+    // Deleting of Attachment needs to happen outside editing flow. If invoked while textStorage editing is
     // taking place, this may sometimes result in a crash(_fillLayoutHoleForCharacterRange).
-    for (NSTextAttachment *attachment in attachments) {
+    // If invoked after, it may still cause a crash as caret location is queried which may cause editor layout again
+    // resulting in the crash.
+    for (NSTextAttachment *attachment in attachmentsToDelete) {
         [_textStorageDelegate textStorage:self didDelete:attachment];
     }
 }
