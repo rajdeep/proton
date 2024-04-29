@@ -184,8 +184,16 @@ public class TableCell {
     }
 
     func addContentView(_ contentView: TableCellContentView) {
+        prepareForReuse(contentView)
         self.contentView = contentView
         delegate?.cell(self, didAddContentView: contentView)
+    }
+
+    func prepareForReuse(_ contentView: TableCellContentView) {
+        contentView.editor.clear()
+        contentView.editor.frame = .zero
+        contentView.frame = .zero
+        contentView.layoutIfNeeded()
     }
 }
 
