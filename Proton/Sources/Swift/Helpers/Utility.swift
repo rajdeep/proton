@@ -27,7 +27,7 @@ public class Utility {
 
     public static func drawRect(rect: CGRect, color: UIColor, in view: UIView, name: String = "rect_layer") {
         let path = UIBezierPath(rect: rect).cgPath
-        drawPath(path: path, color: color, in: view)
+        drawPath(path: path, color: color, in: view, name: name)
     }
 
     public static func drawPath(path: CGPath, color: UIColor, in view: UIView, name: String = "path_layer") {
