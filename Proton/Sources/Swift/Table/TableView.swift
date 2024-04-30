@@ -349,39 +349,40 @@ public class TableView: UIView {
     private func viewportChanged() {
         guard let attachmentContentView = tableView.attachmentContentView,
               tableView.bounds != .zero,
-              let container = delegate?.containerScrollView,
-              let containerEditorView = containerAttachment?.containerEditorView?.rootEditor else {
+              let containerScrollView = delegate?.containerScrollView,
+              let rootEditorView = containerAttachment?.containerEditorView?.rootEditor else {
             cellsInViewport = []
             return
         }
 
-        let rootOrigin: CGPoint
-        if container == containerEditorView.richTextView {
-            rootOrigin = attachmentContentView.frame.origin
-        } else {
-            let attachmentFrame = containerEditorView.convert(attachmentContentView.frame, to: container)
-            if containerAttachment?.containerEditorView?.isRootEditor == true {
-                rootOrigin = attachmentFrame.origin
-            } else {
-                rootOrigin = attachmentContentView.convert(attachmentFrame.origin, to: containerEditorView)
-            }
-        }
-        let containerViewport = delegate?.viewport ?? container.bounds
-        let adjustedViewport = containerViewport.offsetBy(dx: tableView.bounds.origin.x, dy: tableView.bounds.origin.y)
+        guard let superView = attachmentContentView.superview else { return }
 
-        let origin = tableView.bounds.offsetBy(dx: rootOrigin.x, dy: rootOrigin.y).origin
-        let adjustedAttachmentViewport = CGRect(origin: origin, size: attachmentContentView.frame.size)
+        let adjustedAttachmentViewport = rootEditorView.convert(attachmentContentView.frame, from: superView)
 
-        guard adjustedViewport.intersects(adjustedAttachmentViewport) else {
-            cellsInViewport = []
-            return
-        }
+        // Convert the nestedView's frame to the scrollView's coordinate space
+        let nestedViewFrameInScrollView =  delegate?.viewport ?? containerScrollView.bounds
 
-//        cellsInViewport = tableView.table.cellsIn(rect: adjustedViewport, offset: rootOrigin)
+        // Get the visible part of the scrollView
+        let visibleRectInScrollView = containerScrollView.bounds
 
-        cellsInViewport = tableView.cells.filter{
+        // Intersect the two rectangles to get the visible part of the nestedView
+        let visibleRectOfNestedViewInScrollView = visibleRectInScrollView.intersection(nestedViewFrameInScrollView)
+
+        // Convert the visible rectangle back to the nestedView's coordinate space
+        let visibleRectOfNestedView = rootEditorView.convert(visibleRectOfNestedViewInScrollView, from: containerScrollView)
+
+        // Uncomment following line to show the resolved viewport
+//         Utility.drawRect(rect: visibleRectOfNestedView, color: .red, in: rootEditorView, name: "viewport")
+
+        let adjustedViewport = visibleRectOfNestedView.offsetBy(dx: tableView.bounds.minX, dy: tableView.bounds.minY)
+
+        // TODO: future improvement - needs more work
+        //cellsInViewport = tableView.table.cellsIn(rect: adjustedViewport, offset: rootOrigin)
+
+        //TODO: future improvement - sort by cell.frame.y and filter using binary search
+        cellsInViewport = tableView.cells.filter {
             $0.frame != .zero
-            && $0.frame.offsetBy(dx: rootOrigin.x, dy: rootOrigin.y).intersects(adjustedViewport) }
+            && $0.frame.offsetBy(dx: adjustedAttachmentViewport.origin.x, dy: adjustedAttachmentViewport.origin.y).intersects(adjustedViewport) }
     }
 
     private func makeSelectionBorderView() -> UIView {
