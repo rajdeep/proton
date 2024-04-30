@@ -348,6 +348,8 @@ public class TableView: UIView {
 
     private func viewportChanged() {
         guard let attachmentContentView = tableView.attachmentContentView,
+              // ensure editor is not hidden e.g. inside an Expand in collapsed state
+              attachmentContentView.attachment?.containerEditorView?.isHidden == false,
               tableView.bounds != .zero,
               let containerScrollView = delegate?.containerScrollView,
               let rootEditorView = containerAttachment?.containerEditorView?.rootEditor else {
