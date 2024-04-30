@@ -360,7 +360,7 @@ public class TableView: UIView {
         let adjustedAttachmentViewport = rootEditorView.convert(attachmentContentView.frame, from: superView)
 
         // Convert the nestedView's frame to the scrollView's coordinate space
-        let nestedViewFrameInScrollView =  delegate?.viewport ?? containerScrollView.bounds
+        let nestedViewFrameInScrollView = delegate?.viewport ?? containerScrollView.bounds
 
         // Get the visible part of the scrollView
         let visibleRectInScrollView = containerScrollView.bounds
@@ -376,13 +376,23 @@ public class TableView: UIView {
 
         let adjustedViewport = visibleRectOfNestedView.offsetBy(dx: tableView.bounds.minX, dy: tableView.bounds.minY)
 
+        // Ensure the attachment is in viewport else clear off all the cells
+        guard adjustedAttachmentViewport.offsetBy(
+            dx: tableView.bounds.origin.x,
+            dy: tableView.bounds.origin.y).intersects(adjustedViewport
+        ) else {
+            cellsInViewport = []
+            return
+        }
+
         // TODO: future improvement - needs more work
         //cellsInViewport = tableView.table.cellsIn(rect: adjustedViewport, offset: rootOrigin)
 
         //TODO: future improvement - sort by cell.frame.y and filter using binary search
         cellsInViewport = tableView.cells.filter {
             $0.frame != .zero
-            && $0.frame.offsetBy(dx: adjustedAttachmentViewport.origin.x, dy: adjustedAttachmentViewport.origin.y).intersects(adjustedViewport) }
+            && $0.frame.offsetBy(dx: adjustedAttachmentViewport.origin.x, dy: adjustedAttachmentViewport.origin.y)
+            .intersects(adjustedViewport) }
     }
 
     private func makeSelectionBorderView() -> UIView {
