@@ -191,9 +191,12 @@ public class TableCell {
 
     func prepareForReuse(_ contentView: TableCellContentView) {
         contentView.editor.clear()
-        contentView.editor.frame = .zero
-        contentView.frame = .zero
-        contentView.layoutIfNeeded()
+        contentView.editor.frame = CGRect(
+            origin: .zero,
+            size: CGSize(width: contentView.editor.frame.width,
+            height: initialHeight)
+        )
+        contentView.frame = contentView.editor.frame
     }
 }
 
