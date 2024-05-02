@@ -104,6 +104,14 @@ public class TableCellContentView: UIView {
         ])
     }
 
+    public override func didMoveToSuperview() {
+        guard superview != nil else { return }
+        // Update font for editor and subeditors if it happens to have been changed while the contentView was not
+        // added to the view hierarchy. This change in font may result from Accessibility Font Size changes
+        editor.font = UIFont.preferredFont(forTextStyle: editor.font.textStyle)
+        editor.nestedEditors.forEach { $0.font = UIFont.preferredFont(forTextStyle: $0.font.textStyle) }
+    }
+
     func applyStyle(_ style: GridCellStyle) {
        layer.borderColor = style.borderStyle?.color.cgColor ?? gridStyle.borderColor.cgColor
        layer.borderWidth = style.borderStyle?.width ?? gridStyle.borderWidth

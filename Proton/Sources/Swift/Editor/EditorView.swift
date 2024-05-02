@@ -450,7 +450,10 @@ open class EditorView: UIView {
     /// Default font to be used by the Editor. A font may be overridden on whole or part of content in `EditorView` by an `EditorCommand` or
     /// `TextProcessing` conformances.
     public var font: UIFont = UIFont.preferredFont(forTextStyle: .body) {
-        didSet { richTextView.typingAttributes[.font] = font }
+        didSet {
+            richTextView.font = font
+            richTextView.typingAttributes[.font] = font
+        }
     }
 
     /// Default paragraph style to be used by the Editor. The style may be overridden on whole or part of content in
