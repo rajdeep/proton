@@ -280,6 +280,15 @@ public class TableView: UIView {
         }
     }
 
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory
+        else { return }
+        repository.clear()
+        tableView.resetRowHeights()
+        layoutIfNeeded()
+    }
+
     private func setup() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         leadingShadowView.translatesAutoresizingMaskIntoConstraints = false

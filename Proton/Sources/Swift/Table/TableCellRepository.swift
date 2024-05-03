@@ -38,4 +38,8 @@ class TableCellRepository {
 
         cell.addContentView(contentView)
     }
+
+    func clear() {
+        contentViews.removeAll(keepingCapacity: true)
+    }
 }

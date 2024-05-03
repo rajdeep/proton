@@ -192,6 +192,13 @@ class TableContentView: UIScrollView {
             tableContentViewDelegate?.tableContentView(self, didLayoutCell: cell)
         }
         contentSize = table.size
+        heightAnchorConstraint.constant = bounds.height
+    }
+
+    func resetRowHeights() {
+       table.resetRowHeights()
+       table.calculateTableDimensions(basedOn: bounds.size)
+       updateCellFrames()
     }
 
     private func setupSelectionGesture() {

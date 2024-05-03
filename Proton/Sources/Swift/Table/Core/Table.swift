@@ -86,6 +86,12 @@ class Table {
         return cellStore.cellAt(rowIndex: rowIndex, columnIndex: columnIndex)
     }
 
+    func resetRowHeights() {
+        for i in 0..<rowHeights.count {
+            rowHeights[i].currentHeight = rowHeights[i].rowConfiguration.initialHeight
+        }
+    }
+
     func calculateTableDimensions(basedOn size: CGSize) {
         let viewportWidth = viewport?.width ?? size.width
         var cumulativeX: CGFloat = 0
