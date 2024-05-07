@@ -29,6 +29,7 @@ protocol TableContentViewDelegate: AnyObject {
     var cellsInViewport: [TableCell] { get }
 
     func tableContentView(_ tableContentView: TableContentView, didChangeBounds bounds: CGRect, oldBounds: CGRect)
+    func tableContentView(_ tableContentView: TableContentView, didChangeContentSize contentSize: CGSize, oldContentSize: CGSize)
     func tableContentView(_ tableContentView: TableContentView, didCompleteLayoutWithBounds bounds: CGRect)
     func tableContentView(_ tableContentView: TableContentView, didLayoutCell cell: TableCell)
 
@@ -130,7 +131,9 @@ class TableContentView: UIScrollView {
 
     override var contentSize: CGSize {
         didSet {
+            guard oldValue != contentSize else { return }
             self.frame = CGRect(origin: self.frame.origin, size: CGSize(width: self.frame.width, height: contentSize.height))
+            tableContentViewDelegate?.tableContentView(self, didChangeContentSize: contentSize, oldContentSize: oldValue)
         }
     }
 
