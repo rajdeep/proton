@@ -116,6 +116,8 @@ public class TableView: UIView {
     private var resizingDragHandleLastLocation: CGPoint? = nil
     private var leadingShadowConstraint: NSLayoutConstraint!
 
+    private var maintainLockOnRect: CGRect?
+
     private var observation: NSKeyValueObservation?
 
     private let repository = TableCellRepository()
@@ -230,6 +232,13 @@ public class TableView: UIView {
         tableView.numberOfRows
     }
 
+    public override var bounds: CGRect {
+        didSet {
+            guard oldValue == bounds else { return }
+            maintainLockOnRect = nil
+        }
+    }
+
     /// Initializes `TableView` using the provided configuration.
     /// - Parameter
     ///   - config: Configuration for `TableView`
@@ -278,6 +287,12 @@ public class TableView: UIView {
         didSet {
             tableView.backgroundColor = backgroundColor
         }
+    }
+
+    /// Maintains the scroll lock on the rect passed in if the  original rect ends up moving as a result of cells getting rendered above this rect position
+    /// - Parameter rect: Rect to lock. `nil` to release lock.
+    public func maintainScrolledPositionLock(_ rect: CGRect?) {
+        maintainLockOnRect = rect
     }
 
     private func setup() {
@@ -710,6 +725,13 @@ extension TableView: TableContentViewDelegate {
 
     func tableContentView(_ tableContentView: TableContentView, didChangeBounds bounds: CGRect, oldBounds: CGRect) {
         viewportChanged()
+    }
+
+    func tableContentView(_ tableContentView: TableContentView, didChangeContentSize contentSize: CGSize, oldContentSize: CGSize) {
+        if let maintainLockOnRect,
+           let contentOffSet = containerScrollView?.contentOffset {
+            containerScrollView?.contentOffset = CGPoint(x: contentOffSet.x, y: contentOffSet.y + (contentSize.height - oldContentSize.height))
+        }
     }
 
     func tableContentView(_ tableContentView: TableContentView, didCompleteLayoutWithBounds bounds: CGRect) {
