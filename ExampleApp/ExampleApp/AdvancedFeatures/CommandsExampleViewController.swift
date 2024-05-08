@@ -527,6 +527,12 @@ extension CommandsExampleViewController: TableViewDelegate {
     func tableView(_ tableView: TableView, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool {
         return proposedWidth > 50
     }
+
+    func tableView(_ tableView: TableView, didUpdateScrollLock delta: CGPoint) {
+        if let container = tableView.delegate?.containerScrollView {
+            container.contentOffset = CGPoint(x: container.contentOffset.x + delta.x, y: container.contentOffset.y + delta.y)
+        }
+    }
 }
 
 class ListFormattingProvider: EditorListFormattingProvider {
