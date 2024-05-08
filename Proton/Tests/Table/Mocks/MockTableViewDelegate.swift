@@ -34,6 +34,7 @@ class MockTableViewDelegate: TableViewDelegate {
     var onDidSelectCells: ((_ tableView: TableView, _ cells: [TableCell]) -> Void)?
     var onDidUnselectCells: ((_ tableView: TableView, _ cells: [TableCell]) -> Void)?
     var onDidLayoutCell: ((_ tableView: TableView, _ cell: TableCell) -> Void)?
+    var onDidUpdateScrollLock: ((_ tableView: TableView, _ delta: CGPoint) -> Void)?
 
     func tableView(_ tableView: TableView, didReceiveFocusAt range: NSRange, in cell: TableCell) {
         onDidReceiveFocus?(tableView, range, cell)
@@ -72,7 +73,14 @@ class MockTableViewDelegate: TableViewDelegate {
         return true
     }
 
-    func tableView(_ tableView: Proton.TableView, didLayoutCell cell: Proton.TableCell) {
+    func tableView(_ tableView: TableView, didLayoutCell cell: Proton.TableCell) {
         onDidLayoutCell?(tableView, cell)
+    }
+
+    func tableView(_ tableView: TableView, didUpdateScrollLock delta: CGPoint) {
+        onDidUpdateScrollLock?(tableView, delta)
+        if let container = tableView.delegate?.containerScrollView {
+            container.contentOffset = CGPoint(x: container.contentOffset.x + delta.x, y: container.contentOffset.y + delta.y)
+        }
     }
 }

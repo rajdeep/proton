@@ -100,6 +100,16 @@ public protocol TableViewDelegate: AnyObject {
     ///   - tableView: TableView containing the cell.
     ///   - cell: Cell being laid out
     func tableView(_ tableView: TableView, didLayoutCell cell: TableCell)
+    
+    /// Provides a delta if the scroll locked position is updated as a result of cells getting rendered. A scroll lock can be applied using `maintainScrolledPositionLock`
+    /// on `TableView`.
+    /// - Parameters:
+    ///   - tableView: Tableview in which the cells are getting rendered
+    ///   - delta: Change in `x` and `y` positions of locked `CGRect` as a result of new cells getting rendered
+    /// - Note:
+    /// This is only intended to be used in scenarios where Editor is being scrolled to a position within `TableView` and the cell that is being scrolled to may not have been rendered
+    /// as it lies outside viewport.
+    func tableView(_ tableView: TableView, didUpdateScrollLock delta: CGPoint)
 }
 
 /// A view that provides a tabular structure where each cell is an `EditorView`.
@@ -728,9 +738,9 @@ extension TableView: TableContentViewDelegate {
     }
 
     func tableContentView(_ tableContentView: TableContentView, didChangeContentSize contentSize: CGSize, oldContentSize: CGSize) {
-        if let maintainLockOnRect,
-           let contentOffSet = containerScrollView?.contentOffset {
-            containerScrollView?.contentOffset = CGPoint(x: contentOffSet.x, y: contentOffSet.y + (contentSize.height - oldContentSize.height))
+        if maintainLockOnRect != nil {
+            let delta = CGPoint(x: (contentSize.width - oldContentSize.width), y: (contentSize.height - oldContentSize.height))
+            delegate?.tableView(self, didUpdateScrollLock: delta)
         }
     }
 
