@@ -528,9 +528,10 @@ extension CommandsExampleViewController: TableViewDelegate {
         return proposedWidth > 50
     }
 
-    func tableView(_ tableView: TableView, didUpdateScrollLock delta: CGPoint) {
+    func tableView(_ tableView: TableView, needsUpdateScrollPositionOnCell cell: TableCell, rect: CGRect, isRendered: Bool) {
         if let container = tableView.delegate?.containerScrollView {
-            container.contentOffset = CGPoint(x: container.contentOffset.x + delta.x, y: container.contentOffset.y + delta.y)
+            let offset = container.convert(CGPoint(x: cell.frame.origin.x, y: cell.frame.midY), from: tableView)
+            container.contentOffset = offset
         }
     }
 }

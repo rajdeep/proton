@@ -34,7 +34,7 @@ class MockTableViewDelegate: TableViewDelegate {
     var onDidSelectCells: ((_ tableView: TableView, _ cells: [TableCell]) -> Void)?
     var onDidUnselectCells: ((_ tableView: TableView, _ cells: [TableCell]) -> Void)?
     var onDidLayoutCell: ((_ tableView: TableView, _ cell: TableCell) -> Void)?
-    var onDidUpdateScrollLock: ((_ tableView: TableView, _ delta: CGPoint) -> Void)?
+    var onNeedsUpdateScrollPositionOnCell: ((_ tableView: TableView, _ cell: TableCell, _ rect: CGRect, _ isRendered: Bool) -> Void)?
 
     func tableView(_ tableView: TableView, didReceiveFocusAt range: NSRange, in cell: TableCell) {
         onDidReceiveFocus?(tableView, range, cell)
@@ -77,10 +77,11 @@ class MockTableViewDelegate: TableViewDelegate {
         onDidLayoutCell?(tableView, cell)
     }
 
-    func tableView(_ tableView: TableView, didUpdateScrollLock delta: CGPoint) {
-        onDidUpdateScrollLock?(tableView, delta)
+    func tableView(_ tableView: TableView, needsUpdateScrollPositionOnCell cell: TableCell, rect: CGRect, isRendered: Bool) {
+        onNeedsUpdateScrollPositionOnCell?(tableView, cell, rect, isRendered)
         if let container = tableView.delegate?.containerScrollView {
-            container.contentOffset = CGPoint(x: container.contentOffset.x + delta.x, y: container.contentOffset.y + delta.y)
+            let offset = container.convert(CGPoint(x: cell.frame.origin.x, y: cell.frame.midY), from: tableView)
+            container.contentOffset = offset
         }
     }
 }

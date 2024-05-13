@@ -100,16 +100,18 @@ public protocol TableViewDelegate: AnyObject {
     ///   - tableView: TableView containing the cell.
     ///   - cell: Cell being laid out
     func tableView(_ tableView: TableView, didLayoutCell cell: TableCell)
-    
-    /// Provides a delta if the scroll locked position is updated as a result of cells getting rendered. A scroll lock can be applied using `maintainScrolledPositionLock`
-    /// on `TableView`.
+
+    /// Notified that the cell that is being tried to focus using `maintainScrolledPositionLock` or  as a result of `scrollTo` needs to be refocussed.
+    /// A cell may need to be refocussed if it happens to be displayed from originally calculated position on rendering.
     /// - Parameters:
     ///   - tableView: Tableview in which the cells are getting rendered
-    ///   - delta: Change in `x` and `y` positions of locked `CGRect` as a result of new cells getting rendered
-    /// - Note:
-    /// This is only intended to be used in scenarios where Editor is being scrolled to a position within `TableView` and the cell that is being scrolled to may not have been rendered
-    /// as it lies outside viewport.
-    func tableView(_ tableView: TableView, didUpdateScrollLock delta: CGPoint)
+    ///   - cell: Locked `TableCell` that may need to be scrolled to.
+    ///   - rect: Rectangle for content within Cell to focus.
+    ///   - isRendered: Informs if the cell is already rendered in viewport. `true` if it is. `false` if cell is not yet in viewport
+    ///   /// - Note:
+    /// This is only intended to be used in scenarios where Editor is being scrolled to a position within `TableView` and the cell that is being scrolled to may 
+    /// not have been rendered being outside viewport.
+    func tableView(_ tableView: TableView, needsUpdateScrollPositionOnCell cell: TableCell, rect: CGRect, isRendered: Bool)
 }
 
 /// A view that provides a tabular structure where each cell is an `EditorView`.
@@ -126,7 +128,7 @@ public class TableView: UIView {
     private var resizingDragHandleLastLocation: CGPoint? = nil
     private var leadingShadowConstraint: NSLayoutConstraint!
 
-    private var maintainLockOnRect: CGRect?
+    private var maintainLockOnCell: (cell: TableCell, rect: CGRect)?
 
     private var observation: NSKeyValueObservation?
 
@@ -241,11 +243,15 @@ public class TableView: UIView {
     public var numberOfRows: Int {
         tableView.numberOfRows
     }
+    
+    /// Cells visible in current viewport.
+    public var visibleCells: [TableCell] {
+        cellsInViewport
+    }
 
     public override var bounds: CGRect {
         didSet {
             guard oldValue == bounds else { return }
-            maintainLockOnRect = nil
         }
     }
 
@@ -299,10 +305,16 @@ public class TableView: UIView {
         }
     }
 
-    /// Maintains the scroll lock on the rect passed in if the  original rect ends up moving as a result of cells getting rendered above this rect position
-    /// - Parameter rect: Rect to lock. `nil` to release lock.
-    public func maintainScrolledPositionLock(_ rect: CGRect?) {
-        maintainLockOnRect = rect
+    /// Maintains the scroll lock on the cell passed in if the  original rect ends up moving as a result of cells getting rendered above this rect position
+    /// - Parameters:
+    ///   - cell: Cell to lock on
+    ///   - rect: Offset within cell with respect to origin to scroll to.
+    public func maintainScrolledPositionLock(on cell: TableCell?, rect: CGRect) {
+        guard let cell = cell else {
+            maintainLockOnCell = nil
+            return
+        }
+        maintainLockOnCell = (cell, rect)
     }
 
     private func setup() {
@@ -336,6 +348,14 @@ public class TableView: UIView {
             trailingShadowView.topAnchor.constraint(equalTo: topAnchor),
             trailingShadowView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+    }
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        if let lockedCell = maintainLockOnCell?.cell,
+            cellsInViewport.contains(lockedCell) {
+            maintainLockOnCell = nil
+        }
     }
 
     private func setupScrollObserver() {
@@ -738,9 +758,8 @@ extension TableView: TableContentViewDelegate {
     }
 
     func tableContentView(_ tableContentView: TableContentView, didChangeContentSize contentSize: CGSize, oldContentSize: CGSize) {
-        if maintainLockOnRect != nil {
-            let delta = CGPoint(x: (contentSize.width - oldContentSize.width), y: (contentSize.height - oldContentSize.height))
-            delegate?.tableView(self, didUpdateScrollLock: delta)
+        if let maintainLockOnCell {
+            delegate?.tableView(self, needsUpdateScrollPositionOnCell: maintainLockOnCell.cell, rect: maintainLockOnCell.rect, isRendered: maintainLockOnCell.cell.editor != nil)
         }
     }
 
