@@ -1,9 +1,9 @@
 //
-//  CreateGridViewCommand.swift
-//  Proton
+//  TableViewCommand.swift
+//  ExampleApp
 //
-//  Created by Rajdeep Kwatra on 6/6/2022.
-//  Copyright © 2022 Rajdeep Kwatra. All rights reserved.
+//  Created by Rajdeep Kwatra on 9/4/2024.
+//  Copyright © 2024 Rajdeep Kwatra. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -23,19 +23,19 @@ import UIKit
 import Proton
 
 /// Editor command that inserts a GridView in the given range
-public class CreateGridViewCommand: EditorCommand {
+public class TableViewCommand: EditorCommand {
 
-    public let name = CommandName("createGridViewCommand")
-    weak var delegate: GridViewDelegate?
+    public let name = CommandName("tableViewCommand")
+    weak var delegate: TableViewDelegate?
     var text = NSMutableAttributedString()
 
-    public init(delegate: GridViewDelegate) {
+    public init(delegate: TableViewDelegate) {
         self.delegate = delegate
 
         text.append(NSAttributedString(string: "Text before Grid"))
         timeEvent(label: "Create")
-        for i in 1..<2 {
-            text.append(makeGridViewAttachment(id: i, numRows: 7, numColumns: 7).string)
+        for i in 1..<20 {
+            text.append(makeGridViewAttachment(id: i, numRows: 5, numColumns: 10).string)
 //            text.append(makePanelAttachment(id: i).string)
             text.append(NSAttributedString(string: "\ntest middle\n"))
         }
@@ -56,26 +56,34 @@ public class CreateGridViewCommand: EditorCommand {
         return attachment
     }
 
-    private func makeGridViewAttachment(id: Int, numRows: Int, numColumns: Int) -> GridViewAttachment {
+    private func makeGridViewAttachment(id: Int, numRows: Int, numColumns: Int) -> TableViewAttachment {
         let config = GridConfiguration(columnsConfiguration: [GridColumnConfiguration](repeating: GridColumnConfiguration(width: .fixed(100)), count: numColumns),
-                                       rowsConfiguration: [GridRowConfiguration](repeating: GridRowConfiguration(initialHeight: 100), count: numRows))
+                                       rowsConfiguration: [GridRowConfiguration](repeating: GridRowConfiguration(initialHeight: 60), count: numRows))
 
-        var cells = [GridCell]()
+        var cells = [TableCell]()
         for row in 0..<numRows {
             for col in 0..<numColumns {
+                let text = generateRandomString(from: "Text in cell ")
                 let editorInit = {
                     let editor = EditorView(allowAutogrowing: false)
-                    editor.attributedText = NSAttributedString(string: "Table \(id) {\(row), \(col)} Text in cell")
+                    editor.attributedText = NSAttributedString(string: "Table \(id) {\(row), \(col)} \(text)")
                     return editor
                 }
-                let cell = GridCell(rowSpan: [row], columnSpan: [col], initialHeight: 20, editorInitializer: editorInit)
+                let cell = TableCell(rowSpan: [row], columnSpan: [col], initialHeight: 200, editorInitializer: editorInit)
+//                cell.attributedText = NSAttributedString(string: text)
                 cells.append(cell)
             }
         }
 
-        let attachment = GridViewAttachment(config: config, cells: cells)
+        let attachment = TableViewAttachment(config: config, cells: cells)
         attachment.view.delegate = delegate
         return attachment
+    }
+
+    func generateRandomString(from text: String) -> String {
+        let repetitionCount = Int.random(in: 1...10)
+        let randomString = String(repeating: text, count: repetitionCount)
+        return randomString
     }
 
     func timeEvent(label: String) {

@@ -253,6 +253,11 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         }
     }
 
+    /// Attachment's frame in ints container `EditorView`. The value may be nil if attachment is not rendered yet.
+    public var frameInContainer: CGRect? {
+        frame
+    }
+
     /// `EditorView` containing this attachment
     public private(set) weak var containerEditorView: EditorView?
 
