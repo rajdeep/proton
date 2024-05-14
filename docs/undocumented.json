@@ -100,28 +100,28 @@
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Attachment/Attachment.swift",
-      "line": 273,
+      "line": 278,
       "symbol": "Attachment.contentView",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Attachment/Attachment.swift",
-      "line": 579,
+      "line": 584,
       "symbol": "Attachment.update(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Attachment/Attachment.swift",
-      "line": 587,
+      "line": 592,
       "symbol": "Attachment.update(_:size:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Attachment/Attachment.swift",
-      "line": 593,
+      "line": 598,
       "symbol": "Attachment.getFullTextRangeIdentificationAttributes()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -786,35 +786,35 @@
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 1485,
+      "line": 1487,
       "symbol": "EditorView.resolveAsyncText()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 1572,
+      "line": 1574,
       "symbol": "EditorView.forFirstBaselineLayout",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorView.swift",
-      "line": 1576,
+      "line": 1578,
       "symbol": "EditorView.forLastBaselineLayout",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorViewDelegate.swift",
-      "line": 138,
+      "line": 147,
       "symbol": "EditorViewDelegate.editor(_:didChangeBackgroundColor:oldColor:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Editor/EditorViewDelegate.swift",
-      "line": 160,
+      "line": 170,
       "symbol": "EditorViewDelegate.editor(_:didChangeBackgroundColor:oldColor:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -1481,6 +1481,279 @@
       "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/Text/FontExtensions.swift",
       "line": 85,
       "symbol": "UIFont.removing(trait:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/Utility.swift",
+      "line": 25,
+      "symbol": "Utility",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/Utility.swift",
+      "line": 28,
+      "symbol": "Utility.drawRect(rect:color:in:name:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Helpers/Utility.swift",
+      "line": 33,
+      "symbol": "Utility.drawPath(path:color:in:name:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/Core/Table.swift",
+      "line": 456,
+      "symbol": "TableViewError",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/Core/Table.swift",
+      "line": 457,
+      "symbol": "TableViewError.failedToInsertInFrozenRows",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/Core/Table.swift",
+      "line": 458,
+      "symbol": "TableViewError.failedToInsertInFrozenColumns",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCell.swift",
+      "line": 42,
+      "symbol": "TableCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCell.swift",
+      "line": 44,
+      "symbol": "TableCell.EditorInitializer",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCell.swift",
+      "line": 50,
+      "symbol": "TableCell.onEditorInitialized",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCell.swift",
+      "line": 55,
+      "symbol": "TableCell.attributedText",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCell.swift",
+      "line": 70,
+      "symbol": "TableCell.backgroundColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCell.swift",
+      "line": 85,
+      "symbol": "TableCell.isSelected",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCell.swift",
+      "line": 115,
+      "symbol": "TableCell.editor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCell.swift",
+      "line": 119,
+      "symbol": "TableCell.gridStyle",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCell.swift",
+      "line": 120,
+      "symbol": "TableCell.style",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCell.swift",
+      "line": 203,
+      "symbol": "TableCell",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCell.swift",
+      "line": 209,
+      "symbol": "TableCell",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCellContentView.swift",
+      "line": 24,
+      "symbol": "TableCellContentView",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCellContentView.swift",
+      "line": 25,
+      "symbol": "TableCellContentView.editor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCellContentView.swift",
+      "line": 36,
+      "symbol": "TableCellContentView.isSelectable",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCellContentView.swift",
+      "line": 38,
+      "symbol": "TableCellContentView.backgroundColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCellContentView.swift",
+      "line": 45,
+      "symbol": "TableCellContentView.intrinsicContentSize",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCellContentView.swift",
+      "line": 49,
+      "symbol": "TableCellContentView.contentSize",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCellContentView.swift",
+      "line": 138,
+      "symbol": "TableCellContentView.setFocus()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCellContentView.swift",
+      "line": 157,
+      "symbol": "TableCellContentView",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCellContentView.swift",
+      "line": 163,
+      "symbol": "TableCellContentView",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableCellContentView.swift",
+      "line": 184,
+      "symbol": "TableCellContentView.editor(_:didChangeBackgroundColor:oldColor:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableContentView.swift",
+      "line": 525,
+      "symbol": "TableContentView.sizeFor(attachment:containerSize:lineRect:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableView.swift",
+      "line": 26,
+      "symbol": "TableViewDelegate.containerScrollView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableView.swift",
+      "line": 28,
+      "symbol": "TableViewDelegate.viewport",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableView.swift",
+      "line": 233,
+      "symbol": "TableView.selectedCells",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableView.swift",
+      "line": 252,
+      "symbol": "TableView.bounds",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableView.swift",
+      "line": 302,
+      "symbol": "TableView.backgroundColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableView.swift",
+      "line": 353,
+      "symbol": "TableView.layoutSubviews()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableView.swift",
+      "line": 647,
+      "symbol": "TableView.unfreezeColumns()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableView.swift",
+      "line": 651,
+      "symbol": "TableView.unfreezeRows()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableView.swift",
+      "line": 655,
+      "symbol": "TableView.collapseRow(at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableView.swift",
+      "line": 737,
+      "symbol": "TableView.scrollViewDidScroll(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/rkwatra/Documents/practice/proton/Proton/Sources/Swift/Table/TableView.swift",
+      "line": 859,
+      "symbol": "TableView.containerEditor(_:backgroundColorUpdated:oldColor:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
