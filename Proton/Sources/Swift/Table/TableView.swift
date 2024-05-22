@@ -604,10 +604,10 @@ public class TableView: UIView {
     ///     If the index is out of bounds, row will be inserted at the top or bottom of the grid based on index value
     ///   - configuration: Configuration for the new row
     /// - Returns: Result with newly added cells for `.success`, error in case of `.failure`
-//    @discardableResult
-//    public func insertRow(at index: Int, configuration: GridRowConfiguration) -> Result<[TableCell], TableViewError> {
-//        tableView.insertRow(at: index, configuration: configuration)
-//    }
+    @discardableResult
+    public func insertRow(at index: Int, configuration: GridRowConfiguration) -> Result<[TableCell], TableViewError> {
+        tableView.insertRow(at: index, configuration: configuration)
+    }
 
     /// Inserts a new column at given index.
     /// - Parameters:

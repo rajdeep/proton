@@ -241,16 +241,16 @@ class TableContentView: UIScrollView {
         return cells
     }
 
-//    @discardableResult
-//    func insertRow(at index: Int, configuration: GridRowConfiguration) -> Result<[TableCell], GridViewError> {
-//        let result = grid.insertRow(at: index, frozenRowMaxIndex: frozenRowMaxIndex, config: configuration, cellDelegate: self)
-//        if case Result.success = result {
-//            invalidateCellLayout()
-//            tableContentViewDelegate?.tableContentView(self, didAddNewRowAt: index)
-//        }
-//        return result
-//    }
-//
+    @discardableResult
+    func insertRow(at index: Int, configuration: GridRowConfiguration) -> Result<[TableCell], TableViewError> {
+        let result = table.insertRow(at: index, frozenRowMaxIndex: frozenRowMaxIndex, config: configuration, cellDelegate: self)
+        if case Result.success = result {
+            invalidateCellLayout()
+            tableContentViewDelegate?.tableContentView(self, didAddNewRowAt: index)
+        }
+        return result
+    }
+
 //    @discardableResult
 //    func insertColumn(at index: Int, configuration: GridColumnConfiguration) -> Result<[TableCell], GridViewError> {
 //        let result = grid.insertColumn(at: index, frozenColumnMaxIndex: frozenColumnMaxIndex, config: configuration, cellDelegate: self)
@@ -348,7 +348,8 @@ class TableContentView: UIScrollView {
     }
 
     func invalidateCellLayout() {
-        //TODO: Fix
+        updateCellFrames()
+        relayoutTable()
     }
 
     private func recalculateCellBounds(cell: TableCell) {
@@ -374,16 +375,20 @@ class TableContentView: UIScrollView {
             }
         }
 
+        relayoutTable()
+        tableContentViewDelegate?.tableContentView(self, didLayoutCell: cell)
+    }
+
+    private func relayoutTable() {
         contentSize = table.size
 
         heightAnchorConstraint.constant = self.frame.height
         if heightAnchorConstraint.isActive == false {
             heightAnchorConstraint.isActive = true
         }
-
         superview?.layoutIfNeeded()
         boundsObserver?.didChangeBounds(CGRect(origin: bounds.origin, size: frame.size), oldBounds: bounds)
-        tableContentViewDelegate?.tableContentView(self, didLayoutCell: cell)
+        tableContentViewDelegate?.tableContentView(self, needsUpdateViewport: self.bounds.origin)
     }
 
     private func freezeColumnCellIfRequired(_ cell: TableCell) {
