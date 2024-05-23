@@ -1159,6 +1159,93 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testInsertsColumnInMiddle() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        table.insertColumn(at: 1, configuration: GridColumnConfiguration(width: .fixed(80)))
+
+        viewController.render(size: CGSize(width: 400, height: 400))
+        let newCell11 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 1))
+        newCell11.editor?.attributedText = NSAttributedString(string: "New cell")
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testInsertsColumnAtBeginning() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.50)),
+                GridColumnConfiguration(width: .fixed(50)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        table.insertColumn(at: 0, configuration: GridColumnConfiguration(width: .fractional(0.25)))
+
+        viewController.render(size: CGSize(width: 400, height: 400))
+        let newCell00 = try XCTUnwrap(table.cellAt(rowIndex: 0, columnIndex: 0))
+        newCell00.editor?.attributedText = NSAttributedString(string: "New cell")
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testInsertsColumnAtEnd() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fixed(60)),
+                GridColumnConfiguration(width: .fixed(60)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        table.insertColumn(at: 3, configuration: GridColumnConfiguration(width: .fixed(150)))
+
+        viewController.render(size: CGSize(width: 400, height: 400))
+        let newCell21 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 3))
+        newCell21.editor?.attributedText = NSAttributedString(string: "New cell")
+
+        // Editor shows caret for some reason - needs further investigation
+        table.cellAt(rowIndex: 2, columnIndex: 0)?.editor?.isSelectable = false
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
 
     private func makeTableViewAttachment(config: GridConfiguration, cells: [TableCell] = []) -> TableViewAttachment {
         let attachment: TableViewAttachment

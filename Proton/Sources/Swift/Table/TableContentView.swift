@@ -251,15 +251,15 @@ class TableContentView: UIScrollView {
         return result
     }
 
-//    @discardableResult
-//    func insertColumn(at index: Int, configuration: GridColumnConfiguration) -> Result<[TableCell], GridViewError> {
-//        let result = grid.insertColumn(at: index, frozenColumnMaxIndex: frozenColumnMaxIndex, config: configuration, cellDelegate: self)
-//        if case Result.success = result {
-//            invalidateCellLayout()
-//            tableContentViewDelegate?.tableContentView(self, didAddNewColumnAt: index)
-//        }
-//        return result
-//    }
+    @discardableResult
+    func insertColumn(at index: Int, configuration: GridColumnConfiguration) -> Result<[TableCell], TableViewError> {
+        let result = table.insertColumn(at: index, frozenColumnMaxIndex: frozenColumnMaxIndex, config: configuration, cellDelegate: self)
+        if case Result.success = result {
+            invalidateCellLayout()
+            tableContentViewDelegate?.tableContentView(self, didAddNewColumnAt: index)
+        }
+        return result
+    }
 
     func deleteRow(at index: Int) {
         table.deleteRow(at: index)

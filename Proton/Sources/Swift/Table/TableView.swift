@@ -615,10 +615,10 @@ public class TableView: UIView {
     ///   If the index is out of bounds, column will be inserted at the beginning or end of the grid based on index value
     ///   - configuration: Configuration for the new column
     /// - Returns: Result with newly added cells for `.success`, error in case of `.failure`
-//    @discardableResult
-//    public func insertColumn(at index: Int, configuration: GridColumnConfiguration) -> Result<[TableCell], TableViewError> {
-//        tableView.insertColumn(at: index, configuration: configuration)
-//    }
+    @discardableResult
+    public func insertColumn(at index: Int, configuration: GridColumnConfiguration) -> Result<[TableCell], TableViewError> {
+        tableView.insertColumn(at: index, configuration: configuration)
+    }
 
     /// Deletes the row at given index
     /// - Parameter index: Index to delete
