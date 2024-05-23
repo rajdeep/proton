@@ -1105,7 +1105,7 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         viewController.render(size: CGSize(width: 400, height: 400))
 
         let newCell11 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 1))
-        newCell11.editor?.replaceCharacters(in: .zero, with: "New cell")
+        newCell11.editor?.attributedText = NSAttributedString(string: "New cell")
         // Editor shows caret for some reason - needs further investigation
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
