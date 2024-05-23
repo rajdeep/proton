@@ -104,7 +104,7 @@ public class TableCellContentView: UIView {
         ])
     }
 
-    func applyStyle(_ style: GridCellStyle) {
+    public func applyStyle(_ style: GridCellStyle) {
        layer.borderColor = style.borderStyle?.color.cgColor ?? gridStyle.borderColor.cgColor
        layer.borderWidth = style.borderStyle?.width ?? gridStyle.borderWidth
 
