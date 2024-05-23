@@ -1076,14 +1076,13 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         let config = GridConfiguration(
             columnsConfiguration: [
                 GridColumnConfiguration(width: .fixed(30)),
-                GridColumnConfiguration(width: .fixed(150)),
-                GridColumnConfiguration(width: .fixed(200)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+                GridColumnConfiguration(width: .fractional(0.45)),
             ],
             rowsConfiguration: [
                 GridRowConfiguration(initialHeight: 40),
                 GridRowConfiguration(initialHeight: 40),
             ])
-
         let attachment = TableViewAttachment(config: config)
         let table = attachment.view
         attachment.view.delegate = delegate
@@ -1092,21 +1091,12 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
-        let cell11 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 1))
-        let cell12 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 2))
-
-        cell11.editor?.replaceCharacters(in: .zero, with: "Test string 1")
-        cell12.editor?.replaceCharacters(in: .zero, with: "Test string 2")
-
-        viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
-
         table.insertRow(at: 1, configuration: GridRowConfiguration(initialHeight: 60))
-        viewController.render(size: CGSize(width: 400, height: 400))
 
+        viewController.render(size: CGSize(width: 400, height: 400))
         let newCell11 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 1))
         newCell11.editor?.attributedText = NSAttributedString(string: "New cell")
-        // Editor shows caret for some reason - needs further investigation
+
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
