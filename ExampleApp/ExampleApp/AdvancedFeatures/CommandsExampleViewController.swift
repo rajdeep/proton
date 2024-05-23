@@ -501,15 +501,15 @@ extension CommandsExampleViewController: TableViewDelegate {
         let columnActions = [
             UIAction(title: "Add column right", image: UIImage(systemName: "arrow.right"),
                      handler: { (_) in
-//                         let result = tableView.insertColumn(at: cell.columnSpan.max()! + 1, configuration: GridColumnConfiguration(width: .fixed(100)))
-//                         if case let Result.failure(error) = result {
-//                             print("Failed to insert: \(error)")
-//                         }
+                         let result = tableView.insertColumn(at: cell.columnSpan.max()! + 1, configuration: GridColumnConfiguration(width: .fixed(100)))
+                         if case let Result.failure(error) = result {
+                             print("Failed to insert: \(error)")
+                         }
                      }),
-//            UIAction(title: "Add column left", image: UIImage(systemName: "arrow.left"),
-//                     handler: { (_) in
-//                         gridView.insertColumn(at: cell.columnSpan.min()!, configuration: GridColumnConfiguration(dimension: .fixed(100)))
-//                     }),
+            UIAction(title: "Add column left", image: UIImage(systemName: "arrow.left"),
+                     handler: { (_) in
+                         tableView.insertColumn(at: cell.columnSpan.min()!, configuration: GridColumnConfiguration(width: .fixed(100)))
+                     }),
 //            UIAction(title: "Delete Column", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
 //                gridView.deleteColumn(at: cell.columnSpan.max()!)
 //            }),
