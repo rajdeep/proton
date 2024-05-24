@@ -687,6 +687,23 @@ class EditorViewTests: XCTestCase {
         XCTAssertEqual(text.string, expectedString)
     }
 
+    func testAttachmentsInRangeWithValidRange() {
+            let editor = EditorView()
+
+            let panel1 = PanelView()
+            panel1.editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Text inside panel 1"))
+            let panelAttachment1 = Attachment(panel1, size: .matchContent)
+            editor.insertAttachment(in: editor.textEndRange, attachment: panelAttachment1)
+
+            let panel2 = PanelView()
+            panel2.editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Text inside panel 2"))
+            let panelAttachment2 = Attachment(panel2, size: .matchContent)
+            editor.insertAttachment(in: editor.textEndRange, attachment: panelAttachment2)
+
+            let attachments = editor.attachmentsInRange(NSRange(location: editor.attributedText.length - 2, length: 2))
+            XCTAssertEqual(attachments.count, 1)
+        }
+
     func testGetsFullAttributedTextFromRange() {
         let viewController = EditorTestViewController()
         let editor = viewController.editor
