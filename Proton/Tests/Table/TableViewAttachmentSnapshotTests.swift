@@ -1159,6 +1159,45 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testDeletesRow() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(50)),
+                GridColumnConfiguration(width: .fixed(50)),
+                GridColumnConfiguration(width: .fixed(50)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ],
+            ignoresOptimizedInit: true
+        )
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let cell00 = try XCTUnwrap(table.cellAt(rowIndex: 0, columnIndex: 0))
+        let cell10 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 0))
+        let cell20 = try XCTUnwrap(table.cellAt(rowIndex: 2, columnIndex: 0))
+
+        cell00.attributedText = NSAttributedString(string: "R1")
+        cell10.attributedText = NSAttributedString(string: "R2")
+        cell20.attributedText = NSAttributedString(string: "R3")
+
+        viewController.render(size: CGSize(width: 201, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        table.deleteRow(at: 1)
+
+        viewController.render(size: CGSize(width: 201, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     func testInsertsColumnInMiddle() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
@@ -1243,6 +1282,45 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         // Editor shows caret for some reason - needs further investigation
         table.cellAt(rowIndex: 2, columnIndex: 0)?.editor?.isSelectable = false
 
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testDeletesColumn() throws {
+        recordMode = true
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.35)),
+                GridColumnConfiguration(width: .fractional(0.35)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ],
+            ignoresOptimizedInit: true
+        )
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let gridView = attachment.view
+
+        let cell11 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 2))
+
+        cell11.attributedText = NSAttributedString(string: "C1")
+        cell12.attributedText = NSAttributedString(string: "C2")
+
+        viewController.render(size: CGSize(width: 200, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        table.deleteColumn(at: 1)
+
+        viewController.render(size: CGSize(width: 200, height: 300))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 

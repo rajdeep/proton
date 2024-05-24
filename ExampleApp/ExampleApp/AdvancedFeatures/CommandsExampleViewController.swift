@@ -510,9 +510,9 @@ extension CommandsExampleViewController: TableViewDelegate {
                      handler: { (_) in
                          tableView.insertColumn(at: cell.columnSpan.min()!, configuration: GridColumnConfiguration(width: .fixed(100)))
                      }),
-//            UIAction(title: "Delete Column", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
-//                gridView.deleteColumn(at: cell.columnSpan.max()!)
-//            }),
+            UIAction(title: "Delete Column", image: UIImage(systemName: "trash"), attributes: columnCount > 1 ? .destructive : .disabled, handler: { (_) in
+                tableView.deleteColumn(at: cell.columnSpan.max()!)
+            }),
 //            UIAction(title: "Freeze Columns", image: UIImage(systemName: "arrow.up"), handler: { (_) in
 //                gridView.freezeColumns(upTo: cell.columnSpan.max()!)
 //            }),

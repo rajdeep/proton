@@ -57,8 +57,7 @@ class TableCellStore {
     }
 
     func deleteCells(_ cellsToDelete: [TableCell]) {
-        //TODO: fix
-//        cells = cells.filter({ !cellsToDelete.contains($0) })
+        cells = cells.filter({ !cellsToDelete.contains($0) })
     }
 
     func moveCellRowIndex(from index: Int, by step: Int) {
