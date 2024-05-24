@@ -1286,7 +1286,6 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
     }
 
     func testDeletesColumn() throws {
-        recordMode = true
         let config = GridConfiguration(
             columnsConfiguration: [
                 GridColumnConfiguration(width: .fixed(30)),
