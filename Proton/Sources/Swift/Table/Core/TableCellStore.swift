@@ -45,7 +45,6 @@ class TableCellStore {
         let cell = cells[index]
         cell.removeContentView()
         cells.remove(at: index)
-
     }
 
     func addCells(_ newCells: [TableCell]) {

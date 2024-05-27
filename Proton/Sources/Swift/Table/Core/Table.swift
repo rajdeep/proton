@@ -24,6 +24,7 @@ import UIKit
 
 protocol TableDelegate: AnyObject {
     var viewport: CGRect { get  }
+    var cellsInViewport: [TableCell] { get }
     func table(_ table: Table, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool
 }
 
@@ -84,6 +85,10 @@ class Table {
 
     func cellAt(rowIndex: Int, columnIndex: Int) -> TableCell? {
         return cellStore.cellAt(rowIndex: rowIndex, columnIndex: columnIndex)
+    }
+
+    func heightForCell(_ cell: TableCell) -> CGFloat {
+        cell.rowSpan.reduce(0) { $0 + rowHeights[$1].currentHeight }
     }
 
     func calculateTableDimensions(basedOn size: CGSize) {
@@ -236,6 +241,7 @@ class Table {
     }
 
     private func merge(cell: TableCell, other: TableCell) {
+//        syncTextForCellsInViewport()
         guard let _ = cellStore.cells.firstIndex(where: { $0.id == cell.id }),
               let otherIndex = cellStore.cells.firstIndex(where: { $0.id == other.id }) else {
             return
@@ -244,9 +250,11 @@ class Table {
         cell.rowSpan = Array(Set(cell.rowSpan).union(other.rowSpan)).sorted()
         cell.columnSpan = Array(Set(cell.columnSpan).union(other.columnSpan)).sorted()
 
-        // TODO: fix
-//        cell.editor.replaceCharacters(in: cell.editor.textEndRange, with: " ")
-//        cell.editor.replaceCharacters(in: cell.editor.textEndRange, with: other.editor.attributedText)
+        let updatedText = NSMutableAttributedString(attributedString: cell.attributedText ?? NSAttributedString())
+        updatedText.append(NSAttributedString(string: " "))
+        updatedText.append(other.attributedText ?? NSAttributedString())
+
+        cell.attributedText = updatedText
 
         cellStore.deleteCellAt(index: otherIndex)
     }
@@ -415,6 +423,12 @@ class Table {
             cellStore.moveCellColumnIndex(from: index + 1, by: -1)
         }
 
+    }
+
+    func syncTextForCellsInViewport() {
+        delegate?.cellsInViewport.forEach {
+            $0.attributedText = $0.editor?.attributedText
+        }
     }
 
     func collapseRow(at index: Int) {

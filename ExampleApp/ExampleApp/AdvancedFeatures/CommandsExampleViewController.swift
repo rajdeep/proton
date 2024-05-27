@@ -221,13 +221,16 @@ class CommandsExampleViewController: ExamplesBaseViewController {
     var selectedCells: [GridCell]? = nil
     var selectedGrid: GridView? = nil
 
+    var selectedTableCells: [TableCell]? = nil
+    var selectedTable: TableView? = nil
+
     @objc
     func mergeCells(sender: UIButton) {
-        if let cells = selectedCells {
-            selectedGrid?.merge(cells: cells)
+        if let cells = selectedTableCells {
+            selectedTable?.merge(cells: cells)
         }
-        selectedCells = nil
-        selectedGrid = nil
+        selectedTableCells = nil
+        selectedTable = nil
     }
 
     @objc
@@ -599,7 +602,15 @@ extension CommandsExampleViewController: TableViewDelegate {
     }
 
     func tableView(_ tableView: TableView, didSelectCells cells: [TableCell]) {
-      
+        selectedTable = tableView
+        selectedTableCells = cells
+        mergeButton?.isEnabled = tableView.isCellSelectionMergeable(cells)
+
+        if cells.count == 1, cells[0].isSplittable {
+            splitButton?.isEnabled = true
+        } else {
+            splitButton?.isEnabled = false
+        }
     }
 
     func tableView(_ tableView: TableView, didUnselectCells cells: [TableCell]) {

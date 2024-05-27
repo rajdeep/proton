@@ -52,7 +52,16 @@ public class TableCell {
     /// Additional attributes that can be stored on Cell to identify various aspects like Header, Numbered etc.
     public var additionalAttributes: [String: Any] = [:]
 
-    public var attributedText: NSAttributedString?
+    private var _attributedText: NSAttributedString?
+    public var attributedText: NSAttributedString? {
+        get { contentView == nil ? _attributedText : editor?.attributedText }
+        set {
+            _attributedText = newValue
+            editor?.attributedText = newValue ?? NSAttributedString()
+        }
+    }
+
+    /// Row indexes spanned by the cell. In case of a merged cell, this will contain all the rows= indexes which are merged.
 
     /// Row indexes spanned by the cell. In case of a merged cell, this will contain all the rows= indexes which are merged.
     public internal(set) var rowSpan: [Int]
@@ -105,7 +114,7 @@ public class TableCell {
             contentView?.frame = frame
             //TODO: get rid of editorInitializer in favor of delegate callback for editor
             if let editor = contentView?.editor {
-                editor.attributedText = attributedText ?? editorInitializer().attributedText
+                editor.attributedText = _attributedText ?? editorInitializer().attributedText
                 onEditorInitialized?(self, editor)
             }
             contentView?.applyStyle(style)

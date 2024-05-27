@@ -497,7 +497,11 @@ extension TableContentView: TableCellDelegate {
             return
         }
 
-        table.rowHeights[row].currentHeight = bounds.height
+        // Only increase the height if combined height of merged cell, if it is, is less than the height of editor
+        // TODO: handle the case where height is reduced. Same as above
+        if table.heightForCell(cell) <= bounds.height {
+            table.rowHeights[row].currentHeight = bounds.height
+        }
         //TODO: only update affected row/column onwards
         table.calculateTableDimensions(basedOn: self.bounds.size)
         recalculateCellBounds(cell: cell)
@@ -541,6 +545,8 @@ extension TableContentView: UIGestureRecognizerDelegate {
 
 extension TableContentView: TableDelegate {
     var viewport: CGRect { bounds }
+
+    var cellsInViewport: [TableCell] { tableContentViewDelegate?.cellsInViewport ?? [] }
 
     func table(_ table: Table, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool {
         tableContentViewDelegate?.tableContentView(self, shouldChangeColumnWidth: proposedWidth, for: columnIndex) ?? true
