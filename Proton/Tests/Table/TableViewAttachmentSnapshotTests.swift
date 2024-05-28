@@ -678,6 +678,60 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testRendersTableViewAttachmentWithSplitRowsAndColumns() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ],
+            ignoresOptimizedInit: true
+        )
+        let attachment = makeTableViewAttachment(config: config)
+
+        let tableView = attachment.view
+        let cell11 = try XCTUnwrap(tableView.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(tableView.cellAt(rowIndex: 1, columnIndex: 2))
+
+        cell11.attributedText = NSAttributedString(string: "Test string 1")
+        cell12.attributedText = NSAttributedString(string: "Test string 2")
+
+        let cell21 = try XCTUnwrap(tableView.cellAt(rowIndex: 2, columnIndex: 1))
+        let cell22 = try XCTUnwrap(tableView.cellAt(rowIndex: 2, columnIndex: 2))
+
+        cell21.attributedText = NSAttributedString(string: "Test string 3")
+        cell22.attributedText = NSAttributedString(string: "Test string 4")
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        tableView.merge(cells: [
+            cell11,
+            cell12,
+            cell21,
+            cell22
+        ])
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        tableView.split(cell: cell11)
+        let newCell12 = try XCTUnwrap(tableView.cellAt(rowIndex: 1, columnIndex: 2))
+        newCell12.editor?.replaceCharacters(in: .zero, with: "Newly added text")
+
+        viewController.render(size: CGSize(width: 400, height: 500))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     func FLAKY_testTableShadows() {
         let config = GridConfiguration(
             columnsConfiguration: [
