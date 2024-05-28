@@ -77,7 +77,8 @@ class TableViewTests: XCTestCase {
         viewController.render(size: CGSize(width: 400, height: 700))
         attachment.view.scrollViewDidScroll(editor.scrollView)
         XCTAssertEqual(tableView.cellsInViewport.count, 12)
-        XCTAssertEqual("", try cellIDString(from: tableView.cells, filter: filter))
+        XCTAssertEqual("{[0],[0]} {[0],[1]} {[0],[2]} {[0],[3]} {[1],[0]} {[1],[1]} {[1],[2]} {[1],[3]} {[2],[0]} {[2],[1]} {[2],[2]} {[2],[3]}",
+                       try cellIDString(from: tableView.cellsInViewport, filter: filter))
 
         viewport = CGRect(x: 0, y: 300, width: 350, height: 200)
         delegate.viewport = viewport
@@ -87,9 +88,9 @@ class TableViewTests: XCTestCase {
         XCTAssertEqual(tableView.cellsInViewport.count, 12)
         XCTAssertEqual(
             """
-            {[0],[0]} {[0],[1]} {[0],[2]} {[0],[3]} {[1],[0]} {[1],[1]} {[1],[2]} {[1],[3]}
+            {[2],[0]} {[2],[1]} {[2],[2]} {[2],[3]} {[3],[0]} {[3],[1]} {[3],[2]} {[3],[3]} {[4],[0]} {[4],[1]} {[4],[2]} {[4],[3]}
             """,
-            try cellIDString(from: tableView.cells, filter: filter))
+            try cellIDString(from: tableView.cellsInViewport, filter: filter))
 
 
         viewport = CGRect(x: 0, y: 100, width: 350, height: 200)
@@ -100,9 +101,9 @@ class TableViewTests: XCTestCase {
         XCTAssertEqual(tableView.cellsInViewport.count, 12)
         XCTAssertEqual(
             """
-            {[0],[0]} {[0],[1]} {[0],[2]} {[0],[3]} {[1],[0]} {[1],[1]} {[1],[2]} {[1],[3]} {[3],[0]} {[3],[1]} {[3],[2]} {[3],[3]} {[4],[0]} {[4],[1]} {[4],[2]} {[4],[3]}
+            {[0],[0]} {[0],[1]} {[0],[2]} {[0],[3]} {[1],[0]} {[1],[1]} {[1],[2]} {[1],[3]} {[2],[0]} {[2],[1]} {[2],[2]} {[2],[3]}
             """,
-            try cellIDString(from: tableView.cells, filter: filter))
+            try cellIDString(from: tableView.cellsInViewport, filter: filter))
     }
 
     func FIXME_testChangesBoundsOfCell() {
