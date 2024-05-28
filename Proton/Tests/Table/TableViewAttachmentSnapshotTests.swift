@@ -596,7 +596,7 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
-    func FIXME_testRendersTableViewAttachmentWithMergedColumns() throws {
+    func testRendersTableViewAttachmentWithMergedColumns() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
                 GridColumnConfiguration(width: .fixed(100)),
@@ -631,7 +631,7 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
-    func FIXME_testRendersTableViewAttachmentWithMixedMergedRowsAndColumns() throws {
+    func testRendersTableViewAttachmentWithMixedMergedRowsAndColumns() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
                 GridColumnConfiguration(width: .fixed(100)),
