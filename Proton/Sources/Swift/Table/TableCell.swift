@@ -62,8 +62,6 @@ public class TableCell {
     }
 
     /// Row indexes spanned by the cell. In case of a merged cell, this will contain all the rows= indexes which are merged.
-
-    /// Row indexes spanned by the cell. In case of a merged cell, this will contain all the rows= indexes which are merged.
     public internal(set) var rowSpan: [Int]
     /// Column indexes spanned by the cell. In case of a merged cell, this will contain all the column indexes which are merged.
     public internal(set) var columnSpan: [Int]

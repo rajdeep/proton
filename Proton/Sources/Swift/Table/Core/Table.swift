@@ -241,7 +241,6 @@ class Table {
     }
 
     private func merge(cell: TableCell, other: TableCell) {
-//        syncTextForCellsInViewport()
         guard let _ = cellStore.cells.firstIndex(where: { $0.id == cell.id }),
               let otherIndex = cellStore.cells.firstIndex(where: { $0.id == other.id }) else {
             return
@@ -423,12 +422,6 @@ class Table {
             cellStore.moveCellColumnIndex(from: index + 1, by: -1)
         }
 
-    }
-
-    func syncTextForCellsInViewport() {
-        delegate?.cellsInViewport.forEach {
-            $0.attributedText = $0.editor?.attributedText
-        }
     }
 
     func collapseRow(at index: Int) {

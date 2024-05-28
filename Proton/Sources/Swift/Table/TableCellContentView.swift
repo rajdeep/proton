@@ -189,12 +189,4 @@ extension TableCellContentView: EditorViewDelegate {
         backgroundColor = color
         delegate?.cell(containerCell, didChangeBackgroundColor: color, oldColor: oldColor)
     }
-
-//    public func editor(_ editor: EditorView, didChangeTextAt range: NSRange) {
-//        containerCell.attributedText = editor.attributedText
-//    }
-//
-//    public func editor(_ editor: EditorView, didSetAttributedText attributedText: NSAttributedString, isDeferred: Bool) {
-//        containerCell.attributedText = attributedText
-//    }
 }
