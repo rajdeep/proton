@@ -227,17 +227,19 @@ class TableContentView: UIScrollView {
     }
 
     func merge(cells: [TableCell]) -> TableCell? {
+        deselectCells()
         let mergedCell = table.merge(cells: cells)
         invalidateCellLayout()
-        deselectCells()
+
+        mergedCell?.editor?.becomeFirstResponder()
         return mergedCell
     }
 
     func split(cell: TableCell) -> [TableCell] {
+        deselectCells()
         let cells = table.split(cell: cell)
         invalidateCellLayout()
-        // First cell is the existing merged cell. Others are added as new.
-        deselectCells()
+        cell.editor?.becomeFirstResponder()
         return cells
     }
 

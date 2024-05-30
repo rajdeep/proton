@@ -235,13 +235,13 @@ class CommandsExampleViewController: ExamplesBaseViewController {
 
     @objc
     func splitCells(sender: UIButton) {
-        if selectedCells?.count == 1,
-           let cell = selectedCells?.first,
+        if selectedTableCells?.count == 1,
+           let cell = selectedTableCells?.first,
            cell.isSplittable {
-            selectedGrid?.split(cell: cell)
+            selectedTable?.split(cell: cell)
         }
-        selectedCells = nil
-        selectedGrid = nil
+        selectedTableCells = nil
+        selectedTable = nil
     }
 
     @objc

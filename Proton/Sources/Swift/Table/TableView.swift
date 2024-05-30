@@ -381,7 +381,20 @@ public class TableView: UIView {
             let toGenerate = newCells.subtracting(oldCells)
             let toReclaim = oldCells.subtracting(newCells)
 
+            // Required to reset the focus to an editor within viewport.
+            // In absence of this check, if the editor having focus gets reclaimed,
+            // the focus moves to root editor which may cause the content to be scrolled
+            // out to end of the root editor.
+            var needsFocusChange = false
             toReclaim.forEach { [weak self] in
+                if needsFocusChange == false {
+                    needsFocusChange = $0.editor?.isFirstResponder() == true
+                    if needsFocusChange {
+                        self?.cellsInViewport
+                            .first(where: { $0.editor != nil} )?
+                            .editor?.becomeFirstResponder()
+                    }
+                }
                 self?.repository.enqueue(cell: $0)
             }
 
@@ -440,6 +453,22 @@ public class TableView: UIView {
             $0.frame != .zero
             && $0.frame.offsetBy(dx: adjustedAttachmentViewport.origin.x, dy: adjustedAttachmentViewport.origin.y)
             .intersects(adjustedViewport) }
+    }
+
+    func cellBelow(_ cell: TableCell) -> TableCell? {
+        guard let row = cell.rowSpan.max(),
+              let column = cell.columnSpan.min() else {
+            return nil
+        }
+        return cellAt(rowIndex: row + 1, columnIndex: column)
+    }
+
+    func cellAbove(_ cell: TableCell) -> TableCell? {
+        guard let row = cell.rowSpan.max(),
+              let column = cell.columnSpan.min() else {
+            return nil
+        }
+        return cellAt(rowIndex: row - 1, columnIndex: column)
     }
 
     private func makeSelectionBorderView() -> UIView {
@@ -592,6 +621,12 @@ public class TableView: UIView {
     /// are added as empty,
     /// - Parameter cell: Cell to split.
     public func split(cell: TableCell) {
+        if cell.isSplittable {
+            // Remove cell being split so that it can be regenerated
+            // to correctly render cells in viewport
+            cellsInViewport.removeAll(where: { $0 == cell })
+        }
+
         let cells = tableView.split(cell: cell)
         if let cell = cells.last {
             resetColumnResizingHandles(selectedCell: cell)
@@ -735,6 +770,7 @@ public class TableView: UIView {
 
 extension TableView: UIScrollViewDelegate {
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        cellsInViewport.first { $0.editor?.isFirstResponder() == true }?.editor?.resignFocus()
         resetShadows()
         viewportChanged()
     }

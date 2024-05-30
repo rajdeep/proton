@@ -197,6 +197,7 @@ public class TableCell {
     }
 
     func prepareForReuse(_ contentView: TableCellContentView) {
+        contentView.isSelected = false
         contentView.editor.clear()
         contentView.editor.frame = CGRect(
             origin: .zero,
