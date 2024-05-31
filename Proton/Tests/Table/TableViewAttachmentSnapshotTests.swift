@@ -31,6 +31,7 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+        recordMode = true
         delegate = MockTableViewDelegate()
         viewController = EditorTestViewController()
         editor = viewController.editor

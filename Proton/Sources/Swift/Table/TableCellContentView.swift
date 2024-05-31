@@ -109,8 +109,10 @@ public class TableCellContentView: UIView {
     }
 
     public func applyStyle(_ style: GridCellStyle) {
-       layer.borderColor = style.borderStyle?.color.cgColor ?? gridStyle.borderColor.cgColor
-       layer.borderWidth = style.borderStyle?.width ?? gridStyle.borderWidth
+        layer.borderColor = style.borderStyle?.color.cgColor ?? gridStyle.borderColor.cgColor
+        // Half the border width so that when cels are side by side, these show up as full width
+        // Outer edges are drawn separately in TableContentView.contentSize.didSet
+        layer.borderWidth = (style.borderStyle?.width ?? gridStyle.borderWidth)/2
 
         if let font = style.font {
             editor.font = font

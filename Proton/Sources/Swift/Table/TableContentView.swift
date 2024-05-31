@@ -134,6 +134,7 @@ class TableContentView: UIScrollView {
             guard oldValue != contentSize else { return }
             self.frame = CGRect(origin: self.frame.origin, size: CGSize(width: self.frame.width, height: contentSize.height))
             tableContentViewDelegate?.tableContentView(self, didChangeContentSize: contentSize, oldContentSize: oldValue)
+            drawBorder(name: "table_outer_border", size: contentSize, width: config.style.borderWidth, color: config.style.borderColor)
         }
     }
 
@@ -556,8 +557,21 @@ extension TableContentView: TableDelegate {
 }
 
 extension UIView {
-    func drawBorder(width: CGFloat = 1, color: UIColor = .red) {
-        layer.borderColor = color.cgColor
-        layer.borderWidth = width
+    func drawBorder(name: String?, size: CGSize? = nil, width: CGFloat = 1, color: UIColor = .red) {
+        guard let size else {
+            layer.borderColor = color.cgColor
+            layer.borderWidth = width
+            return
+        }
+
+        let borderLayer = layer.sublayers?.first { $0.name == name } ?? CALayer()
+        borderLayer.name = name
+        borderLayer.frame = CGRect(origin: .zero, size: size)
+        borderLayer.borderColor = color.cgColor
+        borderLayer.borderWidth = width
+
+        if borderLayer.superlayer == nil {
+            layer.addSublayer(borderLayer)
+        }
     }
 }
