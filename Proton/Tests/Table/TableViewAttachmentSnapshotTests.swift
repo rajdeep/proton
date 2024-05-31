@@ -31,7 +31,6 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        recordMode = true
         delegate = MockTableViewDelegate()
         viewController = EditorTestViewController()
         editor = viewController.editor
@@ -119,10 +118,9 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         let cell01 = attachment.view.cellAt(rowIndex: 0, columnIndex: 1)
         let cell02 = attachment.view.cellAt(rowIndex: 0, columnIndex: 2)
 
-        let cellOverlapPixels: CGFloat = 1
-        XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, 40)
-        XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, 60)
-        XCTAssertEqual((cell02?.frame.width ?? 0) - cellOverlapPixels, 350)
+        XCTAssertEqual((cell00?.frame.width ?? 0), 40)
+        XCTAssertEqual((cell01?.frame.width ?? 0), 60)
+        XCTAssertEqual((cell02?.frame.width ?? 0), 350)
     }
 
     func testRendersTableViewAttachmentWithViewportConstraints() {
@@ -146,8 +144,8 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
         let cell = attachment.view.cellAt(rowIndex: 0, columnIndex: 0)
         let lineFragmentPadding = editor.lineFragmentPadding
-        let cellOverlapPixels: CGFloat = 1
-        XCTAssertEqual((cell?.frame.width ?? 0) - cellOverlapPixels, editor.frame.width - (lineFragmentPadding * 2))
+
+        XCTAssertEqual((cell?.frame.width ?? 0), editor.frame.width - (lineFragmentPadding * 2))
 
         viewController.render(size: CGSize(width: 700, height: 175))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
@@ -235,10 +233,10 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
 
         let lineFragmentPadding = editor.lineFragmentPadding
         let initialCellWidth = (editor.frame.width - (lineFragmentPadding * 2)) * 0.15
-        let cellOverlapPixels: CGFloat = 1
-        XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, initialCellWidth)
-        XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, 45)
-        XCTAssertEqual((cell02?.frame.width ?? 0) - cellOverlapPixels, 60)
+
+        XCTAssertEqual((cell00?.frame.width ?? 0), initialCellWidth)
+        XCTAssertEqual((cell01?.frame.width ?? 0), 45)
+        XCTAssertEqual((cell02?.frame.width ?? 0), 60)
     }
 
     func testRendersTableViewAttachmentWithFractionalWidthMinViewport() {
@@ -265,9 +263,9 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
 
         let lineFragmentPadding = editor.lineFragmentPadding
         let initialCellWidth = (editor.frame.width - (lineFragmentPadding * 2)) * 0.15
-        let cellOverlapPixels: CGFloat = 1
-        XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, initialCellWidth)
-        XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, editor.frame.width - 10 - (2 * editor.lineFragmentPadding))
+
+        XCTAssertEqual((cell00?.frame.width ?? 0), initialCellWidth)
+        XCTAssertEqual((cell01?.frame.width ?? 0), editor.frame.width - 10 - (2 * editor.lineFragmentPadding))
     }
 
     func testRendersTableViewAttachmentWithFractionalWidthMaxViewport() {
@@ -294,9 +292,9 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
 
         let lineFragmentPadding = editor.lineFragmentPadding
         let initialCellWidth = (editor.frame.width - (lineFragmentPadding * 2)) * 0.15
-        let cellOverlapPixels: CGFloat = 1
-        XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, initialCellWidth)
-        XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, editor.frame.width - 10 - (2 * editor.lineFragmentPadding))
+
+        XCTAssertEqual((cell00?.frame.width ?? 0), initialCellWidth)
+        XCTAssertEqual((cell01?.frame.width ?? 0), editor.frame.width - 10 - (2 * editor.lineFragmentPadding))
     }
 
     func testRendersGridViewAttachmentWithFractionalWidthMax() {
@@ -324,10 +322,9 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         let cell01 = attachment.view.cellAt(rowIndex: 0, columnIndex: 1)
         let cell02 = attachment.view.cellAt(rowIndex: 0, columnIndex: 2)
 
-        let cellOverlapPixels: CGFloat = 1
-        XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, 50)
-        XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, 75)
-        XCTAssertEqual((cell02?.frame.width ?? 0) - cellOverlapPixels, 75)
+        XCTAssertEqual((cell00?.frame.width ?? 0), 50)
+        XCTAssertEqual((cell01?.frame.width ?? 0), 75)
+        XCTAssertEqual((cell02?.frame.width ?? 0), 75)
     }
 
     func testUpdatesCellSizeBasedOnContent() {
