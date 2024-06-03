@@ -76,6 +76,16 @@ class TableContentView: UIScrollView {
     var isFreeScrollingEnabled = false
     var isRendered = false
 
+    // Border for outer edges are added separately to account for
+    // half-width borders added by cells which results in thinner outer border of table
+    // These cannot be added as layer/sublayers as that gets drawn under the cells and for
+    // cells wot background, it overlaps the table border showing it thinner on outer edges for
+    // cells with background color applied.
+    let topBorder: UIView
+    let bottomBorder: UIView
+    let leftBorder: UIView
+    let rightBorder: UIView
+
     var cells: [TableCell] {
         table.cells
     }
@@ -117,6 +127,12 @@ class TableContentView: UIScrollView {
     init(config: GridConfiguration, cells: [TableCell], editorInitializer: TableCell.EditorInitializer?) {
         self.config = config
         table = Table(config: config, cells: cells, editorInitializer: editorInitializer)
+
+        topBorder = UIView()
+        bottomBorder = UIView()
+        leftBorder = UIView()
+        rightBorder = UIView()
+
         super.init(frame: .zero)
 
 //        self.widthAnchorConstraint = widthAnchor.constraint(lessThanOrEqualToConstant: 350)
@@ -127,6 +143,8 @@ class TableContentView: UIScrollView {
 //            widthAnchorConstraint,
 //            heightAnchorConstraint
 //        ])
+
+
     }
 
     override var contentSize: CGSize {
@@ -134,7 +152,7 @@ class TableContentView: UIScrollView {
             guard oldValue != contentSize else { return }
             self.frame = CGRect(origin: self.frame.origin, size: CGSize(width: self.frame.width, height: contentSize.height))
             tableContentViewDelegate?.tableContentView(self, didChangeContentSize: contentSize, oldContentSize: oldValue)
-            drawBorder(name: "table_outer_border", size: contentSize, width: config.style.borderWidth, color: config.style.borderColor)
+            drawBorders()
         }
     }
 
@@ -166,11 +184,47 @@ class TableContentView: UIScrollView {
     override func layoutSubviews() {
         super.layoutSubviews()
         tableContentViewDelegate?.tableContentView(self, didCompleteLayoutWithBounds: bounds)
+        // Bring borders to top so that it shows up over cells
+        bringBordersToTop()
     }
 
     private func setup() {
         setupSelectionGesture()
         tableContentViewDelegate?.tableContentView(self, didUpdateCells: cells)
+    }
+
+    private func drawBorders() {
+        // account for making width slightly less failing which it is possible to see(in extreme zoom level) vertical lines extending underneath horizontal
+        let verticalBorderWidth = contentSize.width - (config.style.borderWidth/2)
+        topBorder.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: verticalBorderWidth, height: config.style.borderWidth))
+        bottomBorder.frame = CGRect(origin: CGPoint(x: 0, y: contentSize.height - 1), size: CGSize(width: verticalBorderWidth, height: config.style.borderWidth))
+        leftBorder.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: config.style.borderWidth, height: contentSize.height))
+        rightBorder.frame = CGRect(origin: CGPoint(x: contentSize.width - 1, y: 0), size: CGSize(width: config.style.borderWidth, height: contentSize.height))
+
+        topBorder.backgroundColor = config.style.borderColor
+        bottomBorder.backgroundColor = config.style.borderColor
+        leftBorder.backgroundColor = config.style.borderColor
+        rightBorder.backgroundColor = config.style.borderColor
+
+        if topBorder.superview == nil {
+            addSubview(topBorder)
+        }
+        if bottomBorder.superview == nil {
+            addSubview(bottomBorder)
+        }
+        if leftBorder.superview == nil {
+            addSubview(leftBorder)
+        }
+        if rightBorder.superview == nil {
+            addSubview(rightBorder)
+        }
+    }
+
+    func bringBordersToTop() {
+        bringSubviewToFront(topBorder)
+        bringSubviewToFront(bottomBorder)
+        bringSubviewToFront(leftBorder)
+        bringSubviewToFront(rightBorder)
     }
 
     public override func willMove(toWindow newWindow: UIWindow?) {
@@ -573,5 +627,6 @@ extension UIView {
         if borderLayer.superlayer == nil {
             layer.addSublayer(borderLayer)
         }
+
     }
 }

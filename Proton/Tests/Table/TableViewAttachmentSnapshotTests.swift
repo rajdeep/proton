@@ -401,8 +401,9 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
     }
 
     func testRendersTableViewAttachmentWithStyledRow() {
+        let lightGray = UIColor(red: 0.90, green: 0.90, blue: 0.92, alpha: 1.00)
         let style = GridCellStyle(
-            backgroundColor: .lightGray,
+            backgroundColor: lightGray,
             textColor: .darkGray,
             font: UIFont.systemFont(ofSize: 14, weight: .bold))
         let config = GridConfiguration(
