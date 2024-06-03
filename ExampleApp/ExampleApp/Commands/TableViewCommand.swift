@@ -58,7 +58,7 @@ public class TableViewCommand: EditorCommand {
 
     private func makeGridViewAttachment(id: Int, numRows: Int, numColumns: Int) -> TableViewAttachment {
         let config = GridConfiguration(columnsConfiguration: [GridColumnConfiguration](repeating: GridColumnConfiguration(width: .fixed(100)), count: numColumns),
-                                       rowsConfiguration: [GridRowConfiguration](repeating: GridRowConfiguration(initialHeight: 60), count: numRows))
+                                       rowsConfiguration: [GridRowConfiguration](repeating: GridRowConfiguration(initialHeight: 40), count: numRows))
 
         var cells = [TableCell]()
         for row in 0..<numRows {
@@ -66,10 +66,10 @@ public class TableViewCommand: EditorCommand {
                 let text = generateRandomString(from: "Text in cell ")
                 let editorInit = {
                     let editor = EditorView(allowAutogrowing: false)
-                    editor.attributedText = NSAttributedString(string: "Table \(id) {\(row), \(col)} \(text)")
+//                    editor.attributedText = NSAttributedString(string: "Table \(id) {\(row), \(col)} \(text)")
                     return editor
                 }
-                let cell = TableCell(rowSpan: [row], columnSpan: [col], initialHeight: 200, editorInitializer: editorInit)
+                let cell = TableCell(rowSpan: [row], columnSpan: [col], initialHeight: 40, editorInitializer: editorInit)
 //                cell.attributedText = NSAttributedString(string: text)
                 cells.append(cell)
             }
@@ -77,6 +77,8 @@ public class TableViewCommand: EditorCommand {
 
         let attachment = TableViewAttachment(config: config, cells: cells)
         attachment.view.delegate = delegate
+
+        attachment.view.merge(cells: [attachment.view.cells[22], attachment.view.cells[32]])
         return attachment
     }
 

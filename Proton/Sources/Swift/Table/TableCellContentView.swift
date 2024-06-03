@@ -162,7 +162,7 @@ public class TableCellContentView: UIView {
 
 extension TableCellContentView: BoundsObserving {
     public func didChangeBounds(_ bounds: CGRect, oldBounds: CGRect) {
-        delegate?.cell(containerCell, didChangeBounds: bounds)
+        delegate?.cell(containerCell, didChangeBounds: bounds, oldBounds: oldBounds)
     }
 }
 

@@ -540,27 +540,43 @@ extension TableContentView: TableCellDelegate {
         tableContentViewDelegate?.tableContentView(self, cell: cell, didChangeBackgroundColor: color, oldColor: oldColor)
     }
 
-    func cell(_ cell: TableCell, didChangeBounds bounds: CGRect) {
-        guard  let row = cell.rowSpan.first else { return }
-//        if table.rowHeights.count > row,
-//           table.maxContentHeightCellForRow(at: row)?.id == cell.id {
-//            table.rowHeights[row].currentHeight = bounds.height
-//        } else {
-//            table.rowHeights[row].currentHeight = table.maxContentHeightCellForRow(at: row)?.contentSize.height ?? 0
-//        }
-
-        //TODO: revisit for when height of entire row gets shorter
-        guard bounds.height > table.rowHeights[row].currentHeight else {
+    func cell(_ cell: TableCell, didChangeBounds bounds: CGRect, oldBounds: CGRect) {
+        guard let row = cell.rowSpan.first,
+              table.maxContentHeightCellForRow(at: row)?.frame.height == cell.frame.height else {
             return
         }
 
-        // Only increase the height if combined height of merged cell, if it is, is less than the height of editor
-        // TODO: handle the case where height is reduced. Same as above
-        if table.heightForCell(cell) <= bounds.height {
-            table.rowHeights[row].currentHeight = bounds.height
+        if table.rowHeights.count > row,
+           table.heightForCell(cell) <= bounds.height {
+            if cell.isSplittable {
+                table.rowHeights[row].currentHeight += (bounds.height - table.heightForCell(cell))
+            } else {
+                table.rowHeights[row].currentHeight = max(cell.initialHeight, bounds.height)
+            }
+        } else {
+            // If the cell height is decreasing
+            if oldBounds.height > bounds.height {
+                let delta = (bounds.height - table.heightForCell(cell))
+                if let currentEditorContentSize = cell.editor?.contentSize.height {
+                    let proposedCellHeight = currentEditorContentSize + delta
+                    // validate if there is another cell with the same or higher content size that is to be applied
+                    let otherCellWithSameHeight = cellsInViewport.first{
+                        guard let cellEditor = $0.editor else { return false }
+                        return $0.id != cell.id && $0.rowSpan.contains(row) && cellEditor.contentSize.height >= proposedCellHeight
+                    }
+                    // reduce height only if new height for the row does not conflict with other cell having similar height
+                    if otherCellWithSameHeight == nil || (otherCellWithSameHeight?.contentSize.height ?? 0) <= cell.contentSize.height {
+                        table.rowHeights[row].currentHeight += (bounds.height - table.heightForCell(cell))
+                        // If updated height falls below default initial height, reset it back.
+                        if table.rowHeights[row].currentHeight < cell.initialHeight {
+                            table.rowHeights[row].currentHeight = cell.initialHeight
+                        }
+                    }
+                }
+            }
         }
-        //TODO: only update affected row/column onwards
-        table.calculateTableDimensions(basedOn: self.bounds.size)
+
+        updateCellFrames()
         recalculateCellBounds(cell: cell)
         tableContentViewDelegate?.tableContentView(self, didChangeBounds: cell.frame, in: cell)
     }

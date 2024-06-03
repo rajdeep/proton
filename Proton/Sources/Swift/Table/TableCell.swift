@@ -29,7 +29,7 @@ protocol TableCellDelegate: AnyObject {
     func cell(_ cell: TableCell, didAddContentView view: TableCellContentView)
     func cell(_ cell: TableCell, didRemoveContentView view: TableCellContentView?)
 
-    func cell(_ cell: TableCell, didChangeBounds bounds: CGRect)
+    func cell(_ cell: TableCell, didChangeBounds bounds: CGRect, oldBounds: CGRect)
     func cell(_ cell: TableCell, didReceiveFocusAt range: NSRange)
     func cell(_ cell: TableCell, didLoseFocusFrom range: NSRange)
     func cell(_ cell: TableCell, didTapAtLocation location: CGPoint, characterRange: NSRange?)
