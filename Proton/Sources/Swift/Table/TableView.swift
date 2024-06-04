@@ -386,16 +386,16 @@ public class TableView: UIView {
             // the focus moves to root editor which may cause the content to be scrolled
             // out to end of the root editor.
             var needsFocusChange = false
-            toReclaim.forEach { [weak self] in
+            toReclaim.forEach { [weak self] cell in
                 if needsFocusChange == false {
-                    needsFocusChange = $0.editor?.isFirstResponder() == true
+                    needsFocusChange = cell.editor?.isFirstResponder() == true
                     if needsFocusChange {
                         self?.cellsInViewport
-                            .first(where: { $0.editor != nil} )?
+                            .first(where: { c in c.editor != nil && c.columnSpan.min() == cell.columnSpan.min() } )?
                             .editor?.becomeFirstResponder()
                     }
                 }
-                self?.repository.enqueue(cell: $0)
+                self?.repository.enqueue(cell: cell)
             }
 
             toGenerate.forEach { [weak self] in
@@ -481,51 +481,56 @@ public class TableView: UIView {
 
     private func addColumnResizingHandles(selectedCell: TableCell) {
         guard isColumnResizingHandlesVisible else { return }
+        for cell in cells where cell.columnSpan.max() == selectedCell.columnSpan.max() {
+            if let contentView = cell.contentView {
+                let handleView = makeColumnResizingHandle(cell: cell)
+                columnResizingHandles.append(handleView)
+                handleView.translatesAutoresizingMaskIntoConstraints = false
+                addSubview(handleView)
+                NSLayoutConstraint.activate([
+                    handleView.widthAnchor.constraint(equalToConstant: handleSize),
+                    handleView.heightAnchor.constraint(equalTo: handleView.widthAnchor),
+                ])
 
-//        for cell in cells where cell.columnSpan.max() == selectedCell.columnSpan.max() {
-//            let handleView = makeColumnResizingHandle(cell: cell)
-//            columnResizingHandles.append(handleView)
-//            handleView.translatesAutoresizingMaskIntoConstraints = false
-//            addSubview(handleView)
-//            NSLayoutConstraint.activate([
-//                handleView.widthAnchor.constraint(equalToConstant: handleSize),
-//                handleView.heightAnchor.constraint(equalTo: handleView.widthAnchor),
-//                handleView.centerYAnchor.constraint(equalTo: cell.contentView.bottomAnchor),
-//                handleView.centerXAnchor.constraint(equalTo: cell.contentView.trailingAnchor)
-//            ])
-//        }
+                NSLayoutConstraint.activate([
+                    handleView.centerYAnchor.constraint(equalTo: contentView.bottomAnchor),
+                    handleView.centerXAnchor.constraint(equalTo: contentView.trailingAnchor)
+                ])
+            }
+        }
 
         addSelectionBorders(grid: self, cell: selectedCell)
     }
 
     private func addSelectionBorders(grid: TableView, cell: TableCell) {
+        guard let contentView = cell.contentView else { return }
+
         addSubview(columnRightBorderView)
         addSubview(columnLeftBorderView)
         addSubview(columnTopBorderView)
         addSubview(columnBottomBorderView)
 
-//        NSLayoutConstraint.activate([
-//            columnRightBorderView.centerXAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
-//            columnRightBorderView.widthAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
-//            columnRightBorderView.heightAnchor.constraint(equalTo: tableView.heightAnchor),
-//            columnRightBorderView.topAnchor.constraint(equalTo: tableView.topAnchor),
-//
-//            columnLeftBorderView.centerXAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
-//            columnLeftBorderView.widthAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
-//            columnLeftBorderView.heightAnchor.constraint(equalTo: tableView.heightAnchor),
-//            columnLeftBorderView.topAnchor.constraint(equalTo: tableView.topAnchor),
-//
-//            columnTopBorderView.centerYAnchor.constraint(equalTo: tableView.topAnchor),
-//            columnTopBorderView.widthAnchor.constraint(equalTo: cell.contentView.widthAnchor),
-//            columnTopBorderView.heightAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
-//            columnTopBorderView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
-//
-//            columnBottomBorderView.centerYAnchor.constraint(equalTo: tableView.bottomAnchor),
-//            columnBottomBorderView.widthAnchor.constraint(equalTo: cell.contentView.widthAnchor),
-//            columnBottomBorderView.heightAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
-//            columnBottomBorderView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
-//
-//        ])
+        NSLayoutConstraint.activate([
+            columnRightBorderView.centerXAnchor.constraint(equalTo: contentView.trailingAnchor),
+            columnRightBorderView.widthAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
+            columnRightBorderView.heightAnchor.constraint(equalTo: tableView.heightAnchor),
+            columnRightBorderView.topAnchor.constraint(equalTo: tableView.topAnchor),
+
+            columnLeftBorderView.centerXAnchor.constraint(equalTo: contentView.leadingAnchor),
+            columnLeftBorderView.widthAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
+            columnLeftBorderView.heightAnchor.constraint(equalTo: tableView.heightAnchor),
+            columnLeftBorderView.topAnchor.constraint(equalTo: tableView.topAnchor),
+
+            columnTopBorderView.centerYAnchor.constraint(equalTo: tableView.topAnchor),
+            columnTopBorderView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            columnTopBorderView.heightAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
+            columnTopBorderView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+
+            columnBottomBorderView.centerYAnchor.constraint(equalTo: tableView.bottomAnchor),
+            columnBottomBorderView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            columnBottomBorderView.heightAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
+            columnBottomBorderView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+        ])
     }
 
     private func removeColumnResizingHandles() {
@@ -556,7 +561,7 @@ public class TableView: UIView {
     @objc
     private func dragHandler(gesture: UIPanGestureRecognizer){
         guard let draggedView = gesture.view,
-              let cell = (draggedView as? CellHandleButton)?.cell else { return }
+              let cell = (draggedView as? TableCellHandleButton)?.cell else { return }
 
         let location = gesture.location(in: self)
         if gesture.state == .changed {
@@ -801,6 +806,12 @@ extension TableView: TableContentViewDelegate {
 
     func tableContentView(_ tableContentView: TableContentView, didCompleteLayoutWithBounds bounds: CGRect) {
         resetShadows()
+    }
+
+    func tableContentView(_ tableContentView: TableContentView, didRemoveCellFromViewport cell: TableCell) {
+        let handleToRemove = columnResizingHandles.first { $0.cell == cell }
+        handleToRemove?.removeFromSuperview()
+        columnResizingHandles.removeAll { $0 == handleToRemove }
     }
 
     func tableContentView(_ tableContentView: TableContentView, didLayoutCell cell: TableCell) {

@@ -57,6 +57,7 @@ protocol TableContentViewDelegate: AnyObject {
     func tableContentView(_ tableContentView: TableContentView, didUpdateCells cells: [TableCell])
 
     func tableContentView(_ tableContentView: TableContentView, needsUpdateViewport delta: CGPoint)
+    func tableContentView(_ tableContentView: TableContentView, didRemoveCellFromViewport cell: TableCell)
 }
 
 class TableContentView: UIScrollView {
@@ -518,6 +519,7 @@ extension TableContentView: TableCellDelegate {
 
     func cell(_ cell: TableCell, didRemoveContentView view: TableCellContentView?) {
         view?.removeFromSuperview()
+        tableContentViewDelegate?.tableContentView(self, didRemoveCellFromViewport: cell)
     }
 
     func cell(_ cell: TableCell, didReceiveFocusAt range: NSRange) {

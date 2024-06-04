@@ -76,6 +76,7 @@ public class TableViewCommand: EditorCommand {
         }
 
         let attachment = TableViewAttachment(config: config, cells: cells)
+        attachment.view.setColumnResizing(true)
         attachment.view.delegate = delegate
 
         attachment.view.merge(cells: [attachment.view.cells[22], attachment.view.cells[32]])
