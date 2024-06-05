@@ -57,6 +57,8 @@ protocol TableContentViewDelegate: AnyObject {
     func tableContentView(_ tableContentView: TableContentView, didUpdateCells cells: [TableCell])
 
     func tableContentView(_ tableContentView: TableContentView, needsUpdateViewport delta: CGPoint)
+
+    func tableContentView(_ tableContentView: TableContentView, didAddCellToViewport cell: TableCell)
     func tableContentView(_ tableContentView: TableContentView, didRemoveCellFromViewport cell: TableCell)
 }
 
@@ -80,7 +82,7 @@ class TableContentView: UIScrollView {
     // Border for outer edges are added separately to account for
     // half-width borders added by cells which results in thinner outer border of table
     // These cannot be added as layer/sublayers as that gets drawn under the cells and for
-    // cells wot background, it overlaps the table border showing it thinner on outer edges for
+    // cells with background, it overlaps the table border showing it thinner on outer edges for
     // cells with background color applied.
     let topBorder: UIView
     let bottomBorder: UIView
@@ -515,6 +517,7 @@ class TableContentView: UIScrollView {
 extension TableContentView: TableCellDelegate {
     func cell(_ cell: TableCell, didAddContentView view: TableCellContentView) {
         addSubview(view)
+        tableContentViewDelegate?.tableContentView(self, didAddCellToViewport: cell)
     }
 
     func cell(_ cell: TableCell, didRemoveContentView view: TableCellContentView?) {

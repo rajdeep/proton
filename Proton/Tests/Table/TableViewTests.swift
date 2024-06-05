@@ -110,7 +110,7 @@ class TableViewTests: XCTestCase {
         let expectation = functionExpectation()
         expectation.expectedFulfillmentCount = 2
 
-        let tableView = TableView(config: config)
+        let tableView = TableView(config: config, tableCellLifecycleObserver: nil)
         let delegate = MockTableViewDelegate()
         tableView.delegate = delegate
         tableView.tableView.willMove(toWindow: UIWindow())

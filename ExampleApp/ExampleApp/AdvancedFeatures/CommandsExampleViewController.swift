@@ -627,6 +627,14 @@ extension CommandsExampleViewController: TableViewDelegate {
             container.contentOffset = offset
         }
     }
+
+    func tableView(_ tableView: TableView, didAddCellToViewport cell: TableCell) {
+
+    }
+
+    func tableView(_ tableView: TableView, didRemoveCellFromViewport cell: TableCell) {
+
+    }
 }
 
 class ListFormattingProvider: EditorListFormattingProvider {

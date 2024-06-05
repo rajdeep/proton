@@ -61,6 +61,7 @@
 		1B4B60CA247FC51E002B63CF /* ListCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B60C9247FC51E002B63CF /* ListCommand.swift */; };
 		1B4B60CD247FC6AF002B63CF /* ListTextProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B60CC247FC6AF002B63CF /* ListTextProcessor.swift */; };
 		1B4B60CF247FC86A002B63CF /* NSParagraphStyleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4B60CE247FC86A002B63CF /* NSParagraphStyleExtensions.swift */; };
+		1B51005B2C0FED6100DBA9AD /* MockTableCellLifecycleObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B51005A2C0FED6100DBA9AD /* MockTableCellLifecycleObserver.swift */; };
 		1B576089245ADDDA00D92AE8 /* EditorViewMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B576088245ADDDA00D92AE8 /* EditorViewMenuTests.swift */; };
 		1B5E2583240F5B0C00163E74 /* NSAttributedStringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5E2582240F5B0C00163E74 /* NSAttributedStringExtensionTests.swift */; };
 		1B617A98283711D700095FEE /* AttachmentUpdateSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B617A97283711D700095FEE /* AttachmentUpdateSnapshotTests.swift */; };
@@ -249,6 +250,7 @@
 		1B4B60C9247FC51E002B63CF /* ListCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCommand.swift; sourceTree = "<group>"; };
 		1B4B60CC247FC6AF002B63CF /* ListTextProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTextProcessor.swift; sourceTree = "<group>"; };
 		1B4B60CE247FC86A002B63CF /* NSParagraphStyleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSParagraphStyleExtensions.swift; sourceTree = "<group>"; };
+		1B51005A2C0FED6100DBA9AD /* MockTableCellLifecycleObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTableCellLifecycleObserver.swift; sourceTree = "<group>"; };
 		1B576088245ADDDA00D92AE8 /* EditorViewMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewMenuTests.swift; sourceTree = "<group>"; };
 		1B5E2582240F5B0C00163E74 /* NSAttributedStringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedStringExtensionTests.swift; sourceTree = "<group>"; };
 		1B617A97283711D700095FEE /* AttachmentUpdateSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentUpdateSnapshotTests.swift; sourceTree = "<group>"; };
@@ -851,6 +853,7 @@
 			isa = PBXGroup;
 			children = (
 				1BD4240B2BC4E95E0046F0C7 /* MockTableViewDelegate.swift */,
+				1B51005A2C0FED6100DBA9AD /* MockTableCellLifecycleObserver.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -1198,6 +1201,7 @@
 				1BD993B123C995B000563ACB /* TextProcessorTests.swift in Sources */,
 				1B30A3642489E11F00FA1D48 /* MockRichTextViewListDelegate.swift in Sources */,
 				1BABD7942BC78990004E52A5 /* TableTests.swift in Sources */,
+				1B51005B2C0FED6100DBA9AD /* MockTableCellLifecycleObserver.swift in Sources */,
 				1BF90FB4245E503E00A411A3 /* TextBlockAttributeTests.swift in Sources */,
 				1B7C76B32608A4FF006618AC /* FontTraitToggleCommandTests.swift in Sources */,
 				1BFFEF1523C332A100D2BA35 /* EditorSnapshotTests.swift in Sources */,

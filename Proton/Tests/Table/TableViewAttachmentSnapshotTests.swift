@@ -50,6 +50,21 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
             ])
 
         let attachment = makeTableViewAttachment(config: config)
+        attachment.view.delegate = delegate
+
+        var cellIDsToAdd = [
+            "{[0],[0]}",
+            "{[0],[1]}",
+            "{[0],[2]}",
+            "{[1],[0]}",
+            "{[1],[2]}",
+            "{[1],[1]}"
+        ]
+
+        delegate.onDidAddCellToViewport = { _, cell in
+            cellIDsToAdd.removeAll(where: { $0 == cell.id })
+        }
+
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
@@ -58,6 +73,7 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
 
         viewController.render(size: CGSize(width: 400, height: 180))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        XCTAssertTrue(cellIDsToAdd.isEmpty)
     }
 
     func testRendersTableViewAttachmentWithContainerBackgroundColor() {
@@ -71,7 +87,19 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
             ])
 
-        let attachment = makeTableViewAttachment(config: config)
+        let tableCellLifeCycleObserver = MockTableCellLifecycleObserver()
+        var cellIDsToAdd = [
+            "{[0],[0]}",
+            "{[0],[1]}",
+            "{[1],[0]}",
+            "{[1],[1]}"
+        ]
+        
+        tableCellLifeCycleObserver.onDidAddCellToViewport = { _, cell in
+            cellIDsToAdd.removeAll(where: { $0 == cell.id })
+        }
+
+        let attachment = makeTableViewAttachment(config: config, tableCellLifeCycleObserver: tableCellLifeCycleObserver)
 
         editor.backgroundColor = .lightGray
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
@@ -90,6 +118,7 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.backgroundColor = .darkGray
         viewController.render(size: CGSize(width: 300, height: 225))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        XCTAssertTrue(cellIDsToAdd.isEmpty)
     }
 
     func testRendersTableViewAttachmentWithConstrainedFixedWidth() {
@@ -1701,12 +1730,12 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
-    private func makeTableViewAttachment(config: GridConfiguration, cells: [TableCell] = []) -> TableViewAttachment {
+    private func makeTableViewAttachment(config: GridConfiguration, cells: [TableCell] = [], tableCellLifeCycleObserver: TableCellLifecycleObserver? = nil) -> TableViewAttachment {
         let attachment: TableViewAttachment
         if cells.count > 0 {
-            attachment = TableViewAttachment(config: config, cells: cells)
+            attachment = TableViewAttachment(config: config, cells: cells, tableCellLifeCycleObserver: tableCellLifeCycleObserver)
         } else {
-            attachment = TableViewAttachment(config: config)
+            attachment = TableViewAttachment(config: config, tableCellLifeCycleObserver: tableCellLifeCycleObserver)
         }
         attachment.view.delegate = delegate
         return attachment

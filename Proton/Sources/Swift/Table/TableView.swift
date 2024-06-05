@@ -21,6 +21,23 @@
 import Foundation
 import UIKit
 
+/// An object capable of observing lifecycle events for a cell in a virtualized tableView
+public protocol TableCellLifecycleObserver: AnyObject {
+    /// Notifies when `TableView` lays out a cell. This is called after the bounds calculation for the cell have been performed.
+    /// Rendering of cell may not have been completed at this time.
+    /// - Parameters:
+    ///   - tableView: TableView containing the cell.
+    ///   - cell: Cell being added to viewport
+    func tableView(_ tableView: TableView, didAddCellToViewport cell: TableCell)
+
+    /// Notifies when `TableView` lays out a cell. This is called after the bounds calculation for the cell have been performed.
+    /// Rendering of cell may not have been completed at this time.
+    /// - Parameters:
+    ///   - tableView: TableView containing the cell.
+    ///   - cell: Cell removed from viewport
+    func tableView(_ tableView: TableView, didRemoveCellFromViewport cell: TableCell)
+}
+
 /// An object capable of handing `TableView` events
 public protocol TableViewDelegate: AnyObject {
     var containerScrollView: UIScrollView? { get }
@@ -112,6 +129,20 @@ public protocol TableViewDelegate: AnyObject {
     /// This is only intended to be used in scenarios where Editor is being scrolled to a position within `TableView` and the cell that is being scrolled to may 
     /// not have been rendered being outside viewport.
     func tableView(_ tableView: TableView, needsUpdateScrollPositionOnCell cell: TableCell, rect: CGRect, isRendered: Bool)
+
+    /// Notifies when `TableView` lays out a cell. This is called after the bounds calculation for the cell have been performed.
+    /// Rendering of cell may not have been completed at this time.
+    /// - Parameters:
+    ///   - tableView: TableView containing the cell.
+    ///   - cell: Cell being added to viewport
+    func tableView(_ tableView: TableView, didAddCellToViewport cell: TableCell)
+
+    /// Notifies when `TableView` lays out a cell. This is called after the bounds calculation for the cell have been performed.
+    /// Rendering of cell may not have been completed at this time.
+    /// - Parameters:
+    ///   - tableView: TableView containing the cell.
+    ///   - cell: Cell removed from viewport
+    func tableView(_ tableView: TableView, didRemoveCellFromViewport cell: TableCell)
 }
 
 /// A view that provides a tabular structure where each cell is an `EditorView`.
@@ -153,6 +184,8 @@ public class TableView: UIView {
     private var shadowWidth: CGFloat {
         10.0
     }
+
+    private weak var tableCellLifecycleObserver: TableCellLifecycleObserver?
 
     /// Delegate for `TableView` which can be used to handle cell specific `EditorView` events
     public weak var delegate: TableViewDelegate? {
@@ -260,9 +293,9 @@ public class TableView: UIView {
     ///   - config: Configuration for `TableView`
     ///   - cellEditorInitializer: Custom initializer for `EditorView` within `TableCell`. This will also be used when creating new cells as a
     ///   return of adding new row or column, or cells being split.
-    public convenience init(config: GridConfiguration, cellEditorInitializer: GridCell.EditorInitializer? = nil) {
+    public convenience init(config: GridConfiguration, cellEditorInitializer: GridCell.EditorInitializer? = nil, tableCellLifecycleObserver: TableCellLifecycleObserver?) {
         let tableView = TableContentView(config: config, editorInitializer: cellEditorInitializer)
-        self.init(config: config, tableView: tableView)
+        self.init(config: config, tableView: tableView, tableCellLifecycleObserver: tableCellLifecycleObserver)
     }
 
     /// Initializes `TableView` using the provided configuration.
@@ -273,13 +306,14 @@ public class TableView: UIView {
     ///   return of adding new row or column, or cells being split.
     ///   - Important:
     ///   Care must be taken that the number of cells are correct per the configuration provided, failing which the `TableView` rendering may be broken.
-    public convenience init(config: GridConfiguration, cells: [TableCell], cellEditorInitializer: TableCell.EditorInitializer? = nil) {
+    public convenience init(config: GridConfiguration, cells: [TableCell], cellEditorInitializer: TableCell.EditorInitializer? = nil, tableCellLifecycleObserver: TableCellLifecycleObserver?) {
         let tableView = TableContentView(config: config, cells: cells, editorInitializer: cellEditorInitializer)
-        self.init(config: config, tableView: tableView)
+        self.init(config: config, tableView: tableView, tableCellLifecycleObserver: tableCellLifecycleObserver)
     }
 
-    private init(config: GridConfiguration, tableView: TableContentView) {
+    private init(config: GridConfiguration, tableView: TableContentView, tableCellLifecycleObserver: TableCellLifecycleObserver?) {
         self.tableView = tableView
+        self.tableCellLifecycleObserver = tableCellLifecycleObserver
         let boundsShadowColors = [
             config.boundsLimitShadowColors.primary.cgColor,
             config.boundsLimitShadowColors.secondary.cgColor
@@ -808,12 +842,6 @@ extension TableView: TableContentViewDelegate {
         resetShadows()
     }
 
-    func tableContentView(_ tableContentView: TableContentView, didRemoveCellFromViewport cell: TableCell) {
-        let handleToRemove = columnResizingHandles.first { $0.cell == cell }
-        handleToRemove?.removeFromSuperview()
-        columnResizingHandles.removeAll { $0 == handleToRemove }
-    }
-
     func tableContentView(_ tableContentView: TableContentView, didLayoutCell cell: TableCell) {
         delegate?.tableView(self, didLayoutCell: cell)
     }
@@ -881,6 +909,19 @@ extension TableView: TableContentViewDelegate {
     }
 
     func tableContentView(_ tableContentView: TableContentView, cell: TableCell, didChangeBackgroundColor color: UIColor?, oldColor: UIColor?) {
+    }
+
+    func tableContentView(_ tableContentView: TableContentView, didAddCellToViewport cell: TableCell) {
+        delegate?.tableView(self, didAddCellToViewport: cell)
+        tableCellLifecycleObserver?.tableView(self, didAddCellToViewport: cell)
+    }
+
+    func tableContentView(_ tableContentView: TableContentView, didRemoveCellFromViewport cell: TableCell) {
+        let handleToRemove = columnResizingHandles.first { $0.cell == cell }
+        handleToRemove?.removeFromSuperview()
+        columnResizingHandles.removeAll { $0 == handleToRemove }
+        delegate?.tableView(self, didRemoveCellFromViewport: cell)
+        tableCellLifecycleObserver?.tableView(self, didRemoveCellFromViewport: cell)
     }
 }
 
