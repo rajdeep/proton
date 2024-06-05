@@ -100,7 +100,7 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         }
 
         let attachment = makeTableViewAttachment(config: config, tableCellLifeCycleObserver: tableCellLifeCycleObserver)
-
+        attachment.view.tableCellLifeCycleObserver = tableCellLifeCycleObserver
         editor.backgroundColor = .lightGray
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -1733,9 +1733,9 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
     private func makeTableViewAttachment(config: GridConfiguration, cells: [TableCell] = [], tableCellLifeCycleObserver: TableCellLifeCycleObserver? = nil) -> TableViewAttachment {
         let attachment: TableViewAttachment
         if cells.count > 0 {
-            attachment = TableViewAttachment(config: config, cells: cells, tableCellLifeCycleObserver: tableCellLifeCycleObserver)
+            attachment = TableViewAttachment(config: config, cells: cells)
         } else {
-            attachment = TableViewAttachment(config: config, tableCellLifeCycleObserver: tableCellLifeCycleObserver)
+            attachment = TableViewAttachment(config: config)
         }
         attachment.view.delegate = delegate
         return attachment

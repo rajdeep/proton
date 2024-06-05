@@ -30,13 +30,13 @@ public class TableViewAttachment: Attachment {
     public let view: TableView
 
     public init(config: GridConfiguration) {
-        view = TableView(config: config, tableCellLifeCycleObserver: nil)
+        view = TableView(config: config)
         super.init(view, size: .fullWidth)
         view.boundsObserver = self
     }
 
     public init(config: GridConfiguration, cells: [TableCell]) {
-        view = TableView(config: config, cells: cells, tableCellLifeCycleObserver: nil)
+        view = TableView(config: config, cells: cells)
         super.init(view, size: .fullWidth)
         view.boundsObserver = self
     }

@@ -185,7 +185,8 @@ public class TableView: UIView {
         10.0
     }
 
-    private weak var tableCellLifeCycleObserver: TableCellLifeCycleObserver?
+    /// Observer  for lifecycle of tableView cells
+    public weak var tableCellLifeCycleObserver: TableCellLifeCycleObserver?
 
     /// Delegate for `TableView` which can be used to handle cell specific `EditorView` events
     public weak var delegate: TableViewDelegate? {
@@ -293,9 +294,9 @@ public class TableView: UIView {
     ///   - config: Configuration for `TableView`
     ///   - cellEditorInitializer: Custom initializer for `EditorView` within `TableCell`. This will also be used when creating new cells as a
     ///   return of adding new row or column, or cells being split.
-    public convenience init(config: GridConfiguration, cellEditorInitializer: GridCell.EditorInitializer? = nil, tableCellLifeCycleObserver: TableCellLifeCycleObserver?) {
+    public convenience init(config: GridConfiguration, cellEditorInitializer: GridCell.EditorInitializer? = nil) {
         let tableView = TableContentView(config: config, editorInitializer: cellEditorInitializer)
-        self.init(config: config, tableView: tableView, tableCellLifeCycleObserver: tableCellLifeCycleObserver)
+        self.init(config: config, tableView: tableView)
     }
 
     /// Initializes `TableView` using the provided configuration.
@@ -306,14 +307,13 @@ public class TableView: UIView {
     ///   return of adding new row or column, or cells being split.
     ///   - Important:
     ///   Care must be taken that the number of cells are correct per the configuration provided, failing which the `TableView` rendering may be broken.
-    public convenience init(config: GridConfiguration, cells: [TableCell], cellEditorInitializer: TableCell.EditorInitializer? = nil, tableCellLifeCycleObserver: TableCellLifeCycleObserver?) {
+    public convenience init(config: GridConfiguration, cells: [TableCell], cellEditorInitializer: TableCell.EditorInitializer? = nil) {
         let tableView = TableContentView(config: config, cells: cells, editorInitializer: cellEditorInitializer)
-        self.init(config: config, tableView: tableView, tableCellLifeCycleObserver: tableCellLifeCycleObserver)
+        self.init(config: config, tableView: tableView)
     }
 
-    private init(config: GridConfiguration, tableView: TableContentView, tableCellLifeCycleObserver: TableCellLifeCycleObserver?) {
+    private init(config: GridConfiguration, tableView: TableContentView) {
         self.tableView = tableView
-        self.tableCellLifeCycleObserver = tableCellLifeCycleObserver
         let boundsShadowColors = [
             config.boundsLimitShadowColors.primary.cgColor,
             config.boundsLimitShadowColors.secondary.cgColor
