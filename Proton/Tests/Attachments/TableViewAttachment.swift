@@ -28,14 +28,14 @@ extension EditorContent.Name {
 
 public class TableViewAttachment: Attachment {
     public let view: TableView
-    public init(config: GridConfiguration, tableCellLifeCycleObserver: TableCellLifecycleObserver? = nil) {
-        view = TableView(config: config, tableCellLifecycleObserver: tableCellLifeCycleObserver)
+    public init(config: GridConfiguration, tableCellLifeCycleObserver: TableCellLifeCycleObserver? = nil) {
+        view = TableView(config: config, tableCellLifeCycleObserver: tableCellLifeCycleObserver)
         super.init(view, size: .fullWidth)
         view.boundsObserver = self
     }
 
-    public init(config: GridConfiguration, cells: [TableCell], tableCellLifeCycleObserver: TableCellLifecycleObserver? = nil) {
-        view = TableView(config: config, cells: cells, tableCellLifecycleObserver: tableCellLifeCycleObserver)
+    public init(config: GridConfiguration, cells: [TableCell], tableCellLifeCycleObserver: TableCellLifeCycleObserver? = nil) {
+        view = TableView(config: config, cells: cells, tableCellLifeCycleObserver: tableCellLifeCycleObserver)
         super.init(view, size: .fullWidth)
         view.boundsObserver = self
     }

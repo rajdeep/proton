@@ -87,14 +87,14 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
             ])
 
-        let tableCellLifeCycleObserver = MockTableCellLifecycleObserver()
+        let tableCellLifeCycleObserver = MockTableCellLifeCycleObserver()
         var cellIDsToAdd = [
             "{[0],[0]}",
             "{[0],[1]}",
             "{[1],[0]}",
             "{[1],[1]}"
         ]
-        
+
         tableCellLifeCycleObserver.onDidAddCellToViewport = { _, cell in
             cellIDsToAdd.removeAll(where: { $0 == cell.id })
         }
@@ -1730,7 +1730,7 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
-    private func makeTableViewAttachment(config: GridConfiguration, cells: [TableCell] = [], tableCellLifeCycleObserver: TableCellLifecycleObserver? = nil) -> TableViewAttachment {
+    private func makeTableViewAttachment(config: GridConfiguration, cells: [TableCell] = [], tableCellLifeCycleObserver: TableCellLifeCycleObserver? = nil) -> TableViewAttachment {
         let attachment: TableViewAttachment
         if cells.count > 0 {
             attachment = TableViewAttachment(config: config, cells: cells, tableCellLifeCycleObserver: tableCellLifeCycleObserver)

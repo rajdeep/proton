@@ -1,5 +1,5 @@
 //
-//  MockTableCellLifecycleObserver.swift
+//  MockTableCellLifeCycleObserver.swift
 //  ProtonTests
 //
 //  Created by Rajdeep Kwatra on 5/6/2024.
@@ -22,7 +22,7 @@ import Foundation
 import UIKit
 import Proton
 
-class MockTableCellLifecycleObserver: TableCellLifecycleObserver {
+class MockTableCellLifeCycleObserver: TableCellLifeCycleObserver {
     var onDidAddCellToViewport: ((_ tableView: TableView, _ cell: TableCell) -> Void)?
     var onDidRemoveCellFromViewport: ((_ tableView: TableView, _ cell: TableCell) -> Void)?
 
