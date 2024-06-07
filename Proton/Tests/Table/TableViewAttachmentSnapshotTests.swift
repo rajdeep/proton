@@ -50,6 +50,21 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
             ])
 
         let attachment = makeTableViewAttachment(config: config)
+        attachment.view.delegate = delegate
+
+        var cellIDsToAdd = [
+            "{[0],[0]}",
+            "{[0],[1]}",
+            "{[0],[2]}",
+            "{[1],[0]}",
+            "{[1],[2]}",
+            "{[1],[1]}"
+        ]
+
+        delegate.onDidAddCellToViewport = { _, cell in
+            cellIDsToAdd.removeAll(where: { $0 == cell.id })
+        }
+
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
@@ -58,6 +73,7 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
 
         viewController.render(size: CGSize(width: 400, height: 180))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        XCTAssertTrue(cellIDsToAdd.isEmpty)
     }
 
     func testRendersTableViewAttachmentWithContainerBackgroundColor() {
@@ -71,8 +87,20 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
                 GridRowConfiguration(initialHeight: 40),
             ])
 
-        let attachment = makeTableViewAttachment(config: config)
+        let tableCellLifeCycleObserver = MockTableCellLifeCycleObserver()
+        var cellIDsToAdd = [
+            "{[0],[0]}",
+            "{[0],[1]}",
+            "{[1],[0]}",
+            "{[1],[1]}"
+        ]
 
+        tableCellLifeCycleObserver.onDidAddCellToViewport = { _, cell in
+            cellIDsToAdd.removeAll(where: { $0 == cell.id })
+        }
+
+        let attachment = makeTableViewAttachment(config: config, tableCellLifeCycleObserver: tableCellLifeCycleObserver)
+        attachment.view.tableCellLifeCycleObserver = tableCellLifeCycleObserver
         editor.backgroundColor = .lightGray
         editor.replaceCharacters(in: .zero, with: "Some text in editor")
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
@@ -90,6 +118,7 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.backgroundColor = .darkGray
         viewController.render(size: CGSize(width: 300, height: 225))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        XCTAssertTrue(cellIDsToAdd.isEmpty)
     }
 
     func testRendersTableViewAttachmentWithConstrainedFixedWidth() {
@@ -118,10 +147,9 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         let cell01 = attachment.view.cellAt(rowIndex: 0, columnIndex: 1)
         let cell02 = attachment.view.cellAt(rowIndex: 0, columnIndex: 2)
 
-        let cellOverlapPixels: CGFloat = 1
-        XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, 40)
-        XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, 60)
-        XCTAssertEqual((cell02?.frame.width ?? 0) - cellOverlapPixels, 350)
+        XCTAssertEqual((cell00?.frame.width ?? 0), 40)
+        XCTAssertEqual((cell01?.frame.width ?? 0), 60)
+        XCTAssertEqual((cell02?.frame.width ?? 0), 350)
     }
 
     func testRendersTableViewAttachmentWithViewportConstraints() {
@@ -145,8 +173,8 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
         let cell = attachment.view.cellAt(rowIndex: 0, columnIndex: 0)
         let lineFragmentPadding = editor.lineFragmentPadding
-        let cellOverlapPixels: CGFloat = 1
-        XCTAssertEqual((cell?.frame.width ?? 0) - cellOverlapPixels, editor.frame.width - (lineFragmentPadding * 2))
+
+        XCTAssertEqual((cell?.frame.width ?? 0), editor.frame.width - (lineFragmentPadding * 2))
 
         viewController.render(size: CGSize(width: 700, height: 175))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
@@ -234,10 +262,10 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
 
         let lineFragmentPadding = editor.lineFragmentPadding
         let initialCellWidth = (editor.frame.width - (lineFragmentPadding * 2)) * 0.15
-        let cellOverlapPixels: CGFloat = 1
-        XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, initialCellWidth)
-        XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, 45)
-        XCTAssertEqual((cell02?.frame.width ?? 0) - cellOverlapPixels, 60)
+
+        XCTAssertEqual((cell00?.frame.width ?? 0), initialCellWidth)
+        XCTAssertEqual((cell01?.frame.width ?? 0), 45)
+        XCTAssertEqual((cell02?.frame.width ?? 0), 60)
     }
 
     func testRendersTableViewAttachmentWithFractionalWidthMinViewport() {
@@ -264,9 +292,9 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
 
         let lineFragmentPadding = editor.lineFragmentPadding
         let initialCellWidth = (editor.frame.width - (lineFragmentPadding * 2)) * 0.15
-        let cellOverlapPixels: CGFloat = 1
-        XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, initialCellWidth)
-        XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, editor.frame.width - 10 - (2 * editor.lineFragmentPadding))
+
+        XCTAssertEqual((cell00?.frame.width ?? 0), initialCellWidth)
+        XCTAssertEqual((cell01?.frame.width ?? 0), editor.frame.width - 10 - (2 * editor.lineFragmentPadding))
     }
 
     func testRendersTableViewAttachmentWithFractionalWidthMaxViewport() {
@@ -293,9 +321,9 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
 
         let lineFragmentPadding = editor.lineFragmentPadding
         let initialCellWidth = (editor.frame.width - (lineFragmentPadding * 2)) * 0.15
-        let cellOverlapPixels: CGFloat = 1
-        XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, initialCellWidth)
-        XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, editor.frame.width - 10 - (2 * editor.lineFragmentPadding))
+
+        XCTAssertEqual((cell00?.frame.width ?? 0), initialCellWidth)
+        XCTAssertEqual((cell01?.frame.width ?? 0), editor.frame.width - 10 - (2 * editor.lineFragmentPadding))
     }
 
     func testRendersGridViewAttachmentWithFractionalWidthMax() {
@@ -323,10 +351,9 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         let cell01 = attachment.view.cellAt(rowIndex: 0, columnIndex: 1)
         let cell02 = attachment.view.cellAt(rowIndex: 0, columnIndex: 2)
 
-        let cellOverlapPixels: CGFloat = 1
-        XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, 50)
-        XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, 75)
-        XCTAssertEqual((cell02?.frame.width ?? 0) - cellOverlapPixels, 75)
+        XCTAssertEqual((cell00?.frame.width ?? 0), 50)
+        XCTAssertEqual((cell01?.frame.width ?? 0), 75)
+        XCTAssertEqual((cell02?.frame.width ?? 0), 75)
     }
 
     func testUpdatesCellSizeBasedOnContent() {
@@ -403,8 +430,9 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
     }
 
     func testRendersTableViewAttachmentWithStyledRow() {
+        let lightGray = UIColor(red: 0.90, green: 0.90, blue: 0.92, alpha: 1.00)
         let style = GridCellStyle(
-            backgroundColor: .lightGray,
+            backgroundColor: lightGray,
             textColor: .darkGray,
             font: UIFont.systemFont(ofSize: 14, weight: .bold))
         let config = GridConfiguration(
@@ -561,7 +589,7 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
 
     }
 
-    func FIXME_testRendersTableViewAttachmentWithMergedRows() throws {
+    func testRendersTableViewAttachmentWithMergedRows() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
                 GridColumnConfiguration(width: .fixed(100)),
@@ -596,7 +624,7 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
-    func FIXME_testRendersTableViewAttachmentWithMergedColumns() throws {
+    func testRendersTableViewAttachmentWithMergedColumns() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
                 GridColumnConfiguration(width: .fixed(100)),
@@ -631,7 +659,7 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
-    func FIXME_testRendersTableViewAttachmentWithMixedMergedRowsAndColumns() throws {
+    func testRendersTableViewAttachmentWithMixedMergedRowsAndColumns() throws {
         let config = GridConfiguration(
             columnsConfiguration: [
                 GridColumnConfiguration(width: .fixed(100)),
@@ -675,6 +703,62 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         ])
 
         viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    // FIXME: This test is failing due to the reason that cells are temporarily removed in TableView.split(cell:)
+    // The feature works as expected in the app
+    func FIXME_testRendersTableViewAttachmentWithSplitRowsAndColumns() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ],
+            ignoresOptimizedInit: true
+        )
+        let attachment = makeTableViewAttachment(config: config)
+
+        let tableView = attachment.view
+        let cell11 = try XCTUnwrap(tableView.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(tableView.cellAt(rowIndex: 1, columnIndex: 2))
+
+        cell11.attributedText = NSAttributedString(string: "Test string 1")
+        cell12.attributedText = NSAttributedString(string: "Test string 2")
+
+        let cell21 = try XCTUnwrap(tableView.cellAt(rowIndex: 2, columnIndex: 1))
+        let cell22 = try XCTUnwrap(tableView.cellAt(rowIndex: 2, columnIndex: 2))
+
+        cell21.attributedText = NSAttributedString(string: "Test string 3")
+        cell22.attributedText = NSAttributedString(string: "Test string 4")
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        tableView.merge(cells: [
+            cell11,
+            cell12,
+            cell21,
+            cell22
+        ])
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        tableView.split(cell: cell11)
+        let newCell12 = try XCTUnwrap(tableView.cellAt(rowIndex: 1, columnIndex: 2))
+        newCell12.editor?.replaceCharacters(in: .zero, with: "Newly added text")
+
+        viewController.render(size: CGSize(width: 400, height: 500))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
@@ -1072,7 +1156,581 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
-    private func makeTableViewAttachment(config: GridConfiguration, cells: [TableCell] = []) -> TableViewAttachment {
+    func testInsertsRowAtIndexInMiddle() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        table.insertRow(at: 1, configuration: GridRowConfiguration(initialHeight: 60))
+
+        viewController.render(size: CGSize(width: 400, height: 400))
+        let newCell11 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 1))
+        newCell11.editor?.attributedText = NSAttributedString(string: "New cell")
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testInsertsRowAtTop() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        table.insertRow(at: 0, configuration: GridRowConfiguration(initialHeight: 60))
+
+        viewController.render(size: CGSize(width: 400, height: 400))
+        let newCell01 = try XCTUnwrap(table.cellAt(rowIndex: 0, columnIndex: 1))
+        newCell01.editor?.attributedText = NSAttributedString(string: "New cell")
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testInsertsRowAtBottom() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        table.insertRow(at: 2, configuration: GridRowConfiguration(initialHeight: 60))
+
+        viewController.render(size: CGSize(width: 400, height: 400))
+        let newCell21 = try XCTUnwrap(table.cellAt(rowIndex: 2, columnIndex: 1))
+        newCell21.editor?.attributedText = NSAttributedString(string: "New cell")
+
+        // Editor shows caret for some reason - needs further investigation
+        table.cellAt(rowIndex: 2, columnIndex: 0)?.editor?.isSelectable = false
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testDeletesRow() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(50)),
+                GridColumnConfiguration(width: .fixed(50)),
+                GridColumnConfiguration(width: .fixed(50)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ],
+            ignoresOptimizedInit: true
+        )
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let cell00 = try XCTUnwrap(table.cellAt(rowIndex: 0, columnIndex: 0))
+        let cell10 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 0))
+        let cell20 = try XCTUnwrap(table.cellAt(rowIndex: 2, columnIndex: 0))
+
+        cell00.attributedText = NSAttributedString(string: "R1")
+        cell10.attributedText = NSAttributedString(string: "R2")
+        cell20.attributedText = NSAttributedString(string: "R3")
+
+        viewController.render(size: CGSize(width: 201, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        table.deleteRow(at: 1)
+
+        viewController.render(size: CGSize(width: 201, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testDeletesMergedRow() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(50)),
+                GridColumnConfiguration(width: .fixed(50)),
+                GridColumnConfiguration(width: .fixed(50)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ],
+            ignoresOptimizedInit: true
+        )
+
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+
+        let cell00 = try XCTUnwrap(table.cellAt(rowIndex: 0, columnIndex: 0))
+        let cell10 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 0))
+        let cell20 = try XCTUnwrap(table.cellAt(rowIndex: 2, columnIndex: 0))
+
+        let cell01 = try XCTUnwrap(table.cellAt(rowIndex: 0, columnIndex: 1))
+        let cell11 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell21 = try XCTUnwrap(table.cellAt(rowIndex: 2, columnIndex: 1))
+
+        cell00.attributedText = NSAttributedString(string: "1")
+        cell10.attributedText = NSAttributedString(string: "2")
+        cell20.attributedText = NSAttributedString(string: "3")
+
+        cell01.attributedText = NSAttributedString(string: "4")
+        cell11.attributedText = NSAttributedString(string: "5")
+        cell21.attributedText = NSAttributedString(string: "6")
+
+        table.merge(cells: [cell00, cell10])
+        viewController.render(size: CGSize(width: 201, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        table.deleteRow(at: 1)
+
+        viewController.render(size: CGSize(width: 201, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testInsertsColumnInMiddle() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        table.insertColumn(at: 1, configuration: GridColumnConfiguration(width: .fixed(80)))
+
+        viewController.render(size: CGSize(width: 400, height: 400))
+        let newCell11 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 1))
+        newCell11.editor?.attributedText = NSAttributedString(string: "New cell")
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testInsertsColumnAtBeginning() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.50)),
+                GridColumnConfiguration(width: .fixed(50)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        table.insertColumn(at: 0, configuration: GridColumnConfiguration(width: .fractional(0.25)))
+
+        viewController.render(size: CGSize(width: 400, height: 400))
+        let newCell00 = try XCTUnwrap(table.cellAt(rowIndex: 0, columnIndex: 0))
+        newCell00.editor?.attributedText = NSAttributedString(string: "New cell")
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testInsertsColumnAtEnd() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fixed(60)),
+                GridColumnConfiguration(width: .fixed(60)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        table.insertColumn(at: 3, configuration: GridColumnConfiguration(width: .fixed(150)))
+
+        viewController.render(size: CGSize(width: 400, height: 400))
+        let newCell21 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 3))
+        newCell21.editor?.attributedText = NSAttributedString(string: "New cell")
+
+        // Editor shows caret for some reason - needs further investigation
+        table.cellAt(rowIndex: 2, columnIndex: 0)?.editor?.isSelectable = false
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testDeletesColumn() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.35)),
+                GridColumnConfiguration(width: .fractional(0.35)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ],
+            ignoresOptimizedInit: true
+        )
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let cell11 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 2))
+
+        cell11.attributedText = NSAttributedString(string: "C1")
+        cell12.attributedText = NSAttributedString(string: "C2")
+
+        viewController.render(size: CGSize(width: 200, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        table.deleteColumn(at: 1)
+
+        viewController.render(size: CGSize(width: 200, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testDeletesMergedColumn() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(40)),
+                GridColumnConfiguration(width: .fractional(0.35)),
+                GridColumnConfiguration(width: .fractional(0.35)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ],
+            ignoresOptimizedInit: true
+        )
+
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let cell01 = try XCTUnwrap(table.cellAt(rowIndex: 0, columnIndex: 1))
+        let cell10 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 0))
+        let cell11 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 2))
+
+        cell01.attributedText = NSAttributedString(string: "C01")
+        cell10.attributedText = NSAttributedString(string: "C10")
+        cell11.attributedText = NSAttributedString(string: "C11")
+        cell12.attributedText = NSAttributedString(string: "C12")
+
+        table.merge(cells: [cell10, cell11])
+
+        viewController.render(size: CGSize(width: 200, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        table.deleteColumn(at: 1)
+
+        viewController.render(size: CGSize(width: 200, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testMergesMultipleCells() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ],
+            ignoresOptimizedInit: true
+        )
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+
+        let cell11 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 2))
+        let cell21 = try XCTUnwrap(table.cellAt(rowIndex: 2, columnIndex: 1))
+        let cell22 = try XCTUnwrap(table.cellAt(rowIndex: 2, columnIndex: 2))
+
+        cell11.attributedText = NSAttributedString(string: "{1, 1} ")
+        cell12.attributedText = NSAttributedString(string: "{1, 2} ")
+        cell21.attributedText = NSAttributedString(string: "{2, 1} ")
+        cell22.attributedText = NSAttributedString(string: "{2, 2} ")
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        table.merge(cells: [
+            cell11,
+            cell12,
+            cell21,
+            cell22
+        ])
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testInsertColumnInTableViewAttachmentWithMergedColumns() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ],
+            ignoresOptimizedInit: true
+        )
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+
+        let cell11 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 2))
+
+        cell11.attributedText = NSAttributedString(string: "Test string 1")
+        cell12.attributedText = NSAttributedString(string: "Test string 2")
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        table.merge(cells: [cell11, cell12])
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        table.insertColumn(at: 1, configuration: GridColumnConfiguration(width: .fixed(50)))
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testInsertRowInTableViewAttachmentWithMergedRows() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ],
+            ignoresOptimizedInit: true
+        )
+        let attachment = TableViewAttachment(config: config)
+        let table = attachment.view
+        attachment.view.delegate = delegate
+
+        let cell11 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell21 = try XCTUnwrap(table.cellAt(rowIndex: 2, columnIndex: 1))
+
+        cell11.attributedText = NSAttributedString(string: "Test string 1")
+        cell21.attributedText = NSAttributedString(string: "Test string 2")
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        table.merge(cells: [cell11, cell21])
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        table.insertRow(at: 1, configuration: GridRowConfiguration(initialHeight: 50))
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testResizesTableViewAttachment() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+
+        let attachment = makeTableViewAttachment(config: config)
+        let table = attachment.view
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let cell11 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 2))
+
+        cell11.attributedText = NSAttributedString(string: "Test string 1 Test string 1")
+        cell12.attributedText = NSAttributedString(string: "Test string 2")
+
+        viewController.render(size: CGSize(width: 400, height: 180))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        table.tableView.changeColumnWidth(index: 1, delta: -50)
+
+        viewController.render(size: CGSize(width: 400, height: 180))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testResizesTableViewAttachmentWithCorrectCellHeight() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(30)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+                GridColumnConfiguration(width: .fractional(0.45)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+
+        let attachment = makeTableViewAttachment(config: config)
+        let table = attachment.view
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        let cell11 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 1))
+        let cell12 = try XCTUnwrap(table.cellAt(rowIndex: 1, columnIndex: 2))
+
+        cell11.attributedText = NSAttributedString(string: "Test string 1 Test string 1 Test string 1")
+        cell12.attributedText = NSAttributedString(string: "Test string 2")
+
+        viewController.render(size: CGSize(width: 400, height: 225))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        table.tableView.changeColumnWidth(index: 1, delta: 50)
+
+        viewController.render(size: CGSize(width: 400, height: 225))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testResizesTableViewAttachmentWithMergedRows() throws {
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+                GridColumnConfiguration(width: .fixed(100)),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ],
+            ignoresOptimizedInit: true
+        )
+        let attachment = makeTableViewAttachment(config: config)
+
+        let tableView = attachment.view
+        let cell01 = try XCTUnwrap(tableView.cellAt(rowIndex: 0, columnIndex: 1))
+        let cell11 = try XCTUnwrap(tableView.cellAt(rowIndex: 1, columnIndex: 1))
+
+        cell01.attributedText = NSAttributedString(string: "Test string 1")
+        cell11.attributedText = NSAttributedString(string: "Test string 2")
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        tableView.merge(cells: [cell01, cell11])
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        tableView.tableView.changeColumnWidth(index: 1, delta: 50)
+
+        viewController.render(size: CGSize(width: 400, height: 300))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    private func makeTableViewAttachment(config: GridConfiguration, cells: [TableCell] = [], tableCellLifeCycleObserver: TableCellLifeCycleObserver? = nil) -> TableViewAttachment {
         let attachment: TableViewAttachment
         if cells.count > 0 {
             attachment = TableViewAttachment(config: config, cells: cells)

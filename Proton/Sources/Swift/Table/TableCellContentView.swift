@@ -72,6 +72,10 @@ public class TableCellContentView: UIView {
         self.gridStyle = containerCell.gridStyle
         super.init(frame: containerCell.frame)
 
+        if containerCell.attributedText == nil {
+            containerCell.attributedText = editor.attributedText
+        }
+
         self.layoutMargins = .zero
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(contentViewTapped))
@@ -104,9 +108,11 @@ public class TableCellContentView: UIView {
         ])
     }
 
-    func applyStyle(_ style: GridCellStyle) {
-       layer.borderColor = style.borderStyle?.color.cgColor ?? gridStyle.borderColor.cgColor
-       layer.borderWidth = style.borderStyle?.width ?? gridStyle.borderWidth
+    public func applyStyle(_ style: GridCellStyle) {
+        layer.borderColor = style.borderStyle?.color.cgColor ?? gridStyle.borderColor.cgColor
+        // Half the border width so that when cels are side by side, these show up as full width
+        // Outer edges are drawn separately in TableContentView.contentSize.didSet
+        layer.borderWidth = (style.borderStyle?.width ?? gridStyle.borderWidth)/2
 
         if let font = style.font {
             editor.font = font
@@ -156,7 +162,7 @@ public class TableCellContentView: UIView {
 
 extension TableCellContentView: BoundsObserving {
     public func didChangeBounds(_ bounds: CGRect, oldBounds: CGRect) {
-        delegate?.cell(containerCell, didChangeBounds: bounds)
+        delegate?.cell(containerCell, didChangeBounds: bounds, oldBounds: oldBounds)
     }
 }
 

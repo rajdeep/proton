@@ -24,6 +24,7 @@ import UIKit
 
 protocol TableDelegate: AnyObject {
     var viewport: CGRect { get  }
+    var cellsInViewport: [TableCell] { get }
     func table(_ table: Table, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool
 }
 
@@ -84,6 +85,10 @@ class Table {
 
     func cellAt(rowIndex: Int, columnIndex: Int) -> TableCell? {
         return cellStore.cellAt(rowIndex: rowIndex, columnIndex: columnIndex)
+    }
+
+    func heightForCell(_ cell: TableCell) -> CGFloat {
+        cell.rowSpan.reduce(0) { $0 + rowHeights[$1].currentHeight }
     }
 
     func calculateTableDimensions(basedOn size: CGSize) {
@@ -159,20 +164,13 @@ class Table {
             result += rowHeights[row].currentHeight 
         }
 
-        // Inset is required to create overlapping borders for cells
-        // In absence of this code, the internal border appears twice as thick as outer as
-        // the layer borders do not perfectly overlap
-        let inset = -config.style.borderWidth
-        let frame = CGRect(x: x, y: y, width: width, height: height).inset(by: UIEdgeInsets(top: 0, left: 0, bottom: inset, right: inset))
-
-        return frame
+        return CGRect(x: x, y: y, width: width, height: height)
     }
 
     func sizeThatFits(size: CGSize) -> CGSize {
         let viewportWidth = viewport?.width ?? size.width
-        let width = columnWidths.reduce(0.0) { $0 + $1.value(basedOn: size.width, viewportWidth: viewportWidth)} + config.style.borderWidth
-        // Account for additional height equal to borders from inset created when calculating the fames for cells
-        let height = currentRowHeights.reduce(0.0, +) + config.style.borderWidth
+        let width = columnWidths.reduce(0.0) { $0 + $1.value(basedOn: size.width, viewportWidth: viewportWidth)}
+        let height = currentRowHeights.reduce(0.0, +)
         return CGSize(width: width, height: height)
     }
 
@@ -244,9 +242,11 @@ class Table {
         cell.rowSpan = Array(Set(cell.rowSpan).union(other.rowSpan)).sorted()
         cell.columnSpan = Array(Set(cell.columnSpan).union(other.columnSpan)).sorted()
 
-        // TODO: fix
-//        cell.editor.replaceCharacters(in: cell.editor.textEndRange, with: " ")
-//        cell.editor.replaceCharacters(in: cell.editor.textEndRange, with: other.editor.attributedText)
+        let updatedText = NSMutableAttributedString(attributedString: cell.attributedText ?? NSAttributedString())
+        updatedText.append(NSAttributedString(string: " "))
+        updatedText.append(other.attributedText ?? NSAttributedString())
+
+        cell.attributedText = updatedText
 
         cellStore.deleteCellAt(index: otherIndex)
     }

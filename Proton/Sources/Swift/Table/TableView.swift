@@ -21,6 +21,23 @@
 import Foundation
 import UIKit
 
+/// An object capable of observing lifecycle events for a cell in a virtualized tableView
+public protocol TableCellLifeCycleObserver: AnyObject {
+    /// Notifies when `TableView` lays out a cell. This is called after the bounds calculation for the cell have been performed.
+    /// Rendering of cell may not have been completed at this time.
+    /// - Parameters:
+    ///   - tableView: TableView containing the cell.
+    ///   - cell: Cell being added to viewport
+    func tableView(_ tableView: TableView, didAddCellToViewport cell: TableCell)
+
+    /// Notifies when `TableView` lays out a cell. This is called after the bounds calculation for the cell have been performed.
+    /// Rendering of cell may not have been completed at this time.
+    /// - Parameters:
+    ///   - tableView: TableView containing the cell.
+    ///   - cell: Cell removed from viewport
+    func tableView(_ tableView: TableView, didRemoveCellFromViewport cell: TableCell)
+}
+
 /// An object capable of handing `TableView` events
 public protocol TableViewDelegate: AnyObject {
     var containerScrollView: UIScrollView? { get }
@@ -112,6 +129,20 @@ public protocol TableViewDelegate: AnyObject {
     /// This is only intended to be used in scenarios where Editor is being scrolled to a position within `TableView` and the cell that is being scrolled to may 
     /// not have been rendered being outside viewport.
     func tableView(_ tableView: TableView, needsUpdateScrollPositionOnCell cell: TableCell, rect: CGRect, isRendered: Bool)
+
+    /// Notifies when `TableView` lays out a cell. This is called after the bounds calculation for the cell have been performed.
+    /// Rendering of cell may not have been completed at this time.
+    /// - Parameters:
+    ///   - tableView: TableView containing the cell.
+    ///   - cell: Cell being added to viewport
+    func tableView(_ tableView: TableView, didAddCellToViewport cell: TableCell)
+
+    /// Notifies when `TableView` lays out a cell. This is called after the bounds calculation for the cell have been performed.
+    /// Rendering of cell may not have been completed at this time.
+    /// - Parameters:
+    ///   - tableView: TableView containing the cell.
+    ///   - cell: Cell removed from viewport
+    func tableView(_ tableView: TableView, didRemoveCellFromViewport cell: TableCell)
 }
 
 /// A view that provides a tabular structure where each cell is an `EditorView`.
@@ -153,6 +184,9 @@ public class TableView: UIView {
     private var shadowWidth: CGFloat {
         10.0
     }
+
+    /// Observer  for lifecycle of tableView cells
+    public weak var tableCellLifeCycleObserver: TableCellLifeCycleObserver?
 
     /// Delegate for `TableView` which can be used to handle cell specific `EditorView` events
     public weak var delegate: TableViewDelegate? {
@@ -381,8 +415,21 @@ public class TableView: UIView {
             let toGenerate = newCells.subtracting(oldCells)
             let toReclaim = oldCells.subtracting(newCells)
 
-            toReclaim.forEach { [weak self] in
-                self?.repository.enqueue(cell: $0)
+            // Required to reset the focus to an editor within viewport.
+            // In absence of this check, if the editor having focus gets reclaimed,
+            // the focus moves to root editor which may cause the content to be scrolled
+            // out to end of the root editor.
+            var needsFocusChange = false
+            toReclaim.forEach { [weak self] cell in
+                if needsFocusChange == false {
+                    needsFocusChange = cell.editor?.isFirstResponder() == true
+                    if needsFocusChange {
+                        self?.cellsInViewport
+                            .first(where: { c in c.editor != nil && c.columnSpan.min() == cell.columnSpan.min() } )?
+                            .editor?.becomeFirstResponder()
+                    }
+                }
+                self?.repository.enqueue(cell: cell)
             }
 
             toGenerate.forEach { [weak self] in
@@ -442,6 +489,22 @@ public class TableView: UIView {
             .intersects(adjustedViewport) }
     }
 
+    func cellBelow(_ cell: TableCell) -> TableCell? {
+        guard let row = cell.rowSpan.max(),
+              let column = cell.columnSpan.min() else {
+            return nil
+        }
+        return cellAt(rowIndex: row + 1, columnIndex: column)
+    }
+
+    func cellAbove(_ cell: TableCell) -> TableCell? {
+        guard let row = cell.rowSpan.max(),
+              let column = cell.columnSpan.min() else {
+            return nil
+        }
+        return cellAt(rowIndex: row - 1, columnIndex: column)
+    }
+
     private func makeSelectionBorderView() -> UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -452,51 +515,56 @@ public class TableView: UIView {
 
     private func addColumnResizingHandles(selectedCell: TableCell) {
         guard isColumnResizingHandlesVisible else { return }
+        for cell in cells where cell.columnSpan.max() == selectedCell.columnSpan.max() {
+            if let contentView = cell.contentView {
+                let handleView = makeColumnResizingHandle(cell: cell)
+                columnResizingHandles.append(handleView)
+                handleView.translatesAutoresizingMaskIntoConstraints = false
+                addSubview(handleView)
+                NSLayoutConstraint.activate([
+                    handleView.widthAnchor.constraint(equalToConstant: handleSize),
+                    handleView.heightAnchor.constraint(equalTo: handleView.widthAnchor),
+                ])
 
-//        for cell in cells where cell.columnSpan.max() == selectedCell.columnSpan.max() {
-//            let handleView = makeColumnResizingHandle(cell: cell)
-//            columnResizingHandles.append(handleView)
-//            handleView.translatesAutoresizingMaskIntoConstraints = false
-//            addSubview(handleView)
-//            NSLayoutConstraint.activate([
-//                handleView.widthAnchor.constraint(equalToConstant: handleSize),
-//                handleView.heightAnchor.constraint(equalTo: handleView.widthAnchor),
-//                handleView.centerYAnchor.constraint(equalTo: cell.contentView.bottomAnchor),
-//                handleView.centerXAnchor.constraint(equalTo: cell.contentView.trailingAnchor)
-//            ])
-//        }
+                NSLayoutConstraint.activate([
+                    handleView.centerYAnchor.constraint(equalTo: contentView.bottomAnchor),
+                    handleView.centerXAnchor.constraint(equalTo: contentView.trailingAnchor)
+                ])
+            }
+        }
 
         addSelectionBorders(grid: self, cell: selectedCell)
     }
 
     private func addSelectionBorders(grid: TableView, cell: TableCell) {
+        guard let contentView = cell.contentView else { return }
+
         addSubview(columnRightBorderView)
         addSubview(columnLeftBorderView)
         addSubview(columnTopBorderView)
         addSubview(columnBottomBorderView)
 
-//        NSLayoutConstraint.activate([
-//            columnRightBorderView.centerXAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
-//            columnRightBorderView.widthAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
-//            columnRightBorderView.heightAnchor.constraint(equalTo: tableView.heightAnchor),
-//            columnRightBorderView.topAnchor.constraint(equalTo: tableView.topAnchor),
-//
-//            columnLeftBorderView.centerXAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
-//            columnLeftBorderView.widthAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
-//            columnLeftBorderView.heightAnchor.constraint(equalTo: tableView.heightAnchor),
-//            columnLeftBorderView.topAnchor.constraint(equalTo: tableView.topAnchor),
-//
-//            columnTopBorderView.centerYAnchor.constraint(equalTo: tableView.topAnchor),
-//            columnTopBorderView.widthAnchor.constraint(equalTo: cell.contentView.widthAnchor),
-//            columnTopBorderView.heightAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
-//            columnTopBorderView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
-//
-//            columnBottomBorderView.centerYAnchor.constraint(equalTo: tableView.bottomAnchor),
-//            columnBottomBorderView.widthAnchor.constraint(equalTo: cell.contentView.widthAnchor),
-//            columnBottomBorderView.heightAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
-//            columnBottomBorderView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
-//
-//        ])
+        NSLayoutConstraint.activate([
+            columnRightBorderView.centerXAnchor.constraint(equalTo: contentView.trailingAnchor),
+            columnRightBorderView.widthAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
+            columnRightBorderView.heightAnchor.constraint(equalTo: tableView.heightAnchor),
+            columnRightBorderView.topAnchor.constraint(equalTo: tableView.topAnchor),
+
+            columnLeftBorderView.centerXAnchor.constraint(equalTo: contentView.leadingAnchor),
+            columnLeftBorderView.widthAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
+            columnLeftBorderView.heightAnchor.constraint(equalTo: tableView.heightAnchor),
+            columnLeftBorderView.topAnchor.constraint(equalTo: tableView.topAnchor),
+
+            columnTopBorderView.centerYAnchor.constraint(equalTo: tableView.topAnchor),
+            columnTopBorderView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            columnTopBorderView.heightAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
+            columnTopBorderView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+
+            columnBottomBorderView.centerYAnchor.constraint(equalTo: tableView.bottomAnchor),
+            columnBottomBorderView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            columnBottomBorderView.heightAnchor.constraint(equalToConstant: cell.gridStyle.borderWidth * 2),
+            columnBottomBorderView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+        ])
     }
 
     private func removeColumnResizingHandles() {
@@ -527,7 +595,7 @@ public class TableView: UIView {
     @objc
     private func dragHandler(gesture: UIPanGestureRecognizer){
         guard let draggedView = gesture.view,
-              let cell = (draggedView as? CellHandleButton)?.cell else { return }
+              let cell = (draggedView as? TableCellHandleButton)?.cell else { return }
 
         let location = gesture.location(in: self)
         if gesture.state == .changed {
@@ -592,6 +660,12 @@ public class TableView: UIView {
     /// are added as empty,
     /// - Parameter cell: Cell to split.
     public func split(cell: TableCell) {
+        if cell.isSplittable {
+            // Remove cell being split so that it can be regenerated
+            // to correctly render cells in viewport
+            cellsInViewport.removeAll(where: { $0 == cell })
+        }
+
         let cells = tableView.split(cell: cell)
         if let cell = cells.last {
             resetColumnResizingHandles(selectedCell: cell)
@@ -604,10 +678,10 @@ public class TableView: UIView {
     ///     If the index is out of bounds, row will be inserted at the top or bottom of the grid based on index value
     ///   - configuration: Configuration for the new row
     /// - Returns: Result with newly added cells for `.success`, error in case of `.failure`
-//    @discardableResult
-//    public func insertRow(at index: Int, configuration: GridRowConfiguration) -> Result<[TableCell], TableViewError> {
-//        tableView.insertRow(at: index, configuration: configuration)
-//    }
+    @discardableResult
+    public func insertRow(at index: Int, configuration: GridRowConfiguration) -> Result<[TableCell], TableViewError> {
+        tableView.insertRow(at: index, configuration: configuration)
+    }
 
     /// Inserts a new column at given index.
     /// - Parameters:
@@ -615,10 +689,10 @@ public class TableView: UIView {
     ///   If the index is out of bounds, column will be inserted at the beginning or end of the grid based on index value
     ///   - configuration: Configuration for the new column
     /// - Returns: Result with newly added cells for `.success`, error in case of `.failure`
-//    @discardableResult
-//    public func insertColumn(at index: Int, configuration: GridColumnConfiguration) -> Result<[TableCell], TableViewError> {
-//        tableView.insertColumn(at: index, configuration: configuration)
-//    }
+    @discardableResult
+    public func insertColumn(at index: Int, configuration: GridColumnConfiguration) -> Result<[TableCell], TableViewError> {
+        tableView.insertColumn(at: index, configuration: configuration)
+    }
 
     /// Deletes the row at given index
     /// - Parameter index: Index to delete
@@ -735,6 +809,7 @@ public class TableView: UIView {
 
 extension TableView: UIScrollViewDelegate {
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        cellsInViewport.first { $0.editor?.isFirstResponder() == true }?.editor?.resignFocus()
         resetShadows()
         viewportChanged()
     }
@@ -834,6 +909,19 @@ extension TableView: TableContentViewDelegate {
     }
 
     func tableContentView(_ tableContentView: TableContentView, cell: TableCell, didChangeBackgroundColor color: UIColor?, oldColor: UIColor?) {
+    }
+
+    func tableContentView(_ tableContentView: TableContentView, didAddCellToViewport cell: TableCell) {
+        delegate?.tableView(self, didAddCellToViewport: cell)
+        tableCellLifeCycleObserver?.tableView(self, didAddCellToViewport: cell)
+    }
+
+    func tableContentView(_ tableContentView: TableContentView, didRemoveCellFromViewport cell: TableCell) {
+        let handleToRemove = columnResizingHandles.first { $0.cell == cell }
+        handleToRemove?.removeFromSuperview()
+        columnResizingHandles.removeAll { $0 == handleToRemove }
+        delegate?.tableView(self, didRemoveCellFromViewport: cell)
+        tableCellLifeCycleObserver?.tableView(self, didRemoveCellFromViewport: cell)
     }
 }
 

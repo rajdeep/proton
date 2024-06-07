@@ -35,6 +35,9 @@ class MockTableViewDelegate: TableViewDelegate {
     var onDidUnselectCells: ((_ tableView: TableView, _ cells: [TableCell]) -> Void)?
     var onDidLayoutCell: ((_ tableView: TableView, _ cell: TableCell) -> Void)?
     var onNeedsUpdateScrollPositionOnCell: ((_ tableView: TableView, _ cell: TableCell, _ rect: CGRect, _ isRendered: Bool) -> Void)?
+    var onDidAddCellToViewport: ((_ tableView: TableView, _ cell: TableCell) -> Void)?
+    var onDidRemoveCellFromViewport: ((_ tableView: TableView, _ cell: TableCell) -> Void)?
+
 
     func tableView(_ tableView: TableView, didReceiveFocusAt range: NSRange, in cell: TableCell) {
         onDidReceiveFocus?(tableView, range, cell)
@@ -75,6 +78,14 @@ class MockTableViewDelegate: TableViewDelegate {
 
     func tableView(_ tableView: TableView, didLayoutCell cell: Proton.TableCell) {
         onDidLayoutCell?(tableView, cell)
+    }
+
+    func tableView(_ tableView: TableView, didAddCellToViewport cell: TableCell) {
+        onDidAddCellToViewport?(tableView, cell)
+    }
+
+    func tableView(_ tableView: TableView, didRemoveCellFromViewport cell: TableCell) {
+        onDidRemoveCellFromViewport?(tableView, cell)
     }
 
     func tableView(_ tableView: TableView, needsUpdateScrollPositionOnCell cell: TableCell, rect: CGRect, isRendered: Bool) {

@@ -45,7 +45,6 @@ class TableCellStore {
         let cell = cells[index]
         cell.removeContentView()
         cells.remove(at: index)
-
     }
 
     func addCells(_ newCells: [TableCell]) {
@@ -57,8 +56,7 @@ class TableCellStore {
     }
 
     func deleteCells(_ cellsToDelete: [TableCell]) {
-        //TODO: fix
-//        cells = cells.filter({ !cellsToDelete.contains($0) })
+        cells = cells.filter({ !cellsToDelete.contains($0) })
     }
 
     func moveCellRowIndex(from index: Int, by step: Int) {

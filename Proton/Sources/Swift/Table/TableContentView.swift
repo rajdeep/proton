@@ -57,6 +57,9 @@ protocol TableContentViewDelegate: AnyObject {
     func tableContentView(_ tableContentView: TableContentView, didUpdateCells cells: [TableCell])
 
     func tableContentView(_ tableContentView: TableContentView, needsUpdateViewport delta: CGPoint)
+
+    func tableContentView(_ tableContentView: TableContentView, didAddCellToViewport cell: TableCell)
+    func tableContentView(_ tableContentView: TableContentView, didRemoveCellFromViewport cell: TableCell)
 }
 
 class TableContentView: UIScrollView {
@@ -75,6 +78,16 @@ class TableContentView: UIScrollView {
 
     var isFreeScrollingEnabled = false
     var isRendered = false
+
+    // Border for outer edges are added separately to account for
+    // half-width borders added by cells which results in thinner outer border of table
+    // These cannot be added as layer/sublayers as that gets drawn under the cells and for
+    // cells with background, it overlaps the table border showing it thinner on outer edges for
+    // cells with background color applied.
+    let topBorder: UIView
+    let bottomBorder: UIView
+    let leftBorder: UIView
+    let rightBorder: UIView
 
     var cells: [TableCell] {
         table.cells
@@ -117,6 +130,12 @@ class TableContentView: UIScrollView {
     init(config: GridConfiguration, cells: [TableCell], editorInitializer: TableCell.EditorInitializer?) {
         self.config = config
         table = Table(config: config, cells: cells, editorInitializer: editorInitializer)
+
+        topBorder = UIView()
+        bottomBorder = UIView()
+        leftBorder = UIView()
+        rightBorder = UIView()
+
         super.init(frame: .zero)
 
 //        self.widthAnchorConstraint = widthAnchor.constraint(lessThanOrEqualToConstant: 350)
@@ -127,6 +146,8 @@ class TableContentView: UIScrollView {
 //            widthAnchorConstraint,
 //            heightAnchorConstraint
 //        ])
+
+
     }
 
     override var contentSize: CGSize {
@@ -134,6 +155,7 @@ class TableContentView: UIScrollView {
             guard oldValue != contentSize else { return }
             self.frame = CGRect(origin: self.frame.origin, size: CGSize(width: self.frame.width, height: contentSize.height))
             tableContentViewDelegate?.tableContentView(self, didChangeContentSize: contentSize, oldContentSize: oldValue)
+            drawBorders()
         }
     }
 
@@ -165,11 +187,47 @@ class TableContentView: UIScrollView {
     override func layoutSubviews() {
         super.layoutSubviews()
         tableContentViewDelegate?.tableContentView(self, didCompleteLayoutWithBounds: bounds)
+        // Bring borders to top so that it shows up over cells
+        bringBordersToTop()
     }
 
     private func setup() {
         setupSelectionGesture()
         tableContentViewDelegate?.tableContentView(self, didUpdateCells: cells)
+    }
+
+    private func drawBorders() {
+        // account for making width slightly less failing which it is possible to see(in extreme zoom level) vertical lines extending underneath horizontal
+        let verticalBorderWidth = contentSize.width - (config.style.borderWidth/2)
+        topBorder.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: verticalBorderWidth, height: config.style.borderWidth))
+        bottomBorder.frame = CGRect(origin: CGPoint(x: 0, y: contentSize.height - 1), size: CGSize(width: verticalBorderWidth, height: config.style.borderWidth))
+        leftBorder.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: config.style.borderWidth, height: contentSize.height))
+        rightBorder.frame = CGRect(origin: CGPoint(x: contentSize.width - 1, y: 0), size: CGSize(width: config.style.borderWidth, height: contentSize.height))
+
+        topBorder.backgroundColor = config.style.borderColor
+        bottomBorder.backgroundColor = config.style.borderColor
+        leftBorder.backgroundColor = config.style.borderColor
+        rightBorder.backgroundColor = config.style.borderColor
+
+        if topBorder.superview == nil {
+            addSubview(topBorder)
+        }
+        if bottomBorder.superview == nil {
+            addSubview(bottomBorder)
+        }
+        if leftBorder.superview == nil {
+            addSubview(leftBorder)
+        }
+        if rightBorder.superview == nil {
+            addSubview(rightBorder)
+        }
+    }
+
+    func bringBordersToTop() {
+        bringSubviewToFront(topBorder)
+        bringSubviewToFront(bottomBorder)
+        bringSubviewToFront(leftBorder)
+        bringSubviewToFront(rightBorder)
     }
 
     public override func willMove(toWindow newWindow: UIWindow?) {
@@ -227,39 +285,41 @@ class TableContentView: UIScrollView {
     }
 
     func merge(cells: [TableCell]) -> TableCell? {
+        deselectCells()
         let mergedCell = table.merge(cells: cells)
         invalidateCellLayout()
-        deselectCells()
+
+        mergedCell?.editor?.becomeFirstResponder()
         return mergedCell
     }
 
     func split(cell: TableCell) -> [TableCell] {
+        deselectCells()
         let cells = table.split(cell: cell)
         invalidateCellLayout()
-        // First cell is the existing merged cell. Others are added as new.
-        deselectCells()
+        cell.editor?.becomeFirstResponder()
         return cells
     }
 
-//    @discardableResult
-//    func insertRow(at index: Int, configuration: GridRowConfiguration) -> Result<[TableCell], GridViewError> {
-//        let result = grid.insertRow(at: index, frozenRowMaxIndex: frozenRowMaxIndex, config: configuration, cellDelegate: self)
-//        if case Result.success = result {
-//            invalidateCellLayout()
-//            tableContentViewDelegate?.tableContentView(self, didAddNewRowAt: index)
-//        }
-//        return result
-//    }
-//
-//    @discardableResult
-//    func insertColumn(at index: Int, configuration: GridColumnConfiguration) -> Result<[TableCell], GridViewError> {
-//        let result = grid.insertColumn(at: index, frozenColumnMaxIndex: frozenColumnMaxIndex, config: configuration, cellDelegate: self)
-//        if case Result.success = result {
-//            invalidateCellLayout()
-//            tableContentViewDelegate?.tableContentView(self, didAddNewColumnAt: index)
-//        }
-//        return result
-//    }
+    @discardableResult
+    func insertRow(at index: Int, configuration: GridRowConfiguration) -> Result<[TableCell], TableViewError> {
+        let result = table.insertRow(at: index, frozenRowMaxIndex: frozenRowMaxIndex, config: configuration, cellDelegate: self)
+        if case Result.success = result {
+            invalidateCellLayout()
+            tableContentViewDelegate?.tableContentView(self, didAddNewRowAt: index)
+        }
+        return result
+    }
+
+    @discardableResult
+    func insertColumn(at index: Int, configuration: GridColumnConfiguration) -> Result<[TableCell], TableViewError> {
+        let result = table.insertColumn(at: index, frozenColumnMaxIndex: frozenColumnMaxIndex, config: configuration, cellDelegate: self)
+        if case Result.success = result {
+            invalidateCellLayout()
+            tableContentViewDelegate?.tableContentView(self, didAddNewColumnAt: index)
+        }
+        return result
+    }
 
     func deleteRow(at index: Int) {
         table.deleteRow(at: index)
@@ -348,7 +408,8 @@ class TableContentView: UIScrollView {
     }
 
     func invalidateCellLayout() {
-        //TODO: Fix
+        updateCellFrames()
+        relayoutTable()
     }
 
     private func recalculateCellBounds(cell: TableCell) {
@@ -374,16 +435,20 @@ class TableContentView: UIScrollView {
             }
         }
 
+        relayoutTable()
+        tableContentViewDelegate?.tableContentView(self, didLayoutCell: cell)
+    }
+
+    private func relayoutTable() {
         contentSize = table.size
 
         heightAnchorConstraint.constant = self.frame.height
         if heightAnchorConstraint.isActive == false {
             heightAnchorConstraint.isActive = true
         }
-
         superview?.layoutIfNeeded()
         boundsObserver?.didChangeBounds(CGRect(origin: bounds.origin, size: frame.size), oldBounds: bounds)
-        tableContentViewDelegate?.tableContentView(self, didLayoutCell: cell)
+        tableContentViewDelegate?.tableContentView(self, needsUpdateViewport: self.bounds.origin)
     }
 
     private func freezeColumnCellIfRequired(_ cell: TableCell) {
@@ -452,10 +517,12 @@ class TableContentView: UIScrollView {
 extension TableContentView: TableCellDelegate {
     func cell(_ cell: TableCell, didAddContentView view: TableCellContentView) {
         addSubview(view)
+        tableContentViewDelegate?.tableContentView(self, didAddCellToViewport: cell)
     }
 
     func cell(_ cell: TableCell, didRemoveContentView view: TableCellContentView?) {
         view?.removeFromSuperview()
+        tableContentViewDelegate?.tableContentView(self, didRemoveCellFromViewport: cell)
     }
 
     func cell(_ cell: TableCell, didReceiveFocusAt range: NSRange) {
@@ -478,23 +545,43 @@ extension TableContentView: TableCellDelegate {
         tableContentViewDelegate?.tableContentView(self, cell: cell, didChangeBackgroundColor: color, oldColor: oldColor)
     }
 
-    func cell(_ cell: TableCell, didChangeBounds bounds: CGRect) {
-        guard  let row = cell.rowSpan.first else { return }
-//        if table.rowHeights.count > row,
-//           table.maxContentHeightCellForRow(at: row)?.id == cell.id {
-//            table.rowHeights[row].currentHeight = bounds.height
-//        } else {
-//            table.rowHeights[row].currentHeight = table.maxContentHeightCellForRow(at: row)?.contentSize.height ?? 0
-//        }
-
-        //TODO: revisit for when height of entire row gets shorter
-        guard bounds.height > table.rowHeights[row].currentHeight else {
+    func cell(_ cell: TableCell, didChangeBounds bounds: CGRect, oldBounds: CGRect) {
+        guard let row = cell.rowSpan.first,
+              table.maxContentHeightCellForRow(at: row)?.frame.height == cell.frame.height else {
             return
         }
 
-        table.rowHeights[row].currentHeight = bounds.height
-        //TODO: only update affected row/column onwards
-        table.calculateTableDimensions(basedOn: self.bounds.size)
+        if table.rowHeights.count > row,
+           table.heightForCell(cell) <= bounds.height {
+            if cell.isSplittable {
+                table.rowHeights[row].currentHeight += (bounds.height - table.heightForCell(cell))
+            } else {
+                table.rowHeights[row].currentHeight = max(cell.initialHeight, bounds.height)
+            }
+        } else {
+            // If the cell height is decreasing
+            if oldBounds.height > bounds.height {
+                let delta = (bounds.height - table.heightForCell(cell))
+                if let currentEditorContentSize = cell.editor?.contentSize.height {
+                    let proposedCellHeight = currentEditorContentSize + delta
+                    // validate if there is another cell with the same or higher content size that is to be applied
+                    let otherCellWithSameHeight = cellsInViewport.first{
+                        guard let cellEditor = $0.editor else { return false }
+                        return $0.id != cell.id && $0.rowSpan.contains(row) && cellEditor.contentSize.height >= proposedCellHeight
+                    }
+                    // reduce height only if new height for the row does not conflict with other cell having similar height
+                    if otherCellWithSameHeight == nil || (otherCellWithSameHeight?.contentSize.height ?? 0) <= cell.contentSize.height {
+                        table.rowHeights[row].currentHeight += (bounds.height - table.heightForCell(cell))
+                        // If updated height falls below default initial height, reset it back.
+                        if table.rowHeights[row].currentHeight < cell.initialHeight {
+                            table.rowHeights[row].currentHeight = cell.initialHeight
+                        }
+                    }
+                }
+            }
+        }
+
+        updateCellFrames()
         recalculateCellBounds(cell: cell)
         tableContentViewDelegate?.tableContentView(self, didChangeBounds: cell.frame, in: cell)
     }
@@ -537,14 +624,30 @@ extension TableContentView: UIGestureRecognizerDelegate {
 extension TableContentView: TableDelegate {
     var viewport: CGRect { bounds }
 
+    var cellsInViewport: [TableCell] { tableContentViewDelegate?.cellsInViewport ?? [] }
+
     func table(_ table: Table, shouldChangeColumnWidth proposedWidth: CGFloat, for columnIndex: Int) -> Bool {
         tableContentViewDelegate?.tableContentView(self, shouldChangeColumnWidth: proposedWidth, for: columnIndex) ?? true
     }
 }
 
 extension UIView {
-    func drawBorder(width: CGFloat = 1, color: UIColor = .red) {
-        layer.borderColor = color.cgColor
-        layer.borderWidth = width
+    func drawBorder(name: String?, size: CGSize? = nil, width: CGFloat = 1, color: UIColor = .red) {
+        guard let size else {
+            layer.borderColor = color.cgColor
+            layer.borderWidth = width
+            return
+        }
+
+        let borderLayer = layer.sublayers?.first { $0.name == name } ?? CALayer()
+        borderLayer.name = name
+        borderLayer.frame = CGRect(origin: .zero, size: size)
+        borderLayer.borderColor = color.cgColor
+        borderLayer.borderWidth = width
+
+        if borderLayer.superlayer == nil {
+            layer.addSublayer(borderLayer)
+        }
+
     }
 }
