@@ -74,6 +74,12 @@ public class TableCell {
         }
     }
 
+    public var isEditable: Bool = true {
+        didSet {
+            editor?.isEditable = isEditable
+        }
+    }
+
     public var backgroundColor: UIColor? = nil {
         didSet {
             guard oldValue != backgroundColor else { return }
@@ -113,6 +119,7 @@ public class TableCell {
             //TODO: get rid of editorInitializer in favor of delegate callback for editor
             if let editor = contentView?.editor {
                 editor.attributedText = _attributedText ?? editorInitializer().attributedText
+                editor.isEditable = isEditable
                 onEditorInitialized?(self, editor)
             }
             contentView?.applyStyle(style)
@@ -156,6 +163,11 @@ public class TableCell {
         self.gridStyle = gridStyle
         self.style = style
         self.initialHeight = initialHeight
+    }
+
+    // Clear the content of the cell
+    public func clear() {
+        attributedText = NSAttributedString()
     }
 
     /// Sets the focus in the `Editor` within the cell.
