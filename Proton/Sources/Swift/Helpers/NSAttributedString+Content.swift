@@ -54,6 +54,17 @@ public extension NSAttributedString {
         }
         return string.makeNSRange(from: range)
     }
+
+
+    /// Determines if the given string contains the attributed at provided location
+    /// - Parameters:
+    ///   - attribute: Attribute to search
+    ///   - location: Location for attribute
+    /// - Returns: `true` if found, else `false`
+    func hasAttribute(_ attribute: NSAttributedString.Key, at location: Int) -> Bool {
+        guard location < length else { return false }
+        return self.attribute(attribute, at: location, effectiveRange: nil) != nil
+    }
 }
 
 extension NSAttributedString {

@@ -132,6 +132,8 @@ class CommandsExampleViewController: ExamplesBaseViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(stackView)
 
+        ListTextProcessor.markerDebugOptions = .replace(with: "•")
+
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),

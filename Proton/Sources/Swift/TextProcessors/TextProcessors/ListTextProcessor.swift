@@ -88,8 +88,32 @@ open class ListTextProcessor: TextProcessing {
             editor.selectedRange = editor.selectedRange.nextPosition
         }
         editor.typingAttributes[.skipNextListMarker] = nil
+
+        if let currentLine = editor.contentLinesInRange(editor.selectedRange).first,
+           let rangeToReplace = currentLine.text.rangeOfCharacter(from: CharacterSet(charactersIn: ListTextProcessor.blankLineFiller)) {
+            if currentLine.text.length > 1 {
+                let adjustedRange = NSRange(location: rangeToReplace.location + currentLine.range.location, length: rangeToReplace.length)
+                let proposedSelectedLocation = editor.selectedRange.location - 1
+                editor.replaceCharacters(in: adjustedRange, with: NSAttributedString())
+                // Resetting selected range may not be required if the replace operation results in changing that
+                // automatically, i.e. in case the list item is last item in the editor and deleting the marker character
+                // results in editor selected range to adjust as it happens to be outside editor content length
+                if proposedSelectedLocation != editor.selectedRange.location {
+                    editor.selectedRange = NSRange(location: proposedSelectedLocation, length: editor.selectedRange.length)
+                }
+            }
+        } else if editor.contentLinesInRange(editor.selectedRange).first?.text.length == 0 {
+//            insertBlankLineFiller(in: editor, location: editor.selectedRange.location)
+        }
     }
-    
+
+    private func insertBlankLineFiller(in editor: EditorView, location: Int) {
+        let range = NSRange(location: location, length: 0)
+        let marker = NSAttributedString(string: ListTextProcessor.blankLineFiller, attributes: editor.typingAttributes)
+        editor.replaceCharacters(in: range, with: marker)
+        editor.selectedRange = range.nextPosition
+    }
+
     open func handleKeyWithModifiers(editor: EditorView, key: EditorKey, modifierFlags: UIKeyModifierFlags, range editedRange: NSRange)  {
         guard editedRange != .zero else { return }
         switch key {
@@ -112,10 +136,38 @@ open class ListTextProcessor: TextProcessing {
                 if modifierFlags == .shift {
                     handleShiftReturn(editor: editor, editedRange: editedRange, attrs: attrs)
                 } else {
+                    // Handle the case if there happens to be a list item afterwards or a ZWS.
+                    // A ZWS denotes the end of list. If there is a ZWS, and we are trying to exit the list,
+                    // it means that we are on last list item and exit should be allowed.
+                    if editedRange.nextCharacterRange.isValidIn(editor.textInput) {
+                        let nextChar = editor.attributedText.attributedSubstring(from: editedRange.nextCharacterRange)
+                        let isNextLineZWS = editor.nextContentLine(from: editedRange.location)?.text.string == ListTextProcessor.blankLineFiller
+                        if  isNextLineZWS == false,
+                            nextChar.attribute(.listItem, at: 0, effectiveRange: nil) != nil,
+                            editor.attributedText.hasAttribute(.listItem, at: editor.selectedRange.location) == false {
+                            return
+                        }
+                    }
+
+//                    let nextContentLine = editor.nextContentLine(from: editedRange.location)
+//                    if editor.contentLinesInRange(editedRange).first?.text.string.contains(ListTextProcessor.blankLineFiller) == true ||
+//                        (nextContentLine != nil && nextContentLine?.text.length == 0) ||
+//                        nextContentLine?.text.hasAttribute(.listItem, at: 0) == true {
+//                        return
+//                    }
+
+                    let nextContentLine = editor.nextContentLine(from: editedRange.location)
+                    let isFirstLineBlank = editor.contentLinesInRange(editedRange).first?.text.string.contains(ListTextProcessor.blankLineFiller) ?? false
+                    let isNextLineEmpty = nextContentLine?.text.length == 0
+                    let isNextLineListItem = nextContentLine?.text.hasAttribute(.listItem, at: 0) ?? false
+
+                    if isFirstLineBlank || isNextLineEmpty || isNextLineListItem {
+                        return
+                    }
+
                     exitListsIfRequired(editor: editor, editedRange: editedRange)
                 }
             }
-
         case .backspace:
             let attributedText = editor.attributedText
             guard editedRange.location > 0,
@@ -155,6 +207,15 @@ open class ListTextProcessor: TextProcessing {
         editor.replaceCharacters(in: rangeToReplace, with: "")
         if editor.selectedRange.endLocation >= rangeToReplace.endLocation {
             editor.selectedRange = NSRange(location: editor.selectedRange.location - 1, length: 0)
+        }
+    }
+
+    private func isProcessingList(editor: EditorView) -> Bool {
+        guard editor.selectedRange != .zero else { return false }
+        if editor.selectedRange.length == 0 {
+            return editor.attributedText.hasAttribute(.listItem, at: editor.selectedRange.location - 1)
+        } else {
+            return editor.attributedText.hasAttribute(.listItem, at: editor.selectedRange.location)
         }
     }
 
