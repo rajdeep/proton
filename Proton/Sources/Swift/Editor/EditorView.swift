@@ -838,7 +838,7 @@ open class EditorView: UIView {
     }
 
     public func attachmentsInRange(_ range: NSRange) -> [AttachmentRange] {
-        guard range.endLocation < attributedText.length else { return [] }
+        guard range.endLocation <= attributedText.length else { return [] }
         let substring = attributedText.attributedSubstring(from: range)
         return substring.attachmentRanges
     }
