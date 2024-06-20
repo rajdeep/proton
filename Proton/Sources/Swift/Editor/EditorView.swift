@@ -817,6 +817,12 @@ open class EditorView: UIView {
         return richTextView.sizeThatFits(size)
     }
 
+    /// Adds an interaction to the view.
+    /// - Parameter interaction: The interaction object to add to the view.
+    open override func addInteraction(_ interaction: UIInteraction) {
+        richTextView.addInteraction(interaction)
+    }
+
     /// Asks UIKit to make this object the first responder in its window.
     /// - Returns:
     /// `true` if this object is now the first-responder or `false` if it is not.
