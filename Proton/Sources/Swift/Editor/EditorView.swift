@@ -390,6 +390,7 @@ open class EditorView: UIView {
     public var isEditable: Bool {
         get { richTextView.isEditable }
         set {
+            guard richTextView.isEditable != newValue else { return }
             richTextView.isEditable = newValue
             AggregateEditorViewDelegate.editor(self, didChangeEditable: newValue)
         }
