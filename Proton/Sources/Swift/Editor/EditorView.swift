@@ -763,6 +763,11 @@ open class EditorView: UIView {
         set { richTextView.textDropDelegate = newValue }
     }
 
+    /// Returns the nearest shared undo manager in the responder chain.
+    open override var undoManager: UndoManager? {
+        get { richTextView.undoManager }
+    }
+
     private func getAttachmentContentView(view: UIView?) -> AttachmentContentView? {
         guard let view = view else { return nil }
         if let attachmentContentView = view.superview as? AttachmentContentView {
