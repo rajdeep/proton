@@ -26,6 +26,7 @@ class RichTextView: AutogrowingTextView {
     
     /// Equivalent, strongly-typed alternative to `textStorage`
     private let richTextStorage = PRTextStorage()
+    private let _undoManager: UndoManager?
     static let defaultListLineFormatting = LineFormatting(indentation: 25, spacingBefore: 0)
 
     weak var richTextViewDelegate: RichTextViewDelegate?
@@ -317,12 +318,18 @@ class RichTextView: AutogrowingTextView {
         delegate as? RichTextViewContext
     }
 
-    init(frame: CGRect = .zero, context: RichTextViewContext, allowAutogrowing: Bool = false) {
+    init(
+        frame: CGRect = .zero,
+        context: RichTextViewContext,
+        allowAutogrowing: Bool = false,
+        undoManager: UndoManager? = nil) {
         let textContainer = TextContainer()
         let layoutManager = LayoutManager()
 
         layoutManager.addTextContainer(textContainer)
         richTextStorage.addLayoutManager(layoutManager)
+
+        _undoManager = undoManager
         super.init(frame: frame, textContainer: textContainer, allowAutogrowing: allowAutogrowing)
         delegateOverrides = [GestureRecognizerDelegateOverride]()
         layoutManager.delegate = self
@@ -336,6 +343,10 @@ class RichTextView: AutogrowingTextView {
         self.backgroundColor = defaultBackgroundColor
         self.textColor = defaultTextColor
 //        self.typingAttributes = defaultTypingAttributes
+    }
+
+    override var undoManager: UndoManager? {
+        _undoManager ?? super.undoManager
     }
 
     var contentLength: Int {
