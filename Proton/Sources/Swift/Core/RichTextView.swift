@@ -183,8 +183,8 @@ class RichTextView: AutogrowingTextView {
         didSet{
             if let range = adjustedTextBlockRangeOnSelectionChange(oldRange: oldValue, newRange: selectedRange) {
                 selectedRange = range
+                richTextViewDelegate?.richTextView(self, selectedRangeChangedFrom: oldValue, to: selectedRange)
             }
-            richTextViewDelegate?.richTextView(self, selectedRangeChangedFrom: oldValue, to: selectedRange)
         }
     }
 
