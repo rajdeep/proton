@@ -39,6 +39,19 @@ class TextBlockAttributeTests: XCTestCase {
         XCTAssertEqual(textView.selectedRange, NSRange(location: 8, length: 0))
     }
 
+    func testSetsFocusAfterForNonFocusableTextWithSelectedRange() {
+        let textView = RichTextView(context: RichTextViewContext())
+        let text = NSMutableAttributedString(string: "0123")
+        text.append(NSAttributedString(string: "4567", attributes: [.textBlock: true]))
+        text.append(NSAttributedString(string: "890"))
+        textView.attributedText = text
+
+        textView.selectedRange = .zero
+        let range = NSRange(location: 5, length: 0)
+        textView.selectedRange = range
+        XCTAssertEqual(textView.selectedRange, NSRange(location: 8, length: 0))
+    }
+
     func testDoubleTapOnTextBlock() {
         let textView = RichTextView(context: RichTextViewContext())
         let text = NSMutableAttributedString(string: "01234", attributes: [.textBlock: true])

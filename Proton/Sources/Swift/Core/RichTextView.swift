@@ -179,6 +179,15 @@ class RichTextView: AutogrowingTextView {
         }
     }
 
+    override var selectedRange: NSRange {
+        didSet{
+            if let range = adjustedTextBlockRangeOnSelectionChange(oldRange: oldValue, newRange: selectedRange) {
+                selectedRange = range
+            }
+            richTextViewDelegate?.richTextView(self, selectedRangeChangedFrom: oldValue, to: selectedRange)
+        }
+    }
+
     override var contentInset: UIEdgeInsets {
         didSet {
             updatePlaceholderVisibility()
