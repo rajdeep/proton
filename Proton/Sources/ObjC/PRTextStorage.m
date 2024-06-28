@@ -91,13 +91,27 @@
         // Out of bounds
         return;
     }
-    
+
     NSMutableAttributedString *replacementString = [attrString mutableCopy];
+    NSAttributedString *substring = [self attributedSubstringFromRange:range];
+
+    if (range.location > 0
+        && [self attributedStringHasNewline:substring atStart:NO]
+        && [self isCharacterAdjacentToRangeAnAttachment:self range:range checkBefore:NO]) {
+        replacementString = [self appendNewlineToAttributedString:[attrString mutableCopy] atStart:NO];
+    }
+
+    if (range.location > 0
+        && [self attributedStringHasNewline:substring atStart:YES]
+        && [self isCharacterAdjacentToRangeAnAttachment:self range:range checkBefore:YES]) {
+        replacementString = [self appendNewlineToAttributedString:[attrString mutableCopy] atStart:YES];
+    }
+
     // Fix any missing attribute that is in the location being replaced, but not in the text that
     // is coming in.
-    if (range.length > 0 && attrString.length > 0) {
+    if (range.length > 0 && replacementString.length > 0) {
         NSDictionary<NSAttributedStringKey, id> *outgoingAttrs = [_storage attributesAtIndex:(range.location + range.length - 1) effectiveRange:nil];
-        NSDictionary<NSAttributedStringKey, id> *incomingAttrs = [attrString attributesAtIndex:0 effectiveRange:nil];
+        NSDictionary<NSAttributedStringKey, id> *incomingAttrs = [replacementString attributesAtIndex:0 effectiveRange:nil];
 
         NSMutableDictionary<NSAttributedStringKey, id> *diff = [NSMutableDictionary dictionary];
         for (NSAttributedStringKey outgoingKey in outgoingAttrs) {
@@ -214,6 +228,68 @@
 }
 
 #pragma mark - Private
+
+- (NSMutableAttributedString *)appendNewlineToAttributedString:(NSMutableAttributedString *)attributedString atStart:(BOOL)appendAtStart {
+    if (attributedString.length == 0) {
+        return [[NSMutableAttributedString alloc] initWithString:@"\n"]; // Return just a newline if the original string is empty.
+    }
+
+    // Create a new NSAttributedString with the newline character.
+    NSAttributedString *newlineAttributedString = [[NSAttributedString alloc] initWithString:@"\n"];
+
+    // Create a mutable copy of the original attributed string.
+    NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithAttributedString:attributedString];
+
+    if (appendAtStart) {
+        // Append the attributed newline at the start.
+        [mutableAttributedString insertAttributedString:newlineAttributedString atIndex:0];
+    } else {
+        // Append the attributed newline at the end.
+        [mutableAttributedString appendAttributedString:newlineAttributedString];
+    }
+
+    return mutableAttributedString;
+}
+
+- (BOOL) attributedStringHasNewline:(NSAttributedString *) attributedString atStart: (BOOL)atStart {
+    NSString *string = [attributedString string];
+    if (string.length == 0) {
+        return NO;
+    }
+
+    unichar characterToVerify = [string characterAtIndex: 0];
+    if (atStart == NO) {
+        characterToVerify = [string characterAtIndex:string.length - 1];
+    }
+
+    return [[NSCharacterSet newlineCharacterSet] characterIsMember:characterToVerify];
+}
+
+-(BOOL) isCharacterAdjacentToRangeAnAttachment: (NSAttributedString *) attributedString range: (NSRange) range checkBefore: (BOOL) checkBefore {
+    NSUInteger positionToCheck;
+
+    if (checkBefore) {
+        if (range.location == 0) {
+            return NO; // No character before the start of the string
+        }
+        positionToCheck = range.location - 1;
+    } else {
+        positionToCheck = NSMaxRange(range);
+        if (positionToCheck >= attributedString.length) {
+            return NO; // No character after the end of the string
+        }
+    }
+
+    // Retrieve the attributes at the position to check
+    NSDictionary *attributes = [attributedString attributesAtIndex:positionToCheck effectiveRange:NULL];
+
+    // Check if these attributes contain the NSAttachmentAttributeName
+    if ([attributes objectForKey:@"_isBlockAttachment"] != nil) {
+        return YES; // There is an attachment
+    }
+
+    return NO; // No attachment found
+}
 
 - (void)fixMissingAttributesForDeletedAttributes:(NSArray<NSAttributedStringKey> *)attrs range:(NSRange)range {
     if ((range.location + range.length) > _storage.length) {
