@@ -235,18 +235,31 @@ open class EditorView: UIView {
     /// Low-tech lock mechanism to know when `attributedText` is being set
     private var isSettingAttributedText = false
 
+
     // Making this a convenience init fails the test `testRendersWidthRangeAttachment` as the init of a class subclassed from
     // `EditorView` is returned as type `EditorView` and not the class itself, causing the test to fail.
+
     /// Initializes the EditorView
     /// - Parameters:
     ///   - frame: Frame to be used for `EditorView`.
     ///   - context: Optional context to be used. `EditorViewContext` is link between `EditorCommandExecutor` and the `EditorView`.
     ///   `EditorCommandExecutor` needs to have same context as the `EditorView` to execute a command on it. Unless you need to have
     ///    restriction around some commands to be restricted in execution on certain specific editors, the default value may be used.
-    public init(frame: CGRect = .zero, context: EditorViewContext = .shared, allowAutogrowing: Bool = true) {
+    ///   - allowAutogrowing: When set to `true`, editor automatically grows based on content size and constraints applied. e.g. when used in non-fullscreen mode
+    ///   - undoManager: Override `UndoManager`. When nil, default `UndoManager` from underlying `UITextView` is used.
+    public init(
+        frame: CGRect = .zero,
+        context: EditorViewContext = .shared,
+        allowAutogrowing: Bool = true,
+        undoManager: UndoManager? = nil) {
         self.context = context.richTextViewContext
         self.editorViewContext = context
-        self.richTextView = RichTextView(frame: frame, context: self.context, allowAutogrowing: allowAutogrowing)
+        self.richTextView = RichTextView(
+            frame: frame,
+            context: self.context,
+            allowAutogrowing: allowAutogrowing,
+            undoManager: undoManager
+        )
 
         super.init(frame: frame)
 
@@ -255,9 +268,18 @@ open class EditorView: UIView {
         setup()
     }
 
-    init(frame: CGRect, richTextViewContext: RichTextViewContext, allowAutogrowing: Bool = true) {
+    init(
+        frame: CGRect,
+        richTextViewContext: RichTextViewContext,
+        allowAutogrowing: Bool = true,
+        undoManager: UndoManager?) {
         self.context = richTextViewContext
-        self.richTextView = RichTextView(frame: frame, context: context, allowAutogrowing: allowAutogrowing)
+        self.richTextView = RichTextView(
+            frame: frame,
+            context: context,
+            allowAutogrowing: allowAutogrowing,
+            undoManager: undoManager
+        )
         self.editorViewContext = .null
         super.init(frame: frame)
 
