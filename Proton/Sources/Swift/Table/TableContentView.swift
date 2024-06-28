@@ -171,7 +171,6 @@ class TableContentView: UIScrollView {
     override var intrinsicContentSize: CGSize {
         let size = table.sizeThatFits(size: frame.size)
         self.contentSize = size
-        self.isScrollEnabled = size.width > frame.width
         self.alwaysBounceHorizontal = false
         return size
     }
