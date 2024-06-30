@@ -870,7 +870,69 @@ class EditorViewTests: XCTestCase {
         XCTAssertNil(dummyAttachment1.containerEditorView)
         XCTAssertNil(dummyAttachment2.containerEditorView)
     }
+
+    func testPreservesNewlineBeforeAttachmentOnDelete() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.preserveBlockAttachmentNewline = .before
+
+        let testString = NSAttributedString(string: "test string\n")
+        editor.replaceCharacters(in: .zero, with: testString)
+        let attachment = makePanelAttachment()
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        XCTAssertEqual(editor.text, "test string\n￼\n")
+
+        editor.replaceCharacters(in: NSRange(location: 8, length: 4), with: "")
+        XCTAssertEqual(editor.attachmentsInRange(editor.attributedText.fullRange).first?.range, NSRange(location: 9, length: 1))
+
+        XCTAssertEqual(editor.text, "test str\n￼\n")
+    }
+
+    func testPreservesNewlineAfterAttachmentOnDelete() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        editor.preserveBlockAttachmentNewline = .after
+
+        let testString = NSAttributedString(string: "test string\n  After attachment")
+        editor.replaceCharacters(in: .zero, with: testString)
+        let attachment = makePanelAttachment()
+        editor.insertAttachment(in: NSRange(location: 13, length: 0), attachment: attachment)
+
+        editor.replaceCharacters(in: NSRange(location: 14, length: 7), with: "")
+
+        XCTAssertEqual(editor.text, "test string\n ￼\n attachment")
+        XCTAssertEqual(editor.attachmentsInRange(editor.attributedText.fullRange).first?.range, NSRange(location: 13, length: 1))
+    }
+
+    func testDoesNotPreservesNewlineByDefault() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let testString = NSAttributedString(string: "test string\n")
+        editor.replaceCharacters(in: .zero, with: testString)
+        let attachment = makePanelAttachment()
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        XCTAssertEqual(editor.text, "test string\n￼\n")
+
+        editor.replaceCharacters(in: NSRange(location: 8, length: 4), with: "")
+
+        XCTAssertEqual(editor.text, "test str￼\n")
+        XCTAssertEqual(editor.attachmentsInRange(editor.attributedText.fullRange).first?.range, NSRange(location: 8, length: 1))
+    }
 }
+
+
+func makePanelAttachment() -> Attachment {
+    let panel = PanelView()
+    panel.editor.forceApplyAttributedText = true
+    panel.backgroundColor = .cyan
+    panel.layer.borderWidth = 1.0
+    panel.layer.cornerRadius = 4.0
+    panel.layer.borderColor = UIColor.black.cgColor
+
+    return Attachment(panel, size: .fullWidth)
+}
+
 
 class DummyMultiEditorAttachment: Attachment {
     let view: DummyMultiEditorView

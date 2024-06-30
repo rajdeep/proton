@@ -95,13 +95,15 @@
     NSMutableAttributedString *replacementString = [attrString mutableCopy];
     NSAttributedString *substring = [self attributedSubstringFromRange:range];
 
-    if (range.location > 0
+    if (self.preserveNewlineBeforeBlock
+        && range.location > 0
         && [self attributedStringHasNewline:substring atStart:NO]
         && [self isCharacterAdjacentToRangeAnAttachment:self range:range checkBefore:NO]) {
         replacementString = [self appendNewlineToAttributedString:[attrString mutableCopy] atStart:NO];
     }
 
-    if (range.location > 0
+    if (self.preserveNewlineAfterBlock
+        && range.location > 0
         && [self attributedStringHasNewline:substring atStart:YES]
         && [self isCharacterAdjacentToRangeAnAttachment:self range:range checkBefore:YES]) {
         replacementString = [self appendNewlineToAttributedString:[attrString mutableCopy] atStart:YES];
