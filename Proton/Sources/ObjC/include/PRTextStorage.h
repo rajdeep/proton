@@ -47,6 +47,9 @@ NS_SWIFT_NAME(TextStorageDelegate)
 @property (weak, nullable) id<PRDefaultTextFormattingProviding> defaultTextFormattingProvider;
 @property (weak, nullable) id<PRTextStorageDelegate> textStorageDelegate;
 
+@property (nonatomic, assign) BOOL preserveNewlineBeforeBlock;
+@property (nonatomic, assign) BOOL preserveNewlineAfterBlock;
+
 @property (nonatomic, readonly) UIFont *defaultFont;
 @property (nonatomic, readonly) NSParagraphStyle *defaultParagraphStyle;
 @property (nonatomic, readonly) UIColor *defaultTextColor;

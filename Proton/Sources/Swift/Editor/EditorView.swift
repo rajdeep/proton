@@ -65,6 +65,20 @@ public struct AttachmentContentIdentifier {
     }
 }
 
+public struct PreserveBlockAttachmentNewline: OptionSet {
+    public let rawValue: Int
+
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+
+    public static let before = PreserveBlockAttachmentNewline(rawValue: 1 << 0)
+    public static let after = PreserveBlockAttachmentNewline(rawValue: 1 << 1)
+
+    public static let none: PreserveBlockAttachmentNewline = []
+    public static let both: PreserveBlockAttachmentNewline = [.before, .after]
+}
+
 /// Defines the height for the Editor
 public enum EditorHeight {
     /// Default controlled via autolayout.
@@ -144,6 +158,11 @@ open class EditorView: UIView {
 
     var editorContextDelegate: EditorViewDelegate? {
         get { editorViewContext.delegate }
+    }
+
+    public var preserveBlockAttachmentNewline: PreserveBlockAttachmentNewline {
+        get { richTextView.preserveBlockAttachmentNewline }
+        set { richTextView.preserveBlockAttachmentNewline = newValue }
     }
 
     public var scrollView: UIScrollView {

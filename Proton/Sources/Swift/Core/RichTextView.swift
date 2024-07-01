@@ -36,6 +36,21 @@ class RichTextView: AutogrowingTextView {
 
     private var delegateOverrides = [GestureRecognizerDelegateOverride]()
 
+    var preserveBlockAttachmentNewline: PreserveBlockAttachmentNewline = .none {
+        didSet {
+            richTextStorage.preserveNewlineBeforeBlock = false
+            richTextStorage.preserveNewlineAfterBlock = false
+
+            if preserveBlockAttachmentNewline.contains(.before) {
+                richTextStorage.preserveNewlineBeforeBlock = true
+            }
+
+            if preserveBlockAttachmentNewline.contains(.after) {
+                richTextStorage.preserveNewlineAfterBlock = true
+            }
+        }
+    }
+
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding?
     {
         get { richTextStorage.defaultTextFormattingProvider }
