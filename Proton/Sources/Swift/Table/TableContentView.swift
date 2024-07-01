@@ -545,8 +545,7 @@ extension TableContentView: TableCellDelegate {
     }
 
     func cell(_ cell: TableCell, didChangeBounds bounds: CGRect, oldBounds: CGRect) {
-        guard let row = cell.rowSpan.first,
-              table.maxContentHeightCellForRow(at: row)?.frame.height == cell.frame.height else {
+        guard let row = cell.rowSpan.first else {
             return
         }
 
