@@ -114,7 +114,18 @@ public struct ListParser {
         }
         return items
     }
-    
+
+    /// Parses NSAttributedString to list items
+    /// - Parameters:
+    ///   - attributedString: NSAttributedString to convert to list items.
+    ///   - indent: Indentation used in list representation in attributedString. This determines the level of list item.
+    /// - Returns: Array of list item nodes with hierarchical representation of list
+    /// - Note: If NSAttributedString passed into the function is non continuous i.e. contains multiple lists, the array will contain items from all the list with the range corresponding to range of text in original attributed string.
+    public static func parseListHierarchy(attributedString: NSAttributedString, indent: CGFloat = 25) -> [ListItemNode] {
+        let listItems = parse(attributedString: attributedString, indent: indent).map { $0.listItem }
+        return createListItemNodes(from: listItems)
+    }
+
     /// Creates hierarchical representation of `ListItem` from the provided collection based on levels of each of the items
     /// - Parameter listItems: ListItems to convert
     /// - Returns: Collection of `ListItemNode` with each node having children nodes based on level of individual list items.
@@ -130,7 +141,7 @@ public struct ListParser {
                 stack.removeLast()
             }
 
-            if let last = stack.last {
+            if stack.last != nil {
                 // If there's a parent, add this node to its children
                 stack[stack.count - 1].node.children.append(newNode)
             } else {

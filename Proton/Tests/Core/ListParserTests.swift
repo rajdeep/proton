@@ -388,6 +388,24 @@ class ListParserTests: XCTestCase {
         XCTAssertEqual(list[1].range, NSRange(location: 80, length: 47))
     }
 
+    func FIXME_testParsesNonContinuousListNodes() {
+        let paraStyle = NSMutableParagraphStyle.forListLevel(1)
+        let line1 = NSAttributedString(string: "This is line 1. This is line 1. This is line 1. This is line 1.", attributes: [.listItem: 1, .paragraphStyle: paraStyle])
+        let line2 = NSAttributedString(string: "This is line 2.")
+        let line3 = NSAttributedString(string: "This is line 3. This is line 3. This is line 3.", attributes: [.listItem: 1, .paragraphStyle: paraStyle])
+
+        let text = NSMutableAttributedString(attributedString: line1)
+        text.append(NSAttributedString(string: "\n"))
+        text.append(line2)
+        text.append(NSAttributedString(string: "\n"))
+        text.append( line3)
+
+        let list = ListParser.parse(attributedString: text)
+        let listNodes = ListParser.parseListHierarchy(attributedString: text)
+        XCTFail()
+    }
+
+
     func testFullCircleWithSameAttributeValue() {
         let listItems1 = [
             ListItem(text: NSAttributedString(string: "One"), level: 1, attributeValue: 1),
