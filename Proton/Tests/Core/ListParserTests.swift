@@ -111,7 +111,78 @@ class ListParserTests: XCTestCase {
         XCTAssertEqual(list[3].listItem.text.string, text2)
     }
 
+    func testParsesMultiLevelListIntoListNodes() {
+        let paraStyle1 = NSMutableParagraphStyle.forListLevel(1)
+        let paraStyle2 = NSMutableParagraphStyle.forListLevel(2)
+
+        let text1 = "This is line 1. This is line 1. This is line 1. This is line 1.\n"
+        let text1a = "Subitem 1 Subitem 1.\n"
+        let text1b = "SubItem 2 SubItem 2.\n"
+        let text2 = "This is line 2. This is line 2. This is line 2."
+
+        let attributedString = NSMutableAttributedString(string: text1, attributes: [.paragraphStyle: paraStyle1])
+        attributedString.append(NSAttributedString(string: text1a, attributes: [.paragraphStyle: paraStyle2]))
+        attributedString.append(NSAttributedString(string: text1b, attributes: [.paragraphStyle: paraStyle2]))
+        attributedString.append(NSAttributedString(string: text2, attributes: [.paragraphStyle: paraStyle1]))
+        attributedString.addAttribute(.listItem, value: 1, range: attributedString.fullRange)
+
+        let list = ListParser.parse(attributedString: attributedString)
+        let nodes = ListParser.createListItemNodes(from: list.map { $0.listItem })
+        XCTAssertEqual(nodes.count, 2)
+
+        XCTAssertEqual(nodes[0].item.level, 1)
+        XCTAssertEqual(nodes[0].children[0].item.level, 2)
+        XCTAssertEqual(nodes[0].children[1].item.level, 2)
+        XCTAssertEqual(nodes[1].item.level, 1)
+
+        XCTAssertEqual(nodes[0].item.text.string, String(text1.prefix(text1.count - 1)))
+        XCTAssertEqual(nodes[0].children[0].item.text.string, String(text1a.prefix(text1a.count - 1)))
+        XCTAssertEqual(nodes[0].children[1].item.text.string, String(text1b.prefix(text1b.count - 1)))
+        XCTAssertEqual(nodes[1].item.text.string, text2)
+    }
+
     func testParsesMultiLevelRepeatingList() {
+        let levels = 3
+        let paraStyles = (1...levels).map { NSMutableParagraphStyle.forListLevel($0) }
+
+        let text = "Text\n"
+        let attributedString = NSMutableAttributedString()
+        for i in 0..<levels * 2 {
+            let style = paraStyles[i % levels]
+            attributedString.append(NSAttributedString(string: text, attributes: [.paragraphStyle: style]))
+            attributedString.append(NSAttributedString(string: text, attributes: [.paragraphStyle: style]))
+        }
+
+        attributedString.addAttribute(.listItem, value: 1, range: attributedString.fullRange)
+        let list = ListParser.parse(attributedString: attributedString)
+        let nodes = ListParser.createListItemNodes(from: list.map { $0.listItem })
+
+        XCTAssertEqual(nodes.count, 4)
+        for node in nodes {
+            XCTAssertEqual(node.item.text.string, "Text")
+            XCTAssertEqual(node.item.level, 1)
+        }
+
+        XCTAssertEqual(nodes[0].children.count, 0)
+        
+        XCTAssertEqual(nodes[1].children.count, 2)
+        XCTAssertTrue(nodes[1].children.allSatisfy { $0.item.level == 2 })
+        
+        XCTAssertEqual(nodes[1].children[0].children.count, 0)
+        
+        XCTAssertEqual(nodes[1].children[1].children.count, 2)
+        XCTAssertTrue(nodes[1].children[1].children.allSatisfy { $0.item.level == 3 })
+
+
+        XCTAssertEqual(nodes[2].children.count, 0)
+
+        XCTAssertEqual(nodes[3].children[0].children.count, 0)
+
+        XCTAssertEqual(nodes[3].children[1].children.count, 2)
+        XCTAssertTrue(nodes[3].children[1].children.allSatisfy { $0.item.level == 3 })
+    }
+
+    func testParsesMultiLevelRepeatingListNodes() {
         let levels = 3
         let paraStyles = (1...levels).map { NSMutableParagraphStyle.forListLevel($0) }
 
