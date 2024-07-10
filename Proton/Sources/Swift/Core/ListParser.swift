@@ -46,6 +46,16 @@ public struct ListItem {
     }
 }
 
+public class ListItemNode {
+    public let item: ListItem
+    public internal(set) var children: [ListItemNode]
+
+    init(item: ListItem, children: [ListItemNode]) {
+        self.item = item
+        self.children = children
+    }
+}
+
 /// Provides helper function to convert between `NSAttributedString` and `[ListItem]`
 public struct ListParser {
 
@@ -103,6 +113,48 @@ public struct ListParser {
             }
         }
         return items
+    }
+
+    /// Parses NSAttributedString to list items
+    /// - Parameters:
+    ///   - attributedString: NSAttributedString to convert to list items.
+    ///   - indent: Indentation used in list representation in attributedString. This determines the level of list item.
+    /// - Returns: Array of list item nodes with hierarchical representation of list
+    /// - Note: If NSAttributedString passed into the function is non continuous i.e. contains multiple lists, the array will contain items from all the list with the range corresponding to range of text in original attributed string.
+    public static func parseListHierarchy(attributedString: NSAttributedString, indent: CGFloat = 25) -> [ListItemNode] {
+        let listItems = parse(attributedString: attributedString, indent: indent).map { $0.listItem }
+        return createListItemNodes(from: listItems)
+    }
+
+    /// Creates hierarchical representation of `ListItem` from the provided collection based on levels of each of the items
+    /// - Parameter listItems: ListItems to convert
+    /// - Returns: Collection of `ListItemNode` with each node having children nodes based on level of individual list items.
+    public static func createListItemNodes(from listItems: [ListItem]) -> [ListItemNode] {
+        var result = [ListItemNode]()
+        var stack: [(node: ListItemNode, level: Int)] = []
+
+        for item in listItems {
+            let newNode = ListItemNode(item: item, children: [])
+
+            // Pop from the stack until the current item's parent is found
+            while let last = stack.last, last.level >= item.level {
+                stack.removeLast()
+            }
+
+            if stack.last != nil {
+                // If there's a parent, add this node to its children
+                stack[stack.count - 1].node.children.append(newNode)
+            } else {
+                // If there's no parent, this is a root node
+                result.append(newNode)
+            }
+
+            // Push the current node onto the stack
+            stack.append((newNode, item.level))
+        }
+
+        // Since we've been directly modifying the nodes in the stack, the `result` array now contains the fully constructed tree
+        return result
     }
 
     private static func parseList(in attributedString: NSAttributedString, rangeInOriginalString: NSRange, indent: CGFloat, attributeValue: Any?) -> [(range: NSRange, listItem: ListItem)] {
