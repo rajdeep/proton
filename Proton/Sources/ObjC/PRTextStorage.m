@@ -141,7 +141,7 @@
     NSInteger delta = str.length - range.length;
     [_storage replaceCharactersInRange:range withString:str];
     [_storage fixAttributesInRange:NSMakeRange(0, _storage.length)];
-    [self edited:NSTextStorageEditedCharacters & NSTextStorageEditedAttributes range:range changeInLength:delta];
+    [self edited:NSTextStorageEditedCharacters | NSTextStorageEditedAttributes range:range changeInLength:delta];
 
     [self endEditing];
 }

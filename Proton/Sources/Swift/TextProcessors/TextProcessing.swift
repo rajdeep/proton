@@ -105,6 +105,22 @@ public protocol TextProcessing {
     /// Invoked after the text has been processed in the `Editor`.
     /// - Parameter editor: EditorView in which text is changed.
     func didProcess(editor: EditorView)
+    
+    /// Invoked  when `editor` is about to process editing changes. The delegate can use this method to perform any necessary preparations before the changes are applied.
+    /// - Parameters:
+    ///   - editor: The `EditorView` instance that is about to process editing changes.
+    ///   - editedMask: `NSTextStorage.EditActions` indicating the types of edits that are about to be processed. This parameter can contain `.editedCharacters`, `.editedAttributes`, or both, indicating whether the changes involve modifications to the text characters, text attributes, or both.
+    ///   - editedRange: Range of text that is affected by the editing changes. This range is specified in the coordinate system of the text storage's string.
+    ///   - delta: Indicates the change in length of the text as a result of the editing. A positive value indicates an increase in length, while a negative value indicates a decrease. This may be used to adjust any related data structures that depend on the text length.
+    func willProcessEditing(editor: EditorView, editedMask: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int)
+
+    /// Invoked  after `editor` has processed editing changes. The delegate can use this method to perform any necessary actions after the content in Editor has been committed following current edit action.
+    /// - Parameters:
+    ///   - editor: The `EditorView` instance that is about to process editing changes.
+    ///   - editedMask: `NSTextStorage.EditActions` indicating the types of edits that are about to be processed. This parameter can contain `.editedCharacters`, `.editedAttributes`, or both, indicating whether the changes involve modifications to the text characters, text attributes, or both.
+    ///   - editedRange: Range of text that is affected by the editing changes. This range is specified in the coordinate system of the text storage's string.
+    ///   - delta: Indicates the change in length of the text as a result of the editing. A positive value indicates an increase in length, while a negative value indicates a decrease. This may be used to adjust any related data structures that depend on the text length.
+    func didProcessEditing(editor: EditorView, editedMask: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int)
 }
 
 public extension TextProcessing {
@@ -112,4 +128,6 @@ public extension TextProcessing {
     func selectedRangeChanged(editor: EditorView, oldRange: NSRange?, newRange: NSRange?) { }
     func didProcess(editor: EditorView) { }
     func shouldProcess(_ editorView: EditorView, shouldProcessTextIn range: NSRange, replacementText text: String) -> Bool { return true }
+    func willProcessEditing(editor: EditorView, editedMask: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int) { }
+    func didProcessEditing(editor: EditorView, editedMask: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int) { }
 }

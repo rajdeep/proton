@@ -58,6 +58,10 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         var processed = false
         let changedText = textStorage.substring(from: editedRange)
 
+        sortedProcessors.forEach {
+            $0.willProcessEditing(editor: editor, editedMask: editedMask, range: editedRange, changeInLength: delta)
+        }
+
         // This func is invoked even when selected range changes without change in text. Guard the code so that delegate call backs are
         // fired only when there is actual change in content
         guard delta != 0 else { return }
@@ -85,6 +89,14 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         guard let editor else { return }
         for processor in sortedProcessors {
             processor.willProcess(editor: editor, deletedText: deletedText, insertedText: insertedText, range: range)
+        }
+    }
+
+    func textStorage(_ textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int) {
+        guard let editor = editor else { return }
+
+        sortedProcessors.forEach {
+            $0.didProcessEditing(editor: editor, editedMask: editedMask, range: editedRange, changeInLength: delta)
         }
     }
 

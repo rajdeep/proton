@@ -325,6 +325,100 @@ class TextProcessorTests: XCTestCase {
 
         waitForExpectations(timeout: 1.0)
     }
+
+    func testInvokesWillProcessEditingContent() {
+        let testExpectation = functionExpectation()
+
+        let editor = EditorView()
+
+        let name = "TextProcessorTest"
+        let mockProcessor = MockTextProcessor(name: name)
+        mockProcessor.willProcessEditing = { processedEditor, editingMask, range, delta in
+            XCTAssertEqual(processedEditor, editor)
+            XCTAssertTrue(editingMask.contains(.editedAttributes))
+            XCTAssertTrue(editingMask.contains(.editedCharacters))
+            XCTAssertEqual(range, editor.attributedText.fullRange)
+            XCTAssertEqual(delta, editor.contentLength)
+            testExpectation.fulfill()
+        }
+        let testString = NSAttributedString(string: "test")
+        editor.registerProcessor(mockProcessor)
+        editor.replaceCharacters(in: .zero, with: testString)
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testInvokesDidProcessEditingContent() {
+        let testExpectation = functionExpectation()
+
+        let editor = EditorView()
+
+        let name = "TextProcessorTest"
+        let mockProcessor = MockTextProcessor(name: name)
+        mockProcessor.didProcessEditing = { processedEditor, editingMask, range, delta in
+            XCTAssertEqual(processedEditor, editor)
+            XCTAssertTrue(editingMask.contains(.editedAttributes))
+            XCTAssertTrue(editingMask.contains(.editedCharacters))
+            XCTAssertEqual(range, editor.attributedText.fullRange)
+            XCTAssertEqual(delta, editor.contentLength)
+            testExpectation.fulfill()
+        }
+        let testString = NSAttributedString(string: "test")
+        editor.registerProcessor(mockProcessor)
+        editor.replaceCharacters(in: .zero, with: testString)
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testInvokesWillProcessAttributeChanges() {
+        let testExpectation = functionExpectation()
+
+        let editor = EditorView()
+
+        let name = "TextProcessorTest"
+        let mockProcessor = MockTextProcessor(name: name)
+
+        let testString = NSAttributedString(string: "test")
+        editor.registerProcessor(mockProcessor)
+        editor.replaceCharacters(in: .zero, with: testString)
+
+        let processRange = NSRange(location: 2, length: 2)
+        mockProcessor.willProcessEditing = { processedEditor, editingMask, range, delta in
+            XCTAssertTrue(editingMask.contains(.editedAttributes))
+            XCTAssertFalse(editingMask.contains(.editedCharacters))
+            XCTAssertEqual(range, processRange)
+            testExpectation.fulfill()
+        }
+
+        editor.selectedRange = processRange
+        BoldCommand().execute(on: editor)
+
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testInvokesDidlProcessAttributeChanges() {
+        let testExpectation = functionExpectation()
+
+        let editor = EditorView()
+
+        let name = "TextProcessorTest"
+        let mockProcessor = MockTextProcessor(name: name)
+
+        let testString = NSAttributedString(string: "test")
+        editor.registerProcessor(mockProcessor)
+        editor.replaceCharacters(in: .zero, with: testString)
+
+        let processRange = NSRange(location: 2, length: 2)
+        mockProcessor.didProcessEditing = { processedEditor, editingMask, range, delta in
+            XCTAssertTrue(editingMask.contains(.editedAttributes))
+            XCTAssertFalse(editingMask.contains(.editedCharacters))
+            XCTAssertEqual(range, processRange)
+            testExpectation.fulfill()
+        }
+
+        editor.selectedRange = processRange
+        BoldCommand().execute(on: editor)
+
+        waitForExpectations(timeout: 1.0)
+    }
 }
 
 extension EditorView {
