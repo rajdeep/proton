@@ -58,6 +58,7 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         var processed = false
         let changedText = textStorage.substring(from: editedRange)
 
+        let editedMask = getEditedMask(delta: delta)
         sortedProcessors.forEach {
             $0.willProcessEditing(editor: editor, editedMask: editedMask, range: editedRange, changeInLength: delta)
         }
@@ -85,6 +86,14 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         editor.editorContextDelegate?.editor(editor, didExecuteProcessors: executedProcessors, at: editedRange)
     }
 
+    func textStorage(_ textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int) {
+        guard let editor = editor else { return }
+        let editedMask = getEditedMask(delta: delta)
+        sortedProcessors.forEach {
+            $0.didProcessEditing(editor: editor, editedMask: editedMask, range: editedRange, changeInLength: delta)
+        }
+    }
+
     func textStorage(_ textStorage: NSTextStorage, willProcessDeletedText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) {
         guard let editor else { return }
         for processor in sortedProcessors {
@@ -92,12 +101,16 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         }
     }
 
-    func textStorage(_ textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int) {
-        guard let editor = editor else { return }
-
-        sortedProcessors.forEach {
-            $0.didProcessEditing(editor: editor, editedMask: editedMask, range: editedRange, changeInLength: delta)
+    // The editedMask is computed here as fixing the actual bug in PRTextStorage.replaceCharacter ([self edited:])
+    // causing incorrect editedMask coming-in in this delegate causes TableViewAttachmentSnapshotTests.testRendersTableViewAttachmentInViewportRotation
+    // to hang, possibly due to persistent layout invalidations. This can be fixed if cell has foreApplyAttributedText on
+    // which ensures TextStorage to always be consistent state. However, given that there is some unknown, the proper fix
+    // in PRTextStorage will be added at a later time. It may include dropping need for forceApplyAttributedText.
+    private func getEditedMask(delta: Int) -> NSTextStorage.EditActions {
+        guard delta != 0 else {
+            return .editedAttributes
         }
+        return [.editedCharacters, .editedAttributes]
     }
 
     private func notifyInterruption(by processor: TextProcessing, editor: EditorView, at range: NSRange) {

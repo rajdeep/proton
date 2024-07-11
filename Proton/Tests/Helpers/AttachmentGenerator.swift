@@ -46,7 +46,6 @@ struct AttachmentGenerator {
             for col in 0..<numColumns {
                 let editorInit = {
                     let editor = EditorView(allowAutogrowing: false)
-                    editor.forceApplyAttributedText = true
                     editor.attributedText = NSAttributedString(string: "Table \(id) {\(row), \(col)} Text in cell")
                     return editor
                 }
