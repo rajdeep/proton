@@ -62,6 +62,10 @@
 + (PREditorContentName *)newlineName { return [[PREditorContentName alloc] initWithRawValue:@"_newline"]; }
 + (PREditorContentName *)textName { return [[PREditorContentName alloc] initWithRawValue:@"_text"]; }
 + (PREditorContentName *)unknownName { return [[PREditorContentName alloc] initWithRawValue:@"_unknown"]; }
++ (PREditorContentName *)blockContentTypeName { return [[PREditorContentName alloc] initWithRawValue:@"_blockContentType"]; }
++ (PREditorContentName *)inlineContentTypeName { return [[PREditorContentName alloc] initWithRawValue:@"_inlineContentType"]; }
++ (PREditorContentName *)isBlockAttachmentName { return [[PREditorContentName alloc] initWithRawValue:@"_isBlockAttachment"]; }
++ (PREditorContentName *)isInlineAttachmentName { return [[PREditorContentName alloc] initWithRawValue:@"_isInlineAttachment"]; }
 
 - (void)encodeWithCoder:(nonnull NSCoder *)coder {
     [coder encodeObject:_rawValue forKey: kRawValueKey];

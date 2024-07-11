@@ -20,12 +20,13 @@
 
 import Foundation
 import UIKit
+import ProtonCore
 
 extension NSAttributedString.Key {
     static let viewOnly = NSAttributedString.Key("_viewOnly")
 
-    static let isBlockAttachment = NSAttributedString.Key("_isBlockAttachment")
-    static let isInlineAttachment = NSAttributedString.Key("_isInlineAttachment")
+    static let isBlockAttachment = NSAttributedString.Key(EditorContentName.isBlockAttachment.rawValue)
+    static let isInlineAttachment = NSAttributedString.Key(EditorContentName.isInlineAttachment.rawValue)
 }
 
 public extension NSAttributedString.Key {
@@ -45,7 +46,7 @@ public extension NSAttributedString.Key {
     /// - SeeAlso:
     /// `EditorContentEncoder`
     /// `EditorView`
-    static let blockContentType = NSAttributedString.Key("_blockContentType")
+    static let blockContentType = NSAttributedString.Key(EditorContentName.blockContentType.rawValue)
 
     /// Identifies inline content attributes. An inline acts as a content in another content types. For e.g. an emoji is an inline content
     /// that may be contained in a Paragraph along side another inline content of Text.
@@ -54,7 +55,7 @@ public extension NSAttributedString.Key {
     /// - SeeAlso:
     /// `EditorContentEncoder`
     /// `EditorView`
-    static let inlineContentType = NSAttributedString.Key("_inlineContentType")
+    static let inlineContentType = NSAttributedString.Key(EditorContentName.inlineContentType.rawValue)
 
     /// Additional style attribute for background color. Using this attribute in addition to `backgroundColor` attribute allows applying
     /// shadow and corner radius to the background.

@@ -36,6 +36,11 @@ NS_SWIFT_NAME(EditorContentName)
 + (PREditorContentName *)newlineName;
 + (PREditorContentName *)textName;
 + (PREditorContentName *)unknownName;
++ (PREditorContentName *)blockContentTypeName;
++ (PREditorContentName *)inlineContentTypeName;
++ (PREditorContentName *)isBlockAttachmentName;
++ (PREditorContentName *)isInlineAttachmentName;
+
 
 @end
 

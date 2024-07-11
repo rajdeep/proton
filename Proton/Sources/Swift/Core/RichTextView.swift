@@ -596,10 +596,7 @@ class RichTextView: AutogrowingTextView {
     }
 
     func replaceCharacters(in range: NSRange, with attrString: NSAttributedString) {
-        let string = NSMutableAttributedString(attributedString: attrString)
-        let newLineRanges = string.rangesOf(characterSet: .newlines)
-        newLineRanges.forEach { string.addAttributes([.blockContentType: EditorContentName.newline()], range: $0)}
-        textStorage.replaceCharacters(in: range, with: string)
+        textStorage.replaceCharacters(in: range, with: attrString)
         ensuringValidSelectedRange()
     }
 
