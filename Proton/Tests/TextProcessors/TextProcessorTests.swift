@@ -368,6 +368,48 @@ class TextProcessorTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
 
+    func testInvokesDidProcessEditingContentOnPartialDelete() {
+        let testExpectation = functionExpectation()
+
+        let editor = EditorView()
+        let name = "TextProcessorTest"
+        let mockProcessor = MockTextProcessor(name: name)
+        mockProcessor.didProcessEditing = { processedEditor, editingMask, range, delta in
+            XCTAssertEqual(processedEditor, editor)
+            XCTAssertTrue(editingMask.contains(.editedAttributes))
+            XCTAssertTrue(editingMask.contains(.editedCharacters))
+            XCTAssertEqual(delta, -2)
+            testExpectation.fulfill()
+        }
+        let testString = NSAttributedString(string: "test")
+        editor.replaceCharacters(in: .zero, with: testString)
+        editor.registerProcessor(mockProcessor)
+        let processRange = NSRange(location: 2, length: 2)
+        editor.replaceCharacters(in: processRange, with: NSAttributedString())
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testInvokesDidProcessEditingContentOnFullDelete() {
+        let testExpectation = functionExpectation()
+
+        let editor = EditorView()
+
+        let name = "TextProcessorTest"
+        let mockProcessor = MockTextProcessor(name: name)
+        mockProcessor.didProcessEditing = { processedEditor, editingMask, range, delta in
+            XCTAssertEqual(processedEditor, editor)
+            XCTAssertTrue(editingMask.contains(.editedAttributes))
+            XCTAssertTrue(editingMask.contains(.editedCharacters))
+            XCTAssertEqual(delta, -4)
+            testExpectation.fulfill()
+        }
+        let testString = NSAttributedString(string: "test")
+        editor.replaceCharacters(in: .zero, with: testString)
+        editor.registerProcessor(mockProcessor)
+        editor.replaceCharacters(in: editor.attributedText.fullRange, with: NSAttributedString())
+        waitForExpectations(timeout: 1.0)
+    }
+
     func testInvokesWillProcessAttributeChanges() {
         let testExpectation = functionExpectation()
 
@@ -394,7 +436,7 @@ class TextProcessorTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
 
-    func testInvokesDidlProcessAttributeChanges() {
+    func testInvokesDidProcessAttributeChanges() {
         let testExpectation = functionExpectation()
 
         let editor = EditorView()
