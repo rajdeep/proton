@@ -71,4 +71,8 @@ extension EditorContentName: RawRepresentable {
     public static let newline = EditorContentName.newline()
     public static let text = EditorContentName.text()
     public static let unknown = EditorContentName.unknown()
+    public static let blockContentType = EditorContentName.blockContentType()
+    public static let inlineContentType = EditorContentName.inlineContentType()
+    public static let isBlockAttachment = EditorContentName.isBlockAttachment()
+    public static let isInlineAttachment = EditorContentName.isInlineAttachment()
 }

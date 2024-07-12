@@ -25,6 +25,10 @@
 @property (nonatomic) NSTextStorage *storage;
 @end
 
+@interface NSString (ProtonExtension)
+- (NSArray<NSValue *> *)rangesOfCharacterSet:(NSCharacterSet*)characterSet;
+@end
+
 @implementation PRTextStorage
 
 - (instancetype)init {
@@ -115,15 +119,38 @@
         NSDictionary<NSAttributedStringKey, id> *outgoingAttrs = [_storage attributesAtIndex:(range.location + range.length - 1) effectiveRange:nil];
         NSDictionary<NSAttributedStringKey, id> *incomingAttrs = [replacementString attributesAtIndex:0 effectiveRange:nil];
 
-        NSMutableDictionary<NSAttributedStringKey, id> *diff = [NSMutableDictionary dictionary];
-        for (NSAttributedStringKey outgoingKey in outgoingAttrs) {
+        // A list of keys we do not want to preserve when missing in the text that is coming in.
+        NSArray *nonCarryoverKeys = @[
+            [[PREditorContentName blockContentTypeName] rawValue],
+            [[PREditorContentName inlineContentTypeName] rawValue],
+            [[PREditorContentName isBlockAttachmentName] rawValue],
+            [[PREditorContentName isInlineAttachmentName] rawValue],
+
             // We do not want to fix the underline since it can be added by the input method for
             // characters accepting diacritical marks (eg. in Vietnamese or Spanish) and should be transient.
-            if (incomingAttrs[outgoingKey] == nil && outgoingKey != NSUnderlineStyleAttributeName) {
-                diff[outgoingKey] = outgoingAttrs[outgoingKey];
+            NSUnderlineStyleAttributeName
+        ];
+
+        NSMutableDictionary<NSAttributedStringKey, id> *filteredOutgoingAttrs = [outgoingAttrs mutableCopy];
+        [filteredOutgoingAttrs removeObjectsForKeys:nonCarryoverKeys];
+
+        NSMutableDictionary<NSAttributedStringKey, id> *diff = [NSMutableDictionary dictionary];
+        for (NSAttributedStringKey outgoingKey in filteredOutgoingAttrs) {
+            if (incomingAttrs[outgoingKey] == nil) {
+                diff[outgoingKey] = filteredOutgoingAttrs[outgoingKey];
             }
         }
         [replacementString addAttributes:diff range:NSMakeRange(0, replacementString.length)];
+    }
+
+    // To maintain a consistent state of attributes, adding newline attributes to
+    // all newline characters in the replacement string.
+    NSArray<NSValue*> *newlineRangeValues =
+        [replacementString.string rangesOfCharacterSet:[NSCharacterSet newlineCharacterSet]];
+    for (NSValue *newlineRangeValue in newlineRangeValues) {
+        [replacementString addAttribute:[[PREditorContentName blockContentTypeName] rawValue]
+                                  value:[PREditorContentName newlineName]
+                                  range:[newlineRangeValue rangeValue]];
     }
 
     NSAttributedString *deletedText = [_storage attributedSubstringFromRange:range];
@@ -341,6 +368,27 @@
         }
     }];
     return attachments;
+}
+
+@end
+
+@implementation NSString (ProtonExtension)
+
+- (NSArray<NSValue *> *)rangesOfCharacterSet:(NSCharacterSet*)characterSet {
+    NSMutableArray *ranges = [NSMutableArray array];
+    NSRange searchRange = NSMakeRange(0, self.length);
+
+    NSRange range = [self rangeOfCharacterFromSet:characterSet options:0 range:searchRange];
+
+    while (range.location != NSNotFound) {
+        [ranges addObject:[NSValue valueWithRange:range]];
+
+        NSUInteger newStart = NSMaxRange(range);
+        searchRange = NSMakeRange(newStart, self.length - newStart);
+        range = [self rangeOfCharacterFromSet:characterSet options:0 range:searchRange];
+    }
+
+    return [ranges copy];
 }
 
 @end

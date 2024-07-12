@@ -132,6 +132,141 @@ class TextStorageTests: XCTestCase {
         XCTAssertEqual(attrs[NSAttributedString.Key("attr3")] as? Int, 3)
     }
 
+    func testDoesNotAddMissingUnderlineAttributeInTextBeingReplaced() {
+        // Given
+        let textStorage = PRTextStorage()
+        let testString = NSAttributedString(string: "test string", attributes: [.underlineStyle: NSUnderlineStyle.single])
+        textStorage.replaceCharacters(in: .zero, with: testString)
+        let replacementString = NSAttributedString(string: "replacement string", attributes: [:])
+
+        // When
+        textStorage.replaceCharacters(in: textStorage.fullRange, with: replacementString)
+
+        // Then
+        let attrs = textStorage.attributes(at: 0, effectiveRange: nil)
+        XCTAssertFalse(attrs[.underlineStyle] as? NSUnderlineStyle == NSUnderlineStyle.single)
+    }
+
+    func testDoesNotAddMissingNewlineAttributeInTextBeingReplaced() {
+        // Given
+        let textStorage = PRTextStorage()
+        let testString = NSAttributedString(string: "\n", attributes: [.blockContentType: EditorContentName.newline()])
+        textStorage.replaceCharacters(in: .zero, with: testString)
+        let replacementString = NSAttributedString(string: " ", attributes: [:])
+
+        // When
+        textStorage.replaceCharacters(in: textStorage.fullRange, with: replacementString)
+
+        // Then
+        let attrs = textStorage.attributes(at: 0, effectiveRange: nil)
+        XCTAssertFalse(attrs[.blockContentType] as? EditorContentName == EditorContentName.newline())
+    }
+
+    func testDoesNotAddMissingBlockContentTypeKeyInTextBeingReplaced() {
+        // Given
+        let textStorage = PRTextStorage()
+        let testString = NSAttributedString(string: "\u{fffc}", attributes: [.blockContentType: "panel"])
+        textStorage.replaceCharacters(in: .zero, with: testString)
+        let replacementString = NSAttributedString(string: " ", attributes: [:])
+
+        // When
+        textStorage.replaceCharacters(in: textStorage.fullRange, with: replacementString)
+
+        // Then
+        let attrs = textStorage.attributes(at: 0, effectiveRange: nil)
+        XCTAssertNil(attrs[.blockContentType])
+    }
+
+    func testDoesNotAddMissingInlineContentTypeKeyInTextBeingReplaced() {
+        // Given
+        let textStorage = PRTextStorage()
+        let testString = NSAttributedString(string: "\u{fffc}", attributes: [.inlineContentType: "emoji"])
+        textStorage.replaceCharacters(in: .zero, with: testString)
+        let replacementString = NSAttributedString(string: " ", attributes: [:])
+
+        // When
+        textStorage.replaceCharacters(in: textStorage.fullRange, with: replacementString)
+
+        // Then
+        let attrs = textStorage.attributes(at: 0, effectiveRange: nil)
+        XCTAssertNil(attrs[.inlineContentType])
+    }
+
+    func testDoesNotAddMissingIsBlockAttachmentKeyInTextBeingReplaced() {
+        // Given
+        let textStorage = PRTextStorage()
+        let testString = NSAttributedString(string: "\u{fffc}", attributes: [.isBlockAttachment: true])
+        textStorage.replaceCharacters(in: .zero, with: testString)
+        let replacementString = NSAttributedString(string: " ", attributes: [:])
+
+        // When
+        textStorage.replaceCharacters(in: textStorage.fullRange, with: replacementString)
+
+        // Then
+        let attrs = textStorage.attributes(at: 0, effectiveRange: nil)
+        XCTAssertNil(attrs[.isBlockAttachment])
+    }
+
+    func testDoesNotAddMissingIsInlineAttachmentKeyInTextBeingReplaced() {
+        // Given
+        let textStorage = PRTextStorage()
+        let testString = NSAttributedString(string: "\u{fffc}", attributes: [.isInlineAttachment: true])
+        textStorage.replaceCharacters(in: .zero, with: testString)
+        let replacementString = NSAttributedString(string: " ", attributes: [:])
+
+        // When
+        textStorage.replaceCharacters(in: textStorage.fullRange, with: replacementString)
+
+        // Then
+        let attrs = textStorage.attributes(at: 0, effectiveRange: nil)
+        XCTAssertNil(attrs[.isInlineAttachment])
+    }
+
+    func testAddsMissingSingleNewlineAttributeInTextBeingReplaced() throws {
+        // Given
+        let newlineString = NSAttributedString(string: "\n", attributes: [.blockContentType: EditorContentName.newline()])
+
+        let textStorage = PRTextStorage()
+        let testString = NSAttributedString(string: "test string", attributes: [:])
+        let testStringWithNewline = NSMutableAttributedString(attributedString: testString)
+        testStringWithNewline.append(newlineString)
+
+        textStorage.replaceCharacters(in: .zero, with: testStringWithNewline)
+        let replacementString = NSAttributedString(string: "\n", attributes: [:])
+
+        // When
+        textStorage.replaceCharacters(in: textStorage.fullRange, with: replacementString)
+
+        // Then
+        let attrs = textStorage.attributes(at: 0, effectiveRange: nil)
+        XCTAssertEqual(attrs[.blockContentType] as? EditorContentName, EditorContentName.newline())
+    }
+
+    func testAddsMissingMultipleNewlineAttributesInTextBeingReplaced() throws {
+        // Given
+        let newlineString = NSAttributedString(string: "\n", attributes: [.blockContentType: EditorContentName.newline()])
+
+        let textStorage = PRTextStorage()
+        let testString = NSAttributedString(string: "test string", attributes: [:])
+        let testStringWithNewline = NSMutableAttributedString(attributedString: testString)
+        testStringWithNewline.append(newlineString)
+
+        textStorage.replaceCharacters(in: .zero, with: testStringWithNewline)
+        let replacementString = NSAttributedString(string: "\nreplacement\nstring\n", attributes: [:])
+
+        // When
+        textStorage.replaceCharacters(in: textStorage.fullRange, with: replacementString)
+
+        // Then
+        let attrsAtBeginning = textStorage.attributes(at: 0, effectiveRange: nil)
+        let attrsInMiddle = textStorage.attributes(at: 12, effectiveRange: nil)
+        let attrsAtEnd = textStorage.attributes(at: textStorage.fullRange.endLocation - 1, effectiveRange: nil)
+
+        XCTAssertEqual(attrsAtBeginning[.blockContentType] as? EditorContentName, EditorContentName.newline())
+        XCTAssertEqual(attrsInMiddle[.blockContentType] as? EditorContentName, EditorContentName.newline())
+        XCTAssertEqual(attrsAtEnd[.blockContentType] as? EditorContentName, EditorContentName.newline())
+    }
+
     func testReturnsSubstringWithClampedRange() {
         let textStorage = PRTextStorage()
         let testString = NSAttributedString(string: "test string")
