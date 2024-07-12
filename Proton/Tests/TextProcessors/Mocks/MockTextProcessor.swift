@@ -35,6 +35,9 @@ class MockTextProcessor: TextProcessing {
     var onDidProcess: ((EditorView) -> Void)?
     var onShouldProcess: ((EditorView, NSRange, String) -> Bool)?
 
+    var willProcessEditing: ((EditorView, NSTextStorage.EditActions, NSRange, Int) -> Void)?
+    var didProcessEditing: ((EditorView, NSTextStorage.EditActions, NSRange, Int) -> Void)?
+
     var processorCondition: (EditorView, NSRange) -> Bool
 
     init(name: String = "MockTextProcessor", processorCondition: @escaping (EditorView, NSRange) -> Bool = { _, _ in true }) {
@@ -74,5 +77,13 @@ class MockTextProcessor: TextProcessing {
 
     func shouldProcess(_ editorView: EditorView, shouldProcessTextIn range: NSRange, replacementText text: String) -> Bool {
         return onShouldProcess?(editorView, range, text) ?? true
+    }
+
+    func willProcessEditing(editor: EditorView, editedMask: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int) {
+        willProcessEditing?(editor, editedMask, editedRange, delta)
+    }
+
+    func didProcessEditing(editor: EditorView, editedMask: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int) {
+        didProcessEditing?(editor, editedMask, editedRange, delta)
     }
 }
