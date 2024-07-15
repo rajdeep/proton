@@ -146,7 +146,7 @@
     // To maintain a consistent state of attributes, adding newline attributes to
     // all newline characters in the replacement string.
     NSArray<NSValue*> *newlineRangeValues =
-        [replacementString.string rangesOfCharacterSet:[NSCharacterSet newlineCharacterSet]];
+    [replacementString.string rangesOfCharacterSet:[NSCharacterSet characterSetWithCharactersInString:@"\n"]];
     for (NSValue *newlineRangeValue in newlineRangeValues) {
         [replacementString addAttribute:[[PREditorContentName blockContentTypeName] rawValue]
                                   value:[PREditorContentName newlineName]
