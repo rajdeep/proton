@@ -173,4 +173,27 @@ public extension NSAttributedString {
         let range = NSRange(location: searchTextRange.location, length: searchText.count)
         return range
     }
+
+    func attributedSubstringOrEmpty(from range: NSRange) -> NSAttributedString {
+        let clamped = range.clamped(upperBound: length)
+        return attributedSubstring(from: clamped)
+    }
+
+    func substringOrEmpty(from range: NSRange) -> String {
+        let clamped = range.clamped(upperBound: length)
+        return (string as NSString).substring(with: clamped)
+    }
+
+    func attributeOrNil(_ key: NSAttributedString.Key, at location: Int) -> Any? {
+        return attributesOrEmpty(at: location)[key]
+    }
+
+    func attributesOrEmpty(at location: Int) -> [NSAttributedString.Key: Any] {
+        guard self.length != 0, location >= 0, location < length else { return [:] }
+        return attributes(at: location, effectiveRange: nil)
+    }
+
+    func containsAttribute(_ key: NSAttributedString.Key, at location: Int) -> Bool {
+        attributesOrEmpty(at: location).keys.contains(key)
+    }
 }
