@@ -218,4 +218,25 @@ class NSAttributedStringExtensionTests: XCTestCase {
         let range = text.reverseRange(of: "isx", startingLocation: text.length - 1)
         XCTAssertNil(range)
     }
+
+    func testEnumeratesIgnoringValue() {
+        let text = NSMutableAttributedString(string: "This is a test string", attributes: [.inlineContentType: "a"])
+        text.append(NSAttributedString(string: " Some more text", attributes: [.inlineContentType: "b"]))
+        text.append(NSAttributedString(string: " And more text", attributes: [.inlineContentType: "c"]))
+        text.append(NSAttributedString(string: "Not with attribute", attributes: [:]))
+        text.append(NSAttributedString(string: "Again with attribute", attributes: [.inlineContentType: "c"]))
+
+        let expected = [
+            ("This is a test string Some more text And more text", true),
+            ("Not with attribute", false),
+            ("Again with attribute", true)
+        ]
+        var counter = 0
+        text.enumerateContinuousRangesByAttribute(.inlineContentType) { isPresent, range in
+            XCTAssertEqual(expected[counter].0, text.substring(from: range))
+            XCTAssertEqual(expected[counter].1, isPresent)
+            counter += 1
+        }
+        XCTAssertEqual(counter, 3)
+    }
 }

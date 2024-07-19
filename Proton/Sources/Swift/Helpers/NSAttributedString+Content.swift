@@ -54,6 +54,40 @@ public extension NSAttributedString {
         }
         return string.makeNSRange(from: range)
     }
+
+    /// Enumerates over continuous ranges of text based on the presence or absence of a specified attribute.
+    /// - Parameters:
+    ///   - attributeName: The name of the attribute to check for presence or absence.
+    ///   - range: The range within the attributed string to enumerate. Defaults to the entire string.
+    ///   - using: The block to apply to continuous ranges, indicating whether the attribute was present or absent for the range.
+    func enumerateContinuousRangesByAttribute(_ attributeName: NSAttributedString.Key, in range: NSRange? = nil, using block: (_ isPresent: Bool, _ range: NSRange) -> Void) {
+        let enumerationRange = range ?? NSRange(location: 0, length: self.length)
+        var lastRange: NSRange? = nil
+        var isAttributePresentInLastRange = false
+        
+        self.enumerateAttributes(in: enumerationRange, options: []) { attributes, currentRange, _ in
+            let isAttributePresent = attributes[attributeName] != nil
+            if let lastRangeUnwrapped = lastRange {
+                if isAttributePresentInLastRange != isAttributePresent {
+                    // Process the last range if the attribute presence state changes
+                    block(isAttributePresentInLastRange, lastRangeUnwrapped)
+                    lastRange = currentRange
+                } else {
+                    // Extend the last range efficiently if the state hasn't changed
+                    lastRange = NSRange(location: lastRangeUnwrapped.location, length: NSMaxRange(currentRange) - lastRangeUnwrapped.location)
+                }
+            } else {
+                // Initialize with the first range
+                lastRange = currentRange
+            }
+            isAttributePresentInLastRange = isAttributePresent
+        }
+        
+        // Process the final range after enumeration
+        if let lastRangeUnwrapped = lastRange {
+            block(isAttributePresentInLastRange, lastRangeUnwrapped)
+        }
+    }
 }
 
 extension NSAttributedString {
