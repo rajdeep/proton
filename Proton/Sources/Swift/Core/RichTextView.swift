@@ -51,6 +51,13 @@ class RichTextView: AutogrowingTextView {
         }
     }
 
+    var showsInvisibleCharacters = false {
+        didSet {
+            layoutManager.invalidateGlyphs(forCharacterRange: richTextStorage.fullRange, changeInLength: 0, actualCharacterRange: nil)
+            setNeedsDisplay()
+        }
+    }
+
     weak var defaultTextFormattingProvider: DefaultTextFormattingProviding?
     {
         get { richTextStorage.defaultTextFormattingProvider }
@@ -191,6 +198,7 @@ class RichTextView: AutogrowingTextView {
             if let range = adjustedTextBlockRangeOnSelectionChange(oldRange: old, newRange: new) {
                 selectedRange = range
             }
+
             richTextViewDelegate?.richTextView(self, selectedRangeChangedFrom: old, to: selectedTextRange?.toNSRange(in: self))
         }
     }
@@ -842,6 +850,18 @@ extension RichTextView: NSLayoutManagerDelegate {
         return false
     }
 
+    func layoutManager(_ layoutManager: NSLayoutManager, shouldGenerateGlyphs glyphs: UnsafePointer<CGGlyph>, properties props: UnsafePointer<NSLayoutManager.GlyphProperty>, characterIndexes charIndexes: UnsafePointer<Int>, font aFont: UIFont, forGlyphRange glyphRange: NSRange) -> Int {
+
+        guard showsInvisibleCharacters == false else { return 0 }
+
+        if let attribute = textStorage.attribute(.invisible, at: charIndexes.pointee, effectiveRange: nil) as? Int, attribute == 1 {
+            let nullProperties = Array(repeating: NSLayoutManager.GlyphProperty.null, count: glyphRange.length)
+            layoutManager.setGlyphs(glyphs, properties: nullProperties, characterIndexes: charIndexes, font: aFont, forGlyphRange: glyphRange)
+            return glyphRange.length
+        } else {
+            return 0
+        }
+    }
 }
 
 extension RichTextView: TextStorageDelegate {
