@@ -83,4 +83,8 @@ public extension NSAttributedString.Key {
 
 
     static let asyncTextResolver = NSAttributedString.Key("_asyncTextResolver")
+
+    /// Prevents display of character range in `EditorView`
+    /// To show the invisible range, use set `showsInvisibleCharacters` to `true` in `EditorView`
+    static let invisible = NSAttributedString.Key(rawValue: "_invisible")
 }

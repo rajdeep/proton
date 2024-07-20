@@ -805,6 +805,13 @@ open class EditorView: UIView {
         set { richTextView.textDropDelegate = newValue }
     }
 
+    /// Shows or hides invisible characters
+    /// Invisible character ranges are governed by presence of `NSAttributedString.Key.invisible` attribute
+    public var showsInvisibleCharacters: Bool {
+        get { richTextView.showsInvisibleCharacters }
+        set { richTextView.showsInvisibleCharacters = newValue }
+    }
+
     /// Returns the nearest shared undo manager in the responder chain.
     open override var undoManager: UndoManager? {
         get { richTextView.undoManager }

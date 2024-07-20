@@ -1471,10 +1471,34 @@ class EditorSnapshotTests: SnapshotTestCase {
         editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
 
         editor.isEditable = false
-        let touch = UITouch()
         attachment.selectOnTap = true
         (attachment.contentView?.superview as? AttachmentContentView)?.onContentViewTapped()
 
+        viewController.render()
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testInvisibleCharacters() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+
+        let text = NSMutableAttributedString(string: "Test text.")
+        text.append(NSAttributedString(string: " Invisible text.", attributes: [
+            .foregroundColor: UIColor.red,
+            .invisible: 1
+        ]))
+        text.append(NSAttributedString(string: " After invisible characters"))
+
+        editor.attributedText = text
+
+        viewController.render()
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        editor.showsInvisibleCharacters = true
+        viewController.render()
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        editor.showsInvisibleCharacters = false
         viewController.render()
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
