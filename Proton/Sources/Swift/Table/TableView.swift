@@ -419,16 +419,11 @@ public class TableView: UIView {
             // In absence of this check, if the editor having focus gets reclaimed,
             // the focus moves to root editor which may cause the content to be scrolled
             // out to end of the root editor.
-            var needsFocusChange = false
+            let needsFocusChange = toReclaim.contains(where: { $0.editor?.isFirstResponder() == true })
+            if needsFocusChange {
+                containerAttachment?.containerEditorView?.rootEditor.endEditing(true)
+            }
             toReclaim.forEach { [weak self] cell in
-                if needsFocusChange == false {
-                    needsFocusChange = cell.editor?.isFirstResponder() == true
-                    if needsFocusChange {
-                        self?.cellsInViewport
-                            .first(where: { c in c.editor != nil && c.columnSpan.min() == cell.columnSpan.min() } )?
-                            .editor?.becomeFirstResponder()
-                    }
-                }
                 self?.repository.enqueue(cell: cell)
             }
 
