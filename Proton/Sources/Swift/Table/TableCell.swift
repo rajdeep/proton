@@ -203,9 +203,11 @@ public class TableCell {
     }
 
     func addContentView(_ contentView: TableCellContentView) {
+        contentView.editor.disableFirstResponder()
         prepareForReuse(contentView)
         self.contentView = contentView
         delegate?.cell(self, didAddContentView: contentView)
+        contentView.editor.enableFirstResponder()
     }
 
     func prepareForReuse(_ contentView: TableCellContentView) {
