@@ -25,6 +25,13 @@ import SnapshotTesting
 @testable import Proton
 
 class ViewAttachmentSnapshotTests: SnapshotTestCase {
+    var attachmentOffset = CGPoint(x: 0, y: -3)
+
+    override func setUp() {
+        super.setUp()
+        attachmentOffset = CGPoint(x: 0, y: -3)
+    }
+
     func testMatchContentRendering() {
         let viewController = EditorTestViewController()
         let textView = viewController.editor
@@ -110,7 +117,100 @@ class ViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func testSetsSelectionWithDisplay() {
+        let viewController = EditorTestViewController()
+        let textView = viewController.editor
+
+        let attachment1 = makeTextFieldAttachment(text: NSAttributedString(string: "Test text"))
+
+        textView.replaceCharacters(in: .zero, with: "Short text ")
+        textView.insertAttachment(in: textView.textEndRange, attachment: attachment1)
+
+        textView.selectedRange = .zero
+
+        attachment1.setSelected(true)
+        viewController.render(size: CGSize(width: 300, height: 120))
+
+        XCTAssertNotNil(attachment1.rangeInContainer())
+        XCTAssertTrue(attachment1.isSelected)
+        XCTAssertEqual(attachment1.containerEditorView?.selectedRange, attachment1.rangeInContainer())
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testSetsSelectionWithoutDisplay() {
+        let viewController = EditorTestViewController()
+        let textView = viewController.editor
+
+        let attachment1 = makeTextFieldAttachment(text: NSAttributedString(string: "Test text"))
+
+        textView.replaceCharacters(in: .zero, with: "Short text ")
+        textView.insertAttachment(in: textView.textEndRange, attachment: attachment1)
+
+        textView.selectedRange = .zero
+
+        XCTAssertTrue(attachment1.selectRangeInContainer())
+        viewController.render(size: CGSize(width: 300, height: 120))
+
+        XCTAssertNotNil(attachment1.rangeInContainer())
+        XCTAssertTrue(attachment1.isSelected)
+        XCTAssertEqual(attachment1.containerEditorView?.selectedRange, attachment1.rangeInContainer())
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testGetsFocussedChildView() {
+        let window = UIWindow(frame: CGRect(origin: .zero, size: CGSize(width: 300, height: 800)))
+        window.makeKeyAndVisible()
+
+        let viewController = EditorTestViewController()
+        window.rootViewController = viewController
+
+        let textView = viewController.editor
+        let attachment1 = makeTextFieldAttachment(text: NSAttributedString(string: "Test text"))
+
+        textView.replaceCharacters(in: .zero, with: "Short text ")
+        textView.insertAttachment(in: textView.textEndRange, attachment: attachment1)
+
+        textView.selectedRange = .zero
+
+        viewController.render(size: CGSize(width: 300, height: 120))
+
+        XCTAssertTrue((attachment1.contentView as? AutogrowingTextField)?.becomeFirstResponder() ?? false)
+        XCTAssertTrue(attachment1.isFocussed)
+
+        XCTAssertTrue(attachment1.firstResponderChildView is AutogrowingTextField)
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func testReturnsNilForNonFocussedChildView() {
+        let window = UIWindow(frame: CGRect(origin: .zero, size: CGSize(width: 300, height: 800)))
+        window.makeKeyAndVisible()
+
+        let viewController = EditorTestViewController()
+        window.rootViewController = viewController
+
+        let textView = viewController.editor
+        let attachment1 = makeTextFieldAttachment(text: NSAttributedString(string: "Test text"))
+
+        textView.replaceCharacters(in: .zero, with: "Short text ")
+        textView.insertAttachment(in: textView.textEndRange, attachment: attachment1)
+
+        textView.selectedRange = .zero
+
+        viewController.render(size: CGSize(width: 300, height: 120))
+
+        XCTAssertTrue((attachment1.contentView as? AutogrowingTextField)?.becomeFirstResponder() ?? false)
+        XCTAssertTrue(attachment1.isFocussed)
+        XCTAssertTrue((attachment1.contentView as? AutogrowingTextField)?.resignFirstResponder() ?? false)
+
+        XCTAssertFalse(attachment1.isFocussed)
+        XCTAssertNil(attachment1.firstResponderChildView)
+
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     private func makeDummyAttachment(text: String, size: AttachmentSize) -> Attachment {
+        attachmentOffset = CGPoint(x: 0, y: -3)
         let textView = RichTextAttachmentView(context: RichTextViewContext())
         textView.textContainerInset = .zero
         textView.layoutMargins = .zero
@@ -120,10 +220,20 @@ class ViewAttachmentSnapshotTests: SnapshotTestCase {
         attachment.offsetProvider = self
         return attachment
     }
+
+    private func makeTextFieldAttachment(text: NSAttributedString) -> Attachment {
+        attachmentOffset = CGPoint(x: 0, y: -5)
+        let textField = AutogrowingTextField()
+        let textFieldAttachment = Attachment(textField, size: .matchContent)
+        textFieldAttachment.offsetProvider = self
+        textField.attributedText = text
+        textField.borderStyle = .roundedRect
+        return textFieldAttachment
+    }
 }
 
 extension ViewAttachmentSnapshotTests: AttachmentOffsetProviding {
     func offset(for attachment: Attachment, in textContainer: NSTextContainer, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGPoint {
-        return CGPoint(x: 0, y: -3)
+        return attachmentOffset
     }
 }
