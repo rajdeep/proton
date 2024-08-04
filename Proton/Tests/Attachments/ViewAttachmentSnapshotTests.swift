@@ -222,12 +222,13 @@ class ViewAttachmentSnapshotTests: SnapshotTestCase {
     }
 
     private func makeTextFieldAttachment(text: NSAttributedString) -> Attachment {
-        attachmentOffset = CGPoint(x: 0, y: -5)
+        attachmentOffset = CGPoint(x: 0, y: -4.5)
         let textField = AutogrowingTextField()
         let textFieldAttachment = Attachment(textField, size: .matchContent)
         textFieldAttachment.offsetProvider = self
         textField.attributedText = text
-        textField.borderStyle = .roundedRect
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.layer.borderWidth = 1
         return textFieldAttachment
     }
 }
