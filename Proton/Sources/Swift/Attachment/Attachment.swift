@@ -414,6 +414,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     /// Selects attachment range in container `EditorView`. This does not shows attachment itself as selected nor does it makes
     /// any changes to first responder. To show attachment as selected, see `setSelected`
     /// - Returns: `true` if attachment range was selected, else `false`
+    @discardableResult
     public func selectRangeInContainer() -> Bool {
         guard let container = containerEditorView,
               let range = rangeInContainer(),
