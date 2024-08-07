@@ -209,6 +209,12 @@ public class TableView: UIView {
         }
     }
 
+    /// Determines if cell selection using 2-finger drag gesture is enabled
+    public var isCellSelectionEnabled: Bool {
+        get { tableView.isCellSelectionEnabled }
+        set { tableView.isCellSelectionEnabled = newValue }
+    }
+
     /// Bounds observer for the `TableView`. Typically, this will be the `Attachment` that hosts the `TableView`.
     /// - Note: In absence of a `boundObserver`, the `TableView` will not autoresize when the content in the cells
     /// are changed.
@@ -294,9 +300,9 @@ public class TableView: UIView {
     ///   - config: Configuration for `TableView`
     ///   - cellEditorInitializer: Custom initializer for `EditorView` within `TableCell`. This will also be used when creating new cells as a
     ///   return of adding new row or column, or cells being split.
-    public convenience init(config: GridConfiguration, cellEditorInitializer: GridCell.EditorInitializer? = nil) {
+    public convenience init(config: GridConfiguration, cellEditorInitializer: GridCell.EditorInitializer? = nil, isCellSelectionEnabled: Bool = false) {
         let tableView = TableContentView(config: config, editorInitializer: cellEditorInitializer)
-        self.init(config: config, tableView: tableView)
+        self.init(config: config, tableView: tableView, isCellSelectionEnabled: isCellSelectionEnabled)
     }
 
     /// Initializes `TableView` using the provided configuration.
@@ -307,12 +313,12 @@ public class TableView: UIView {
     ///   return of adding new row or column, or cells being split.
     ///   - Important:
     ///   Care must be taken that the number of cells are correct per the configuration provided, failing which the `TableView` rendering may be broken.
-    public convenience init(config: GridConfiguration, cells: [TableCell], cellEditorInitializer: TableCell.EditorInitializer? = nil) {
+    public convenience init(config: GridConfiguration, cells: [TableCell], cellEditorInitializer: TableCell.EditorInitializer? = nil, isCellSelectionEnabled: Bool = false) {
         let tableView = TableContentView(config: config, cells: cells, editorInitializer: cellEditorInitializer)
-        self.init(config: config, tableView: tableView)
+        self.init(config: config, tableView: tableView, isCellSelectionEnabled: isCellSelectionEnabled)
     }
 
-    private init(config: GridConfiguration, tableView: TableContentView) {
+    private init(config: GridConfiguration, tableView: TableContentView, isCellSelectionEnabled: Bool ) {
         self.tableView = tableView
         let boundsShadowColors = [
             config.boundsLimitShadowColors.primary.cgColor,
@@ -325,7 +331,7 @@ public class TableView: UIView {
         self.config = config
         super.init(frame: .zero)
         self.leadingShadowConstraint = leadingShadowView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
-
+        self.isCellSelectionEnabled = isCellSelectionEnabled
         setup()
     }
 
