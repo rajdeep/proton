@@ -35,7 +35,7 @@ jobs:
     - name: Capture Proton Code Coverage
       uses: codecov/codecov-action@v4.5.0
       with:
-        fail_ci_if_error: false
+        fail_ci_if_error: true
         verbose: true
         token: ${{ secrets.CODECOV_TOKEN }}
     - name: Build Example App
