@@ -110,6 +110,7 @@ open class Attachment: NSTextAttachment, BoundsObserving {
     private(set) var cachedContainerSize: CGSize?
     private var indexInContainer: Int?
     private let backgroundColor: UIColor?
+    private var showSelectionViewWhenSelected = true
 
     var cachedBounds: CGRect?
 
@@ -182,6 +183,19 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         isRenderingAsync && isAsyncRendered == false
     }
 
+    /// Returns `true` if any of the child views is first Responder, else false
+    public var isFocussed: Bool {
+        contentView?.firstResponderChildView() != nil
+    }
+
+    /// Returns  the child view that is first Responder, else nil
+    public var firstResponderChildView: UIView? {
+        contentView?.firstResponderChildView()
+    }
+
+    /// Determines if attachment is in selected range in the container `EditorView`
+    public var isInSelectedRange: Bool { isSelected }
+
     var isImageBasedAttachment: Bool {
         self.view == nil
     }
@@ -190,12 +204,10 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         return view?.superview != nil
     }
 
-    /// Determines if attachment is in selected range in the container `EditorView`
-    public var isInSelectedRange: Bool { isSelected }
-
     var isSelected: Bool = false {
         didSet {
-            guard let view = self.view else { return }
+            guard let view = self.view,
+                  showSelectionViewWhenSelected else { return }
             if isSelected {
                 selectionView.addTo(parent: view)
             } else {
@@ -398,9 +410,30 @@ open class Attachment: NSTextAttachment, BoundsObserving {
         view?.removeFromSuperview()
         containerEditorView = nil
     }
+    
+    /// Selects attachment range in container `EditorView`. This does not shows attachment itself as selected nor does it makes
+    /// any changes to first responder. To show attachment as selected, see `setSelected`
+    /// - Returns: `true` if attachment range was selected, else `false`
+    @discardableResult
+    public func selectRangeInContainer() -> Bool {
+        guard let container = containerEditorView,
+              let range = rangeInContainer(),
+              range.isValidIn(container.textInput) else { return false }
+        selectContainerWithoutSelfSelection {
+            container.selectedRange = range
+        }
+        return true
+    }
+
+    private func selectContainerWithoutSelfSelection(_ closure: () -> Void) {
+        showSelectionViewWhenSelected = false
+        closure()
+        showSelectionViewWhenSelected = true
+    }
 
     /// Selects the attachment in Editor.
-    /// - Parameter isSelected: `true` to set selected, else `false`
+    /// - Parameters:
+    ///   - isSelected: `true` to set selected, else `false`
     public func setSelected(_ isSelected: Bool) {
         guard let containerEditor = containerEditorView,
               let range = rangeInContainer() else { return }
@@ -664,6 +697,10 @@ extension Attachment {
 extension UIView {
     var attachmentContentView: AttachmentContentView? {
         containerAttachmentFor(view: self)
+    }
+
+    func firstResponderChildView() -> UIView? {
+        return isFirstResponder ? self : subviews.compactMap { $0.firstResponderChildView() }.first
     }
 
     private func containerAttachmentFor(view: UIView?) -> AttachmentContentView? {
