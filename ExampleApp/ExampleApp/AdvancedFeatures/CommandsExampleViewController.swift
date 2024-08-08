@@ -492,7 +492,8 @@ extension CommandsExampleViewController: TableViewDelegate {
     }
 
     var containerScrollView: UIScrollView? {
-        editor.scrollView
+        nil
+//        editor.scrollView
     }
 
     func tableView(_ tableView: TableView, didReceiveKey key: EditorKey, at range: NSRange, in cell: TableCell) { }

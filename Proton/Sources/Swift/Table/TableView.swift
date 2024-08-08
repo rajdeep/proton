@@ -392,8 +392,15 @@ public class TableView: UIView {
         }
     }
 
+    public override func didMoveToWindow() {
+        guard window != nil,
+            observation == nil else { return }
+
+        setupScrollObserver()
+    }
+
     private func setupScrollObserver() {
-        observation = delegate?.containerScrollView?.observe(\.bounds, options: [.new, .old]) { [weak self] container, change in
+        observation = self.containerScrollView?.observe(\.bounds, options: [.new, .old]) { [weak self] container, change in
             self?.viewportChanged()
         }
     }
@@ -438,7 +445,7 @@ public class TableView: UIView {
               // ensure editor is not hidden e.g. inside an Expand in collapsed state
               attachmentContentView.attachment?.containerEditorView?.isHidden == false,
               tableView.bounds != .zero,
-              let containerScrollView = delegate?.containerScrollView,
+              let containerScrollView = self.containerScrollView,
               let rootEditorView = containerAttachment?.containerEditorView?.rootEditor else {
             cellsInViewport = []
             return
@@ -812,7 +819,7 @@ extension TableView: UIScrollViewDelegate {
 
 extension TableView: TableContentViewDelegate {
     var containerScrollView: UIScrollView? {
-        delegate?.containerScrollView
+        delegate?.containerScrollView ?? containerAttachment?.containerEditorView?.rootEditor.scrollView
     }
 
     var viewport: CGRect? {

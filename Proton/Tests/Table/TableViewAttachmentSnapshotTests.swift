@@ -34,7 +34,7 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         delegate = MockTableViewDelegate()
         viewController = EditorTestViewController()
         editor = viewController.editor
-        delegate.containerScrollView = editor.scrollView
+        // Not setting delegate.containerScrollview expects the editor.scrollview as default scrollview
     }
 
     func testRendersTableViewAttachment() {
