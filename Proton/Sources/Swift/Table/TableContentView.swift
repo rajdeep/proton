@@ -78,6 +78,15 @@ class TableContentView: UIScrollView {
 
     var isFreeScrollingEnabled = false
     var isRendered = false
+    var isCellSelectionEnabled = false {
+        didSet {
+            guard oldValue != isCellSelectionEnabled else { return }
+            setupSelectionGesture()
+        }
+    }
+
+    var selectionGestureRecognizer: UIPanGestureRecognizer?
+    let selectionGestureRecognizerName = "_tableView_selectionGestureRecognizer"
 
     // Border for outer edges are added separately to account for
     // half-width borders added by cells which results in thinner outer border of table
@@ -255,7 +264,17 @@ class TableContentView: UIScrollView {
     }
 
     private func setupSelectionGesture() {
+        if let selectionGestureRecognizer {
+            removeGestureRecognizer(selectionGestureRecognizer)
+        }
+
+        guard isCellSelectionEnabled else {
+            return
+        }
+
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSelection(_:)))
+        gestureRecognizer.name = selectionGestureRecognizerName
+        selectionGestureRecognizer = gestureRecognizer
         gestureRecognizer.delegate = self
         gestureRecognizer.minimumNumberOfTouches = 2
         gestureRecognizer.maximumNumberOfTouches = 2

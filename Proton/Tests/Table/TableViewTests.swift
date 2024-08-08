@@ -106,6 +106,20 @@ class TableViewTests: XCTestCase {
             try cellIDString(from: tableView.cellsInViewport, filter: filter))
     }
 
+    func testIsCellSelectionEnabled() {
+        let attachment = AttachmentGenerator.makeTableViewAttachment(
+            id: 1,
+            numRows: 20,
+            numColumns: 5,
+            initialRowHeight: 100
+        )
+        let tableView = attachment.view.tableView
+        XCTAssertFalse(tableView.gestureRecognizers?.contains{ $0.name == tableView.selectionGestureRecognizerName } ?? false)
+
+        tableView.isCellSelectionEnabled = true
+        XCTAssertTrue(tableView.gestureRecognizers?.contains{ $0.name == tableView.selectionGestureRecognizerName } ?? false)
+    }
+
     func FIXME_testChangesBoundsOfCell() {
         let expectation = functionExpectation()
         expectation.expectedFulfillmentCount = 2

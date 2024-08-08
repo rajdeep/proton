@@ -28,13 +28,13 @@ extension EditorContent.Name {
 
 public class TableViewAttachment: Attachment {
     public let view: TableView
-    public init(config: GridConfiguration) {
+    public init(config: GridConfiguration, isCellSelectionEnabled: Bool = false) {
         view = TableView(config: config)
         super.init(view, size: .fullWidth)
         view.boundsObserver = self
     }
 
-    public init(config: GridConfiguration, cells: [TableCell]) {
+    public init(config: GridConfiguration, cells: [TableCell], isCellSelectionEnabled: Bool = false) {
         view = TableView(config: config, cells: cells)
         super.init(view, size: .fullWidth)
         view.boundsObserver = self

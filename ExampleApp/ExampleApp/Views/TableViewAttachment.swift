@@ -30,7 +30,7 @@ public class TableViewAttachment: Attachment {
     public let view: TableView
 
     public init(config: GridConfiguration) {
-        view = TableView(config: config)
+        view = TableView(config: config, isCellSelectionEnabled: true)
         super.init(view, size: .fullWidth)
         view.boundsObserver = self
     }
