@@ -534,7 +534,9 @@ class TableContentView: UIScrollView {
 
 extension TableContentView: TableCellDelegate {
     func cell(_ cell: TableCell, didAddContentView view: TableCellContentView) {
-        addSubview(view)
+        cell.performWithoutChangingFirstResponder { [weak self] in
+            self?.addSubview(view)
+        }
         tableContentViewDelegate?.tableContentView(self, didAddCellToViewport: cell)
     }
 
