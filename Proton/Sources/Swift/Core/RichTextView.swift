@@ -36,6 +36,19 @@ class RichTextView: AutogrowingTextView {
 
     private var delegateOverrides = [GestureRecognizerDelegateOverride]()
 
+    private var _canBecomeFirstResponder = true
+    override var canBecomeFirstResponder: Bool {
+        return _canBecomeFirstResponder
+    }
+
+    func disableFirstResponder() {
+        _canBecomeFirstResponder = false
+    }
+
+    func enableFirstResponder() {
+        _canBecomeFirstResponder = true
+    }
+
     var preserveBlockAttachmentNewline: PreserveBlockAttachmentNewline = .none {
         didSet {
             richTextStorage.preserveNewlineBeforeBlock = false

@@ -584,22 +584,19 @@ open class EditorView: UIView {
         richTextView.text
     }
 
-    // Boolean flag to control first responder state
-    private var canBecomeFirstResponderFlag = true
-
     // Override canBecomeFirstResponder property
     open override var canBecomeFirstResponder: Bool {
-        return canBecomeFirstResponderFlag
+        return richTextView.canBecomeFirstResponder
     }
 
     // Method to disable becoming first responder
     func disableFirstResponder() {
-        canBecomeFirstResponderFlag = false
+        richTextView.disableFirstResponder()
     }
 
     // Method to enable becoming first responder
     func enableFirstResponder() {
-        canBecomeFirstResponderFlag = true
+        richTextView.enableFirstResponder()
     }
 
     public var selectedRange: NSRange {

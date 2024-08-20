@@ -188,6 +188,12 @@ public class TableCell {
         contentView?.showEditor()
     }
 
+    func performWithoutChangingFirstResponder(_ closure: () -> Void) {
+        editor?.disableFirstResponder()
+        closure()
+        editor?.enableFirstResponder()
+    }
+
     func removeContentView() {
         attributedText = contentView?.editor.attributedText
         frame = contentView?.frame ?? frame
