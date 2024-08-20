@@ -33,7 +33,12 @@ class RichTextViewContext: NSObject, UITextViewDelegate {
     func textViewDidChangeSelection(_ textView: UITextView) {
         guard textView.delegate === self else { return }
         if textView.selectedTextRange != nil {
-            selectedTextView = textView.asRichTextView
+            if (textView.isEditable && textView.isFirstResponder) ||
+                textView.isEditable == false {
+                selectedTextView = textView.asRichTextView
+            } else {
+                selectedTextView = nil
+            }
         } else {
             selectedTextView = nil
         }
