@@ -45,6 +45,13 @@ class AutogrowingTextView: UITextView {
         }
         //TODO: enable only when line numbering is turned on
         contentMode = .redraw
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(textViewTextDidChange(_:)),
+            name: UITextView.textDidChangeNotification,
+            object: self
+        )
     }
 
     required init?(coder: NSCoder) {
@@ -63,16 +70,11 @@ class AutogrowingTextView: UITextView {
         }
     }
 
-    override var contentSize: CGSize {
-        didSet {
-            guard oldValue != .zero,
-                  contentSize != .zero,
-                oldValue != contentSize else { return }
-            // Entering a newline char may not always cause layout(super.layoutSubviews) to take place
-            // This code is required to be run so that the isScrollEnabled state can be correctly calculated based
-            // on the content size.
-            recalculateHeightIfRequired()
-        }
+    @objc func textViewTextDidChange(_ notification: Notification) {
+        // Entering a newline char may not always cause layout(super.layoutSubviews) to take place
+        // This code is required to be run so that the isScrollEnabled state can be correctly calculated based
+        // on the content size.
+        setNeedsLayout()
     }
 
     // Expose this method to the Objective-C runtime so clients
@@ -134,6 +136,14 @@ class AutogrowingTextView: UITextView {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.becomeFirstResponder()
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UITextView.textDidChangeNotification,
+            object: self
+        )
     }
 
     private func calculatedSize(attributedText: NSAttributedString, frame: CGSize, textContainerInset: UIEdgeInsets) -> CGSize {
