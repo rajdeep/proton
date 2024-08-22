@@ -383,14 +383,14 @@ class RichTextViewContextTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
 
-    func testSetsSelectedEditorOnTap() {
+    func testSetsSelectedReadOnlyEditorOnTap() {
         let testExpectation = expectation(description: #function)
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
         let context = RichTextEditorContext.default
         let textView = RichTextView(context: context)
         textView.richTextViewDelegate = mockTextViewDelegate
-
+        textView.isEditable = false
         textView.text = "Sample text"
         textView.selectedTextRange = nil
 
