@@ -87,6 +87,10 @@ public class TableCell {
         }
     }
 
+    public var containsFirstResponder: Bool {
+        editor?.isFirstResponder() == true || editor?.containsFirstResponder() == true
+    }
+
     let editorInitializer: EditorInitializer
 
     /// Controls if the cell can be selected or not.

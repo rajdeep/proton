@@ -906,6 +906,15 @@ open class EditorView: UIView {
         richTextView.isFirstResponder
     }
 
+
+    /// Describes if one of the nested editor is first responder
+    /// - Returns: `true` if a nested editor is first responder.
+    /// - Note:
+    /// To check if current Editor itself is first responder, use `isFirstResponder()`.
+    public func containsFirstResponder() -> Bool {
+        nestedEditors.contains(where: { $0.isFirstResponder() })
+    }
+
     /// Resets typing attributes back to default text color, font and paragraph style.
     ///All other attributes are dropped.
     open func resetTypingAttributes() {

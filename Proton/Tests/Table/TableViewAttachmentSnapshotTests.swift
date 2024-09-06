@@ -1065,6 +1065,67 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func FLAKY_testPreventsRecyclingFocussedCell() {
+        var viewport = CGRect(x: 0, y: 100, width: 350, height: 200)
+        delegate.viewport = viewport
+
+        Utility.drawRect(rect: viewport, color: .red, in: editor)
+
+        let attachment = AttachmentGenerator.makeTableViewAttachment(id: 1, numRows: 20, numColumns: 5)
+        attachment.view.delegate = delegate
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        XCTAssertEqual(attachment.view.containerAttachment, attachment)
+
+        viewController.render(size: CGSize(width: 400, height: 700))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        let cell10 = attachment.view.cellAt(rowIndex: 1, columnIndex: 0)
+        cell10?.editor?.setFocus()
+
+        viewport = CGRect(x: 0, y: 300, width: 350, height: 200)
+        delegate.viewport = viewport
+        attachment.view.scrollViewDidScroll(editor.scrollView)
+
+        Utility.drawRect(rect: viewport, color: .red, in: editor)
+        viewController.render(size: CGSize(width: 400, height: 700))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
+    func FLAKY_testPreventsRecyclingNestedEditorFocussedCell() {
+        var viewport = CGRect(x: 0, y: 100, width: 350, height: 200)
+        delegate.viewport = viewport
+
+        Utility.drawRect(rect: viewport, color: .red, in: editor)
+
+        let attachment = AttachmentGenerator.makeTableViewAttachment(id: 1, numRows: 20, numColumns: 5)
+        attachment.view.delegate = delegate
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        XCTAssertEqual(attachment.view.containerAttachment, attachment)
+
+        let cell10 = attachment.view.cellAt(rowIndex: 1, columnIndex: 0)
+        cell10?.attributedText = NSAttributedString(attachment: makePanelAttachment())
+        let panel = ((cell10?.attributedText?.attachmentRanges[0].attachment as? Attachment)?.contentView as? PanelView)
+        panel?.editor.setFocus()
+
+        viewController.render(size: CGSize(width: 400, height: 700))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+
+        viewport = CGRect(x: 0, y: 300, width: 350, height: 200)
+        delegate.viewport = viewport
+        attachment.view.scrollViewDidScroll(editor.scrollView)
+
+        Utility.drawRect(rect: viewport, color: .red, in: editor)
+        viewController.render(size: CGSize(width: 400, height: 700))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     func testRendersTableViewAttachmentInViewportRotation() {
         var viewport = CGRect(x: 0, y: 100, width: 350, height: 200)
         delegate.viewport = viewport
