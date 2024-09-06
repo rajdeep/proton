@@ -421,20 +421,19 @@ public class TableView: UIView {
             let toGenerate = newCells.subtracting(oldCells)
             let toReclaim = oldCells.subtracting(newCells)
 
-            // Required to reset the focus to an editor within viewport.
-            // In absence of this check, if the editor having focus gets reclaimed,
-            // the focus moves to root editor which may cause the content to be scrolled
-            // out to end of the root editor.
-            let needsFocusChange = toReclaim.contains(where: { $0.editor?.isFirstResponder() == true })
-            if needsFocusChange {
-                containerAttachment?.containerEditorView?.rootEditor.endEditing(true)
-            }
             toReclaim.forEach { [weak self] cell in
-                self?.repository.enqueue(cell: cell)
+                // Ignore reclaiming the cell if it has focus
+                if cell.containsFirstResponder == false {
+                    self?.repository.enqueue(cell: cell)
+                }
             }
 
-            toGenerate.forEach { [weak self] in
-                self?.repository.dequeue(for: $0)
+            toGenerate.forEach { [weak self] cell in
+                // Ignore generating the cell if it has focus. The focussed cell is not reclaimed, hence need not be regenerated.
+                // In absence of this check, there may be cases where the focussed cell gets duplicated
+                if cell.containsFirstResponder == false {
+                    self?.repository.dequeue(for: cell)
+                }
             }
         }
     }
@@ -810,7 +809,6 @@ public class TableView: UIView {
 
 extension TableView: UIScrollViewDelegate {
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        cellsInViewport.first { $0.editor?.isFirstResponder() == true }?.editor?.resignFocus()
         resetShadows()
         viewportChanged()
     }
