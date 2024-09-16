@@ -708,7 +708,9 @@ class RichTextView: AutogrowingTextView {
     }
 
     func didTap(at location: CGPoint) {
-        context?.selectedTextView = self
+        if isEditable == false {
+            context?.selectedTextView = self
+        }
         let characterRange = rangeOfCharacter(at: location)
         richTextViewDelegate?.richTextView(self, didTapAtLocation: location, characterRange: characterRange)
     }

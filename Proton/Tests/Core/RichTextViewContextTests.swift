@@ -25,6 +25,25 @@ import XCTest
 
 class RichTextViewContextTests: XCTestCase {
 
+    var window: UIWindow!
+    var viewController: UIViewController!
+
+
+    override func setUp() {
+        super.setUp()
+        window = UIWindow(frame: UIScreen.main.bounds)
+        viewController = UIViewController()
+        window.rootViewController = viewController
+
+        window.makeKeyAndVisible()
+    }
+
+    override func tearDown() {
+        viewController = nil
+        window = nil
+        super.tearDown()
+    }
+
     func testInvokesSelectionChange() {
         let testExpectation = expectation(description: #function)
         let mockTextViewDelegate = MockRichTextViewDelegate()
@@ -297,12 +316,37 @@ class RichTextViewContextTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
 
-    func testSetsSelectedEditorOnTextRangeChange() {
+    func testSetsSelectedEditorOnTextRangeChangeWhenReadOnly() {
         let testExpectation = expectation(description: #function)
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
         let context = RichTextEditorContext.default
         let textView = RichTextView(context: context)
+        textView.isEditable = false
+        textView.richTextViewDelegate = mockTextViewDelegate
+
+        textView.text = "Sample text"
+        textView.selectedRange = .zero
+
+        mockTextViewDelegate.onSelectionChanged = { _, _, _, _ in
+            XCTAssertEqual(context.selectedTextView, textView)
+            testExpectation.fulfill()
+        }
+
+        context.textViewDidChangeSelection(textView)
+
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testSetsSelectedEditorOnTextRangeChangeWhenIsFirstResponder() {
+        let testExpectation = expectation(description: #function)
+        let mockTextViewDelegate = MockRichTextViewDelegate()
+
+        let context = RichTextEditorContext.default
+        let textView = RichTextView(context: context)
+        viewController.view.addSubview(textView)
+
+        XCTAssertTrue(textView.becomeFirstResponder())
         textView.richTextViewDelegate = mockTextViewDelegate
 
         textView.text = "Sample text"
@@ -339,14 +383,14 @@ class RichTextViewContextTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
 
-    func testSetsSelectedEditorOnTap() {
+    func testSetsSelectedReadOnlyEditorOnTap() {
         let testExpectation = expectation(description: #function)
         let mockTextViewDelegate = MockRichTextViewDelegate()
 
         let context = RichTextEditorContext.default
         let textView = RichTextView(context: context)
         textView.richTextViewDelegate = mockTextViewDelegate
-
+        textView.isEditable = false
         textView.text = "Sample text"
         textView.selectedTextRange = nil
 
