@@ -360,4 +360,32 @@ class RichTextViewContextTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
 
+    func testInvokesScrollCHanged() {
+        let testExpectation = expectation(description: #function)
+        testExpectation.expectedFulfillmentCount = 2
+        let mockTextViewDelegate = MockRichTextViewDelegate()
+
+        let context = RichTextEditorContext.default
+        let frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 100))
+        let textView = RichTextView(frame: frame, context: context, allowAutogrowing: true)
+        textView.richTextViewDelegate = mockTextViewDelegate
+
+        textView.text = "Sample text"
+
+        var expectedValue = [true, false]
+        mockTextViewDelegate.onDidChangeScrollEnabled = { _, isScrollEnabled in
+            XCTAssertEqual(isScrollEnabled, expectedValue.first)
+            expectedValue.remove(at: 0)
+            testExpectation.fulfill()
+        }
+
+        textView.text = "\n\n\n\n\n\n\n\n"
+        textView.render(size: textView.frame.size)
+
+        textView.text = ""
+        textView.render(size: textView.frame.size)
+
+        waitForExpectations(timeout: 1.0)
+    }
+
 }

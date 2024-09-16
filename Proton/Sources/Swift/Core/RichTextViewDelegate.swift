@@ -78,6 +78,7 @@ protocol RichTextViewDelegate: AnyObject {
     func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?)
     func richTextView(_ richTextView: RichTextView, selectedRangeChangedFrom oldRange: NSRange?, to newRange: NSRange?)
     func richTextView(_ richTextView: RichTextView, shouldSelectAttachmentOnBackspace attachment: Attachment) -> Bool?
+    func richTextView(_ richTextView: RichTextView, didChangeScrollEnabled isScrollEnabled: Bool)
 }
 
 protocol RichTextViewListDelegate: AnyObject {

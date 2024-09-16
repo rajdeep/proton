@@ -1501,6 +1501,10 @@ extension EditorView: RichTextViewDelegate {
     func richTextView(_ richTextView: RichTextView, shouldSelectAttachmentOnBackspace attachment: Attachment) -> Bool? {
         AggregateEditorViewDelegate.editor(self, shouldSelectAttachmentOnBackspace: attachment)
     }
+
+    func richTextView(_ richTextView: RichTextView, didChangeScrollEnabled isScrollEnabled: Bool) {
+        AggregateEditorViewDelegate.editor(self, didChangeScrollEnabled: isScrollEnabled)
+    }
 }
 
 extension EditorView {

@@ -241,6 +241,13 @@ class RichTextView: AutogrowingTextView {
         getNestedEditors(for: self)
     }
 
+    override var isScrollEnabled: Bool {
+        didSet {
+            guard isScrollEnabled != oldValue else { return }
+            richTextViewDelegate?.richTextView(self, didChangeScrollEnabled: isScrollEnabled)
+        }
+    }
+
     override public func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         guard let key = presses.first?.key else {
             super.pressesBegan(presses, with: event)
