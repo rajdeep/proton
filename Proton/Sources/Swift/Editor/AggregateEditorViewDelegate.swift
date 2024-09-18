@@ -109,4 +109,9 @@ class AggregateEditorViewDelegate: EditorViewDelegate {
         editor.editorContextDelegate?.editor(editor, shouldSelectAttachmentOnBackspace: attachment) ??
         attachment.selectBeforeDelete
     }
+
+    static func editor(_ editor: EditorView, didChangeScrollEnabled isScrollable: Bool) {
+        editor.delegate?.editor(editor, didChangeScrollEnabled: isScrollable)
+        editor.editorContextDelegate?.editor(editor, didChangeScrollEnabled: isScrollable)
+    }
 }

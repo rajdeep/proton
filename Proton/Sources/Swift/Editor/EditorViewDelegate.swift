@@ -143,8 +143,19 @@ public protocol EditorViewDelegate: AnyObject {
     /// - Returns: `true` to delete, else `false`
     /// - Note: If either this or`Attachment`s property of `selectBeforeDelete` is `true`, the attachment will be shown as selected on backspace.
     func editor(_ editor: EditorView, shouldSelectAttachmentOnBackspace attachment: Attachment) -> Bool?
-
+    
+    /// Invoked when background color of Editor is changed
+    /// - Parameters:
+    ///   - editor: Editor view receiving the event.
+    ///   - color: Color applied
+    ///   - oldColor: Color before the new color was applied
     func editor(_ editor: EditorView, didChangeBackgroundColor color: UIColor?, oldColor: UIColor?)
+
+    /// Invoked when Editor's isScrollEnabled status is changed
+    /// - Parameters:
+    ///   - editor: Editor view receiving the event.
+    ///   - isScrollEnabled: `true` if editor is scrollable, else `false`
+    func editor(_ editor: EditorView, didChangeScrollEnabled isScrollEnabled: Bool)
 }
 
 public extension EditorViewDelegate {
@@ -168,4 +179,5 @@ public extension EditorViewDelegate {
         return nil
     }
     func editor(_ editor: EditorView, didChangeBackgroundColor color: UIColor?, oldColor: UIColor?) { }
+    func editor(_ editor: EditorView, didChangeScrollEnabled isScrollEnabled: Bool) { }
 }

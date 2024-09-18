@@ -34,6 +34,7 @@ class MockRichTextViewDelegate: RichTextViewDelegate {
     var onDidTapAtLocation: ((RichTextView, CGPoint, NSRange?) -> Void)?
     var onSelectedRangeChanged: ((RichTextView, NSRange?, NSRange?) -> Void)?
     var onShouldSelectAttachmentOnBackspace: ((RichTextView, Attachment) -> Bool)?
+    var onDidChangeScrollEnabled: ((RichTextView, Bool) -> Void)?
 
     func richTextView(_ richTextView: RichTextView, didChangeSelection range: NSRange, attributes: [NSAttributedString.Key: Any], contentType: EditorContent.Name) {
         onSelectionChanged?(richTextView, range, attributes, contentType)
@@ -73,5 +74,9 @@ class MockRichTextViewDelegate: RichTextViewDelegate {
 
     func richTextView(_ richTextView: RichTextView, shouldSelectAttachmentOnBackspace attachment: Attachment) -> Bool? {
         onShouldSelectAttachmentOnBackspace?(richTextView, attachment) ?? false
+    }
+
+    func richTextView(_ richTextView: RichTextView, didChangeScrollEnabled isScrollEnabled: Bool) {
+        onDidChangeScrollEnabled?(richTextView, isScrollEnabled)
     }
 }
