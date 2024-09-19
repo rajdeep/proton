@@ -27,7 +27,8 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
             sortedProcessors = activeProcessors.sorted { $0.priority > $1.priority }
         }
     }
-    private(set) var sortedProcessors = [TextProcessing]()
+    private var sortedProcessors = [TextProcessing]()
+
     weak var editor: EditorView?
 
     init(editor: EditorView) {
@@ -52,6 +53,11 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         }
     }
 
+    func filteringExecutableOn(editor: EditorView) -> [TextProcessing] {
+        guard editor.isSettingAttributedText else { return sortedProcessors }
+        return sortedProcessors.filter { $0.isRunOnSettingText }
+    }
+
     func textStorage(_ textStorage: NSTextStorage, willProcessEditing editedMask: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int) {
         guard let editor = editor else { return }
         var executedProcessors = [TextProcessing]()
@@ -59,7 +65,10 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         let changedText = textStorage.substring(from: editedRange)
 
         let editedMask = getEditedMask(delta: delta)
-        sortedProcessors.forEach {
+
+        let executableProcessors = filteringExecutableOn(editor: editor)
+
+        executableProcessors.forEach {
             $0.willProcessEditing(editor: editor, editedMask: editedMask, range: editedRange, changeInLength: delta)
         }
 
@@ -67,7 +76,7 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
         // fired only when there is actual change in content
         guard delta != 0 else { return }
 
-        for processor in sortedProcessors {
+        for processor in executableProcessors {
             if changedText == "\n" {
                 processor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: editedRange)
             } else if changedText == "\t" {
@@ -89,14 +98,17 @@ class TextProcessor: NSObject, NSTextStorageDelegate {
     func textStorage(_ textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int) {
         guard let editor = editor else { return }
         let editedMask = getEditedMask(delta: delta)
-        sortedProcessors.forEach {
+        let executableProcessors = filteringExecutableOn(editor: editor)
+
+        executableProcessors.forEach {
             $0.didProcessEditing(editor: editor, editedMask: editedMask, range: editedRange, changeInLength: delta)
         }
     }
 
     func textStorage(_ textStorage: NSTextStorage, willProcessDeletedText deletedText: NSAttributedString, insertedText: NSAttributedString, range: NSRange) {
         guard let editor else { return }
-        for processor in sortedProcessors {
+        let executableProcessors = filteringExecutableOn(editor: editor)
+        for processor in executableProcessors {
             processor.willProcess(editor: editor, deletedText: deletedText, insertedText: insertedText, range: range)
         }
     }

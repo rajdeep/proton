@@ -252,7 +252,7 @@ open class EditorView: UIView {
     public var asyncTextResolvers: [AsyncTextResolving] = []
 
     /// Low-tech lock mechanism to know when `attributedText` is being set
-    private var isSettingAttributedText = false
+    private(set) var isSettingAttributedText = false
 
 
     // Making this a convenience init fails the test `testRendersWidthRangeAttachment` as the init of a class subclassed from
@@ -1491,7 +1491,8 @@ extension EditorView: RichTextViewDelegate {
     }
 
     func richTextView(_ richTextView: RichTextView, selectedRangeChangedFrom oldRange: NSRange?, to newRange: NSRange?) {
-        textProcessor?.activeProcessors.forEach { $0.selectedRangeChanged(editor: self, oldRange: oldRange, newRange: newRange) }
+        let executableProcessors = textProcessor?.filteringExecutableOn(editor: self) ?? []
+        executableProcessors.forEach { $0.selectedRangeChanged(editor: self, oldRange: oldRange, newRange: newRange) }
     }
 
     func richTextView(_ richTextView: RichTextView, didTapAtLocation location: CGPoint, characterRange: NSRange?) {

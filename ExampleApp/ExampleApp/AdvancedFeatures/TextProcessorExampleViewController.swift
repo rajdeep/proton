@@ -51,6 +51,8 @@ class TextProcessorExampleViewController: ExamplesBaseViewController {
         ])
 
         registerTextProcessors()
+
+        editor.attributedText = NSAttributedString(string: "test")
     }
 
     private func registerTextProcessors() {
