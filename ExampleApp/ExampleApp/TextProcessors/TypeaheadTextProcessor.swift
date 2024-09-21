@@ -45,6 +45,10 @@ class TypeaheadTextProcessor: TextProcessing {
         return .exclusive
     }
 
+    var isRunOnSettingText: Bool {
+        true
+    }
+
     weak var delegate: TypeaheadTextProcessorDelegate?
     var triggerDeleted = false
 

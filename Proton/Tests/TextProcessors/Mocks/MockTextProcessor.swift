@@ -26,6 +26,7 @@ import Proton
 class MockTextProcessor: TextProcessing {
     let name: String
     var priority: TextProcessingPriority = .medium
+    var isRunOnSettingText: Bool = true
 
     var onWillProcess: ((EditorView, NSAttributedString, NSAttributedString, NSRange) -> Void)?
     var onProcess: ((EditorView, NSRange, Int) -> Void)?

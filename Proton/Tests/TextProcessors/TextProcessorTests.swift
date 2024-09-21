@@ -25,24 +25,26 @@ import XCTest
 
 class TextProcessorTests: XCTestCase {
     func testRegistersTextProcessor() {
-        let textProcessor = TextProcessor(editor: EditorView())
+        let editor = EditorView()
+        let textProcessor = TextProcessor(editor: editor)
         let name = "TextProcessorTest"
         let mockProcessor = MockTextProcessor(name: name)
         textProcessor.register(mockProcessor)
 
-        XCTAssertEqual(textProcessor.sortedProcessors.count, 1)
-        XCTAssertEqual(textProcessor.sortedProcessors[0].name, name)
+        XCTAssertEqual(textProcessor.filteringExecutableOn(editor: editor).count, 1)
+        XCTAssertEqual(textProcessor.activeProcessors[0].name, name)
     }
 
     func testUnregistersTextProcessor() {
-        let textProcessor = TextProcessor(editor: EditorView())
+        let editor = EditorView()
+        let textProcessor = TextProcessor(editor: editor)
         let name = "TextProcessorTest"
         let mockProcessor = MockTextProcessor(name: name)
         textProcessor.register(mockProcessor)
 
         textProcessor.unregister(mockProcessor)
 
-        XCTAssertEqual(textProcessor.sortedProcessors.count, 0)
+        XCTAssertEqual(textProcessor.filteringExecutableOn(editor: editor).count, 0)
     }
 
     func testInvokesWillProcess() throws {
@@ -70,6 +72,69 @@ class TextProcessorTests: XCTestCase {
         editor.registerProcessor(mockProcessor)
 
         editor.replaceCharacters(in: replacementRange, with: replacementString)
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testExecutesWillProcessOnSetAttributedText() throws {
+        let expectation = expectation(description: "Wait for willProcess to be invoked")
+        try assertProcessorInvocationOnSetAttributedText(expectation, isRunOnSettingText: true) { mockProcessor in
+            mockProcessor.onWillProcess = { _, _, _, _ in
+                expectation.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testExecutesWillProcessEditingOnSetAttributedText() throws {
+        let expectation = expectation(description: "Wait for willProcess to be invoked")
+        try assertProcessorInvocationOnSetAttributedText(expectation, isRunOnSettingText: true) { mockProcessor in
+            mockProcessor.willProcessEditing = { _, _, _, _ in
+                expectation.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testExecutesDidProcessEditingOnSetAttributedText() throws {
+        let expectation = expectation(description: "Wait for didProcess to be invoked")
+        try assertProcessorInvocationOnSetAttributedText(expectation, isRunOnSettingText: true) { mockProcessor in
+            mockProcessor.didProcessEditing = { _, _, _, _ in
+                expectation.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testPreventsWillProcessOnSetAttributedText() throws {
+        let expectation = expectation(description: "Should not wait for WillProcess to be invoked")
+        expectation.isInverted = true
+        try assertProcessorInvocationOnSetAttributedText(expectation, isRunOnSettingText: false) { mockProcessor in
+            mockProcessor.onWillProcess = { _, _, _, _ in
+                expectation.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testPreventsWillProcessEditingOnSetAttributedText() throws {
+        let expectation = expectation(description: "Should not wait for WillProcess to be invoked")
+        expectation.isInverted = true
+        try assertProcessorInvocationOnSetAttributedText(expectation, isRunOnSettingText: false) { mockProcessor in
+            mockProcessor.willProcessEditing = { _, _, _, _ in
+                expectation.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testPreventsDidProcessEditingOnSetAttributedText() throws {
+        let expectation = expectation(description: "Should not wait for DidProcess to be invoked")
+        expectation.isInverted = true
+        try assertProcessorInvocationOnSetAttributedText(expectation, isRunOnSettingText: false) { mockProcessor in
+            mockProcessor.didProcessEditing = { _, _, _, _ in
+                expectation.fulfill()
+            }
+        }
         waitForExpectations(timeout: 1.0)
     }
 
@@ -460,6 +525,21 @@ class TextProcessorTests: XCTestCase {
         BoldCommand().execute(on: editor)
 
         waitForExpectations(timeout: 1.0)
+    }
+
+    private func assertProcessorInvocationOnSetAttributedText(_ expectation: XCTestExpectation, isRunOnSettingText: Bool, file: StaticString = #file, line: UInt = #line, assertion: (MockTextProcessor) -> Void) throws {
+        let editor = EditorView()
+        editor.forceApplyAttributedText = true
+
+        let name = "TextProcessorTest"
+        let mockProcessor = MockTextProcessor(name: name)
+        mockProcessor.isRunOnSettingText = isRunOnSettingText
+        assertion(mockProcessor)
+
+        let testString = NSAttributedString(string: "test some text")
+        editor.registerProcessor(mockProcessor)
+
+        editor.attributedText = testString
     }
 }
 

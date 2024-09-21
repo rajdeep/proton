@@ -44,6 +44,8 @@ public protocol TextProcessing {
     /// executed. It is responsibility of these `TextProcessors` to do any cleanup/rollback if that needs to be done.
     var priority: TextProcessingPriority { get }
 
+    var isRunOnSettingText: Bool { get }
+
     /// Determines if the text should be changed in the editor.
     /// - Note:
     /// This function is invoked just before making the changes in the `EditorView`. Besides preventing changing text in Editor in certain cases,
@@ -124,6 +126,8 @@ public protocol TextProcessing {
 }
 
 public extension TextProcessing {
+    var isRunOnSettingText: Bool { true }
+
     func handleKeyWithModifiers(editor: EditorView, key: EditorKey, modifierFlags: UIKeyModifierFlags, range editedRange: NSRange) { }
     func selectedRangeChanged(editor: EditorView, oldRange: NSRange?, newRange: NSRange?) { }
     func didProcess(editor: EditorView) { }

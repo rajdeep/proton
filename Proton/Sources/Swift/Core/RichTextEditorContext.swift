@@ -122,7 +122,8 @@ class RichTextEditorContext: RichTextViewContext {
 
         updateTypingAttributes(editor: editor, editedRange: range)
 
-        for processor in richTextView.textProcessor?.sortedProcessors ?? [] {
+        let executableProcessors = richTextView.textProcessor?.filteringExecutableOn(editor: editor) ?? []
+        for processor in executableProcessors {
             let shouldProcess = processor.shouldProcess(editor, shouldProcessTextIn: range, replacementText: replacementText)
             if shouldProcess == false {
                 return false
@@ -168,7 +169,8 @@ class RichTextEditorContext: RichTextViewContext {
     private func invokeDidProcessIfRequired(_ richTextView: RichTextView) {
         guard let editor = richTextView.superview as? EditorView else { return }
 
-        for processor in richTextView.textProcessor?.sortedProcessors ?? [] {
+        let executableProcessors = richTextView.textProcessor?.filteringExecutableOn(editor: editor) ?? []
+        for processor in executableProcessors {
             processor.didProcess(editor: editor)
         }
     }
