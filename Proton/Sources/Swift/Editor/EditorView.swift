@@ -1306,6 +1306,15 @@ open class EditorView: UIView {
         richTextView.recalculateHeight(size: size)
     }
 
+    /// Set the behavior for how Editor size would be updated based on content
+    /// - Parameter isAutogrowing: When `true`, uses custom calculation and constrains to size editor based on content. This is typically the case where
+    /// Editor is scrollable and needs to be confined to certain size using applied constraints. Use `false` in case Editor is itself non-scrollable but is hosted within
+    /// another scroll container. This will use iOS's internal logic for sizing the Editor based on the height of the content and is generally better performing.
+    public func setAutogrowing(_ isAutogrowing: Bool) {
+        richTextView.setAutogrowing(isAutogrowing)
+    }
+
+
     open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return richTextView.canPerformAction(action, withSender: sender)
     }
