@@ -34,7 +34,7 @@ class AutogrowingTextView: UITextView {
         self.allowAutogrowing = allowAutogrowing
         super.init(frame: frame, textContainer: textContainer)
         isScrollEnabled = false
-        setAutogrowing(allowAutogrowing)
+        addHeightConstraint()
 
         //TODO: enable only when line numbering is turned on
         contentMode = .redraw
@@ -49,13 +49,8 @@ class AutogrowingTextView: UITextView {
 
         if allowAutogrowing {
             if heightAnchorConstraint == nil {
-                let heightConstraint = heightAnchor.constraint(greaterThanOrEqualToConstant: contentSize.height)
-                heightAnchorConstraint = heightConstraint
-                heightAnchorConstraint?.priority = .defaultHigh
-
-                NSLayoutConstraint.activate([
-                    heightConstraint
-                ])
+                addHeightConstraint()
+                recalculateHeight()
             }
         }  else {
             isScrollEnabled = false
@@ -64,6 +59,17 @@ class AutogrowingTextView: UITextView {
             }
             heightAnchorConstraint = nil
         }
+    }
+
+    private func addHeightConstraint() {
+        guard allowAutogrowing else { return }
+        let heightConstraint = heightAnchor.constraint(greaterThanOrEqualToConstant: contentSize.height)
+        heightAnchorConstraint = heightConstraint
+        heightAnchorConstraint?.priority = .defaultHigh
+
+        NSLayoutConstraint.activate([
+            heightConstraint
+        ])
     }
 
     override func layoutSubviews() {
