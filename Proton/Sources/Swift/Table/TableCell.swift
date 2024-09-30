@@ -49,6 +49,14 @@ public class TableCell {
 
     public var onEditorInitialized: ((TableCell, EditorView) -> Void)?
 
+    @MainActor
+    private var retainCount = 0
+    /// Returns `true` if the cell has one or more retain invocations.
+    @MainActor
+    public var isRetained: Bool {
+        retainCount > 0
+    }
+
     /// Additional attributes that can be stored on Cell to identify various aspects like Header, Numbered etc.
     public var additionalAttributes: [String: Any] = [:]
 
@@ -184,6 +192,22 @@ public class TableCell {
         contentView?.removeFocus()
     }
 
+    /// Retains the cell to prevent it from getting recycled when viewport changes and cell is scrolled off-screen
+    /// Cell with focus is automatically retained and released.
+    /// - Note: A cell may be retained as many time as needed but needs to have a corresponding release for every retain.
+    /// Failing to release would mean that the cell will never participate in virtualization and will always be kept alive even when off-screen.
+    /// - Important: It is responsibility of consumer to ensure that the cells are correctly released after being retained.
+    @MainActor
+    public func retain() {
+        retainCount += 1
+    }
+
+    /// Releases a retained cell. Calling this function on a non-retained cell is a no-op.
+    @MainActor
+    public func release() {
+        retainCount = max(0, retainCount - 1)
+    }
+
     func hideEditor() {
         contentView?.hideEditor()
     }
@@ -191,6 +215,7 @@ public class TableCell {
     func showEditor() {
         contentView?.showEditor()
     }
+
 
     func performWithoutChangingFirstResponder(_ closure: () -> Void) {
         editor?.disableFirstResponder()

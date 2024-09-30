@@ -412,8 +412,12 @@ public class TableView: UIView {
         removeScrollObserver()
     }
 
+    private var retainedCells = Set<TableCell>()
+
     var cellsInViewport: [TableCell] = [] {
         didSet {
+            reclaimReleasedCells()
+
             guard oldValue != cellsInViewport else { return }
 
             let oldCells = Set(oldValue)
@@ -422,16 +426,19 @@ public class TableView: UIView {
             let toReclaim = oldCells.subtracting(newCells)
 
             toReclaim.forEach { [weak self] cell in
-                // Ignore reclaiming the cell if it has focus
-                if cell.containsFirstResponder == false {
+                // Ignore reclaiming the cell if these are retained
+                // Cell having focus is always retained and released on lost focus
+                if cell.isRetained == false {
                     self?.repository.enqueue(cell: cell)
+                } else {
+                    self?.retainedCells.insert(cell)
                 }
             }
 
             toGenerate.forEach { [weak self] cell in
-                // Ignore generating the cell if it has focus. The focussed cell is not reclaimed, hence need not be regenerated.
-                // In absence of this check, there may be cases where the focussed cell gets duplicated
-                if cell.containsFirstResponder == false {
+                // Ignore generating the cell if it is already retained. The retained cell is not reclaimed, hence need not be regenerated.
+                // In absence of this check, there may be cases where the retained cell gets duplicated
+                if cell.isRetained == false {
                     self?.repository.dequeue(for: cell)
                 }
             }
@@ -487,6 +494,15 @@ public class TableView: UIView {
             $0.frame != .zero
             && $0.frame.offsetBy(dx: adjustedAttachmentViewport.origin.x, dy: adjustedAttachmentViewport.origin.y)
             .intersects(adjustedViewport) }
+    }
+
+    private func reclaimReleasedCells() {
+        retainedCells.forEach {
+            if $0.isRetained == false {
+                self.repository.enqueue(cell: $0)
+                retainedCells.remove($0)
+            }
+        }
     }
 
     func cellBelow(_ cell: TableCell) -> TableCell? {
@@ -854,11 +870,13 @@ extension TableView: TableContentViewDelegate {
     }
 
     func tableContentView(_ tableContentView: TableContentView, didReceiveFocusAt range: NSRange, in cell: TableCell) {
+        cell.retain()
         resetColumnResizingHandles(selectedCell: cell)
         delegate?.tableView(self, didReceiveFocusAt: range, in: cell)
     }
 
     func tableContentView(_ tableContentView: TableContentView, didLoseFocusFrom range: NSRange, in cell: TableCell) {
+        cell.release()
         removeSelectionBorders()
         delegate?.tableView(self, didLoseFocusFrom: range, in: cell)
     }
