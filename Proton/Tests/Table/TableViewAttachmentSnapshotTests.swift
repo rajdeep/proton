@@ -1094,6 +1094,46 @@ class TableViewAttachmentSnapshotTests: SnapshotTestCase {
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
+    func FLAKY_testRecyclesRetainedCell() {
+        var viewport = CGRect(x: 0, y: 100, width: 350, height: 200)
+        delegate.viewport = viewport
+
+        Utility.drawRect(rect: viewport, color: .red, in: editor)
+
+        let attachment = AttachmentGenerator.makeTableViewAttachment(id: 1, numRows: 20, numColumns: 5)
+        attachment.view.delegate = delegate
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        XCTAssertEqual(attachment.view.containerAttachment, attachment)
+
+        viewController.render(size: CGSize(width: 400, height: 700))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        let cell10 = attachment.view.cellAt(rowIndex: 1, columnIndex: 0)
+        cell10?.editor?.setFocus()
+
+        viewport = CGRect(x: 0, y: 300, width: 350, height: 200)
+        delegate.viewport = viewport
+        attachment.view.scrollViewDidScroll(editor.scrollView)
+
+        Utility.drawRect(rect: viewport, color: .red, in: editor)
+        viewController.render(size: CGSize(width: 400, height: 700))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+
+        let cell40 = attachment.view.cellAt(rowIndex: 4, columnIndex: 0)
+        cell40?.editor?.setFocus()
+
+        viewport = CGRect(x: 0, y: 320, width: 350, height: 200)
+        delegate.viewport = viewport
+        attachment.view.scrollViewDidScroll(editor.scrollView)
+
+        Utility.drawRect(rect: viewport, color: .red, in: editor)
+        viewController.render(size: CGSize(width: 400, height: 700))
+        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+    }
+
     func FLAKY_testPreventsRecyclingNestedEditorFocussedCell() {
         var viewport = CGRect(x: 0, y: 100, width: 350, height: 200)
         delegate.viewport = viewport
