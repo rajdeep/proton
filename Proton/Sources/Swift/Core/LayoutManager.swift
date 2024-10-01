@@ -88,26 +88,6 @@ class LayoutManager: NSLayoutManager {
             counters = [:]
         }
 
-        var levelToSet = 0
-        textStorage.enumerateAttribute(.paragraphStyle, in: listRange, options: []) { value, range, _ in
-            levelToSet = 0
-            if let paraStyle = (value as? NSParagraphStyle)?.mutableParagraphStyle {
-                let previousLevel = Int(prevStyle?.firstLineHeadIndent ?? 0)/Int(listIndent)
-                let currentLevel = Int(paraStyle.firstLineHeadIndent)/Int(listIndent)
-
-                if currentLevel - previousLevel > 1 {
-                    levelToSet = previousLevel + 1
-                    let indentation = CGFloat(levelToSet) * listIndent
-                    paraStyle.firstLineHeadIndent = indentation
-                    paraStyle.headIndent = indentation
-                    textStorage.addAttribute(.paragraphStyle, value: paraStyle, range: range)
-                    prevStyle = paraStyle
-                } else {
-                    prevStyle = value as? NSParagraphStyle
-                }
-            }
-        }
-
         let listGlyphRange = glyphRange(forCharacterRange: listRange, actualCharacterRange: nil)
         previousLevel = 0
         enumerateLineFragments(forGlyphRange: listGlyphRange) { [weak self] (rect, usedRect, textContainer, glyphRange, stop) in

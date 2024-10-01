@@ -104,6 +104,7 @@ public class ListCommand: EditorCommand {
             ], at: selectedRange)
             editor.removeAttribute(.listItem, at: selectedRange)
             editor.typingAttributes[.listItem] = nil
+            cleanupIfNeeded(editor: editor)
             return
         }
 
@@ -131,5 +132,35 @@ public class ListCommand: EditorCommand {
     public func execute(on editor: EditorView, attributeValue: Any?) {
         self.attributeValue = attributeValue
         execute(on: editor)
+    }
+
+    // Cleanup any dangling lists after the parent of this is removed as being a list item
+    private func cleanupIfNeeded(editor: EditorView) {
+        guard let nextContentLine = editor.nextContentLine(from: editor.selectedRange.endLocation),
+              nextContentLine.text.attributeOrNil(.listItem, at: 0) != nil,
+              let listToUpdateRange = editor.attributedText.rangeOf(attribute: .listItem, startingLocation: editor.selectedRange.endLocation) else { return }
+
+        let listIndent = editor.listLineFormatting.indentation
+
+        var levelToSet = 0
+        var prevStyle: NSParagraphStyle?
+        editor.attributedText.enumerateAttribute(.paragraphStyle, in: listToUpdateRange) { value, range, stop in
+            levelToSet = 0
+            if let paraStyle = (value as? NSParagraphStyle)?.mutableParagraphStyle {
+                let previousLevel = Int(prevStyle?.firstLineHeadIndent ?? 0)/Int(listIndent)
+                let currentLevel = Int(paraStyle.firstLineHeadIndent)/Int(listIndent)
+
+                if currentLevel - previousLevel > 1 {
+                    levelToSet = previousLevel + 1
+                    let indentation = CGFloat(levelToSet) * listIndent
+                    paraStyle.firstLineHeadIndent = indentation
+                    paraStyle.headIndent = indentation
+                    editor.addAttribute(.paragraphStyle, value: paraStyle, at: range)
+                    prevStyle = paraStyle
+                } else {
+                    prevStyle = value as? NSParagraphStyle
+                }
+            }
+        }
     }
 }
