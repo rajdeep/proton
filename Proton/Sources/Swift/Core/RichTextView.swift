@@ -36,6 +36,8 @@ class RichTextView: AutogrowingTextView {
 
     private var delegateOverrides = [GestureRecognizerDelegateOverride]()
 
+    private(set) var ignoreSelectedRangeChangeCallback = false
+
     private var _canBecomeFirstResponder = true
     override var canBecomeFirstResponder: Bool {
         return _canBecomeFirstResponder
@@ -201,6 +203,12 @@ class RichTextView: AutogrowingTextView {
     func drawDefaultLineNumberIfRequired() {
         guard isLineNumbersEnabled else { return }
         draw(CGRect(origin: .zero, size: contentSize))
+    }
+
+    func updateSelectedRangeIgnoringCallback(_ selectedRange: NSRange) {
+        ignoreSelectedRangeChangeCallback = true
+        self.selectedRange = selectedRange
+        ignoreSelectedRangeChangeCallback = false
     }
 
     override var selectedTextRange: UITextRange? {

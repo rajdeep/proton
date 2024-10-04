@@ -559,6 +559,7 @@ open class EditorView: UIView {
                 pendingAttributedText = newValue
                 return
             }
+            isSettingAttributedText = true
             attachmentRenderingScheduler.cancel()
             renderedViewport = nil
             // Clear text before setting new value to avoid issues with formatting/layout when
@@ -569,7 +570,7 @@ open class EditorView: UIView {
             pendingAttributedText = nil
 
             AggregateEditorViewDelegate.editor(self, willSetAttributedText: newValue, isDeferred: isDeferred)
-            isSettingAttributedText = true
+            
             richTextView.attributedText = newValue
             isSettingAttributedText = false
             AggregateEditorViewDelegate.editor(self, didSetAttributedText: newValue, isDeferred: isDeferred)

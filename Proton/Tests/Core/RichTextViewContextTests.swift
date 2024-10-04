@@ -305,6 +305,7 @@ class RichTextViewContextTests: XCTestCase {
         let textView = RichTextView(context: context)
         textView.richTextViewDelegate = mockTextViewDelegate
 
+        textView.isEditable = false
         textView.text = "Sample text"
         textView.selectedRange = .zero
 
