@@ -54,7 +54,7 @@ public class TableCell {
     /// Returns `true` if the cell has one or more retain invocations.
     @MainActor
     public var isRetained: Bool {
-        retainCount > 0
+        retainCount > 0 || containsFirstResponder
     }
 
     /// Additional attributes that can be stored on Cell to identify various aspects like Header, Numbered etc.
