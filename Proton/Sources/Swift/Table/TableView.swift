@@ -416,7 +416,7 @@ public class TableView: UIView {
 
     var cellsInViewport: [TableCell] = [] {
         didSet {
-            reclaimReleasedCells()
+            reclaimReleasedCells(cellsInViewport)
 
             guard oldValue != cellsInViewport else { return }
 
@@ -496,13 +496,15 @@ public class TableView: UIView {
             .intersects(adjustedViewport) }
     }
 
-    private func reclaimReleasedCells() {
-        retainedCells.forEach {
-            if $0.isRetained == false {
-                self.repository.enqueue(cell: $0)
-                retainedCells.remove($0)
+    private func reclaimReleasedCells(_ cellsInViewport: [TableCell]) {
+        retainedCells
+            .filter { cellsInViewport.contains($0) == false }
+            .forEach {
+                if $0.isRetained == false {
+                    self.repository.enqueue(cell: $0)
+                    retainedCells.remove($0)
+                }
             }
-        }
     }
 
     func cellBelow(_ cell: TableCell) -> TableCell? {
@@ -870,13 +872,11 @@ extension TableView: TableContentViewDelegate {
     }
 
     func tableContentView(_ tableContentView: TableContentView, didReceiveFocusAt range: NSRange, in cell: TableCell) {
-        cell.retain()
         resetColumnResizingHandles(selectedCell: cell)
         delegate?.tableView(self, didReceiveFocusAt: range, in: cell)
     }
 
     func tableContentView(_ tableContentView: TableContentView, didLoseFocusFrom range: NSRange, in cell: TableCell) {
-        cell.release()
         removeSelectionBorders()
         delegate?.tableView(self, didLoseFocusFrom: range, in: cell)
     }
