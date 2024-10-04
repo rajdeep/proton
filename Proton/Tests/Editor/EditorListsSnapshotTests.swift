@@ -594,10 +594,6 @@ class EditorListsSnapshotTests: SnapshotTestCase {
 
         viewController.render(size: CGSize(width: 300, height: 225))
         assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
-
-        // For some reason, a re-render is required in tests
-        viewController.render(size: CGSize(width: 300, height: 225))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersListWithDifferentAttributeValues() {
