@@ -45,19 +45,49 @@ class AutogrowingTextView: UITextView {
         }
         //TODO: enable only when line numbering is turned on
         contentMode = .redraw
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(textViewTextDidChange(_:)),
+            name: UITextView.textDidChangeNotification,
+            object: self
+        )
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override var isScrollEnabled: Bool {
+        didSet {
+            guard oldValue != isScrollEnabled else { return }
+            // If scrollEnabled is changed, reset contentOffset to .zero as without this
+            // if the text close to keyboard is deleted, the first line of text may not be
+            // entirely visible and with scroll being removed, it cannot be brought in focus manually by user
+            if isScrollEnabled == false {
+                contentOffset = .zero
+            }
+        }
+    }
+
+    @objc func textViewTextDidChange(_ notification: Notification) {
+        // Entering a newline char may not always cause layout(super.layoutSubviews) to take place
+        // This code is required to be run so that the isScrollEnabled state can be correctly calculated based
+        // on the content size.
+        setNeedsLayout()
+    }
+
+    // Expose this method to the Objective-C runtime so clients
+    // can dynamically change its implementation
+    @objc dynamic func invalidateLayout() {
+        invalidateIntrinsicContentSize()
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
         guard allowAutogrowing, maxHeight != .greatestFiniteMagnitude else { return }
         // Required to reset the size if content is removed
-        if contentSize.height <= frame.height {
-            recalculateHeight()
-            invalidateIntrinsicContentSize()
+        if recalculateHeightIfRequired() {
             return
         }
 
@@ -66,13 +96,24 @@ class AutogrowingTextView: UITextView {
         recalculateHeight()
     }
 
+    @discardableResult
+    func recalculateHeightIfRequired() -> Bool {
+        guard contentSize.height <= frame.height else {
+            return false
+        }
+
+        recalculateHeight()
+        invalidateIntrinsicContentSize()
+        return true
+    }
+
     func recalculateHeight(size: CGSize? = nil) {
         guard allowAutogrowing else { return }
         let bounds = self.bounds.integral
         let sizeToUse = size ?? frame.size
         let fittingSize = self.calculatedSize(attributedText: attributedText, frame: sizeToUse, textContainerInset: textContainerInset)
 
-        self.isScrollEnabled = (fittingSize.height > bounds.height) || (self.maxHeight > 0 && self.maxHeight < fittingSize.height)
+        self.isScrollEnabled = (fittingSize.height > (bounds.height - contentInset.bottom)) || (self.maxHeight > 0 && self.maxHeight < fittingSize.height)
         self.heightAnchorConstraint?.constant = min(fittingSize.height, self.contentSize.height)
 
     }
@@ -95,6 +136,14 @@ class AutogrowingTextView: UITextView {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.becomeFirstResponder()
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UITextView.textDidChangeNotification,
+            object: self
+        )
     }
 
     private func calculatedSize(attributedText: NSAttributedString, frame: CGSize, textContainerInset: UIEdgeInsets) -> CGSize {
