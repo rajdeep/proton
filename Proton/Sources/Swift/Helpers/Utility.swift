@@ -25,18 +25,18 @@ import UIKit
 public class Utility {
     private init() { }
 
-    public static func drawRect(rect: CGRect, color: UIColor, in view: UIView, name: String = "rect_layer") {
+    public static func drawRect(rect: CGRect, color: UIColor, borderWidth: CGFloat = 1.0, in view: UIView, name: String = "rect_layer") {
         let path = UIBezierPath(rect: rect).cgPath
-        drawPath(path: path, color: color, in: view, name: name)
+        drawPath(path: path, color: color, borderWidth: borderWidth, in: view, name: name)
     }
 
-    public static func drawPath(path: CGPath, color: UIColor, in view: UIView, name: String = "path_layer") {
+    public static func drawPath(path: CGPath, color: UIColor, borderWidth: CGFloat = 1.0, in view: UIView, name: String = "path_layer") {
         let existingLayer = view.layer.sublayers?.first(where: { $0.name == name}) as? CAShapeLayer
         let shapeLayer = existingLayer ?? CAShapeLayer()
         shapeLayer.path = path
         shapeLayer.strokeColor = color.cgColor
         shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.lineWidth = 1.0
+        shapeLayer.lineWidth = borderWidth
         shapeLayer.name = name
 
         if existingLayer == nil {
