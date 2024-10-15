@@ -181,7 +181,7 @@ public class TableView: UIView {
 
     private let repository = TableCellRepository()
 
-    private var _containerScrollView: UIScrollView? {
+    private weak var _containerScrollView: UIScrollView? {
         didSet {
             _containerScrollView != nil ? setupScrollObserver() : removeScrollObserver()
         }
@@ -368,10 +368,7 @@ public class TableView: UIView {
     }
 
     public override func didMoveToWindow() {
-        guard window != nil else {
-            removeScrollObserver()
-            return
-        }
+        guard window != nil else { return }
 
         // Only try to auto resolve container scrollview, if not already provided by the delegate
         guard self.containerScrollView == nil else { return }
@@ -384,12 +381,7 @@ public class TableView: UIView {
         }
 
         // Else, find the next available scrollview up the hierarchy
-        var currentView: UIView? = containerEditorView
-        while let view = currentView, !(view is UIScrollView) {
-            currentView = view.superview
-        }
-
-        if let scrollView = currentView as? UIScrollView {
+        if let scrollView = getScrollContainer(from: containerEditorView) {
             _containerScrollView = scrollView
         }
 
@@ -399,6 +391,14 @@ public class TableView: UIView {
         if _containerScrollView == nil {
             _containerScrollView = containerEditorView?.scrollView
         }
+    }
+
+    private func getScrollContainer(from view: UIView?) -> UIScrollView? {
+        guard view != nil else { return nil }
+        guard let scrollView = view as? UIScrollView else {
+            return getScrollContainer(from: view?.superview)
+        }
+        return scrollView
     }
 
     /// Maintains the scroll lock on the cell passed in if the  original rect ends up moving as a result of cells getting rendered above this rect position
