@@ -487,12 +487,15 @@ extension CommandsExampleViewController: TableViewDelegate {
         viewport.size.width -= (offsetX * 2)
         viewport.size.height -= (offsetY * 2)
 
-        Utility.drawRect(rect: CGRect(origin: CGPoint(x: offsetX, y: offsetY), size: viewport.size), color: .red, in: editor)
         return viewport
     }
 
     var containerScrollView: UIScrollView? {
-        editor.scrollView
+        nil
+    }
+
+    var resolvedViewportBorderDisplay: ViewportBorderDisplay {
+        .visible(color: .red, borderWidth: 1)
     }
 
     func tableView(_ tableView: TableView, didReceiveKey key: EditorKey, at range: NSRange, in cell: TableCell) { }

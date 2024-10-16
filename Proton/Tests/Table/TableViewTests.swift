@@ -52,6 +52,32 @@ class TableViewTests: XCTestCase {
         window.rootViewController = viewController
     }
 
+    func testResolvesContainerScrollView() throws {
+        delegate.containerScrollView = nil
+
+        let viewport = CGRect(x: 0, y: 100, width: 350, height: 200)
+        delegate.viewport = viewport
+
+        let attachment = AttachmentGenerator.makeTableViewAttachment(
+            id: 1,
+            numRows: 20,
+            numColumns: 5,
+            initialRowHeight: 100
+        )
+        let tableView = attachment.view
+
+        tableView.delegate = delegate
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render()
+
+        XCTAssertNil(delegate.containerScrollView)
+        XCTAssertEqual(attachment.view.containerScrollView, editor.scrollView)
+    }
+
     func testReusesTextFromPreRenderedCells() throws {
         delegate.containerScrollView = editor.scrollView
 
