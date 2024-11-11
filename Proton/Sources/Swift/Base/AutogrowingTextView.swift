@@ -27,28 +27,49 @@ class AutogrowingTextView: UITextView {
     private var allowAutogrowing: Bool
     weak var boundsObserver: BoundsObserving?
     private var maxHeightConstraint: NSLayoutConstraint!
-    private var heightAnchorConstraint: NSLayoutConstraint!
+    private var heightAnchorConstraint: NSLayoutConstraint?
     private var isSizeRecalculationRequired = true
 
     init(frame: CGRect = .zero, textContainer: NSTextContainer? = nil, allowAutogrowing: Bool = false) {
         self.allowAutogrowing = allowAutogrowing
         super.init(frame: frame, textContainer: textContainer)
         isScrollEnabled = false
+        addHeightConstraint()
 
-        if allowAutogrowing {
-            heightAnchorConstraint = heightAnchor.constraint(greaterThanOrEqualToConstant: contentSize.height)
-            heightAnchorConstraint.priority = .defaultHigh
-
-            NSLayoutConstraint.activate([
-                heightAnchorConstraint
-            ])
-        }
         //TODO: enable only when line numbering is turned on
         contentMode = .redraw
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func setAutogrowing(_ isAutogrowing: Bool) {
+        allowAutogrowing = isAutogrowing
+
+        if allowAutogrowing {
+            if heightAnchorConstraint == nil {
+                addHeightConstraint()
+                recalculateHeight()
+            }
+        }  else {
+            isScrollEnabled = false
+            if let heightAnchorConstraint {
+                NSLayoutConstraint.deactivate([heightAnchorConstraint])
+            }
+            heightAnchorConstraint = nil
+        }
+    }
+
+    private func addHeightConstraint() {
+        guard allowAutogrowing else { return }
+        let heightConstraint = heightAnchor.constraint(greaterThanOrEqualToConstant: contentSize.height)
+        heightAnchorConstraint = heightConstraint
+        heightAnchorConstraint?.priority = .defaultHigh
+
+        NSLayoutConstraint.activate([
+            heightConstraint
+        ])
     }
 
     override func layoutSubviews() {
