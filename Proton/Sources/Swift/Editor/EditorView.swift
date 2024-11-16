@@ -224,6 +224,12 @@ open class EditorView: UIView {
         set { richTextView.lineNumberFormatting = newValue }
     }
 
+    @available(iOSApplicationExtension 18.0, *)
+    public var writingToolsBehavior: UIWritingToolsBehavior {
+        get { richTextView.writingToolsBehavior }
+        set { richTextView.writingToolsBehavior = newValue }
+    }
+
     public override var bounds: CGRect {
         didSet {
             guard oldValue != bounds else { return }
