@@ -128,7 +128,6 @@ class TestEditorView: EditorView {
 
     init() {
         super.init()
-        forceApplyAttributedText = true
     }
 
     required init?(coder aDecoder: NSCoder) {

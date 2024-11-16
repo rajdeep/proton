@@ -150,12 +150,6 @@ open class EditorView: UIView {
         }
     }
 
-
-    // Holds `attributedText` until Editor move to a window
-    // Setting attributed text without Editor being fully ready
-    // causes issues with cached bounds that shows up when rotating the device.
-    private var pendingAttributedText: NSAttributedString?
-
     var editorContextDelegate: EditorViewDelegate? {
         get { editorViewContext.delegate }
     }
@@ -171,12 +165,6 @@ open class EditorView: UIView {
 
     /// Context for the current Editor
     public let editorViewContext: EditorViewContext
-
-    /// Returns if `attributedText` change is pending. `AttributedText` may not have been applied if the `EditorView` is not already on
-    /// `window` and `forceApplyAttributedText` is not set to `true`.
-    public var isAttributedTextPending: Bool {
-        pendingAttributedText != nil
-    }
 
     /// Enables asynchronous rendering of attachments.
     /// - Note:
@@ -419,7 +407,6 @@ open class EditorView: UIView {
     /// An attachment is only counted as a single character. Content length does not include
     /// length of content within the Attachment that is hosting another `EditorView`.
     public var contentLength: Int {
-        guard pendingAttributedText == nil else { return attributedText.length }
         return richTextView.contentLength
     }
 
@@ -539,26 +526,12 @@ open class EditorView: UIView {
         }
     }
 
-    /// Forces setting attributed text in `EditorView` even if it is not
-    /// yet in view hierarchy.
-    /// - Note: This may result in misplaced `Attachment`s and is recommended to be set to `true` only in unit tests.
-    public var forceApplyAttributedText = false
-
     /// Text to be set in the `EditorView`
-    /// - Important: `attributedText` is not set for rendering in `EditorView` if the `EditorView` is not already in a `Window`. Value of `true`
-    /// for `isAttributedTextPending` confirms that the text has not yet been rendered even though it is set in the `EditorView`.
-    /// Notification of text being set can be observed by subscribing to `didSetAttributedText` in `EditorViewDelegate`.
-    /// Alternatively, `forceApplyAttributedText` may be set to `true` to always apply `attributedText` irrespective of `EditorView` being
-    /// in a `Window` or not.
     public var attributedText: NSAttributedString {
         get {
-            pendingAttributedText ?? richTextView.attributedText
+            richTextView.attributedText
         }
         set {
-            if forceApplyAttributedText == false && window == nil {
-                pendingAttributedText = newValue
-                return
-            }
             isSettingAttributedText = true
             attachmentRenderingScheduler.cancel()
             renderedViewport = nil
@@ -566,8 +539,7 @@ open class EditorView: UIView {
             // editor is hosted in a scrollable container and content is set multiple times.
             richTextView.attributedText = NSAttributedString()
 
-            let isDeferred = pendingAttributedText != nil
-            pendingAttributedText = nil
+            let isDeferred = false
 
             AggregateEditorViewDelegate.editor(self, willSetAttributedText: newValue, isDeferred: isDeferred)
             
@@ -872,9 +844,6 @@ open class EditorView: UIView {
     /// - IMPORTANT: Overriding implementations must call `super.didMoveToWindow()`
     open override func didMoveToWindow() {
         super.didMoveToWindow()
-        if let pendingAttributedText {
-            attributedText = pendingAttributedText
-        }
         let isReady = window != nil
         AggregateEditorViewDelegate.editor(self, isReady: isReady)
     }

@@ -168,7 +168,6 @@ class EditorViewportSnapshotTests: SnapshotTestCase {
 
         for i in 0..<count {
             var panel = PanelView()
-            panel.editor.forceApplyAttributedText = true
             panel.backgroundColor = .cyan
             panel.layer.borderWidth = 1.0
             panel.layer.cornerRadius = 4.0

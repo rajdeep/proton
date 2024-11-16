@@ -158,7 +158,6 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
             ])
         let gridAttachment = GridViewAttachment(config: config)
         var panel = PanelView()
-        panel.editor.forceApplyAttributedText = true
         panel.backgroundColor = .cyan
         panel.layer.borderWidth = 1.0
         panel.layer.cornerRadius = 4.0
