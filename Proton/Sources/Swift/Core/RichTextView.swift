@@ -205,6 +205,15 @@ class RichTextView: AutogrowingTextView {
         draw(CGRect(origin: .zero, size: contentSize))
     }
 
+    override func becomeFirstResponder() -> Bool {
+        let didBecomeFirstResponder = super.becomeFirstResponder()
+        if didBecomeFirstResponder {
+            context?.selectedTextView = self
+            context?.activeTextView = self
+        }
+        return didBecomeFirstResponder
+    }
+
     func updateSelectedRangeIgnoringCallback(_ selectedRange: NSRange) {
         ignoreSelectedRangeChangeCallback = true
         self.selectedRange = selectedRange

@@ -99,7 +99,6 @@ class EditorSnapshotTests: SnapshotTestCase {
         editor.font = UIFont.systemFont(ofSize: 12)
 
         var panel = PanelView()
-        panel.editor.forceApplyAttributedText = true
         panel.backgroundColor = .cyan
         panel.layer.borderWidth = 1.0
         panel.layer.cornerRadius = 4.0
@@ -266,7 +265,6 @@ class EditorSnapshotTests: SnapshotTestCase {
 
         for i in 1...10 {
             var panel = PanelView()
-            panel.editor.forceApplyAttributedText = true
             panel.backgroundColor = .cyan
             panel.layer.borderWidth = 1.0
             panel.layer.cornerRadius = 4.0
@@ -425,7 +423,6 @@ class EditorSnapshotTests: SnapshotTestCase {
         editor.attributedText = NSAttributedString(string: "One\nTwo\nThree")
 
         var panel = PanelView()
-        panel.editor.forceApplyAttributedText = true
         panel.backgroundColor = .cyan
         panel.layer.borderWidth = 1.0
         panel.layer.cornerRadius = 4.0
@@ -466,7 +463,6 @@ class EditorSnapshotTests: SnapshotTestCase {
         let attachment = Attachment(panel, size: .fullWidth)
         panel.boundsObserver = attachment
         panel.editor.font = editor.font
-        panel.editor.forceApplyAttributedText = true
 
         panel.attributedText = NSAttributedString(string: "In \nfull-width \nattachment")
 
@@ -1421,7 +1417,6 @@ class EditorSnapshotTests: SnapshotTestCase {
         editor.font = UIFont.systemFont(ofSize: 12)
 
         var panel = PanelView()
-        panel.editor.forceApplyAttributedText = true
         panel.backgroundColor = .cyan
         panel.layer.borderWidth = 1.0
         panel.layer.cornerRadius = 4.0
@@ -1455,7 +1450,6 @@ class EditorSnapshotTests: SnapshotTestCase {
         editor.font = UIFont.systemFont(ofSize: 12)
 
         var panel = PanelView()
-        panel.editor.forceApplyAttributedText = true
         panel.backgroundColor = .cyan
         panel.layer.borderWidth = 1.0
         panel.layer.cornerRadius = 4.0
