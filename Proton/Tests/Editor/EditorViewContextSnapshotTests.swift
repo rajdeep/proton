@@ -42,7 +42,7 @@ class EditorViewContextSnapshotTests: SnapshotTestCase {
         viewController.render()
         _ = context.richTextViewContext.textView(textView.richTextView, shouldChangeTextIn: NSRange(location: textView.selectedRange.location - 1, length: 1), replacementText: "")
         addSelectionRects(at: textView.selectedTextRange!, in: textView, color: .cyan)
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
 }

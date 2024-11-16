@@ -39,11 +39,11 @@ class AsyncTextResolverSnapshotTests: SnapshotTestCase {
         editor.attributedText = text
 
         viewController.render(size: CGSize(width: 300, height: 170))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
             viewController.render(size: CGSize(width: 300, height: 170))
-            assertSnapshot(matching: viewController.view, as: Snapshotting.image, record: self.recordMode)
+            assertSnapshot(of: viewController.view, as: Snapshotting.image, record: self.recordMode)
             expectation.fulfill()
         }
 
@@ -64,11 +64,11 @@ class AsyncTextResolverSnapshotTests: SnapshotTestCase {
         editor.attributedText = text
 
         viewController.render(size: CGSize(width: 300, height: 170))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
             viewController.render(size: CGSize(width: 300, height: 170))
-            assertSnapshot(matching: viewController.view, as: Snapshotting.image, record: self.recordMode)
+            assertSnapshot(of: viewController.view, as: Snapshotting.image, record: self.recordMode)
             expectation.fulfill()
         }
 
@@ -91,11 +91,11 @@ class AsyncTextResolverSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: NSRange(location: 65, length: 0), with: NSAttributedString(string: " "))
 
         viewController.render(size: CGSize(width: 300, height: 170))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
             viewController.render(size: CGSize(width: 300, height: 170))
-            assertSnapshot(matching: viewController.view, as: Snapshotting.image, record: self.recordMode)
+            assertSnapshot(of: viewController.view, as: Snapshotting.image, record: self.recordMode)
 
             let attributeRange = viewController.editor.attributedText.rangeOf(attribute: .asyncTextResolver, startingLocation: 0)
             XCTAssertNil(attributeRange)

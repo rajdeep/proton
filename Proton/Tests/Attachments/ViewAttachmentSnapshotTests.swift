@@ -42,7 +42,7 @@ class ViewAttachmentSnapshotTests: SnapshotTestCase {
         textView.insertAttachment(in: textView.textEndRange, attachment: attachment)
 
         viewController.render()
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testFallsToNextLineForLongContent() {
@@ -56,7 +56,7 @@ class ViewAttachmentSnapshotTests: SnapshotTestCase {
         textView.replaceCharacters(in: textView.textEndRange, with: NSAttributedString(string: "after."))
 
         viewController.render()
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testMatchContainerRendering() {
@@ -69,7 +69,7 @@ class ViewAttachmentSnapshotTests: SnapshotTestCase {
         textView.insertAttachment(in: textView.textEndRange, attachment: attachment)
 
         viewController.render()
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testFixedWidthRendering() {
@@ -83,7 +83,7 @@ class ViewAttachmentSnapshotTests: SnapshotTestCase {
         textView.replaceCharacters(in: textView.textEndRange, with: "and some more text after it.")
 
         viewController.render(size: CGSize(width: 300, height: 120))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testPercentBasedRendering() {
@@ -98,7 +98,7 @@ class ViewAttachmentSnapshotTests: SnapshotTestCase {
         textView.insertAttachment(in: textView.textEndRange, attachment: attachment)
 
         viewController.render(size: CGSize(width: 300, height: 120))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testWidthRangeRendering() {
@@ -114,7 +114,7 @@ class ViewAttachmentSnapshotTests: SnapshotTestCase {
         textView.insertAttachment(in: textView.textEndRange, attachment: attachment2)
 
         viewController.render(size: CGSize(width: 300, height: 120))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testSetsSelectionWithDisplay() {
@@ -134,7 +134,7 @@ class ViewAttachmentSnapshotTests: SnapshotTestCase {
         XCTAssertNotNil(attachment1.rangeInContainer())
         XCTAssertTrue(attachment1.isSelected)
         XCTAssertEqual(attachment1.containerEditorView?.selectedRange, attachment1.rangeInContainer())
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testSetsSelectionWithoutDisplay() {
@@ -154,7 +154,7 @@ class ViewAttachmentSnapshotTests: SnapshotTestCase {
         XCTAssertNotNil(attachment1.rangeInContainer())
         XCTAssertTrue(attachment1.isSelected)
         XCTAssertEqual(attachment1.containerEditorView?.selectedRange, attachment1.rangeInContainer())
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testGetsFocussedChildView() {
@@ -179,7 +179,7 @@ class ViewAttachmentSnapshotTests: SnapshotTestCase {
 
         XCTAssertTrue(attachment1.firstResponderChildView is AutogrowingTextField)
 
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testReturnsNilForNonFocussedChildView() {
@@ -206,7 +206,7 @@ class ViewAttachmentSnapshotTests: SnapshotTestCase {
         XCTAssertFalse(attachment1.isFocussed)
         XCTAssertNil(attachment1.firstResponderChildView)
 
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     private func makeDummyAttachment(text: String, size: AttachmentSize) -> Attachment {

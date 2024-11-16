@@ -41,7 +41,7 @@ class GridViewSnapshotTests: SnapshotTestCase {
 
         let vc = GenericViewTestViewController(contentView: gridView)
         vc.render(size: CGSize(width: 350, height: 200))
-        assertSnapshot(matching: vc.view, as: .image, record: recordMode)
+        assertSnapshot(of: vc.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewAsSelected() {
@@ -60,7 +60,7 @@ class GridViewSnapshotTests: SnapshotTestCase {
         gridView.isSelected = true
         let vc = GenericViewTestViewController(contentView: gridView)
         vc.render(size: CGSize(width: 350, height: 200))
-        assertSnapshot(matching: vc.view, as: .image, record: recordMode)
+        assertSnapshot(of: vc.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewAsSelectedWithRedColor() {
@@ -80,7 +80,7 @@ class GridViewSnapshotTests: SnapshotTestCase {
         gridView.isSelected = true
         let vc = GenericViewTestViewController(contentView: gridView)
         vc.render(size: CGSize(width: 350, height: 200))
-        assertSnapshot(matching: vc.view, as: .image, record: recordMode)
+        assertSnapshot(of: vc.view, as: .image, record: recordMode)
     }
 
 //    func testRendersGridViewWithFractionalColumns() {

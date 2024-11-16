@@ -41,7 +41,7 @@ class AutogrowingTextViewSnapshotTests: SnapshotTestCase {
 
         viewController.render()
 
-        assertSnapshot(matching: view, as: .image, record: recordMode)
+        assertSnapshot(of: view, as: .image, record: recordMode)
     }
 
     func testRendersMultilineTextViewBasedOnContent() {
@@ -61,6 +61,6 @@ class AutogrowingTextViewSnapshotTests: SnapshotTestCase {
 
         viewController.render()
 
-        assertSnapshot(matching: view, as: .image, record: recordMode)
+        assertSnapshot(of: view, as: .image, record: recordMode)
     }
 }

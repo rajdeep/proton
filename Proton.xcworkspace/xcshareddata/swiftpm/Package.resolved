@@ -2,12 +2,21 @@
   "object": {
     "pins": [
       {
-        "package": "SnapshotTesting",
+        "package": "swift-snapshot-testing",
         "repositoryURL": "https://github.com/pointfreeco/swift-snapshot-testing.git",
         "state": {
           "branch": null,
-          "revision": "114882386a815f4a2e6d8f2f7ee4857acd372438",
-          "version": "1.7.2"
+          "revision": "42a086182681cf661f5c47c9b7dc3931de18c6d7",
+          "version": "1.17.6"
+        }
+      },
+      {
+        "package": "swift-syntax",
+        "repositoryURL": "https://github.com/swiftlang/swift-syntax",
+        "state": {
+          "branch": null,
+          "revision": "0687f71944021d616d34d922343dcef086855920",
+          "version": "600.0.1"
         }
       }
     ]

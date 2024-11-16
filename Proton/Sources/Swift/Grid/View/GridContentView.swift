@@ -141,6 +141,14 @@ class GridContentView: UIScrollView {
     }
 
     public override func willMove(toWindow newWindow: UIWindow?) {
+        defer {
+            for cell in grid.cells {
+                if !cell.editorSetupComplete {
+                    cell.setupEditor()
+                }
+            }
+        }
+
         guard isRendered == false,
               newWindow != nil else {
                   return

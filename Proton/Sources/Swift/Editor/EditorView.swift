@@ -1113,7 +1113,7 @@ open class EditorView: UIView {
         if let range {
             selectedRange = range
         }
-        richTextView.becomeFirstResponder()
+        _ = richTextView.becomeFirstResponder()
     }
 
     /// Makes the `EditorView` lose focus.

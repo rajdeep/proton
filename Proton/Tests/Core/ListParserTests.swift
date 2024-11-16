@@ -400,8 +400,8 @@ class ListParserTests: XCTestCase {
         text.append(NSAttributedString(string: "\n"))
         text.append( line3)
 
-        let list = ListParser.parse(attributedString: text)
-        let listNodes = ListParser.parseListHierarchy(attributedString: text)
+//        let list = ListParser.parse(attributedString: text)
+//        let listNodes = ListParser.parseListHierarchy(attributedString: text)
         XCTFail()
     }
 

@@ -40,7 +40,7 @@ class ListsSnapshotTests: SnapshotTestCase {
         let attributedText = NSAttributedString(string: text, attributes: [.listItem: 1, .paragraphStyle: paraStyle])
         let view = renderList(text: attributedText, viewSize: CGSize(width: 300, height: 150))
 
-        assertSnapshot(matching: view, as: .image, record: recordMode)
+        assertSnapshot(of: view, as: .image, record: recordMode)
     }
 
     func testMultiLevelList() {
@@ -59,7 +59,7 @@ class ListsSnapshotTests: SnapshotTestCase {
         attributedString.addAttribute(.listItem, value: 1, range: attributedString.fullRange)
 
         let view = renderList(text: attributedString, viewSize: CGSize(width: 300, height: 175), sequenceGenerators: sequenceGenerators)
-        assertSnapshot(matching: view, as: .image, record: recordMode)
+        assertSnapshot(of: view, as: .image, record: recordMode)
     }
 
     func testSequenceGeneratorsRepetition() {
@@ -82,7 +82,7 @@ class ListsSnapshotTests: SnapshotTestCase {
         let attributedText = attributedString
         let view = renderList(text: attributedText, viewSize: CGSize(width: 225, height: 325), sequenceGenerators: sequenceGenerators)
 
-        assertSnapshot(matching: view, as: .image, record: recordMode)
+        assertSnapshot(of: view, as: .image, record: recordMode)
     }
 
     func testMultiLevelRepeatingText() {
@@ -105,7 +105,7 @@ class ListsSnapshotTests: SnapshotTestCase {
         let attributedText = attributedString
         let view = renderList(text: attributedText, viewSize: CGSize(width: 225, height: 325), sequenceGenerators: sequenceGenerators)
 
-        assertSnapshot(matching: view, as: .image, record: recordMode)
+        assertSnapshot(of: view, as: .image, record: recordMode)
     }
 
     func renderList(text: NSAttributedString, viewSize: CGSize, sequenceGenerators: [SequenceGenerator] = []) -> UIView {

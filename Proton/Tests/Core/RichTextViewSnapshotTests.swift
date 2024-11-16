@@ -42,7 +42,7 @@ class RichTextViewSnapshotTests: SnapshotTestCase {
 
         viewController.render()
 
-        assertSnapshot(matching: view, as: .image, record: recordMode)
+        assertSnapshot(of: view, as: .image, record: recordMode)
     }
 
     func testRendersPlaceholderInTextView() {
@@ -62,19 +62,19 @@ class RichTextViewSnapshotTests: SnapshotTestCase {
 
         textView.attributedText = NSAttributedString(string: "A")
         viewController.render()
-        assertSnapshot(matching: view, as: .image, record: recordMode)
+        assertSnapshot(of: view, as: .image, record: recordMode)
 
         textView.deleteBackward()
         viewController.render()
-        assertSnapshot(matching: view, as: .image, record: recordMode)
+        assertSnapshot(of: view, as: .image, record: recordMode)
 
         textView.attributedText = NSAttributedString(string: "B")
         viewController.render()
-        assertSnapshot(matching: view, as: .image, record: recordMode)
+        assertSnapshot(of: view, as: .image, record: recordMode)
 
         textView.attributedText = NSAttributedString();
         viewController.render()
-        assertSnapshot(matching: view, as: .image, record: recordMode)
+        assertSnapshot(of: view, as: .image, record: recordMode)
     }
 
     func testRendersMultilineTextViewBasedOnContent() {
@@ -107,6 +107,6 @@ class RichTextViewSnapshotTests: SnapshotTestCase {
 
         viewController.render(size: CGSize(width: 300, height: 150))
 
-        assertSnapshot(matching: view, as: .image, record: recordMode)
+        assertSnapshot(of: view, as: .image, record: recordMode)
     }
 }
