@@ -43,7 +43,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listCommand.execute(on: editor)
         viewController.render()
 
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testCreatesListFromSelectedText() {
@@ -62,7 +62,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
 
         viewController.render(size: CGSize(width: 300, height: 175))
 
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testIndentsAndOutdentsListWithoutSelectedRangeInBeginning() {
@@ -87,12 +87,12 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         // Indent second line
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: editor.selectedRange)
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         // Outdent second line
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [.shift], range: editor.selectedRange)
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testIndentsAndOutdentsListWithoutSelectedRangeInEnd() {
@@ -116,11 +116,11 @@ class EditorListsSnapshotTests: SnapshotTestCase {
 
         ListIndentCommand().execute(on: editor)
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         ListOutdentCommand().execute(on: editor)
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testIndentsAndOutdentsListWithoutSelectedRangeInMiddle() {
@@ -146,12 +146,12 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         // Indent second line
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: editor.selectedRange)
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         // Outdent second line
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [.shift], range: editor.selectedRange)
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testIndentsAndOutdentsListWithMultipleSelectedLines() {
@@ -176,12 +176,12 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         // Indent second line
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: secondAndThirdLineRange)
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         // Outdent second line
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [.shift], range: secondAndThirdLineRange)
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testCreatesNewListItemOnReturnKey() {
@@ -208,7 +208,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listTextProcessor.didProcess(editor: editor)
 
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testExitsNewListItemOnSecondReturnKey() {
@@ -229,14 +229,14 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: editedRange)
         listTextProcessor.didProcess(editor: editor) // invoke lifecycle event manually
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         editor.appendCharacters(NSAttributedString(string: "\n", attributes: attrs))
         editedRange = NSRange(location: editor.contentLength - 1, length: 1)
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: editedRange)
         listTextProcessor.didProcess(editor: editor) // invoke lifecycle event manually
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testExitsNewListItemOnSecondReturnKeyWithTrailingNonListText() {
@@ -253,7 +253,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listCommand.execute(on: editor)
 
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         var newLineLocation = lines[1].range.endLocation
         let attrs = editor.attributedText.attributes(at: newLineLocation, effectiveRange: nil)
@@ -271,7 +271,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
 
 
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testCreatesNewListItemOnSecondReturnKeyWhenInMiddleOfAList() {
@@ -296,7 +296,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         // Indent second line
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: editor.selectedRange)
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         let location = secondLine.range.endLocation
         let attrs = editor.attributedText.attributes(at: location - 1, effectiveRange: nil)
@@ -306,14 +306,14 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: editedRange)
         listTextProcessor.didProcess(editor: editor) // invoke lifecycle event manually
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         editor.replaceCharacters(in: NSRange(location: location, length: 0), with: NSAttributedString(string: "\n", attributes: attrs))
         editedRange = NSRange(location: location + 1, length: 1)
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [], range: editedRange)
         listTextProcessor.didProcess(editor: editor) // invoke lifecycle event manually
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testAddsMultipleLevelOfLists() {
@@ -338,7 +338,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         }
 
         viewController.render(size: CGSize(width: 450, height: 450))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testOutdentsNestedItems() {
@@ -362,7 +362,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listCommand.execute(on: editor)
 
         viewController.render(size: CGSize(width: 300, height: 225))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         let line2a = editor.contentLinesInRange(editor.attributedText.fullRange)[2]
         let line2a1 = editor.contentLinesInRange(editor.attributedText.fullRange)[4]
@@ -374,11 +374,11 @@ class EditorListsSnapshotTests: SnapshotTestCase {
 
 
         viewController.render(size: CGSize(width: 300, height: 225))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [.shift], range: line2a.range)
         viewController.render(size: CGSize(width: 300, height: 225))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testIndentsNestedItems() {
@@ -402,7 +402,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listCommand.execute(on: editor)
 
         viewController.render(size: CGSize(width: 300, height: 225))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         let line2 = editor.contentLinesInRange(editor.attributedText.fullRange)[1]
         let line2a = editor.contentLinesInRange(editor.attributedText.fullRange)[2]
@@ -412,11 +412,11 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: NSRange(location: line2a.range.location, length: line2a2.range.endLocation - line2a.range.location))
 
         viewController.render(size: CGSize(width: 300, height: 225))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: line2.range)
         viewController.render(size: CGSize(width: 300, height: 225))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testOutdentsToZerothLevel() {
@@ -444,7 +444,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         }
 
         viewController.render(size: CGSize(width: 300, height: 400))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         let paraStyle = editor.attributedText.attribute(.paragraphStyle, at: editor.textEndRange.location - 1, effectiveRange: nil) ?? NSParagraphStyle()
 
@@ -458,7 +458,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listTextProcessor.didProcess(editor: editor)
 
         viewController.render(size: CGSize(width: 300, height: 400))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         for _ in 0..<lines.count {
             editor.selectedRange =  NSRange(location: editor.textEndRange.location, length: 0)
@@ -468,7 +468,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
             listTextProcessor.didProcess(editor: editor)
 
             viewController.render(size: CGSize(width: 300, height: 400))
-            assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+            assertSnapshot(of: viewController.view, as: .image, record: recordMode)
         }
     }
 
@@ -484,7 +484,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listCommand.execute(on: editor)
 
         viewController.render(size: CGSize(width: 300, height: 400))
-        assertSnapshot(matching: viewController.view, as: .image, record: true)
+        assertSnapshot(of: viewController.view, as: .image, record: true)
 
         let paraStyle = editor.attributedText.attribute(.paragraphStyle, at: editor.textEndRange.location - 1, effectiveRange: nil) ?? NSParagraphStyle()
 
@@ -498,7 +498,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listTextProcessor.didProcess(editor: editor)
 
         viewController.render(size: CGSize(width: 300, height: 400))
-        assertSnapshot(matching: viewController.view, as: .image, record: true)
+        assertSnapshot(of: viewController.view, as: .image, record: true)
 
         editor.appendCharacters(NSAttributedString(string: "\n",
                                                    attributes: [
@@ -514,7 +514,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .backspace, modifierFlags: [], range: NSRange(location: editor.textEndRange.location - 1, length: 1))
 
         viewController.render(size: CGSize(width: 300, height: 400))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testQueriesDelegateForListLineMarker() {
@@ -556,7 +556,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: editor.selectedRange)
         viewController.render(size: CGSize(width: 300, height: 175))
 
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
         waitForExpectations(timeout: 1.0)
     }
 
@@ -587,13 +587,13 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: line2.range)
 
         viewController.render(size: CGSize(width: 300, height: 225))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         editor.selectedRange = NSRange(location: 0, length: line2a.range.endLocation)
         listCommand.execute(on: editor, attributeValue: nil)
 
         viewController.render(size: CGSize(width: 300, height: 225))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersListWithDifferentAttributeValues() {
@@ -621,7 +621,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         editor.addAttribute(.listItem, value: 2, at: thirdAndFourthLineRange)
         
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersListInAttributedString() {
@@ -663,7 +663,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         editor.appendCharacters(NSAttributedString(string: "Ordered 1", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
 
         viewController.render(size: CGSize(width: 300, height: 575))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersListInArrowFormat() {
@@ -700,7 +700,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         editor.appendCharacters(NSAttributedString(string: "\nText after list"))
 
         viewController.render(size: CGSize(width: 300, height: 375))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testContinuesNumberingWhenTwoListsAreCombined() {
@@ -730,7 +730,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         editor.appendCharacters(NSAttributedString(string: "Item 5", attributes: [.listItem: 1, .paragraphStyle: paraStyle1]))
 
         viewController.render(size: CGSize(width: 300, height: 180))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         let lines = editor.contentLinesInRange(editor.attributedText.fullRange)
         let notInListLine = lines[3]
@@ -739,7 +739,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listCommand.execute(on: editor, attributeValue: 1)
 
         viewController.render(size: CGSize(width: 300, height: 180))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testAppliesAndRemovesListStyleToEntireLineOnPartialSelection() {
@@ -766,18 +766,18 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         editor.appendCharacters(NSAttributedString(string: "Item 3"))
 
         viewController.render(size: CGSize(width: 300, height: 150))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         editor.selectedRange = NSRange(location: 3, length: editor.contentLength - 3)
         listCommand.execute(on: editor, attributeValue: 1)
 
         viewController.render(size: CGSize(width: 300, height: 180))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         listCommand.execute(on: editor, attributeValue: nil)
 
         viewController.render(size: CGSize(width: 300, height: 180))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testCreatesListWithoutSelectionUsingCommandInBeginning() {
@@ -789,7 +789,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listCommand.execute(on: editor)
         viewController.render()
 
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testCreatesListWithoutSelectionUsingCommandAtEnd() {
@@ -801,7 +801,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listCommand.execute(on: editor)
         viewController.render()
 
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testCreatesListWithoutSelectionUsingCommandInTheMiddle() {
@@ -813,7 +813,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listCommand.execute(on: editor)
         viewController.render()
 
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRegeneratesNumbersOnChangesToNonListTextInMiddleOfLists() {
@@ -840,14 +840,14 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listCommand.execute(on: editor, attributeValue: 1)
 
         viewController.render(size: CGSize(width: 300, height: 120))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         // Make line 2 a list that should combine line 1 and line 3 in the same list
         editor.selectedRange = NSRange(location: lines[1].range.location + 3, length: 0)
         listCommand.execute(on: editor, attributeValue: 1)
 
         viewController.render(size: CGSize(width: 300, height: 120))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testSkipNumberingForMultilineText() {
@@ -872,7 +872,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listCommand.execute(on: editor, attributeValue: 1)
         
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testSkipListMarkerForSkipAttribute() {
@@ -900,7 +900,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         editor.appendCharacters(NSAttributedString(string: "Item 3", attributes: [.listItem: 1, .paragraphStyle: paraStyle2]))
 
         viewController.render(size: CGSize(width: 300, height: 180))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
 
@@ -934,7 +934,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
 
 
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testSkipsListMarkerOnShiftReturnKeyAtEndOfTheList() {
@@ -954,7 +954,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .enter, modifierFlags: [.shift], range: NSRange(location: editor.textEndRange.location, length: 0))
 
         viewController.render(size: CGSize(width: 300, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testFullWidthAttachmentInLists() {
@@ -1013,12 +1013,12 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         panel2.setFocus()
 
         viewController.render(size: CGSize(width: 300, height: 200))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: lines[3].range)
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: lines[3].range)
         viewController.render(size: CGSize(width: 300, height: 200))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testCreatesListBetweenTwoParagraphs() {
@@ -1031,12 +1031,12 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         listCommand.execute(on: editor)
         viewController.render(size: editorSize)
 
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         editor.replaceCharacters(in: editor.selectedRange, with: NSAttributedString(string: "New line"))
         viewController.render(size: editorSize)
 
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testResetsParagraphStyleOnExitingList() {
@@ -1060,7 +1060,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         editor.selectedRange = NSRange(location: 0, length: 90)
         listCommand.execute(on: editor)
         viewController.render(size: CGSize(width: 300, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         let secondLine = editor.contentLinesInRange(editor.attributedText.fullRange)[2]
         let rangeToSet = NSRange(location: secondLine.range.location, length: 4)
@@ -1069,7 +1069,7 @@ class EditorListsSnapshotTests: SnapshotTestCase {
         // Outdent second line
         listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [.shift], range: editor.selectedRange)
         viewController.render(size: CGSize(width: 300, height: 320))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
 }

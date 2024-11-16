@@ -47,7 +47,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         XCTAssertEqual(attachment.view.containerAttachment, attachment)
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewAttachmentWithContainerBackgroundColor() {
@@ -74,11 +74,11 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         cell?.backgroundColor = .white
 
         viewController.render(size: CGSize(width: 300, height: 225))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         editor.backgroundColor = .darkGray
         viewController.render(size: CGSize(width: 300, height: 225))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewAttachmentWithConstrainedFixedWidth() {
@@ -103,7 +103,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         XCTAssertEqual(attachment.view.containerAttachment, attachment)
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         let cell00 = attachment.view.cellAt(rowIndex: 0, columnIndex: 0)
         let cell01 = attachment.view.cellAt(rowIndex: 0, columnIndex: 1)
@@ -135,14 +135,14 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         XCTAssertEqual(attachment.view.containerAttachment, attachment)
 
         viewController.render(size: CGSize(width: 400, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
         let cell = attachment.view.cellAt(rowIndex: 0, columnIndex: 0)
         let lineFragmentPadding = editor.lineFragmentPadding
         let cellOverlapPixels: CGFloat = 1
         XCTAssertEqual((cell?.frame.width ?? 0) - cellOverlapPixels, editor.frame.width - (lineFragmentPadding * 2))
 
         viewController.render(size: CGSize(width: 700, height: 175))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersNestedGridViewAttachmentWithViewportConstraints() {
@@ -175,7 +175,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 240))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewAttachmentWithFractionalWidth() {
@@ -200,7 +200,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 350))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewAttachmentWithFractionalWidthMin() {
@@ -224,7 +224,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 300, height: 200))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         let cell00 = attachment.view.cellAt(rowIndex: 0, columnIndex: 0)
         let cell01 = attachment.view.cellAt(rowIndex: 0, columnIndex: 1)
@@ -257,7 +257,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 300, height: 200))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         let cell00 = attachment.view.cellAt(rowIndex: 0, columnIndex: 0)
         let cell01 = attachment.view.cellAt(rowIndex: 0, columnIndex: 1)
@@ -288,7 +288,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 300, height: 200))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         let cell00 = attachment.view.cellAt(rowIndex: 0, columnIndex: 0)
         let cell01 = attachment.view.cellAt(rowIndex: 0, columnIndex: 1)
@@ -322,7 +322,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 300, height: 200))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         let cell00 = attachment.view.cellAt(rowIndex: 0, columnIndex: 0)
         let cell01 = attachment.view.cellAt(rowIndex: 0, columnIndex: 1)
@@ -360,7 +360,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         attachment.view.cells[0].editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Test some long text in the first cell"))
 
         viewController.render(size: CGSize(width: 400, height: 350))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testMaintainsRowHeightBasedOnContent() {
@@ -391,24 +391,24 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         // Render text which expands the first row
         cell00Editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Test some long text in the cell"))
         viewController.render(size: CGSize(width: 400, height: 350))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
 
         // Render text which expands the first row with longer text in second cell
         cell01Editor.replaceCharacters(in: .zero, with: NSAttributedString(string: "Test longer text in the second cell"))
         viewController.render(size: CGSize(width: 400, height: 350))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         // Render text which shrinks the first row due to shorter text in second cell
         cell01Editor.replaceCharacters(in: cell01Editor.attributedText.fullRange, with: NSAttributedString(string: "Short text"))
         viewController.render(size: CGSize(width: 400, height: 350))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         // Resets to blank state
         cell00Editor.replaceCharacters(in: cell00Editor.attributedText.fullRange, with: NSAttributedString(string: ""))
         cell01Editor.replaceCharacters(in: cell01Editor.attributedText.fullRange, with: NSAttributedString(string: ""))
         viewController.render(size: CGSize(width: 400, height: 350))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewAttachmentWithStyledRow() {
@@ -443,7 +443,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         cell10Editor.replaceCharacters(in: .zero, with: "2.")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewAttachmentWithStyledColumn() {
@@ -482,7 +482,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         cell02Editor.replaceCharacters(in: .zero, with: "Col 3")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewAttachmentWithMixedStyles() {
@@ -540,7 +540,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         cell12Editor.replaceCharacters(in: .zero, with: "Cell 6")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testScrollsCellToVisible() {
@@ -568,11 +568,11 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         cell05Editor.replaceCharacters(in: .zero, with: "Last cell")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         attachment.view.scrollToCellAt(rowIndex: 1, columnIndex: 2, animated: false)
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewAttachmentWithMergedRows() throws {
@@ -605,11 +605,11 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         gridView.merge(cells: [cell01, cell11])
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
 
@@ -643,11 +643,11 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         gridView.merge(cells: [cell11, cell12])
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewAttachmentWithMixedMergedRowsAndColumns() throws {
@@ -686,7 +686,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         gridView.merge(cells: [
             cell11,
@@ -696,7 +696,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         ])
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewAttachmentWithSplitRowsAndColumns() throws {
@@ -743,14 +743,14 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
 
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         gridView.split(cell: cell11)
         let newCell12 = try XCTUnwrap(gridView.cellAt(rowIndex: 1, columnIndex: 2))
         newCell12.editor.replaceCharacters(in: .zero, with: "Newly added text")
 
         viewController.render(size: CGSize(width: 400, height: 500))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testInsertsRowAtIndexInMiddle() throws {
@@ -782,7 +782,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         cell12.editor.replaceCharacters(in: .zero, with: "Test string 2")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         gridView.insertRow(at: 1, configuration: GridRowConfiguration(initialHeight: 60))
 
@@ -790,7 +790,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         newCell11.editor.replaceCharacters(in: .zero, with: "New cell")
 
         viewController.render(size: CGSize(width: 400, height: 400))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testInsertsColumnAtIndexInMiddle() throws {
@@ -822,7 +822,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         cell12.editor.replaceCharacters(in: .zero, with: "Test string 2")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         gridView.insertColumn(at: 1, configuration: GridColumnConfiguration(width: .fractional(0.20)))
 
@@ -830,7 +830,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         newCell11.editor.replaceCharacters(in: .zero, with: "New cell")
 
         viewController.render(size: CGSize(width: 500, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testInsertsRowAtTop() throws {
@@ -861,7 +861,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         // Editor shows caret for some reason - needs further investigation
         gridView.cellAt(rowIndex: 0, columnIndex: 0)?.editor.isSelectable = false
         viewController.render(size: CGSize(width: 400, height: 400))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testInsertsRowAtBottom() throws {
@@ -892,7 +892,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         // Editor shows caret for some reason - needs further investigation
         gridView.cellAt(rowIndex: 2, columnIndex: 0)?.editor.isSelectable = false
         viewController.render(size: CGSize(width: 400, height: 400))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testInsertsColumnAtBeginning() throws {
@@ -925,7 +925,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         // Editor shows caret for some reason - needs further investigation
         gridView.cellAt(rowIndex: 0, columnIndex: 0)?.editor.isSelectable = false
         viewController.render(size: CGSize(width: 500, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testInsertsColumnAtEnd() throws {
@@ -958,7 +958,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         // Editor shows caret for some reason - needs further investigation
         gridView.cellAt(rowIndex: 0, columnIndex: 3)?.editor.isSelectable = false
         viewController.render(size: CGSize(width: 500, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testInsertsRowInMixedMergedCells() throws {
@@ -1001,11 +1001,11 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         ])
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         gridView.insertRow(at: 2, configuration: GridRowConfiguration(initialHeight: 30))
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testInsertsColumnInMixedMergedCells() throws {
@@ -1039,11 +1039,11 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
 
         gridView.merge(cells: [cell11, cell12])
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         gridView.insertColumn(at: 2, configuration: GridColumnConfiguration(width: .fixed(40)))
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testDeletesColumn() throws {
@@ -1076,13 +1076,13 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         cell12.editor.replaceCharacters(in: .zero, with: "C2")
 
         viewController.render(size: CGSize(width: 200, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
 
         gridView.deleteColumn(at: 1)
 
         viewController.render(size: CGSize(width: 200, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testDeletesMergedColumn() throws {
@@ -1119,13 +1119,13 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         gridView.merge(cells: [cell10, cell11])
 
         viewController.render(size: CGSize(width: 200, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
 
         gridView.deleteColumn(at: 1)
 
         viewController.render(size: CGSize(width: 200, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testDeletesRow() throws {
@@ -1161,12 +1161,12 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         cell20.editor.replaceCharacters(in: .zero, with: "R3")
 
         viewController.render(size: CGSize(width: 201, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         gridView.deleteRow(at: 1)
 
         viewController.render(size: CGSize(width: 201, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testDeletesMergedRow() throws {
@@ -1211,12 +1211,12 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
 
         gridView.merge(cells: [cell00, cell10])
         viewController.render(size: CGSize(width: 201, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         gridView.deleteRow(at: 1)
 
         viewController.render(size: CGSize(width: 201, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testMergesMultipleCells() throws {
@@ -1260,7 +1260,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         ])
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testInsertColumnInGridViewAttachmentWithMergedColumns() throws {
@@ -1293,16 +1293,16 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         gridView.merge(cells: [cell11, cell12])
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         gridView.insertColumn(at: 1, configuration: GridColumnConfiguration(width: .fixed(50)))
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testInsertRowInGridViewAttachmentWithMergedRows() throws {
@@ -1335,16 +1335,16 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         gridView.merge(cells: [cell11, cell21])
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         gridView.insertRow(at: 1, configuration: GridRowConfiguration(initialHeight: 50))
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testAppliesStyleToNewRow() throws {
@@ -1370,12 +1370,12 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         gridView.insertRow(at: 1, configuration: GridRowConfiguration(initialHeight: 50, style: GridCellStyle(backgroundColor: .red)))
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testAppliesStyleToNewColumn() throws {
@@ -1401,12 +1401,12 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         gridView.insertColumn(at: 1, configuration: GridColumnConfiguration(width: .fixed(50), style: GridCellStyle(backgroundColor: .red)))
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testFreezesRows() throws {
@@ -1443,7 +1443,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         }
 
         viewController.render(size: CGSize(width: 400, height: 200))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         gridView.freezeRows(upTo: 1)
         let style = GridCellStyle(backgroundColor: .gray, textColor: .white, borderStyle: GridCellStyle.BorderStyle(color: .white, width: 1))
@@ -1454,7 +1454,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         let cellFrame = try XCTUnwrap(gridView.cellAt(rowIndex: 6, columnIndex: 1)?.frame)
         editor.scrollRectToVisible(cellFrame, animated: false)
         viewController.render(size: CGSize(width: 400, height: 200))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testFreezesColumns() {
@@ -1492,7 +1492,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         }
 
         viewController.render(size: CGSize(width: 400, height: 200))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         gridView.freezeColumns(upTo: 1)
         let style = GridCellStyle(backgroundColor: .gray, textColor: .white, borderStyle: GridCellStyle.BorderStyle(color: .white, width: 1))
@@ -1502,7 +1502,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
 
         gridView.scrollToCellAt(rowIndex: 1, columnIndex: 5)
         viewController.render(size: CGSize(width: 400, height: 200))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testGridShadows() {
@@ -1539,7 +1539,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         gridView.scrollToCellAt(rowIndex: 1, columnIndex: 4)
 
         viewController.render(size: CGSize(width: 400, height: 200))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testGridCellLayoutCompletion() {
@@ -1576,7 +1576,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 200))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewFromCells() {
@@ -1608,7 +1608,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewWithMergedRowsFromCells() {
@@ -1657,7 +1657,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewWithMergedColumnsFromCells() {
@@ -1709,7 +1709,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewWithMixedMergedColumnsAndRowsFromCells() {
@@ -1772,7 +1772,7 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 350))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewWithCollapsedRows() {
@@ -1785,17 +1785,17 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         attachment.view.collapseRow(at: 1)
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         attachment.view.expandRow(at: 1)
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersGridViewWithCollapsedColumns() {
@@ -1808,17 +1808,17 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         attachment.view.collapseColumn(at: 1)
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         attachment.view.expandColumn(at: 1)
 
         viewController.render(size: CGSize(width: 400, height: 300))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     private func make3By3GridViewAttachment() -> GridViewAttachment {

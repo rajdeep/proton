@@ -26,8 +26,9 @@ import SnapshotTesting
 class SnapshotTestCase: XCTestCase {
     var recordMode = false
 
-    class override func setUp() {
-        XCTestCase.setUp()
-        diffTool = "ksdiff"
+    override func invokeTest() {
+        withSnapshotTesting(record: .all, diffTool: .ksdiff) {
+            super.invokeTest()
+        }
     }
 }

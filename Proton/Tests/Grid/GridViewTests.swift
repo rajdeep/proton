@@ -205,7 +205,7 @@ class GridViewTests: XCTestCase {
         gridView.delegate = delegate
         gridView.gridView.willMove(toWindow: UIWindow())
 
-        var cellsToSelect = gridView.cells.filter { $0.rowSpan.contains(0) }
+        let cellsToSelect = gridView.cells.filter { $0.rowSpan.contains(0) }
         var column = 0
         expectation.expectedFulfillmentCount = cellsToSelect.count
         delegate.onDidSelectCells = { _, cells in

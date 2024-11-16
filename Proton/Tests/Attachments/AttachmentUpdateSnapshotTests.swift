@@ -37,7 +37,7 @@ class AttachmentUpdateSnapshotTests: SnapshotTestCase {
         textView.replaceCharacters(in: textView.textEndRange, with: "Text after attachment")
 
         viewController.render()
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersImageBasedBlockAttachment() {
@@ -51,7 +51,7 @@ class AttachmentUpdateSnapshotTests: SnapshotTestCase {
         textView.replaceCharacters(in: textView.textEndRange, with: "Text after attachment")
 
         viewController.render()
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersUpdatedImageInAttachment() {
@@ -65,10 +65,10 @@ class AttachmentUpdateSnapshotTests: SnapshotTestCase {
         textView.replaceCharacters(in: textView.textEndRange, with: "Text after attachment")
 
         viewController.render()
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
         attachment.update(with: AttachmentImage(name: EditorContent.Name("image"), image: UIImage(systemName: "car")!, size: CGSize(width: 40, height: 80), type: .block))
         viewController.render(size: CGSize(width: 300, height: 150))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
     func testRendersUpdatedViewInAttachment() {
@@ -93,10 +93,10 @@ class AttachmentUpdateSnapshotTests: SnapshotTestCase {
         textView.replaceCharacters(in: textView.textEndRange, with: "Text after attachment")
 
         viewController.render()
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController, as: .image, record: recordMode)
         attachment.update(panel, size: .fullWidth)
         viewController.render(size: CGSize(width: 300, height: 150))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController, as: .image, record: recordMode)
     }
 
     func testRendersUpdatedViewInImageAttachment() {
@@ -118,11 +118,11 @@ class AttachmentUpdateSnapshotTests: SnapshotTestCase {
         textView.replaceCharacters(in: textView.textEndRange, with: "Text after attachment")
 
         viewController.render()
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         attachment.update(panel, size: .fullWidth)
         viewController.render(size: CGSize(width: 300, height: 150))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 
 
@@ -142,10 +142,10 @@ class AttachmentUpdateSnapshotTests: SnapshotTestCase {
         textView.replaceCharacters(in: textView.textEndRange, with: "Text after attachment")
 
         viewController.render()
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         attachment.update(with: AttachmentImage(name: EditorContent.Name("image"), image: UIImage(systemName: "car.2.fill")!, size: CGSize(width: 80, height: 40), type: .block))
         viewController.render(size: CGSize(width: 300, height: 125))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 }

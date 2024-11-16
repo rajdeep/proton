@@ -72,6 +72,6 @@ class EditorCommandSnapshotTests: SnapshotTestCase {
 
         viewController.render()
 
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
     }
 }

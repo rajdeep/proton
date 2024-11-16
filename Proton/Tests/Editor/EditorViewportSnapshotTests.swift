@@ -66,7 +66,7 @@ class EditorViewportSnapshotTests: SnapshotTestCase {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             XCTAssertTrue(renderingNotified)
-            assertSnapshot(matching: viewController.view, as: .image, record: self.recordMode)
+            assertSnapshot(of: viewController.view, as: .image, record: self.recordMode)
             ex.fulfill()
         }
 
@@ -105,12 +105,12 @@ class EditorViewportSnapshotTests: SnapshotTestCase {
 
         asyncRenderingDelegate.onDidCompleteRenderingViewport = { viewport, _ in
             XCTAssertEqual(viewport, asyncRenderingDelegate.prioritizedViewport)
-            assertSnapshot(matching: viewController.view, as: .image, record: self.recordMode)
+            assertSnapshot(of: viewController.view, as: .image, record: self.recordMode)
             ex.fulfill()
         }
 
         viewController.render(size: CGSize(width: 300, height: 900))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         waitForExpectations(timeout: 1.0)
     }
@@ -147,7 +147,7 @@ class EditorViewportSnapshotTests: SnapshotTestCase {
 
         asyncRenderingDelegate.onDidCompleteRenderingViewport = { viewport, _ in
             XCTAssertEqual(viewport, expectedViewport)
-            assertSnapshot(matching: viewController.view, as: .image, record: self.recordMode)
+            assertSnapshot(of: viewController.view, as: .image, record: self.recordMode)
             asyncRenderingDelegate.prioritizedViewport =  CGRect(
                 origin: CGPoint(x: 0, y: 600),
                 size: CGSize(width: 260, height: 200)
@@ -158,7 +158,7 @@ class EditorViewportSnapshotTests: SnapshotTestCase {
         }
 
         viewController.render(size: CGSize(width: 300, height: 900))
-        assertSnapshot(matching: viewController.view, as: .image, record: recordMode)
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
 
         waitForExpectations(timeout: 2.0)
     }

@@ -29,7 +29,6 @@ class TableTests: XCTestCase {
     func testGetsFrameForCell() {
         let generated = generateCells(numRows: 200, numColumns: 70)
         let table = Table(config: generated.config, cells: generated.cells)
-        let cells = table.cells
 
         let size = CGSize(width: 300, height: 150)
 
