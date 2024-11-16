@@ -140,23 +140,3 @@ extension EditorView: UITextInput {
         richTextView.insertText(text)
     }
 }
-
-@propertyWrapper
-struct RichTextViewProperty<T> {
-    private weak var textView: RichTextView?
-    private let keyPath: ReferenceWritableKeyPath<UITextView, T>
-
-    init(_ textView: RichTextView, keyPath: ReferenceWritableKeyPath<UITextView, T>) {
-        self.textView = textView
-        self.keyPath = keyPath
-    }
-
-    var wrappedValue: T {
-        get {
-            return textView?[keyPath: keyPath] ?? (T.self as! T)
-        }
-        set {
-            textView?[keyPath: keyPath] = newValue
-        }
-    }
-}
