@@ -133,6 +133,38 @@ class EditorViewDelegateTests: XCTestCase {
         try assertKeyPress(.tab, replacementText: "\t")
     }
 
+    func testNotifiesTextProcessorsOnDidReceiveFocus() {
+        let expectation = functionExpectation()
+        let mockProcessor = MockTextProcessor()
+        mockProcessor.onDidReceiveFocus = { _ in
+            expectation.fulfill()
+        }
+        let editor = EditorView()
+        editor.textProcessor?.register(mockProcessor)
+        let richTextView = editor.richTextView
+        let richTextViewDelegate = richTextView.richTextViewDelegate
+
+        richTextViewDelegate?.richTextView(richTextView, didReceiveFocusAt: .zero)
+
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testNotifiesTextProcessorsOnDidLoseFocus() {
+        let expectation = functionExpectation()
+        let mockProcessor = MockTextProcessor()
+        mockProcessor.onDidLoseFocus = { _ in
+            expectation.fulfill()
+        }
+        let editor = EditorView()
+        editor.textProcessor?.register(mockProcessor)
+        let richTextView = editor.richTextView
+        let richTextViewDelegate = richTextView.richTextViewDelegate
+
+        richTextViewDelegate?.richTextView(richTextView, didLoseFocusFrom: .zero)
+
+        waitForExpectations(timeout: 1.0)
+    }
+
     private func assertKeyPress(_ key: EditorKey, replacementText: String, file: StaticString = #file, line: UInt = #line) throws {
         let delegateExpectation = functionExpectation()
         let delegate = MockEditorViewDelegate()

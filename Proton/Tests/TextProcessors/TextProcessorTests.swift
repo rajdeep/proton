@@ -138,6 +138,28 @@ class TextProcessorTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
 
+    func testPreventsDidReceiveFocusOnSetAttributedText() throws {
+        let expectation = expectation(description: "Should not invoke didReceiveFocus")
+        expectation.isInverted = true
+        try assertProcessorInvocationOnSetAttributedText(expectation, isRunOnSettingText: false) { mockProcessor in
+            mockProcessor.onDidReceiveFocus = { _ in
+                expectation.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 1.0)
+    }
+
+    func testPreventsDidLoseFocusOnSetAttributedText() throws {
+        let expectation = expectation(description: "Should not invoke didLoseFocus")
+        expectation.isInverted = true
+        try assertProcessorInvocationOnSetAttributedText(expectation, isRunOnSettingText: false) { mockProcessor in
+            mockProcessor.onDidLoseFocus = { _ in
+                expectation.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 1.0)
+    }
+
     func testInvokesTextProcessor() {
         let testExpectation = functionExpectation()
         let editor = EditorView()
