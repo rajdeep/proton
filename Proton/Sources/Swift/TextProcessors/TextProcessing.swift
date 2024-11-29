@@ -104,6 +104,16 @@ public protocol TextProcessing {
     ///   - newRange: Current range after the change
     func selectedRangeChanged(editor: EditorView, oldRange: NSRange?, newRange: NSRange?)
 
+    /// Notifies the processor when `editor` receives focus.
+    /// - Note: This function is also called when focus moves between `EditorView`'s nested editors.
+    /// - Parameter editor: `EditorView` which received focus
+    func didReceiveFocus(editor: EditorView)
+
+    /// Notifies the processor when `editor` loses focus.
+    /// - Note: This function is also called when focus moves between `EditorView`'s nested editors.
+    /// - Parameter editor: `EditorView` which lost focus
+    func didLoseFocus(editor: EditorView)
+
     /// Invoked after the text has been processed in the `Editor`.
     /// - Parameter editor: EditorView in which text is changed.
     func didProcess(editor: EditorView)
@@ -134,4 +144,6 @@ public extension TextProcessing {
     func shouldProcess(_ editorView: EditorView, shouldProcessTextIn range: NSRange, replacementText text: String) -> Bool { return true }
     func willProcessEditing(editor: EditorView, editedMask: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int) { }
     func didProcessEditing(editor: EditorView, editedMask: NSTextStorage.EditActions, range editedRange: NSRange, changeInLength delta: Int) { }
+    func didReceiveFocus(editor: EditorView) { }
+    func didLoseFocus(editor: EditorView) { }
 }

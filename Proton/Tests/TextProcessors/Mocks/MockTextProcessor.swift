@@ -33,6 +33,8 @@ class MockTextProcessor: TextProcessing {
     var onKeyWithModifier: ((EditorView, EditorKey, UIKeyModifierFlags, NSRange) -> Void)?
     var onProcessInterrupted: ((EditorView, NSRange) -> Void)?
     var onSelectedRangeChanged: ((EditorView, NSRange?, NSRange?) -> Void)?
+    var onDidReceiveFocus: ((EditorView) -> Void)?
+    var onDidLoseFocus: ((EditorView) -> Void)?
     var onDidProcess: ((EditorView) -> Void)?
     var onShouldProcess: ((EditorView, NSRange, String) -> Bool)?
 
@@ -70,6 +72,14 @@ class MockTextProcessor: TextProcessing {
 
     func selectedRangeChanged(editor: EditorView, oldRange: NSRange?, newRange: NSRange?) {
         onSelectedRangeChanged?(editor, oldRange, newRange)
+    }
+
+    func didReceiveFocus(editor: EditorView) {
+        onDidReceiveFocus?(editor)
+    }
+
+    func didLoseFocus(editor: EditorView) {
+        onDidLoseFocus?(editor)
     }
 
     func didProcess(editor: EditorView) {
