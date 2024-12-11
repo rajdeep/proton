@@ -28,7 +28,8 @@ let package = Package(
         .library(name: "ProtonCore", targets: ["ProtonCore"])
     ],
     dependencies: [
-        .package(name: "SnapshotTesting", url: "https://github.com/pointfreeco/swift-snapshot-testing.git", .branch("master"))
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing.git",
+                 branch: "master")
     ],
     targets: [
         .target(
@@ -43,7 +44,7 @@ let package = Package(
         ),
         .testTarget(
             name: "ProtonTests",
-            dependencies: ["Proton", "SnapshotTesting"],
+            dependencies: ["Proton", "swift-snapshot-testing"],
             path: "Proton/Tests"
         )
     ]
