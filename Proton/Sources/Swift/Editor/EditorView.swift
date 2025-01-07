@@ -1451,10 +1451,14 @@ extension EditorView: RichTextViewDelegate {
     }
 
     func richTextView(_ richTextView: RichTextView, didReceiveFocusAt range: NSRange) {
+        let executableProcessors = textProcessor?.filteringExecutableOn(editor: self) ?? []
+        executableProcessors.forEach { $0.didReceiveFocus(editor: self) }
         AggregateEditorViewDelegate.editor(self, didReceiveFocusAt: range)
     }
 
     func richTextView(_ richTextView: RichTextView, didLoseFocusFrom range: NSRange) {
+        let executableProcessors = textProcessor?.filteringExecutableOn(editor: self) ?? []
+        executableProcessors.forEach { $0.didLoseFocus(editor: self) }
         AggregateEditorViewDelegate.editor(self, didLoseFocusFrom: range)
     }
 
