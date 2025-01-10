@@ -94,23 +94,38 @@ public enum GridColumnWidth {
                                      viewportWidth: CGFloat,
                                      minVal: (() -> ConstrainedWidth)?,
                                      maxVal: (() -> ConstrainedWidth)?) -> CGFloat {
+        
+        var minCalculated: CGFloat?
+        var maxCalculated: CGFloat?
+
         if let minVal = minVal?() {
             switch minVal {
             case .absolute(let value):
-                return max(value, originalValue)
+                minCalculated = max(value, originalValue)
             case .viewport(let padding):
-                return max(viewportWidth - padding, originalValue)
+                minCalculated = max(viewportWidth - padding, originalValue)
             }
         }
+        
         if let maxVal = maxVal?() {
             switch maxVal {
             case .absolute(let value):
-                return min(value, originalValue)
+                maxCalculated = min(value, originalValue)
             case .viewport(let padding):
-                return min(viewportWidth - padding, originalValue)
+                maxCalculated = min(viewportWidth - padding, originalValue)
             }
+        }        
+
+        switch (minCalculated, maxCalculated) {
+        case let (min?, max?):
+            return originalValue.isBetween(min, max) ? originalValue : (originalValue < min ? min : max)
+        case let (min?, nil):
+            return originalValue < min ? min : originalValue
+        case let (nil, max?):
+            return originalValue > max ? max : originalValue
+        case (nil, nil):
+            return originalValue
         }
-        return originalValue
     }
 }
 
