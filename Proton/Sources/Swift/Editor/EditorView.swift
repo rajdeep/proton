@@ -59,7 +59,7 @@ public struct AttachmentContentIdentifier {
     /// - Parameters:
     ///   - openingID: Used to identify start of attachment content
     ///   - closingID: Used to identify end of attachment content
-    init(openingID: NSAttributedString, closingID: NSAttributedString) {
+    public init(openingID: NSAttributedString, closingID: NSAttributedString) {
         self.openingID = openingID
         self.closingID = closingID
     }
