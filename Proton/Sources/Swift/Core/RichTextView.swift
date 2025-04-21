@@ -837,7 +837,9 @@ class RichTextView: AutogrowingTextView {
         let lineRect = layoutManager.boundingRect(forGlyphRange: NSRange(location: location, length: 0), in: textContainer)
 
         var caretRect = super.caretRect(for: position)
-        caretRect.origin.y = lineRect.minY + textContainerInset.top
+        // For non-Latin chars, the line height is calculated differently. Hence, using the higher of
+        // existing Caret rect or lineHeight.y position for caret positioning.
+        caretRect.origin.y = max(caretRect.origin.y, lineRect.minY + textContainerInset.top)
         caretRect.size.height = lineRect.height
         return caretRect
     }
