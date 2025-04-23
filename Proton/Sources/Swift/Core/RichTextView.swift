@@ -829,7 +829,11 @@ class RichTextView: AutogrowingTextView {
     }
 
     override func caretRect(for position: UITextPosition) -> CGRect {
-        guard isEditable else {
+        // layoutManager.numberOfGlyphs check is required to prevent cases where selectedRange is accessed
+        // while TextProcessor is processing and contents are changed to prevent a crash that may result when
+        // this is not same as textStorage.length
+        guard isEditable,
+              layoutManager.numberOfGlyphs == textStorage.length else {
             return super.caretRect(for: position)
         }
 
