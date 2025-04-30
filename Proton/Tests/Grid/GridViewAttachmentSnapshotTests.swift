@@ -334,6 +334,40 @@ class GridViewAttachmentSnapshotTests: SnapshotTestCase {
         XCTAssertEqual((cell02?.frame.width ?? 0) - cellOverlapPixels, 75)
     }
 
+    func testRendersGridViewAttachmentWithWidthBetweenMinAndMax() {
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let config = GridConfiguration(
+            columnsConfiguration: [
+                GridColumnConfiguration(width: .fractional(0.10, min: { .absolute(50)}, max: { .absolute(80) })),
+                GridColumnConfiguration(width: .fractional(0.40, min: { .absolute(50)}, max: { .absolute(80) })),
+                GridColumnConfiguration(width: .fixed(40, min: { .absolute(50)} , max: { .absolute(80)})),
+                GridColumnConfiguration(width: .fixed(90, min: { .absolute(50)} , max: { .absolute(80)})),
+            ],
+            rowsConfiguration: [
+                GridRowConfiguration(initialHeight: 40),
+                GridRowConfiguration(initialHeight: 40),
+            ])
+        let attachment = GridViewAttachment(config: config)
+
+        editor.replaceCharacters(in: .zero, with: "Some text in editor")
+        editor.insertAttachment(in: editor.textEndRange, attachment: attachment)
+        editor.replaceCharacters(in: editor.textEndRange, with: "Text after grid")
+
+        viewController.render(size: CGSize(width: 300, height: 200))
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
+
+        let cell00 = attachment.view.cellAt(rowIndex: 0, columnIndex: 0)
+        let cell01 = attachment.view.cellAt(rowIndex: 0, columnIndex: 1)
+        let cell02 = attachment.view.cellAt(rowIndex: 0, columnIndex: 2)
+        let cell03 = attachment.view.cellAt(rowIndex: 0, columnIndex: 3)
+
+        let cellOverlapPixels: CGFloat = 1
+        XCTAssertEqual((cell00?.frame.width ?? 0) - cellOverlapPixels, 50)
+        XCTAssertEqual((cell01?.frame.width ?? 0) - cellOverlapPixels, 80)
+        XCTAssertEqual((cell02?.frame.width ?? 0) - cellOverlapPixels, 50)
+        XCTAssertEqual((cell03?.frame.width ?? 0) - cellOverlapPixels, 80)
+    }
 
     func testUpdatesCellSizeBasedOnContent() {
         let viewController = EditorTestViewController()
