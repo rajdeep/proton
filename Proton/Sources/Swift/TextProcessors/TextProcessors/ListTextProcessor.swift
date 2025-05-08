@@ -95,7 +95,8 @@ open class ListTextProcessor: TextProcessing {
         switch key {
         case .tab:
             // Indent only if previous character is a listItem
-            guard editedRange.location > 0,
+            guard editor.listLineFormatting.enableMultipleIndentations,
+                  editedRange.location > 0,
                   let attributeValue = editor.attributedText.attribute(.listItem, at: editedRange.location - 1, effectiveRange: nil)
             else { return }
             
@@ -309,8 +310,13 @@ open class ListTextProcessor: TextProcessing {
     func updatedParagraphStyle(paraStyle: NSParagraphStyle?, listLineFormatting: LineFormatting, indentMode: Indentation, defaultParaStyle: NSParagraphStyle) -> NSParagraphStyle? {
         let mutableStyle = paraStyle?.mutableCopy() as? NSMutableParagraphStyle
         let indent = listLineFormatting.indentation
-        if indentMode == .indent {
+        let isFirstLevel = (mutableStyle?.firstLineHeadIndent ?? 0) == 0
+        if (listLineFormatting.enableMultipleIndentations || isFirstLevel),
+           indentMode == .indent {
             mutableStyle?.firstLineHeadIndent += indent
+            mutableStyle?.headIndent = mutableStyle?.firstLineHeadIndent ?? 0
+        } else if indentMode == .indent {
+            mutableStyle?.firstLineHeadIndent = indent
             mutableStyle?.headIndent = mutableStyle?.firstLineHeadIndent ?? 0
         } else {
             mutableStyle?.firstLineHeadIndent -= indent

@@ -471,6 +471,33 @@ class EditorListsSnapshotTests: SnapshotTestCase {
             assertSnapshot(of: viewController.view, as: .image, record: recordMode)
         }
     }
+    
+    func testIndentationsTurnedOffTabbingIn() {
+        let text = """
+        Line 1
+        Line 2
+        Line 2a
+        """
+
+        let viewController = EditorTestViewController()
+        let editor = viewController.editor
+        let listFormattingProvider = MockListFormattingProvider(sequenceGenerators: [NumericSequenceGenerator(), DiamondBulletSequenceGenerator()], listLineFormatting: .init(indentation: 25, spacingBefore: 0, spacingAfter: 0, enableMultipleIndentations: false))
+        editor.listFormattingProvider = listFormattingProvider
+        editor.attributedText = NSAttributedString(string: text)
+        editor.selectedRange = editor.attributedText.fullRange
+        listCommand.execute(on: editor)
+
+        viewController.render(size: CGSize(width: 300, height: 175))
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
+
+        let line2 = editor.contentLinesInRange(editor.attributedText.fullRange)[1]
+        let line2a = editor.contentLinesInRange(editor.attributedText.fullRange)[2]
+
+        listTextProcessor.handleKeyWithModifiers(editor: editor, key: .tab, modifierFlags: [], range: NSRange(location: line2.range.location, length: line2a.range.endLocation - line2.range.location))
+
+        viewController.render(size: CGSize(width: 300, height: 175))
+        assertSnapshot(of: viewController.view, as: .image, record: recordMode)
+    }
 
     func IGNORED_testDeletingBlankLineMovesToPreviousLine() {
         let text = "Hello world"

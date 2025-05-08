@@ -38,16 +38,21 @@ public struct LineFormatting {
 
     /// Vertical spacing after the line
     public let spacingAfter: CGFloat?
+    
+    /// If a list can be indented multiple times
+    public let enableMultipleIndentations: Bool
 
     /// Initializes
     /// - Parameters:
     ///   - indentation: Indentation for each line of text
     ///   - spacingBefore: Vertical spacing before line of text
     ///   - spacingAfter: Vertical spacing after line of text
-    public init(indentation: CGFloat, spacingBefore: CGFloat, spacingAfter: CGFloat? = nil) {
+    ///   - enableMultipleIndentations: If a list can be indented multiple times
+    public init(indentation: CGFloat, spacingBefore: CGFloat, spacingAfter: CGFloat? = nil, enableMultipleIndentations: Bool = true) {
         self.indentation = indentation
         self.spacingBefore = spacingBefore
         self.spacingAfter = spacingAfter
+        self.enableMultipleIndentations = enableMultipleIndentations
     }
 }
 
